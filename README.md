@@ -14,6 +14,9 @@ Crash Twinsanity API by NeoKesha.
 Crash Tag Team Racing/Titans/Mind Over Mutant API by NeoKesha.  
 Randomizers, mods and the Crate Mod Loader by BetaM.  
 
+Features - Crash Twinsanity:
+- Randomize Crate Types (globally)
+
 # Prerequisites
 
 - At least 2 GB of RAM
