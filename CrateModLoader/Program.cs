@@ -191,6 +191,7 @@ namespace CrateModLoader
                 args += "/CLOSE ";
                 args += "/PRESERVEFULLPATHNAMES NO ";
                 args += "/RECURSESUBDIRECTORIES YES ";
+                args += "/NOIMAGEDETAILS ";
                 args += "/NOSAVELOG ";
                 args += "/PORTABLE ";
                 args += "/NOSAVESETTINGS ";
