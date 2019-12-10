@@ -16,6 +16,7 @@ Randomizers, mods and the Crate Mod Loader by BetaM.
 
 # Prerequisites
 
+- At least 2 GB of RAM
 - .NET 4.5.2
 - Quamotion.DiscUtils.1.0.3
 
