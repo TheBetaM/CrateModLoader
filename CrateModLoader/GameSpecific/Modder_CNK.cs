@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
-//CNK API by BetaM, ManDude and eezstreet.
+//CNK Tools/API by BetaM, ManDude and eezstreet.
 
 namespace CrateModLoader
 {
     class Modder_CNK
     {
         public string gameName = "CNK";
-        public string apiCredit = "API by BetaM, ManDude and eezstreet";
+        public string apiCredit = "Tools/API by BetaM, ManDude and eezstreet";
         public System.Drawing.Image gameIcon = Properties.Resources.icon_cnk;
         public string[] modOptions = { "No options available" };
 

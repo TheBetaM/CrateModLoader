@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Text;
 using System.Media;
+using System.Diagnostics;
 using DiscUtils;
 using DiscUtils.Iso9660;
 
@@ -69,9 +70,12 @@ namespace CrateModLoader
         public RegionType targetRegion = RegionType.Undefined;
         public string extractedPath = "";
         public string PS2_executable_name = "";
+        public string PS2_game_code_name = "";
         public bool loadedISO = false;
         public bool outputPathSet = false;
         public bool keepTempFiles = false;
+        public bool useImgBurn = true;
+        private Process ImgBurnProcess;
 
         public Timer processTimer = new Timer();
 
@@ -114,29 +118,101 @@ namespace CrateModLoader
 
         void CreateISO()
         {
-            CDBuilder isoBuild = new CDBuilder();
-            isoBuild.UseJoliet = true;
-            isoBuild.VolumeIdentifier = ISO_label;
+            if (!useImgBurn)
+            {
+                CDBuilder isoBuild = new CDBuilder();
+                isoBuild.UseJoliet = true;
+                isoBuild.VolumeIdentifier = "PLAYSTATION";
 
-            DirectoryInfo di = new DirectoryInfo(extractedPath);
-            string stackedName = "";
+                DirectoryInfo di = new DirectoryInfo(extractedPath);
+                string stackedName = "";
 
+                foreach (DirectoryInfo dir in di.EnumerateDirectories())
+                {
+                    stackedName = dir.Name + @"\";
+                    isoBuild.AddDirectory(dir.Name);
+                    foreach (FileInfo file in dir.EnumerateFiles())
+                    {
+                        isoBuild.AddFile(stackedName + file.Name, file.Open(FileMode.Open));
+                    }
+                    Recursive_AddDirs(ref isoBuild, dir, stackedName);
+                }
+                foreach (FileInfo file in di.EnumerateFiles())
+                {
+                    isoBuild.AddFile(file.Name, file.Open(FileMode.Open));
+                }
+
+                isoBuild.Build(outputISOpath);
+            }
+            else
+            {
+
+                DirectoryInfo di = new DirectoryInfo(extractedPath);
+
+                // fix for ;1 version strings at the end of filenames
+                if (isoType == ConsoleMode.PS2)
+                {
+                    foreach (DirectoryInfo dir in di.EnumerateDirectories())
+                    {
+                        foreach (FileInfo file in dir.EnumerateFiles())
+                        {
+                            file.MoveTo(file.FullName.Substring(0, file.FullName.Length - 2));
+                        }
+                        Recursive_RenameFiles(dir);
+                    }
+                    foreach (FileInfo file in di.EnumerateFiles())
+                    {
+                        file.MoveTo(file.FullName.Substring(0, file.FullName.Length - 2));
+                    }
+                }
+
+                string args = "";
+                args += "/MODE BUILD ";
+                args += "/BUILDINPUTMODE STANDARD ";
+                args += "/BUILDOUTPUTMODE IMAGEFILE ";
+                args += "/SRC \"";
+                foreach (DirectoryInfo dir in di.EnumerateDirectories())
+                {
+                    args += dir.FullName;
+                    args += "|";
+                }
+                foreach (FileInfo file in di.EnumerateFiles())
+                {
+                    args += file.FullName;
+                    args += "|";
+                }
+                args += "\" ";
+                args += "/DEST " + outputISOpath + " ";
+                args += "/FILESYSTEM \"ISO9660 + UDF\" ";
+                args += "/UDFREVISION \"1.02\" ";
+                args += "/VOLUMELABEL \"" + PS2_game_code_name + "\" ";
+                args += "/OVERWRITE YES ";
+                args += "/START ";
+                args += "/CLOSE ";
+                args += "/PRESERVEFULLPATHNAMES NO ";
+                args += "/RECURSESUBDIRECTORIES YES ";
+                args += "/NOSAVELOG ";
+                args += "/PORTABLE ";
+                args += "/NOSAVESETTINGS ";
+
+                ImgBurnProcess = Process.Start(AppDomain.CurrentDomain.BaseDirectory + "/Tools/ImgBurn.exe", args);
+                if (ImgBurnProcess.HasExited)
+                {
+                    // TODO: wait for imgburn to finish
+                }
+            }
+        }
+
+        void Recursive_RenameFiles(DirectoryInfo di)
+        {
             foreach (DirectoryInfo dir in di.EnumerateDirectories())
             {
-                stackedName = dir.Name + @"\";
-                isoBuild.AddDirectory(dir.Name);
                 foreach (FileInfo file in dir.EnumerateFiles())
                 {
-                    isoBuild.AddFile(stackedName + file.Name, file.Open(FileMode.Open));
+                    file.MoveTo(file.FullName.Substring(0, file.FullName.Length - 2));
                 }
-                Recursive_AddDirs(ref isoBuild, dir, stackedName);
+                Recursive_RenameFiles(dir);
             }
-            foreach (FileInfo file in di.EnumerateFiles())
-            {
-                isoBuild.AddFile(file.Name, file.Open(FileMode.Open));
-            }
-
-            isoBuild.Build(outputISOpath);
         }
 
         void Recursive_AddDirs(ref CDBuilder isoBuild, DirectoryInfo di, string sName)
@@ -402,11 +478,13 @@ namespace CrateModLoader
                         {
                             SetGameType(ConsoleMode.PS2, GameType.CTTR, RegionType.NTSC_U);
                             PS2_executable_name = "SLUS_211.91";
+                            PS2_game_code_name = "SLUS_21191";
                         }
                         else if (titleID == @"BOOT2 = cdrom0:\SLES_534.39;1")
                         {
                             SetGameType(ConsoleMode.PS2, GameType.CTTR, RegionType.PAL);
                             PS2_executable_name = "SLES_534.39";
+                            PS2_game_code_name = "SLES_53439";
                         }
                         else if (titleID == "ULES-00168") //Unknown, TODO
                         {
@@ -417,66 +495,79 @@ namespace CrateModLoader
                         {
                             SetGameType(ConsoleMode.PS2, GameType.Twins, RegionType.NTSC_U);
                             PS2_executable_name = "SLUS_209.09";
+                            PS2_game_code_name = "SLUS_20909";
                         }
                         else if (titleID == @"BOOT2 = cdrom0:\SLES_525.68;1 " || titleID == @"BOOT2 = cdrom0:\SLES_525.68;1")
                         {
                             SetGameType(ConsoleMode.PS2, GameType.Twins, RegionType.PAL);
                             PS2_executable_name = "SLES_525.68";
+                            PS2_game_code_name = "SLES_52568";
                         }
                         else if (titleID == @"BOOT2 = cdrom0:\SLPM_658.01;1 " || titleID == @"BOOT2 = cdrom0:\SLPM_658.01;1")
                         {
                             SetGameType(ConsoleMode.PS2, GameType.Twins, RegionType.NTSC_J);
                             PS2_executable_name = "SLPM_658.01";
+                            PS2_game_code_name = "SLPM_65801";
                         }
                         else if (titleID == @"BOOT2 = cdrom0:\SLUS_215.83;1")
                         {
                             SetGameType(ConsoleMode.PS2, GameType.Titans, RegionType.NTSC_U);
                             PS2_executable_name = "SLUS_215.83";
+                            PS2_game_code_name = "SLUS_21583";
                         }
                         else if (titleID == @"BOOT2 = cdrom0:\SLES_548.41;1")
                         {
                             SetGameType(ConsoleMode.PS2, GameType.Titans, RegionType.PAL);
                             PS2_executable_name = "SLES_548.41";
+                            PS2_game_code_name = "SLES_54841";
                         }
                         else if (titleID == @"BOOT2 = cdrom0:\SLUS_217.28;1")
                         {
                             SetGameType(ConsoleMode.PS2, GameType.MoM, RegionType.NTSC_U);
                             PS2_executable_name = "SLUS_217.28";
+                            PS2_game_code_name = "SLUS_21728";
                         }
                         else if (titleID == @"BOOT2 = cdrom0:\SLES_552.04;1")
                         {
                             SetGameType(ConsoleMode.PS2, GameType.MoM, RegionType.PAL);
                             PS2_executable_name = "SLES_552.04";
+                            PS2_game_code_name = "SLES_55204";
                         }
                         else if (titleID == @"BOOT2 = cdrom0:\SLUS_206.49;1")
                         {
                             SetGameType(ConsoleMode.PS2, GameType.CNK, RegionType.NTSC_U);
                             PS2_executable_name = "SLUS_206.49";
+                            PS2_game_code_name = "SLUS_20649";
                         }
                         else if (titleID == @"BOOT2 = cdrom0:\SLES_515.11;1")
                         {
                             SetGameType(ConsoleMode.PS2, GameType.CNK, RegionType.PAL);
                             PS2_executable_name = "SLES_515.11";
+                            PS2_game_code_name = "SLES_51511";
                         }
                         else if (titleID == @"BOOT2 = cdrom0:\SLPM_660.67;1")
                         {
                             SetGameType(ConsoleMode.PS2, GameType.CNK, RegionType.NTSC_J);
                             PS2_executable_name = "SLPM_660.67";
+                            PS2_game_code_name = "SLPM_66067";
                         }
                         else if (titleID == @"BOOT2 = cdrom0:\SLUS_202.38;1")
                         {
                             SetGameType(ConsoleMode.PS2, GameType.TWOC, RegionType.NTSC_U);
                             PS2_executable_name = "SLUS_202.38";
+                            PS2_game_code_name = "SLUS_20238";
                         }
                         else if (titleID == @"BOOT2 = cdrom0:\SLES_503.86;1")
                         {
                             SetGameType(ConsoleMode.PS2, GameType.TWOC, RegionType.PAL);
-                            PS2_executable_name = "SLUS_202.38";
+                            PS2_executable_name = "SLES_503.86";
+                            PS2_game_code_name = "SLES_50386";
                         }
                         else if (titleID == @"BOOT2 = cdrom0:\SLPM_740.03;1")
                         {
                             SetGameType(ConsoleMode.PS2, GameType.TWOC, RegionType.NTSC_J);
                             PS2_executable_name = "SLPM_740.03";
+                            PS2_game_code_name = "SLPM_74003";
                         }
                         else
                         {
