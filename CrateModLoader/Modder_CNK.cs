@@ -10,6 +10,11 @@ namespace CrateModLoader
 {
     class Modder_CNK
     {
+        public string gameName = "CNK";
+        public string apiCredit = "API by BetaM, ManDude and eezstreet";
+        public System.Drawing.Image gameIcon = Properties.Resources.icon_cnk;
+        public string[] modOptions = { "No options available" };
+
         public void StartModProcess()
         {
             Process proc = Process.Start(AppDomain.CurrentDomain.BaseDirectory + "/Tools/gobextract_in.exe", "assets.gob extr");

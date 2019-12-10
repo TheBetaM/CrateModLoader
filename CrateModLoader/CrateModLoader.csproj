@@ -60,18 +60,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Modder_CNK.cs" />
+    <Compile Include="Modder_Crash1.cs" />
+    <Compile Include="Modder_Crash2.cs" />
+    <Compile Include="Modder_Crash3.cs" />
+    <Compile Include="Modder_CTR.cs" />
+    <Compile Include="Modder_MoM.cs" />
+    <Compile Include="Modder_Titans.cs" />
     <Compile Include="Modder_Twins.cs" />
     <Compile Include="Modder_CTTR.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="ModLoaderForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="ModLoaderForm.Designer.cs">
+      <DependentUpon>ModLoaderForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="ModLoaderForm.resx">
+      <DependentUpon>ModLoaderForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

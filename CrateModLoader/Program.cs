@@ -14,33 +14,37 @@ namespace CrateModLoader
 {
     static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        /// 
-        public static Randomizer RandoProgram;
+        public static ModLoader ModProgram;
         public static Modder_CNK ModCNK;
         public static Modder_CTTR ModCTTR;
         public static Modder_MoM ModMoM;
         public static Modder_Titans ModTitans;
         public static Modder_Twins ModTwins;
+        public static Modder_CTR ModCTR;
+        public static Modder_Crash1 ModCrash1;
+        public static Modder_Crash2 ModCrash2;
+        public static Modder_Crash3 ModCrash3;
 
         [STAThread]
         static void Main()
         {
-            RandoProgram = new Randomizer();
+            ModProgram = new ModLoader();
             ModCNK = new Modder_CNK();
             ModCTTR = new Modder_CTTR();
             ModMoM = new Modder_MoM();
             ModTitans = new Modder_Titans();
             ModTwins = new Modder_Twins();
+            ModCTR = new Modder_CTR();
+            ModCrash1 = new Modder_Crash1();
+            ModCrash2 = new Modder_Crash2();
+            ModCrash3 = new Modder_Crash3();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new ModLoaderForm());
         }
     }
 
-    public class Randomizer
+    public class ModLoader
     {
         public long randoSeed = 0;
         public Label processText;
@@ -52,6 +56,11 @@ namespace CrateModLoader
         public PictureBox image_gameIcon;
         public CheckedListBox list_modOptions;
         public Form main_form;
+        public Button button_browse1;
+        public Button button_browse2;
+        public Button button_randomize;
+        public TextBox textbox_output_path;
+        public NumericUpDown textbox_rando_seed;
 
         public string inputISOpath = "";
         public string outputISOpath = "";
@@ -76,6 +85,9 @@ namespace CrateModLoader
             PS2 = 1,
             XBOX = 2,
             GCN = 3,
+            PS1 = 4,
+            WII = 5,
+            XBOX360 = 6,
         }
         public enum GameType
         {
@@ -344,7 +356,7 @@ namespace CrateModLoader
         {
             processText.Text = "Finished!";
             SystemSounds.Beep.Play();
-            startButton.Enabled = true;
+            EnableInteraction();
         }
 
         public void ErrorFinish(string errorType)
@@ -353,7 +365,7 @@ namespace CrateModLoader
             progressBar.Value = progressBar.Minimum;
             SystemSounds.Beep.Play();
             processText.Text = "Error: " + errorType;
-            startButton.Enabled = true;
+            EnableInteraction();
         }
 
         public void OptionChanged(int option,bool value)
@@ -651,6 +663,18 @@ namespace CrateModLoader
             {
                 cons_mod = "XBOX";
             }
+            else if (console == ConsoleMode.PS1)
+            {
+                cons_mod = "PS1";
+            }
+            else if (console == ConsoleMode.WII)
+            {
+                cons_mod = "WII";
+            }
+            else if (console == ConsoleMode.XBOX360)
+            {
+                cons_mod = "360";
+            }
 
             string region_mod = "";
             if (region == RegionType.Undefined)
@@ -674,110 +698,106 @@ namespace CrateModLoader
             {
                 text_gameType.Text = "ERROR_GAME";
             }
-            else if (type == GameType.CTTR)
+            else
             {
-                text_gameType.Text = "CTTR " + region_mod + " " + cons_mod + " detected!";
-                text_optionsLabel.Text = "CTTR Options: (API by NeoKesha)";
-                image_gameIcon.Image = Properties.Resources.icon_crash;
+                string[] modOptions = Program.ModCTTR.modOptions;
+                string apiCredit = Program.ModCTTR.apiCredit;
+                string gameName = Program.ModCTTR.gameName;
+                System.Drawing.Image gameIcon = null;
+                if (type == GameType.CTTR)
+                {
+                    gameName = Program.ModCTTR.gameName;
+                    apiCredit = Program.ModCTTR.apiCredit;
+                    modOptions = Program.ModCTTR.modOptions;
+                    gameIcon = Program.ModCTTR.gameIcon;
+                }
+                else if (type == GameType.Twins)
+                {
+                    gameName = Program.ModTwins.gameName;
+                    apiCredit = Program.ModTwins.apiCredit;
+                    modOptions = Program.ModTwins.modOptions;
+                    gameIcon = Program.ModTwins.gameIcon;
+                }
+                else if (type == GameType.Titans)
+                {
+                    gameName = Program.ModTitans.gameName;
+                    apiCredit = Program.ModTitans.apiCredit;
+                    modOptions = Program.ModTitans.modOptions;
+                    gameIcon = Program.ModTitans.gameIcon;
+                }
+                else if (type == GameType.MoM)
+                {
+                    gameName = Program.ModMoM.gameName;
+                    apiCredit = Program.ModMoM.apiCredit;
+                    modOptions = Program.ModMoM.modOptions;
+                    gameIcon = Program.ModMoM.gameIcon;
+                }
+                else if (type == GameType.CTR)
+                {
+                    gameName = Program.ModCTR.gameName;
+                    apiCredit = Program.ModCTR.apiCredit;
+                    modOptions = Program.ModCTR.modOptions;
+                    gameIcon = Program.ModCTR.gameIcon;
+                }
+                else if (type == GameType.CNK)
+                {
+                    gameName = Program.ModCNK.gameName;
+                    apiCredit = Program.ModCNK.apiCredit;
+                    modOptions = Program.ModCNK.modOptions;
+                    gameIcon = Program.ModCNK.gameIcon;
+                }
+                else if (type == GameType.Crash1)
+                {
+                    gameName = Program.ModCrash1.gameName;
+                    apiCredit = Program.ModCrash1.apiCredit;
+                    modOptions = Program.ModCrash1.modOptions;
+                    gameIcon = Program.ModCrash1.gameIcon;
+                }
+                else if (type == GameType.Crash2)
+                {
+                    gameName = Program.ModCrash2.gameName;
+                    apiCredit = Program.ModCrash2.apiCredit;
+                    modOptions = Program.ModCrash2.modOptions;
+                    gameIcon = Program.ModCrash2.gameIcon;
+                }
+                else if (type == GameType.Crash3)
+                {
+                    gameName = Program.ModCrash3.gameName;
+                    apiCredit = Program.ModCrash3.apiCredit;
+                    modOptions = Program.ModCrash3.modOptions;
+                    gameIcon = Program.ModCrash3.gameIcon;
+                }
+                else if (type == GameType.TWOC)
+                {
+                    modOptions = new string[] { "No options available" };
+                    gameName = "TWOC";
+                    apiCredit = "No API available!";
+                    gameIcon = null;
+                }
+                else if (type == GameType.Bash)
+                {
+                    modOptions = new string[] { "No options available" };
+                    gameName = "Bash";
+                    apiCredit = "No API available!";
+                    gameIcon = null;
+                }
+
+                text_gameType.Text = gameName + " " + region_mod + " " + cons_mod + " detected!";
+                text_optionsLabel.Text = gameName + " Options: (" + apiCredit + ")";
+                if (gameIcon != null)
+                {
+                    image_gameIcon.Image = gameIcon;
+                    image_gameIcon.Visible = true;
+                }
+                else
+                {
+                    image_gameIcon.Visible = false;
+                }
                 list_modOptions.Items.Clear();
-                string[] modOptions = Program.ModCTTR.modOptions_CTTR;
                 list_modOptions.Items.AddRange(modOptions);
                 PrepareOptionsList();
             }
-            else if (type == GameType.Twins)
-            {
-                text_gameType.Text = "Twinsanity " + region_mod + " " + cons_mod + " detected!";
-                text_optionsLabel.Text = "Twinsanity Options: (API by NeoKesha)";
-                image_gameIcon.Image = Properties.Resources.icon_twins;
-                list_modOptions.Items.Clear();
-                string[] modOptions = { "No options available" };
-                list_modOptions.Items.AddRange(modOptions);
-                PrepareOptionsList();
-            }
-            else if (type == GameType.Titans)
-            {
-                text_gameType.Text = "Titans " + region_mod + " " + cons_mod + " detected!";
-                text_optionsLabel.Text = "Titans Options: (API by NeoKesha)";
-                image_gameIcon.Image = Properties.Resources.icon_titans;
-                list_modOptions.Items.Clear();
-                string[] modOptions = { "No options available" };
-                list_modOptions.Items.AddRange(modOptions);
-                PrepareOptionsList();
-            }
-            else if (type == GameType.MoM)
-            {
-                text_gameType.Text = "MoM " + region_mod + " " + cons_mod + " detected!";
-                text_optionsLabel.Text = "MoM Options: (API by NeoKesha)";
-                image_gameIcon.Image = Properties.Resources.icon_titans;
-                list_modOptions.Items.Clear();
-                string[] modOptions = { "No options available" };
-                list_modOptions.Items.AddRange(modOptions);
-                PrepareOptionsList();
-            }
-            else if (type == GameType.CTR)
-            {
-                text_gameType.Text = "CTR " + region_mod + " detected!";
-                text_optionsLabel.Text = "CTR Options: (API by DCxDemo)";
-                list_modOptions.Items.Clear();
-                string[] modOptions = { "No options available" };
-                list_modOptions.Items.AddRange(modOptions);
-                PrepareOptionsList();
-            }
-            else if (type == GameType.CNK)
-            {
-                text_gameType.Text = "CNK " + region_mod + " " + cons_mod + " detected!";
-                text_optionsLabel.Text = "CNK Options: (API by BetaM, ManDude and eezstreet)";
-                image_gameIcon.Image = Properties.Resources.icon_cnk;
-                list_modOptions.Items.Clear();
-                string[] modOptions = { "No options available" };
-                list_modOptions.Items.AddRange(modOptions);
-                PrepareOptionsList();
-            }
-            else if (type == GameType.Crash1)
-            {
-                text_gameType.Text = "Crash 1 " + region_mod + " detected!";
-                text_optionsLabel.Text = "Crash 1 Options: (API by chekwob and ManDude)";
-                list_modOptions.Items.Clear();
-                string[] modOptions = { "No options available" };
-                list_modOptions.Items.AddRange(modOptions);
-                PrepareOptionsList();
-            }
-            else if (type == GameType.Crash2)
-            {
-                text_gameType.Text = "Crash 2 " + region_mod + " detected!";
-                text_optionsLabel.Text = "Crash 2 Options: (API by chekwob and ManDude)";
-                list_modOptions.Items.Clear();
-                string[] modOptions = { "No options available" };
-                list_modOptions.Items.AddRange(modOptions);
-                PrepareOptionsList();
-            }
-            else if (type == GameType.Crash3)
-            {
-                text_gameType.Text = "Crash 3 " + region_mod + " detected!";
-                text_optionsLabel.Text = "Crash 3 Options: (API by chekwob and ManDude)";
-                list_modOptions.Items.Clear();
-                string[] modOptions = { "No options available" };
-                list_modOptions.Items.AddRange(modOptions);
-                PrepareOptionsList();
-            }
-            else if (type == GameType.TWOC)
-            {
-                text_gameType.Text = "TWOC " + region_mod + " " + cons_mod + " detected!";
-                text_optionsLabel.Text = "TWOC Options: ";
-                list_modOptions.Items.Clear();
-                string[] modOptions = { "No options available" };
-                list_modOptions.Items.AddRange(modOptions);
-                PrepareOptionsList();
-            }
-            else if (type == GameType.Bash)
-            {
-                text_gameType.Text = "Bash " + region_mod + " detected!";
-                text_optionsLabel.Text = "Bash Options: ";
-                list_modOptions.Items.Clear();
-                string[] modOptions = { "No options available" };
-                list_modOptions.Items.AddRange(modOptions);
-                PrepareOptionsList();
-            }
+            
         }
 
         void PrepareOptionsList()
@@ -789,6 +809,27 @@ namespace CrateModLoader
                 main_form.Size = new System.Drawing.Size(main_form.Size.Width, height);
             }
             main_form.MinimumSize = new System.Drawing.Size(main_form.MinimumSize.Width, height);
+        }
+
+        public void DisableInteraction()
+        {
+            startButton.Enabled = false;
+            list_modOptions.Enabled = false;
+            button_browse1.Enabled = false;
+            button_browse2.Enabled = false;
+            button_randomize.Enabled = false;
+            textbox_output_path.ReadOnly = true;
+            textbox_rando_seed.ReadOnly = true;
+        }
+        public void EnableInteraction()
+        {
+            startButton.Enabled = true;
+            list_modOptions.Enabled = true;
+            button_browse1.Enabled = true;
+            button_browse2.Enabled = true;
+            button_randomize.Enabled = true;
+            textbox_output_path.ReadOnly = false;
+            textbox_rando_seed.ReadOnly = false;
         }
     }
 }

@@ -12,7 +12,7 @@ Crash Mind Over Mutant - All PS2, All PSP
 Crash Nitro Kart API by BetaM, ManDude and eezstreet.
 Crash Twinsanity API by NeoKesha.
 Crash Tag Team Racing/Titans/Mind Over Mutant API by NeoKesha.
-Randomizers, mods and the Crate Mod Loader by BetaM.
+Randomizers, mods and the Crate Mod Loader created by BetaM.
 
 License Information
 

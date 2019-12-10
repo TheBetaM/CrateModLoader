@@ -10,6 +10,11 @@ namespace CrateModLoader
 {
     class Modder_Twins
     {
+        public string gameName = "Twinsanity";
+        public string apiCredit = "API by NeoKesha";
+        public System.Drawing.Image gameIcon = Properties.Resources.icon_twins;
+        public string[] modOptions = { "No options available" };
+
         public void StartModProcess()
         {
             RM2 mainArchive = new RM2();

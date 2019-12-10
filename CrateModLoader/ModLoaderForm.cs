@@ -10,23 +10,28 @@ using System.Windows.Forms;
 
 namespace CrateModLoader
 {
-    public partial class Form1 : Form
+    public partial class ModLoaderForm : Form
     {
-        public Form1()
+        public ModLoaderForm()
         {
             InitializeComponent();
             label5.Text = "";
             label6.Text = "Waiting for input ISO...";
             label7.Text = "";
             button3.Enabled = false;
-            Program.RandoProgram.processText = label6;
-            Program.RandoProgram.progressBar = progressBar1;
-            Program.RandoProgram.startButton = button3;
-            Program.RandoProgram.text_gameType = label7;
-            Program.RandoProgram.text_optionsLabel = label5;
-            Program.RandoProgram.list_modOptions = checkedListBox1;
-            Program.RandoProgram.main_form = this;
-            Program.RandoProgram.image_gameIcon = pictureBox1;
+            Program.ModProgram.processText = label6;
+            Program.ModProgram.progressBar = progressBar1;
+            Program.ModProgram.startButton = button3;
+            Program.ModProgram.text_gameType = label7;
+            Program.ModProgram.text_optionsLabel = label5;
+            Program.ModProgram.list_modOptions = checkedListBox1;
+            Program.ModProgram.main_form = this;
+            Program.ModProgram.image_gameIcon = pictureBox1;
+            Program.ModProgram.button_browse1 = button1;
+            Program.ModProgram.button_browse2 = button2;
+            Program.ModProgram.button_randomize = button4;
+            Program.ModProgram.textbox_output_path = textBox2;
+            Program.ModProgram.textbox_rando_seed = numericUpDown1;
 
             progressBar1.Minimum = 1;
             progressBar1.Maximum = 4;
@@ -36,7 +41,7 @@ namespace CrateModLoader
             Random rand = new Random();
             long Seed = rand.Next(0, int.MaxValue);
             numericUpDown1.Value = Seed;
-            Program.RandoProgram.randoSeed = Seed;
+            Program.ModProgram.randoSeed = Seed;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -68,7 +73,7 @@ namespace CrateModLoader
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
-            Program.RandoProgram.randoSeed = long.Parse(numericUpDown1.Text);
+            Program.ModProgram.randoSeed = long.Parse(numericUpDown1.Text);
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -76,15 +81,15 @@ namespace CrateModLoader
             Random rand = new Random();
             long Seed = rand.Next(0,int.MaxValue);
             numericUpDown1.Value = Seed;
-            Program.RandoProgram.randoSeed = Seed;
+            Program.ModProgram.randoSeed = Seed;
         }
 
         private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
-            Program.RandoProgram.outputISOpath = saveFileDialog1.FileName;
-            textBox2.Text = Program.RandoProgram.outputISOpath;
-            Program.RandoProgram.outputPathSet = true;
-            if (Program.RandoProgram.loadedISO && Program.RandoProgram.outputPathSet)
+            Program.ModProgram.outputISOpath = saveFileDialog1.FileName;
+            textBox2.Text = Program.ModProgram.outputISOpath;
+            Program.ModProgram.outputPathSet = true;
+            if (Program.ModProgram.loadedISO && Program.ModProgram.outputPathSet)
             {
                 button3.Enabled = true;
                 label6.Text = "Ready!";
@@ -97,16 +102,16 @@ namespace CrateModLoader
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
-            Program.RandoProgram.outputISOpath = textBox2.Text;
+            Program.ModProgram.outputISOpath = textBox2.Text;
         }
 
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (Program.RandoProgram.targetGame == Randomizer.GameType.CTTR)
+            if (Program.ModProgram.targetGame == ModLoader.GameType.CTTR)
             {
                 for (int i = 0; i < checkedListBox1.Items.Count; i++)
                 {
-                    Program.RandoProgram.OptionChanged(i,checkedListBox1.GetItemChecked(i));
+                    Program.ModProgram.OptionChanged(i,checkedListBox1.GetItemChecked(i));
                 }
             }
             checkedListBox1.ClearSelected();
@@ -114,36 +119,36 @@ namespace CrateModLoader
 
         private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
-            Program.RandoProgram.inputISOpath = openFileDialog1.FileName;
-            textBox1.Text = Program.RandoProgram.inputISOpath;
-            Program.RandoProgram.CheckISO();
+            Program.ModProgram.inputISOpath = openFileDialog1.FileName;
+            textBox1.Text = Program.ModProgram.inputISOpath;
+            Program.ModProgram.CheckISO();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            button3.Enabled = false;
+            Program.ModProgram.DisableInteraction();
 
             if (checkedListBox1.CheckedItems.Count <= 0)
             {
-                DialogResult dialogResult = MessageBox.Show("No options specified - Output ISO will be exactly the same as the input! Proceed?", "No Options", MessageBoxButtons.YesNo);
+                DialogResult dialogResult = MessageBox.Show("No options specified - Output ISO will be exactly the same as the input! Proceed?", "No Options Selected", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {
-                    Program.RandoProgram.StartButtonPressed();
+                    Program.ModProgram.StartButtonPressed();
                 }
                 else if (dialogResult == DialogResult.No)
                 {
-                    button3.Enabled = true;
+                    Program.ModProgram.EnableInteraction();
                 }
             }
             else
             {
-                Program.RandoProgram.StartButtonPressed();
+                Program.ModProgram.StartButtonPressed();
             }
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            Program.RandoProgram.keepTempFiles = checkBox1.Checked;
+            Program.ModProgram.keepTempFiles = checkBox1.Checked;
         }
     }
 }

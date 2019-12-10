@@ -11,6 +11,10 @@ namespace CrateModLoader
     class Modder_CTTR
     {
 
+        public string gameName = "CTTR";
+        public string apiCredit = "API by NeoKesha";
+        public System.Drawing.Image gameIcon = Properties.Resources.icon_crash;
+
         //CTTR specific
         public string path_RCF_default = "";
         public string path_RCF_common = "";
@@ -54,7 +58,7 @@ namespace CrateModLoader
         public string path_RCF_sound = "";
         public string path_RCF_english = "";
 
-        public string[] modOptions_CTTR = { "Randomize hubs", "Randomize tracks", "Randomize minigames", "Randomize missions", "Add unused cutscenes", "Prevent sequence breaks" };
+        public string[] modOptions = { "Randomize hubs", "Randomize tracks", "Randomize minigames", "Randomize missions", "Add unused cutscenes", "Prevent sequence breaks" };
         public bool CTTR_rand_hubs = false;
         public bool CTTR_rand_tracks = false;
         public bool CTTR_rand_minigames = false;
@@ -110,9 +114,9 @@ namespace CrateModLoader
             }
         }
 
-        public void SetPaths(Randomizer.ConsoleMode console, string exec_name = "")
+        public void SetPaths(ModLoader.ConsoleMode console, string exec_name = "")
         {
-            if (console == Randomizer.ConsoleMode.PS2)
+            if (console == ModLoader.ConsoleMode.PS2)
             {
                 path_executable = exec_name;
                 path_RCF_default = @"ADEFAULT\DEFAULT.RCF";
@@ -146,7 +150,7 @@ namespace CrateModLoader
                 path_RCF_onfoot5 = @"ONFOOT\ONFOOT5.RCF";
                 path_RCF_onfoot6 = @"ONFOOT\ONFOOT6.RCF";
             }
-            else if (console == Randomizer.ConsoleMode.PSP)
+            else if (console == ModLoader.ConsoleMode.PSP)
             {
                 path_executable = @"PSP_GAME\SYSDIR\BOOT.BIN";
                 path_RCF_default = @"PSP_GAME\USRDIR\adefault\default.rcf";
@@ -181,7 +185,7 @@ namespace CrateModLoader
                 path_RCF_onfoot5 = @"PSP_GAME\USRDIR\onfoot\onfoot5.rcf";
                 path_RCF_onfoot6 = @"PSP_GAME\USRDIR\onfoot\onfoot6.rcf";
             }
-            else if (console == Randomizer.ConsoleMode.GCN)
+            else if (console == ModLoader.ConsoleMode.GCN)
             {
                 path_executable = @"sys\main.dol";
                 path_RCF_default = @"root\adefault\default.rcf";
@@ -216,15 +220,5 @@ namespace CrateModLoader
                 path_RCF_onfoot7 = @"root\onfoot\onfoot7.rcf";
             }
         }
-    }
-
-    class Modder_Titans
-    {
-
-    }
-
-    class Modder_MoM
-    {
-
     }
 }
