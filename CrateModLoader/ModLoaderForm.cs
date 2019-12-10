@@ -47,7 +47,7 @@ namespace CrateModLoader
         private void button1_Click(object sender, EventArgs e)
         {
             openFileDialog1.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            openFileDialog1.Filter = "ISO (*.iso)|*.iso|All files (*.*)|*.*";
+            openFileDialog1.Filter = "PS2/PSP ISO (*.iso)|*.iso|GC ISO (*.iso)|*.iso|All files (*.*)|*.*";
             openFileDialog1.FilterIndex = 0;
             openFileDialog1.RestoreDirectory = true;
             openFileDialog1.FileName = "";

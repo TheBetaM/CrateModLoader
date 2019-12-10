@@ -75,7 +75,7 @@ namespace CrateModLoader
         public bool outputPathSet = false;
         public bool keepTempFiles = false;
         public bool useImgBurn = true;
-        private Process ImgBurnProcess;
+        private Process ISOcreatorProcess;
 
         public Timer processTimer = new Timer();
 
@@ -118,52 +118,22 @@ namespace CrateModLoader
 
         void CreateISO()
         {
-            if (!useImgBurn)
+            if (isoType == ConsoleMode.PS2)
             {
-                CDBuilder isoBuild = new CDBuilder();
-                isoBuild.UseJoliet = true;
-                isoBuild.VolumeIdentifier = "PLAYSTATION";
-
+                //Use ImgBurn
                 DirectoryInfo di = new DirectoryInfo(extractedPath);
-                string stackedName = "";
-
+                // fix for ;1 version strings at the end of filenames
                 foreach (DirectoryInfo dir in di.EnumerateDirectories())
                 {
-                    stackedName = dir.Name + @"\";
-                    isoBuild.AddDirectory(dir.Name);
                     foreach (FileInfo file in dir.EnumerateFiles())
-                    {
-                        isoBuild.AddFile(stackedName + file.Name, file.Open(FileMode.Open));
-                    }
-                    Recursive_AddDirs(ref isoBuild, dir, stackedName);
-                }
-                foreach (FileInfo file in di.EnumerateFiles())
-                {
-                    isoBuild.AddFile(file.Name, file.Open(FileMode.Open));
-                }
-
-                isoBuild.Build(outputISOpath);
-            }
-            else
-            {
-
-                DirectoryInfo di = new DirectoryInfo(extractedPath);
-
-                // fix for ;1 version strings at the end of filenames
-                if (isoType == ConsoleMode.PS2)
-                {
-                    foreach (DirectoryInfo dir in di.EnumerateDirectories())
-                    {
-                        foreach (FileInfo file in dir.EnumerateFiles())
-                        {
-                            file.MoveTo(file.FullName.Substring(0, file.FullName.Length - 2));
-                        }
-                        Recursive_RenameFiles(dir);
-                    }
-                    foreach (FileInfo file in di.EnumerateFiles())
                     {
                         file.MoveTo(file.FullName.Substring(0, file.FullName.Length - 2));
                     }
+                    Recursive_RenameFiles(dir);
+                }
+                foreach (FileInfo file in di.EnumerateFiles())
+                {
+                    file.MoveTo(file.FullName.Substring(0, file.FullName.Length - 2));
                 }
 
                 string args = "";
@@ -196,12 +166,57 @@ namespace CrateModLoader
                 args += "/PORTABLE ";
                 args += "/NOSAVESETTINGS ";
 
-                ImgBurnProcess = new Process();
-                ImgBurnProcess.StartInfo.FileName = AppDomain.CurrentDomain.BaseDirectory + "/Tools/ImgBurn.exe";
-                ImgBurnProcess.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
-                ImgBurnProcess.StartInfo.Arguments = args;
-                ImgBurnProcess.Start();
-                ImgBurnProcess.WaitForExit();
+                ISOcreatorProcess = new Process();
+                ISOcreatorProcess.StartInfo.FileName = AppDomain.CurrentDomain.BaseDirectory + "/Tools/ImgBurn.exe";
+                ISOcreatorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
+                ISOcreatorProcess.StartInfo.Arguments = args;
+                ISOcreatorProcess.Start();
+                ISOcreatorProcess.WaitForExit();
+            }
+            else if (isoType == ConsoleMode.PSP)
+            {
+                // Use ???
+            }
+            else if (isoType == ConsoleMode.GCN)
+            {
+                // Use GCR
+                string args = "";
+                args += "rebuild image: ";
+                args += extractedPath + " " + outputISOpath;
+
+                ISOcreatorProcess = new Process();
+                ISOcreatorProcess.StartInfo.FileName = AppDomain.CurrentDomain.BaseDirectory + "/Tools/gcr.exe";
+                ISOcreatorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                ISOcreatorProcess.StartInfo.Arguments = args;
+                ISOcreatorProcess.Start();
+                ISOcreatorProcess.WaitForExit();
+            }
+            else
+            {
+                // failsafe
+                CDBuilder isoBuild = new CDBuilder();
+                isoBuild.UseJoliet = true;
+                isoBuild.VolumeIdentifier = ISO_label;
+
+                DirectoryInfo di = new DirectoryInfo(extractedPath);
+                string stackedName = "";
+
+                foreach (DirectoryInfo dir in di.EnumerateDirectories())
+                {
+                    stackedName = dir.Name + @"\";
+                    isoBuild.AddDirectory(dir.Name);
+                    foreach (FileInfo file in dir.EnumerateFiles())
+                    {
+                        isoBuild.AddFile(stackedName + file.Name, file.Open(FileMode.Open));
+                    }
+                    Recursive_AddDirs(ref isoBuild, dir, stackedName);
+                }
+                foreach (FileInfo file in di.EnumerateFiles())
+                {
+                    isoBuild.AddFile(file.Name, file.Open(FileMode.Open));
+                }
+
+                isoBuild.Build(outputISOpath);
             }
         }
 
@@ -374,8 +389,8 @@ namespace CrateModLoader
             }
             else if (processProgress == 3)
             {
-                //EditGameContent();
-                startButton.Enabled = true; //DEBUG, pressing the button again will progress
+                EditGameContent();
+                //startButton.Enabled = true; //DEBUG, pressing the button again will progress
             }
             else if (processProgress == 4)
             {
@@ -396,9 +411,13 @@ namespace CrateModLoader
 
         public void EditGameContent()
         {
-            //Add modding process (duh)
+            
+            if (targetGame == GameType.Twins)
+            {
+                Program.ModTwins.StartModProcess();
+            }
 
-            //ProgressProcess();
+            ProgressProcess();
         }
 
         public void FinishISO()
@@ -406,7 +425,7 @@ namespace CrateModLoader
 
             CreateISO();
 
-            /* TODO: delete temp files
+            // TODO: delete temp files
             if (!keepTempFiles)
             {
                 if (Directory.Exists(extractedPath))
@@ -425,7 +444,7 @@ namespace CrateModLoader
                     Directory.Delete(extractedPath);
                 }
             }
-            */
+            
 
             ProgressProcess();
         }
@@ -460,7 +479,8 @@ namespace CrateModLoader
             {
                 if (!CDReader.Detect(isoStream))
                 {
-                    text_gameType.Text = "Unknown game ISO!";
+                    // Currently Gamecube ISO's end up here
+                    text_gameType.Text = "Invalid PS2/PSP ISO!";
                     return;
                 }
                 CDReader cd = new CDReader(isoStream, true);
@@ -640,9 +660,10 @@ namespace CrateModLoader
                     isoType = ConsoleMode.XBOX;
                     //TODO: figure out xbox checks
                 }
-                else if (cd.DirectoryExists("sys") && cd.FileExists(@"sys\boot.bin"))
+                else if (cd.DirectoryExists("systemdata") && cd.FileExists(@"systemdata\ISO.hdr"))
                 {
-                    fileStream = cd.OpenFile(@"sys\boot.bin", FileMode.Open);
+                    // CDReader can't detect Gamecube ISO's so GCR must be used instaed?
+                    fileStream = cd.OpenFile(@"systemdata\ISO.hdr", FileMode.Open);
                     using (StreamReader sr = new StreamReader(fileStream))
                     {
                         string input;
