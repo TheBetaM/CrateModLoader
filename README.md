@@ -2,7 +2,7 @@
 Randomizer and mod loader for various games. 
  
 It is not functional yet, it will only detect, extract and try to rebuild detected ISO files.  
-Currently is able to rebuild PS2 ISO's using ImgBurn.
+Currently is able to correctly rebuild PS2 ISO's using ImgBurn.
 
 Supports (or rather will support):
 - Crash Nitro Kart - All PS2, All GC
