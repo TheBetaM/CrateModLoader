@@ -196,11 +196,12 @@ namespace CrateModLoader
                 args += "/PORTABLE ";
                 args += "/NOSAVESETTINGS ";
 
-                ImgBurnProcess = Process.Start(AppDomain.CurrentDomain.BaseDirectory + "/Tools/ImgBurn.exe", args);
-                if (ImgBurnProcess.HasExited)
-                {
-                    // TODO: wait for imgburn to finish
-                }
+                ImgBurnProcess = new Process();
+                ImgBurnProcess.StartInfo.FileName = AppDomain.CurrentDomain.BaseDirectory + "/Tools/ImgBurn.exe";
+                ImgBurnProcess.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
+                ImgBurnProcess.StartInfo.Arguments = args;
+                ImgBurnProcess.Start();
+                ImgBurnProcess.WaitForExit();
             }
         }
 
