@@ -8,7 +8,7 @@ using System.Diagnostics;
 
 namespace CrateModLoader
 {
-    class Randomizer_CNK
+    class Modder_CNK
     {
         public void StartModProcess()
         {

@@ -164,9 +164,9 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(11, 12);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(158, 13);
+            this.label4.Size = new System.Drawing.Size(110, 13);
             this.label4.TabIndex = 10;
-            this.label4.Text = "Crate Mod Loader 0.5 by BetaM";
+            this.label4.Text = "Crate Mod Loader 0.5";
             this.label4.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // button3

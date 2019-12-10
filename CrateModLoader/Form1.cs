@@ -100,26 +100,14 @@ namespace CrateModLoader
             Program.RandoProgram.outputISOpath = textBox2.Text;
         }
 
-
-        public enum CTTR_Options
-        {
-            RandomizeHubs = 0,
-            RandomizeTracks = 1,
-            RandomizeMinigames = 2,
-            RandomizeMissions = 3,
-            AddUnusedCutscenes = 4,
-            PreventSequenceBreaks = 5,
-        }
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (Program.RandoProgram.targetGame == Randomizer.GameType.CTTR)
             {
-                Program.RandoProgram.CTTR_rand_hubs = checkedListBox1.GetItemChecked((int)CTTR_Options.RandomizeHubs);
-                Program.RandoProgram.CTTR_rand_tracks = checkedListBox1.GetItemChecked((int)CTTR_Options.RandomizeTracks);
-                Program.RandoProgram.CTTR_rand_minigames = checkedListBox1.GetItemChecked((int)CTTR_Options.RandomizeMinigames);
-                Program.RandoProgram.CTTR_rand_missions = checkedListBox1.GetItemChecked((int)CTTR_Options.RandomizeMissions);
-                Program.RandoProgram.CTTR_add_unused_cutscenes = checkedListBox1.GetItemChecked((int)CTTR_Options.AddUnusedCutscenes);
-                Program.RandoProgram.CTTR_add_sequence_break_checks = checkedListBox1.GetItemChecked((int)CTTR_Options.PreventSequenceBreaks);
+                for (int i = 0; i < checkedListBox1.Items.Count; i++)
+                {
+                    Program.RandoProgram.OptionChanged(i,checkedListBox1.GetItemChecked(i));
+                }
             }
             checkedListBox1.ClearSelected();
         }

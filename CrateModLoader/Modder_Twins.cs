@@ -8,7 +8,7 @@ using Twinsanity;
 
 namespace CrateModLoader
 {
-    class Randomizer_Twins
+    class Modder_Twins
     {
         public void StartModProcess()
         {

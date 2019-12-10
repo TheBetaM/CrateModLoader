@@ -14,7 +14,7 @@ Crash Twinsanity API by NeoKesha.
 Crash Tag Team Racing/Titans/Mind Over Mutant API by NeoKesha.
 Randomizers, mods and the Crate Mod Loader by BetaM.
 
-Copyright (C) 2019 BetaM
+License Information
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

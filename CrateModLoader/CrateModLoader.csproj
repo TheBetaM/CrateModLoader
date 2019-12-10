@@ -59,9 +59,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Randomizer_CNK.cs" />
-    <Compile Include="Randomizer_Twins.cs" />
-    <Compile Include="Randomizer_CTTR.cs" />
+    <Compile Include="Modder_CNK.cs" />
+    <Compile Include="Modder_Twins.cs" />
+    <Compile Include="Modder_CTTR.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
