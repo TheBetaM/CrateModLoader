@@ -187,8 +187,8 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.numericUpDown1.Location = new System.Drawing.Point(11, 194);
             this.numericUpDown1.Maximum = new decimal(new int[] {
-            1316134911,
-            2328,
+            2147483647,
+            0,
             0,
             0});
             this.numericUpDown1.Name = "numericUpDown1";
@@ -263,7 +263,7 @@
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Visible = false;
             // 
-            // Form1
+            // ModLoaderForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -289,7 +289,7 @@
             this.Controls.Add(this.checkedListBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(440, 280);
-            this.Name = "Form1";
+            this.Name = "ModLoaderForm";
             this.Text = "Crate Mod Loader";
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

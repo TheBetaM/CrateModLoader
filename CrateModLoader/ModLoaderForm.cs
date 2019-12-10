@@ -39,7 +39,7 @@ namespace CrateModLoader
             progressBar1.Step = 1;
 
             Random rand = new Random();
-            long Seed = rand.Next(0, int.MaxValue);
+            int Seed = rand.Next(0, int.MaxValue);
             numericUpDown1.Value = Seed;
             Program.ModProgram.randoSeed = Seed;
         }
@@ -73,13 +73,13 @@ namespace CrateModLoader
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
-            Program.ModProgram.randoSeed = long.Parse(numericUpDown1.Text);
+            Program.ModProgram.randoSeed = int.Parse(numericUpDown1.Text);
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
             Random rand = new Random();
-            long Seed = rand.Next(0,int.MaxValue);
+            int Seed = rand.Next(0,int.MaxValue);
             numericUpDown1.Value = Seed;
             Program.ModProgram.randoSeed = Seed;
         }
@@ -112,6 +112,13 @@ namespace CrateModLoader
                 for (int i = 0; i < checkedListBox1.Items.Count; i++)
                 {
                     Program.ModProgram.OptionChanged(i,checkedListBox1.GetItemChecked(i));
+                }
+            }
+            else if (Program.ModProgram.targetGame == ModLoader.GameType.Twins)
+            {
+                for (int i = 0; i < checkedListBox1.Items.Count; i++)
+                {
+                    Program.ModProgram.OptionChanged(i, checkedListBox1.GetItemChecked(i));
                 }
             }
             checkedListBox1.ClearSelected();

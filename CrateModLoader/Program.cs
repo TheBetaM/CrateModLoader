@@ -47,7 +47,7 @@ namespace CrateModLoader
 
     public class ModLoader
     {
-        public long randoSeed = 0;
+        public int randoSeed = 0;
         public Label processText;
         public ProgressBar progressBar;
         public Button startButton;
@@ -470,6 +470,10 @@ namespace CrateModLoader
             if (targetGame == GameType.CTTR)
             {
                 Program.ModCTTR.OptionChanged(option,value);
+            }
+            else if (targetGame == GameType.Twins)
+            {
+                Program.ModTwins.OptionChanged(option, value);
             }
         }
 
