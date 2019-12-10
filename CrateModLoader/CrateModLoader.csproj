@@ -59,15 +59,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Modder_CNK.cs" />
-    <Compile Include="Modder_Crash1.cs" />
-    <Compile Include="Modder_Crash2.cs" />
-    <Compile Include="Modder_Crash3.cs" />
-    <Compile Include="Modder_CTR.cs" />
-    <Compile Include="Modder_MoM.cs" />
-    <Compile Include="Modder_Titans.cs" />
-    <Compile Include="Modder_Twins.cs" />
-    <Compile Include="Modder_CTTR.cs" />
+    <Compile Include="GameSpecific\Modder_CNK.cs" />
+    <Compile Include="GameSpecific\Modder_Crash1.cs" />
+    <Compile Include="GameSpecific\Modder_Crash2.cs" />
+    <Compile Include="GameSpecific\Modder_Crash3.cs" />
+    <Compile Include="GameSpecific\Modder_CTR.cs" />
+    <Compile Include="GameSpecific\Modder_MoM.cs" />
+    <Compile Include="GameSpecific\Modder_Titans.cs" />
+    <Compile Include="GameSpecific\Modder_Twins.cs" />
+    <Compile Include="GameSpecific\Modder_CTTR.cs" />
     <Compile Include="ModLoaderForm.cs">
       <SubType>Form</SubType>
     </Compile>
