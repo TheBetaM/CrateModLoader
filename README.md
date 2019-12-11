@@ -5,7 +5,7 @@ It detects, extracts, modifies and rebuilds detected PS2 ISO files.
 Supports:
 - Crash Nitro Kart - All PS2 (GC Not yet implemented)
 - Crash Twinsanity - All PS2
-- Crash Tag Team Racing - NTSC-U/PAL PS2, All PSP, All GC - NOT YET IMPLEMENTED
+- Crash Tag Team Racing - NTSC-U/PAL PS2 (PSP and GC not yet implemented)
 - Crash of the Titans - All PS2, All PSP - NOT YET IMPLEMENTED
 - Crash Mind Over Mutant - All PS2, All PSP - NOT YET IMPLEMENTED
   
@@ -18,6 +18,9 @@ Features - Crash Twinsanity:
 - Randomize Crate Types (globally)
 
 Features - Crash Nitro Kart:
+- TBD
+
+Features - Crash Tag Team Racing:
 - TBD
 
 # Prerequisites
