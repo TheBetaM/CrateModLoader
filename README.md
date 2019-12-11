@@ -3,7 +3,7 @@ Randomizer and mod loader for various games.
 It detects, extracts, modifies and rebuilds detected PS2 ISO files.  
 
 Supports:
-- Crash Nitro Kart - All PS2, All GC - NOT YET IMPLEMENTED
+- Crash Nitro Kart - All PS2, All GC
 - Crash Twinsanity - All PS2
 - Crash Tag Team Racing - NTSC-U/PAL PS2, All PSP, All GC - NOT YET IMPLEMENTED
 - Crash of the Titans - All PS2, All PSP - NOT YET IMPLEMENTED
@@ -16,6 +16,9 @@ Randomizers, mods and the Crate Mod Loader by BetaM.
 
 Features - Crash Twinsanity:
 - Randomize Crate Types (globally)
+
+Features - Crash Nitro Kart:
+- TBD
 
 # Prerequisites
 
