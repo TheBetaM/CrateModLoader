@@ -37,22 +37,36 @@ namespace CrateModLoader
             Directory.CreateDirectory(path_extr);
             rcf_frontend.ExtractRCF(ref feedback, path_extr);
 
-            // Proof of concept mod TEMP
-            /*
-            string[] frontend_lines = File.ReadAllLines(path_extr + @"script\CreditsList.txt");
-            frontend_lines[3] = "false       \"Modded Titans\"                                               false           true    kforbes";
-            File.WriteAllLines(path_extr + @"script\CreditsList.txt", frontend_lines);
+            // Proof of concept mod increasing gameplay FOV in Episode 1
+            string[] frontend_lines = File.ReadAllLines(path_extr + @"levels\L1_E1\cameraoverrides.blua");
+            frontend_lines[6] = "cameraManager:SetCameraVolumeFOV( 0, 90.000000 )";
+            frontend_lines[11] = "cameraManager:SetCameraVolumeFOV( 2, 90.000000 )";
+            frontend_lines[14] = "cameraManager:SetCameraVolumeFOV( 3, 90.000000 )";
+            frontend_lines[68] = "cameraManager:SetCameraVolumeFOV( 78, 90.000000 )";
+            frontend_lines[71] = "cameraManager:SetCameraVolumeFOV( 79, 90.000000 )";
+            frontend_lines[73] = "cameraManager:SetCameraVolumeFOV( 80, 90.000000 )";
+            frontend_lines[76] = "cameraManager:SetCameraVolumeFOV( 81, 90.000000 )";
+            frontend_lines[79] = "cameraManager:SetCameraVolumeFOV( 82, 90.000000 )";
+            frontend_lines[81] = "cameraManager:SetCameraVolumeFOV( 83, 90.000000 )";
+            frontend_lines[83] = "cameraManager:SetCameraVolumeFOV( 84, 90.000000 )";
+            frontend_lines[85] = "cameraManager:SetCameraVolumeFOV( 85, 90.000000 )";
+            frontend_lines[87] = "cameraManager:SetCameraVolumeFOV( 86, 90.000000 )";
+            frontend_lines[89] = "cameraManager:SetCameraVolumeFOV( 87, 90.000000 )";
+            frontend_lines[91] = "cameraManager:SetCameraVolumeFOV( 88, 90.000000 )";
+            frontend_lines[94] = "cameraManager:SetCameraVolumeFOV( 89, 90.000000 )";
+            frontend_lines[97] = "cameraManager:SetCameraVolumeFOV( 90, 90.000000 )";
+            File.WriteAllLines(path_extr + @"levels\L1_E1\cameraoverrides.blua", frontend_lines);
 
             for (int i = 0; i < rcf_frontend.Header.T2File.Length; i++)
             {
-                if (rcf_frontend.Header.T2File[i].Name == @"script\CreditsList.txt")
+                if (rcf_frontend.Header.T2File[i].Name == @"levels\L1_E1\cameraoverrides.blua")
                 {
-                    rcf_frontend.Header.T2File[i].External = path_extr + @"script\CreditsList.txt";
+                    rcf_frontend.Header.T2File[i].External = path_extr + @"levels\L1_E1\cameraoverrides.blua";
                     //Console.WriteLine("external " + rcf_frontend.Header.T2File[i].External);
                     break;
                 }
             }
-            */
+            
 
             rcf_frontend.Recalculate();
             rcf_frontend.Pack(AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_frontend + "1", ref feedback);
@@ -79,6 +93,27 @@ namespace CrateModLoader
 
             //Fixes names for PS2
             File.Move(Program.ModProgram.extractedPath + path_RCF_frontend, Program.ModProgram.extractedPath + path_RCF_frontend + ";1");
+        }
+
+        int GetPositionBeforeMatch(byte[] data, byte[] pattern)
+        {
+            for (int i = 0; i < data.Length - pattern.Length; i++)
+            {
+                bool match = true;
+                for (int k = 0; k < pattern.Length; k++)
+                {
+                    if (data[i + k] != pattern[k])
+                    {
+                        match = false;
+                        break;
+                    }
+                }
+                if (match)
+                {
+                    return i - pattern.Length;
+                }
+            }
+            return -1;
         }
     }
 }
