@@ -1,4 +1,4 @@
-Crate Mod Loader 0.5
+Crate Mod Loader 1.0
 
 A game randomizer/mod suite for multiple Crash games.
 

@@ -14,14 +14,18 @@ namespace CrateModLoader
         public string gameName = "Twinsanity";
         public string apiCredit = "API by NeoKesha";
         public System.Drawing.Image gameIcon = Properties.Resources.icon_twins;
-        public string[] modOptions = { "Randomize Crate Types" };
+        public string[] modOptions = { "Randomize Crate Types", "Randomize Individual Crates", "Randomize Gem Types",  };
 
         public bool Twins_Randomize_CrateTypes = false;
+        public bool Twins_Randomize_AllCrates = false; // Not yet implemented
+        public bool Twins_Randomize_GemTypes = false;
         private string bdPath = "";
 
         public enum Twins_Options
         {
             RandomizeCrateTypes = 0,
+            RandomizeAllCrates = 1,
+            RandomizeGemTypes = 2,
         }
 
         public void OptionChanged(int option, bool value)
@@ -30,8 +34,71 @@ namespace CrateModLoader
             {
                 Twins_Randomize_CrateTypes = value;
             }
+            else if (option == (int)Twins_Options.RandomizeAllCrates)
+            {
+                Twins_Randomize_AllCrates = value;
+            }
+            else if (option == (int)Twins_Options.RandomizeGemTypes)
+            {
+                Twins_Randomize_GemTypes = value;
+            }
         }
 
+        public enum RM2_Sections
+        {
+            Graphics = 0,
+            Code = 1,
+            Unknown = 2,
+            GeoData = 3,
+            Instances1 = 4,
+            Instances2 = 5,
+            Instances3 = 6,
+            Instances4 = 7,
+            Instances5 = 8,
+            Instances6 = 9,
+            Instances7 = 10,
+            Instances8 = 11,
+        }
+        public enum RM2_Graphics_Sections
+        {
+            Textures = 0,
+            Materials = 1,
+            Models = 2,
+            GraphicsCompilations = 3,
+            RiggedModels = 4,
+            Unknown1 = 5,
+            GraphicsCompilationsExtra = 6,
+            Terrains = 7,
+            Unknown2 = 8,
+        }
+        public enum RM2_Code_Sections
+        {
+            GameObjects = 0,
+            Scripts = 1,
+            Animations = 2,
+            OGI = 3,
+            Unknown = 4,
+            SoundEffects = 5,
+            SoundEffectBank = 6,
+            VA_English = 7,
+            VA_French = 8,
+            VA_German = 9,
+            VA_Spanish = 10,
+            VA_Italian = 11,
+            Unknown2 = 12,
+        }
+        public enum RM2_Instance_Sections
+        {
+            Particles = 0,
+            Behaviors = 1,
+            Behaviors2 = 2,
+            Positions = 3,
+            Paths = 4,
+            SurfaceBehaviors = 5,
+            Instances = 6,
+            Triggers = 7,
+            Unknown = 8,
+        }
         public enum DefaultRM2_DefaultIDs
         {
             REDWUMPA = 1,
@@ -120,55 +187,84 @@ namespace CrateModLoader
 
             Random randState = new Random(Program.ModProgram.randoSeed);
 
-            if (Twins_Randomize_CrateTypes)
+            if (Twins_Randomize_CrateTypes || Twins_Randomize_GemTypes)
             {
                 RM2 mainArchive = new RM2();
                 mainArchive.LoadRM2(bdPath + "/Startup/Default.rm2");
 
                 List<uint> crateList = new List<uint>();
-                crateList.Add((uint)DefaultRM2_DefaultIDs.BASIC_CRATE);
-                crateList.Add((uint)DefaultRM2_DefaultIDs.TNT_CRATE);
-                crateList.Add((uint)DefaultRM2_DefaultIDs.NITRO_CRATE);
-                crateList.Add((uint)DefaultRM2_DefaultIDs.EXTRA_LIFE_CRATE);
-                crateList.Add((uint)DefaultRM2_DefaultIDs.WOODEN_SPRING_CRATE);
-                crateList.Add((uint)DefaultRM2_DefaultIDs.REINFORCED_WOODEN_CRATE);
-                crateList.Add((uint)DefaultRM2_DefaultIDs.AKU_AKU_CRATE);
-                crateList.Add((uint)DefaultRM2_DefaultIDs.EXTRA_LIFE_CRATE_CORTEX);
-                crateList.Add((uint)DefaultRM2_DefaultIDs.EXTRA_LIFE_CRATE_NINA);
-                crateList.Add((uint)DefaultRM2_DefaultIDs.IRON_CRATE);
-                crateList.Add((uint)DefaultRM2_DefaultIDs.IRON_SPRING_CRATE);
-                crateList.Add((uint)DefaultRM2_DefaultIDs.MULTIPLE_HIT_CRATE);
-                crateList.Add((uint)DefaultRM2_DefaultIDs.SURPRISE_CRATE);
-
                 List<int> posList = new List<int>();
-                posList.Add((int)DefaultRM2_DefaultPOSITION.BASIC_CRATE);
-                posList.Add((int)DefaultRM2_DefaultPOSITION.TNT_CRATE);
-                posList.Add((int)DefaultRM2_DefaultPOSITION.NITRO_CRATE);
-                posList.Add((int)DefaultRM2_DefaultPOSITION.EXTRA_LIFE_CRATE);
-                posList.Add((int)DefaultRM2_DefaultPOSITION.WOODEN_SPRING_CRATE);
-                posList.Add((int)DefaultRM2_DefaultPOSITION.REINFORCED_WOODEN_CRATE);
-                posList.Add((int)DefaultRM2_DefaultPOSITION.AKU_AKU_CRATE);
-                posList.Add((int)DefaultRM2_DefaultPOSITION.EXTRA_LIFE_CRATE_CORTEX);
-                posList.Add((int)DefaultRM2_DefaultPOSITION.EXTRA_LIFE_CRATE_NINA);
-                posList.Add((int)DefaultRM2_DefaultPOSITION.IRON_CRATE);
-                posList.Add((int)DefaultRM2_DefaultPOSITION.IRON_SPRING_CRATE);
-                posList.Add((int)DefaultRM2_DefaultPOSITION.MULTIPLE_HIT_CRATE);
-                posList.Add((int)DefaultRM2_DefaultPOSITION.SURPRISE_CRATE);
 
-                int target_item = 0;
-
-                while (posList.Count > 0)
+                if (Twins_Randomize_CrateTypes)
                 {
-                    target_item = randState.Next(0, crateList.Count);
-                    mainArchive.Item[1].Item[0].Item[posList[0]].ID = crateList[target_item];
-                    posList.RemoveAt(0);
-                    crateList.RemoveAt(target_item);
-                }
-                posList.Clear();
-                crateList.Clear();
+                    crateList.Add((uint)DefaultRM2_DefaultIDs.BASIC_CRATE);
+                    crateList.Add((uint)DefaultRM2_DefaultIDs.TNT_CRATE);
+                    crateList.Add((uint)DefaultRM2_DefaultIDs.NITRO_CRATE);
+                    crateList.Add((uint)DefaultRM2_DefaultIDs.EXTRA_LIFE_CRATE);
+                    crateList.Add((uint)DefaultRM2_DefaultIDs.WOODEN_SPRING_CRATE);
+                    crateList.Add((uint)DefaultRM2_DefaultIDs.REINFORCED_WOODEN_CRATE);
+                    crateList.Add((uint)DefaultRM2_DefaultIDs.AKU_AKU_CRATE);
+                    crateList.Add((uint)DefaultRM2_DefaultIDs.EXTRA_LIFE_CRATE_CORTEX);
+                    crateList.Add((uint)DefaultRM2_DefaultIDs.EXTRA_LIFE_CRATE_NINA);
+                    crateList.Add((uint)DefaultRM2_DefaultIDs.IRON_CRATE);
+                    crateList.Add((uint)DefaultRM2_DefaultIDs.IRON_SPRING_CRATE);
+                    crateList.Add((uint)DefaultRM2_DefaultIDs.MULTIPLE_HIT_CRATE);
+                    crateList.Add((uint)DefaultRM2_DefaultIDs.SURPRISE_CRATE);
 
-                //mainArchive.Item[1].Item[0].Item[3].ID = 5;
-                //mainArchive.Item[1].Item[0].Item[4].ID = 4;
+                    posList.Add((int)DefaultRM2_DefaultPOSITION.BASIC_CRATE);
+                    posList.Add((int)DefaultRM2_DefaultPOSITION.TNT_CRATE);
+                    posList.Add((int)DefaultRM2_DefaultPOSITION.NITRO_CRATE);
+                    posList.Add((int)DefaultRM2_DefaultPOSITION.EXTRA_LIFE_CRATE);
+                    posList.Add((int)DefaultRM2_DefaultPOSITION.WOODEN_SPRING_CRATE);
+                    posList.Add((int)DefaultRM2_DefaultPOSITION.REINFORCED_WOODEN_CRATE);
+                    posList.Add((int)DefaultRM2_DefaultPOSITION.AKU_AKU_CRATE);
+                    posList.Add((int)DefaultRM2_DefaultPOSITION.EXTRA_LIFE_CRATE_CORTEX);
+                    posList.Add((int)DefaultRM2_DefaultPOSITION.EXTRA_LIFE_CRATE_NINA);
+                    posList.Add((int)DefaultRM2_DefaultPOSITION.IRON_CRATE);
+                    posList.Add((int)DefaultRM2_DefaultPOSITION.IRON_SPRING_CRATE);
+                    posList.Add((int)DefaultRM2_DefaultPOSITION.MULTIPLE_HIT_CRATE);
+                    posList.Add((int)DefaultRM2_DefaultPOSITION.SURPRISE_CRATE);
+
+                    int target_item = 0;
+
+                    while (posList.Count > 0)
+                    {
+                        target_item = randState.Next(0, crateList.Count);
+                        mainArchive.Item[(int)RM2_Sections.Code].Item[(int)RM2_Code_Sections.GameObjects].Item[posList[0]].ID = crateList[target_item];
+                        posList.RemoveAt(0);
+                        crateList.RemoveAt(target_item);
+                    }
+                    posList.Clear();
+                    crateList.Clear();
+                }
+                if (Twins_Randomize_GemTypes)
+                {
+                    crateList.Add((uint)DefaultRM2_DefaultIDs.GEM_BLUE);
+                    crateList.Add((uint)DefaultRM2_DefaultIDs.GEM_CLEAR);
+                    crateList.Add((uint)DefaultRM2_DefaultIDs.GEM_GREEN);
+                    crateList.Add((uint)DefaultRM2_DefaultIDs.GEM_PURPLE);
+                    crateList.Add((uint)DefaultRM2_DefaultIDs.GEM_RED);
+                    crateList.Add((uint)DefaultRM2_DefaultIDs.GEM_YELLOW);
+
+                    posList.Add((int)DefaultRM2_DefaultPOSITION.GEM_BLUE);
+                    posList.Add((int)DefaultRM2_DefaultPOSITION.GEM_CLEAR);
+                    posList.Add((int)DefaultRM2_DefaultPOSITION.GEM_GREEN);
+                    posList.Add((int)DefaultRM2_DefaultPOSITION.GEM_PURPLE);
+                    posList.Add((int)DefaultRM2_DefaultPOSITION.GEM_RED);
+                    posList.Add((int)DefaultRM2_DefaultPOSITION.GEM_YELLOW);
+
+                    int target_item = 0;
+
+                    while (posList.Count > 0)
+                    {
+                        target_item = randState.Next(0, crateList.Count);
+                        mainArchive.Item[(int)RM2_Sections.Code].Item[(int)RM2_Code_Sections.GameObjects].Item[posList[0]].ID = crateList[target_item];
+                        posList.RemoveAt(0);
+                        crateList.RemoveAt(target_item);
+                    }
+                    posList.Clear();
+                    crateList.Clear();
+                }
 
                 mainArchive.Recalculate();
                 mainArchive.Save(bdPath + "/Startup/Default.rm2");

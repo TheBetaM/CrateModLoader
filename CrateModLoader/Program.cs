@@ -416,6 +416,14 @@ namespace CrateModLoader
             {
                 Program.ModTwins.StartModProcess();
             }
+            else if (targetGame == GameType.CTTR)
+            {
+                Program.ModCTTR.StartModProcess();
+            }
+            else if (targetGame == GameType.CNK)
+            {
+                Program.ModCNK.StartModProcess();
+            }
 
             ProgressProcess();
         }
@@ -474,6 +482,10 @@ namespace CrateModLoader
             else if (targetGame == GameType.Twins)
             {
                 Program.ModTwins.OptionChanged(option, value);
+            }
+            else if (targetGame == GameType.CNK)
+            {
+                Program.ModCNK.OptionChanged(option, value);
             }
         }
 

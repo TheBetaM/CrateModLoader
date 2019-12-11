@@ -77,13 +77,19 @@ namespace CrateModLoader
 
         public void StartModProcess()
         {
+            //TODO: Add renaming the rcf from ;1
+
             string feedbacktest = "";
             RCF newrcf = new RCF();
             newrcf.OpenRCF(""); // Path to target RCF
+
             object testItem = newrcf.ExtractItem(1, ""); // Extract if needed
             newrcf.Header.T2File[0].External = ""; // Path to external replacement
+
             newrcf.Recalculate(); //Maybe needs this?
             newrcf.Pack("", ref feedbacktest); // Pack the RCF
+
+            //TODO: Add renaming the rcf to ;1
         }
 
         public void OptionChanged(int option,bool value)

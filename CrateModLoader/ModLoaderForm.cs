@@ -121,6 +121,13 @@ namespace CrateModLoader
                     Program.ModProgram.OptionChanged(i, checkedListBox1.GetItemChecked(i));
                 }
             }
+            else if (Program.ModProgram.targetGame == ModLoader.GameType.CNK)
+            {
+                for (int i = 0; i < checkedListBox1.Items.Count; i++)
+                {
+                    Program.ModProgram.OptionChanged(i, checkedListBox1.GetItemChecked(i));
+                }
+            }
             checkedListBox1.ClearSelected();
         }
 
