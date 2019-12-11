@@ -424,6 +424,14 @@ namespace CrateModLoader
             {
                 Program.ModCNK.StartModProcess();
             }
+            else if (targetGame == GameType.Titans)
+            {
+                Program.ModTitans.StartModProcess();
+            }
+            else if (targetGame == GameType.MoM)
+            {
+                Program.ModMoM.StartModProcess();
+            }
 
             ProgressProcess();
         }
@@ -486,6 +494,14 @@ namespace CrateModLoader
             else if (targetGame == GameType.CNK)
             {
                 Program.ModCNK.OptionChanged(option, value);
+            }
+            else if (targetGame == GameType.Titans)
+            {
+                Program.ModTitans.OptionChanged(option, value);
+            }
+            else if (targetGame == GameType.MoM)
+            {
+                Program.ModMoM.OptionChanged(option, value);
             }
         }
 
