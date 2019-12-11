@@ -6,8 +6,8 @@ Supports:
 - Crash Nitro Kart - All PS2 (GC Not yet implemented)
 - Crash Twinsanity - All PS2
 - Crash Tag Team Racing - NTSC-U/PAL PS2 (PSP and GC not yet implemented)
-- Crash of the Titans - All PS2, All PSP - NOT YET IMPLEMENTED
-- Crash Mind Over Mutant - All PS2, All PSP - NOT YET IMPLEMENTED
+- Crash of the Titans - All PS2 (PSP and Wii not yet implemented)
+- Crash Mind Over Mutant - All PS2 (PSP and Wii not yet implemented)
   
 Crash Nitro Kart API by BetaM, ManDude and eezstreet.  
 Crash Twinsanity API by NeoKesha.  
@@ -21,6 +21,12 @@ Features - Crash Nitro Kart:
 - TBD
 
 Features - Crash Tag Team Racing:
+- TBD
+
+Features - Crash of the Titans:
+- TBD
+
+Features - Crash Mind Over Mutant:
 - TBD
 
 # Prerequisites
