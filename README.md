@@ -3,11 +3,11 @@ Randomizer and mod loader for various games.
 It detects, extracts, modifies and rebuilds detected PS2 ISO files.  
 
 Supports:
-- Crash Nitro Kart - All PS2 (GC Not yet implemented)
+- Crash Nitro Kart - All PS2 (GC not yet supported)
 - Crash Twinsanity - All PS2
-- Crash Tag Team Racing - NTSC-U/PAL PS2 (PSP and GC not yet implemented)
-- Crash of the Titans - All PS2 (PSP and Wii not yet implemented)
-- Crash Mind Over Mutant - All PS2 (PSP and Wii not yet implemented)
+- Crash Tag Team Racing - NTSC-U/PAL PS2 (PSP and GC not yet supported)
+- Crash of the Titans - All PS2 (PSP and Wii not yet supported)
+- Crash Mind Over Mutant - All PS2 (PSP and Wii not yet supported)
   
 Crash Nitro Kart API by BetaM, ManDude and eezstreet.  
 Crash Twinsanity API by NeoKesha.  
