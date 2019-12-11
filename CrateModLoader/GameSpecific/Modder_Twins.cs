@@ -174,17 +174,27 @@ namespace CrateModLoader
 
         public void StartModProcess()
         {
+            // Extract BD
             Directory.CreateDirectory(Program.ModProgram.extractedPath + "/cml_extr/");
             bdPath = Program.ModProgram.extractedPath + "/cml_extr/";
             BDArchive mainBD = new BDArchive();
+            // Fixes names for PS2
             File.Move(Program.ModProgram.extractedPath + "/CRASH6/CRASH.BD;1", Program.ModProgram.extractedPath + "/CRASH6/CRASH.BD");
             File.Move(Program.ModProgram.extractedPath + "/CRASH6/CRASH.BH;1", Program.ModProgram.extractedPath + "/CRASH6/CRASH.BH");
             //mainBD.LoadArchive(Program.ModProgram.extractedPath + "/CRASH6/", "CRASH.BD");
             mainBD.ExtractOnce(bdPath, Program.ModProgram.extractedPath + "/CRASH6/", "CRASH");
             //mainBD.Dispose();
+            // This takes up too much memory for some reason?? And Dispose() doesn't work for it.
+
             File.Delete(Program.ModProgram.extractedPath + "/CRASH6/CRASH.BD");
             File.Delete(Program.ModProgram.extractedPath + "/CRASH6/CRASH.BH");
 
+            ModProcess();
+        }
+
+        public void ModProcess()
+        {
+            //Start Modding
             Random randState = new Random(Program.ModProgram.randoSeed);
 
             if (Twins_Randomize_CrateTypes || Twins_Randomize_GemTypes)
@@ -270,12 +280,19 @@ namespace CrateModLoader
                 mainArchive.Save(bdPath + "/Startup/Default.rm2");
             }
 
-            mainBD = new BDArchive();
+            EndModProcess();
+        }
+
+        public void EndModProcess()
+        {
+            // Build BD
+            BDArchive mainBD = new BDArchive();
             mainBD.CreateTable(bdPath);
             mainBD.SaveTable(Program.ModProgram.extractedPath + "/CRASH6/", "CRASH");
             mainBD.SaveArchive(Program.ModProgram.extractedPath + "/CRASH6/", "CRASH");
             mainBD.Dispose();
 
+            // Get rid of extracted files
             if (Directory.Exists(bdPath))
             {
                 DirectoryInfo di = new DirectoryInfo(bdPath);
@@ -292,6 +309,7 @@ namespace CrateModLoader
                 Directory.Delete(bdPath);
             }
 
+            // Fixes names for PS2
             File.Move(Program.ModProgram.extractedPath + "/CRASH6/CRASH.BD", Program.ModProgram.extractedPath + "/CRASH6/CRASH.BD;1");
             File.Move(Program.ModProgram.extractedPath + "/CRASH6/CRASH.BH", Program.ModProgram.extractedPath + "/CRASH6/CRASH.BH;1");
         }

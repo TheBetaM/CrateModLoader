@@ -55,6 +55,9 @@
             // 
             // checkedListBox1
             // 
+            this.checkedListBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.checkedListBox1.BackColor = System.Drawing.SystemColors.Control;
             this.checkedListBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.checkedListBox1.CheckOnClick = true;
@@ -63,7 +66,7 @@
             "Nothing"});
             this.checkedListBox1.Location = new System.Drawing.Point(11, 243);
             this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(179, 90);
+            this.checkedListBox1.Size = new System.Drawing.Size(311, 0);
             this.checkedListBox1.TabIndex = 0;
             this.checkedListBox1.Visible = false;
             this.checkedListBox1.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged);
@@ -103,9 +106,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(8, 93);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(56, 13);
+            this.label1.Size = new System.Drawing.Size(63, 13);
             this.label1.TabIndex = 3;
-            this.label1.Text = "Game ISO";
+            this.label1.Text = "Game ROM";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // progressBar1
@@ -123,9 +126,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(8, 136);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(55, 13);
+            this.label2.Size = new System.Drawing.Size(64, 13);
             this.label2.TabIndex = 5;
-            this.label2.Text = "Output file";
+            this.label2.Text = "Output Path";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // textBox2
@@ -166,7 +169,7 @@
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(110, 13);
             this.label4.TabIndex = 10;
-            this.label4.Text = "Crate Mod Loader 0.5";
+            this.label4.Text = "Crate Mod Loader 1.0";
             this.label4.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // button3

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 using CTTR;
 //CTTR API by NeoKesha
 
@@ -73,23 +74,6 @@ namespace CrateModLoader
             RandomizeMissions = 3,
             AddUnusedCutscenes = 4,
             PreventSequenceBreaks = 5,
-        }
-
-        public void StartModProcess()
-        {
-            //TODO: Add renaming the rcf from ;1
-
-            string feedbacktest = "";
-            RCF newrcf = new RCF();
-            newrcf.OpenRCF(""); // Path to target RCF
-
-            object testItem = newrcf.ExtractItem(1, ""); // Extract if needed
-            newrcf.Header.T2File[0].External = ""; // Path to external replacement
-
-            newrcf.Recalculate(); //Maybe needs this?
-            newrcf.Pack("", ref feedbacktest); // Pack the RCF
-
-            //TODO: Add renaming the rcf to ;1
         }
 
         public void OptionChanged(int option,bool value)
@@ -225,6 +209,62 @@ namespace CrateModLoader
                 path_RCF_onfoot6 = @"root\onfoot\onfoot6.rcf";
                 path_RCF_onfoot7 = @"root\onfoot\onfoot7.rcf";
             }
+        }
+
+        public void StartModProcess()
+        {
+            //Fixes names for PS2
+            File.Move(Program.ModProgram.extractedPath + path_RCF_frontend + ";1", Program.ModProgram.extractedPath + path_RCF_frontend);
+
+            //Warning: The CTTR API only likes paths with \ backslashes
+            string feedback = "";
+            string path_extr = "";
+            RCF rcf_frontend = new RCF();
+            rcf_frontend.OpenRCF(AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_frontend);
+            path_extr = AppDomain.CurrentDomain.BaseDirectory + @"temp\cml_extr\";
+            Directory.CreateDirectory(path_extr);
+            rcf_frontend.ExtractRCF(ref feedback, path_extr);
+
+            // Proof of concept mod replacing attract movie with first gem cutscene
+            string[] frontend_lines = File.ReadAllLines(path_extr + @"design\levels\common\frontend.god");
+            frontend_lines[64] = "PlayMovie(\"art/fmv/wny_midway_statue\",\"any\",\"any\",true)";
+            File.WriteAllLines(path_extr + @"design\levels\common\frontend.god", frontend_lines);
+
+            for (int i = 0; i < rcf_frontend.Header.T2File.Length; i++)
+            {
+                if (rcf_frontend.Header.T2File[i].Name == @"design\levels\common\frontend.god")
+                {
+                    rcf_frontend.Header.T2File[i].External = path_extr + @"design\levels\common\frontend.god";
+                    //Console.WriteLine("external " + rcf_frontend.Header.T2File[i].External);
+                    break;
+                }
+            }
+
+            rcf_frontend.Recalculate();
+            rcf_frontend.Pack(AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_frontend + "1", ref feedback);
+
+            // Extraction cleanup
+            File.Delete(AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_frontend);
+            File.Move(AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_frontend + "1", AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_frontend);
+            if (Directory.Exists(path_extr))
+            {
+                DirectoryInfo di = new DirectoryInfo(path_extr);
+
+                foreach (FileInfo file in di.EnumerateFiles())
+                {
+                    file.Delete();
+                }
+                foreach (DirectoryInfo dir in di.EnumerateDirectories())
+                {
+                    dir.Delete(true);
+                }
+
+                Directory.Delete(path_extr);
+            }
+            
+
+            //Fixes names for PS2
+            File.Move(Program.ModProgram.extractedPath + path_RCF_frontend, Program.ModProgram.extractedPath + path_RCF_frontend + ";1");
         }
     }
 }

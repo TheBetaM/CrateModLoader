@@ -14,14 +14,26 @@ namespace CrateModLoader
         public string gameName = "CNK";
         public string apiCredit = "Tools/API by BetaM, ManDude and eezstreet";
         public System.Drawing.Image gameIcon = Properties.Resources.icon_cnk;
-        public string[] modOptions = { "No options available" };
+        public string[] modOptions = { "Randomize Adventure Hub Warp Pads", "Randomize Character Stats", "Randomize Kart Stats", "Randomize AI Kart Stats", "Randomize Wumpa Crate", "Disable Fadeout Overlay", "Speed Up Mask Hints" };
 
         public bool Randomize_Hub_Pads = false;
+        public bool Randomize_Character_Stats = false;
+        public bool Randomize_Kart_Stats = false;
+        public bool Randomize_AI_Kart_Stats = false;
+        public bool Randomize_Wumpa_Crate = false;
+        public bool Mod_SpeedUp_Mask_Hints = false;
+        public bool Mod_Disable_Fadeout = false;
         private string path_gob_extracted = "";
 
         public enum CNK_Options
         {
             RandomizeHubPads = 0,
+            RandomizeCharacterStats = 1,
+            RandomizeKartStats = 2,
+            RandomizeAIKartStats = 3,
+            RandomizeWumpaCrate = 4,
+            DisableFadeout = 5,
+            SpeedUpMaskHints = 6,
         }
 
         public void OptionChanged(int option, bool value)
@@ -30,14 +42,39 @@ namespace CrateModLoader
             {
                 Randomize_Hub_Pads = value;
             }
+            else if (option == (int)CNK_Options.RandomizeCharacterStats)
+            {
+                Randomize_Character_Stats = value;
+            }
+            else if (option == (int)CNK_Options.DisableFadeout)
+            {
+                Mod_Disable_Fadeout = value;
+            }
+            else if (option == (int)CNK_Options.RandomizeKartStats)
+            {
+                Randomize_Kart_Stats = value;   
+            }
+            else if (option == (int)CNK_Options.RandomizeAIKartStats)
+            {
+                Randomize_AI_Kart_Stats = value;
+            }
+            else if (option == (int)CNK_Options.RandomizeWumpaCrate)
+            {
+                Randomize_Wumpa_Crate = value;
+            }
+            else if (option == (int)CNK_Options.SpeedUpMaskHints)
+            {
+                Mod_SpeedUp_Mask_Hints = value;
+            }
         }
 
         public void StartModProcess()
         {
-            // Fix for PS2 names, and moving the archive for convenience
+            // Fixes names for PS2, and moves the archive for convenience
             File.Move(Program.ModProgram.extractedPath + "/ASSETS.GFC;1", AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GFC");
             File.Move(Program.ModProgram.extractedPath + "/ASSETS.GOB;1", AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GOB");
 
+            // Extract GOB
             Process GobExtract = new Process();
             GobExtract.StartInfo.FileName = AppDomain.CurrentDomain.BaseDirectory + "/Tools/gobextract_in.exe";
             GobExtract.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
@@ -48,7 +85,6 @@ namespace CrateModLoader
 
             File.Delete(AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GFC");
             File.Delete(AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GOB");
-
 
             ModProcess();
         }
@@ -65,6 +101,7 @@ namespace CrateModLoader
 
         public void EndModProcess()
         {
+            // Build GOB
             Process GobExtract = new Process();
             GobExtract.StartInfo.FileName = AppDomain.CurrentDomain.BaseDirectory + "/Tools/gobextract_out.exe";
             GobExtract.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
@@ -72,10 +109,11 @@ namespace CrateModLoader
             GobExtract.Start();
             GobExtract.WaitForExit();
 
-            // Fix for PS2 names, and moving the archive for convenience
+            // Fixes names for PS2, and moves the archive for convenience
             File.Move(AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GFC", Program.ModProgram.extractedPath + "/ASSETS.GFC;1");
             File.Move(AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GOB", Program.ModProgram.extractedPath + "/ASSETS.GOB;1");
             
+            // Extraction cleanup
             if (Directory.Exists(path_gob_extracted))
             {
                 DirectoryInfo di = new DirectoryInfo(path_gob_extracted);
