@@ -37,6 +37,9 @@
     <ApplicationIcon>rando_icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Crash">
+      <HintPath>.\Crash.dll</HintPath>
+    </Reference>
     <Reference Include="CTTR">
       <HintPath>.\CTTR.dll</HintPath>
     </Reference>
