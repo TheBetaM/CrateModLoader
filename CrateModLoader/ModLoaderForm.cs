@@ -66,11 +66,6 @@ namespace CrateModLoader
             saveFileDialog1.ShowDialog();
         }
 
-        private void progressBar1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
             Program.ModProgram.randoSeed = int.Parse(numericUpDown1.Text);
