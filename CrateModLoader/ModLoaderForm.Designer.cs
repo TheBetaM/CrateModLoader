@@ -239,7 +239,7 @@
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(250, 13);
             this.label7.TabIndex = 17;
-            this.label7.Text = "Ver y long title of a Game detected!";
+            this.label7.Text = "Crash Game That Has a Long Title detected!";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // checkBox1
