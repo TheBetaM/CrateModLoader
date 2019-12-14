@@ -684,13 +684,13 @@ namespace CrateModLoader
                         }
                         else if (titleID == @"BOOT = cdrom:\SCUS_949.00;1")
                         {
-                            SetGameType(ConsoleMode.PS1, GameType.Crash1, RegionType.PAL);
+                            SetGameType(ConsoleMode.PS1, GameType.Crash1, RegionType.NTSC_U);
                             PS2_executable_name = "SCUS_949.00";
                             PS2_game_code_name = "SCUS_94900";
                         }
                         else if (titleID == @"BOOT = cdrom:\SCES_003.44;1")
                         {
-                            SetGameType(ConsoleMode.PS1, GameType.Crash1, RegionType.NTSC_U);
+                            SetGameType(ConsoleMode.PS1, GameType.Crash1, RegionType.PAL);
                             PS2_executable_name = "SCES_003.44";
                             PS2_game_code_name = "SCES_00344";
                         }
@@ -702,13 +702,13 @@ namespace CrateModLoader
                         }
                         else if (titleID == @"BOOT = cdrom:\SCUS_941.54;1")
                         {
-                            SetGameType(ConsoleMode.PS1, GameType.Crash2, RegionType.PAL);
+                            SetGameType(ConsoleMode.PS1, GameType.Crash2, RegionType.NTSC_U);
                             PS2_executable_name = "SCUS_94154";
                             PS2_game_code_name = "SCUS_94154";
                         }
                         else if (titleID == @"BOOT = cdrom:\SCES_009.67;1")
                         {
-                            SetGameType(ConsoleMode.PS1, GameType.Crash2, RegionType.NTSC_U);
+                            SetGameType(ConsoleMode.PS1, GameType.Crash2, RegionType.PAL);
                             PS2_executable_name = "SCES_009.67";
                             PS2_game_code_name = "SCES_00967";
                         }
