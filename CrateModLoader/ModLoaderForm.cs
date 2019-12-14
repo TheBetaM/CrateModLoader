@@ -115,6 +115,7 @@ namespace CrateModLoader
                 case ModLoader.GameType.Titans:
                 case ModLoader.GameType.MoM:
                 case ModLoader.GameType.Crash1:
+                case ModLoader.GameType.Crash2:
                     for (int i = 0; i < checkedListBox1.Items.Count; i++)
                     {
                         Program.ModProgram.OptionChanged(i, checkedListBox1.GetItemChecked(i));

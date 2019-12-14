@@ -268,7 +268,18 @@ namespace CrateModLoader
         {
             using (FileStream isoStream = File.Open(inputISOpath,FileMode.Open))
             {
-                CDReader cd = new CDReader(isoStream, true);
+                CDReader cd;
+                FileStream tempbin = null;
+                if (Path.GetExtension(inputISOpath).ToLower() == ".bin") // PS1 image
+                {
+                    FileStream binconvout = new FileStream(AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso", FileMode.Create, FileAccess.Write);
+                    PSX2ISO.Run(isoStream, binconvout);
+                    binconvout.Close();
+                    tempbin = new FileStream(AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso", FileMode.Open, FileAccess.Read);
+                    cd = new CDReader(tempbin, true);
+                }
+                else
+                    cd = new CDReader(isoStream, true);
                 ISO_label = cd.VolumeLabel;
 
                 /* TODO
@@ -301,7 +312,9 @@ namespace CrateModLoader
                             foreach (string file in cd.GetFiles(directory))
                             {
                                 fileStreamFrom = cd.OpenFile(file, FileMode.Open);
-                                fileStreamTo = File.Open(extractedPath + "/" + file, FileMode.OpenOrCreate);
+                                string filename = extractedPath + "/" + file;
+                                filename = filename.Replace(";1", string.Empty);
+                                fileStreamTo = File.Open(filename, FileMode.OpenOrCreate);
                                 fileStreamFrom.CopyTo(fileStreamTo);
                                 fileStreamFrom.Close();
                                 fileStreamTo.Close();
@@ -318,7 +331,9 @@ namespace CrateModLoader
                     foreach (string file in cd.GetFiles(""))
                     {
                         fileStreamFrom = cd.OpenFile(file, FileMode.Open);
-                        fileStreamTo = File.Open(extractedPath + "/" + file, FileMode.OpenOrCreate);
+                        string filename = extractedPath + "/" + file;
+                        filename = filename.Replace(";1", string.Empty);
+                        fileStreamTo = File.Open(filename, FileMode.OpenOrCreate);
                         fileStreamFrom.CopyTo(fileStreamTo);
                         fileStreamFrom.Close();
                         fileStreamTo.Close();
@@ -326,6 +341,12 @@ namespace CrateModLoader
                 }
 
                 cd.Dispose();
+
+                if (tempbin != null)
+                {
+                    tempbin.Dispose();
+                    File.Delete(AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso");
+                }
             }
 
             ProgressProcess();
@@ -448,6 +469,9 @@ namespace CrateModLoader
                 case GameType.Crash1:
                     Program.ModCrash1.StartModProcess();
                     break;
+                case GameType.Crash2:
+                    Program.ModCrash2.StartModProcess();
+                    break;
             }
 
             ProgressProcess();
@@ -455,7 +479,6 @@ namespace CrateModLoader
 
         public void FinishISO()
         {
-
             CreateISO();
 
             // TODO: delete temp files
@@ -524,6 +547,10 @@ namespace CrateModLoader
             {
                 Program.ModCrash1.OptionChanged(option, value);
             }
+            else if (targetGame == GameType.Crash2)
+            {
+                Program.ModCrash2.OptionChanged(option, value);
+            }
         }
 
         public void CheckISO()
@@ -531,13 +558,14 @@ namespace CrateModLoader
             using (FileStream isoStream = File.Open(inputISOpath, FileMode.Open))
             {
                 CDReader cd;
-                FileInfo isoInfo = new FileInfo(inputISOpath);
-                if (isoInfo.Extension.ToLower() == ".bin") // PS1 image
+                FileStream tempbin = null;
+                if (Path.GetExtension(inputISOpath).ToLower() == ".bin") // PS1 image
                 {
-                    inputISOpath = AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso";
-                    FileStream binconvout = new FileStream(inputISOpath, FileMode.Create, FileAccess.ReadWrite); // this file must NOT be deleted by the user, and keeping it in memory is dumb, so... Pray.
+                    FileStream binconvout = new FileStream(AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso", FileMode.Create, FileAccess.Write);
                     PSX2ISO.Run(isoStream, binconvout);
-                    cd = new CDReader(binconvout, true);
+                    binconvout.Close();
+                    tempbin = new FileStream(AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso", FileMode.Open, FileAccess.Read);
+                    cd = new CDReader(tempbin, true);
                 }
                 else if (!CDReader.Detect(isoStream))
                 {
@@ -654,11 +682,41 @@ namespace CrateModLoader
                             PS2_executable_name = "SLPM_740.03";
                             PS2_game_code_name = "SLPM_74003";
                         }
-                        else if (titleID == @"BOOT = cdrom:\SCES_003.44;1")
+                        else if (titleID == @"BOOT = cdrom:\SCUS_949.00;1")
                         {
                             SetGameType(ConsoleMode.PS1, GameType.Crash1, RegionType.PAL);
+                            PS2_executable_name = "SCUS_949.00";
+                            PS2_game_code_name = "SCUS_94900";
+                        }
+                        else if (titleID == @"BOOT = cdrom:\SCES_003.44;1")
+                        {
+                            SetGameType(ConsoleMode.PS1, GameType.Crash1, RegionType.NTSC_U);
                             PS2_executable_name = "SCES_003.44";
                             PS2_game_code_name = "SCES_00344";
+                        }
+                        else if (titleID == @"BOOT = cdrom:\SCPS_100.31;1")
+                        {
+                            SetGameType(ConsoleMode.PS1, GameType.Crash1, RegionType.NTSC_J);
+                            PS2_executable_name = "SCPS_100.31";
+                            PS2_game_code_name = "SCPS_10031";
+                        }
+                        else if (titleID == @"BOOT = cdrom:\SCUS_941.54;1")
+                        {
+                            SetGameType(ConsoleMode.PS1, GameType.Crash2, RegionType.PAL);
+                            PS2_executable_name = "SCUS_94154";
+                            PS2_game_code_name = "SCUS_94154";
+                        }
+                        else if (titleID == @"BOOT = cdrom:\SCES_009.67;1")
+                        {
+                            SetGameType(ConsoleMode.PS1, GameType.Crash2, RegionType.NTSC_U);
+                            PS2_executable_name = "SCES_009.67";
+                            PS2_game_code_name = "SCES_00967";
+                        }
+                        else if (titleID == @"BOOT = cdrom:\SCPS_100.47;1")
+                        {
+                            SetGameType(ConsoleMode.PS1, GameType.Crash2, RegionType.NTSC_J);
+                            PS2_executable_name = "SCPS_100.47";
+                            PS2_game_code_name = "SCPS_10047";
                         }
                         else
                         {
@@ -813,8 +871,14 @@ namespace CrateModLoader
                     startButton.Enabled = false;
                     processText.Text = "Waiting for output path...";
                 }
-
+                
                 cd.Dispose();
+
+                if (tempbin != null)
+                {
+                    tempbin.Dispose();
+                    File.Delete(AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso");
+                }
             }
         }
 
