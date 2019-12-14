@@ -52,7 +52,12 @@ namespace CrateModLoader
             openFileDialog1.RestoreDirectory = true;
             openFileDialog1.FileName = "";
 
-            openFileDialog1.ShowDialog();
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                Program.ModProgram.inputISOpath = openFileDialog1.FileName;
+                Program.ModProgram.CheckISO();
+                textBox1.Text = Program.ModProgram.inputISOpath;
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -117,13 +122,6 @@ namespace CrateModLoader
                     break;
             }
             checkedListBox1.ClearSelected();
-        }
-
-        private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
-        {
-            Program.ModProgram.inputISOpath = openFileDialog1.FileName;
-            textBox1.Text = Program.ModProgram.inputISOpath;
-            Program.ModProgram.CheckISO();
         }
 
         private void button3_Click(object sender, EventArgs e)
