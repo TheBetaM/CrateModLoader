@@ -2,8 +2,11 @@
 
 namespace CrateModLoader
 {
-    sealed class Modder_Crash2 : Modder_OrigTrilogy
+    sealed class Modder_Crash2
     {
+        public string gameName = "Crash 2";
+        public string apiCredit = "API by chekwob and ManDude";
+        public System.Drawing.Image gameIcon = null;
         public new string[] modOptions = { "No options available" };
     }
 }
