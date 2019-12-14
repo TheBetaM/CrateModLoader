@@ -80,6 +80,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PSX2ISO.cs" />
     <EmbeddedResource Include="ModLoaderForm.resx">
       <DependentUpon>ModLoaderForm.cs</DependentUpon>
     </EmbeddedResource>

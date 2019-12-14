@@ -47,7 +47,7 @@ namespace CrateModLoader
         private void button1_Click(object sender, EventArgs e)
         {
             openFileDialog1.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            openFileDialog1.Filter = "PS2/PSP ISO (*.iso)|*.iso|GC ISO (*.iso)|*.iso|All files (*.*)|*.*";
+            openFileDialog1.Filter = "PS2/PSP ISO (*.iso)|*.iso|GC ISO (*.iso)|*.iso|PSX BIN (*.bin)|*.bin|All files (*.*)|*.*";
             openFileDialog1.FilterIndex = 0;
             openFileDialog1.RestoreDirectory = true;
             openFileDialog1.FileName = "";
@@ -102,40 +102,19 @@ namespace CrateModLoader
 
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (Program.ModProgram.targetGame == ModLoader.GameType.CTTR)
+            switch (Program.ModProgram.targetGame)
             {
-                for (int i = 0; i < checkedListBox1.Items.Count; i++)
-                {
-                    Program.ModProgram.OptionChanged(i,checkedListBox1.GetItemChecked(i));
-                }
-            }
-            else if (Program.ModProgram.targetGame == ModLoader.GameType.Twins)
-            {
-                for (int i = 0; i < checkedListBox1.Items.Count; i++)
-                {
-                    Program.ModProgram.OptionChanged(i, checkedListBox1.GetItemChecked(i));
-                }
-            }
-            else if (Program.ModProgram.targetGame == ModLoader.GameType.CNK)
-            {
-                for (int i = 0; i < checkedListBox1.Items.Count; i++)
-                {
-                    Program.ModProgram.OptionChanged(i, checkedListBox1.GetItemChecked(i));
-                }
-            }
-            else if (Program.ModProgram.targetGame == ModLoader.GameType.Titans)
-            {
-                for (int i = 0; i < checkedListBox1.Items.Count; i++)
-                {
-                    Program.ModProgram.OptionChanged(i, checkedListBox1.GetItemChecked(i));
-                }
-            }
-            else if (Program.ModProgram.targetGame == ModLoader.GameType.MoM)
-            {
-                for (int i = 0; i < checkedListBox1.Items.Count; i++)
-                {
-                    Program.ModProgram.OptionChanged(i, checkedListBox1.GetItemChecked(i));
-                }
+                case ModLoader.GameType.CTTR:
+                case ModLoader.GameType.Twins:
+                case ModLoader.GameType.CNK:
+                case ModLoader.GameType.Titans:
+                case ModLoader.GameType.MoM:
+                case ModLoader.GameType.Crash1:
+                    for (int i = 0; i < checkedListBox1.Items.Count; i++)
+                    {
+                        Program.ModProgram.OptionChanged(i, checkedListBox1.GetItemChecked(i));
+                    }
+                    break;
             }
             checkedListBox1.ClearSelected();
         }

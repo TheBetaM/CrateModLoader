@@ -25,7 +25,6 @@ namespace CrateModLoader
         public static Modder_Crash1 ModCrash1;
         public static Modder_Crash2 ModCrash2;
         public static Modder_Crash3 ModCrash3;
-        public static Modder_OrigTrilogy ModOGTrilogy;
 
         [STAThread]
         static void Main()
@@ -40,7 +39,6 @@ namespace CrateModLoader
             ModCrash1 = new Modder_Crash1();
             ModCrash2 = new Modder_Crash2();
             ModCrash3 = new Modder_Crash3();
-            ModOGTrilogy = new Modder_OrigTrilogy();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new ModLoaderForm());
@@ -108,7 +106,7 @@ namespace CrateModLoader
             Crash3 = 7,
             CTR = 8,
             TWOC = 9,
-            Bash = 10,
+            Bash = 10
         }
         public enum RegionType
         {
@@ -359,8 +357,8 @@ namespace CrateModLoader
                 processProgress = 0;
                 progressBar.Value = progressBar.Minimum;
 
-                processTimer.Tick += new EventHandler(DelayedProcessStart);
-                processTimer.Interval = 1000;
+                processTimer.Tick += new EventHandler(DelayedProcessStart); // FIXME : change to a background worker instead of a timer
+                processTimer.Interval = 500;
                 processTimer.Start();
             }
             else if (processProgress > 0)
@@ -413,26 +411,26 @@ namespace CrateModLoader
 
         public void EditGameContent()
         {
-            
-            if (targetGame == GameType.Twins)
+            switch (targetGame)
             {
-                Program.ModTwins.StartModProcess();
-            }
-            else if (targetGame == GameType.CTTR)
-            {
-                Program.ModCTTR.StartModProcess();
-            }
-            else if (targetGame == GameType.CNK)
-            {
-                Program.ModCNK.StartModProcess();
-            }
-            else if (targetGame == GameType.Titans)
-            {
-                Program.ModTitans.StartModProcess();
-            }
-            else if (targetGame == GameType.MoM)
-            {
-                Program.ModMoM.StartModProcess();
+                case GameType.Twins:
+                    Program.ModTwins.StartModProcess();
+                    break;
+                case GameType.CTTR:
+                    Program.ModCTTR.StartModProcess();
+                    break;
+                case GameType.CNK:
+                    Program.ModCNK.StartModProcess();
+                    break;
+                case GameType.Titans:
+                    Program.ModTitans.StartModProcess();
+                    break;
+                case GameType.MoM:
+                    Program.ModMoM.StartModProcess();
+                    break;
+                case GameType.Crash1:
+                    Program.ModCrash1.StartModProcess();
+                    break;
             }
 
             ProgressProcess();
@@ -505,19 +503,33 @@ namespace CrateModLoader
             {
                 Program.ModMoM.OptionChanged(option, value);
             }
+            else if (targetGame == GameType.Crash1)
+            {
+                Program.ModCrash1.OptionChanged(option, value);
+            }
         }
 
         public void CheckISO()
         {
             using (FileStream isoStream = File.Open(inputISOpath, FileMode.Open))
             {
-                if (!CDReader.Detect(isoStream))
+                CDReader cd;
+                FileInfo isoInfo = new FileInfo(inputISOpath);
+                if (isoInfo.Extension.ToLower() == ".bin") // PS1 image
+                {
+                    inputISOpath = AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso";
+                    FileStream binconvout = new FileStream(inputISOpath, FileMode.Create, FileAccess.ReadWrite); // this file must NOT be deleted by the user, and keeping it in memory is dumb, so... Pray.
+                    PSX2ISO.Run(isoStream, binconvout);
+                    cd = new CDReader(binconvout, true);
+                }
+                else if (!CDReader.Detect(isoStream))
                 {
                     // Currently Gamecube ISO's end up here
                     text_gameType.Text = "Invalid PS2/PSP ISO!";
                     return;
                 }
-                CDReader cd = new CDReader(isoStream, true);
+                else
+                    cd = new CDReader(isoStream, true);
                 Stream fileStream;
                 bool foundMetaData = false;
                 if (cd.FileExists(@"SYSTEM.CNF"))
@@ -624,6 +636,12 @@ namespace CrateModLoader
                             SetGameType(ConsoleMode.PS2, GameType.TWOC, RegionType.NTSC_J);
                             PS2_executable_name = "SLPM_740.03";
                             PS2_game_code_name = "SLPM_74003";
+                        }
+                        else if (titleID == @"BOOT = cdrom:\SCES_003.44;1")
+                        {
+                            SetGameType(ConsoleMode.PS1, GameType.Crash1, RegionType.PAL);
+                            PS2_executable_name = "SCES_003.44";
+                            PS2_game_code_name = "SCES_00344";
                         }
                         else
                         {
