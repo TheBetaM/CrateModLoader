@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameSpecific\Modder_CNK.cs" />
+    <Compile Include="GameSpecific\Modder_OrigTrilogy.cs" />
     <Compile Include="GameSpecific\Modder_Crash1.cs" />
     <Compile Include="GameSpecific\Modder_Crash2.cs" />
     <Compile Include="GameSpecific\Modder_Crash3.cs" />
