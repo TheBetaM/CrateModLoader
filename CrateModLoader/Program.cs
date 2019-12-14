@@ -25,6 +25,7 @@ namespace CrateModLoader
         public static Modder_Crash1 ModCrash1;
         public static Modder_Crash2 ModCrash2;
         public static Modder_Crash3 ModCrash3;
+        public static Modder_OrigTrilogy ModOGTrilogy;
 
         [STAThread]
         static void Main()
@@ -39,6 +40,7 @@ namespace CrateModLoader
             ModCrash1 = new Modder_Crash1();
             ModCrash2 = new Modder_Crash2();
             ModCrash3 = new Modder_Crash3();
+            ModOGTrilogy = new Modder_OrigTrilogy();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new ModLoaderForm());
