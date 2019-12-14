@@ -122,18 +122,17 @@ namespace CrateModLoader
             {
                 //Use ImgBurn
                 DirectoryInfo di = new DirectoryInfo(extractedPath);
-                // fix for ;1 version strings at the end of filenames
                 foreach (DirectoryInfo dir in di.EnumerateDirectories())
                 {
                     foreach (FileInfo file in dir.EnumerateFiles())
                     {
-                        file.MoveTo(file.FullName.Substring(0, file.FullName.Length - 2));
+                        file.MoveTo(file.FullName);
                     }
                     Recursive_RenameFiles(dir);
                 }
                 foreach (FileInfo file in di.EnumerateFiles())
                 {
-                    file.MoveTo(file.FullName.Substring(0, file.FullName.Length - 2));
+                    file.MoveTo(file.FullName);
                 }
 
                 string args = "";
@@ -199,24 +198,34 @@ namespace CrateModLoader
                 isoBuild.VolumeIdentifier = ISO_label;
 
                 DirectoryInfo di = new DirectoryInfo(extractedPath);
-                string stackedName = "";
+                HashSet<FileStream> files = new HashSet<FileStream>();
 
-                foreach (DirectoryInfo dir in di.EnumerateDirectories())
+                foreach (DirectoryInfo dir in di.GetDirectories())
                 {
-                    stackedName = dir.Name + @"\";
-                    isoBuild.AddDirectory(dir.Name);
-                    foreach (FileInfo file in dir.EnumerateFiles())
+                    Recursive_AddDirs(isoBuild, dir, dir.Name + @"\", files);
+                }
+                foreach (FileInfo file in di.GetFiles())
+                {
+                    AddFile(isoBuild, file, string.Empty, files);
+                }
+
+                if (isoType == ConsoleMode.PS1)
+                {
+                    using (FileStream output = new FileStream(outputISOpath, FileMode.Create, FileAccess.Write))
+                    using (Stream input = isoBuild.Build())
                     {
-                        isoBuild.AddFile(stackedName + file.Name, file.Open(FileMode.Open));
+                        ISO2PSX.Run(input, output);
                     }
-                    Recursive_AddDirs(ref isoBuild, dir, stackedName);
                 }
-                foreach (FileInfo file in di.EnumerateFiles())
+                else
                 {
-                    isoBuild.AddFile(file.Name, file.Open(FileMode.Open));
+                    isoBuild.Build(outputISOpath);
                 }
 
-                isoBuild.Build(outputISOpath);
+                foreach (FileStream file in files)
+                {
+                    file.Close();
+                }
             }
         }
 
@@ -232,19 +241,27 @@ namespace CrateModLoader
             }
         }
 
-        void Recursive_AddDirs(ref CDBuilder isoBuild, DirectoryInfo di, string sName)
+        void Recursive_AddDirs(CDBuilder isoBuild, DirectoryInfo di, string sName, HashSet<FileStream> files)
         {
-            string stackName = sName;
-            foreach (DirectoryInfo dir in di.EnumerateDirectories())
+            isoBuild.AddDirectory(di.Name);
+            foreach (DirectoryInfo dir in di.GetDirectories())
             {
-                stackName = sName + dir.Name + @"\";
-                //isoBuild.AddDirectory(dir.Name);
-                foreach (FileInfo file in dir.EnumerateFiles())
-                {
-                    isoBuild.AddFile(stackName + file.Name, file.Open(FileMode.Open));
-                }
-                Recursive_AddDirs(ref isoBuild, dir, stackName);
+                Recursive_AddDirs(isoBuild, dir, sName + dir.Name + @"\", files);
             }
+            foreach (FileInfo file in di.GetFiles())
+            {
+                AddFile(isoBuild, file, sName, files);
+            }
+        }
+
+        void AddFile(CDBuilder isoBuild, FileInfo file, string sName, HashSet<FileStream> files)
+        {
+            var fstream = file.Open(FileMode.Open);
+            if (isoType == ConsoleMode.PS1 || isoType == ConsoleMode.PS2)
+                isoBuild.AddFile(sName + file.Name + ";1", fstream);
+            else
+                isoBuild.AddFile(sName + file.Name, fstream);
+            files.Add(fstream);
         }
 
         void LoadISO()
@@ -448,16 +465,16 @@ namespace CrateModLoader
                 {
                     DirectoryInfo di = new DirectoryInfo(extractedPath);
 
-                    foreach (FileInfo file in di.EnumerateFiles())
-                    {
-                        file.Delete();
-                    }
-                    foreach (DirectoryInfo dir in di.EnumerateDirectories())
+                    foreach (DirectoryInfo dir in di.GetDirectories())
                     {
                         dir.Delete(true);
                     }
+                    foreach (FileInfo file in di.GetFiles())
+                    {
+                        file.Delete();
+                    }
 
-                    Directory.Delete(extractedPath);
+                    di.Delete();
                 }
             }
             
