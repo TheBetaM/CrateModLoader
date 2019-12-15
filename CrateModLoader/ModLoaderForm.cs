@@ -32,6 +32,8 @@ namespace CrateModLoader
             Program.ModProgram.button_randomize = button4;
             Program.ModProgram.textbox_output_path = textBox2;
             Program.ModProgram.textbox_rando_seed = numericUpDown1;
+            Program.ModProgram.button_modMenu = button_openModMenu;
+            Program.ModProgram.button_modCrateMenu = button_modCrateMenu;
 
             progressBar1.Minimum = 1;
             progressBar1.Maximum = 4;
@@ -150,6 +152,20 @@ namespace CrateModLoader
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             Program.ModProgram.keepTempFiles = checkBox1.Checked;
+        }
+
+        private void button_modCrateMenu_Click(object sender, EventArgs e)
+        {
+            // TODO: Mod Crate Manager Window: 
+            // Either a checkbox list of .zip files in a mod directory OR
+            // A list with a button that lets you manually add .zip files
+        }
+
+        private void button_openModMenu_Click(object sender, EventArgs e)
+        {
+            // TODO: Individual Game Mod Menu
+            // Detailed settings UI for some games
+            // Set availability in ModProgram.SetGameType
         }
     }
 }

@@ -78,29 +78,26 @@ namespace CrateModLoader
 
         public void OptionChanged(int option,bool value)
         {
-            if (option == (int)CTTR_Options.RandomizeHubs)
+            switch ((CTTR_Options)option)
             {
-                CTTR_rand_hubs = value;
-            }
-            else if (option == (int)CTTR_Options.RandomizeTracks)
-            {
-                CTTR_rand_tracks = value;
-            }
-            else if (option == (int)CTTR_Options.RandomizeMinigames)
-            {
-                CTTR_rand_minigames = value;
-            }
-            else if (option == (int)CTTR_Options.RandomizeMissions)
-            {
-                CTTR_rand_missions = value;
-            }
-            else if (option == (int)CTTR_Options.AddUnusedCutscenes)
-            {
-                CTTR_add_unused_cutscenes = value;
-            }
-            else if (option == (int)CTTR_Options.PreventSequenceBreaks)
-            {
-                CTTR_add_sequence_break_checks = value;
+                case CTTR_Options.AddUnusedCutscenes:
+                    CTTR_add_unused_cutscenes = value;
+                    break;
+                case CTTR_Options.PreventSequenceBreaks:
+                    CTTR_add_sequence_break_checks = value;
+                    break;
+                case CTTR_Options.RandomizeHubs:
+                    CTTR_rand_hubs = value;
+                    break;
+                case CTTR_Options.RandomizeMinigames:
+                    CTTR_rand_minigames = value;
+                    break;
+                case CTTR_Options.RandomizeMissions:
+                    CTTR_rand_missions = value;
+                    break;
+                case CTTR_Options.RandomizeTracks:
+                    CTTR_rand_tracks = value;
+                    break;
             }
         }
 
@@ -213,6 +210,8 @@ namespace CrateModLoader
 
         public void StartModProcess()
         {
+            SetPaths(Program.ModProgram.isoType, Program.ModProgram.PS2_executable_name);
+
             //Fixes names for PS2
             File.Move(Program.ModProgram.extractedPath + path_RCF_frontend + ";1", Program.ModProgram.extractedPath + path_RCF_frontend);
 

@@ -62,6 +62,8 @@ namespace CrateModLoader
         public Button button_randomize;
         public TextBox textbox_output_path;
         public NumericUpDown textbox_rando_seed;
+        public Button button_modMenu;
+        public Button button_modCrateMenu;
 
         public string inputISOpath = "";
         public string outputISOpath = "";
@@ -472,6 +474,12 @@ namespace CrateModLoader
                 case GameType.Crash2:
                     Program.ModCrash2.StartModProcess();
                     break;
+                case GameType.Crash3:
+                    Program.ModCrash3.StartModProcess();
+                    break;
+                case GameType.CTR:
+                    Program.ModCTR.StartModProcess();
+                    break;
             }
 
             ProgressProcess();
@@ -523,33 +531,35 @@ namespace CrateModLoader
 
         public void OptionChanged(int option,bool value)
         {
-            if (targetGame == GameType.CTTR)
+            switch (targetGame)
             {
-                Program.ModCTTR.OptionChanged(option,value);
-            }
-            else if (targetGame == GameType.Twins)
-            {
-                Program.ModTwins.OptionChanged(option, value);
-            }
-            else if (targetGame == GameType.CNK)
-            {
-                Program.ModCNK.OptionChanged(option, value);
-            }
-            else if (targetGame == GameType.Titans)
-            {
-                Program.ModTitans.OptionChanged(option, value);
-            }
-            else if (targetGame == GameType.MoM)
-            {
-                Program.ModMoM.OptionChanged(option, value);
-            }
-            else if (targetGame == GameType.Crash1)
-            {
-                Program.ModCrash1.OptionChanged(option, value);
-            }
-            else if (targetGame == GameType.Crash2)
-            {
-                Program.ModCrash2.OptionChanged(option, value);
+                case GameType.CTTR:
+                    Program.ModCTTR.OptionChanged(option, value);
+                    break;
+                case GameType.Twins:
+                    Program.ModTwins.OptionChanged(option, value);
+                    break;
+                case GameType.CNK:
+                    Program.ModCNK.OptionChanged(option, value);
+                    break;
+                case GameType.Titans:
+                    Program.ModTitans.OptionChanged(option, value);
+                    break;
+                case GameType.MoM:
+                    Program.ModMoM.OptionChanged(option, value);
+                    break;
+                case GameType.Crash1:
+                    Program.ModCrash1.OptionChanged(option, value);
+                    break;
+                case GameType.Crash2:
+                    Program.ModCrash2.OptionChanged(option, value);
+                    break;
+                case GameType.Crash3:
+                    Program.ModCrash3.OptionChanged(option, value);
+                    break;
+                case GameType.CTR:
+                    Program.ModCTR.OptionChanged(option, value);
+                    break;
             }
         }
 
@@ -718,16 +728,63 @@ namespace CrateModLoader
                             PS2_executable_name = "SCPS_100.47";
                             PS2_game_code_name = "SCPS_10047";
                         }
+                        else if (titleID == @"BOOT = cdrom:\SCUS_942.44;1")
+                        {
+                            SetGameType(ConsoleMode.PS1, GameType.Crash3, RegionType.NTSC_U);
+                            PS2_executable_name = "SCUS_942.44";
+                            PS2_game_code_name = "SCUS_94244";
+                        }
+                        else if (titleID == @"BOOT = cdrom:\SCES_014.20;1")
+                        {
+                            SetGameType(ConsoleMode.PS1, GameType.Crash3, RegionType.PAL);
+                            PS2_executable_name = "SCES_014.20";
+                            PS2_game_code_name = "SCES_01420";
+                        }
+                        else if (titleID == @"BOOT = cdrom:\SCPS_100.73;1")
+                        {
+                            SetGameType(ConsoleMode.PS1, GameType.Crash3, RegionType.NTSC_J);
+                            PS2_executable_name = "SCPS_100.73";
+                            PS2_game_code_name = "SCPS_10073";
+                        }
+                        else if (titleID == @"BOOT = cdrom:\SCUS_944.26;1")
+                        {
+                            SetGameType(ConsoleMode.PS1, GameType.CTR, RegionType.NTSC_U);
+                            PS2_executable_name = "SCUS_944.26";
+                            PS2_game_code_name = "SCUS_94426";
+                        }
+                        else if (titleID == @"BOOT = cdrom:\SCES_021.05;1")
+                        {
+                            SetGameType(ConsoleMode.PS1, GameType.CTR, RegionType.PAL);
+                            PS2_executable_name = "SCES_021.05";
+                            PS2_game_code_name = "SCES_02105";
+                        }
+                        else if (titleID == @"BOOT = cdrom:\SCPS_101.18;1")
+                        {
+                            SetGameType(ConsoleMode.PS1, GameType.CTR, RegionType.NTSC_J);
+                            PS2_executable_name = "SCPS_101.18";
+                            PS2_game_code_name = "SCPS_10118";
+                        }
+                        else if (titleID == @"BOOT = cdrom:\SCUS_945.70;1")
+                        {
+                            SetGameType(ConsoleMode.PS1, GameType.Bash, RegionType.NTSC_U);
+                            PS2_executable_name = "SCUS_945.70";
+                            PS2_game_code_name = "SCUS_94570";
+                        }
+                        else if (titleID == @"BOOT = cdrom:\SCES_028.34;1")
+                        {
+                            SetGameType(ConsoleMode.PS1, GameType.Bash, RegionType.PAL);
+                            PS2_executable_name = "SCES_028.34";
+                            PS2_game_code_name = "SCES_02834";
+                        }
+                        else if (titleID == @"BOOT = cdrom:\SCPS_101.40;1")
+                        {
+                            SetGameType(ConsoleMode.PS1, GameType.Bash, RegionType.NTSC_J);
+                            PS2_executable_name = "SCPS_101.40";
+                            PS2_game_code_name = "SCPS_10140";
+                        }
                         else
                         {
                             foundMetaData = false;
-                        }
-                    }
-                    if (foundMetaData)
-                    {
-                        if (targetGame == GameType.CTTR)
-                        {
-                            Program.ModCTTR.SetPaths(ConsoleMode.PS2, PS2_executable_name);
                         }
                     }
                 }
@@ -772,13 +829,6 @@ namespace CrateModLoader
                         else
                         {
                             foundMetaData = false;
-                        }
-                    }
-                    if (foundMetaData)
-                    {
-                        if (targetGame == GameType.CTTR)
-                        {
-                            Program.ModCTTR.SetPaths(ConsoleMode.PSP);
                         }
                     }
                 }
@@ -837,13 +887,6 @@ namespace CrateModLoader
                         else
                         {
                             foundMetaData = false;
-                        }
-                    }
-                    if (foundMetaData)
-                    {
-                        if (targetGame == GameType.CTTR)
-                        {
-                            Program.ModCTTR.SetPaths(ConsoleMode.GCN);
                         }
                     }
                 }
@@ -957,6 +1000,8 @@ namespace CrateModLoader
                     apiCredit = Program.ModCTTR.apiCredit;
                     modOptions = Program.ModCTTR.modOptions;
                     gameIcon = Program.ModCTTR.gameIcon;
+                    button_modMenu.Enabled = false;
+                    button_modMenu.Visible = false;
                 }
                 else if (type == GameType.Twins)
                 {
@@ -964,6 +1009,8 @@ namespace CrateModLoader
                     apiCredit = Program.ModTwins.apiCredit;
                     modOptions = Program.ModTwins.modOptions;
                     gameIcon = Program.ModTwins.gameIcon;
+                    button_modMenu.Enabled = false;
+                    button_modMenu.Visible = false;
                 }
                 else if (type == GameType.Titans)
                 {
@@ -971,6 +1018,8 @@ namespace CrateModLoader
                     apiCredit = Program.ModTitans.apiCredit;
                     modOptions = Program.ModTitans.modOptions;
                     gameIcon = Program.ModTitans.gameIcon;
+                    button_modMenu.Enabled = false;
+                    button_modMenu.Visible = false;
                 }
                 else if (type == GameType.MoM)
                 {
@@ -978,6 +1027,8 @@ namespace CrateModLoader
                     apiCredit = Program.ModMoM.apiCredit;
                     modOptions = Program.ModMoM.modOptions;
                     gameIcon = Program.ModMoM.gameIcon;
+                    button_modMenu.Enabled = false;
+                    button_modMenu.Visible = false;
                 }
                 else if (type == GameType.CTR)
                 {
@@ -985,6 +1036,8 @@ namespace CrateModLoader
                     apiCredit = Program.ModCTR.apiCredit;
                     modOptions = Program.ModCTR.modOptions;
                     gameIcon = Program.ModCTR.gameIcon;
+                    button_modMenu.Enabled = false;
+                    button_modMenu.Visible = false;
                 }
                 else if (type == GameType.CNK)
                 {
@@ -992,6 +1045,8 @@ namespace CrateModLoader
                     apiCredit = Program.ModCNK.apiCredit;
                     modOptions = Program.ModCNK.modOptions;
                     gameIcon = Program.ModCNK.gameIcon;
+                    button_modMenu.Enabled = true;
+                    button_modMenu.Visible = true;
                 }
                 else if (type == GameType.Crash1)
                 {
@@ -999,6 +1054,8 @@ namespace CrateModLoader
                     apiCredit = Program.ModCrash1.apiCredit;
                     modOptions = Program.ModCrash1.modOptions;
                     gameIcon = Program.ModCrash1.gameIcon;
+                    button_modMenu.Enabled = false;
+                    button_modMenu.Visible = false;
                 }
                 else if (type == GameType.Crash2)
                 {
@@ -1006,6 +1063,8 @@ namespace CrateModLoader
                     apiCredit = Program.ModCrash2.apiCredit;
                     modOptions = Program.ModCrash2.modOptions;
                     gameIcon = Program.ModCrash2.gameIcon;
+                    button_modMenu.Enabled = false;
+                    button_modMenu.Visible = false;
                 }
                 else if (type == GameType.Crash3)
                 {
@@ -1013,6 +1072,8 @@ namespace CrateModLoader
                     apiCredit = Program.ModCrash3.apiCredit;
                     modOptions = Program.ModCrash3.modOptions;
                     gameIcon = Program.ModCrash3.gameIcon;
+                    button_modMenu.Enabled = false;
+                    button_modMenu.Visible = false;
                 }
                 else if (type == GameType.TWOC)
                 {
@@ -1020,6 +1081,8 @@ namespace CrateModLoader
                     gameName = "TWOC";
                     apiCredit = "No API available!";
                     gameIcon = null;
+                    button_modMenu.Enabled = false;
+                    button_modMenu.Visible = false;
                 }
                 else if (type == GameType.Bash)
                 {
@@ -1027,10 +1090,12 @@ namespace CrateModLoader
                     gameName = "Bash";
                     apiCredit = "No API available!";
                     gameIcon = null;
+                    button_modMenu.Enabled = false;
+                    button_modMenu.Visible = false;
                 }
 
                 text_gameType.Text = gameName + " " + region_mod + " " + cons_mod + " detected!";
-                text_optionsLabel.Text = gameName + " Options: (" + apiCredit + ")";
+                text_optionsLabel.Text = gameName + " Quick Options (" + apiCredit + ")";
                 if (gameIcon != null)
                 {
                     image_gameIcon.Image = gameIcon;
@@ -1043,13 +1108,15 @@ namespace CrateModLoader
                 list_modOptions.Items.Clear();
                 list_modOptions.Items.AddRange(modOptions);
                 PrepareOptionsList();
+                button_modCrateMenu.Enabled = true;
+                button_modCrateMenu.Visible = true;
             }
             
         }
 
         void PrepareOptionsList()
         {
-            int height = 290 + (list_modOptions.Items.Count * 15);
+            int height = 320 + (list_modOptions.Items.Count * 15);
             list_modOptions.Visible = true;
             if (main_form.Size.Height < height)
             {
@@ -1067,6 +1134,8 @@ namespace CrateModLoader
             button_randomize.Enabled = false;
             textbox_output_path.ReadOnly = true;
             textbox_rando_seed.ReadOnly = true;
+            button_modMenu.Enabled = false;
+            button_modCrateMenu.Enabled = false;
         }
         public void EnableInteraction()
         {
@@ -1077,6 +1146,8 @@ namespace CrateModLoader
             button_randomize.Enabled = true;
             textbox_output_path.ReadOnly = false;
             textbox_rando_seed.ReadOnly = false;
+            button_modMenu.Enabled = true;
+            button_modCrateMenu.Enabled = true;
         }
     }
 }

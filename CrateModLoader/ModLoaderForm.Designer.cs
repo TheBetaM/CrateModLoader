@@ -49,6 +49,8 @@
             this.label7 = new System.Windows.Forms.Label();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.button_openModMenu = new System.Windows.Forms.Button();
+            this.button_modCrateMenu = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -64,7 +66,7 @@
             this.checkedListBox1.FormattingEnabled = true;
             this.checkedListBox1.Items.AddRange(new object[] {
             "Nothing"});
-            this.checkedListBox1.Location = new System.Drawing.Point(11, 243);
+            this.checkedListBox1.Location = new System.Drawing.Point(11, 273);
             this.checkedListBox1.Name = "checkedListBox1";
             this.checkedListBox1.Size = new System.Drawing.Size(311, 0);
             this.checkedListBox1.TabIndex = 0;
@@ -211,7 +213,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(8, 220);
+            this.label5.Location = new System.Drawing.Point(8, 254);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(43, 13);
             this.label5.TabIndex = 14;
@@ -242,10 +244,9 @@
             // 
             // checkBox1
             // 
-            this.checkBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBox1.AutoSize = true;
             this.checkBox1.Enabled = false;
-            this.checkBox1.Location = new System.Drawing.Point(256, 220);
+            this.checkBox1.Location = new System.Drawing.Point(200, 225);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(163, 17);
             this.checkBox1.TabIndex = 18;
@@ -257,12 +258,36 @@
             // pictureBox1
             // 
             this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox1.Location = new System.Drawing.Point(347, 243);
+            this.pictureBox1.Location = new System.Drawing.Point(347, 254);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(64, 64);
             this.pictureBox1.TabIndex = 16;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Visible = false;
+            // 
+            // button_openModMenu
+            // 
+            this.button_openModMenu.Enabled = false;
+            this.button_openModMenu.Location = new System.Drawing.Point(94, 221);
+            this.button_openModMenu.Name = "button_openModMenu";
+            this.button_openModMenu.Size = new System.Drawing.Size(100, 23);
+            this.button_openModMenu.TabIndex = 19;
+            this.button_openModMenu.Text = "Open Mod Menu";
+            this.button_openModMenu.UseVisualStyleBackColor = true;
+            this.button_openModMenu.Visible = false;
+            this.button_openModMenu.Click += new System.EventHandler(this.button_openModMenu_Click);
+            // 
+            // button_modCrateMenu
+            // 
+            this.button_modCrateMenu.Enabled = false;
+            this.button_modCrateMenu.Location = new System.Drawing.Point(13, 221);
+            this.button_modCrateMenu.Name = "button_modCrateMenu";
+            this.button_modCrateMenu.Size = new System.Drawing.Size(75, 23);
+            this.button_modCrateMenu.TabIndex = 20;
+            this.button_modCrateMenu.Text = "Mod Crates";
+            this.button_modCrateMenu.UseVisualStyleBackColor = true;
+            this.button_modCrateMenu.Visible = false;
+            this.button_modCrateMenu.Click += new System.EventHandler(this.button_modCrateMenu_Click);
             // 
             // ModLoaderForm
             // 
@@ -270,6 +295,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(424, 241);
+            this.Controls.Add(this.button_modCrateMenu);
+            this.Controls.Add(this.button_openModMenu);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.pictureBox1);
@@ -321,6 +348,8 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Button button_openModMenu;
+        private System.Windows.Forms.Button button_modCrateMenu;
     }
 }
 
