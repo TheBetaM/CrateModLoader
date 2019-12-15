@@ -13,6 +13,8 @@ namespace CrateModLoader
         public string gameName = "CTR";
         public string apiCredit = "API by DCxDemo";
         public System.Drawing.Image gameIcon = null;
+        public bool ModMenuEnabled = false;
+        public bool ModCratesSupported = true;
         public string[] modOptions = { "No options available" };
 
         public enum CTR_Options

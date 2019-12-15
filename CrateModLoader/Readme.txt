@@ -3,16 +3,22 @@ Crate Mod Loader 1.0
 A game randomizer/mod suite for multiple Crash games.
 
 Supports:
-Crash Nitro Kart - All PS2, All GC
-Crash Twinsanity - All PS2
-Crash Tag Team Racing - NTSC-U/PAL PS2, All PSP, All GC
-Crash of the Titans - All PS2, All PSP
-Crash Mind Over Mutant - All PS2, All PSP
+Crash Bandicoot - All versions (.BIN format)
+Crash Bandicoot 2: Cortex Strikes Back - All versions (.BIN format)
+Crash Bandicoot: Warped - All versions (.BIN format)
+Crash Team Racing - All versions (.BIN format)
+Crash Nitro Kart - All PS2 versions (.ISO format) (GC not yet supported)
+Crash Twinsanity - All PS2 versions (.ISO format)
+Crash Tag Team Racing - NTSC-U/PAL PS2 versions (.ISO format) (PSP and GC not yet supported)
+Crash of the Titans - All PS2 versions (.ISO format) (PSP and Wii not yet supported)
+Crash Mind Over Mutant - All PS2 versions (.ISO format) (PSP and Wii not yet supported)
 
+Crash Bandicoot 1/2/3 API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)
+Crash Team Racing API by DCxDemo. (https://github.com/DCxDemo/CTR-tools)
 Crash Nitro Kart API by BetaM, ManDude and eezstreet.
 Crash Twinsanity API by NeoKesha.
 Crash Tag Team Racing/Titans/Mind Over Mutant API by NeoKesha.
-Randomizers, mods and the Crate Mod Loader created by BetaM.
+Crate Mod Loader created by BetaM.
 
 License Information
 

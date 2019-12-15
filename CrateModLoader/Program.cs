@@ -25,6 +25,7 @@ namespace CrateModLoader
         public static Modder_Crash1 ModCrash1;
         public static Modder_Crash2 ModCrash2;
         public static Modder_Crash3 ModCrash3;
+        public static ModLoaderForm ModProgramForm;
 
         [STAThread]
         static void Main()
@@ -41,7 +42,8 @@ namespace CrateModLoader
             ModCrash3 = new Modder_Crash3();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ModLoaderForm());
+            ModProgramForm = new ModLoaderForm();
+            Application.Run(ModProgramForm);
         }
     }
 
@@ -897,7 +899,7 @@ namespace CrateModLoader
 
                 if (!foundMetaData)
                 {
-                    text_gameType.Text = "Unknown game ISO!";
+                    text_gameType.Text = "Unknown game ROM!";
                     loadedISO = false;
                 }
                 else
@@ -993,6 +995,8 @@ namespace CrateModLoader
                 string[] modOptions = Program.ModCTTR.modOptions;
                 string apiCredit = Program.ModCTTR.apiCredit;
                 string gameName = Program.ModCTTR.gameName;
+                bool hasModMenu = false;
+                bool hasModCrates = false;
                 System.Drawing.Image gameIcon = null;
                 if (type == GameType.CTTR)
                 {
@@ -1000,8 +1004,8 @@ namespace CrateModLoader
                     apiCredit = Program.ModCTTR.apiCredit;
                     modOptions = Program.ModCTTR.modOptions;
                     gameIcon = Program.ModCTTR.gameIcon;
-                    button_modMenu.Enabled = false;
-                    button_modMenu.Visible = false;
+                    hasModMenu = Program.ModCTTR.ModMenuEnabled;
+                    hasModCrates = Program.ModCTTR.ModCratesSupported;
                 }
                 else if (type == GameType.Twins)
                 {
@@ -1009,8 +1013,8 @@ namespace CrateModLoader
                     apiCredit = Program.ModTwins.apiCredit;
                     modOptions = Program.ModTwins.modOptions;
                     gameIcon = Program.ModTwins.gameIcon;
-                    button_modMenu.Enabled = false;
-                    button_modMenu.Visible = false;
+                    hasModMenu = Program.ModTwins.ModMenuEnabled;
+                    hasModCrates = Program.ModTwins.ModCratesSupported;
                 }
                 else if (type == GameType.Titans)
                 {
@@ -1018,8 +1022,8 @@ namespace CrateModLoader
                     apiCredit = Program.ModTitans.apiCredit;
                     modOptions = Program.ModTitans.modOptions;
                     gameIcon = Program.ModTitans.gameIcon;
-                    button_modMenu.Enabled = false;
-                    button_modMenu.Visible = false;
+                    hasModMenu = Program.ModTitans.ModMenuEnabled;
+                    hasModCrates = Program.ModTitans.ModCratesSupported;
                 }
                 else if (type == GameType.MoM)
                 {
@@ -1027,8 +1031,8 @@ namespace CrateModLoader
                     apiCredit = Program.ModMoM.apiCredit;
                     modOptions = Program.ModMoM.modOptions;
                     gameIcon = Program.ModMoM.gameIcon;
-                    button_modMenu.Enabled = false;
-                    button_modMenu.Visible = false;
+                    hasModMenu = Program.ModMoM.ModMenuEnabled;
+                    hasModCrates = Program.ModMoM.ModCratesSupported;
                 }
                 else if (type == GameType.CTR)
                 {
@@ -1036,8 +1040,8 @@ namespace CrateModLoader
                     apiCredit = Program.ModCTR.apiCredit;
                     modOptions = Program.ModCTR.modOptions;
                     gameIcon = Program.ModCTR.gameIcon;
-                    button_modMenu.Enabled = false;
-                    button_modMenu.Visible = false;
+                    hasModMenu = Program.ModCTR.ModMenuEnabled;
+                    hasModCrates = Program.ModCTR.ModCratesSupported;
                 }
                 else if (type == GameType.CNK)
                 {
@@ -1045,8 +1049,8 @@ namespace CrateModLoader
                     apiCredit = Program.ModCNK.apiCredit;
                     modOptions = Program.ModCNK.modOptions;
                     gameIcon = Program.ModCNK.gameIcon;
-                    button_modMenu.Enabled = true;
-                    button_modMenu.Visible = true;
+                    hasModMenu = Program.ModCNK.ModMenuEnabled;
+                    hasModCrates = Program.ModCNK.ModCratesSupported;
                 }
                 else if (type == GameType.Crash1)
                 {
@@ -1054,8 +1058,8 @@ namespace CrateModLoader
                     apiCredit = Program.ModCrash1.apiCredit;
                     modOptions = Program.ModCrash1.modOptions;
                     gameIcon = Program.ModCrash1.gameIcon;
-                    button_modMenu.Enabled = false;
-                    button_modMenu.Visible = false;
+                    hasModMenu = Program.ModCrash1.ModMenuEnabled;
+                    hasModCrates = Program.ModCrash1.ModCratesSupported;
                 }
                 else if (type == GameType.Crash2)
                 {
@@ -1063,8 +1067,8 @@ namespace CrateModLoader
                     apiCredit = Program.ModCrash2.apiCredit;
                     modOptions = Program.ModCrash2.modOptions;
                     gameIcon = Program.ModCrash2.gameIcon;
-                    button_modMenu.Enabled = false;
-                    button_modMenu.Visible = false;
+                    hasModMenu = Program.ModCrash2.ModMenuEnabled;
+                    hasModCrates = Program.ModCrash2.ModCratesSupported;
                 }
                 else if (type == GameType.Crash3)
                 {
@@ -1072,8 +1076,8 @@ namespace CrateModLoader
                     apiCredit = Program.ModCrash3.apiCredit;
                     modOptions = Program.ModCrash3.modOptions;
                     gameIcon = Program.ModCrash3.gameIcon;
-                    button_modMenu.Enabled = false;
-                    button_modMenu.Visible = false;
+                    hasModMenu = Program.ModCrash3.ModMenuEnabled;
+                    hasModCrates = Program.ModCrash3.ModCratesSupported;
                 }
                 else if (type == GameType.TWOC)
                 {
@@ -1081,8 +1085,8 @@ namespace CrateModLoader
                     gameName = "TWOC";
                     apiCredit = "No API available!";
                     gameIcon = null;
-                    button_modMenu.Enabled = false;
-                    button_modMenu.Visible = false;
+                    hasModMenu = false;
+                    hasModCrates = false;
                 }
                 else if (type == GameType.Bash)
                 {
@@ -1090,8 +1094,28 @@ namespace CrateModLoader
                     gameName = "Bash";
                     apiCredit = "No API available!";
                     gameIcon = null;
+                    hasModMenu = false;
+                    hasModCrates = false;
+                }
+                if (!hasModMenu)
+                {
                     button_modMenu.Enabled = false;
                     button_modMenu.Visible = false;
+                }
+                else
+                {
+                    button_modMenu.Enabled = true;
+                    button_modMenu.Visible = true;
+                }
+                if (!hasModCrates)
+                {
+                    button_modCrateMenu.Enabled = false;
+                    button_modCrateMenu.Visible = false;
+                }
+                else
+                {
+                    button_modCrateMenu.Enabled = true;
+                    button_modCrateMenu.Visible = true;
                 }
 
                 text_gameType.Text = gameName + " " + region_mod + " " + cons_mod + " detected!";
@@ -1108,8 +1132,6 @@ namespace CrateModLoader
                 list_modOptions.Items.Clear();
                 list_modOptions.Items.AddRange(modOptions);
                 PrepareOptionsList();
-                button_modCrateMenu.Enabled = true;
-                button_modCrateMenu.Visible = true;
             }
             
         }
@@ -1123,6 +1145,30 @@ namespace CrateModLoader
                 main_form.Size = new System.Drawing.Size(main_form.Size.Width, height);
             }
             main_form.MinimumSize = new System.Drawing.Size(main_form.MinimumSize.Width, height);
+        }
+
+        public void OpenModCrateManager()
+        {
+            // Mod Crate Manager Window: 
+            // Either a checkbox list of .zip files in a mod directory OR
+            // A list with a button that lets you manually add .zip files
+            // Set availability in Game classes (ModCratesSupported variable)
+            ModCrateManagerForm modCrateManagerMenu = new ModCrateManagerForm();
+            modCrateManagerMenu.Owner = Program.ModProgramForm;
+            modCrateManagerMenu.Show();
+        }
+
+        public void OpenModMenu()
+        {
+            // Individual Game Mod Menu
+            // Detailed settings UI for some games
+            // Set availability in Game classes (ModMenuEnabled variable)
+            switch (targetGame)
+            {
+                case GameType.CNK:
+                    Program.ModCNK.OpenModMenu();
+                    break;
+            }
         }
 
         public void DisableInteraction()

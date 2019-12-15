@@ -7,6 +7,8 @@ namespace CrateModLoader
         public string gameName = "Crash 3";
         public string apiCredit = "API by chekwob and ManDude";
         public System.Drawing.Image gameIcon = null;
+        public bool ModMenuEnabled = false;
+        public bool ModCratesSupported = true;
         public string[] modOptions = { "No options available" };
 
         public enum ModOptions

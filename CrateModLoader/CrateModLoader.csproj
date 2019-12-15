@@ -75,6 +75,18 @@
     <Compile Include="GameSpecific\Modder_Titans.cs" />
     <Compile Include="GameSpecific\Modder_Twins.cs" />
     <Compile Include="GameSpecific\Modder_CTTR.cs" />
+    <Compile Include="GameSpecific\ModMenu_CNK.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GameSpecific\ModMenu_CNK.Designer.cs">
+      <DependentUpon>ModMenu_CNK.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ModCrateManagerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ModCrateManagerForm.Designer.cs">
+      <DependentUpon>ModCrateManagerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ModLoaderForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -84,6 +96,12 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PSX2ISO.cs" />
+    <EmbeddedResource Include="GameSpecific\ModMenu_CNK.resx">
+      <DependentUpon>ModMenu_CNK.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ModCrateManagerForm.resx">
+      <DependentUpon>ModCrateManagerForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ModLoaderForm.resx">
       <DependentUpon>ModLoaderForm.cs</DependentUpon>
     </EmbeddedResource>

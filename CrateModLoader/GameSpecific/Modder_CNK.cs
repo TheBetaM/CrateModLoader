@@ -14,6 +14,8 @@ namespace CrateModLoader
         public string gameName = "CNK";
         public string apiCredit = "Tools/API by BetaM, ManDude and eezstreet";
         public System.Drawing.Image gameIcon = Properties.Resources.icon_cnk;
+        public bool ModMenuEnabled = true;
+        public bool ModCratesSupported = true;
         public string[] modOptions = {
             "Randomize Adventure Hub Warp Pads",
             "Randomize Adventure Requirements",
@@ -96,6 +98,13 @@ namespace CrateModLoader
             {
                 Randomize_Hub_Rewards = value;
             }
+        }
+
+        public void OpenModMenu()
+        {
+            GameSpecific.ModMenu_CNK modMenu = new GameSpecific.ModMenu_CNK();
+            modMenu.Owner = Program.ModProgramForm;
+            modMenu.Show();
         }
 
         public enum KartPhysicsBaseRows

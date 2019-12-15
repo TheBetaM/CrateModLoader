@@ -15,6 +15,8 @@ namespace CrateModLoader
         public string gameName = "CTTR";
         public string apiCredit = "API by NeoKesha";
         public System.Drawing.Image gameIcon = Properties.Resources.icon_crash;
+        public bool ModMenuEnabled = false;
+        public bool ModCratesSupported = true;
 
         //CTTR specific
         public string path_RCF_default = "";

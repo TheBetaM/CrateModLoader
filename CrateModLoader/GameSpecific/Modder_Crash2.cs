@@ -12,6 +12,8 @@ namespace CrateModLoader
         public string gameName = "Crash 2";
         public string apiCredit = "API by chekwob and ManDude";
         public System.Drawing.Image gameIcon = null;
+        public bool ModMenuEnabled = false;
+        public bool ModCratesSupported = true;
         public string[] modOptions = {
             "Randomize sound effects"
         };

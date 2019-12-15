@@ -156,16 +156,12 @@ namespace CrateModLoader
 
         private void button_modCrateMenu_Click(object sender, EventArgs e)
         {
-            // TODO: Mod Crate Manager Window: 
-            // Either a checkbox list of .zip files in a mod directory OR
-            // A list with a button that lets you manually add .zip files
+            Program.ModProgram.OpenModCrateManager();
         }
 
         private void button_openModMenu_Click(object sender, EventArgs e)
         {
-            // TODO: Individual Game Mod Menu
-            // Detailed settings UI for some games
-            // Set availability in ModProgram.SetGameType
+            Program.ModProgram.OpenModMenu();
         }
     }
 }
