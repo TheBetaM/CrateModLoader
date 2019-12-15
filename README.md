@@ -1,5 +1,5 @@
 # CrateModLoader
-Randomizer and mod loader for various games. 
+Randomizer and mod loader for various games.  
 It detects, extracts, modifies and rebuilds detected disc image files in an easy to setup way.  
 
 Supports:
@@ -13,7 +13,7 @@ Supports:
 - Crash of the Titans - All PS2 versions (.ISO format) (PSP and Wii not yet supported)
 - Crash Mind Over Mutant - All PS2 versions (.ISO format) (PSP and Wii not yet supported)
   
-Crash Bandicoot 1/2/3 API by checkwob and ManDude. (https://github.com/ManDude/CrashEdit)  
+Crash Bandicoot 1/2/3 API by chekwob and ManDude. (https://github.com/ManDude/CrashEdit)  
 Crash Team Racing API by DCxDemo. (https://github.com/DCxDemo/CTR-tools)  
 Crash Nitro Kart API by BetaM, ManDude and eezstreet.  
 Crash Twinsanity API by NeoKesha.  
@@ -47,9 +47,9 @@ Features - Crash of the Titans:
 Features - Crash Mind Over Mutant:
 - TBD
 
-# Prerequisites
+# Building Prerequisites
 
-- Visual Studio 2017
+- Microsoft Visual Studio 2017
 - .NET 4.5.2
 - Quamotion.DiscUtils.1.0.3
 
