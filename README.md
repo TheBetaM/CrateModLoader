@@ -13,7 +13,7 @@ Supports:
 - Crash of the Titans - All PS2 versions (.ISO format) (PSP and Wii not yet supported)
 - Crash Mind Over Mutant - All PS2 versions (.ISO format) (PSP and Wii not yet supported)
   
-Crash Bandicoot 1/2/3 API by chekwob and ManDude. (https://github.com/ManDude/CrashEdit)  
+Crash Bandicoot 1/2/3 API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)  
 Crash Team Racing API by DCxDemo. (https://github.com/DCxDemo/CTR-tools)  
 Crash Nitro Kart API by BetaM, ManDude and eezstreet.  
 Crash Twinsanity API by NeoKesha.  
