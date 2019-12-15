@@ -40,6 +40,9 @@
     <Reference Include="Crash">
       <HintPath>.\Crash.dll</HintPath>
     </Reference>
+    <Reference Include="CTRFramework">
+      <HintPath>.\CTRFramework.dll</HintPath>
+    </Reference>
     <Reference Include="CTTR">
       <HintPath>.\CTTR.dll</HintPath>
     </Reference>
@@ -146,8 +149,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>call "$(DevEnvDir)..\..\vc\vcvarsall.bat" x86
-"$(DevEnvDir)..\..\vc\bin\EditBin.exe" "$(TargetPath)"  /LARGEADDRESSAWARE</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
