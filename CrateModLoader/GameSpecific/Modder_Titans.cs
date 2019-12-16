@@ -28,7 +28,7 @@ namespace CrateModLoader
         {
             string path_RCF_frontend = "DEFAULT.RCF";
             //Fixes names for PS2
-            File.Move(Program.ModProgram.extractedPath + path_RCF_frontend + ";1", Program.ModProgram.extractedPath + path_RCF_frontend);
+            //File.Move(Program.ModProgram.extractedPath + path_RCF_frontend + ";1", Program.ModProgram.extractedPath + path_RCF_frontend);
 
             //Warning: The CTTR API only likes paths with \ backslashes
             string feedback = "";
@@ -94,7 +94,7 @@ namespace CrateModLoader
 
 
             //Fixes names for PS2
-            File.Move(Program.ModProgram.extractedPath + path_RCF_frontend, Program.ModProgram.extractedPath + path_RCF_frontend + ";1");
+            //File.Move(Program.ModProgram.extractedPath + path_RCF_frontend, Program.ModProgram.extractedPath + path_RCF_frontend + ";1");
         }
 
         int GetPositionBeforeMatch(byte[] data, byte[] pattern)

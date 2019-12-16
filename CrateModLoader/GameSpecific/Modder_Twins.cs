@@ -181,8 +181,8 @@ namespace CrateModLoader
             bdPath = Program.ModProgram.extractedPath + "/cml_extr/";
             BDArchive mainBD = new BDArchive();
             // Fixes names for PS2
-            File.Move(Program.ModProgram.extractedPath + "/CRASH6/CRASH.BD;1", Program.ModProgram.extractedPath + "/CRASH6/CRASH.BD");
-            File.Move(Program.ModProgram.extractedPath + "/CRASH6/CRASH.BH;1", Program.ModProgram.extractedPath + "/CRASH6/CRASH.BH");
+            //File.Move(Program.ModProgram.extractedPath + "/CRASH6/CRASH.BD;1", Program.ModProgram.extractedPath + "/CRASH6/CRASH.BD");
+            //File.Move(Program.ModProgram.extractedPath + "/CRASH6/CRASH.BH;1", Program.ModProgram.extractedPath + "/CRASH6/CRASH.BH");
             //mainBD.LoadArchive(Program.ModProgram.extractedPath + "/CRASH6/", "CRASH.BD");
             mainBD.ExtractOnce(bdPath, Program.ModProgram.extractedPath + "/CRASH6/", "CRASH");
             //mainBD.Dispose();
@@ -312,8 +312,8 @@ namespace CrateModLoader
             }
 
             // Fixes names for PS2
-            File.Move(Program.ModProgram.extractedPath + "/CRASH6/CRASH.BD", Program.ModProgram.extractedPath + "/CRASH6/CRASH.BD;1");
-            File.Move(Program.ModProgram.extractedPath + "/CRASH6/CRASH.BH", Program.ModProgram.extractedPath + "/CRASH6/CRASH.BH;1");
+            //File.Move(Program.ModProgram.extractedPath + "/CRASH6/CRASH.BD", Program.ModProgram.extractedPath + "/CRASH6/CRASH.BD;1");
+            //File.Move(Program.ModProgram.extractedPath + "/CRASH6/CRASH.BH", Program.ModProgram.extractedPath + "/CRASH6/CRASH.BH;1");
         }
     }
 }

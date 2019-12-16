@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using System.IO;
+using CrateModLoader.GameSpecific.CNK;
 //CNK Tools/API by BetaM, ManDude and eezstreet.
 
 namespace CrateModLoader
@@ -18,8 +19,7 @@ namespace CrateModLoader
         public bool ModCratesSupported = true;
         public string[] modOptions = {
             "Randomize Adventure Hub Warp Pads",
-            "Randomize Adventure Requirements",
-            "Randomize Adventure Rewards",
+            "Randomize Adventure Requirements & Rewards",
             "Randomize Character Stats",
             "Randomize Kart Stats",
             "Randomize AI Kart Stats",
@@ -31,7 +31,6 @@ namespace CrateModLoader
 
         public bool Randomize_Hub_Pads = false;
         public bool Randomize_Hub_Requirements = false;
-        public bool Randomize_Hub_Rewards = false;
         public bool Randomize_Character_Stats = false;
         public bool Randomize_Kart_Stats = false;
         public bool Randomize_AI_Kart_Stats = false; //TODO physics
@@ -48,16 +47,15 @@ namespace CrateModLoader
         public enum CNK_Options
         {
             RandomizeHubPads = 0,
-            RandomizeHubRequirements = 1,
-            RandomizeAdventureRewards = 2,
-            RandomizeCharacterStats = 3,
-            RandomizeKartStats = 4,
-            RandomizeAIKartStats = 5,
-            RandomizeSurfaceParameters = 6,
-            RandomizeWeaponPools = 7,
-            RandomizeWumpaCrate = 8,
-            DisableFadeout = 9,
-            SpeedUpMaskHints = 10,
+            RandomizeAdventureRequirements = 1,
+            RandomizeCharacterStats = 2,
+            RandomizeKartStats = 3,
+            RandomizeAIKartStats = 4,
+            RandomizeSurfaceParameters = 5,
+            RandomizeWeaponPools = 6,
+            RandomizeWumpaCrate = 7,
+            DisableFadeout = 8,
+            SpeedUpMaskHints = 9,
         }
 
         public void OptionChanged(int option, bool value)
@@ -90,13 +88,9 @@ namespace CrateModLoader
             {
                 Mod_SpeedUp_Mask_Hints = value;
             }
-            else if (option == (int)CNK_Options.RandomizeHubRequirements)
+            else if (option == (int)CNK_Options.RandomizeAdventureRequirements)
             {
                 Randomize_Hub_Requirements = value;
-            }
-            else if (option == (int)CNK_Options.RandomizeAdventureRewards)
-            {
-                Randomize_Hub_Rewards = value;
             }
         }
 
@@ -107,157 +101,16 @@ namespace CrateModLoader
             modMenu.Show();
         }
 
-        public enum KartPhysicsBaseRows
-        { // This enum's comments are from the original CNK files, not made for this tool!
-            /// <summary> float | The minimum height we need to get without jumping before we set the in-air state (Note: This is from the center of the collision sphere!!!) </summary>
-            m_MinHeightForAirNoJump = 1,
-            /// <summary> float | The maximum we will allow our XY velocity to get. | 40 (Trying to limit aberrant behavior.) </summary>
-            m_MaxLinearVelXY = 3,
-            /// <summary> float | The maximum we will allow our Z velocity to get </summary>
-            m_MaxLinearVelZ = 4,
-            /// <summary> float | The collision sphere radius for the kart (m) </summary>
-            m_CollisionRadius = 6,
-            /// <summary> X, Y, Z | The collision sphere offset position from the kart (m) </summary>
-            m_CollisionSphereOffset = 7,
-            /// <summary> float | The NORMAL maximum FORWARD SPEED of the kart (m/sec) | 27 </summary>
-            m_MaxForwardSpeedNormal = 9,
-            /// <summary> float | The WUMPA maximum FORWARD SPEED of the kart (m/sec) | 30 </summary>
-            m_MaxForwardSpeedWumpa = 10,
-            /// <summary> float | The maximum REVERSE SPEED of the kart (m/sec) </summary>
-            m_MaxReverseSpeed = 11,
-            /// <summary> float | The NORMAL ACCELERATION GAIN of the kart (m/sec) | "18 (2.12s), 20 (1.82s), 22 (1.58s), 24 (1.40s), 26 (1.25s)" | 22 </summary>
-            m_AccelerationGainNormal = 12,
-            /// <summary> float | The WUMPA ACCELERATION GAIN of the kart (m/sec) | 25 </summary>
-            m_AccelerationGainWumpa = 13,
-            /// <summary> float | The REVERSE ACCELERATION GAIN of the kart (m/sec) | 37 </summary>
-            m_ReverseGain = 14,
-            /// <summary> float | The maximum REVERSE SPEED of the kart (m/sec) </summary>
-            m_BrakeForce = 15,
-            /// <summary> float | Speed to determine when we are in low speed driving model (m/sec) </summary>
-            m_LowSpeed = 16,
-            /// <summary> float | The amount of GRAVITY when in AIR (x times gravity) </summary>
-            m_GravityAir = 17,
-            /// <summary> float | The amount of GRAVITY when on GROUND (x times gravity) </summary>
-            m_GravityGround = 18,
-            /// <summary> float | The amount of DOWNFORCE when in MAGLEV (x times gravity) </summary>
-            m_DownforceMagLev = 19,
-            /// <summary> float | The amount of DOWNFORCE when in MAGLEV and IN AIR (x times gravity) (Note: This is ONLY applied after we have gained air for m_DownforceMagLevAirTime seconds) | "9, 12, 14" </summary>
-            m_DownforceInAirMagLev = 20,
-            /// <summary> float | The amount of DOWNFORCE when on GROUND (x times gravity)</summary>
-            m_DownforceGround = 21,
-            /// <summary> float | The time we allow in AIR before we apply m_DownforceMagLevInAir | 0.3 </summary>
-            m_DownforceMagLevAirTime = 22,
-            /// <summary> float | The minimum angle that this kicks in (r) </summary>
-            m_SlopeMinAngle = 24,
-            /// <summary> float | The maximum angle where we achieve full extra (r) </summary>
-            m_SlopeMaxAngle = 25,
-            /// <summary> float | The acceleration increase (percent) </summary>
-            m_SlopeAccelExtra = 26,
-            /// <summary> float | The NORMAL kart turn rate (r/sec) | 80 </summary>
-            m_TurnRateNormal = 28,
-            /// <summary> float | The WUMPA kart turn rate (r/sec) | 80 </summary>
-            m_TurnRateWumpa = 29,
-            /// <summary> float | The kart additional turn rate when brake is pressed (r/sec) | 90 </summary>
-            m_TurnRateBrake = 30,
-            /// <summary> float | The kart additional turn rate when accelerator and not brake is pressed (r/sec) </summary>
-            m_TurnRateAccel = 31,
-            //Todo: the rest
-        }
-        public enum KartPhysicsCharacterRows
-        {// This enum's comments are from the original CNK files, not made for this tool!
-            /// <summary> float </summary>
-            m_MaxForwardSpeedNormal = 1,
-            /// <summary> float </summary>
-            m_MaxForwardSpeedWumpa = 2,
-            /// <summary> float </summary>
-            m_AccelerationGainNormal = 3,
-            /// <summary> float </summary>
-            m_AccelerationGainWumpa = 4,
-            /// <summary> float </summary>
-            m_BrakeForce = 5,
-            /// <summary> float </summary>
-            m_TurnRateNormal = 7,
-            /// <summary> float </summary>
-            m_TurnRateWumpa = 8,
-            /// <summary> float </summary>
-            m_TurnRateBrake = 9,
-            /// <summary> float </summary>
-            m_TurnRateAccel = 10,
-            /// <summary> float </summary>
-            m_HiTurnStartAngle = 12,
-            /// <summary> lat / long / lat 2 long </summary>
-            m_HiTurnFriction = 13,
-            /// <summary> lat / long / lat 2 long </summary>
-            m_NormalFriction = 14,
-            /// <summary> float </summary>
-            m_InAirTurnRateNormal = 16,
-            /// <summary> float </summary>
-            m_InAirTurnRateWumpa = 17,
-            /// <summary> float </summary>
-            m_TurnDecellSpeed = 19,
-            /// <summary> float </summary>
-            m_TurnDecellForce = 20,
-            /// <summary> float </summary>
-            m_TurnDecellForceMax = 21,
-            /// <summary> float </summary>
-            m_SlideMaxAngle = 23,
-            /// <summary> float </summary>
-            m_SlideMinAngle = 24,
-            /// <summary> float </summary>
-            m_SlideTurnRateInToSlide = 25,
-            /// <summary> float </summary>
-            m_SlideTurnRateAwayFromSlide = 26,
-            /// <summary> lat / long / lat 2 long </summary>
-            m_SlideFrictionLow = 28,
-            /// <summary> lat / long / lat 2 long </summary>
-            m_SlideFrictionNorm = 29,
-            /// <summary> lat / long / lat 2 long </summary>
-            m_SlideFrictionHigh = 30,
-            /// <summary> float </summary>
-            m_BoostMaxImpulsePerSecond = 32,
-            /// <summary> float </summary>
-            m_BoostSlidePushTime = 33,
-            /// <summary> float </summary>
-            m_BoostSlidePushAngle = 34,
-            /// <summary> speed / time / wheelie </summary>
-            m_BoostInfo_eBOOST_JUMP_SMALL = 35,
-            /// <summary> speed / time / wheelie </summary>
-            m_BoostInfo_eBOOST_JUMP_MEDIUM = 36,
-            /// <summary> speed / time / wheelie </summary>
-            m_BoostInfo_eBOOST_JUMP_LARGE = 37,
-            /// <summary> speed / time / wheelie </summary>
-            m_BoostInfo_eBOOST_SLIDE_1 = 38,
-            /// <summary> speed / time / wheelie </summary>
-            m_BoostInfo_eBOOST_SLIDE_2 = 39,
-            /// <summary> speed / time / wheelie </summary>
-            m_BoostInfo_eBOOST_SLIDE_3 = 40,
-            /// <summary> speed / time / wheelie </summary>
-            m_BoostInfo_eBOOST_PAD = 41,
-            /// <summary> speed / time / wheelie </summary>
-            m_BoostInfo_eBOOST_START = 42,
-            /// <summary> speed / time / wheelie </summary>
-            m_BoostInfo_eBOOST_AKU_DROP = 43,
-            /// <summary> speed / time / wheelie </summary>
-            m_BoostInfo_eBOOST_TURBOBOOST = 44,
-            /// <summary> speed / time / wheelie </summary>
-            m_BoostInfo_eBOOST_TURBOBOOST_JUICED = 45,
-            /// <summary> speed / time / wheelie </summary>
-            m_BoostInfo_eBOOST_SUPER_ENGINE = 46,
-            /// <summary> float </summary>
-            m_UIStats_Speed = 48,
-            /// <summary> float </summary>
-            m_UIStats_Acceleration = 49,
-            /// <summary> float </summary>
-            m_UIStats_Turn = 50,
-            /// <summary> float </summary>
-            m_UIStats_MaxValue = 51,
-        }
+        public Random randState = new Random();
+        
 
         public void StartModProcess()
         {
             // Fixes names for PS2, and moves the archive for convenience
-            File.Move(Program.ModProgram.extractedPath + "/ASSETS.GFC;1", AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GFC");
-            File.Move(Program.ModProgram.extractedPath + "/ASSETS.GOB;1", AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GOB");
+            //File.Move(Program.ModProgram.extractedPath + "/ASSETS.GFC;1", AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GFC");
+            //File.Move(Program.ModProgram.extractedPath + "/ASSETS.GOB;1", AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GOB");
+            File.Move(Program.ModProgram.extractedPath + "/ASSETS.GFC", AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GFC");
+            File.Move(Program.ModProgram.extractedPath + "/ASSETS.GOB", AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GOB");
 
             // Extract GOB
             Process GobExtract = new Process();
@@ -276,158 +129,351 @@ namespace CrateModLoader
 
         void ModProcess()
         {
-            // Proof of concept hiscores mod
-            //string[] hiscores_lines = File.ReadAllLines(path_gob_extracted + "common/gameprogression/hiscores.csv");
-            //hiscores_lines[5] = "Modded,crash,69,# Modded         ";
-            //File.WriteAllLines(path_gob_extracted + "common/gameprogression/hiscores.csv", hiscores_lines);
 
-            Random randState = new Random(Program.ModProgram.randoSeed);
+            randState = new Random(Program.ModProgram.randoSeed);
+
+            bool Editing_CSV_AdventureTracksManager = false;
+            bool Editing_CSV_GoalsToRewardsConverter = false;
+            bool Editing_CSV_WarpPadInfo = false;
+            bool Editing_CSV_KartPhysicsBase = false;
+            bool Editing_CSV_CharacterPhysics = false;
 
             if (Randomize_Hub_Requirements)
             {
-                string[] csv_advtracksmanager = File.ReadAllLines(path_gob_extracted + "common/gameprogression/adventuretracksmanager.csv");
-                string[] cur_line_split;
-                string[] requirement_types = new string[] { "trophy" ,"key", "token_red", "token_blue", "token_purple", "token_green", "gem_blue","gem_red","gem_green","gem_purple", "relic", "relic2", "relic3" };
-                int target_req = 0;
-                int target_amount = 0;
-
-                for (int cur_row = 14; cur_row < 75; cur_row++)
+                Editing_CSV_AdventureTracksManager = true;
+                Editing_CSV_GoalsToRewardsConverter = true;
+                CNK_Data.CNK_Randomize_ReqsRewards();
+            }
+            if (Randomize_Hub_Pads)
+            {
+                Editing_CSV_WarpPadInfo = true;
+                CNK_Data.CNK_Randomize_WarpPads();
+            }
+            if (Randomize_Kart_Stats)
+            {
+                Editing_CSV_KartPhysicsBase = true;
+                CNK_Data.CNK_Randomize_KartStats(ref randState);
+            }
+            if (Randomize_Character_Stats)
+            {
+                Editing_CSV_CharacterPhysics = true;
+                for (int i = 0; i < CNK_Data.DriverAmount; i++)
                 {
-                    cur_line_split = csv_advtracksmanager[cur_row].Split(new string[] { ",," },StringSplitOptions.RemoveEmptyEntries);
-                    target_req = randState.Next(0, requirement_types.Length);
-                    target_amount = randState.Next(0, 4);
-                    csv_advtracksmanager[cur_row] = cur_line_split[0] + ",," + cur_line_split[1] + ",," + requirement_types[target_req] + ",," + target_amount;
+                    CNK_Data.CNK_Randomize_CharacterStats(ref randState, i);
+                }
+            }
+
+            
+
+            if (Editing_CSV_AdventureTracksManager)
+            {
+                string[] csv_advtracksmanager = File.ReadAllLines(path_gob_extracted + "common/gameprogression/adventuretracksmanager.csv");
+                List<string> csv_AdvTracksManager_LineList = new List<string>();
+                for (int i = 0; i < CNK_Data.Adv_TracksManager_GridStartRow - 1; i++)
+                {
+                    csv_AdvTracksManager_LineList.Add(csv_advtracksmanager[i]);
+                }
+
+                string cur_line = "";
+                for (int i = 0; i < CNK_Data.Adv_TracksManager_EntryList.Count; i++)
+                {
+                    cur_line = CNK_Data.PadInfoName[(int)CNK_Data.Adv_TracksManager_EntryList[i].PadName] + ",," + CNK_Data.SubModeName[(int)CNK_Data.Adv_TracksManager_EntryList[i].Submode] + ",," + CNK_Data.RewardName[(int)CNK_Data.Adv_TracksManager_EntryList[i].RewardNeeded] + ",," + CNK_Data.Adv_TracksManager_EntryList[i].NumberNeeded.ToString();
+                    csv_AdvTracksManager_LineList.Add(cur_line);
+                }
+                csv_AdvTracksManager_LineList.Add("");
+
+                csv_advtracksmanager = new string[csv_AdvTracksManager_LineList.Count];
+                for (int i = 0; i < csv_AdvTracksManager_LineList.Count; i++)
+                {
+                    csv_advtracksmanager[i] = csv_AdvTracksManager_LineList[i];
                 }
 
                 File.WriteAllLines(path_gob_extracted + "common/gameprogression/adventuretracksmanager.csv", csv_advtracksmanager);
             }
-            if (Randomize_Hub_Rewards)
+            if (Editing_CSV_GoalsToRewardsConverter)
             {
                 string[] csv_goalstorewards = File.ReadAllLines(path_gob_extracted + "common/gameprogression/goalstorewardsconverter.csv");
-                string[] cur_line_split;
-                string[] reward_types = new string[] { "trophy", "key", "relic", "token_red", "token_blue", "token_purple", "token_green", "gem_blue", "gem_red", "gem_green", "gem_purple" };
-                int target_rew = 0;
 
-                for (int cur_row = 6; cur_row < 73; cur_row++)
+                List<string> csv_GoalsToRewards_LineList = new List<string>();
+                for (int i = 0; i < 6; i++)
                 {
-                    if (csv_goalstorewards[cur_row] != "")
-                    {
-                        cur_line_split = csv_goalstorewards[cur_row].Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
-                        target_rew = randState.Next(0, reward_types.Length);
-                        csv_goalstorewards[cur_row] = cur_line_split[0] + "," + cur_line_split[1] + "," + reward_types[target_rew];
-                    }
+                    csv_GoalsToRewards_LineList.Add(csv_goalstorewards[i]);
+                }
+
+                string cur_line = "";
+                for (int i = 0; i < CNK_Data.Adv_GoalsToRewards_EntryList.Count; i++)
+                {
+                    cur_line = CNK_Data.TrackName[(int)CNK_Data.Adv_GoalsToRewards_EntryList[i].Track] + "," + CNK_Data.SubModeName[(int)CNK_Data.Adv_GoalsToRewards_EntryList[i].Submode] + "," + CNK_Data.RewardName[(int)CNK_Data.Adv_GoalsToRewards_EntryList[i].Reward];
+                    csv_GoalsToRewards_LineList.Add(cur_line);
+                }
+                csv_GoalsToRewards_LineList.Add("end_rewards,,");
+                csv_GoalsToRewards_LineList.Add("");
+
+                csv_goalstorewards = new string[csv_GoalsToRewards_LineList.Count];
+                for (int i = 0; i < csv_GoalsToRewards_LineList.Count; i++)
+                {
+                    csv_goalstorewards[i] = csv_GoalsToRewards_LineList[i];
                 }
 
                 File.WriteAllLines(path_gob_extracted + "common/gameprogression/goalstorewardsconverter.csv", csv_goalstorewards);
             }
-            if (Randomize_Hub_Pads)
+            if (Editing_CSV_WarpPadInfo)
             {
                 string[] csv_warppadinfo = File.ReadAllLines(path_gob_extracted + "common/gameprogression/warppadinfo.csv");
-                string[] cur_line_split;
-                string[] warp_types = new string[] { "earth1", "earth2", "earth3", "barin1", "barin2", "barin3", "fenom1", "fenom2", "fenom3", "teknee1", "teknee2", "teknee3", "velorace" };
-                // TODO: add pad names too
-                int target_warp = 0;
-                int[] validrows = new int[] { 6,7,8,12,13,14,18,19,20,24,25,26,57}; //todo: cup entrances, hub warps, arenas, bosses (they aren't functional on non-boss-intended tracks)
-                int cur_row = 0;
 
-                for (int targetRow = 0; targetRow < validrows.Length; targetRow++)
+                List<string> csv_WarpPadInfo_LineList = new List<string>();
+                for (int i = 0; i < 6; i++)
                 {
-                    cur_row = validrows[targetRow];
-                    if (csv_warppadinfo[cur_row] != "")
+                    csv_WarpPadInfo_LineList.Add(csv_warppadinfo[i]);
+                }
+
+                string cur_line = "";
+                for (int i = 0; i < CNK_Data.Adv_WarpPadInfo_EntryList.Count; i++)
+                {
+                    cur_line = CNK_Data.PadInfoName[(int)CNK_Data.Adv_WarpPadInfo_EntryList[i].PadName] + ",";
+                    cur_line += CNK_Data.PadInfoDescTypes[(int)CNK_Data.Adv_WarpPadInfo_EntryList[i].PadDesc] + ",";
+                    cur_line += CNK_Data.TrackName[(int)CNK_Data.Adv_WarpPadInfo_EntryList[i].Track] + ",";
+                    cur_line += CNK_Data.PadInfoEventName[(int)CNK_Data.Adv_WarpPadInfo_EntryList[i].isWarpGate] + ",";
+                    cur_line += CNK_Data.PadInfoEventName[(int)CNK_Data.Adv_WarpPadInfo_EntryList[i].PrimaryActEvent] + ",";
+                    cur_line += CNK_Data.PadInfoEventName[(int)CNK_Data.Adv_WarpPadInfo_EntryList[i].SecondaryEvent] + ",";
+                    cur_line += CNK_Data.PadInfoEventName[(int)CNK_Data.Adv_WarpPadInfo_EntryList[i].LockedEvent] + ",";
+                    cur_line += CNK_Data.PadInfoEventName[(int)CNK_Data.Adv_WarpPadInfo_EntryList[i].LockedEvent2] + ",";
+                    cur_line += CNK_Data.PadInfoEventName[(int)CNK_Data.Adv_WarpPadInfo_EntryList[i].BaseRewardEvent[0]];
+                    if (CNK_Data.Adv_WarpPadInfo_EntryList[i].BaseRewardEvent.Length > 1)
                     {
-                        cur_line_split = csv_warppadinfo[cur_row].Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
-                        target_warp = randState.Next(0, warp_types.Length);
-                        csv_warppadinfo[cur_row] = cur_line_split[0] + "," + cur_line_split[1] + "," + warp_types[target_warp];
+                        cur_line += ";" + CNK_Data.PadInfoEventName[(int)CNK_Data.Adv_WarpPadInfo_EntryList[i].BaseRewardEvent[1]];
                     }
+                    if (CNK_Data.Adv_WarpPadInfo_EntryList[i].BaseRewardEvent.Length > 2)
+                    {
+                        cur_line += ";" + CNK_Data.PadInfoEventName[(int)CNK_Data.Adv_WarpPadInfo_EntryList[i].BaseRewardEvent[2]];
+                    }
+                    cur_line += ",";
+                    cur_line += CNK_Data.PadInfoEventName[(int)CNK_Data.Adv_WarpPadInfo_EntryList[i].RelicWonEvent] + ",";
+                    cur_line += CNK_Data.PadInfoEventName[(int)CNK_Data.Adv_WarpPadInfo_EntryList[i].TokenWonEvent[0]];
+                    if (CNK_Data.Adv_WarpPadInfo_EntryList[i].TokenWonEvent.Length > 1)
+                    {
+                        cur_line += ";" + CNK_Data.PadInfoEventName[(int)CNK_Data.Adv_WarpPadInfo_EntryList[i].TokenWonEvent[1]];
+                    }
+                    csv_WarpPadInfo_LineList.Add(cur_line);
+                }
+                csv_WarpPadInfo_LineList.Add("end_padinfo,,,,,,,,,,");
+                csv_WarpPadInfo_LineList.Add("");
+
+                for (int i = 62; i < 79; i++)
+                {
+                    csv_WarpPadInfo_LineList.Add(csv_warppadinfo[i]);
+                }
+
+                csv_WarpPadInfo_LineList.Add("");
+
+                csv_warppadinfo = new string[csv_WarpPadInfo_LineList.Count];
+                for (int i = 0; i < csv_WarpPadInfo_LineList.Count; i++)
+                {
+                    csv_warppadinfo[i] = csv_WarpPadInfo_LineList[i];
                 }
 
                 File.WriteAllLines(path_gob_extracted + "common/gameprogression/warppadinfo.csv", csv_warppadinfo);
             }
 
-            if (Randomize_Kart_Stats)
+            if (Editing_CSV_KartPhysicsBase)
             {
-                /* TODO
-                string[] csv_kartphysicsbase = File.ReadAllLines(path_gob_extracted + "common/physics/kpbase.csv");
-                string[] cur_line_split;
-                float target_val = 0f;
 
-                for (int cur_row = 0; cur_row < 158; cur_row++)
-                {
-                    if (csv_kartphysicsbase[cur_row] != "")
-                    {
-                        cur_line_split = csv_kartphysicsbase[cur_row].Split(new string[] { "," }, StringSplitOptions.None);
-                        target_val = (float)randState.NextDouble();
-                        csv_kartphysicsbase[cur_row] = target_val + "," + cur_line_split[1];
-                    }
-                }
+                string[] csv_kartphysicsbase = File.ReadAllLines(path_gob_extracted + "common/physics/kpbase.csv");
+
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_AccelerationGainNormal] = Float_To_CSV_Line(CNK_Data.m_AccelerationGainNormal);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_AccelerationGainWumpa] = Float_To_CSV_Line(CNK_Data.m_AccelerationGainWumpa);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_AkuDropHeight] = Float_To_CSV_Line(CNK_Data.m_AkuDropHeight);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_AkuDropSpeed] = Float_To_CSV_Line(CNK_Data.m_AkuDropSpeed);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_AkuDropTime] = Float_To_CSV_Line(CNK_Data.m_AkuDropTime);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_AkuDropTS_m_CancelMinPercent] = Float_To_CSV_Line(CNK_Data.m_AkuDropTS_m_CancelMinPercent);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_AkuDropTS_m_DecHoldTime] = Float_To_CSV_Line(CNK_Data.m_AkuDropTS_m_DecHoldTime);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_AkuDropTS_m_DecSpeed] = Float_To_CSV_Line(CNK_Data.m_AkuDropTS_m_DecSpeed);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_AkuDropTS_m_IncSpeed] = Float_To_CSV_Line(CNK_Data.m_AkuDropTS_m_IncSpeed);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_AkuDropTS_m_MaxHoldTime] = Float_To_CSV_Line(CNK_Data.m_AkuDropTS_m_MaxHoldTime);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_AkuDropTS_m_MaxRepressTime] = Float_To_CSV_Line(CNK_Data.m_AkuDropTS_m_MaxRepressTime);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_AkuDropTS_m_Quadratic] = FloatArray_To_CSV_Line(CNK_Data.m_AkuDropTS_m_Quadratic);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_BoostInARowTimeTol] = Float_To_CSV_Line(CNK_Data.m_BoostInARowTimeTol);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_BoostInfo_eBOOST_AKU_DROP] = FloatArray_To_CSV_Line(CNK_Data.m_BoostInfo_eBOOST_AKU_DROP);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_BoostInfo_eBOOST_JUMP_LARGE] = FloatArray_To_CSV_Line(CNK_Data.m_BoostInfo_eBOOST_JUMP_LARGE);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_BoostInfo_eBOOST_JUMP_MEDIUM] = FloatArray_To_CSV_Line(CNK_Data.m_BoostInfo_eBOOST_JUMP_MEDIUM);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_BoostInfo_eBOOST_JUMP_SMALL] = FloatArray_To_CSV_Line(CNK_Data.m_BoostInfo_eBOOST_JUMP_SMALL);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_BoostInfo_eBOOST_PAD] = FloatArray_To_CSV_Line(CNK_Data.m_BoostInfo_eBOOST_PAD);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_BoostInfo_eBOOST_SLIDE_1] = FloatArray_To_CSV_Line(CNK_Data.m_BoostInfo_eBOOST_SLIDE_1);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_BoostInfo_eBOOST_SLIDE_2] = FloatArray_To_CSV_Line(CNK_Data.m_BoostInfo_eBOOST_SLIDE_2);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_BoostInfo_eBOOST_SLIDE_3] = FloatArray_To_CSV_Line(CNK_Data.m_BoostInfo_eBOOST_SLIDE_3);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_BoostInfo_eBOOST_START] = FloatArray_To_CSV_Line(CNK_Data.m_BoostInfo_eBOOST_START);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_BoostInfo_eBOOST_SUPER_ENGINE] = FloatArray_To_CSV_Line(CNK_Data.m_BoostInfo_eBOOST_SUPER_ENGINE);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_BoostInfo_eBOOST_TURBOBOOST] = FloatArray_To_CSV_Line(CNK_Data.m_BoostInfo_eBOOST_TURBOBOOST);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_BoostInfo_eBOOST_TURBOBOOST_JUICED] = FloatArray_To_CSV_Line(CNK_Data.m_BoostInfo_eBOOST_TURBOBOOST_JUICED);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_BoostMaxImpulsePerSecond] = Float_To_CSV_Line(CNK_Data.m_BoostMaxImpulsePerSecond);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_BoostMaxTimeCap] = Float_To_CSV_Line(CNK_Data.m_BoostMaxTimeCap);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_BoostSlidePushAngle] = FloatArray_To_CSV_Line(CNK_Data.m_BoostSlidePushAngle);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_BoostSlidePushTime] = Float_To_CSV_Line(CNK_Data.m_BoostSlidePushTime);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_BrakeForce] = Float_To_CSV_Line(CNK_Data.m_BrakeForce);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_CollisionRadius] = Float_To_CSV_Line(CNK_Data.m_CollisionRadius);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_CollisionSphereOffset] = FloatArray_To_CSV_Line(CNK_Data.m_CollisionSphereOffset);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_CtfFlagMaxForwardSpeed] = FloatArray_To_CSV_Line(CNK_Data.m_CtfFlagMaxForwardSpeed);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_CursedMaxForwardSpeed] = FloatArray_To_CSV_Line(CNK_Data.m_CursedMaxForwardSpeed);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_DonutFriction] = FloatArray_To_CSV_Line(CNK_Data.m_DonutFriction);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_DonutMinMaxSpeed] = FloatArray_To_CSV_Line(CNK_Data.m_DonutMinMaxSpeed);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_DonutTurnRateMax] = Float_To_CSV_Line(CNK_Data.m_DonutTurnRateMax);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_DonutTurnRateMin] = Float_To_CSV_Line(CNK_Data.m_DonutTurnRateMin);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_DonutTurnTotal] = Float_To_CSV_Line(CNK_Data.m_DonutTurnTotal);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_DownforceGround] = Float_To_CSV_Line(CNK_Data.m_DownforceGround);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_DownforceInAirMagLev] = Float_To_CSV_Line(CNK_Data.m_DownforceInAirMagLev);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_DownforceMagLev] = Float_To_CSV_Line(CNK_Data.m_DownforceMagLev);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_DownforceMagLevAirTime] = Float_To_CSV_Line(CNK_Data.m_DownforceMagLevAirTime);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_DragMaxStrength] = Float_To_CSV_Line(CNK_Data.m_DragMaxStrength);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_DragStrength] = Float_To_CSV_Line(CNK_Data.m_DragStrength);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_GravityAir] = Float_To_CSV_Line(CNK_Data.m_GravityAir);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_GravityGround] = Float_To_CSV_Line(CNK_Data.m_GravityGround);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_HeightForBigAir] = Float_To_CSV_Line(CNK_Data.m_HeightForBigAir);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_HitByMissileFriction] = Float_To_CSV_Line(CNK_Data.m_HitByMissileFriction);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_HitSlowdownSpeedForce] = Float_To_CSV_Line(CNK_Data.m_HitSlowdownSpeedForce);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_HitSlowdownSpeedForceRev] = Float_To_CSV_Line(CNK_Data.m_HitSlowdownSpeedForceRev);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_HitSlowdownSpeedMin] = Float_To_CSV_Line(CNK_Data.m_HitSlowdownSpeedMin);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_HitStopAngle] = Float_To_CSV_Line(CNK_Data.m_HitStopAngle);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_HitStopSpeed] = Float_To_CSV_Line(CNK_Data.m_HitStopSpeed);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_HitUpSlideTol] = Float_To_CSV_Line(CNK_Data.m_HitUpSlideTol);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_HiTurnLatFriction] = FloatArray_To_CSV_Line(CNK_Data.m_HiTurnLatFriction);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_HiTurnStartAngle] = Float_To_CSV_Line(CNK_Data.m_HiTurnStartAngle);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_HitWallLatFricLoss] = Float_To_CSV_Line(CNK_Data.m_HitWallLatFricLoss);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_HitWallLatMaxAng] = Float_To_CSV_Line(CNK_Data.m_HitWallLatMaxAng);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_HitWallLatMinAng] = Float_To_CSV_Line(CNK_Data.m_HitWallLatMinAng);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_InAirFriction] = FloatArray_To_CSV_Line(CNK_Data.m_InAirFriction);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_InAirMinSpeed] = Float_To_CSV_Line(CNK_Data.m_InAirMinSpeed);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_InAirTurnRateNormal] = Float_To_CSV_Line(CNK_Data.m_InAirTurnRateNormal);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_InAirTurnRateWumpa] = Float_To_CSV_Line(CNK_Data.m_InAirTurnRateWumpa);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_InvincibiliyMaxForwardSpeed] = FloatArray_To_CSV_Line(CNK_Data.m_InvincibiliyMaxForwardSpeed);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_JumpAirTolerance] = Float_To_CSV_Line(CNK_Data.m_JumpAirTolerance);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_JumpBeforeAirTimeTol] = Float_To_CSV_Line(CNK_Data.m_JumpBeforeAirTimeTol);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_JumpImpulseBase] = Float_To_CSV_Line(CNK_Data.m_JumpImpulseBase);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_JumpImpulseBaseMagLev] = Float_To_CSV_Line(CNK_Data.m_JumpImpulseBaseMagLev);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_JumpImpulseUpMax] = Float_To_CSV_Line(CNK_Data.m_JumpImpulseUpMax);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_JumpImpulseUpMin] = Float_To_CSV_Line(CNK_Data.m_JumpImpulseUpMin);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_JumpImpulseUpPercent] = Float_To_CSV_Line(CNK_Data.m_JumpImpulseUpPercent);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_JumpMaxUpVelocity] = Float_To_CSV_Line(CNK_Data.m_JumpMaxUpVelocity);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_JumpTimeInAirBoost] = FloatArray_To_CSV_Line(CNK_Data.m_JumpTimeInAirBoost);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_LowSpeed] = Float_To_CSV_Line(CNK_Data.m_LowSpeed);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_MaxForwardSpeedNormal] = Float_To_CSV_Line(CNK_Data.m_MaxForwardSpeedNormal);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_MaxForwardSpeedWumpa] = Float_To_CSV_Line(CNK_Data.m_MaxForwardSpeedWumpa);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_MaxLinearVelXY] = Float_To_CSV_Line(CNK_Data.m_MaxLinearVelXY);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_MaxLinearVelZ] = Float_To_CSV_Line(CNK_Data.m_MaxLinearVelZ);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_MaxReverseSpeed] = Float_To_CSV_Line(CNK_Data.m_MaxReverseSpeed);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_MinHeightForAirNoJump] = Float_To_CSV_Line(CNK_Data.m_MinHeightForAirNoJump);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_NormalFriction] = FloatArray_To_CSV_Line(CNK_Data.m_NormalFriction);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_ResetGravStrength] = Float_To_CSV_Line(CNK_Data.m_ResetGravStrength);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_ResetMaxTime] = Float_To_CSV_Line(CNK_Data.m_ResetMaxTime);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_ResetWaitBeforeDrop] = Float_To_CSV_Line(CNK_Data.m_ResetWaitBeforeDrop);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_ReverseGain] = Float_To_CSV_Line(CNK_Data.m_ReverseGain);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_ShockedMaxForwardSpeed] = FloatArray_To_CSV_Line(CNK_Data.m_ShockedMaxForwardSpeed);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_SlideBoostQuadratic] = FloatArray_To_CSV_Line(CNK_Data.m_SlideBoostQuadratic);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_SlideBoostTime] = Float_To_CSV_Line(CNK_Data.m_SlideBoostTime);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_SlideEaseInSpeed] = Float_To_CSV_Line(CNK_Data.m_SlideEaseInSpeed);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_SlideEaseOutPercentBetween] = FloatArray_To_CSV_Line(CNK_Data.m_SlideEaseOutPercentBetween);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_SlideEaseOutRotVelSpeed] = FloatArray_To_CSV_Line(CNK_Data.m_SlideEaseOutRotVelSpeed);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_SlideEaseOutSpeed] = Float_To_CSV_Line(CNK_Data.m_SlideEaseOutSpeed);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_SlideEndMaxTime] = Float_To_CSV_Line(CNK_Data.m_SlideEndMaxTime);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_SlideEndReduceTime] = Float_To_CSV_Line(CNK_Data.m_SlideEndReduceTime);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_SlideFrictionHigh] = FloatArray_To_CSV_Line(CNK_Data.m_SlideFrictionHigh);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_SlideFrictionLow] = FloatArray_To_CSV_Line(CNK_Data.m_SlideFrictionLow);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_SlideFrictionNorm] = FloatArray_To_CSV_Line(CNK_Data.m_SlideFrictionNorm);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_SlideMaxAngle] = Float_To_CSV_Line(CNK_Data.m_SlideMaxAngle);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_SlideMaxBoostCount] = Int_To_CSV_Line(CNK_Data.m_SlideMaxBoostCount);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_SlideMinAngle] = Float_To_CSV_Line(CNK_Data.m_SlideMinAngle);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_SlideMinimumSpeed] = Float_To_CSV_Line(CNK_Data.m_SlideMinimumSpeed);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_SlideStartMinSteer] = Float_To_CSV_Line(CNK_Data.m_SlideStartMinSteer);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_SlideTurnRateAwayFromSlide] = Float_To_CSV_Line(CNK_Data.m_SlideTurnRateAwayFromSlide);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_SlideTurnRateInToSlide] = Float_To_CSV_Line(CNK_Data.m_SlideTurnRateInToSlide);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_SlopeAccelExtra] = Float_To_CSV_Line(CNK_Data.m_SlopeAccelExtra);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_SlopeMaxAngle] = Float_To_CSV_Line(CNK_Data.m_SlopeMaxAngle);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_SlopeMinAngle] = Float_To_CSV_Line(CNK_Data.m_SlopeMinAngle);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_SpikeyFruitMaxForwardSpeed] = FloatArray_To_CSV_Line(CNK_Data.m_SpikeyFruitMaxForwardSpeed);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_SpinOutFriction] = FloatArray_To_CSV_Line(CNK_Data.m_SpinOutFriction);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_SpinOutTotalLarge] = Float_To_CSV_Line(CNK_Data.m_SpinOutTotalLarge);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_SpinOutTotalNormal] = Float_To_CSV_Line(CNK_Data.m_SpinOutTotalNormal);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_SpinOutTurnRateMax] = Float_To_CSV_Line(CNK_Data.m_SpinOutTurnRateMax);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_SpinOutTurnRateMin] = Float_To_CSV_Line(CNK_Data.m_SpinOutTurnRateMin);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_SquashedMaxForwardSpeed] = FloatArray_To_CSV_Line(CNK_Data.m_SquashedMaxForwardSpeed);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_StartLineTS_m_CancelMinPercent] = Float_To_CSV_Line(CNK_Data.m_StartLineTS_m_CancelMinPercent);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_StartLineTS_m_DecHoldTime] = Float_To_CSV_Line(CNK_Data.m_StartLineTS_m_DecHoldTime);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_StartLineTS_m_DecSpeed] = Float_To_CSV_Line(CNK_Data.m_StartLineTS_m_DecSpeed);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_StartLineTS_m_IncSpeed] = Float_To_CSV_Line(CNK_Data.m_StartLineTS_m_IncSpeed);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_StartLineTS_m_MaxHoldTime] = Float_To_CSV_Line(CNK_Data.m_StartLineTS_m_MaxHoldTime);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_StartLineTS_m_MaxRepressTime] = Float_To_CSV_Line(CNK_Data.m_StartLineTS_m_MaxRepressTime);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_StartLineTS_m_Quadratic] = FloatArray_To_CSV_Line(CNK_Data.m_StartLineTS_m_Quadratic);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_TimeBubbleMaxForwardSpeed] = FloatArray_To_CSV_Line(CNK_Data.m_TimeBubbleMaxForwardSpeed);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_TropyClocksMaxForwardSpeed] = FloatArray_To_CSV_Line(CNK_Data.m_TropyClocksMaxForwardSpeed);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_TurnDecellForce] = Float_To_CSV_Line(CNK_Data.m_TurnDecellForce);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_TurnDecellForceMax] = Float_To_CSV_Line(CNK_Data.m_TurnDecellForceMax);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_TurnDecellSpeed] = Float_To_CSV_Line(CNK_Data.m_TurnDecellSpeed);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_TurnRateAccel] = Float_To_CSV_Line(CNK_Data.m_TurnRateAccel);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_TurnRateBrake] = Float_To_CSV_Line(CNK_Data.m_TurnRateBrake);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_TurnRateNormal] = Float_To_CSV_Line(CNK_Data.m_TurnRateNormal);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_TurnRateWumpa] = Float_To_CSV_Line(CNK_Data.m_TurnRateWumpa);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_WaitBeforeBrakeReverses] = Float_To_CSV_Line(CNK_Data.m_WaitBeforeBrakeReverses);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_WheelieMinTime] = Float_To_CSV_Line(CNK_Data.m_WheelieMinTime);
+                csv_kartphysicsbase[(int)CNK_Data.KartPhysicsBaseRows.m_WheelieSlideBoostMinPercent] = Float_To_CSV_Line(CNK_Data.m_WheelieSlideBoostMinPercent);
 
                 File.WriteAllLines(path_gob_extracted + "common/physics/kpbase.csv", csv_kartphysicsbase);
-                */
+                
             }
-            if (Randomize_Character_Stats)
+            if (Editing_CSV_CharacterPhysics)
             {
-                string[] csv_charactertypes = new string[] { "coco", "crash", "cortex", "crunch", "dingodile", "fakecrash", "ngin", "noxide", "ntrance", "ntropy", "polar", "pura", "realvelo", "tiny", "zam", "zem" };
                 string[] csv_kartphysicscharacter;
-                string[] cur_line_split;
-                string cur_line;
-                double target_val = 0;
-                int m_Speed = 0;
-                int m_Turn = 0;
-                int m_Accel = 0;
-                int m_MaxVal = 7;
-                double temp_Speed = 0;
-                double temp_Turn = 0;
-                double temp_Accel = 0;
 
-                for (int csv_pos = 0; csv_pos < csv_charactertypes.Length; csv_pos++)
+                for (int csv_pos = 0; csv_pos < CNK_Data.DriverTypes.Length; csv_pos++)
                 {
-                    csv_kartphysicscharacter = File.ReadAllLines(path_gob_extracted + "common/physics/kp" + csv_charactertypes[csv_pos] + ".csv");
+                    csv_kartphysicscharacter = File.ReadAllLines(path_gob_extracted + "common/physics/kp" + CNK_Data.DriverTypes[csv_pos] + ".csv");
 
-                    for (int cur_row = 0; cur_row < 48; cur_row++)
-                    {
-                        if (csv_kartphysicscharacter[cur_row] != "")
-                        {
-                            cur_line_split = csv_kartphysicscharacter[cur_row].Split(new string[] { "," }, StringSplitOptions.None);
-                            target_val = randState.NextDouble() + 0.5;
+                    csv_kartphysicscharacter[(int)CNK_Data.KartPhysicsCharacterRows.c_AccelerationGainNormal] = Float_To_CSV_Line(CNK_Data.c_AccelerationGainNormal[csv_pos]);
+                    csv_kartphysicscharacter[(int)CNK_Data.KartPhysicsCharacterRows.c_AccelerationGainWumpa] = Float_To_CSV_Line(CNK_Data.c_AccelerationGainWumpa[csv_pos]);
+                    csv_kartphysicscharacter[(int)CNK_Data.KartPhysicsCharacterRows.c_BoostInfo_eBOOST_AKU_DROP] = FloatArray2_To_CSV_Line(CNK_Data.c_BoostInfo_eBOOST_AKU_DROP, csv_pos);
+                    csv_kartphysicscharacter[(int)CNK_Data.KartPhysicsCharacterRows.c_BoostInfo_eBOOST_JUMP_LARGE] = FloatArray2_To_CSV_Line(CNK_Data.c_BoostInfo_eBOOST_JUMP_LARGE, csv_pos);
+                    csv_kartphysicscharacter[(int)CNK_Data.KartPhysicsCharacterRows.c_BoostInfo_eBOOST_JUMP_MEDIUM] = FloatArray2_To_CSV_Line(CNK_Data.c_BoostInfo_eBOOST_JUMP_MEDIUM, csv_pos);
+                    csv_kartphysicscharacter[(int)CNK_Data.KartPhysicsCharacterRows.c_BoostInfo_eBOOST_JUMP_SMALL] = FloatArray2_To_CSV_Line(CNK_Data.c_BoostInfo_eBOOST_JUMP_SMALL, csv_pos);
+                    csv_kartphysicscharacter[(int)CNK_Data.KartPhysicsCharacterRows.c_BoostInfo_eBOOST_PAD] = FloatArray2_To_CSV_Line(CNK_Data.c_BoostInfo_eBOOST_PAD, csv_pos);
+                    csv_kartphysicscharacter[(int)CNK_Data.KartPhysicsCharacterRows.c_BoostInfo_eBOOST_SLIDE_1] = FloatArray2_To_CSV_Line(CNK_Data.c_BoostInfo_eBOOST_SLIDE_1, csv_pos);
+                    csv_kartphysicscharacter[(int)CNK_Data.KartPhysicsCharacterRows.c_BoostInfo_eBOOST_SLIDE_2] = FloatArray2_To_CSV_Line(CNK_Data.c_BoostInfo_eBOOST_SLIDE_2, csv_pos);
+                    csv_kartphysicscharacter[(int)CNK_Data.KartPhysicsCharacterRows.c_BoostInfo_eBOOST_SLIDE_3] = FloatArray2_To_CSV_Line(CNK_Data.c_BoostInfo_eBOOST_SLIDE_3, csv_pos);
+                    csv_kartphysicscharacter[(int)CNK_Data.KartPhysicsCharacterRows.c_BoostInfo_eBOOST_START] = FloatArray2_To_CSV_Line(CNK_Data.c_BoostInfo_eBOOST_START, csv_pos);
+                    csv_kartphysicscharacter[(int)CNK_Data.KartPhysicsCharacterRows.c_BoostInfo_eBOOST_SUPER_ENGINE] = FloatArray2_To_CSV_Line(CNK_Data.c_BoostInfo_eBOOST_SUPER_ENGINE, csv_pos);
+                    csv_kartphysicscharacter[(int)CNK_Data.KartPhysicsCharacterRows.c_BoostInfo_eBOOST_TURBOBOOST] = FloatArray2_To_CSV_Line(CNK_Data.c_BoostInfo_eBOOST_TURBOBOOST, csv_pos);
+                    csv_kartphysicscharacter[(int)CNK_Data.KartPhysicsCharacterRows.c_BoostInfo_eBOOST_TURBOBOOST_JUICED] = FloatArray2_To_CSV_Line(CNK_Data.c_BoostInfo_eBOOST_TURBOBOOST_JUICED, csv_pos);
+                    csv_kartphysicscharacter[(int)CNK_Data.KartPhysicsCharacterRows.c_BoostMaxImpulsePerSecond] = Float_To_CSV_Line(CNK_Data.c_BoostMaxImpulsePerSecond[csv_pos]);
+                    csv_kartphysicscharacter[(int)CNK_Data.KartPhysicsCharacterRows.c_BoostSlidePushAngle] = Float_To_CSV_Line(CNK_Data.c_BoostSlidePushAngle[csv_pos]);
+                    csv_kartphysicscharacter[(int)CNK_Data.KartPhysicsCharacterRows.c_BoostSlidePushTime] = Float_To_CSV_Line(CNK_Data.c_BoostSlidePushTime[csv_pos]);
+                    csv_kartphysicscharacter[(int)CNK_Data.KartPhysicsCharacterRows.c_BrakeForce] = Float_To_CSV_Line(CNK_Data.c_BrakeForce[csv_pos]);
+                    csv_kartphysicscharacter[(int)CNK_Data.KartPhysicsCharacterRows.c_HiTurnFriction] = FloatArray2_To_CSV_Line(CNK_Data.c_HiTurnFriction, csv_pos);
+                    csv_kartphysicscharacter[(int)CNK_Data.KartPhysicsCharacterRows.c_HiTurnStartAngle] = Float_To_CSV_Line(CNK_Data.c_HiTurnStartAngle[csv_pos]);
+                    csv_kartphysicscharacter[(int)CNK_Data.KartPhysicsCharacterRows.c_InAirTurnRateNormal] = Float_To_CSV_Line(CNK_Data.c_InAirTurnRateNormal[csv_pos]);
+                    csv_kartphysicscharacter[(int)CNK_Data.KartPhysicsCharacterRows.c_InAirTurnRateWumpa] = Float_To_CSV_Line(CNK_Data.c_InAirTurnRateWumpa[csv_pos]);
+                    csv_kartphysicscharacter[(int)CNK_Data.KartPhysicsCharacterRows.c_MaxForwardSpeedNormal] = Float_To_CSV_Line(CNK_Data.c_MaxForwardSpeedNormal[csv_pos]);
+                    csv_kartphysicscharacter[(int)CNK_Data.KartPhysicsCharacterRows.c_MaxForwardSpeedWumpa] = Float_To_CSV_Line(CNK_Data.c_MaxForwardSpeedWumpa[csv_pos]);
+                    csv_kartphysicscharacter[(int)CNK_Data.KartPhysicsCharacterRows.c_NormalFriction] = FloatArray2_To_CSV_Line(CNK_Data.c_NormalFriction, csv_pos);
+                    csv_kartphysicscharacter[(int)CNK_Data.KartPhysicsCharacterRows.c_SlideFrictionHigh] = FloatArray2_To_CSV_Line(CNK_Data.c_SlideFrictionHigh, csv_pos);
+                    csv_kartphysicscharacter[(int)CNK_Data.KartPhysicsCharacterRows.c_SlideFrictionLow] = FloatArray2_To_CSV_Line(CNK_Data.c_SlideFrictionLow, csv_pos);
+                    csv_kartphysicscharacter[(int)CNK_Data.KartPhysicsCharacterRows.c_SlideFrictionNorm] = FloatArray2_To_CSV_Line(CNK_Data.c_SlideFrictionNorm, csv_pos);
+                    csv_kartphysicscharacter[(int)CNK_Data.KartPhysicsCharacterRows.c_SlideMaxAngle] = Float_To_CSV_Line(CNK_Data.c_SlideMaxAngle[csv_pos]);
+                    csv_kartphysicscharacter[(int)CNK_Data.KartPhysicsCharacterRows.c_SlideMinAngle] = Float_To_CSV_Line(CNK_Data.c_SlideMinAngle[csv_pos]);
+                    csv_kartphysicscharacter[(int)CNK_Data.KartPhysicsCharacterRows.c_SlideTurnRateAwayFromSlide] = Float_To_CSV_Line(CNK_Data.c_SlideTurnRateAwayFromSlide[csv_pos]);
+                    csv_kartphysicscharacter[(int)CNK_Data.KartPhysicsCharacterRows.c_SlideTurnRateInToSlide] = Float_To_CSV_Line(CNK_Data.c_SlideTurnRateInToSlide[csv_pos]);
+                    csv_kartphysicscharacter[(int)CNK_Data.KartPhysicsCharacterRows.c_TurnDecellForce] = Float_To_CSV_Line(CNK_Data.c_TurnDecellForce[csv_pos]);
+                    csv_kartphysicscharacter[(int)CNK_Data.KartPhysicsCharacterRows.c_TurnDecellForceMax] = Float_To_CSV_Line(CNK_Data.c_TurnDecellForceMax[csv_pos]);
+                    csv_kartphysicscharacter[(int)CNK_Data.KartPhysicsCharacterRows.c_TurnDecellSpeed] = Float_To_CSV_Line(CNK_Data.c_TurnDecellSpeed[csv_pos]);
+                    csv_kartphysicscharacter[(int)CNK_Data.KartPhysicsCharacterRows.c_TurnRateAccel] = Float_To_CSV_Line(CNK_Data.c_TurnRateAccel[csv_pos]);
+                    csv_kartphysicscharacter[(int)CNK_Data.KartPhysicsCharacterRows.c_TurnRateBrake] = Float_To_CSV_Line(CNK_Data.c_TurnRateBrake[csv_pos]);
+                    csv_kartphysicscharacter[(int)CNK_Data.KartPhysicsCharacterRows.c_TurnRateNormal] = Float_To_CSV_Line(CNK_Data.c_TurnRateNormal[csv_pos]);
+                    csv_kartphysicscharacter[(int)CNK_Data.KartPhysicsCharacterRows.c_TurnRateWumpa] = Float_To_CSV_Line(CNK_Data.c_TurnRateWumpa[csv_pos]);
+                    csv_kartphysicscharacter[(int)CNK_Data.KartPhysicsCharacterRows.c_UIStats_Acceleration] = Float_To_CSV_Line(CNK_Data.c_UIStats_Acceleration[csv_pos]);
+                    csv_kartphysicscharacter[(int)CNK_Data.KartPhysicsCharacterRows.c_UIStats_Speed] = Float_To_CSV_Line(CNK_Data.c_UIStats_Speed[csv_pos]);
+                    csv_kartphysicscharacter[(int)CNK_Data.KartPhysicsCharacterRows.c_UIStats_Turn] = Float_To_CSV_Line(CNK_Data.c_UIStats_Turn[csv_pos]);
+                    csv_kartphysicscharacter[(int)CNK_Data.KartPhysicsCharacterRows.c_UIStats_MaxValue] = Float_To_CSV_Line(CNK_Data.c_UIStats_MaxValue[csv_pos]);
 
-                            if (cur_row == (int)KartPhysicsCharacterRows.m_MaxForwardSpeedNormal)
-                            {
-                                temp_Speed = target_val;
-                            }
-                            else if (cur_row == (int)KartPhysicsCharacterRows.m_AccelerationGainNormal)
-                            {
-                                temp_Accel = target_val;
-                            }
-                            else if (cur_row == (int)KartPhysicsCharacterRows.m_TurnRateNormal)
-                            {
-                                temp_Turn = target_val;
-                            }
-
-                            cur_line = String.Format("{0:0.#########}", target_val);
-                            cur_line = cur_line.Replace(',','.'); // For some reason String.Format is still not enough
-                            cur_line += ",";
-                            for (int i = 1; i < cur_line_split.Length; i++)
-                            {
-                                cur_line += cur_line_split[i] + ",";
-                            }
-                            csv_kartphysicscharacter[cur_row] = cur_line;
-                        }
-                    }
-
-                    m_Speed = (int)Math.Ceiling((temp_Speed/1.5) * m_MaxVal);
-                    m_Accel = (int)Math.Ceiling((temp_Accel/1.5) * m_MaxVal);
-                    m_Turn = (int)Math.Ceiling((temp_Turn/1.5) * m_MaxVal);
-
-                    csv_kartphysicscharacter[(int)KartPhysicsCharacterRows.m_UIStats_Acceleration] = m_Accel.ToString() + ",,,,,";
-                    csv_kartphysicscharacter[(int)KartPhysicsCharacterRows.m_UIStats_Speed] = m_Speed.ToString() + ",,,,,";
-                    csv_kartphysicscharacter[(int)KartPhysicsCharacterRows.m_UIStats_Turn] = m_Turn.ToString() + ",,,,,";
-                    csv_kartphysicscharacter[(int)KartPhysicsCharacterRows.m_UIStats_MaxValue] = m_MaxVal.ToString() + ",,,,,";
-
-                    File.WriteAllLines(path_gob_extracted + "common/physics/kp" + csv_charactertypes[csv_pos] + ".csv", csv_kartphysicscharacter);
+                    File.WriteAllLines(path_gob_extracted + "common/physics/kp" + CNK_Data.DriverTypes[csv_pos] + ".csv", csv_kartphysicscharacter);
                 }
 
             }
-
 
 
             EndModProcess();
@@ -444,9 +490,11 @@ namespace CrateModLoader
             GobExtract.WaitForExit();
 
             // Fixes names for PS2, and moves the archive for convenience
-            File.Move(AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GFC", Program.ModProgram.extractedPath + "/ASSETS.GFC;1");
-            File.Move(AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GOB", Program.ModProgram.extractedPath + "/ASSETS.GOB;1");
-            
+            //File.Move(AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GFC", Program.ModProgram.extractedPath + "/ASSETS.GFC;1");
+            //File.Move(AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GOB", Program.ModProgram.extractedPath + "/ASSETS.GOB;1");
+            File.Move(AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GFC", Program.ModProgram.extractedPath + "/ASSETS.GFC");
+            File.Move(AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GOB", Program.ModProgram.extractedPath + "/ASSETS.GOB");
+
             // Extraction cleanup
             if (Directory.Exists(path_gob_extracted))
             {
@@ -464,6 +512,54 @@ namespace CrateModLoader
                 Directory.Delete(path_gob_extracted);
             }
             
+        }
+
+        string Float_To_CSV_Line(float targetfloat)
+        {
+            string cur_line = String.Format("{0:0.#########}", targetfloat);
+            cur_line = cur_line.Replace(',', '.'); // For some reason String.Format is still not enough
+            cur_line += ",";
+            return cur_line;
+        }
+        string FloatArray_To_CSV_Line(float[] targetfloat)
+        {
+            string cur_line = "";
+            string[] line_vars = new string[targetfloat.Length];
+            for (int i = 0; i < targetfloat.Length; i++)
+            {
+                line_vars[i] = String.Format("{0:0.#########}", targetfloat[i]);
+                line_vars[i] = line_vars[i].Replace(',', '.'); // For some reason String.Format is still not enough
+            }
+            for (int i = 0; i < targetfloat.Length; i++)
+            {
+                cur_line += line_vars[i];
+                cur_line += ",";
+            }
+            cur_line += ",";
+            return cur_line;
+        }
+        string FloatArray2_To_CSV_Line(float[,] targetfloat, int targetCharacter)
+        {
+            string cur_line = "";
+            string[] line_vars = new string[targetfloat.GetLength(1)];
+            for (int i = 0; i < targetfloat.GetLength(1); i++)
+            {
+                line_vars[i] = String.Format("{0:0.#########}", targetfloat[targetCharacter, i]);
+                line_vars[i] = line_vars[i].Replace(',', '.'); // For some reason String.Format is still not enough
+            }
+            for (int i = 0; i < targetfloat.GetLength(1); i++)
+            {
+                cur_line += line_vars[i];
+                cur_line += ",";
+            }
+            cur_line += ",";
+            return cur_line;
+        }
+        string Int_To_CSV_Line(int targetInt)
+        {
+            string cur_line = targetInt.ToString();
+            cur_line += ",";
+            return cur_line;
         }
     }
 }

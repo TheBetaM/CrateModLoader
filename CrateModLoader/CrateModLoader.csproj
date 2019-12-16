@@ -66,6 +66,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameSpecific\CNK\CNK_Data.cs" />
     <Compile Include="GameSpecific\Modder_CNK.cs" />
     <Compile Include="GameSpecific\Modder_Crash1.cs" />
     <Compile Include="GameSpecific\Modder_Crash2.cs" />
