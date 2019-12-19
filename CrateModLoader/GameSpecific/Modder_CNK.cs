@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using CrateModLoader.GameSpecific.CNK;
 //CNK Tools/API by BetaM, ManDude and eezstreet.
+//Version number and seed is displayed in the Credits accessible from the main menu.
 
 namespace CrateModLoader
 {
@@ -173,6 +174,7 @@ namespace CrateModLoader
             //bool Editing_CSV_PlayerWeaponSelection_Battle = false;
             bool Editing_CSV_PlayerWeaponSelection_Boss = false;
             //bool Editing_CSV_AI_WeaponSelection = false;
+            bool Editing_CSV_Credits = true;
 
             if (Randomize_Hub_Requirements)
             {
@@ -1363,6 +1365,34 @@ namespace CrateModLoader
                     }
                 }
                 
+            }
+
+            if (Editing_CSV_Credits)
+            {
+                string[] csv_Credits = File.ReadAllLines(path_gob_extracted + "common/ui/eng/credits.csv");
+
+                List<string> csv_Credits_LineList = new List<string>();
+                for (int i = 0; i < 3; i++)
+                {
+                    csv_Credits_LineList.Add(csv_Credits[i]);
+                }
+
+                csv_Credits_LineList.Add("Crate Mod Loader " + Program.ModProgram.releaseVersionString + ",AlphaDance,1.25,C,4294950912,0,40");
+                csv_Credits_LineList.Add("Seed: " + Program.ModProgram.randoSeed + ",AlphaDance,1.25,C,4294950912,0,40");
+
+                for (int i = 3; i < csv_Credits.Length; i++)
+                {
+                    csv_Credits_LineList.Add(csv_Credits[i]);
+                }
+
+                csv_Credits = new string[csv_Credits_LineList.Count];
+                for (int i = 0; i < csv_Credits_LineList.Count; i++)
+                {
+                    csv_Credits[i] = csv_Credits_LineList[i];
+                }
+                csv_Credits[3] = "Crash Nitro Kart,AlphaDance,1.25,C,0xFF10FFFF,0,80";
+
+                File.WriteAllLines(path_gob_extracted + "common/ui/eng/credits.csv", csv_Credits);
             }
 
 

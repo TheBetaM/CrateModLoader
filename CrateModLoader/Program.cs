@@ -66,6 +66,7 @@ namespace CrateModLoader
         public NumericUpDown textbox_rando_seed;
         public Button button_modMenu;
         public Button button_modCrateMenu;
+        public string releaseVersionString = "v1.0";
 
         public string inputISOpath = "";
         public string outputISOpath = "";
