@@ -36,7 +36,16 @@ Features - Crash Twinsanity:
 - Randomize Crate Types (globally)
 
 Features - Crash Nitro Kart:
-- TBD
+- Randomize Adventure Hub Warp Pads & Cups
+- Randomize Adventure Requirements & Rewards
+- Randomize Character Stats
+- Randomize Kart Stats
+- Randomize Surface Parameters
+- Randomize Powerup Distribution
+- Randomize Powerup Effects
+- Disable Fadeout Overlay
+- Disable Unlock Popups
+- Speed Up Mask Hints
 
 Features - Crash Tag Team Racing:
 - TBD
