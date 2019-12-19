@@ -1390,7 +1390,7 @@ namespace CrateModLoader
                 {
                     csv_Credits[i] = csv_Credits_LineList[i];
                 }
-                csv_Credits[3] = "Crash Nitro Kart,AlphaDance,1.25,C,0xFF10FFFF,0,80";
+                csv_Credits[5] = "Crash Nitro Kart,AlphaDance,1.25,C,0xFF10FFFF,0,80";
 
                 File.WriteAllLines(path_gob_extracted + "common/ui/eng/credits.csv", csv_Credits);
             }

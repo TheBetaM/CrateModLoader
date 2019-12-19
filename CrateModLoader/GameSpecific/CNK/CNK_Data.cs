@@ -1992,8 +1992,8 @@ namespace CrateModLoader.GameSpecific.CNK
         public static void CNK_Randomize_BowlingBomb(ref Random randState)
         {
             //todo
-            BowlingBomb_m_Speed = 65f;
-            BowlingBomb_m_Acceleration = 80f;
+            BowlingBomb_m_Speed = randState.Next(50,80);
+            BowlingBomb_m_Acceleration = randState.Next(70,90);
             BowlingBomb_m_AccelerationJuiced = BowlingBomb_m_Acceleration * 1.125f;
             BowlingBomb_m_Mass = 2500f;
             BowlingBomb_m_Radius = 1f;
@@ -2023,14 +2023,14 @@ namespace CrateModLoader.GameSpecific.CNK
         {
             //todo
             HomingMissle_m_TrackingFrontDistance = 50f;
-            HomingMissle_m_MaxSpeed = 60f;
+            HomingMissle_m_MaxSpeed = randState.Next(40,80);
             HomingMissle_m_MaxSpeedJuiced = HomingMissle_m_MaxSpeed * (70f/60f);
             HomingMissle_m_TimeLimit = 15000;
             HomingMissle_m_AirGravityNormal = 8f;
             HomingMissle_m_GroundGravityNormal = 1.25f;
             HomingMissle_m_AirGravityMaglev = 8f;
             HomingMissle_m_GroundGravityMaglev = HomingMissle_m_AirGravityMaglev;
-            HomingMissle_m_Acceleration = 45f;
+            HomingMissle_m_Acceleration = randState.Next(35,55);
             HomingMissle_m_AccelerationJuiced = HomingMissle_m_Acceleration * (55f/45f);
             HomingMissle_m_TurnSpeed = 5f;
             HomingMissle_m_TurnSpeedJuiced = HomingMissle_m_TurnSpeed * (8f/5f);
@@ -2060,7 +2060,7 @@ namespace CrateModLoader.GameSpecific.CNK
         {
             //todo
             Tornado_m_TrackingFrontDistance = 35f;
-            Tornado_m_MaxSpeed = 55f;
+            Tornado_m_MaxSpeed = randState.Next(45,60);
             Tornado_m_MaxSpeedJuiced = Tornado_m_MaxSpeed;
             Tornado_m_MaxSpeedWithKart = 10f;
             Tornado_m_TimeLimit = 30000;
@@ -2068,9 +2068,9 @@ namespace CrateModLoader.GameSpecific.CNK
             Tornado_m_GroundGravity = 1.5f;
             Tornado_m_AirGravityMaglev = Tornado_m_AirGravity;
             Tornado_m_GroundGravityMaglev = 8f;
-            Tornado_m_Acceleration = 50f;
+            Tornado_m_Acceleration = randState.Next(40,60);
             Tornado_m_AccelerationJuiced = Tornado_m_Acceleration;
-            Tornado_m_TurnSpeed = 8f;
+            Tornado_m_TurnSpeed = randState.Next(6,10);
             Tornado_m_TurnSpeedJuiced = Tornado_m_TurnSpeed;
             Tornado_m_Mass = 50f;
             Tornado_m_Radius = 2.5f;
