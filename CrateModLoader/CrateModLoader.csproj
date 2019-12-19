@@ -149,16 +149,13 @@
     <Content Include="Tools\gcr_readme_rus.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Tools\gobextract_in.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Tools\gobextract_out.exe">
+    <Content Include="Tools\gobextract.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Tools\ImgBurn.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Tools\IMPORTANT LICENSE - READ BEFORE OPENING.txt">
+    <Content Include="Tools\GOBEXTRACT License.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\icon_titans.png" />
