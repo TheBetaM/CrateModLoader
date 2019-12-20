@@ -34,6 +34,7 @@ Features - Crash Team Racing:
 
 Features - Crash Twinsanity:
 - Randomize Crate Types (globally)
+- Version, seed and settings visible in the Autosave Disabled screen
 
 Features - Crash Nitro Kart:
 - Randomize Adventure Hub Warp Pads & Cups
@@ -46,15 +47,17 @@ Features - Crash Nitro Kart:
 - Disable Fadeout Overlay
 - Disable Unlock Popups
 - Speed Up Mask Hints
+- Version, seed and settings visible in the Credits screen
 
 Features - Crash Tag Team Racing:
 - TBD
+- Version, seed and settings visible in the Credits screen
 
 Features - Crash of the Titans:
 - TBD
 
 Features - Crash Mind Over Mutant:
-- TBD
+- Version, seed and settings visible in the Credits screen
 
 # Building Prerequisites
 
