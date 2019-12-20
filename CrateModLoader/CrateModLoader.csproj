@@ -66,20 +66,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameDatabase.cs" />
     <Compile Include="GameSpecific\CNK\CNK_Data.cs" />
-    <Compile Include="GameSpecific\Modder_CNK.cs" />
-    <Compile Include="GameSpecific\Modder_Crash1.cs" />
-    <Compile Include="GameSpecific\Modder_Crash2.cs" />
-    <Compile Include="GameSpecific\Modder_Crash3.cs" />
-    <Compile Include="GameSpecific\Modder_CTR.cs" />
-    <Compile Include="GameSpecific\Modder_MoM.cs" />
-    <Compile Include="GameSpecific\Modder_Titans.cs" />
-    <Compile Include="GameSpecific\Modder_Twins.cs" />
-    <Compile Include="GameSpecific\Modder_CTTR.cs" />
-    <Compile Include="GameSpecific\ModMenu_CNK.cs">
+    <Compile Include="GameSpecific\CNK\Modder_CNK.cs" />
+    <Compile Include="GameSpecific\Crash1\Modder_Crash1.cs" />
+    <Compile Include="GameSpecific\Crash2\Modder_Crash2.cs" />
+    <Compile Include="GameSpecific\Crash3\Modder_Crash3.cs" />
+    <Compile Include="GameSpecific\CTR\Modder_CTR.cs" />
+    <Compile Include="GameSpecific\MoM\Modder_MoM.cs" />
+    <Compile Include="GameSpecific\Titans\Modder_Titans.cs" />
+    <Compile Include="GameSpecific\Twins\Modder_Twins.cs" />
+    <Compile Include="GameSpecific\CTTR\Modder_CTTR.cs" />
+    <Compile Include="GameSpecific\CNK\ModMenu_CNK.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GameSpecific\ModMenu_CNK.Designer.cs">
+    <Compile Include="GameSpecific\CNK\ModMenu_CNK.Designer.cs">
       <DependentUpon>ModMenu_CNK.cs</DependentUpon>
     </Compile>
     <Compile Include="ModCrateManagerForm.cs">
@@ -97,7 +98,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PSX2ISO.cs" />
-    <EmbeddedResource Include="GameSpecific\ModMenu_CNK.resx">
+    <EmbeddedResource Include="GameSpecific\CNK\ModMenu_CNK.resx">
       <DependentUpon>ModMenu_CNK.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ModCrateManagerForm.resx">
@@ -162,6 +163,10 @@
     <None Include="Resources\icon_cnk.png" />
     <None Include="Resources\icon_twins.png" />
     <Content Include="rando_icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="GameSpecific\Bash\" />
+    <Folder Include="GameSpecific\TWOC\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

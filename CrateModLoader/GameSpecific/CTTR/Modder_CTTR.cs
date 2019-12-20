@@ -228,7 +228,7 @@ namespace CrateModLoader
             rcf_frontend.ExtractRCF(ref feedback, path_extr);
 
             // Proof of concept mod replacing attract movie with first gem cutscene
-            string[] frontend_lines = File.ReadAllLines(path_extr + @"design\levels\common\frontend.god");
+            string[] frontend_lines = System.IO.File.ReadAllLines(path_extr + @"design\levels\common\frontend.god");
             frontend_lines[64] = "PlayMovie(\"art/fmv/wny_midway_statue\",\"any\",\"any\",true)";
 
             // Editing credits to add CML metadata
@@ -244,7 +244,7 @@ namespace CrateModLoader
                 }
             }
 
-            File.WriteAllLines(path_extr + @"design\levels\common\frontend.god", frontend_lines);
+            System.IO.File.WriteAllLines(path_extr + @"design\levels\common\frontend.god", frontend_lines);
 
             for (int i = 0; i < rcf_frontend.Header.T2File.Length; i++)
             {
@@ -260,8 +260,8 @@ namespace CrateModLoader
             rcf_frontend.Pack(AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_frontend + "1", ref feedback);
 
             // Extraction cleanup
-            File.Delete(AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_frontend);
-            File.Move(AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_frontend + "1", AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_frontend);
+            System.IO.File.Delete(AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_frontend);
+            System.IO.File.Move(AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_frontend + "1", AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_frontend);
             if (Directory.Exists(path_extr))
             {
                 DirectoryInfo di = new DirectoryInfo(path_extr);

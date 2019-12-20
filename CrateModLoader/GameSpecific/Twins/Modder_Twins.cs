@@ -311,7 +311,7 @@ namespace CrateModLoader
                 {
                     if (CodeText_LineList[i] == "to enable autosave,~return to the pause menu~and re-save the game.") //todo: japanese equivalent
                     {
-                        CodeText_LineList[i] = "crate mod loader " + Program.ModProgram.releaseVersionString + "~" + "seed: " + Program.ModProgram.randoSeed + "~" + "options: " + Program.ModProgram.optionsSelectedString + "";
+                        CodeText_LineList[i] = "to enable autosave,~return to the pause menu~and re-save the game.~crate mod loader " + Program.ModProgram.releaseVersionString + "~" + "seed: " + Program.ModProgram.randoSeed + "~" + "options: " + Program.ModProgram.optionsSelectedString + "";
                     }
                 }
 
@@ -345,7 +345,7 @@ namespace CrateModLoader
             mainBD.CreateTable(bdPath);
             mainBD.SaveTable(Program.ModProgram.extractedPath + "/CRASH6/", "CRASH");
             mainBD.SaveArchive(Program.ModProgram.extractedPath + "/CRASH6/", "CRASH");
-            //mainBD.Dispose();
+            mainBD.Dispose();
 
             // Get rid of extracted files
             if (Directory.Exists(bdPath))
