@@ -17,12 +17,11 @@ namespace CrateModLoader
             InitializeComponent();
             label5.Text = "";
             label6.Text = "Waiting for input file...";
-            label7.Text = "";
             button3.Enabled = false;
             Program.ModProgram.processText = label6;
             Program.ModProgram.progressBar = progressBar1;
             Program.ModProgram.startButton = button3;
-            Program.ModProgram.text_gameType = label7;
+            Program.ModProgram.text_gameType = label1;
             Program.ModProgram.text_optionsLabel = label5;
             Program.ModProgram.list_modOptions = checkedListBox1;
             Program.ModProgram.main_form = this;
@@ -49,6 +48,7 @@ namespace CrateModLoader
         private void button1_Click(object sender, EventArgs e)
         {
             openFileDialog1.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            //openFileDialog1.Filter = "PS2/PSP ISO (*.iso)|*.iso|GC ISO (*.iso)|*.iso|PSX BIN (*.bin)|*.bin|WII ISO (*.iso)|*.iso|PSX/PS2 Directory (system.cnf)|*.cnf|PSP Directory (umd_data.bin)|*.bin|GC/WII Directory (opening.bnr)|*.bnr|XBOX Directory (*.xbe)|*.xbe|360 Directory (*.xex)|*.xex|All files (*.*)|*.*";
             openFileDialog1.Filter = "PS2/PSP ISO (*.iso)|*.iso|GC ISO (*.iso)|*.iso|PSX BIN (*.bin)|*.bin|All files (*.*)|*.*";
             openFileDialog1.FilterIndex = 0;
             openFileDialog1.RestoreDirectory = true;
@@ -69,7 +69,7 @@ namespace CrateModLoader
             saveFileDialog1.FilterIndex = 0;
             saveFileDialog1.RestoreDirectory = true;
 
-            saveFileDialog1.FileName = "CTTR_Randomized.iso";
+            saveFileDialog1.FileName = "ModdedGame.iso";
             saveFileDialog1.ShowDialog();
         }
 
@@ -122,7 +122,7 @@ namespace CrateModLoader
 
             if (checkedListBox1.CheckedItems.Count <= 0)
             {
-                DialogResult dialogResult = MessageBox.Show("No options specified - Output ISO will be exactly the same as the input! Proceed?", "No Options Selected", MessageBoxButtons.YesNo);
+                DialogResult dialogResult = MessageBox.Show("No options specified - Output ROM will be exactly the same as the input! Proceed?", "No Options Selected", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {
                     Program.ModProgram.StartButtonPressed();

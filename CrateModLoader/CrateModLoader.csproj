@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameDatabase.cs" />
+    <Compile Include="GameSpecific\Bash\Modder_Bash.cs" />
     <Compile Include="GameSpecific\CNK\CNK_Data.cs" />
     <Compile Include="GameSpecific\CNK\Modder_CNK.cs" />
     <Compile Include="GameSpecific\Crash1\Modder_Crash1.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="GameSpecific\CNK\ModMenu_CNK.Designer.cs">
       <DependentUpon>ModMenu_CNK.cs</DependentUpon>
     </Compile>
+    <Compile Include="GameSpecific\TWOC\Modder_TWOC.cs" />
     <Compile Include="ModCrateManagerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -164,10 +166,7 @@
     <None Include="Resources\icon_twins.png" />
     <Content Include="rando_icon.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="GameSpecific\Bash\" />
-    <Folder Include="GameSpecific\TWOC\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

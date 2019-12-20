@@ -46,7 +46,6 @@
             this.button4 = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.button_openModMenu = new System.Windows.Forms.Button();
@@ -215,9 +214,9 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(8, 254);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(43, 13);
+            this.label5.Size = new System.Drawing.Size(383, 13);
             this.label5.TabIndex = 14;
-            this.label5.Text = "Options";
+            this.label5.Text = "Options Text With Game Name and API Credit which is very long and ends here";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label6
@@ -230,17 +229,6 @@
             this.label6.TabIndex = 15;
             this.label6.Text = "ProgressInfo";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label7
-            // 
-            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label7.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.label7.Location = new System.Drawing.Point(72, 93);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(250, 13);
-            this.label7.TabIndex = 17;
-            this.label7.Text = "Crash Game That Has a Long Title detected!";
-            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // checkBox1
             // 
@@ -258,7 +246,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox1.Location = new System.Drawing.Point(347, 254);
+            this.pictureBox1.Location = new System.Drawing.Point(350, 275);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(64, 64);
             this.pictureBox1.TabIndex = 16;
@@ -298,7 +286,6 @@
             this.Controls.Add(this.button_modCrateMenu);
             this.Controls.Add(this.button_openModMenu);
             this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.label7);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
@@ -346,7 +333,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Button button_openModMenu;
         private System.Windows.Forms.Button button_modCrateMenu;

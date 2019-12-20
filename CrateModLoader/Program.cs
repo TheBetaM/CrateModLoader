@@ -157,7 +157,7 @@ namespace CrateModLoader
             }
             else if (isoType == ConsoleMode.GCN)
             {
-                // Use GCR
+                // Use GCR (or Wiimms ISO Tool?)
                 string args = "";
                 args += "rebuild image: ";
                 args += extractedPath + " " + outputISOpath;
@@ -169,9 +169,13 @@ namespace CrateModLoader
                 ISOcreatorProcess.Start();
                 ISOcreatorProcess.WaitForExit();
             }
+            else if (isoType == ConsoleMode.WII)
+            {
+                // Use Wiimms ISO Tool
+            }
             else
             {
-                // failsafe
+                // Otherwise, try CDBuilder
                 CDBuilder isoBuild = new CDBuilder();
                 isoBuild.UseJoliet = true;
                 isoBuild.VolumeIdentifier = ISO_label;
@@ -261,7 +265,7 @@ namespace CrateModLoader
                     cd = new CDReader(isoStream, true);
                 ISO_label = cd.VolumeLabel;
 
-                /* TODO
+                /* TODO: free space checks
                 if (cd.ClusterSize * 2 > GetTotalFreeSpace(extractedPath.Substring(0,4)))
                 {
                     cd.Dispose();
@@ -530,7 +534,7 @@ namespace CrateModLoader
                 else if (!CDReader.Detect(isoStream))
                 {
                     // Currently Gamecube ISO's end up here
-                    text_gameType.Text = "Invalid PS2/PSP ISO!";
+                    text_gameType.Text = "Game ROM - Invalid PS2/PSP ISO!";
                     return;
                 }
                 else
@@ -554,16 +558,19 @@ namespace CrateModLoader
                         {
                             for (int game = 0; game < GameDatabase.Games.Length; game++)
                             {
-                                foreach (RegionCode rcode in GameDatabase.Games[game].RegionID_PS1)
+                                if (GameDatabase.Games[game].RegionID_PS1 != null && GameDatabase.Games[game].RegionID_PS1.Length > 0)
                                 {
-                                    if (titleID == rcode.Name)
+                                    foreach (RegionCode rcode in GameDatabase.Games[game].RegionID_PS1)
                                     {
-                                        GameID = game;
-                                        SetGameType(GameID, ConsoleMode.PS1, rcode.Region);
-                                        PS2_executable_name = rcode.ExecName;
-                                        PS2_game_code_name = rcode.CodeName;
-                                        foundMetaData = true;
-                                        break;
+                                        if (titleID == rcode.Name)
+                                        {
+                                            GameID = game;
+                                            SetGameType(GameID, ConsoleMode.PS1, rcode.Region);
+                                            PS2_executable_name = rcode.ExecName;
+                                            PS2_game_code_name = rcode.CodeName;
+                                            foundMetaData = true;
+                                            break;
+                                        }
                                     }
                                 }
                                 if (foundMetaData)
@@ -576,16 +583,19 @@ namespace CrateModLoader
                         {
                             for (int game = 0; game < GameDatabase.Games.Length; game++)
                             {
-                                foreach (RegionCode rcode in GameDatabase.Games[game].RegionID_PS2)
+                                if (GameDatabase.Games[game].RegionID_PS2 != null && GameDatabase.Games[game].RegionID_PS2.Length > 0)
                                 {
-                                    if (titleID == rcode.Name)
+                                    foreach (RegionCode rcode in GameDatabase.Games[game].RegionID_PS2)
                                     {
-                                        GameID = game;
-                                        SetGameType(GameID, ConsoleMode.PS2, rcode.Region);
-                                        PS2_executable_name = rcode.ExecName;
-                                        PS2_game_code_name = rcode.CodeName;
-                                        foundMetaData = true;
-                                        break;
+                                        if (titleID == rcode.Name)
+                                        {
+                                            GameID = game;
+                                            SetGameType(GameID, ConsoleMode.PS2, rcode.Region);
+                                            PS2_executable_name = rcode.ExecName;
+                                            PS2_game_code_name = rcode.CodeName;
+                                            foundMetaData = true;
+                                            break;
+                                        }
                                     }
                                 }
                                 if (foundMetaData)
@@ -611,12 +621,15 @@ namespace CrateModLoader
                         {
                             foreach (RegionCode rcode in GameDatabase.Games[game].RegionID_PSP)
                             {
-                                if (titleID == rcode.Name)
+                                if (GameDatabase.Games[game].RegionID_PSP != null && GameDatabase.Games[game].RegionID_PSP.Length > 0)
                                 {
-                                    GameID = game;
-                                    SetGameType(GameID, ConsoleMode.PSP, rcode.Region);
-                                    foundMetaData = true;
-                                    break;
+                                    if (titleID == rcode.Name)
+                                    {
+                                        GameID = game;
+                                        SetGameType(GameID, ConsoleMode.PSP, rcode.Region);
+                                        foundMetaData = true;
+                                        break;
+                                    }
                                 }
                             }
                             if (foundMetaData)
@@ -647,12 +660,15 @@ namespace CrateModLoader
                         {
                             foreach (RegionCode rcode in GameDatabase.Games[game].RegionID_GCN)
                             {
-                                if (titleID == rcode.Name)
+                                if (GameDatabase.Games[game].RegionID_GCN != null && GameDatabase.Games[game].RegionID_GCN.Length > 0)
                                 {
-                                    GameID = game;
-                                    SetGameType(GameID, ConsoleMode.GCN, rcode.Region);
-                                    foundMetaData = true;
-                                    break;
+                                    if (titleID == rcode.Name)
+                                    {
+                                        GameID = game;
+                                        SetGameType(GameID, ConsoleMode.GCN, rcode.Region);
+                                        foundMetaData = true;
+                                        break;
+                                    }
                                 }
                             }
                             if (foundMetaData)
@@ -669,7 +685,7 @@ namespace CrateModLoader
 
                 if (!foundMetaData)
                 {
-                    text_gameType.Text = "Unknown game ROM!";
+                    text_gameType.Text = "Game ROM - Unknown game ROM!";
                     loadedISO = false;
                 }
                 else
@@ -761,7 +777,7 @@ namespace CrateModLoader
 
             if (type == -1)
             {
-                text_gameType.Text = "ERROR_GAME";
+                text_gameType.Text = "Game ROM - ERROR_GAME";
             }
             else
             {
@@ -792,7 +808,7 @@ namespace CrateModLoader
                     button_modCrateMenu.Visible = true;
                 }
 
-                text_gameType.Text = gameName + " " + region_mod + " " + cons_mod + " detected!";
+                text_gameType.Text = "Game ROM - " + gameName + " " + region_mod + " " + cons_mod + " detected!";
                 text_optionsLabel.Text = gameName + " Quick Options (" + apiCredit + ")";
                 if (gameIcon != null)
                 {
@@ -837,7 +853,7 @@ namespace CrateModLoader
             // Mod Crate Manager Window: 
             // Either a checkbox list of .zip files in a mod directory OR
             // A list with a button that lets you manually add .zip files
-            // Set availability in Game classes (ModCratesSupported variable)
+            // Set availability in GameDatabase (ModCratesSupported variable)
             ModCrateManagerForm modCrateManagerMenu = new ModCrateManagerForm();
             modCrateManagerMenu.Owner = Program.ModProgramForm;
             modCrateManagerMenu.Show();
@@ -847,7 +863,7 @@ namespace CrateModLoader
         {
             // Individual Game Mod Menu
             // Detailed settings UI for some games
-            // Set availability in Game classes (ModMenuEnabled variable)
+            // Set availability in GameDatabase (ModMenuEnabled variable)
 
             Type thisType = GameDatabase.Games[targetGame].ModderClass;
             MethodInfo theMethod = thisType.GetMethod("OpenModMenu");

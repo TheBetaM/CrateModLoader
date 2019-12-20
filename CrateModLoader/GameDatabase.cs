@@ -34,7 +34,7 @@ namespace CrateModLoader
         {
             new Game()
             {
-                Name = "CNK",
+                Name = "Crash Nitro Kart",
                 Consoles = new ModLoader.ConsoleMode[]
                 {
                     ModLoader.ConsoleMode.PS2,
@@ -77,7 +77,7 @@ namespace CrateModLoader
             },
             new Game()
             {
-                Name = "CTTR",
+                Name = "Crash Tag Team Racing",
                 Consoles = new ModLoader.ConsoleMode[]
                 {
                     ModLoader.ConsoleMode.PS2,
@@ -141,7 +141,7 @@ namespace CrateModLoader
             },
             new Game()
             {
-                Name = "Titans",
+                Name = "Crash of the Titans",
                 Consoles = new ModLoader.ConsoleMode[]
                 {
                     ModLoader.ConsoleMode.PS2,
@@ -177,7 +177,7 @@ namespace CrateModLoader
             },
             new Game()
             {
-                Name = "MoM",
+                Name = "Crash Mind Over Mutant",
                 Consoles = new ModLoader.ConsoleMode[]
                 {
                     ModLoader.ConsoleMode.PS2,
@@ -192,15 +192,15 @@ namespace CrateModLoader
                 ModCratesSupported = true,
                 RegionID_PS2 = new RegionCode[] {
                     new RegionCode() {
-                    Name = @"BOOT2 = cdrom0:\SLUS_215.83;1",
+                    Name = @"BOOT2 = cdrom0:\SLUS_217.28;1",
                     Region = ModLoader.RegionType.NTSC_U,
-                    ExecName = "SLUS_215.83",
-                    CodeName = "SLUS_21583", },
+                    ExecName = "SLUS_217.28",
+                    CodeName = "SLUS_21728", },
                     new RegionCode() {
-                    Name = @"BOOT2 = cdrom0:\SLES_548.41;1",
+                    Name = @"BOOT2 = cdrom0:\SLES_552.04;1",
                     Region = ModLoader.RegionType.PAL,
-                    ExecName = "SLES_548.41",
-                    CodeName = "SLES_54841", },
+                    ExecName = "SLES_552.04",
+                    CodeName = "SLES_55204", },
                 },
                 RegionID_PSP = new RegionCode[] {
                     new RegionCode() {
@@ -213,7 +213,7 @@ namespace CrateModLoader
             },
             new Game()
             {
-                Name = "Twinsanity",
+                Name = "Crash Twinsanity",
                 Consoles = new ModLoader.ConsoleMode[]
                 {
                     ModLoader.ConsoleMode.PS2,
@@ -259,7 +259,7 @@ namespace CrateModLoader
             },
             new Game()
             {
-                Name = "TWOC",
+                Name = "Crash Bandicoot: The Wrath of Cortex",
                 Consoles = new ModLoader.ConsoleMode[]
                 {
                     ModLoader.ConsoleMode.PS2,
@@ -268,7 +268,7 @@ namespace CrateModLoader
                 },
                 API_Credit = "No API Available",
                 Icon = null,
-                ModderClass = null,
+                ModderClass = typeof(Modder_TWOC),
                 ModMenuEnabled = false,
                 ModCratesSupported = true,
                 RegionID_PS2 = new RegionCode[] {
@@ -302,7 +302,7 @@ namespace CrateModLoader
             },
             new Game()
             {
-                Name = "Crash 1",
+                Name = "Crash Bandicoot",
                 Consoles = new ModLoader.ConsoleMode[]
                 {
                     ModLoader.ConsoleMode.PS1
@@ -332,7 +332,7 @@ namespace CrateModLoader
             },
             new Game()
             {
-                Name = "Crash 2",
+                Name = "Crash Bandicoot 2",
                 Consoles = new ModLoader.ConsoleMode[]
                 {
                     ModLoader.ConsoleMode.PS1
@@ -362,7 +362,7 @@ namespace CrateModLoader
             },
             new Game()
             {
-                Name = "Crash 3",
+                Name = "Crash Bandicoot: Warped",
                 Consoles = new ModLoader.ConsoleMode[]
                 {
                     ModLoader.ConsoleMode.PS1
@@ -392,7 +392,7 @@ namespace CrateModLoader
             },
             new Game()
             {
-                Name = "CTR",
+                Name = "Crash Team Racing",
                 Consoles = new ModLoader.ConsoleMode[]
                 {
                     ModLoader.ConsoleMode.PS1
@@ -422,14 +422,14 @@ namespace CrateModLoader
             },
             new Game()
             {
-                Name = "Bash",
+                Name = "Crash Bash",
                 Consoles = new ModLoader.ConsoleMode[]
                 {
                     ModLoader.ConsoleMode.PS1
                 },
                 API_Credit = "No API available",
                 Icon = null,
-                ModderClass = null,
+                ModderClass = typeof(Modder_Bash),
                 ModMenuEnabled = false,
                 ModCratesSupported = true,
                 RegionID_PS1 = new RegionCode[] {
