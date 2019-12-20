@@ -1,13 +1,497 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection;
 
 namespace CrateModLoader
 {
-    class GameDatabase
+    static class GameDatabase
     {
+        /*
+         * Adding a game:
+         * 1. Add it as a Game object here.
+         * 2. Create a class for it with functions named: StartModProcess, OptionChanged(int option, bool value), OpenModMenu, UpdateModOptions
+         * 3. Done.
+         * 
+         */
 
+        public enum GameType
+        {
+            Undefined = -1,
+            CNK = 0,
+            CTTR = 1,
+            Titans = 2,
+            MoM = 3,
+            Twins = 4,
+            TWOC = 5,
+            Crash1 = 6,
+            Crash2 = 7,
+            Crash3 = 8,
+            CTR = 9,
+            Bash = 10
+        }
+
+        public static Game[] Games = new Game[]
+        {
+            new Game()
+            {
+                Name = "CNK",
+                Consoles = new ModLoader.ConsoleMode[]
+                {
+                    ModLoader.ConsoleMode.PS2,
+                    ModLoader.ConsoleMode.GCN,
+                    ModLoader.ConsoleMode.XBOX
+                },
+                API_Credit = "Tools/API by BetaM, ManDude and eezstreet",
+                Icon = Properties.Resources.icon_cnk,
+                ModderClass = typeof(Modder_CNK),
+                ModMenuEnabled = false,
+                ModCratesSupported = true,
+                RegionID_PS2 = new RegionCode[] {
+                    new RegionCode() {
+                    Name = @"BOOT2 = cdrom0:\SLUS_206.49;1",
+                    Region = ModLoader.RegionType.NTSC_U,
+                    ExecName = "SLUS_206.49",
+                    CodeName = "SLUS_20649", },
+                    new RegionCode() {
+                    Name = @"BOOT2 = cdrom0:\SLES_515.11;1",
+                    Region = ModLoader.RegionType.PAL,
+                    ExecName = "SLES_515.11",
+                    CodeName = "SLES_51511", },
+                    new RegionCode() {
+                    Name = @"BOOT2 = cdrom0:\SLPM_660.67;1",
+                    Region = ModLoader.RegionType.NTSC_J,
+                    ExecName = "SLPM_660.67",
+                    CodeName = "SLPM_66067", },
+                },
+                RegionID_GCN = new RegionCode[] {
+                    new RegionCode() {
+                    Name = "GCNE",
+                    Region = ModLoader.RegionType.NTSC_U },
+                    new RegionCode() {
+                    Name = "GCNP",
+                    Region = ModLoader.RegionType.PAL },
+                    new RegionCode() {
+                    Name = "GC8J",
+                    Region = ModLoader.RegionType.NTSC_J },
+                }
+            },
+            new Game()
+            {
+                Name = "CTTR",
+                Consoles = new ModLoader.ConsoleMode[]
+                {
+                    ModLoader.ConsoleMode.PS2,
+                    ModLoader.ConsoleMode.GCN,
+                    ModLoader.ConsoleMode.PSP,
+                    ModLoader.ConsoleMode.XBOX,
+                },
+                API_Credit = "API by NeoKesha",
+                Icon = Properties.Resources.icon_crash,
+                ModderClass = typeof(Modder_CTTR),
+                ModMenuEnabled = false,
+                ModCratesSupported = true,
+                RegionID_PS2 = new RegionCode[] {
+                    new RegionCode() {
+                    Name = @"BOOT2 = cdrom0:\SLUS_211.91;1",
+                    Region = ModLoader.RegionType.NTSC_U,
+                    ExecName = "SLUS_211.91",
+                    CodeName = "SLUS_21191", },
+                    new RegionCode() {
+                    Name = @"BOOT2 = cdrom0:\SLES_534.39;1",
+                    Region = ModLoader.RegionType.PAL,
+                    ExecName = "SLES_534.39",
+                    CodeName = "SLES_53439", },
+                    new RegionCode() {
+                    Name = @"BOOT2 = cdrom0:\SLPM_?????;1", // TODO, unknown
+                    Region = ModLoader.RegionType.NTSC_J,
+                    ExecName = "SLPM_?????",
+                    CodeName = "SLPM_?????", },
+                },
+                RegionID_GCN = new RegionCode[] {
+                    new RegionCode() {
+                    Name = "G9RE",
+                    Region = ModLoader.RegionType.NTSC_U },
+                    new RegionCode() {
+                    Name = "G9RH",
+                    Region = ModLoader.RegionType.PAL },
+                    new RegionCode() {
+                    Name = "G9RJ",
+                    Region = ModLoader.RegionType.NTSC_J },
+                    new RegionCode() {
+                    Name = "G9RD",
+                    Region = ModLoader.RegionType.PAL },
+                    new RegionCode() {
+                    Name = "G9RF",
+                    Region = ModLoader.RegionType.PAL },
+                    new RegionCode() {
+                    Name = "G9RP",
+                    Region = ModLoader.RegionType.PAL },
+                },
+                RegionID_PSP = new RegionCode[] {
+                    new RegionCode() {
+                    Name = "ULUS-10044",
+                    Region = ModLoader.RegionType.NTSC_U },
+                    new RegionCode() {
+                    Name = "ULJM-05036",
+                    Region = ModLoader.RegionType.PAL },
+                    new RegionCode() {
+                    Name = "ULES-00168",
+                    Region = ModLoader.RegionType.NTSC_J },
+                }
+            },
+            new Game()
+            {
+                Name = "Titans",
+                Consoles = new ModLoader.ConsoleMode[]
+                {
+                    ModLoader.ConsoleMode.PS2,
+                    ModLoader.ConsoleMode.PSP,
+                    ModLoader.ConsoleMode.WII,
+                    ModLoader.ConsoleMode.XBOX360,
+                },
+                API_Credit = "API by NeoKesha",
+                Icon = Properties.Resources.icon_titans,
+                ModderClass = typeof(Modder_Titans),
+                ModMenuEnabled = false,
+                ModCratesSupported = true,
+                RegionID_PS2 = new RegionCode[] {
+                    new RegionCode() {
+                    Name = @"BOOT2 = cdrom0:\SLUS_215.83;1",
+                    Region = ModLoader.RegionType.NTSC_U,
+                    ExecName = "SLUS_215.83",
+                    CodeName = "SLUS_21583", },
+                    new RegionCode() {
+                    Name = @"BOOT2 = cdrom0:\SLES_548.41;1",
+                    Region = ModLoader.RegionType.PAL,
+                    ExecName = "SLES_548.41",
+                    CodeName = "SLES_54841", },
+                },
+                RegionID_PSP = new RegionCode[] {
+                    new RegionCode() {
+                    Name = "ULUS-10304",
+                    Region = ModLoader.RegionType.NTSC_U },
+                    new RegionCode() {
+                    Name = "ULES-00917",
+                    Region = ModLoader.RegionType.PAL },
+                }
+            },
+            new Game()
+            {
+                Name = "MoM",
+                Consoles = new ModLoader.ConsoleMode[]
+                {
+                    ModLoader.ConsoleMode.PS2,
+                    ModLoader.ConsoleMode.PSP,
+                    ModLoader.ConsoleMode.WII,
+                    ModLoader.ConsoleMode.XBOX360,
+                },
+                API_Credit = "API by NeoKesha",
+                Icon = Properties.Resources.icon_titans,
+                ModderClass = typeof(Modder_MoM),
+                ModMenuEnabled = false,
+                ModCratesSupported = true,
+                RegionID_PS2 = new RegionCode[] {
+                    new RegionCode() {
+                    Name = @"BOOT2 = cdrom0:\SLUS_215.83;1",
+                    Region = ModLoader.RegionType.NTSC_U,
+                    ExecName = "SLUS_215.83",
+                    CodeName = "SLUS_21583", },
+                    new RegionCode() {
+                    Name = @"BOOT2 = cdrom0:\SLES_548.41;1",
+                    Region = ModLoader.RegionType.PAL,
+                    ExecName = "SLES_548.41",
+                    CodeName = "SLES_54841", },
+                },
+                RegionID_PSP = new RegionCode[] {
+                    new RegionCode() {
+                    Name = "ULUS-10377",
+                    Region = ModLoader.RegionType.NTSC_U },
+                    new RegionCode() {
+                    Name = "ULES-01171",
+                    Region = ModLoader.RegionType.PAL },
+                }
+            },
+            new Game()
+            {
+                Name = "Twinsanity",
+                Consoles = new ModLoader.ConsoleMode[]
+                {
+                    ModLoader.ConsoleMode.PS2,
+                    ModLoader.ConsoleMode.XBOX,
+                },
+                API_Credit = "API by NeoKesha",
+                Icon = Properties.Resources.icon_twins,
+                ModderClass = typeof(Modder_Twins),
+                ModMenuEnabled = false,
+                ModCratesSupported = true,
+                RegionID_PS2 = new RegionCode[] {
+                    new RegionCode() {
+                    Name = @"BOOT2 = cdrom0:\SLUS_209.09;1 ",
+                    Region = ModLoader.RegionType.NTSC_U,
+                    ExecName = "SLUS_209.09",
+                    CodeName = "SLUS_20909", },
+                    new RegionCode() {
+                    Name = @"BOOT2 = cdrom0:\SLES_525.68;1 ",
+                    Region = ModLoader.RegionType.PAL,
+                    ExecName = "SLES_525.68",
+                    CodeName = "SLES_52568", },
+                    new RegionCode() {
+                    Name = @"BOOT2 = cdrom0:\SLPM_658.01;1 ",
+                    Region = ModLoader.RegionType.NTSC_J,
+                    ExecName = "SLPM_658.01",
+                    CodeName = "SLPM_65801", },
+                    new RegionCode() {
+                    Name = @"BOOT2 = cdrom0:\SLUS_209.09;1",
+                    Region = ModLoader.RegionType.NTSC_U,
+                    ExecName = "SLUS_209.09",
+                    CodeName = "SLUS_20909", },
+                    new RegionCode() {
+                    Name = @"BOOT2 = cdrom0:\SLES_525.68;1",
+                    Region = ModLoader.RegionType.PAL,
+                    ExecName = "SLES_525.68",
+                    CodeName = "SLES_52568", },
+                    new RegionCode() {
+                    Name = @"BOOT2 = cdrom0:\SLPM_658.01;1",
+                    Region = ModLoader.RegionType.NTSC_J,
+                    ExecName = "SLPM_658.01",
+                    CodeName = "SLPM_65801", },
+                },
+            },
+            new Game()
+            {
+                Name = "TWOC",
+                Consoles = new ModLoader.ConsoleMode[]
+                {
+                    ModLoader.ConsoleMode.PS2,
+                    ModLoader.ConsoleMode.GCN,
+                    ModLoader.ConsoleMode.XBOX,
+                },
+                API_Credit = "No API Available",
+                Icon = null,
+                ModderClass = null,
+                ModMenuEnabled = false,
+                ModCratesSupported = true,
+                RegionID_PS2 = new RegionCode[] {
+                    new RegionCode() {
+                    Name = @"BOOT2 = cdrom0:\SLUS_202.38;1",
+                    Region = ModLoader.RegionType.NTSC_U,
+                    ExecName = "SLUS_202.38",
+                    CodeName = "SLUS_20238", },
+                    new RegionCode() {
+                    Name = @"BOOT2 = cdrom0:\SLES_503.86;1",
+                    Region = ModLoader.RegionType.PAL,
+                    ExecName = "SLES_503.86",
+                    CodeName = "SLES_50386", },
+                    new RegionCode() {
+                    Name = @"BOOT2 = cdrom0:\SLPM_740.03;1",
+                    Region = ModLoader.RegionType.NTSC_J,
+                    ExecName = "SLPM_740.03",
+                    CodeName = "SLPM_74003", },
+                },
+                RegionID_GCN = new RegionCode[] {
+                    new RegionCode() {
+                    Name = "GCBE",
+                    Region = ModLoader.RegionType.NTSC_U },
+                    new RegionCode() {
+                    Name = "GCBP",
+                    Region = ModLoader.RegionType.PAL },
+                    new RegionCode() {
+                    Name = "GCBJ",
+                    Region = ModLoader.RegionType.NTSC_J },
+                },
+            },
+            new Game()
+            {
+                Name = "Crash 1",
+                Consoles = new ModLoader.ConsoleMode[]
+                {
+                    ModLoader.ConsoleMode.PS1
+                },
+                API_Credit = "API by chekwob and ManDude",
+                Icon = null,
+                ModderClass = typeof(Modder_Crash1),
+                ModMenuEnabled = false,
+                ModCratesSupported = true,
+                RegionID_PS1 = new RegionCode[] {
+                    new RegionCode() {
+                    Name = @"BOOT = cdrom:\SCUS_949.00;1",
+                    Region = ModLoader.RegionType.NTSC_U,
+                    ExecName = "SCUS_949.00",
+                    CodeName = "SCUS_94900", },
+                    new RegionCode() {
+                    Name = @"BOOT = cdrom:\SCES_003.44;1",
+                    Region = ModLoader.RegionType.PAL,
+                    ExecName = "SCES_003.44",
+                    CodeName = "SCES_00344", },
+                    new RegionCode() {
+                    Name = @"BOOT = cdrom:\SCPS_100.31;1",
+                    Region = ModLoader.RegionType.NTSC_J,
+                    ExecName = "SCPS_100.31",
+                    CodeName = "SCPS_10031", },
+                },
+            },
+            new Game()
+            {
+                Name = "Crash 2",
+                Consoles = new ModLoader.ConsoleMode[]
+                {
+                    ModLoader.ConsoleMode.PS1
+                },
+                API_Credit = "API by chekwob and ManDude",
+                Icon = null,
+                ModderClass = typeof(Modder_Crash2),
+                ModMenuEnabled = false,
+                ModCratesSupported = true,
+                RegionID_PS1 = new RegionCode[] {
+                    new RegionCode() {
+                    Name = @"BOOT = cdrom:\SCUS_941.54;1",
+                    Region = ModLoader.RegionType.NTSC_U,
+                    ExecName = "SCUS_941.54",
+                    CodeName = "SCUS_94154", },
+                    new RegionCode() {
+                    Name = @"BOOT = cdrom:\SCES_009.67;1",
+                    Region = ModLoader.RegionType.PAL,
+                    ExecName = "SCES_009.67",
+                    CodeName = "SCES_00967", },
+                    new RegionCode() {
+                    Name = @"BOOT = cdrom:\SCPS_100.47;1",
+                    Region = ModLoader.RegionType.NTSC_J,
+                    ExecName = "SCPS_100.47",
+                    CodeName = "SCPS_10047", },
+                },
+            },
+            new Game()
+            {
+                Name = "Crash 3",
+                Consoles = new ModLoader.ConsoleMode[]
+                {
+                    ModLoader.ConsoleMode.PS1
+                },
+                API_Credit = "API by chekwob and ManDude",
+                Icon = null,
+                ModderClass = typeof(Modder_Crash3),
+                ModMenuEnabled = false,
+                ModCratesSupported = true,
+                RegionID_PS1 = new RegionCode[] {
+                    new RegionCode() {
+                    Name = @"BOOT = cdrom:\SCUS_942.44;1",
+                    Region = ModLoader.RegionType.NTSC_U,
+                    ExecName = "SCUS_942.44",
+                    CodeName = "SCUS_94244", },
+                    new RegionCode() {
+                    Name = @"BOOT = cdrom:\SCES_014.20;1",
+                    Region = ModLoader.RegionType.PAL,
+                    ExecName = "SCES_014.20",
+                    CodeName = "SCES_01420", },
+                    new RegionCode() {
+                    Name = @"BOOT = cdrom:\SCPS_100.73;1",
+                    Region = ModLoader.RegionType.NTSC_J,
+                    ExecName = "SCPS_100.73",
+                    CodeName = "SCPS_10073", },
+                },
+            },
+            new Game()
+            {
+                Name = "CTR",
+                Consoles = new ModLoader.ConsoleMode[]
+                {
+                    ModLoader.ConsoleMode.PS1
+                },
+                API_Credit = "API by DCxDemo",
+                Icon = null,
+                ModderClass = typeof(Modder_CTR),
+                ModMenuEnabled = false,
+                ModCratesSupported = true,
+                RegionID_PS1 = new RegionCode[] {
+                    new RegionCode() {
+                    Name = @"BOOT = cdrom:\SCUS_944.26;1",
+                    Region = ModLoader.RegionType.NTSC_U,
+                    ExecName = "SCUS_944.26",
+                    CodeName = "SCUS_94426", },
+                    new RegionCode() {
+                    Name = @"BOOT = cdrom:\SCES_021.05;1",
+                    Region = ModLoader.RegionType.PAL,
+                    ExecName = "SCES_021.05",
+                    CodeName = "SCES_02105", },
+                    new RegionCode() {
+                    Name = @"BOOT = cdrom:\SCPS_101.18;1",
+                    Region = ModLoader.RegionType.NTSC_J,
+                    ExecName = "SCPS_101.18",
+                    CodeName = "SCPS_10118", },
+                },
+            },
+            new Game()
+            {
+                Name = "Bash",
+                Consoles = new ModLoader.ConsoleMode[]
+                {
+                    ModLoader.ConsoleMode.PS1
+                },
+                API_Credit = "No API available",
+                Icon = null,
+                ModderClass = null,
+                ModMenuEnabled = false,
+                ModCratesSupported = true,
+                RegionID_PS1 = new RegionCode[] {
+                    new RegionCode() {
+                    Name = @"BOOT = cdrom:\SCUS_945.70;1",
+                    Region = ModLoader.RegionType.NTSC_U,
+                    ExecName = "SCUS_945.70",
+                    CodeName = "SCUS_94570", },
+                    new RegionCode() {
+                    Name = @"BOOT = cdrom:\SCES_028.34;1",
+                    Region = ModLoader.RegionType.PAL,
+                    ExecName = "SCES_028.34",
+                    CodeName = "SCES_02834", },
+                    new RegionCode() {
+                    Name = @"BOOT = cdrom:\SCPS_101.40;1",
+                    Region = ModLoader.RegionType.NTSC_J,
+                    ExecName = "SCPS_101.40",
+                    CodeName = "SCPS_10140", },
+                },
+            },
+        };
+
+        static void Test()
+        {
+            Type thisType = Games[0].ModderClass;
+            MethodInfo theMethod = thisType.GetMethod("StartModProcess");
+            theMethod.Invoke(Games[0], null);
+        }
+    }
+
+    public struct Game
+    {
+        /// <summary> Displayed name of the game. </summary>
+        public string Name;
+        /// <summary> Console types to check for game detection. </summary>
+        public ModLoader.ConsoleMode[] Consoles;
+        /// <summary> Detailed credit of the individual game's support. </summary>
+        public string API_Credit;
+        /// <summary> Display an icon or set to null to not display one. </summary>
+        public System.Drawing.Image Icon;
+        /// <summary> The individual game's class of which methods are invoked. </summary>
+        public Type ModderClass;
+        /// <summary> Set to true to enable mod menu. </summary>
+        public bool ModMenuEnabled;
+        /// <summary> Set to true to enable mod crates. </summary>
+        public bool ModCratesSupported;
+        /// <summary> List of quick options. </summary>
+        public string[] ModOptions;
+        /// <summary> List of region identifiers for PS1 games. </summary>
+        public RegionCode[] RegionID_PS1;
+        /// <summary> List of region identifiers for PS2 games. </summary>
+        public RegionCode[] RegionID_PS2;
+        /// <summary> List of region identifiers for PSP games. </summary>
+        public RegionCode[] RegionID_PSP;
+        /// <summary> List of region identifiers for GCN games. </summary>
+        public RegionCode[] RegionID_GCN;
+    }
+    public struct RegionCode
+    {
+        public string Name;
+        public ModLoader.RegionType Region;
+        public string ExecName;
+        public string CodeName;
     }
 }

@@ -10,11 +10,6 @@ namespace CrateModLoader
 {
     class Modder_CTR
     {
-        public string gameName = "CTR";
-        public string apiCredit = "API by DCxDemo";
-        public System.Drawing.Image gameIcon = null;
-        public bool ModMenuEnabled = false;
-        public bool ModCratesSupported = true;
         public string[] modOptions = { "No options available" };
 
         public enum CTR_Options
@@ -25,6 +20,11 @@ namespace CrateModLoader
         public void OptionChanged(int option, bool value)
         {
             // TODO
+        }
+
+        public void UpdateModOptions()
+        {
+            Program.ModProgram.PrepareOptionsList(modOptions);
         }
 
         public void StartModProcess()

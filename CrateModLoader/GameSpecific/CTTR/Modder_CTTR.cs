@@ -13,13 +13,6 @@ namespace CrateModLoader
     class Modder_CTTR
     {
 
-        public string gameName = "CTTR";
-        public string apiCredit = "API by NeoKesha";
-        public System.Drawing.Image gameIcon = Properties.Resources.icon_crash;
-        public bool ModMenuEnabled = false;
-        public bool ModCratesSupported = true;
-
-        //CTTR specific
         public string path_RCF_default = "";
         public string path_RCF_common = "";
         public string path_RCF_frontend = "";
@@ -102,6 +95,11 @@ namespace CrateModLoader
                     CTTR_rand_tracks = value;
                     break;
             }
+        }
+
+        public void UpdateModOptions()
+        {
+            Program.ModProgram.PrepareOptionsList(modOptions);
         }
 
         public void SetPaths(ModLoader.ConsoleMode console, string exec_name = "")

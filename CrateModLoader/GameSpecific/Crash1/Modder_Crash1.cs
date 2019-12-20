@@ -9,11 +9,6 @@ namespace CrateModLoader
 {
     public sealed class Modder_Crash1
     {
-        public string gameName = "Crash 1";
-        public string apiCredit = "API by chekwob and ManDude";
-        public System.Drawing.Image gameIcon = null;
-        public bool ModMenuEnabled = false;
-        public bool ModCratesSupported = true;
         public string[] modOptions = {
             "Randomize sound effects"
         };
@@ -34,7 +29,12 @@ namespace CrateModLoader
                     break;
             }
         }
-        
+
+        public void UpdateModOptions()
+        {
+            Program.ModProgram.PrepareOptionsList(modOptions);
+        }
+
         public void StartModProcess()
         {
             // there is nothing for us to do here...

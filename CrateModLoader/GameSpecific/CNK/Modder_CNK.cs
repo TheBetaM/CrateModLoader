@@ -13,11 +13,7 @@ namespace CrateModLoader
 {
     class Modder_CNK
     {
-        public string gameName = "CNK";
-        public string apiCredit = "Tools/API by BetaM, ManDude and eezstreet";
-        public System.Drawing.Image gameIcon = Properties.Resources.icon_cnk;
-        public bool ModMenuEnabled = false;
-        public bool ModCratesSupported = true;
+
         public string[] modOptions = {
             "Randomize Adventure Hub Warp Pads & Cups",
             "Randomize Adventure Requirements & Rewards",
@@ -110,6 +106,11 @@ namespace CrateModLoader
             {
                 Mod_Disable_Unlock_Popups = value;
             }
+        }
+
+        public void UpdateModOptions()
+        {
+            Program.ModProgram.PrepareOptionsList(modOptions);
         }
 
         public void OpenModMenu()

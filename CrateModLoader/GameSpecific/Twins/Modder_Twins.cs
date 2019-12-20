@@ -12,11 +12,7 @@ namespace CrateModLoader
 {
     class Modder_Twins
     {
-        public string gameName = "Twinsanity";
-        public string apiCredit = "API by NeoKesha";
-        public System.Drawing.Image gameIcon = Properties.Resources.icon_twins;
-        public bool ModMenuEnabled = false;
-        public bool ModCratesSupported = true;
+
         public string[] modOptions = { "Randomize Crate Types", "Randomize Individual Crates", "Randomize Gem Types",  };
 
         public bool Twins_Randomize_CrateTypes = false;
@@ -45,6 +41,11 @@ namespace CrateModLoader
             {
                 Twins_Randomize_GemTypes = value;
             }
+        }
+
+        public void UpdateModOptions()
+        {
+            Program.ModProgram.PrepareOptionsList(modOptions);
         }
 
         public enum RM2_Sections

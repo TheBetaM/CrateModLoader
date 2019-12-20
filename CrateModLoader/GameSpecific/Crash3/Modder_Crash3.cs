@@ -4,11 +4,6 @@ namespace CrateModLoader
 {
     sealed class Modder_Crash3
     {
-        public string gameName = "Crash 3";
-        public string apiCredit = "API by chekwob and ManDude";
-        public System.Drawing.Image gameIcon = null;
-        public bool ModMenuEnabled = false;
-        public bool ModCratesSupported = true;
         public string[] modOptions = { "No options available" };
 
         public enum ModOptions
@@ -19,6 +14,11 @@ namespace CrateModLoader
         public void OptionChanged(int option, bool value)
         {
             // TODO
+        }
+
+        public void UpdateModOptions()
+        {
+            Program.ModProgram.PrepareOptionsList(modOptions);
         }
 
         public void StartModProcess()

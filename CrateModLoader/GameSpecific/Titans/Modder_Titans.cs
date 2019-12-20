@@ -11,17 +11,16 @@ namespace CrateModLoader
 {
     class Modder_Titans
     {
-        public string gameName = "Titans";
-        public string apiCredit = "API by NeoKesha";
-        public System.Drawing.Image gameIcon = Properties.Resources.icon_titans;
-        public bool ModMenuEnabled = false;
-        public bool ModCratesSupported = true;
         public string[] modOptions = { "No options available" };
-
 
         public void OptionChanged(int option, bool value)
         {
             //TODO
+        }
+
+        public void UpdateModOptions()
+        {
+            Program.ModProgram.PrepareOptionsList(modOptions);
         }
 
         public void StartModProcess()

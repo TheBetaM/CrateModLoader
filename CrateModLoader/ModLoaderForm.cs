@@ -16,7 +16,7 @@ namespace CrateModLoader
         {
             InitializeComponent();
             label5.Text = "";
-            label6.Text = "Waiting for input ISO...";
+            label6.Text = "Waiting for input file...";
             label7.Text = "";
             button3.Enabled = false;
             Program.ModProgram.processText = label6;
@@ -109,20 +109,9 @@ namespace CrateModLoader
 
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch (Program.ModProgram.targetGame)
+            for (int i = 0; i < checkedListBox1.Items.Count; i++)
             {
-                case ModLoader.GameType.CTTR:
-                case ModLoader.GameType.Twins:
-                case ModLoader.GameType.CNK:
-                case ModLoader.GameType.Titans:
-                case ModLoader.GameType.MoM:
-                case ModLoader.GameType.Crash1:
-                case ModLoader.GameType.Crash2:
-                    for (int i = 0; i < checkedListBox1.Items.Count; i++)
-                    {
-                        Program.ModProgram.OptionChanged(i, checkedListBox1.GetItemChecked(i));
-                    }
-                    break;
+                Program.ModProgram.OptionChanged(i, checkedListBox1.GetItemChecked(i));
             }
             checkedListBox1.ClearSelected();
         }
