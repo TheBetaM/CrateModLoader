@@ -1,6 +1,6 @@
 Crate Mod Loader 1.0
-
-A game randomizer/mod suite for multiple Crash games.
+Randomizer and mod loader for PS1, PS2, PSP and GC games.  
+It detects, extracts, modifies and rebuilds detected disc image files in an easy to setup way.  
 
 Supports:
 Crash Bandicoot - All versions (.BIN format)
@@ -19,6 +19,45 @@ Crash Nitro Kart API by BetaM, ManDude and eezstreet.
 Crash Twinsanity API by NeoKesha.
 Crash Tag Team Racing/Titans/Mind Over Mutant API by NeoKesha.
 Crate Mod Loader created by BetaM.
+
+Features - Crash Bandicoot:
+- TBD
+
+Features - Crash Bandicoot 2:
+- TBD
+
+Features - Crash Bandicoot Warped:
+- TBD
+
+Features - Crash Team Racing: 
+- TBD
+
+Features - Crash Twinsanity:
+- Randomize Crate Types (globally)
+- Version, seed and settings visible in the Autosave Disabled screen
+
+Features - Crash Nitro Kart:
+- Randomize Adventure Hub Warp Pads & Cups
+- Randomize Adventure Requirements & Rewards
+- Randomize Character Stats
+- Randomize Kart Stats
+- Randomize Surface Parameters
+- Randomize Powerup Distribution
+- Randomize Powerup Effects
+- Disable Fadeout Overlay
+- Disable Unlock Popups
+- Speed Up Mask Hints
+- Version, seed and settings visible in the Credits screen
+
+Features - Crash Tag Team Racing:
+- TBD
+- Version, seed and settings visible in the Credits screen
+
+Features - Crash of the Titans:
+- TBD
+
+Features - Crash Mind Over Mutant:
+- Version, seed and settings visible in the Credits screen
 
 License Information
 

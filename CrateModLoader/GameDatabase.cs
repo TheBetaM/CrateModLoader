@@ -486,6 +486,8 @@ namespace CrateModLoader
         public RegionCode[] RegionID_PSP;
         /// <summary> List of region identifiers for GCN games. </summary>
         public RegionCode[] RegionID_GCN;
+        /// <summary> List of region identifiers for WII games. </summary>
+        public RegionCode[] RegionID_WII;
     }
     public struct RegionCode
     {
