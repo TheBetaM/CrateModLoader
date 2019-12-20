@@ -1,8 +1,8 @@
 # CrateModLoader
-Randomizer and mod loader for various games.  
+Randomizer and mod loader for PS1, PS2, PSP and GC games.  
 It detects, extracts, modifies and rebuilds detected disc image files in an easy to setup way.  
 
-Supports:
+Supported games:
 - Crash Bandicoot - All versions (.BIN format)
 - Crash Bandicoot 2: Cortex Strikes Back - All versions (.BIN format)
 - Crash Bandicoot: Warped - All versions (.BIN format)
