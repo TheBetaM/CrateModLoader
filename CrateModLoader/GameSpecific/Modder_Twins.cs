@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using Twinsanity;
 //Twinsanity API by NeoKesha
+//Version number, seed and options are displayed in the Autosave Disabled screen accessible by starting a new game without saving or just disabling autosave.
 
 namespace CrateModLoader
 {
@@ -19,7 +20,7 @@ namespace CrateModLoader
         public string[] modOptions = { "Randomize Crate Types", "Randomize Individual Crates", "Randomize Gem Types",  };
 
         public bool Twins_Randomize_CrateTypes = false;
-        public bool Twins_Randomize_AllCrates = false; // Not yet implemented
+        public bool Twins_Randomize_AllCrates = false; // TODO
         public bool Twins_Randomize_GemTypes = false;
         private string bdPath = "";
 
@@ -199,6 +200,8 @@ namespace CrateModLoader
             //Start Modding
             Random randState = new Random(Program.ModProgram.randoSeed);
 
+            bool Twins_Edit_CodeText = true;
+
             if (Twins_Randomize_CrateTypes || Twins_Randomize_GemTypes)
             {
                 RM2 mainArchive = new RM2();
@@ -282,6 +285,56 @@ namespace CrateModLoader
                 mainArchive.Save(bdPath + "/Startup/Default.rm2");
             }
 
+            if (Twins_Edit_CodeText)
+            {
+                string[] CodeText;
+                if (Program.ModProgram.targetRegion == ModLoader.RegionType.NTSC_U)
+                {
+                    CodeText = File.ReadAllLines(bdPath + "/Language/Code/American.txt");
+                }
+                else if (Program.ModProgram.targetRegion == ModLoader.RegionType.PAL)
+                {
+                    CodeText = File.ReadAllLines(bdPath + "/Language/Code/English.txt");
+                }
+                else
+                {
+                    CodeText = File.ReadAllLines(bdPath + "/Language/Code/Japanese.txt");
+                }
+
+                List<string> CodeText_LineList = new List<string>();
+                for (int i = 0; i < CodeText.Length; i++)
+                {
+                    CodeText_LineList.Add(CodeText[i]);
+                }
+
+                for (int i = 0; i < CodeText_LineList.Count; i++)
+                {
+                    if (CodeText_LineList[i] == "to enable autosave,~return to the pause menu~and re-save the game.") //todo: japanese equivalent
+                    {
+                        CodeText_LineList[i] = "crate mod loader " + Program.ModProgram.releaseVersionString + "~" + "seed: " + Program.ModProgram.randoSeed + "~" + "options: " + Program.ModProgram.optionsSelectedString + "";
+                    }
+                }
+
+                CodeText = new string[CodeText_LineList.Count];
+                for (int i = 0; i < CodeText_LineList.Count; i++)
+                {
+                    CodeText[i] = CodeText_LineList[i];
+                }
+
+                if (Program.ModProgram.targetRegion == ModLoader.RegionType.NTSC_U)
+                {
+                    File.WriteAllLines(bdPath + "/Language/Code/American.txt", CodeText);
+                }
+                else if (Program.ModProgram.targetRegion == ModLoader.RegionType.PAL)
+                {
+                    File.WriteAllLines(bdPath + "/Language/Code/English.txt", CodeText);
+                }
+                else
+                {
+                    File.WriteAllLines(bdPath + "/Language/Code/Japanese.txt", CodeText);
+                }
+            }
+
             EndModProcess();
         }
 
@@ -292,7 +345,7 @@ namespace CrateModLoader
             mainBD.CreateTable(bdPath);
             mainBD.SaveTable(Program.ModProgram.extractedPath + "/CRASH6/", "CRASH");
             mainBD.SaveArchive(Program.ModProgram.extractedPath + "/CRASH6/", "CRASH");
-            mainBD.Dispose();
+            //mainBD.Dispose();
 
             // Get rid of extracted files
             if (Directory.Exists(bdPath))

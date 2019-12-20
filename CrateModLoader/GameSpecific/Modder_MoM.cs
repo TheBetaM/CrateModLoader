@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using CTTR;
 //MoM API by NeoKesha
+//Version number, seed and options are displayed in the Credits accessible from the main menu.
 
 namespace CrateModLoader
 {
@@ -39,9 +40,29 @@ namespace CrateModLoader
             rcf_frontend.ExtractRCF(ref feedback, path_extr);
 
             // Proof of concept mod replacing credits text
-            string[] frontend_lines = File.ReadAllLines(path_extr + @"script\CreditsList.txt");
-            frontend_lines[3] = "false       \"Modded MoM\"                                               false           true    kforbes";
-            File.WriteAllLines(path_extr + @"script\CreditsList.txt", frontend_lines);
+            string[] credits_lines = File.ReadAllLines(path_extr + @"script\CreditsList.txt");
+            //credits_lines[3] = "false       \"Modded MoM\"                                               false           true    kforbes";
+
+            List<string> credits_LineList = new List<string>();
+            credits_LineList.Add(credits_lines[0]);
+
+            credits_LineList.Add("false        \"Crate Mod Loader " + Program.ModProgram.releaseVersionString + "\"                 false           false");
+            credits_LineList.Add("false        \"Seed: " + Program.ModProgram.randoSeed + "\"                 false           false");
+            credits_LineList.Add("false        \"Options: " + Program.ModProgram.optionsSelectedString + "\"                 false           false");
+
+            for (int i = 1; i < credits_lines.Length; i++)
+            {
+                credits_LineList.Add(credits_lines[i]);
+            }
+
+            credits_lines = new string[credits_LineList.Count];
+            for (int i = 0; i < credits_LineList.Count; i++)
+            {
+                credits_lines[i] = credits_LineList[i];
+            }
+
+
+            File.WriteAllLines(path_extr + @"script\CreditsList.txt", credits_lines);
 
             for (int i = 0; i < rcf_frontend.Header.T2File.Length; i++)
             {

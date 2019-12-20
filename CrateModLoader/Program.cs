@@ -49,6 +49,7 @@ namespace CrateModLoader
 
     public class ModLoader
     {
+        /// <summary> Global Randomizer Seed </summary>
         public int randoSeed = 0;
         public Label processText;
         public ProgressBar progressBar;
@@ -66,7 +67,10 @@ namespace CrateModLoader
         public NumericUpDown textbox_rando_seed;
         public Button button_modMenu;
         public Button button_modCrateMenu;
+        /// <summary> String used to show which version of CML the modded game was built with. </summary>
         public string releaseVersionString = "v1.0";
+        /// <summary> String of bytes displaying which quick options were selected. (Automatically adjusts to more bytes depending options available, min. 2 characters, 2 characters per 8 options) </summary>
+        public string optionsSelectedString = "00";
 
         public string inputISOpath = "";
         public string outputISOpath = "";
@@ -563,6 +567,32 @@ namespace CrateModLoader
                 case GameType.CTR:
                     Program.ModCTR.OptionChanged(option, value);
                     break;
+            }
+            //Setting Options String
+            if (list_modOptions.Items.Count > 0)
+            {
+                int optionCount = list_modOptions.Items.Count;
+                int byteCount = (int)Math.Ceiling(optionCount / 8d);
+                byte[] optionsSelected = new byte[byteCount];
+                for (int i = 0; i < optionCount; i++)
+                {
+                    if (list_modOptions.GetItemCheckState(i) == CheckState.Checked)
+                    {
+                        optionsSelected[(int)Math.Floor(i / 8d)] += (byte)Math.Pow(2, i % 8);
+                    }
+                }
+                optionsSelectedString = optionsSelected[0].ToString("X2");
+                if (optionsSelected.Length > 1)
+                {
+                    for (int i = 1; i < optionsSelected.Length; i++)
+                    {
+                        if (optionsSelected[i] != 0x00)
+                        {
+                            optionsSelectedString += optionsSelected[i].ToString("X2");
+                        }
+                    }
+                }
+                //Console.WriteLine("options " + optionsSelectedString);
             }
         }
 

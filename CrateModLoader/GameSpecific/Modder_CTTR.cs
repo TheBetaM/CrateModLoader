@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using CTTR;
 //CTTR API by NeoKesha
+//Version number, seed and options are displayed in the Credits accessible from the main menu.
 
 namespace CrateModLoader
 {
@@ -229,6 +230,20 @@ namespace CrateModLoader
             // Proof of concept mod replacing attract movie with first gem cutscene
             string[] frontend_lines = File.ReadAllLines(path_extr + @"design\levels\common\frontend.god");
             frontend_lines[64] = "PlayMovie(\"art/fmv/wny_midway_statue\",\"any\",\"any\",true)";
+
+            // Editing credits to add CML metadata
+            for (int i = 0; i < frontend_lines.Length; i++)
+            {
+                if (frontend_lines[i] == "screen.AddLine(\"\",0,\"\")")
+                {
+                    frontend_lines[i + 1] = "screen.AddLine(\"Crate Mod Loader " + Program.ModProgram.releaseVersionString + "\",0,\"\")";
+                    frontend_lines[i + 2] = "screen.AddLine(\"Seed: " + Program.ModProgram.randoSeed + "\",0,\"\")";
+                    frontend_lines[i + 3] = "screen.AddLine(\"Options: " + Program.ModProgram.optionsSelectedString + "\",0,\"\")";
+                    frontend_lines[i + 4] = "screen.AddLineSpecial(\"creditscttr\",0,104,104,255,1.2,true)";
+                    break;
+                }
+            }
+
             File.WriteAllLines(path_extr + @"design\levels\common\frontend.god", frontend_lines);
 
             for (int i = 0; i < rcf_frontend.Header.T2File.Length; i++)

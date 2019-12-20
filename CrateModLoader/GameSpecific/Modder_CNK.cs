@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using CrateModLoader.GameSpecific.CNK;
 //CNK Tools/API by BetaM, ManDude and eezstreet.
-//Version number and seed is displayed in the Credits accessible from the main menu.
+//Version number, seed and options are displayed in the Credits accessible from the main menu.
 
 namespace CrateModLoader
 {
@@ -1379,8 +1379,10 @@ namespace CrateModLoader
 
                 csv_Credits_LineList.Add("Crate Mod Loader " + Program.ModProgram.releaseVersionString + ",AlphaDance,1.25,C,4294950912,0,40");
                 csv_Credits_LineList.Add("Seed: " + Program.ModProgram.randoSeed + ",AlphaDance,1.25,C,4294950912,0,40");
+                csv_Credits_LineList.Add("Options: " + Program.ModProgram.optionsSelectedString + ",AlphaDance,1.25,C,4294950912,0,40");
+                csv_Credits_LineList.Add("Crash Nitro Kart,AlphaDance,1.25,C,4279304191,0,80");
 
-                for (int i = 3; i < csv_Credits.Length; i++)
+                for (int i = 4; i < csv_Credits.Length; i++)
                 {
                     csv_Credits_LineList.Add(csv_Credits[i]);
                 }
@@ -1390,7 +1392,6 @@ namespace CrateModLoader
                 {
                     csv_Credits[i] = csv_Credits_LineList[i];
                 }
-                csv_Credits[5] = "Crash Nitro Kart,AlphaDance,1.25,C,0xFF10FFFF,0,80";
 
                 File.WriteAllLines(path_gob_extracted + "common/ui/eng/credits.csv", csv_Credits);
             }
