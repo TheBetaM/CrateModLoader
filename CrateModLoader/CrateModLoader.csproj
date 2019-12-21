@@ -74,6 +74,7 @@
     <Compile Include="GameSpecific\Crash2\Modder_Crash2.cs" />
     <Compile Include="GameSpecific\Crash3\Modder_Crash3.cs" />
     <Compile Include="GameSpecific\CTR\Modder_CTR.cs" />
+    <Compile Include="GameSpecific\CTTR\CTTR_Data.cs" />
     <Compile Include="GameSpecific\MoM\Modder_MoM.cs" />
     <Compile Include="GameSpecific\Titans\Modder_Titans.cs" />
     <Compile Include="GameSpecific\Twins\Modder_Twins.cs" />

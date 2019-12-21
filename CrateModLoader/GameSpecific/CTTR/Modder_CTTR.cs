@@ -55,27 +55,33 @@ namespace CrateModLoader
         public string path_RCF_sound = "";
         public string path_RCF_english = "";
 
-        public string[] modOptions = { "Randomize hubs", "Randomize tracks", "Randomize minigames", "Randomize missions", "Add unused cutscenes", "Prevent sequence breaks" };
-        public bool CTTR_rand_hubs = false;
-        public bool CTTR_rand_tracks = false;
-        public bool CTTR_rand_minigames = false;
-        public bool CTTR_rand_missions = false;
-        public bool CTTR_add_unused_cutscenes = false;
-        public bool CTTR_add_sequence_break_checks = false;
+        public Random randState = new Random();
+        public string[] modOptions = { "Randomize playable characters", "Randomize hub entrances", "Randomize tracks", "Randomize minigames", "Randomize missions", "Add unused cutscenes", "Prevent sequence breaks" };
+        public bool CTTR_rand_hubs = false; // todo, startup.god or genericobjectives.god (and maybe unlock message in missionobjectives_midway?)
+        public bool CTTR_rand_tracks = false; // todo, genericobjectives + missionobjectives_x
+        public bool CTTR_rand_minigames = false; // todo, genericobjectives.god
+        public bool CTTR_rand_missions = false; // todo, genericobjectives, missionobjectives_x, level NIS+NPC
+        public bool CTTR_rand_characters = false;
+        public bool CTTR_add_unused_cutscenes = false; // todo, NIS + an objective?
+        public bool CTTR_add_sequence_break_checks = false; // todo, genericobjectives
         public enum CTTR_Options
         {
-            RandomizeHubs = 0,
-            RandomizeTracks = 1,
-            RandomizeMinigames = 2,
-            RandomizeMissions = 3,
-            AddUnusedCutscenes = 4,
-            PreventSequenceBreaks = 5,
+            RandomizeCharacters = 0,
+            RandomizeHubs = 1,
+            RandomizeTracks = 2,
+            RandomizeMinigames = 3,
+            RandomizeMissions = 4,
+            AddUnusedCutscenes = 5,
+            PreventSequenceBreaks = 6,
         }
 
         public void OptionChanged(int option,bool value)
         {
             switch ((CTTR_Options)option)
             {
+                case CTTR_Options.RandomizeCharacters:
+                    CTTR_rand_characters = value;
+                    break;
                 case CTTR_Options.AddUnusedCutscenes:
                     CTTR_add_unused_cutscenes = value;
                     break;
@@ -213,9 +219,219 @@ namespace CrateModLoader
         {
             SetPaths(Program.ModProgram.isoType, Program.ModProgram.PS2_executable_name);
 
+            randState = new Random(Program.ModProgram.randoSeed);
+
             //Fixes names for PS2
             //File.Move(Program.ModProgram.extractedPath + path_RCF_frontend + ";1", Program.ModProgram.extractedPath + path_RCF_frontend);
 
+            bool Editing_Credits = true;
+            bool Editing_DefaultCommon = false;
+
+            if (CTTR_rand_characters)
+            {
+                Editing_DefaultCommon = true;
+            }
+
+            if (Editing_DefaultCommon)
+            {
+                EditDefaultAndCommon();
+            }
+
+            if (Editing_Credits)
+            {
+                Mod_EditCredits();
+            }
+            
+
+            //Fixes names for PS2
+            //File.Move(Program.ModProgram.extractedPath + path_RCF_frontend, Program.ModProgram.extractedPath + path_RCF_frontend + ";1");
+        }
+
+        void EditDefaultAndCommon()
+        {
+            List<int> randChars = new List<int>();
+            if (CTTR_rand_characters)
+            {
+                int maxPlayableCharacters = 2;
+
+                List<int> possibleChars = new List<int>();
+                
+                for (int i = 0; i < 8; i++)
+                {
+                    possibleChars.Add(i);
+                }
+                int targetChar = -1;
+                for (int i = 0; i < maxPlayableCharacters; i++)
+                {
+                    targetChar = possibleChars[randState.Next(0, possibleChars.Count)];
+                    randChars.Add(targetChar);
+                }
+            }
+
+            //Warning: The CTTR API only likes paths with \ backslashes
+            string feedback = "";
+            string path_extr = "";
+            RCF rcf_common= new RCF();
+            rcf_common.OpenRCF(AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_common);
+            path_extr = AppDomain.CurrentDomain.BaseDirectory + @"temp\cml_extr\";
+            Directory.CreateDirectory(path_extr);
+            rcf_common.ExtractRCF(ref feedback, path_extr);
+
+            if (CTTR_rand_characters)
+            {
+                Randomize_Characters(path_extr, ref rcf_common, ref randChars);
+            }
+
+            rcf_common.Recalculate();
+            rcf_common.Pack(AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_common + "1", ref feedback);
+
+            // Extraction cleanup
+            System.IO.File.Delete(AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_common);
+            System.IO.File.Move(AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_common + "1", AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_common);
+            if (Directory.Exists(path_extr))
+            {
+                DirectoryInfo di = new DirectoryInfo(path_extr);
+
+                foreach (FileInfo file in di.EnumerateFiles())
+                {
+                    file.Delete();
+                }
+                foreach (DirectoryInfo dir in di.EnumerateDirectories())
+                {
+                    dir.Delete(true);
+                }
+
+                Directory.Delete(path_extr);
+            }
+            
+            RCF rcf_default = new RCF();
+            rcf_default.OpenRCF(AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_default);
+            path_extr = AppDomain.CurrentDomain.BaseDirectory + @"temp\cml_extr\";
+            Directory.CreateDirectory(path_extr);
+            rcf_default.ExtractRCF(ref feedback, path_extr);
+
+            if (CTTR_rand_characters)
+            {
+                Randomize_Characters(path_extr, ref rcf_default, ref randChars);
+            }
+
+            rcf_default.Recalculate();
+            rcf_default.Pack(AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_default + "1", ref feedback);
+
+            // Extraction cleanup
+            System.IO.File.Delete(AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_default);
+            System.IO.File.Move(AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_default + "1", AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_default);
+            if (Directory.Exists(path_extr))
+            {
+                DirectoryInfo di = new DirectoryInfo(path_extr);
+
+                foreach (FileInfo file in di.EnumerateFiles())
+                {
+                    file.Delete();
+                }
+                foreach (DirectoryInfo dir in di.EnumerateDirectories())
+                {
+                    dir.Delete(true);
+                }
+
+                Directory.Delete(path_extr);
+            }
+            
+        }
+
+        void Randomize_Characters(string path_extr, ref RCF rcf_file, ref List<int> randChars)
+        {
+            
+
+            if (File.Exists(path_extr + @"design\permanent\genericobjectives.god"))
+            {
+                string[] startup_lines = System.IO.File.ReadAllLines(path_extr + @"design\permanent\genericobjectives.god");
+                List<string> LineList = new List<string>();
+                for (int i = 0; i < startup_lines.Length; i++)
+                {
+                    LineList.Add(startup_lines[i]);
+                }
+
+                int characterList_Start = 0;
+                int characterList_End = 0;
+                List<string> DefaultUnlocks = new List<string>();
+                if (CTTR_Data.LUA_LoadObject(ref LineList, "Objective", "UnlockDefaults", ref characterList_Start, ref characterList_End, ref DefaultUnlocks))
+                {
+                    DefaultUnlocks.Clear();
+                    DefaultUnlocks.Add("this.SetName(\"UnlockDefaults\")");
+                    for (int i = 0; i < randChars.Count; i++)
+                    {
+                        DefaultUnlocks.Add("this.AddAction_UnlockCar(\"" + CTTR_Data.DriverNames[randChars[i]] + "\",1)");
+                    }
+                }
+                CTTR_Data.LUA_SaveObject(ref LineList, "Objective", "UnlockDefaults", ref DefaultUnlocks);
+
+                startup_lines = new string[LineList.Count];
+                for (int i = 0; i < LineList.Count; i++)
+                {
+                    startup_lines[i] = LineList[i];
+                }
+
+                System.IO.File.WriteAllLines(path_extr + @"design\permanent\genericobjectives.god", startup_lines);
+
+                for (int i = 0; i < rcf_file.Header.T2File.Length; i++)
+                {
+                    if (rcf_file.Header.T2File[i].Name == @"design\permanent\genericobjectives.god")
+                    {
+                        rcf_file.Header.T2File[i].External = path_extr + @"design\permanent\genericobjectives.god";
+                        break;
+                    }
+                }
+            }
+            if (File.Exists(path_extr + @"design\permanent\skins.god"))
+            {
+                string[] skins_lines = System.IO.File.ReadAllLines(path_extr + @"design\permanent\skins.god");
+                List<string> LineList = new List<string>();
+                for (int i = 0; i < skins_lines.Length; i++)
+                {
+                    LineList.Add(skins_lines[i]);
+                }
+
+                int skin_Start = 0;
+                int skin_End = 0;
+                List<string> SkinObj = new List<string>();
+                if (CTTR_Data.LUA_LoadObject(ref LineList, "Skin", "CrashDefault", ref skin_Start, ref skin_End, ref SkinObj))
+                {
+                    for (int i = 0; i < SkinObj.Count; i++)
+                    {
+                        if (SkinObj[i] == "this.SetOnfootSkinFilename(\"crash_onfoot_model\")")
+                        {
+                            SkinObj[i] = "this.SetOnfootSkinFilename(\"" + CTTR_Data.DriverNames[randChars[0]] + "_onfoot_model\")";
+                        }
+                        else if (SkinObj[i] == "this.SetSpinSkinFilename(\"crash_spin_model\")")
+                        {
+                            SkinObj[i] = "this.SetSpinSkinFilename(\"" + CTTR_Data.DriverNames[randChars[0]] + "_onfoot_model\")";
+                        }
+                    }
+                }
+                CTTR_Data.LUA_SaveObject(ref LineList, "Skin", "CrashDefault", ref SkinObj);
+
+                skins_lines = new string[LineList.Count];
+                for (int i = 0; i < LineList.Count; i++)
+                {
+                    skins_lines[i] = LineList[i];
+                }
+
+                System.IO.File.WriteAllLines(path_extr + @"design\permanent\skins.god", skins_lines);
+
+                for (int i = 0; i < rcf_file.Header.T2File.Length; i++)
+                {
+                    if (rcf_file.Header.T2File[i].Name == @"design\permanent\skins.god")
+                    {
+                        rcf_file.Header.T2File[i].External = path_extr + @"design\permanent\skins.god";
+                        break;
+                    }
+                }
+            }
+        }
+
+        void Mod_EditCredits()
+        {
             //Warning: The CTTR API only likes paths with \ backslashes
             string feedback = "";
             string path_extr = "";
@@ -275,10 +491,6 @@ namespace CrateModLoader
 
                 Directory.Delete(path_extr);
             }
-            
-
-            //Fixes names for PS2
-            //File.Move(Program.ModProgram.extractedPath + path_RCF_frontend, Program.ModProgram.extractedPath + path_RCF_frontend + ";1");
         }
     }
 }
