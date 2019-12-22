@@ -19,6 +19,7 @@ namespace CrateModLoader
         public bool Twins_Randomize_AllCrates = false; // TODO
         public bool Twins_Randomize_GemTypes = false;
         private string bdPath = "";
+        public Random randState = new Random();
 
         public enum Twins_Options
         {
@@ -199,7 +200,7 @@ namespace CrateModLoader
         public void ModProcess()
         {
             //Start Modding
-            Random randState = new Random(Program.ModProgram.randoSeed);
+            randState = new Random(Program.ModProgram.randoSeed);
 
             bool Twins_Edit_CodeText = true;
 
@@ -286,6 +287,30 @@ namespace CrateModLoader
                 mainArchive.Save(bdPath + "/Startup/Default.rm2");
             }
 
+            if (Twins_Randomize_AllCrates)
+            {
+                List<uint> crateList = new List<uint>();
+                crateList.Add((uint)DefaultRM2_DefaultIDs.BASIC_CRATE);
+                crateList.Add((uint)DefaultRM2_DefaultIDs.TNT_CRATE);
+                crateList.Add((uint)DefaultRM2_DefaultIDs.NITRO_CRATE);
+                crateList.Add((uint)DefaultRM2_DefaultIDs.EXTRA_LIFE_CRATE);
+                crateList.Add((uint)DefaultRM2_DefaultIDs.WOODEN_SPRING_CRATE);
+                crateList.Add((uint)DefaultRM2_DefaultIDs.REINFORCED_WOODEN_CRATE);
+                crateList.Add((uint)DefaultRM2_DefaultIDs.AKU_AKU_CRATE);
+                crateList.Add((uint)DefaultRM2_DefaultIDs.EXTRA_LIFE_CRATE_CORTEX);
+                crateList.Add((uint)DefaultRM2_DefaultIDs.EXTRA_LIFE_CRATE_NINA);
+                crateList.Add((uint)DefaultRM2_DefaultIDs.IRON_CRATE);
+                crateList.Add((uint)DefaultRM2_DefaultIDs.IRON_SPRING_CRATE);
+                crateList.Add((uint)DefaultRM2_DefaultIDs.MULTIPLE_HIT_CRATE);
+                crateList.Add((uint)DefaultRM2_DefaultIDs.SURPRISE_CRATE);
+
+                DirectoryInfo di = new DirectoryInfo(bdPath + "/Levels/");
+                foreach (DirectoryInfo dir in di.EnumerateDirectories())
+                {
+                    Recursive_Randomize_All_Crates(dir, ref crateList);
+                }
+            }
+
             if (Twins_Edit_CodeText)
             {
                 string[] CodeText;
@@ -337,6 +362,59 @@ namespace CrateModLoader
             }
 
             EndModProcess();
+        }
+
+        void RM_Randomize_All_Crates(string path, ref List<uint> crateList)
+        {
+            RM2 RM_Archive = new RM2();
+            Instance inst = null;
+
+            int target_item = 0;
+            bool cont = false;
+
+            RM_Archive.LoadRM2(path);
+
+            for (int section = (int)RM2_Sections.Instances1; section < (int)RM2_Sections.Instances8 + 1; section++)
+            {
+                if (RM_Archive.Item[section].Item != null && RM_Archive.Item[section].Item.Length > 0)
+                {
+                    if (RM_Archive.Item[section].Item[(int)RM2_Instance_Sections.Instances].Item.Length > 0)
+                    {
+                        for (int i = 0; i < RM_Archive.Item[section].Item[(int)RM2_Instance_Sections.Instances].Item.Length; i++)
+                        {
+                            inst = (Instance)RM_Archive.Item[section].Item[(int)RM2_Instance_Sections.Instances].Item[i];
+                            for (int d = 0; d < crateList.Count; d++)
+                            {
+                                if (!cont && inst.ObjectID == crateList[d])
+                                {
+                                    target_item = randState.Next(0, crateList.Count);
+                                    inst.ObjectID = (ushort)crateList[target_item];
+                                    cont = true;
+                                }
+                            }
+                            RM_Archive.Item[section].Item[(int)RM2_Instance_Sections.Instances].Item[i] = inst;
+                            cont = false;
+                        }
+                    }
+                }
+            }
+
+            RM_Archive.Recalculate();
+            RM_Archive.Save(path);
+        }
+        void Recursive_Randomize_All_Crates(DirectoryInfo di, ref List<uint> crateList)
+        {
+            foreach (DirectoryInfo dir in di.EnumerateDirectories())
+            {
+                foreach (FileInfo file in dir.EnumerateFiles())
+                {
+                    if (file.Extension == ".rm2" || file.Extension == ".RM2")
+                    {
+                        RM_Randomize_All_Crates(file.FullName, ref crateList);
+                    }
+                }
+                Recursive_Randomize_All_Crates(dir, ref crateList);
+            }
         }
 
         public void EndModProcess()

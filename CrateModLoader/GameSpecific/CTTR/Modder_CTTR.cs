@@ -59,10 +59,9 @@ namespace CrateModLoader
 
         public Random randState = new Random();
         public string[] modOptions = {
-            "Randomize Playable Characters",
+            "Randomize Playable & Starting Characters",
             "Randomize Hub Entrances",
             "Randomize Track Entrances",
-            "Randomize Gem Keys",
             "Randomize Minigames",
             "Randomize Missions",
             "Randomize Car Stats",
@@ -72,12 +71,11 @@ namespace CrateModLoader
             "Randomize Run & Gun",
             "Add Unused Cutscenes",
             "Prevent Sequence Breaks" };
-        public bool CTTR_rand_hubs = false;
+        public bool CTTR_rand_hubs = false; // todo: gem keys in missionobjectives_x, unlock failure message, key missions
         public bool CTTR_rand_tracks = false; // todo: arenas
         public bool CTTR_rand_minigames = false; // todo: minigame challenges aswell
         public bool CTTR_rand_missions = false; // todo, genericobjectives, missionobjectives_x, level NIS+NPC
         public bool CTTR_rand_characters = false; // todo: idle animation
-        public bool CTTR_rand_gems = false; // todo: missionobjectives_x
         public bool CTTR_rand_carstats = false; // todo: vehicles
         public bool CTTR_rand_racelaps = false;
         public bool CTTR_rand_battlekos = false;
@@ -90,7 +88,6 @@ namespace CrateModLoader
             RandomizeCharacters = 0,
             RandomizeHubs = 1,
             RandomizeTracks = 2,
-            RandomizeGems = 3,
             RandomizeMinigames = 4,
             RandomizeMissions = 5,
             RandomizeCarStats = 6,
@@ -126,9 +123,6 @@ namespace CrateModLoader
                     break;
                 case CTTR_Options.RandomizeTracks:
                     CTTR_rand_tracks = value;
-                    break;
-                case CTTR_Options.RandomizeGems:
-                    CTTR_rand_gems = value;
                     break;
                 case CTTR_Options.RandomizeCarStats:
                     CTTR_rand_carstats = value;
@@ -272,7 +266,7 @@ namespace CrateModLoader
             bool Editing_Credits = true;
             bool Editing_DefaultCommon = false;
 
-            if (CTTR_rand_characters || CTTR_rand_hubs || CTTR_rand_tracks || CTTR_rand_minigames || CTTR_rand_missions || CTTR_rand_gems || CTTR_rand_carstats || CTTR_rand_racelaps || CTTR_rand_battlekos || CTTR_rand_crashinator || CTTR_rand_runandgun)
+            if (CTTR_rand_characters || CTTR_rand_hubs || CTTR_rand_tracks || CTTR_rand_minigames || CTTR_rand_missions || CTTR_rand_carstats || CTTR_rand_racelaps || CTTR_rand_battlekos || CTTR_rand_crashinator || CTTR_rand_runandgun)
             {
                 Editing_DefaultCommon = true;
             }
@@ -380,6 +374,28 @@ namespace CrateModLoader
                     randKOs.Add(randState.Next(5, 20));
                 }
             }
+            List<int> randGems = new List<int>();
+            if (CTTR_rand_hubs)
+            {
+                List<int> possibleGems = new List<int>();
+
+                possibleGems.Add(0);
+                possibleGems.Add(1);
+                possibleGems.Add(2);
+                possibleGems.Add(4);
+                possibleGems.Add(5);
+                int targetGem = -1;
+                for (int i = 0; i < 5; i++)
+                {
+                    targetGem = possibleGems[randState.Next(0, possibleGems.Count)];
+                    randGems.Add(targetGem);
+                    possibleGems.Remove(targetGem);
+                    if (i == 2)
+                    {
+                        randGems.Add(3);
+                    }
+                }
+            }
 
             //Warning: The CTTR API only likes paths with \ backslashes
             string feedback = "";
@@ -396,7 +412,7 @@ namespace CrateModLoader
             }
             if (CTTR_rand_hubs)
             {
-                Randomize_Hubs(path_extr, ref rcf_common, ref randHubs);
+                Randomize_Hubs(path_extr, ref rcf_common, ref randHubs, ref randGems);
             }
             if (CTTR_rand_tracks)
             {
@@ -449,7 +465,7 @@ namespace CrateModLoader
             }
             if (CTTR_rand_hubs)
             {
-                Randomize_Hubs(path_extr, ref rcf_default, ref randHubs);
+                Randomize_Hubs(path_extr, ref rcf_default, ref randHubs, ref randGems);
             }
             if (CTTR_rand_tracks)
             {
@@ -536,7 +552,7 @@ namespace CrateModLoader
                     }
                 }
             }
-            if (System.IO.File.Exists(path_extr + @"design\permanent\skins.god"))
+            if (randChars[0] != (int)CTTR_Data.DriverID.Crash && System.IO.File.Exists(path_extr + @"design\permanent\skins.god"))
             {
                 string[] skins_lines = System.IO.File.ReadAllLines(path_extr + @"design\permanent\skins.god");
                 List<string> LineList = new List<string>();
@@ -643,7 +659,7 @@ namespace CrateModLoader
             }
             */
         }
-        void Randomize_Hubs(string path_extr, ref RCF rcf_file, ref List<int> randHubs)
+        void Randomize_Hubs(string path_extr, ref RCF rcf_file, ref List<int> randHubs, ref List<int> randGems)
         {
             if (System.IO.File.Exists(path_extr + @"design\permanent\genericobjectives.god"))
             {
@@ -692,6 +708,84 @@ namespace CrateModLoader
                     }
                 }
             }
+            /* TODO: Gem Key randomization?
+            for (int obj = 0; obj < CTTR_Data.MissionObjectiveTypes.Length; obj++)
+            {
+                if (System.IO.File.Exists(path_extr + @"design\permanent\missionobjectives_" + CTTR_Data.MissionObjectiveTypes[obj] + ".god"))
+                {
+                    string[] objective_lines = System.IO.File.ReadAllLines(path_extr + @"design\permanent\missionobjectives_" + CTTR_Data.MissionObjectiveTypes[obj] + ".god");
+                    List<string> LineList = new List<string>();
+                    for (int i = 0; i < objective_lines.Length; i++)
+                    {
+                        LineList.Add(objective_lines[i]);
+                    }
+
+                    int List_Start = 0;
+                    int List_End = 0;
+                    List<string> ChangeHubObjective = new List<string>();
+                    for (int i = 0; i < CTTR_Data.MissionObjectiveTypes.Length; i++)
+                    {
+                        if (CTTR_Data.LUA_LoadObject(ref LineList, "Objective", CTTR_Data.MissionObjectiveHubNamesSimple[i] + "KeyCollection", ref List_Start, ref List_End, ref ChangeHubObjective))
+                        {
+                            for (int a = 0; a < ChangeHubObjective.Count; a++)
+                            {
+                                if (ChangeHubObjective[a] == "this.AddAction_SetNamedFlag(\"KeyAcquired_" + CTTR_Data.MissionObjectiveTypes[i] + "\",true)")
+                                {
+                                    ChangeHubObjective[a] = "this.AddAction_SetNamedFlag(\"KeyAcquired_" + CTTR_Data.MissionObjectiveTypes[randGems[i]] + "\",true)";
+                                }
+                                else if (ChangeHubObjective[a] == "this.AddAction_SetRadarNavPoint(\"Nav" + CTTR_Data.MissionObjectiveHubNamesSimple[i] + "Gate\")")
+                                {
+                                    ChangeHubObjective[a] = "this.AddAction_SetRadarNavPoint(\"Nav" + CTTR_Data.MissionObjectiveHubNamesSimple[randGems[i]] + "Gate\")";
+                                }
+                                else if (ChangeHubObjective[a] == "this.AddRequirement_ObjectiveComplete(\"Unlock" + CTTR_Data.MissionObjectiveHubNamesSimple[i] + "Gate\")")
+                                {
+                                    ChangeHubObjective[a] = "this.AddRequirement_ObjectiveComplete(\"Unlock" + CTTR_Data.MissionObjectiveHubNamesSimple[randGems[i]] + "Gate\")";
+                                }
+                            }
+                            CTTR_Data.LUA_SaveObject(ref LineList, "Objective", CTTR_Data.MissionObjectiveHubNamesSimple[i] + "KeyCollection", ref ChangeHubObjective);
+                        }
+                        ChangeHubObjective.Clear();
+                        if (CTTR_Data.LUA_LoadObject(ref LineList, "Objective", "Unlock" + CTTR_Data.MissionObjectiveHubNamesSimple[i] + "Gate", ref List_Start, ref List_End, ref ChangeHubObjective))
+                        {
+                            for (int a = 0; a < ChangeHubObjective.Count; a++)
+                            {
+                                if (ChangeHubObjective[a] == "this.AddRequirement_CheckNamedFlag(\"KeyAcquired_" + CTTR_Data.MissionObjectiveTypes[i] + "\",true)")
+                                {
+                                    ChangeHubObjective[a] = "this.AddRequirement_CheckNamedFlag(\"KeyAcquired_" + CTTR_Data.MissionObjectiveTypes[randGems[i]] + "\",true)";
+                                }
+                                else if (ChangeHubObjective[a] == "this.AddAction_SetNamedFlag(\"GateUnlocked_" + CTTR_Data.MissionObjectiveTypes[i] + "\",true)")
+                                {
+                                    ChangeHubObjective[a] = "this.AddAction_SetNamedFlag(\"GateUnlocked_" + CTTR_Data.MissionObjectiveTypes[randGems[i]] + "\",true)";
+                                }
+                                else if (ChangeHubObjective[a] == "this.AddAction_SetRadarNavPoint(\"Nav" + CTTR_Data.MissionObjectiveHubNamesSimple[i] + "Weenie\")")
+                                {
+                                    ChangeHubObjective[a] = "this.AddAction_SetRadarNavPoint(\"Nav" + CTTR_Data.MissionObjectiveHubNamesSimple[randGems[i]] + "Weenie\")";
+                                }
+                            }
+                            CTTR_Data.LUA_SaveObject(ref LineList, "Objective", "Unlock" + CTTR_Data.MissionObjectiveHubNamesSimple[i] + "Gate", ref ChangeHubObjective);
+                        }
+                        ChangeHubObjective.Clear();
+                    }
+
+                    objective_lines = new string[LineList.Count];
+                    for (int i = 0; i < LineList.Count; i++)
+                    {
+                        objective_lines[i] = LineList[i];
+                    }
+
+                    System.IO.File.WriteAllLines(path_extr + @"design\permanent\missionobjectives_" + CTTR_Data.MissionObjectiveTypes[obj] + ".god", objective_lines);
+
+                    for (int i = 0; i < rcf_file.Header.T2File.Length; i++)
+                    {
+                        if (rcf_file.Header.T2File[i].Name == @"design\permanent\missionobjectives_" + CTTR_Data.MissionObjectiveTypes[obj] + ".god")
+                        {
+                            rcf_file.Header.T2File[i].External = path_extr + @"design\permanent\missionobjectives_" + CTTR_Data.MissionObjectiveTypes[obj] + ".god";
+                            break;
+                        }
+                    }
+                }
+            }
+            */
         }
         void Randomize_Tracks(string path_extr, ref RCF rcf_file, ref List<int> randTracks)
         {

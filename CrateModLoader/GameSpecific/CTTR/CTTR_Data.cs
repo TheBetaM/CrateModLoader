@@ -357,6 +357,15 @@ namespace CrateModLoader
             "fairy",
             "solar",
         };
+        public static string[] MissionObjectiveHubNamesSimple = new string[]
+        {
+            "Adventure",
+            "Dino",
+            "Egypt",
+            "Midway",
+            "Fairy",
+            "Solar",
+        };
         public static string[] MinigameObjectiveTypes = new string[]
         {
             "MiniGamesMidway1",
@@ -378,6 +387,24 @@ namespace CrateModLoader
             "MiniGameFallingTargets2",
             "MiniGameBowling2",
             "MiniGameFloatingTargets2",
+        };
+        public enum MissionID
+        {
+            Unlock_Hub_Adventure_Gate = 54,
+            Unlock_Hub_Fairy_Gate = 55,
+            Unlock_Hub_Dino_Gate = 56,
+            Unlock_Hub_Egypt_Gate = 57,
+            Unlock_Hub_Solar_Gate = 58,
+        }
+        public static string[] KeyMissionTypes = new string[] // This is because their names have typos
+        {
+            "Not Used",
+            "Not Used",
+            "FairyKeyMission",
+            "DinotKeyMission",
+            "EgyptKeyMission",
+            "SolartKeuMission",
+            "Not Used",
         };
 
         public static bool LUA_FindObject(ref List<string> lua_script, string object_type, string object_name, ref int object_start, ref int object_end)
