@@ -222,6 +222,163 @@ namespace CrateModLoader
             "solar3",
             "testbed1",
         };
+        public enum HubID
+        {
+            Midway = 0,
+            Adventure = 1,
+            Fairy = 2,
+            Dino = 3,
+            Egypt = 4,
+            Solar = 5,
+            Tutorial = 6,
+        }
+        public static string[] HubNames = new string[]
+        {
+            "onfoot_midway",
+            "onfoot_adventure",
+            "onfoot_fairy",
+            "onfoot_dino",
+            "onfoot_egypt",
+            "onfoot_solar",
+            "onfoot_tutorial",
+        };
+        public static string[] HubNamesSimple = new string[]
+        {
+            "Midway",
+            "Adventure",
+            "Fairy",
+            "Dino",
+            "Egypt",
+            "Solar",
+            "Tutorial",
+        };
+        public enum TrackID
+        {
+            adventure1 = 0,
+            adventure2 = 1,
+            adventure3 = 2,
+            fairy1 = 3,
+            fairy2 = 4,
+            fairy3 = 5,
+            dino1 = 6,
+            dino2 = 7,
+            dino3 = 8,
+            egypt1 = 9,
+            egypt2 = 10,
+            egypt3 = 11,
+            solar1 = 12,
+            solar2 = 13,
+            solar3 = 14,
+            adventure_arena = 15,
+            fairy_arena = 16,
+            dino_arena = 17,
+            egypt_arena = 18,
+            solar_arena = 19,
+            bonus1_arena = 20,
+        }
+        public static string[] TrackNames = new string[]
+        {
+            "adventure1",
+            "adventure2",
+            "adventure3",
+            "fairy1",
+            "fairy2",
+            "fairy3",
+            "dino1",
+            "dino2",
+            "dino3",
+            "egypt1",
+            "egypt2",
+            "egypt3",
+            "solar1",
+            "solar2",
+            "solar3",
+            "adventure_arena",
+            "fairy_arena",
+            "dino_arena",
+            "egypt_arena",
+            "solar_arena",
+            "bonus1_arena",
+        };
+        public static string[] TrackNamesSimple = new string[]
+        {
+            "Adventure1",
+            "Adventure2",
+            "Adventure3",
+            "Fairy1",
+            "Fairy2",
+            "Fairy3",
+            "Dino1",
+            "Dino2",
+            "Dino3",
+            "Egypt1",
+            "Egypt2",
+            "Egypt3",
+            "Solar1",
+            "Solar2",
+            "Solar3",
+            "Adventure",
+            "Fairy",
+            "Dino",
+            "Egypt",
+            "Solar",
+            "Dino",
+        };
+        public static string[] TrackGateNames = new string[]
+        {
+            "adventuregate1",
+            "adventuregate2",
+            "adventuregate3",
+            "fairygate1",
+            "fairygate2",
+            "fairygate3",
+            "dinogate1",
+            "dinogate2",
+            "dinogate3",
+            "egyptgate1",
+            "egyptgate2",
+            "egyptgate3",
+            "solargate1",
+            "solargate2",
+            "solargate3",
+            "adventuregate4",
+            "fairygate4",
+            "dinogate4",
+            "egyptgate4",
+            "solargate4",
+            "bonusgate",
+        };
+        public static string[] MissionObjectiveTypes = new string[]
+        {
+            "adventure",
+            "dino",
+            "egypt",
+            "midway",
+            "fairy",
+            "solar",
+        };
+        public static string[] MinigameObjectiveTypes = new string[]
+        {
+            "MiniGamesMidway1",
+            "MiniGamesMidway2",
+            "MiniGamesAdventure1",
+            "MiniGamesFairy1",
+            "MiniGamesDino1",
+            "MiniGamesEgypt1",
+            "MiniGamesSolar1",
+            "MiniGamesSolar2",
+        };
+        public static string[] MinigameTypeNames = new string[]
+        {
+            "MiniGameBowling1",
+            "MiniGameDucks1",
+            "MiniGameSkeets1",
+            "MiniGameFallingTargets1",
+            "MiniGameFloatingTargets1",
+            "MiniGameFallingTargets2",
+            "MiniGameBowling2",
+            "MiniGameFloatingTargets2",
+        };
 
         public static bool LUA_FindObject(ref List<string> lua_script, string object_type, string object_name, ref int object_start, ref int object_end)
         {

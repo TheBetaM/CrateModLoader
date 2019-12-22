@@ -5,7 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using CTTR;
+using Pure3D;
 //CTTR API by NeoKesha
+//Pure3D API by handsomematt (https://github.com/handsomematt/Pure3D)
 //Version number, seed and options are displayed in the Credits accessible from the main menu.
 
 namespace CrateModLoader
@@ -56,12 +58,31 @@ namespace CrateModLoader
         public string path_RCF_english = "";
 
         public Random randState = new Random();
-        public string[] modOptions = { "Randomize playable characters", "Randomize hub entrances", "Randomize tracks", "Randomize minigames", "Randomize missions", "Add unused cutscenes", "Prevent sequence breaks" };
-        public bool CTTR_rand_hubs = false; // todo, startup.god or genericobjectives.god (and maybe unlock message in missionobjectives_midway?)
-        public bool CTTR_rand_tracks = false; // todo, genericobjectives + missionobjectives_x
-        public bool CTTR_rand_minigames = false; // todo, genericobjectives.god
+        public string[] modOptions = {
+            "Randomize Playable Characters",
+            "Randomize Hub Entrances",
+            "Randomize Track Entrances",
+            "Randomize Gem Keys",
+            "Randomize Minigames",
+            "Randomize Missions",
+            "Randomize Car Stats",
+            "Randomize Race Laps",
+            "Randomize Battle KO's",
+            "Randomize Crashinator",
+            "Randomize Run & Gun",
+            "Add Unused Cutscenes",
+            "Prevent Sequence Breaks" };
+        public bool CTTR_rand_hubs = false;
+        public bool CTTR_rand_tracks = false; // todo: arenas
+        public bool CTTR_rand_minigames = false; // todo: minigame challenges aswell
         public bool CTTR_rand_missions = false; // todo, genericobjectives, missionobjectives_x, level NIS+NPC
-        public bool CTTR_rand_characters = false;
+        public bool CTTR_rand_characters = false; // todo: idle animation
+        public bool CTTR_rand_gems = false; // todo: missionobjectives_x
+        public bool CTTR_rand_carstats = false; // todo: vehicles
+        public bool CTTR_rand_racelaps = false;
+        public bool CTTR_rand_battlekos = false;
+        public bool CTTR_rand_crashinator = false; // todo: kamikaze
+        public bool CTTR_rand_runandgun = false; // todo: railshooter
         public bool CTTR_add_unused_cutscenes = false; // todo, NIS + an objective?
         public bool CTTR_add_sequence_break_checks = false; // todo, genericobjectives
         public enum CTTR_Options
@@ -69,10 +90,16 @@ namespace CrateModLoader
             RandomizeCharacters = 0,
             RandomizeHubs = 1,
             RandomizeTracks = 2,
-            RandomizeMinigames = 3,
-            RandomizeMissions = 4,
-            AddUnusedCutscenes = 5,
-            PreventSequenceBreaks = 6,
+            RandomizeGems = 3,
+            RandomizeMinigames = 4,
+            RandomizeMissions = 5,
+            RandomizeCarStats = 6,
+            RandomizeRaceLaps = 7,
+            RandomizeBattleKOs = 8,
+            RandomizeCrashinator = 9,
+            RandomizeRunAndGun = 10,
+            AddUnusedCutscenes = 11,
+            PreventSequenceBreaks = 12,
         }
 
         public void OptionChanged(int option,bool value)
@@ -99,6 +126,24 @@ namespace CrateModLoader
                     break;
                 case CTTR_Options.RandomizeTracks:
                     CTTR_rand_tracks = value;
+                    break;
+                case CTTR_Options.RandomizeGems:
+                    CTTR_rand_gems = value;
+                    break;
+                case CTTR_Options.RandomizeCarStats:
+                    CTTR_rand_carstats = value;
+                    break;
+                case CTTR_Options.RandomizeBattleKOs:
+                    CTTR_rand_battlekos = value;
+                    break;
+                case CTTR_Options.RandomizeRaceLaps:
+                    CTTR_rand_racelaps = value;
+                    break;
+                case CTTR_Options.RandomizeCrashinator:
+                    CTTR_rand_crashinator = value;
+                    break;
+                case CTTR_Options.RandomizeRunAndGun:
+                    CTTR_rand_runandgun = value;
                     break;
             }
         }
@@ -227,7 +272,7 @@ namespace CrateModLoader
             bool Editing_Credits = true;
             bool Editing_DefaultCommon = false;
 
-            if (CTTR_rand_characters)
+            if (CTTR_rand_characters || CTTR_rand_hubs || CTTR_rand_tracks || CTTR_rand_minigames || CTTR_rand_missions || CTTR_rand_gems || CTTR_rand_carstats || CTTR_rand_racelaps || CTTR_rand_battlekos || CTTR_rand_crashinator || CTTR_rand_runandgun)
             {
                 Editing_DefaultCommon = true;
             }
@@ -265,6 +310,74 @@ namespace CrateModLoader
                 {
                     targetChar = possibleChars[randState.Next(0, possibleChars.Count)];
                     randChars.Add(targetChar);
+                    possibleChars.Remove(targetChar);
+                }
+            }
+            List<int> randHubs = new List<int>();
+            if (CTTR_rand_hubs)
+            {
+                List<int> possibleHubs = new List<int>();
+
+                for (int i = 1; i < 6; i++)
+                {
+                    possibleHubs.Add(i);
+                }
+                int targetHub = -1;
+                for (int i = 0; i < 5; i++)
+                {
+                    targetHub = possibleHubs[randState.Next(0, possibleHubs.Count)];
+                    randHubs.Add(targetHub);
+                    possibleHubs.Remove(targetHub);
+                }
+            }
+            List<int> randTracks = new List<int>();
+            if (CTTR_rand_tracks)
+            {
+                List<int> possibleTracks = new List<int>();
+
+                for (int i = 0; i < 15; i++)
+                {
+                    possibleTracks.Add(i);
+                }
+                int targetTrack = -1;
+                for (int i = 0; i < 15; i++)
+                {
+                    targetTrack = possibleTracks[randState.Next(0, possibleTracks.Count)];
+                    randTracks.Add(targetTrack);
+                    possibleTracks.Remove(targetTrack);
+                }
+            }
+            List<int> randMinigames = new List<int>();
+            if (CTTR_rand_tracks)
+            {
+                List<int> possibleMinigames = new List<int>();
+
+                for (int i = 0; i < 8; i++)
+                {
+                    possibleMinigames.Add(i);
+                }
+                int targetMinigame = -1;
+                for (int i = 0; i < 8; i++)
+                {
+                    targetMinigame = possibleMinigames[randState.Next(0, possibleMinigames.Count)];
+                    randMinigames.Add(targetMinigame);
+                    possibleMinigames.Remove(targetMinigame);
+                }
+            }
+            List<int> randLaps = new List<int>();
+            if (CTTR_rand_racelaps)
+            {
+                for (int i = 0; i < 15; i++)
+                {
+                    randLaps.Add(randState.Next(1,10));
+                }
+            }
+            List<int> randKOs = new List<int>();
+            if (CTTR_rand_battlekos)
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    randKOs.Add(randState.Next(5, 20));
                 }
             }
 
@@ -280,6 +393,26 @@ namespace CrateModLoader
             if (CTTR_rand_characters)
             {
                 Randomize_Characters(path_extr, ref rcf_common, ref randChars);
+            }
+            if (CTTR_rand_hubs)
+            {
+                Randomize_Hubs(path_extr, ref rcf_common, ref randHubs);
+            }
+            if (CTTR_rand_tracks)
+            {
+                Randomize_Tracks(path_extr, ref rcf_common, ref randTracks);
+            }
+            if (CTTR_rand_minigames)
+            {
+                Randomize_Minigames(path_extr, ref rcf_common, ref randMinigames);
+            }
+            if (CTTR_rand_racelaps)
+            {
+                Randomize_Race_Laps(path_extr, ref rcf_common, ref randLaps);
+            }
+            if (CTTR_rand_battlekos)
+            {
+                Randomize_Battle_KOs(path_extr, ref rcf_common, ref randKOs);
             }
 
             rcf_common.Recalculate();
@@ -314,6 +447,26 @@ namespace CrateModLoader
             {
                 Randomize_Characters(path_extr, ref rcf_default, ref randChars);
             }
+            if (CTTR_rand_hubs)
+            {
+                Randomize_Hubs(path_extr, ref rcf_default, ref randHubs);
+            }
+            if (CTTR_rand_tracks)
+            {
+                Randomize_Tracks(path_extr, ref rcf_default, ref randTracks);
+            }
+            if (CTTR_rand_minigames)
+            {
+                Randomize_Minigames(path_extr, ref rcf_default, ref randMinigames);
+            }
+            if (CTTR_rand_racelaps)
+            {
+                Randomize_Race_Laps(path_extr, ref rcf_default, ref randLaps);
+            }
+            if (CTTR_rand_battlekos)
+            {
+                Randomize_Battle_KOs(path_extr, ref rcf_default, ref randKOs);
+            }
 
             rcf_default.Recalculate();
             rcf_default.Pack(AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_default + "1", ref feedback);
@@ -343,7 +496,7 @@ namespace CrateModLoader
         {
             
 
-            if (File.Exists(path_extr + @"design\permanent\genericobjectives.god"))
+            if (System.IO.File.Exists(path_extr + @"design\permanent\genericobjectives.god"))
             {
                 string[] startup_lines = System.IO.File.ReadAllLines(path_extr + @"design\permanent\genericobjectives.god");
                 List<string> LineList = new List<string>();
@@ -383,7 +536,7 @@ namespace CrateModLoader
                     }
                 }
             }
-            if (File.Exists(path_extr + @"design\permanent\skins.god"))
+            if (System.IO.File.Exists(path_extr + @"design\permanent\skins.god"))
             {
                 string[] skins_lines = System.IO.File.ReadAllLines(path_extr + @"design\permanent\skins.god");
                 List<string> LineList = new List<string>();
@@ -428,6 +581,360 @@ namespace CrateModLoader
                     }
                 }
             }
+            
+            // Todo: Changing Crash's idle animation to that of the randomized character
+            // Need to add saving P3D to the P3D API
+            /*
+            if (randChars[0] != (int)CTTR_Data.DriverID.Crash && System.IO.File.Exists(path_extr + @"art\animation\" + CTTR_Data.DriverNames[randChars[0]] + "_onfoot_animations.p3d"))
+            {
+                Pure3D.File targetCharAnim = new Pure3D.File();
+                targetCharAnim.Load(path_extr + @"art\animation\\" + CTTR_Data.DriverNames[randChars[0]] + "_onfoot_animations.p3d");
+
+                Pure3D.Chunks.Animation targetIdleAnim = targetCharAnim.RootChunk.GetChildrenByName<Pure3D.Chunks.Animation>("onfoot_idle")[0];
+
+                if (System.IO.File.Exists(path_extr + @"art\animation\crash_onfoot_animations.p3d"))
+                {
+                    Pure3D.File CrashOnfootAnim = new Pure3D.File();
+                    CrashOnfootAnim.Load(path_extr + @"art\animation\crash_onfoot_animations.p3d");
+
+                    Pure3D.Chunks.Animation[] anims = CrashOnfootAnim.RootChunk.GetChildrenByName<Pure3D.Chunks.Animation>("onfoot_idle");
+                    if (anims.Length > 0)
+                    {
+                        CrashOnfootAnim.RootChunk.GetChildrenByName<Pure3D.Chunks.Animation>("onfoot_idle")[0] = targetIdleAnim;
+                    }
+
+                    CrashOnfootAnim.Save(path_extr + @"art\animation\crash_onfoot_animations1.p3d");
+                    System.IO.File.Delete(path_extr + @"art\animation\crash_onfoot_animations.p3d");
+                    System.IO.File.Move(path_extr + @"art\animation\crash_onfoot_animations1.p3d", path_extr + @"art\animation\crash_onfoot_animations.p3d");
+
+                    for (int i = 0; i < rcf_file.Header.T2File.Length; i++)
+                    {
+                        if (rcf_file.Header.T2File[i].Name == @"art\animation\crash_onfoot_animations.p3d")
+                        {
+                            rcf_file.Header.T2File[i].External = path_extr + @"art\animation\crash_onfoot_animations.p3d";
+                            break;
+                        }
+                    }
+                }
+                if (System.IO.File.Exists(path_extr + @"art\animation\crash_onfoot_midway_animations.p3d"))
+                {
+                    Pure3D.File CrashOnfootMidwayAnim = new Pure3D.File();
+                    CrashOnfootMidwayAnim.Load(path_extr + @"art\animation\crash_onfoot_midway_animations.p3d");
+
+                    Pure3D.Chunks.Animation[] anims = CrashOnfootMidwayAnim.RootChunk.GetChildrenByName<Pure3D.Chunks.Animation>("onfoot_idle");
+                    if (anims.Length > 0)
+                    {
+                        CrashOnfootMidwayAnim.RootChunk.GetChildrenByName<Pure3D.Chunks.Animation>("onfoot_idle")[0] = targetIdleAnim;
+                    }
+
+                    CrashOnfootMidwayAnim.Save(path_extr + @"art\animation\crash_onfoot_midway_animations1.p3d");
+                    System.IO.File.Delete(path_extr + @"art\animation\crash_onfoot_midway_animations.p3d");
+                    System.IO.File.Move(path_extr + @"art\animation\crash_onfoot_midway_animations1.p3d", path_extr + @"art\animation\crash_onfoot_midway_animations.p3d");
+
+                    for (int i = 0; i < rcf_file.Header.T2File.Length; i++)
+                    {
+                        if (rcf_file.Header.T2File[i].Name == @"art\animation\crash_onfoot_midway_animations.p3d")
+                        {
+                            rcf_file.Header.T2File[i].External = path_extr + @"art\animation\crash_onfoot_midway_animations.p3d";
+                            break;
+                        }
+                    }
+                }
+            }
+            */
+        }
+        void Randomize_Hubs(string path_extr, ref RCF rcf_file, ref List<int> randHubs)
+        {
+            if (System.IO.File.Exists(path_extr + @"design\permanent\genericobjectives.god"))
+            {
+                string[] objective_lines = System.IO.File.ReadAllLines(path_extr + @"design\permanent\genericobjectives.god");
+                List<string> LineList = new List<string>();
+                for (int i = 0; i < objective_lines.Length; i++)
+                {
+                    LineList.Add(objective_lines[i]);
+                }
+
+                int List_Start = 0;
+                int List_End = 0;
+                string targetHub = "";
+                List<string> ChangeHubObjective = new List<string>();
+                for (int i = 0; i < 5; i++)
+                {
+                    targetHub = CTTR_Data.HubNamesSimple[i + 1];
+                    if (CTTR_Data.LUA_LoadObject(ref LineList, "Objective", "ChangeLevelMidwayTo" + targetHub, ref List_Start, ref List_End, ref ChangeHubObjective))
+                    {
+                        ChangeHubObjective[ChangeHubObjective.Count - 3] = "this.AddAction_ChangeLevel(\"" + CTTR_Data.HubNames[randHubs[i]] + "\",\"StartLocationFromMidway\")";
+                        CTTR_Data.LUA_SaveObject(ref LineList, "Objective", "ChangeLevelMidwayTo" + targetHub, ref ChangeHubObjective);
+                    }
+                    ChangeHubObjective.Clear();
+                    if (CTTR_Data.LUA_LoadObject(ref LineList, "Objective", "ChangeLevel" + CTTR_Data.HubNamesSimple[randHubs[i]] + "ToMidway", ref List_Start, ref List_End, ref ChangeHubObjective))
+                    {
+                        ChangeHubObjective[ChangeHubObjective.Count - 3] = "this.AddAction_ChangeLevel(\"onfoot_midway\",\"StartLocationFrom" + targetHub + "\")";
+                        CTTR_Data.LUA_SaveObject(ref LineList, "Objective", "ChangeLevel" + CTTR_Data.HubNamesSimple[randHubs[i]] + "ToMidway", ref ChangeHubObjective);
+                    }
+                    ChangeHubObjective.Clear();
+                }
+
+                objective_lines = new string[LineList.Count];
+                for (int i = 0; i < LineList.Count; i++)
+                {
+                    objective_lines[i] = LineList[i];
+                }
+
+                System.IO.File.WriteAllLines(path_extr + @"design\permanent\genericobjectives.god", objective_lines);
+
+                for (int i = 0; i < rcf_file.Header.T2File.Length; i++)
+                {
+                    if (rcf_file.Header.T2File[i].Name == @"design\permanent\genericobjectives.god")
+                    {
+                        rcf_file.Header.T2File[i].External = path_extr + @"design\permanent\genericobjectives.god";
+                        break;
+                    }
+                }
+            }
+        }
+        void Randomize_Tracks(string path_extr, ref RCF rcf_file, ref List<int> randTracks)
+        {
+            if (System.IO.File.Exists(path_extr + @"design\permanent\genericobjectives.god"))
+            {
+                string[] objective_lines = System.IO.File.ReadAllLines(path_extr + @"design\permanent\genericobjectives.god");
+                List<string> LineList = new List<string>();
+                for (int i = 0; i < objective_lines.Length; i++)
+                {
+                    LineList.Add(objective_lines[i]);
+                }
+
+                int List_Start = 0;
+                int List_End = 0;
+                List<string> ChangeHubObjective = new List<string>();
+                for (int i = 0; i < 15; i++)
+                {
+                    if (CTTR_Data.LUA_LoadObject(ref LineList, "Objective", "StartRace" + CTTR_Data.TrackNamesSimple[i], ref List_Start, ref List_End, ref ChangeHubObjective))
+                    {
+                        ChangeHubObjective[ChangeHubObjective.Count - 3] = "this.AddAction_UnlockRace(\"" + CTTR_Data.TrackNames[randTracks[i]] + "\")";
+                        ChangeHubObjective[ChangeHubObjective.Count - 2] = "this.AddAction_StartRace(\"" + CTTR_Data.TrackNames[randTracks[i]] + "\",\"ReturnFromRace" + CTTR_Data.TrackNamesSimple[i] + "\")";
+                        CTTR_Data.LUA_SaveObject(ref LineList, "Objective", "StartRace" + CTTR_Data.TrackNamesSimple[i], ref ChangeHubObjective);
+                    }
+                    ChangeHubObjective.Clear();
+                }
+                if (CTTR_Data.LUA_LoadObject(ref LineList, "Objective", "StartRaceFromMidway2", ref List_Start, ref List_End, ref ChangeHubObjective))
+                {
+                    ChangeHubObjective[ChangeHubObjective.Count - 2] = "this.AddAction_StartRace(\"" + CTTR_Data.TrackNames[randTracks[0]] + "\",\"ReturnFromMidwayRaces\")";
+                    CTTR_Data.LUA_SaveObject(ref LineList, "Objective", "StartRaceFromMidway2", ref ChangeHubObjective);
+                }
+                ChangeHubObjective.Clear();
+                if (CTTR_Data.LUA_LoadObject(ref LineList, "Objective", "StartRaceFromMidway3", ref List_Start, ref List_End, ref ChangeHubObjective))
+                {
+                    ChangeHubObjective[ChangeHubObjective.Count - 2] = "this.AddAction_StartRace(\"" + CTTR_Data.TrackNames[randTracks[0]] + "\",\"ReturnFromMidwayRaces2\")";
+                    CTTR_Data.LUA_SaveObject(ref LineList, "Objective", "StartRaceFromMidway3", ref ChangeHubObjective);
+                }
+                ChangeHubObjective.Clear();
+                if (CTTR_Data.LUA_LoadObject(ref LineList, "Objective", "BuyRaceTicketWithTrack", ref List_Start, ref List_End, ref ChangeHubObjective))
+                {
+                    ChangeHubObjective[ChangeHubObjective.Count - 2] = "this.AddAction_UnlockRace(\"" + CTTR_Data.TrackNames[randTracks[0]] + "\")";
+                    CTTR_Data.LUA_SaveObject(ref LineList, "Objective", "BuyRaceTicketWithTrack", ref ChangeHubObjective);
+                }
+                ChangeHubObjective.Clear();
+
+                objective_lines = new string[LineList.Count];
+                for (int i = 0; i < LineList.Count; i++)
+                {
+                    objective_lines[i] = LineList[i];
+                }
+
+                System.IO.File.WriteAllLines(path_extr + @"design\permanent\genericobjectives.god", objective_lines);
+
+                for (int i = 0; i < rcf_file.Header.T2File.Length; i++)
+                {
+                    if (rcf_file.Header.T2File[i].Name == @"design\permanent\genericobjectives.god")
+                    {
+                        rcf_file.Header.T2File[i].External = path_extr + @"design\permanent\genericobjectives.god";
+                        break;
+                    }
+                }
+            }
+            for (int obj = 0; obj < CTTR_Data.MissionObjectiveTypes.Length; obj++)
+            {
+                if (System.IO.File.Exists(path_extr + @"design\permanent\missionobjectives_" + CTTR_Data.MissionObjectiveTypes[obj] + ".god"))
+                {
+                    string[] objective_lines = System.IO.File.ReadAllLines(path_extr + @"design\permanent\missionobjectives_" + CTTR_Data.MissionObjectiveTypes[obj] + ".god");
+                    List<string> LineList = new List<string>();
+                    for (int i = 0; i < objective_lines.Length; i++)
+                    {
+                        LineList.Add(objective_lines[i]);
+                    }
+
+                    int List_Start = 0;
+                    int List_End = 0;
+                    List<string> ChangeHubObjective = new List<string>();
+                    for (int i = 0; i < 15; i++)
+                    {
+                        if (CTTR_Data.LUA_LoadObject(ref LineList, "Objective", "UnlockRace" + CTTR_Data.TrackNamesSimple[i], ref List_Start, ref List_End, ref ChangeHubObjective))
+                        {
+                            ChangeHubObjective[ChangeHubObjective.Count - 2] = "this.AddAction_UnlockRace(\"" + CTTR_Data.TrackNames[randTracks[i]] + "\")";
+                            ChangeHubObjective[ChangeHubObjective.Count - 1] = "this.AddAction_DisplayMessage(\"" + CTTR_Data.TrackGateNames[randTracks[i]] +"\",1.0,6.0)";
+                            CTTR_Data.LUA_SaveObject(ref LineList, "Objective", "UnlockRace" + CTTR_Data.TrackNamesSimple[i], ref ChangeHubObjective);
+                        }
+                        ChangeHubObjective.Clear();
+                    }
+
+                    objective_lines = new string[LineList.Count];
+                    for (int i = 0; i < LineList.Count; i++)
+                    {
+                        objective_lines[i] = LineList[i];
+                    }
+
+                    System.IO.File.WriteAllLines(path_extr + @"design\permanent\missionobjectives_" + CTTR_Data.MissionObjectiveTypes[obj] + ".god", objective_lines);
+
+                    for (int i = 0; i < rcf_file.Header.T2File.Length; i++)
+                    {
+                        if (rcf_file.Header.T2File[i].Name == @"design\permanent\missionobjectives_" + CTTR_Data.MissionObjectiveTypes[obj] + ".god")
+                        {
+                            rcf_file.Header.T2File[i].External = path_extr + @"design\permanent\missionobjectives_" + CTTR_Data.MissionObjectiveTypes[obj] + ".god";
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        void Randomize_Minigames(string path_extr, ref RCF rcf_file, ref List<int> randMinigames)
+        {
+            if (System.IO.File.Exists(path_extr + @"design\permanent\genericobjectives.god"))
+            {
+                string[] objective_lines = System.IO.File.ReadAllLines(path_extr + @"design\permanent\genericobjectives.god");
+                List<string> LineList = new List<string>();
+                for (int i = 0; i < objective_lines.Length; i++)
+                {
+                    LineList.Add(objective_lines[i]);
+                }
+
+                int List_Start = 0;
+                int List_End = 0;
+                List<string> ChangeHubObjective = new List<string>();
+                for (int i = 0; i < 8; i++)
+                {
+                    if (CTTR_Data.LUA_LoadObject(ref LineList, "Objective", CTTR_Data.MinigameObjectiveTypes[i], ref List_Start, ref List_End, ref ChangeHubObjective))
+                    {
+                        ChangeHubObjective[ChangeHubObjective.Count - 3] = "this.AddAction_UnlockMiniGame(\"OFMiniGames/" + CTTR_Data.MinigameTypeNames[randMinigames[i]] + "\")";
+                        CTTR_Data.LUA_SaveObject(ref LineList, "Objective", CTTR_Data.MinigameObjectiveTypes[i], ref ChangeHubObjective);
+                    }
+                    ChangeHubObjective.Clear();
+                }
+
+                objective_lines = new string[LineList.Count];
+                for (int i = 0; i < LineList.Count; i++)
+                {
+                    objective_lines[i] = LineList[i];
+                }
+
+                System.IO.File.WriteAllLines(path_extr + @"design\permanent\genericobjectives.god", objective_lines);
+
+                for (int i = 0; i < rcf_file.Header.T2File.Length; i++)
+                {
+                    if (rcf_file.Header.T2File[i].Name == @"design\permanent\genericobjectives.god")
+                    {
+                        rcf_file.Header.T2File[i].External = path_extr + @"design\permanent\genericobjectives.god";
+                        break;
+                    }
+                }
+            }
+        }
+        void Randomize_Race_Laps(string path_extr, ref RCF rcf_file, ref List<int> randLaps)
+        {
+            if (System.IO.File.Exists(path_extr + @"design\startup.god"))
+            {
+                string[] startup_lines = System.IO.File.ReadAllLines(path_extr + @"design\startup.god");
+                List<string> LineList = new List<string>();
+                for (int i = 0; i < startup_lines.Length; i++)
+                {
+                    LineList.Add(startup_lines[i]);
+                }
+
+                int LevelListStart = 0;
+                for (int i = 0; i < LineList.Count; i++)
+                {
+                    if (LineList[i] == "function GetLevelList()")
+                    {
+                        LevelListStart = i + 2;
+                        break;
+                    }
+                }
+                LineList[LevelListStart] = "{\"adventure1\",ThemeAdventure,TypeRace," + randLaps[0] + ",true},";
+                LineList[LevelListStart + 1] = "{\"adventure2\",ThemeAdventure,TypeRace," + randLaps[1] + ",true},";
+                LineList[LevelListStart + 2] = "{\"adventure3\",ThemeAdventure,TypeRace," + randLaps[2] + ",true},";
+                LineList[LevelListStart + 4] = "{\"fairy1\",ThemeFairy,TypeRace," + randLaps[3] + ",true},";
+                LineList[LevelListStart + 5] = "{\"fairy2\",ThemeFairy,TypeRace," + randLaps[4] + ",true},";
+                LineList[LevelListStart + 6] = "{\"fairy3\",ThemeFairy,TypeRace," + randLaps[5] + ",true},";
+                LineList[LevelListStart + 9] = "{\"dino1\",ThemeDino,TypeRace," + randLaps[6] + ",true},";
+                LineList[LevelListStart + 10] = "{\"dino2\",ThemeDino,TypeRace," + randLaps[7] + ",true},";
+                LineList[LevelListStart + 11] = "{\"dino3\",ThemeDino,TypeRace," + randLaps[8] + ",true},";
+                LineList[LevelListStart + 13] = "{\"egypt1\",ThemeEgypt,TypeRace," + randLaps[9] + ",true},";
+                LineList[LevelListStart + 14] = "{\"egypt2\",ThemeEgypt,TypeRace," + randLaps[10] + ",true},";
+                LineList[LevelListStart + 15] = "{\"egypt3\",ThemeEgypt,TypeRace," + randLaps[11] + ",true},";
+                LineList[LevelListStart + 17] = "{\"solar1\",ThemeSolar,TypeRace," + randLaps[12] + ",true},";
+                LineList[LevelListStart + 18] = "{\"solar2\",ThemeSolar,TypeRace," + randLaps[13] + ",true},";
+                LineList[LevelListStart + 19] = "{\"solar3\",ThemeSolar,TypeRace," + randLaps[14] + ",true},";
+
+                startup_lines = new string[LineList.Count];
+                for (int i = 0; i < LineList.Count; i++)
+                {
+                    startup_lines[i] = LineList[i];
+                }
+
+                System.IO.File.WriteAllLines(path_extr + @"design\startup.god", startup_lines);
+
+                for (int i = 0; i < rcf_file.Header.T2File.Length; i++)
+                {
+                    if (rcf_file.Header.T2File[i].Name == @"design\startup.god")
+                    {
+                        rcf_file.Header.T2File[i].External = path_extr + @"design\startup.god";
+                        break;
+                    }
+                }
+            }
+        }
+        void Randomize_Battle_KOs(string path_extr, ref RCF rcf_file, ref List<int> randKOs)
+        {
+            if (System.IO.File.Exists(path_extr + @"design\startup.god"))
+            {
+                string[] startup_lines = System.IO.File.ReadAllLines(path_extr + @"design\startup.god");
+                List<string> LineList = new List<string>();
+                for (int i = 0; i < startup_lines.Length; i++)
+                {
+                    LineList.Add(startup_lines[i]);
+                }
+
+                int LevelListStart = 0;
+                for (int i = 0; i < LineList.Count; i++)
+                {
+                    if (LineList[i] == "function GetLevelList()")
+                    {
+                        LevelListStart = i + 2;
+                        break;
+                    }
+                }
+                LineList[LevelListStart + 3] = "{\"adventure_arena\",ThemeAdventure,TypeBattle," + randKOs[0] + ",true},";
+                LineList[LevelListStart + 8] = "{\"bonus1_arena\",ThemeFairy,TypeBattle," + randKOs[1] + ",true},";
+                LineList[LevelListStart + 12] = "{\"dino_arena\",ThemeDino,TypeBattle," + randKOs[2] + ",true},";
+                LineList[LevelListStart + 16] = "{\"egypt_arena\",ThemeEgypt,TypeBattle," + randKOs[3] + ",true},";
+
+                startup_lines = new string[LineList.Count];
+                for (int i = 0; i < LineList.Count; i++)
+                {
+                    startup_lines[i] = LineList[i];
+                }
+
+                System.IO.File.WriteAllLines(path_extr + @"design\startup.god", startup_lines);
+
+                for (int i = 0; i < rcf_file.Header.T2File.Length; i++)
+                {
+                    if (rcf_file.Header.T2File[i].Name == @"design\startup.god")
+                    {
+                        rcf_file.Header.T2File[i].External = path_extr + @"design\startup.god";
+                        break;
+                    }
+                }
+            }
         }
 
         void Mod_EditCredits()
@@ -441,9 +948,7 @@ namespace CrateModLoader
             Directory.CreateDirectory(path_extr);
             rcf_frontend.ExtractRCF(ref feedback, path_extr);
 
-            // Proof of concept mod replacing attract movie with first gem cutscene
             string[] frontend_lines = System.IO.File.ReadAllLines(path_extr + @"design\levels\common\frontend.god");
-            frontend_lines[64] = "PlayMovie(\"art/fmv/wny_midway_statue\",\"any\",\"any\",true)";
 
             // Editing credits to add CML metadata
             for (int i = 0; i < frontend_lines.Length; i++)

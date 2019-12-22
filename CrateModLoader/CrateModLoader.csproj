@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -45,6 +46,9 @@
     </Reference>
     <Reference Include="CTTR">
       <HintPath>.\CTTR.dll</HintPath>
+    </Reference>
+    <Reference Include="Pure3D">
+      <HintPath>GameSpecific\CTTR\Pure3D.dll</HintPath>
     </Reference>
     <Reference Include="Quamotion.DiscUtils, Version=1.0.3.0, Culture=neutral, PublicKeyToken=c9975db8d649ebd1, processorArchitecture=MSIL">
       <HintPath>..\packages\Quamotion.DiscUtils.1.0.3\lib\net45\Quamotion.DiscUtils.dll</HintPath>
