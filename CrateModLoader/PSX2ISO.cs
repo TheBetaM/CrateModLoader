@@ -17,6 +17,7 @@ namespace CrateModLoader
         }
     }
 
+    // written by chekwob https://github.com/cbhacks/CrashEdit/blob/deprecate/CrashEdit/ISO2PSX.cs
     public static class ISO2PSX
     {
         public static void Run(Stream i, Stream o)
