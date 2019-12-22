@@ -33,7 +33,9 @@ Features - Crash Team Racing:
 - TBD
 
 Features - Crash Twinsanity:
-- Randomize Crate Types (globally)
+- Randomize Crate Types
+- Randomize Individual Crates
+- Randomize Gem Types
 - Version, seed and settings visible in the Autosave Disabled screen
 
 Features - Crash Nitro Kart:
@@ -50,7 +52,17 @@ Features - Crash Nitro Kart:
 - Version, seed and settings visible in the Credits screen
 
 Features - Crash Tag Team Racing:
-- TBD
+- Randomize Playable & Starting Characters
+- Randomize Hub Entrances
+- Randomize Track Entrances
+- Randomize Minigames
+- Randomize Missions
+- Randomize Car Stats
+- Randomize Race Laps
+- Randomize Crashinator
+- Randomize Run & Gun
+- Add Unused Cutscenes
+- Prevent Sequence Breaks
 - Version, seed and settings visible in the Credits screen
 
 Features - Crash of the Titans:
