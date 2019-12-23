@@ -213,7 +213,9 @@ namespace CrateModLoader
                     while (posList.Count > 0)
                     {
                         target_item = randState.Next(0, crateList.Count);
-                        mainArchive.GetItem<TwinsSection>((int)RM2_Sections.Code).GetItem<TwinsSection>((int)RM2_Code_Sections.Object).GetItem<TwinsItem>(posList[0]).ID = crateList[target_item];
+                        TwinsSection objectdata = mainArchive.GetItem<TwinsSection>((uint)RM2_Sections.Code).GetItem<TwinsSection>((int)RM2_Code_Sections.Object);
+                        if (objectdata.ContainsItem(posList[0]))
+                            objectdata.GetItem<TwinsItem>(posList[0]).ID = crateList[target_item];
                         posList.RemoveAt(0);
                         crateList.RemoveAt(target_item);
                     }
@@ -241,7 +243,9 @@ namespace CrateModLoader
                     while (posList.Count > 0)
                     {
                         target_item = randState.Next(0, crateList.Count);
-                        mainArchive.GetItem<TwinsSection>((uint)RM2_Sections.Code).GetItem<TwinsSection>((int)RM2_Code_Sections.Object).GetItem<TwinsItem>(posList[0]).ID = crateList[target_item];
+                        TwinsSection objectdata = mainArchive.GetItem<TwinsSection>((uint)RM2_Sections.Code).GetItem<TwinsSection>((int)RM2_Code_Sections.Object);
+                        if (objectdata.ContainsItem(posList[0]))
+                            objectdata.GetItem<TwinsItem>(posList[0]).ID = crateList[target_item];
                         posList.RemoveAt(0);
                         crateList.RemoveAt(target_item);
                     }
@@ -340,30 +344,30 @@ namespace CrateModLoader
             RM_Archive.LoadFile(path, TwinsFile.FileType.RM2);
 
             int target_item = 0;
-            bool cont = false;
 
             if (Twins_Randomize_AllCrates)
             {
                 for (uint section_id = (uint)RM2_Sections.Instances1; section_id <= (uint)RM2_Sections.Instances8; section_id++)
                 {
+                    if (!RM_Archive.ContainsItem(section_id)) continue;
                     TwinsSection section = RM_Archive.GetItem<TwinsSection>(section_id);
                     if (section.Records.Count > 0)
                     {
+                        if (!section.ContainsItem((uint)RM2_Instance_Sections.ObjectInstance)) continue;
                         TwinsSection instances = section.GetItem<TwinsSection>((uint)RM2_Instance_Sections.ObjectInstance);
                         for (int i = 0; i < instances.Records.Count; ++i)
                         {
                             Instance instance = (Instance)instances.Records[i];
                             for (int d = 0; d < randCrateList.Count; d++)
                             {
-                                if (!cont && instance.ObjectID == randCrateList[d])
+                                if (instance.ObjectID == randCrateList[d])
                                 {
                                     target_item = randState.Next(0, randCrateList.Count);
                                     instance.ObjectID = (ushort)randCrateList[target_item];
-                                    cont = true;
+                                    break;
                                 }
                             }
                             instances.Records[i] = instance;
-                            cont = false;
                         }
                     }
                 }
