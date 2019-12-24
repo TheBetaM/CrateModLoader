@@ -1,28 +1,33 @@
 # Crate Mod Loader Supported Games & Features
   
-Crash Bandicoot - All PS1 versions (.BIN format)  
+## Crash Bandicoot
+Supported: All PS1 versions (.BIN format)  
 API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)  
-Features:  
+### Features:  
 - TBD  
   
-Crash Bandicoot 2: Cortex Strikes Back - All PS1 versions (.BIN format)  
+## Crash Bandicoot 2: Cortex Strikes Back
+Supported: All PS1 versions (.BIN format)  
 API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)  
-Features:  
+### Features:  
 - TBD  
   
-Crash Bandicoot: Warped - All PS1 versions (.BIN format)  
+## Crash Bandicoot: Warped
+Supported: All PS1 versions (.BIN format)  
 API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)  
-Features:  
-- TBD  
+### Features:  
+- TBD   
   
-Crash Team Racing - All PS1 versions (.BIN format)  
+## Crash Team Racing
+Supported: All PS1 versions (.BIN format)  
 API by DCxDemo. (https://github.com/DCxDemo/CTR-tools)  
-Features:  
-- TBD
+### Features:  
+- TBD  
   
-Crash Nitro Kart - All PS2 versions (.ISO format) (GC not yet supported)  
+## Crash Nitro Kart
+Supported: All PS2 versions (.ISO format) (GC not yet supported)  
 API by BetaM, ManDude and eezstreet.  
-Features:
+### Features:  
 - Randomize Adventure Hub Warp Pads & Cups
 - Randomize Adventure Requirements & Rewards
 - Randomize Character Stats
@@ -35,17 +40,19 @@ Features:
 - Speed Up Mask Hints
 - Version, seed and settings visible in the Credits screen
   
-Crash Twinsanity - All PS2 versions (.ISO format)  
+## Crash Twinsanity
+Supported: All PS2 versions (.ISO format)  
 API by NeoKesha, Smartkin, ManDude and Marko. (https://github.com/Smartkin/twinsanity-editor)  
-Features:  
+### Features:  
 - Randomize Crate Types
 - Randomize Individual Crates 
 - Randomize Gem Types  
 - Version, seed and settings visible in the Autosave Disabled screen  
   
-Crash Tag Team Racing - NTSC-U/PAL PS2 versions (.ISO format) (PSP and GC not yet supported)  
+## Crash Tag Team Racing
+Supported: NTSC-U/PAL PS2 versions (.ISO format) (PSP and GC not yet supported)  
 APIs by NeoKesha and handsomematt. (https://github.com/handsomematt/Pure3D)  
-Features:  
+### Features:  
 - Randomize Playable & Starting Characters
 - Randomize Hub Entrances
 - Randomize Track Entrances
@@ -59,12 +66,14 @@ Features:
 - Prevent Sequence Breaks
 - Version, seed and settings visible in the Credits screen
   
-Crash of the Titans - All PS2 versions (.ISO format) (PSP and Wii not yet supported)  
+## Crash of the Titans
+Supported: All PS2 versions (.ISO format) (PSP and Wii not yet supported)  
 API by NeoKesha.  
-Features:  
+### Features:   
 - TBD  
   
-Crash Mind Over Mutant - All PS2 versions (.ISO format) (PSP and Wii not yet supported)  
+## Crash Mind Over Mutant
+Supported: All PS2 versions (.ISO format) (PSP and Wii not yet supported)  
 API by NeoKesha.  
-Features:  
+### Features:    
 - Version, seed and settings visible in the Credits screen  
