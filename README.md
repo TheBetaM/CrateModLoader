@@ -2,7 +2,7 @@
 Randomizer and mod loader for PS1, PS2, PSP and GC games.  
 It detects, extracts, modifies and rebuilds detected disc image files in an easy to setup way.  
 
-See [this list](../master/GAMES) for supported games and their features.
+See [this list](../master/GAMES.md) for supported games and their features.
 
 # Building Prerequisites
 
