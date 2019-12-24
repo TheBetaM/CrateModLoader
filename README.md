@@ -1,7 +1,7 @@
-# CrateModLoader
+# Crate Mod Loader
 Randomizer and mod loader for PS1, PS2, PSP and GC games.  
-It detects, extracts, modifies and rebuilds detected disc image files in an easy to setup way.  
-
+It detects, extracts, modifies and rebuilds disc image files in an easy to setup way.  
+  
 See [this list](../master/GAMES.md) for supported games and their features.
 
 # Building Prerequisites
@@ -12,9 +12,8 @@ See [this list](../master/GAMES.md) for supported games and their features.
 
 # Credits
 
-Crate Mod Loader created by [BetaM](https://www.youtube.com/channel/UCL-EwV5XqypMUJ5zVHaBjAw).  
-Other contributors:
-- [ManDude](https://github.com/ManDude)
+- [BetaM](https://www.youtube.com/channel/UCL-EwV5XqypMUJ5zVHaBjAw) (Creator)    
+- [ManDude](https://github.com/ManDude)  
 
 # License
 
