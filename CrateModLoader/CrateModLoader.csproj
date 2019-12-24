@@ -50,13 +50,17 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>GameSpecific\CTTR\CTTR.dll</HintPath>
     </Reference>
+    <Reference Include="DiscUtils, Version=0.11.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>tools\DiscUtils.dll</HintPath>
+    </Reference>
+    <Reference Include="DiscUtils.Common, Version=0.11.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>tools\DiscUtils.Common.dll</HintPath>
+    </Reference>
     <Reference Include="Pure3D, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>GameSpecific\CTTR\Pure3D.dll</HintPath>
-    </Reference>
-    <Reference Include="Quamotion.DiscUtils, Version=1.0.3.0, Culture=neutral, PublicKeyToken=c9975db8d649ebd1, processorArchitecture=MSIL">
-      <HintPath>..\packages\Quamotion.DiscUtils.1.0.3\lib\net45\Quamotion.DiscUtils.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -124,7 +128,6 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

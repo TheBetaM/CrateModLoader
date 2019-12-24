@@ -8,7 +8,6 @@ See [this list](../master/GAMES.md) for supported games and their features.
 
 - Microsoft Visual Studio 2017
 - .NET 4.5.2
-- Quamotion.DiscUtils.1.0.3
 
 # Credits
 

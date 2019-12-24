@@ -152,7 +152,9 @@ namespace CrateModLoader
             }
             else if (isoType == ConsoleMode.PSP)
             {
-                // Use PSPTools
+                // Use PSPTools?
+                //UMD.ISO IsoFile = new UMD.ISO();
+                //IsoFile.CreateISO(extractedPath, outputISOpath, true);
             }
             else if (isoType == ConsoleMode.GCN)
             {
@@ -622,9 +624,9 @@ namespace CrateModLoader
                         foundMetaData = false;
                         for (int game = 0; game < GameDatabase.Games.Length; game++)
                         {
-                            foreach (RegionCode rcode in GameDatabase.Games[game].RegionID_PSP)
+                            if (GameDatabase.Games[game].RegionID_PSP != null && GameDatabase.Games[game].RegionID_PSP.Length > 0)
                             {
-                                if (GameDatabase.Games[game].RegionID_PSP != null && GameDatabase.Games[game].RegionID_PSP.Length > 0)
+                                foreach (RegionCode rcode in GameDatabase.Games[game].RegionID_PSP)
                                 {
                                     if (titleID == rcode.Name)
                                     {
@@ -661,9 +663,9 @@ namespace CrateModLoader
                         foundMetaData = false;
                         for (int game = 0; game < GameDatabase.Games.Length; game++)
                         {
-                            foreach (RegionCode rcode in GameDatabase.Games[game].RegionID_GCN)
+                            if (GameDatabase.Games[game].RegionID_GCN != null && GameDatabase.Games[game].RegionID_GCN.Length > 0)
                             {
-                                if (GameDatabase.Games[game].RegionID_GCN != null && GameDatabase.Games[game].RegionID_GCN.Length > 0)
+                                foreach (RegionCode rcode in GameDatabase.Games[game].RegionID_GCN)
                                 {
                                     if (titleID == rcode.Name)
                                     {
@@ -673,7 +675,7 @@ namespace CrateModLoader
                                         break;
                                     }
                                 }
-                            }
+                            } 
                             if (foundMetaData)
                             {
                                 break;
