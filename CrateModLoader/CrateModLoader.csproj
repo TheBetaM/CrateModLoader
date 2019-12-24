@@ -38,16 +38,20 @@
     <ApplicationIcon>rando_icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Crash">
-      <HintPath>.\Crash.dll</HintPath>
+    <Reference Include="Crash, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>GameSpecific\Crash1\Crash.dll</HintPath>
     </Reference>
-    <Reference Include="CTRFramework">
-      <HintPath>.\CTRFramework.dll</HintPath>
+    <Reference Include="CTRFramework, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>GameSpecific\CTR\CTRFramework.dll</HintPath>
     </Reference>
-    <Reference Include="CTTR">
-      <HintPath>.\CTTR.dll</HintPath>
+    <Reference Include="CTTR, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>GameSpecific\CTTR\CTTR.dll</HintPath>
     </Reference>
-    <Reference Include="Pure3D">
+    <Reference Include="Pure3D, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>GameSpecific\CTTR\Pure3D.dll</HintPath>
     </Reference>
     <Reference Include="Quamotion.DiscUtils, Version=1.0.3.0, Culture=neutral, PublicKeyToken=c9975db8d649ebd1, processorArchitecture=MSIL">
@@ -65,8 +69,9 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="Twinsanity">
-      <HintPath>.\Twinsanity.dll</HintPath>
+    <Reference Include="Twinsanity, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>GameSpecific\Twins\Twinsanity.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
