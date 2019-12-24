@@ -22,7 +22,7 @@ Features:
   
 Crash Nitro Kart - All PS2 versions (.ISO format) (GC not yet supported)  
 API by BetaM, ManDude and eezstreet.  
-Features - Crash Nitro Kart:
+Features:
 - Randomize Adventure Hub Warp Pads & Cups
 - Randomize Adventure Requirements & Rewards
 - Randomize Character Stats
@@ -37,7 +37,7 @@ Features - Crash Nitro Kart:
   
 Crash Twinsanity - All PS2 versions (.ISO format)  
 API by NeoKesha, Smartkin, ManDude and Marko. (https://github.com/Smartkin/twinsanity-editor)  
-Features - Crash Twinsanity:  
+Features:  
 - Randomize Crate Types
 - Randomize Individual Crates 
 - Randomize Gem Types  
@@ -45,7 +45,7 @@ Features - Crash Twinsanity:
   
 Crash Tag Team Racing - NTSC-U/PAL PS2 versions (.ISO format) (PSP and GC not yet supported)  
 APIs by NeoKesha and handsomematt. (https://github.com/handsomematt/Pure3D)  
-Features - Crash Tag Team Racing:  
+Features:  
 - Randomize Playable & Starting Characters
 - Randomize Hub Entrances
 - Randomize Track Entrances
@@ -61,10 +61,10 @@ Features - Crash Tag Team Racing:
   
 Crash of the Titans - All PS2 versions (.ISO format) (PSP and Wii not yet supported)  
 API by NeoKesha.  
-Features - Crash of the Titans:  
+Features:  
 - TBD  
   
 Crash Mind Over Mutant - All PS2 versions (.ISO format) (PSP and Wii not yet supported)  
 API by NeoKesha.  
-Features - Crash Mind Over Mutant:  
+Features:  
 - Version, seed and settings visible in the Credits screen  
