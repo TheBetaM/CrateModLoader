@@ -15,7 +15,7 @@ API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)
 Features:  
 - TBD  
   
-Crash Team Racing - All versions (.BIN format)  
+Crash Team Racing - All PS1 versions (.BIN format)  
 API by DCxDemo. (https://github.com/DCxDemo/CTR-tools)  
 Features:  
 - TBD
