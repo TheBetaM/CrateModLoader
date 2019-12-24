@@ -16,8 +16,9 @@ Crash Mind Over Mutant - All PS2 versions (.ISO format) (PSP and Wii not yet sup
 Crash Bandicoot 1/2/3 API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)
 Crash Team Racing API by DCxDemo. (https://github.com/DCxDemo/CTR-tools)
 Crash Nitro Kart API by BetaM, ManDude and eezstreet.
-Crash Twinsanity API by NeoKesha.
-Crash Tag Team Racing/Titans/Mind Over Mutant API by NeoKesha.
+Crash Twinsanity API by NeoKesha, Smartkin, ManDude and Marko. (https://github.com/Smartkin/twinsanity-editor)
+Crash Tag Team Racing APIs by NeoKesha and handsomematt. (https://github.com/handsomematt/Pure3D)
+Crash of the Titans/Mind Over Mutant API by NeoKesha.  
 Crate Mod Loader created by BetaM.
 
 Features - Crash Bandicoot:

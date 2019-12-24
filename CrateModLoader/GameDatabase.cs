@@ -219,7 +219,7 @@ namespace CrateModLoader
                     ModLoader.ConsoleMode.PS2,
                     ModLoader.ConsoleMode.XBOX,
                 },
-                API_Credit = "API by NeoKesha",
+                API_Credit = "API by NeoKesha, Smartkin, ManDude and Marko",
                 Icon = Properties.Resources.icon_twins,
                 ModderClass = typeof(Modder_Twins),
                 ModMenuEnabled = false,

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using Twinsanity;
-//Twinsanity API by NeoKesha
+//Twinsanity API by NeoKesha, Smartkin, ManDude and Marko (https://github.com/Smartkin/twinsanity-editor)
 //Version number, seed and options are displayed in the Autosave Disabled screen accessible by starting a new game without saving or just disabling autosave.
 
 namespace CrateModLoader
@@ -16,8 +16,11 @@ namespace CrateModLoader
         public string[] modOptions = { "Randomize Crate Types", "Randomize Individual Crates", "Randomize Gem Types",  };
 
         public bool Twins_Randomize_CrateTypes = false;
-        public bool Twins_Randomize_AllCrates = false; // TODO
+        public bool Twins_Randomize_AllCrates = false;
         public bool Twins_Randomize_GemTypes = false;
+        public bool Twins_Randomize_Enemies = false; //TODO
+        public bool Twins_Randomize_PlayableChars = false; //TODO
+        public bool Twins_Randomize_StartingChunk = false; //TODO, ExePatcher
         private string bdPath = "";
         public Random randState = new Random();
         public List<uint> randCrateList = new List<uint>();
@@ -275,7 +278,7 @@ namespace CrateModLoader
                 DirectoryInfo di = new DirectoryInfo(bdPath + "/Levels/");
                 foreach (DirectoryInfo dir in di.EnumerateDirectories())
                 {
-                    Recursive_EditLevels(dir);
+                    Recursive_EditLevels(di);
                 }
             }
 
@@ -332,43 +335,20 @@ namespace CrateModLoader
             EndModProcess();
         }
 
+
         void RM_EditLevel(string path)
         {
             TwinsFile RM_Archive = new TwinsFile();
             RM_Archive.LoadFile(path, TwinsFile.FileType.RM2);
 
-            int target_item = 0;
-
             if (Twins_Randomize_AllCrates)
             {
-                for (uint section_id = (uint)RM2_Sections.Instances1; section_id <= (uint)RM2_Sections.Instances8; section_id++)
-                {
-                    if (!RM_Archive.ContainsItem(section_id)) continue;
-                    TwinsSection section = RM_Archive.GetItem<TwinsSection>(section_id);
-                    if (section.Records.Count > 0)
-                    {
-                        if (!section.ContainsItem((uint)RM2_Instance_Sections.ObjectInstance)) continue;
-                        TwinsSection instances = section.GetItem<TwinsSection>((uint)RM2_Instance_Sections.ObjectInstance);
-                        for (int i = 0; i < instances.Records.Count; ++i)
-                        {
-                            Instance instance = (Instance)instances.Records[i];
-                            for (int d = 0; d < randCrateList.Count; d++)
-                            {
-                                if (instance.ObjectID == randCrateList[d])
-                                {
-                                    target_item = randState.Next(0, randCrateList.Count);
-                                    instance.ObjectID = (ushort)randCrateList[target_item];
-                                    break;
-                                }
-                            }
-                            instances.Records[i] = instance;
-                        }
-                    }
-                }
+                RM_Randomize_Crates(ref RM_Archive);
             }
-            
+
             RM_Archive.SaveFile(path);
         }
+
         void Recursive_EditLevels(DirectoryInfo di)
         {
             foreach (DirectoryInfo dir in di.EnumerateDirectories())
@@ -409,6 +389,36 @@ namespace CrateModLoader
             // Fixes names for PS2
             //File.Move(Program.ModProgram.extractedPath + "/CRASH6/CRASH.BD", Program.ModProgram.extractedPath + "/CRASH6/CRASH.BD;1");
             //File.Move(Program.ModProgram.extractedPath + "/CRASH6/CRASH.BH", Program.ModProgram.extractedPath + "/CRASH6/CRASH.BH;1");
+        }
+
+
+        void RM_Randomize_Crates(ref TwinsFile RM_Archive)
+        {
+            int target_item = 0;
+            for (uint section_id = (uint)RM2_Sections.Instances1; section_id <= (uint)RM2_Sections.Instances8; section_id++)
+            {
+                if (!RM_Archive.ContainsItem(section_id)) continue;
+                TwinsSection section = RM_Archive.GetItem<TwinsSection>(section_id);
+                if (section.Records.Count > 0)
+                {
+                    if (!section.ContainsItem((uint)RM2_Instance_Sections.ObjectInstance)) continue;
+                    TwinsSection instances = section.GetItem<TwinsSection>((uint)RM2_Instance_Sections.ObjectInstance);
+                    for (int i = 0; i < instances.Records.Count; ++i)
+                    {
+                        Instance instance = (Instance)instances.Records[i];
+                        for (int d = 0; d < randCrateList.Count; d++)
+                        {
+                            if (instance.ObjectID == randCrateList[d])
+                            {
+                                target_item = randState.Next(0, randCrateList.Count);
+                                instance.ObjectID = (ushort)randCrateList[target_item];
+                                break;
+                            }
+                        }
+                        instances.Records[i] = instance;
+                    }
+                }
+            }
         }
     }
 }

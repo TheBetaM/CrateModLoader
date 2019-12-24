@@ -152,7 +152,7 @@ namespace CrateModLoader
             }
             else if (isoType == ConsoleMode.PSP)
             {
-                // Use ???
+                // Use PSPTools
             }
             else if (isoType == ConsoleMode.GCN)
             {
@@ -171,6 +171,10 @@ namespace CrateModLoader
             else if (isoType == ConsoleMode.WII)
             {
                 // Use Wiimms ISO Tool
+            }
+            else if (isoType == ConsoleMode.XBOX)
+            {
+                // Directory mode, so there's nothing to do here
             }
             else
             {
