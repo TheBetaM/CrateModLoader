@@ -9,7 +9,6 @@ using System.Text;
 using System.Media;
 using System.Diagnostics;
 using System.Reflection;
-using DiscUtils;
 using DiscUtils.Iso9660;
 //Crate Mod Loader Main Class
 
@@ -23,9 +22,9 @@ namespace CrateModLoader
         [STAThread]
         static void Main()
         {
-            ModProgram = new ModLoader();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            ModProgram = new ModLoader();
             ModProgramForm = new ModLoaderForm();
             Application.Run(ModProgramForm);
         }
@@ -276,7 +275,7 @@ namespace CrateModLoader
 
                 processText.Text = "Extracting ISO...";
                 //fileStream = cd.OpenFile(@"SYSTEM.CNF", FileMode.Open);
-                extractedPath = AppDomain.CurrentDomain.BaseDirectory + "/temp/";
+                extractedPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"temp\");
                 if (!Directory.Exists(extractedPath))
                 {
                     Directory.CreateDirectory(extractedPath);
@@ -289,13 +288,13 @@ namespace CrateModLoader
                 {
                     foreach (string directory in cd.GetDirectories(""))
                     {
-                        Directory.CreateDirectory(extractedPath + "/" + directory);
+                        Directory.CreateDirectory(extractedPath + directory);
                         if (cd.GetDirectoryInfo(directory).GetFiles().Length > 0)
                         {
                             foreach (string file in cd.GetFiles(directory))
                             {
                                 fileStreamFrom = cd.OpenFile(file, FileMode.Open);
-                                string filename = extractedPath + "/" + file;
+                                string filename = extractedPath + file;
                                 filename = filename.Replace(";1", string.Empty);
                                 fileStreamTo = File.Open(filename, FileMode.OpenOrCreate);
                                 fileStreamFrom.CopyTo(fileStreamTo);

@@ -145,19 +145,13 @@ namespace CrateModLoader
         public void StartModProcess()
         {
             // Extract BD
-            Directory.CreateDirectory(Program.ModProgram.extractedPath + "/cml_extr/");
-            bdPath = Program.ModProgram.extractedPath + "/cml_extr/";
-            BDArchive mainBD = new BDArchive();
-            // Fixes names for PS2
-            //File.Move(Program.ModProgram.extractedPath + "/CRASH6/CRASH.BD;1", Program.ModProgram.extractedPath + "/CRASH6/CRASH.BD");
-            //File.Move(Program.ModProgram.extractedPath + "/CRASH6/CRASH.BH;1", Program.ModProgram.extractedPath + "/CRASH6/CRASH.BH");
-            //mainBD.LoadArchive(Program.ModProgram.extractedPath + "/CRASH6/", "CRASH.BD");
-            mainBD.ExtractOnce(bdPath, Program.ModProgram.extractedPath + "/CRASH6/", "CRASH");
-            //mainBD.Dispose();
-            // This takes up too much memory for some reason?? And Dispose() doesn't work for it.
+            bdPath = System.IO.Path.Combine(Program.ModProgram.extractedPath, "cml_extr/");
+            Directory.CreateDirectory(bdPath);
 
-            File.Delete(Program.ModProgram.extractedPath + "/CRASH6/CRASH.BD");
-            File.Delete(Program.ModProgram.extractedPath + "/CRASH6/CRASH.BH");
+            BDArchive.ExtractAll(System.IO.Path.Combine(Program.ModProgram.extractedPath, "CRASH6/CRASH"), bdPath);
+
+            File.Delete(System.IO.Path.Combine(Program.ModProgram.extractedPath, "CRASH6/CRASH.BD"));
+            File.Delete(System.IO.Path.Combine(Program.ModProgram.extractedPath, "CRASH6/CRASH.BH"));
 
             ModProcess();
         }
@@ -173,7 +167,7 @@ namespace CrateModLoader
             if (Twins_Randomize_CrateTypes || Twins_Randomize_GemTypes)
             {
                 TwinsFile mainArchive = new TwinsFile();
-                mainArchive.LoadFile(bdPath + "/Startup/Default.rm2", TwinsFile.FileType.RM2);
+                mainArchive.LoadFile(bdPath + @"Startup\Default.rm2", TwinsFile.FileType.RM2);
 
                 List<uint> crateList = new List<uint>();
                 List<uint> posList = new List<uint>();
@@ -213,7 +207,7 @@ namespace CrateModLoader
                     while (posList.Count > 0)
                     {
                         target_item = randState.Next(0, crateList.Count);
-                        TwinsSection objectdata = mainArchive.GetItem<TwinsSection>((uint)RM2_Sections.Code).GetItem<TwinsSection>((int)RM2_Code_Sections.Object);
+                        TwinsSection objectdata = mainArchive.GetItem<TwinsSection>((uint)RM2_Sections.Code).GetItem<TwinsSection>((uint)RM2_Code_Sections.Object);
                         if (objectdata.ContainsItem(posList[0]))
                             objectdata.GetItem<TwinsItem>(posList[0]).ID = crateList[target_item];
                         posList.RemoveAt(0);
@@ -393,11 +387,7 @@ namespace CrateModLoader
         public void EndModProcess()
         {
             // Build BD
-            BDArchive mainBD = new BDArchive();
-            mainBD.CreateTable(bdPath);
-            mainBD.SaveTable(Program.ModProgram.extractedPath + "/CRASH6/", "CRASH");
-            mainBD.SaveArchive(Program.ModProgram.extractedPath + "/CRASH6/", "CRASH");
-            mainBD.Dispose();
+            BDArchive.CompileAll(System.IO.Path.Combine(Program.ModProgram.extractedPath, "CRASH6/CRASH"), bdPath);
 
             // Get rid of extracted files
             if (Directory.Exists(bdPath))
