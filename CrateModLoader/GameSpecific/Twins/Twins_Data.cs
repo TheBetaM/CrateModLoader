@@ -200,6 +200,42 @@ namespace CrateModLoader.GameSpecific.Twins
             GEM_CLEAR = 2,
         }
 
+        public enum MusicID
+        {
+            BP = 7,
+            ClassroomCortex = 8,
+            Henchmania = 9,
+            WormChase = 10,
+            TitleTheme = 27,
+            Cavern = 28,
+            BeeChase = 29,
+            MechaBandicoot = 30,
+            TotemRiver = 31,
+            BossTikimon = 32,
+            IcebergLab = 33,
+            IceClimb = 34,
+            BossUka = 35,
+            WalrusChase = 36,
+            Academy = 37,
+            AcademyNoLaugh = 38,
+            Undefined = 39,
+            BossDingodile = 40,
+            Rooftop = 41,
+            IcebergLabFast = 53,
+            SlipSlide = 54,
+            BossNGin = 55,
+            Hijinks = 56,
+            Boiler = 57,
+            ClassroomCrash = 58,
+            BossAmberly = 59,
+            AltLab = 60,
+            Rockslide = 61,
+            TwinsanityIsland = 62,
+            AntAgony = 63,
+            BossTwins = 64,
+            BoilerUnused = 136,
+        }
+
         public static List<TwinsLevelChunk> All_Chunks = new List<TwinsLevelChunk>()
         {
             new TwinsLevelChunk(ChunkType.AltEarth_Core_AftTreas,LevelType.AntAgony,@"altearth\core\afttreas"),

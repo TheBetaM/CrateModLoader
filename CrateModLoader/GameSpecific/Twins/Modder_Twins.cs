@@ -16,8 +16,9 @@ namespace CrateModLoader
 
         public string[] modOptions = { 
 			"Randomize Crates", 
-			"Randomize Gem Locations", 
-			"Prevent Sequence Breaks" 
+			"Randomize Gem Locations",
+            "Randomize Level Music",
+			"Prevent Sequence Breaks",
 			};
 
         public bool Twins_Randomize_CrateTypes = false; // TODO: Make this a toggle between CrateTypes/AllCrates in the mod menu?
@@ -27,20 +28,23 @@ namespace CrateModLoader
         public bool Twins_Randomize_Enemies = false; // TODO
         public bool Twins_Randomize_PlayableChars = false; // TODO
         public bool Twins_Randomize_StartingChunk = false; // TODO, ExePatcher
-        public bool Twins_Randomize_Music = false; // TODO
+        public bool Twins_Randomize_Music = false; 
 		public bool Twins_Mod_PreventSequenceBreaks = false; // TODO
         private string bdPath = "";
         public Random randState = new Random();
         public List<uint> CrateReplaceList = new List<uint>();
         public List<uint> randCrateList = new List<uint>();
         public List<uint> gemObjectList = new List<uint>();
+        public List<uint> musicTypes = new List<uint>();
+        public List<uint> randMusicList = new List<uint>();
         public bool[] levelEdited;
 
         public enum Twins_Options
         {
             RandomizeAllCrates = 0,
             RandomizeGemLocations = 1,
-			ModPreventSB = 2,
+            RandomizeMusic = 2,
+			ModPreventSB = 3,
         }
 
         public void OptionChanged(int option, bool value)
@@ -52,6 +56,10 @@ namespace CrateModLoader
             else if (option == (int)Twins_Options.RandomizeAllCrates)
             {
                 Twins_Randomize_AllCrates = value;
+            }
+            else if (option == (int)Twins_Options.RandomizeMusic)
+            {
+                Twins_Randomize_Music = value;
             }
 			else if (option == (int)Twins_Options.ModPreventSB)
             {
@@ -312,6 +320,63 @@ namespace CrateModLoader
                 Twins_Edit_AllLevels = true;
             }
 
+            if (Twins_Randomize_Music)
+            {
+                List<uint> temp_musicList = new List<uint>();
+                musicTypes.Clear();
+                musicTypes.Add((uint)Twins_Data.MusicID.Academy);
+                musicTypes.Add((uint)Twins_Data.MusicID.AcademyNoLaugh);
+                musicTypes.Add((uint)Twins_Data.MusicID.AltLab);
+                musicTypes.Add((uint)Twins_Data.MusicID.AntAgony);
+                musicTypes.Add((uint)Twins_Data.MusicID.BeeChase);
+                musicTypes.Add((uint)Twins_Data.MusicID.Boiler);
+                musicTypes.Add((uint)Twins_Data.MusicID.BoilerUnused);
+                musicTypes.Add((uint)Twins_Data.MusicID.BossAmberly);
+                musicTypes.Add((uint)Twins_Data.MusicID.BossDingodile);
+                musicTypes.Add((uint)Twins_Data.MusicID.BossNGin);
+                musicTypes.Add((uint)Twins_Data.MusicID.BossTikimon);
+                musicTypes.Add((uint)Twins_Data.MusicID.BossTwins);
+                musicTypes.Add((uint)Twins_Data.MusicID.BossUka);
+                musicTypes.Add((uint)Twins_Data.MusicID.BP);
+                musicTypes.Add((uint)Twins_Data.MusicID.Cavern);
+                musicTypes.Add((uint)Twins_Data.MusicID.ClassroomCortex);
+                musicTypes.Add((uint)Twins_Data.MusicID.ClassroomCrash);
+                musicTypes.Add((uint)Twins_Data.MusicID.Henchmania);
+                musicTypes.Add((uint)Twins_Data.MusicID.Hijinks);
+                musicTypes.Add((uint)Twins_Data.MusicID.IcebergLab);
+                musicTypes.Add((uint)Twins_Data.MusicID.IcebergLabFast);
+                musicTypes.Add((uint)Twins_Data.MusicID.IceClimb);
+                musicTypes.Add((uint)Twins_Data.MusicID.MechaBandicoot);
+                musicTypes.Add((uint)Twins_Data.MusicID.Rockslide);
+                musicTypes.Add((uint)Twins_Data.MusicID.Rooftop);
+                musicTypes.Add((uint)Twins_Data.MusicID.SlipSlide);
+                musicTypes.Add((uint)Twins_Data.MusicID.TitleTheme);
+                musicTypes.Add((uint)Twins_Data.MusicID.TotemRiver);
+                musicTypes.Add((uint)Twins_Data.MusicID.TwinsanityIsland);
+                musicTypes.Add((uint)Twins_Data.MusicID.WalrusChase);
+                musicTypes.Add((uint)Twins_Data.MusicID.WormChase);
+                int targetPos = 0;
+
+                for (int i = 0; i < musicTypes.Count; i++)
+                {
+                    temp_musicList.Add(musicTypes[i]);
+                }
+                while (musicTypes.Count > 0)
+                {
+                    targetPos = randState.Next(0, musicTypes.Count);
+                    randMusicList.Add(musicTypes[targetPos]);
+                    musicTypes.RemoveAt(targetPos);
+                }
+
+                musicTypes.Clear();
+                for (int i = 0; i < temp_musicList.Count; i++)
+                {
+                    musicTypes.Add(temp_musicList[i]);
+                }
+
+                Twins_Edit_AllLevels = true;
+            }
+
             if (Twins_Edit_AllLevels)
             {
                 levelEdited = new bool[140];
@@ -402,6 +467,10 @@ namespace CrateModLoader
             if (Twins_Randomize_GemLocations)
             {
                 RM_Randomize_Gems(ref RM_Archive, ref chunkType);
+            }
+            if (Twins_Randomize_Music)
+            {
+                RM_Randomize_Music(ref RM_Archive);
             }
 
             RM_Archive.SaveFile(path);
@@ -583,5 +652,39 @@ namespace CrateModLoader
             
 
         }
+
+        void RM_Randomize_Music(ref TwinsFile RM_Archive)
+        {
+            for (uint section_id = (uint)RM2_Sections.Instances1; section_id <= (uint)RM2_Sections.Instances8; section_id++)
+            {
+                if (!RM_Archive.ContainsItem(section_id)) continue;
+                TwinsSection section = RM_Archive.GetItem<TwinsSection>(section_id);
+                if (section.Records.Count > 0)
+                {
+                    if (!section.ContainsItem((uint)RM2_Instance_Sections.ObjectInstance)) continue;
+                    TwinsSection instances = section.GetItem<TwinsSection>((uint)RM2_Instance_Sections.ObjectInstance);
+                    for (int i = 0; i < instances.Records.Count; ++i)
+                    {
+                        Instance instance = (Instance)instances.Records[i];
+                        if (instance.ObjectID == 316) // DJ object
+                        {
+                            uint sourceMusic = instance.UnkI323[0];
+                            for (int m = 0; m < musicTypes.Count; m++)
+                            {
+                                if (musicTypes[m] == sourceMusic)
+                                {
+                                    sourceMusic = randMusicList[m];
+                                }
+                            }
+                            instance.UnkI323 = new List<uint>() { sourceMusic, 255, instance.UnkI323[2] };
+
+                            break;
+                        }
+                        instances.Records[i] = instance;
+                    }
+                }
+            }
+        }
+
     }
 }
