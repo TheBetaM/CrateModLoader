@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using CrateModLoader.GameSpecific.Twins;
 using Twinsanity;
 //Twinsanity API by NeoKesha, Smartkin, ManDude and Marko (https://github.com/Smartkin/twinsanity-editor)
 //Version number, seed and options are displayed in the Autosave Disabled screen accessible by starting a new game without saving or just disabling autosave.
@@ -13,38 +14,46 @@ namespace CrateModLoader
     class Modder_Twins
     {
 
-        public string[] modOptions = { "Randomize Crate Types", "Randomize Individual Crates", "Randomize Gem Types",  };
+        public string[] modOptions = { 
+			"Randomize Crates", 
+			"Randomize Gem Locations", 
+			"Prevent Sequence Breaks" 
+			};
 
-        public bool Twins_Randomize_CrateTypes = false;
-        public bool Twins_Randomize_AllCrates = false;
-        public bool Twins_Randomize_GemTypes = false;
-        public bool Twins_Randomize_Enemies = false; //TODO
-        public bool Twins_Randomize_PlayableChars = false; //TODO
-        public bool Twins_Randomize_StartingChunk = false; //TODO, ExePatcher
+        public bool Twins_Randomize_CrateTypes = false; // TODO: Make this a toggle between CrateTypes/AllCrates in the mod menu?
+        public bool Twins_Randomize_AllCrates = false; // TODO: Set seed based per chunk/instance ID to prevent version inconsistency
+        public bool Twins_Randomize_GemTypes = false; // TODO: Change instance variable, maybe just scrap this
+		public bool Twins_Randomize_GemLocations = false;
+        public bool Twins_Randomize_Enemies = false; // TODO
+        public bool Twins_Randomize_PlayableChars = false; // TODO
+        public bool Twins_Randomize_StartingChunk = false; // TODO, ExePatcher
+		public bool Twins_Mod_PreventSequenceBreaks = false; // TODO
         private string bdPath = "";
         public Random randState = new Random();
         public List<uint> randCrateList = new List<uint>();
+        public List<uint> gemObjectList = new List<uint>();
+        public bool[] levelEdited;
 
         public enum Twins_Options
         {
-            RandomizeCrateTypes = 0,
-            RandomizeAllCrates = 1,
-            RandomizeGemTypes = 2,
+            RandomizeAllCrates = 0,
+            RandomizeGemLocations = 1,
+			ModPreventSB = 2,
         }
 
         public void OptionChanged(int option, bool value)
         {
-            if (option == (int)Twins_Options.RandomizeCrateTypes)
+            if (option == (int)Twins_Options.RandomizeGemLocations)
             {
-                Twins_Randomize_CrateTypes = value;
+                Twins_Randomize_GemLocations = value;
             }
             else if (option == (int)Twins_Options.RandomizeAllCrates)
             {
                 Twins_Randomize_AllCrates = value;
             }
-            else if (option == (int)Twins_Options.RandomizeGemTypes)
+			else if (option == (int)Twins_Options.ModPreventSB)
             {
-                Twins_Randomize_GemTypes = value;
+                Twins_Mod_PreventSequenceBreaks = value;
             }
         }
 
@@ -273,8 +282,25 @@ namespace CrateModLoader
                 Twins_Edit_AllLevels = true;
             }
 
+            if (Twins_Randomize_GemLocations)
+            {
+                Twins_Data.Twins_Randomize_Gems(ref randState);
+
+                gemObjectList = new List<uint>();
+                gemObjectList.Add((uint)DefaultRM2_DefaultIDs.GEM_BLUE);
+                gemObjectList.Add((uint)DefaultRM2_DefaultIDs.GEM_CLEAR);
+                gemObjectList.Add((uint)DefaultRM2_DefaultIDs.GEM_GREEN);
+                gemObjectList.Add((uint)DefaultRM2_DefaultIDs.GEM_PURPLE);
+                gemObjectList.Add((uint)DefaultRM2_DefaultIDs.GEM_RED);
+                gemObjectList.Add((uint)DefaultRM2_DefaultIDs.GEM_YELLOW);
+
+                Twins_Edit_AllLevels = true;
+            }
+
             if (Twins_Edit_AllLevels)
             {
+                levelEdited = new bool[140];
+
                 DirectoryInfo di = new DirectoryInfo(bdPath + "/Levels/");
                 foreach (DirectoryInfo dir in di.EnumerateDirectories())
                 {
@@ -338,12 +364,29 @@ namespace CrateModLoader
 
         void RM_EditLevel(string path)
         {
+            Twins_Data.ChunkType chunkType = Twins_Data.ChunkPathToType(path, System.IO.Path.Combine(Program.ModProgram.extractedPath, @"cml_extr\"));
+            if (chunkType != Twins_Data.ChunkType.Invalid)
+            {
+                if (levelEdited[(int)chunkType])
+                {
+                    return;
+                }
+                else
+                {
+                    levelEdited[(int)chunkType] = true;
+                }
+            }
+
             TwinsFile RM_Archive = new TwinsFile();
             RM_Archive.LoadFile(path, TwinsFile.FileType.RM2);
 
             if (Twins_Randomize_AllCrates)
             {
                 RM_Randomize_Crates(ref RM_Archive);
+            }
+            if (Twins_Randomize_GemLocations)
+            {
+                RM_Randomize_Gems(ref RM_Archive, ref chunkType);
             }
 
             RM_Archive.SaveFile(path);
@@ -419,6 +462,111 @@ namespace CrateModLoader
                     }
                 }
             }
+        }
+
+        void RM_Randomize_Gems(ref TwinsFile RM_Archive, ref Twins_Data.ChunkType chunkType)
+        {
+            // TODO
+            if (chunkType == Twins_Data.ChunkType.Invalid)
+            {
+                Console.WriteLine("INVALID CHUNK FILE: " + RM_Archive.FileName);
+                return;
+            }
+
+            // Part 1: Remove existing gems
+
+            for (uint section_id = (uint)RM2_Sections.Instances1; section_id <= (uint)RM2_Sections.Instances8; section_id++)
+            {
+                if (!RM_Archive.ContainsItem(section_id)) continue;
+                TwinsSection section = RM_Archive.GetItem<TwinsSection>(section_id);
+                if (section.Records.Count > 0)
+                {
+                    if (!section.ContainsItem((uint)RM2_Instance_Sections.ObjectInstance)) continue;
+                    TwinsSection instances = section.GetItem<TwinsSection>((uint)RM2_Instance_Sections.ObjectInstance);
+                    for (int i = 0; i < instances.Records.Count; ++i)
+                    {
+                        Instance instance = (Instance)instances.Records[i];
+                        for (int d = 0; d < gemObjectList.Count; d++)
+                        {
+                            if (instance.ObjectID == gemObjectList[d])
+                            {
+                                instance.Pos.Y = instance.Pos.Y - 1000f; //todo: figure out how to get rid of them gracefully
+
+                                /* Used this to generate vanilla gem locations instead of checking one-by-one
+                                if (instance.ObjectID == (ushort)Twins_Data.GemID.GEM_BLUE)
+                                {
+                                    Console.WriteLine("new TwinsGem(ChunkType." + chunkType + ",GemType.GEM_BLUE,new Vector3(" + instance.Pos.X + "f," + instance.Pos.Y + "f," + instance.Pos.Z + "f)),");
+                                }
+                                */
+
+                                break;
+                            }
+                        }
+                        instances.Records[i] = instance;
+                    }
+                }
+            }
+
+            // Part 2: Add new gems
+            uint gem_section_id = (uint)RM2_Sections.Instances1;
+            if (!RM_Archive.ContainsItem(gem_section_id)) return;
+            TwinsSection instances_group = RM_Archive.GetItem<TwinsSection>(gem_section_id);
+            TwinsSection instances_section;
+            if (instances_group.Records.Count > 0)
+            {
+                if (!instances_group.ContainsItem((uint)RM2_Instance_Sections.ObjectInstance)) return;
+                instances_section = instances_group.GetItem<TwinsSection>((uint)RM2_Instance_Sections.ObjectInstance);
+            }
+            else
+            {
+                return;
+            }
+
+            
+            for (int i = 0; i < Twins_Data.All_Gems.Count; i++)
+            {
+                if (Twins_Data.All_Gems[i].chunk == chunkType)
+                {
+                    Instance NewGem = new Instance();
+                    NewGem.Pos = new Pos(Twins_Data.All_Gems[i].pos.X, Twins_Data.All_Gems[i].pos.Y, Twins_Data.All_Gems[i].pos.Z,1f);
+                    if (Twins_Data.All_Gems[i].type == Twins_Data.GemType.GEM_BLUE)
+                    {
+                        NewGem.ObjectID = (ushort)Twins_Data.GemID.GEM_BLUE;
+                    }
+                    else if (Twins_Data.All_Gems[i].type == Twins_Data.GemType.GEM_CLEAR)
+                    {
+                        NewGem.ObjectID = (ushort)Twins_Data.GemID.GEM_CLEAR;
+                    }
+                    else if (Twins_Data.All_Gems[i].type == Twins_Data.GemType.GEM_GREEN)
+                    {
+                        NewGem.ObjectID = (ushort)Twins_Data.GemID.GEM_GREEN;
+                    }
+                    else if (Twins_Data.All_Gems[i].type == Twins_Data.GemType.GEM_PURPLE)
+                    {
+                        NewGem.ObjectID = (ushort)Twins_Data.GemID.GEM_PURPLE;
+                    }
+                    else if (Twins_Data.All_Gems[i].type == Twins_Data.GemType.GEM_RED)
+                    {
+                        NewGem.ObjectID = (ushort)Twins_Data.GemID.GEM_RED;
+                    }
+                    else if (Twins_Data.All_Gems[i].type == Twins_Data.GemType.GEM_YELLOW)
+                    {
+                        NewGem.ObjectID = (ushort)Twins_Data.GemID.GEM_YELLOW;
+                    }
+                    NewGem.ID = (uint)instances_section.Records.Count;
+                    NewGem.SomeNum1 = 10;
+                    NewGem.SomeNum2 = 10;
+                    NewGem.SomeNum3 = 10;
+                    NewGem.AfterOID = uint.MaxValue;
+                    NewGem.UnkI32 = 0x1CE;
+                    NewGem.UnkI322 = new List<float>() { 1 };
+                    NewGem.UnkI323 = new List<uint>() { 0, 255, (uint)Twins_Data.All_Gems[i].type };
+
+                    instances_section.Records.Add(NewGem);
+                }
+            }
+            
+
         }
     }
 }

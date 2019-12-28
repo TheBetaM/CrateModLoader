@@ -44,9 +44,8 @@ API by BetaM, ManDude and eezstreet.
 Supported: All PS2 versions (.ISO format)  
 API by NeoKesha, Smartkin, ManDude and Marko. (https://github.com/Smartkin/twinsanity-editor)  
 ### Features:  
-- Randomize Crate Types
-- Randomize Individual Crates 
-- Randomize Gem Types  
+- Randomize Crates 
+- Randomize Gem Locations  
 - Version, seed and settings visible in the Autosave Disabled screen  
   
 ## Crash Tag Team Racing
