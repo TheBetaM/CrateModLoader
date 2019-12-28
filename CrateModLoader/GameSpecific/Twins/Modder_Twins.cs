@@ -22,14 +22,16 @@ namespace CrateModLoader
 
         public bool Twins_Randomize_CrateTypes = false; // TODO: Make this a toggle between CrateTypes/AllCrates in the mod menu?
         public bool Twins_Randomize_AllCrates = false; // TODO: Set seed based per chunk/instance ID to prevent version inconsistency
-        public bool Twins_Randomize_GemTypes = false; // TODO: Change instance variable, maybe just scrap this
+        public bool Twins_Randomize_GemTypes = false; // TODO: Change instance variable, or maybe just scrap this
 		public bool Twins_Randomize_GemLocations = false;
         public bool Twins_Randomize_Enemies = false; // TODO
         public bool Twins_Randomize_PlayableChars = false; // TODO
         public bool Twins_Randomize_StartingChunk = false; // TODO, ExePatcher
+        public bool Twins_Randomize_Music = false; // TODO
 		public bool Twins_Mod_PreventSequenceBreaks = false; // TODO
         private string bdPath = "";
         public Random randState = new Random();
+        public List<uint> CrateReplaceList = new List<uint>();
         public List<uint> randCrateList = new List<uint>();
         public List<uint> gemObjectList = new List<uint>();
         public bool[] levelEdited;
@@ -279,6 +281,19 @@ namespace CrateModLoader
                 randCrateList.Add((uint)DefaultRM2_DefaultIDs.MULTIPLE_HIT_CRATE);
                 randCrateList.Add((uint)DefaultRM2_DefaultIDs.SURPRISE_CRATE);
 
+                CrateReplaceList = new List<uint>();
+                CrateReplaceList.Add((uint)DefaultRM2_DefaultIDs.BASIC_CRATE);
+                CrateReplaceList.Add((uint)DefaultRM2_DefaultIDs.TNT_CRATE);
+                //CrateReplaceList.Add((uint)DefaultRM2_DefaultIDs.NITRO_CRATE);
+                CrateReplaceList.Add((uint)DefaultRM2_DefaultIDs.EXTRA_LIFE_CRATE);
+                CrateReplaceList.Add((uint)DefaultRM2_DefaultIDs.WOODEN_SPRING_CRATE);
+                CrateReplaceList.Add((uint)DefaultRM2_DefaultIDs.REINFORCED_WOODEN_CRATE);
+                CrateReplaceList.Add((uint)DefaultRM2_DefaultIDs.AKU_AKU_CRATE);
+                //CrateReplaceList.Add((uint)DefaultRM2_DefaultIDs.IRON_CRATE);
+                //CrateReplaceList.Add((uint)DefaultRM2_DefaultIDs.IRON_SPRING_CRATE);
+                CrateReplaceList.Add((uint)DefaultRM2_DefaultIDs.MULTIPLE_HIT_CRATE);
+                CrateReplaceList.Add((uint)DefaultRM2_DefaultIDs.SURPRISE_CRATE);
+
                 Twins_Edit_AllLevels = true;
             }
 
@@ -449,9 +464,9 @@ namespace CrateModLoader
                     for (int i = 0; i < instances.Records.Count; ++i)
                     {
                         Instance instance = (Instance)instances.Records[i];
-                        for (int d = 0; d < randCrateList.Count; d++)
+                        for (int d = 0; d < CrateReplaceList.Count; d++)
                         {
-                            if (instance.ObjectID == randCrateList[d])
+                            if (instance.ObjectID == CrateReplaceList[d])
                             {
                                 target_item = randState.Next(0, randCrateList.Count);
                                 instance.ObjectID = (ushort)randCrateList[target_item];
