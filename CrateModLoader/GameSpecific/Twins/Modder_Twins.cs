@@ -15,7 +15,7 @@ namespace CrateModLoader
     {
 
         public string[] modOptions = { 
-			"Randomize Crates", 
+			"Randomize Regular Crates", 
 			"Randomize Gem Locations",
             "Randomize Level Music",
 			"Prevent Sequence Breaks",
@@ -28,7 +28,8 @@ namespace CrateModLoader
         public bool Twins_Randomize_Enemies = false; // TODO
         public bool Twins_Randomize_PlayableChars = false; // TODO
         public bool Twins_Randomize_StartingChunk = false; // TODO, ExePatcher
-        public bool Twins_Randomize_Music = false; 
+        public bool Twins_Randomize_Music = false;
+        public bool Twins_Randomize_BossPatterns = false;// TODO
 		public bool Twins_Mod_PreventSequenceBreaks = false; // TODO
         private string bdPath = "";
         public Random randState = new Random();
@@ -197,8 +198,8 @@ namespace CrateModLoader
                 if (Twins_Randomize_CrateTypes)
                 {
                     crateList.Add((uint)DefaultRM2_DefaultIDs.BASIC_CRATE);
-                    crateList.Add((uint)DefaultRM2_DefaultIDs.TNT_CRATE);
-                    crateList.Add((uint)DefaultRM2_DefaultIDs.NITRO_CRATE);
+                    //crateList.Add((uint)DefaultRM2_DefaultIDs.TNT_CRATE);
+                    //crateList.Add((uint)DefaultRM2_DefaultIDs.NITRO_CRATE);
                     crateList.Add((uint)DefaultRM2_DefaultIDs.EXTRA_LIFE_CRATE);
                     crateList.Add((uint)DefaultRM2_DefaultIDs.WOODEN_SPRING_CRATE);
                     crateList.Add((uint)DefaultRM2_DefaultIDs.REINFORCED_WOODEN_CRATE);
@@ -211,8 +212,8 @@ namespace CrateModLoader
                     crateList.Add((uint)DefaultRM2_DefaultIDs.SURPRISE_CRATE);
 
                     posList.Add((uint)DefaultRM2_DefaultIDs.BASIC_CRATE);
-                    posList.Add((uint)DefaultRM2_DefaultIDs.TNT_CRATE);
-                    posList.Add((uint)DefaultRM2_DefaultIDs.NITRO_CRATE);
+                    //posList.Add((uint)DefaultRM2_DefaultIDs.TNT_CRATE);
+                    //posList.Add((uint)DefaultRM2_DefaultIDs.NITRO_CRATE);
                     posList.Add((uint)DefaultRM2_DefaultIDs.EXTRA_LIFE_CRATE);
                     posList.Add((uint)DefaultRM2_DefaultIDs.WOODEN_SPRING_CRATE);
                     posList.Add((uint)DefaultRM2_DefaultIDs.REINFORCED_WOODEN_CRATE);
@@ -276,8 +277,8 @@ namespace CrateModLoader
             {
                 randCrateList = new List<uint>();
                 randCrateList.Add((uint)DefaultRM2_DefaultIDs.BASIC_CRATE);
-                randCrateList.Add((uint)DefaultRM2_DefaultIDs.TNT_CRATE);
-                randCrateList.Add((uint)DefaultRM2_DefaultIDs.NITRO_CRATE);
+                //randCrateList.Add((uint)DefaultRM2_DefaultIDs.TNT_CRATE);
+                //randCrateList.Add((uint)DefaultRM2_DefaultIDs.NITRO_CRATE);
                 randCrateList.Add((uint)DefaultRM2_DefaultIDs.EXTRA_LIFE_CRATE);
                 randCrateList.Add((uint)DefaultRM2_DefaultIDs.WOODEN_SPRING_CRATE);
                 randCrateList.Add((uint)DefaultRM2_DefaultIDs.REINFORCED_WOODEN_CRATE);
@@ -291,7 +292,7 @@ namespace CrateModLoader
 
                 CrateReplaceList = new List<uint>();
                 CrateReplaceList.Add((uint)DefaultRM2_DefaultIDs.BASIC_CRATE);
-                CrateReplaceList.Add((uint)DefaultRM2_DefaultIDs.TNT_CRATE);
+                //CrateReplaceList.Add((uint)DefaultRM2_DefaultIDs.TNT_CRATE);
                 //CrateReplaceList.Add((uint)DefaultRM2_DefaultIDs.NITRO_CRATE);
                 CrateReplaceList.Add((uint)DefaultRM2_DefaultIDs.EXTRA_LIFE_CRATE);
                 CrateReplaceList.Add((uint)DefaultRM2_DefaultIDs.WOODEN_SPRING_CRATE);
@@ -550,7 +551,6 @@ namespace CrateModLoader
 
         void RM_Randomize_Gems(ref TwinsFile RM_Archive, ref Twins_Data.ChunkType chunkType)
         {
-            // TODO
             if (chunkType == Twins_Data.ChunkType.Invalid)
             {
                 Console.WriteLine("INVALID CHUNK FILE: " + RM_Archive.FileName);
@@ -649,8 +649,6 @@ namespace CrateModLoader
                     instances_section.Records.Add(NewGem);
                 }
             }
-            
-
         }
 
         void RM_Randomize_Music(ref TwinsFile RM_Archive)

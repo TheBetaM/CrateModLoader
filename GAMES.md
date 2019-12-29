@@ -46,6 +46,7 @@ API by NeoKesha, Smartkin, ManDude and Marko. (https://github.com/Smartkin/twins
 ### Features:  
 - Randomize Crates 
 - Randomize Gem Locations  
+- Randomize Level Music  
 - Version, seed and settings visible in the Autosave Disabled screen  
   
 ## Crash Tag Team Racing
