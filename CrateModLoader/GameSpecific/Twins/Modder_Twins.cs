@@ -19,6 +19,7 @@ namespace CrateModLoader
 			"Randomize Gem Locations",
             "Randomize Level Music",
 			"Enable Flying Kick for Crash",
+            "Enable Stomp Kick for Crash (Flying Kick variation)"
 			};
 
         public bool Twins_Randomize_CrateTypes = false; // TODO: Make this a toggle between CrateTypes/AllCrates in the mod menu?
@@ -32,6 +33,7 @@ namespace CrateModLoader
         public bool Twins_Randomize_BossPatterns = false;// TODO
 		public bool Twins_Mod_PreventSequenceBreaks = false; // TODO
         public bool Twins_Mod_FlyingKick = false;
+        public bool Twins_Mod_StompKick = false;
         private string bdPath = "";
         public Random randState = new Random();
         public List<uint> CrateReplaceList = new List<uint>();
@@ -47,7 +49,7 @@ namespace CrateModLoader
             RandomizeGemLocations = 1,
             RandomizeMusic = 2,
             ModFlyingKick = 3,
-			ModPreventSB = 4,
+			ModStompKick = 4,
         }
 
         public void OptionChanged(int option, bool value)
@@ -64,9 +66,9 @@ namespace CrateModLoader
             {
                 Twins_Randomize_Music = value;
             }
-			else if (option == (int)Twins_Options.ModPreventSB)
+			else if (option == (int)Twins_Options.ModStompKick)
             {
-                Twins_Mod_PreventSequenceBreaks = value;
+                Twins_Mod_StompKick = value;
             }
             else if (option == (int)Twins_Options.ModFlyingKick)
             {
@@ -384,9 +386,49 @@ namespace CrateModLoader
                 Twins_Edit_AllLevels = true;
             }
 
-            if (Twins_Mod_FlyingKick)
+            if (Twins_Mod_FlyingKick || Twins_Mod_StompKick)
             {
                 Twins_Edit_AllLevels = true;
+
+                levelEdited = new bool[140];
+
+                DirectoryInfo di = new DirectoryInfo(bdPath + "/Levels/");
+                foreach (DirectoryInfo dir in di.EnumerateDirectories())
+                {
+                    Recursive_LoadLevels(di);
+                }
+
+                TwinsFile mainArchiveLoad = new TwinsFile();
+                mainArchiveLoad.LoadFile(bdPath + @"Startup\Default.rm2", TwinsFile.FileType.RM2);
+
+                RM_LoadScripts(ref mainArchiveLoad);
+                RM_LoadObjects(ref mainArchiveLoad);
+
+                Twins_Data.allScripts.Sort((x, y) => x.ID.CompareTo(y.ID));
+                Twins_Data.allObjects.Sort((x, y) => x.ID.CompareTo(y.ID));
+
+                /*
+                List<string> test_scriptList = new List<string>();
+
+                test_scriptList.Add("public enum ObjectID {");
+
+                for (int i = 0; i < Twins_Data.allObjects.Count; i++)
+                {
+                    if (Twins_Data.allObjects[i].Name != null && Twins_Data.allObjects[i].Name != "")
+                    {
+                        test_scriptList.Add(Twins_Data.allObjects[i].Name + " = " + Twins_Data.allObjects[i].ID + ",");
+                    }
+                    else
+                    {
+                        test_scriptList.Add("Object" + Twins_Data.allObjects[i].ID + " = " + Twins_Data.allObjects[i].ID + ",");
+                    }
+                }
+
+                test_scriptList.Add("};");
+
+                File.WriteAllLines(AppDomain.CurrentDomain.BaseDirectory + "/Tools/AllScripts.txt", test_scriptList);
+                */
+                
             }
 
             if (Twins_Edit_AllLevels)
@@ -398,6 +440,9 @@ namespace CrateModLoader
                 {
                     Recursive_EditLevels(di);
                 }
+
+                Twins_Data.allScripts.Clear();
+                Twins_Data.allObjects.Clear();
             }
 
             if (Twins_Edit_CodeText)
@@ -484,12 +529,40 @@ namespace CrateModLoader
             {
                 RM_Randomize_Music(ref RM_Archive);
             }
-            if (Twins_Mod_FlyingKick)
+            if (Twins_Mod_StompKick)
+            {
+                RM_CharacterObjectMod(ref RM_Archive);
+            }
+            if (Twins_Mod_FlyingKick || Twins_Mod_StompKick)
             {
                 RM_CharacterMod(ref RM_Archive);
             }
 
             RM_Archive.SaveFile(path);
+        }
+        void RM_LoadLevel(string path)
+        {
+            Twins_Data.ChunkType chunkType = Twins_Data.ChunkPathToType(path, System.IO.Path.Combine(Program.ModProgram.extractedPath, @"cml_extr\"));
+            if (chunkType != Twins_Data.ChunkType.Invalid)
+            {
+                if (levelEdited[(int)chunkType])
+                {
+                    return;
+                }
+                else
+                {
+                    levelEdited[(int)chunkType] = true;
+                }
+            }
+
+            TwinsFile RM_Archive = new TwinsFile();
+            RM_Archive.LoadFile(path, TwinsFile.FileType.RM2);
+
+            if (Twins_Mod_FlyingKick || Twins_Mod_StompKick)
+            {
+                RM_LoadScripts(ref RM_Archive);
+                RM_LoadObjects(ref RM_Archive);
+            }
         }
 
         void Recursive_EditLevels(DirectoryInfo di)
@@ -504,6 +577,20 @@ namespace CrateModLoader
                     }
                 }
                 Recursive_EditLevels(dir);
+            }
+        }
+        void Recursive_LoadLevels(DirectoryInfo di)
+        {
+            foreach (DirectoryInfo dir in di.EnumerateDirectories())
+            {
+                foreach (FileInfo file in dir.EnumerateFiles())
+                {
+                    if (file.Extension == ".rm2" || file.Extension == ".RM2")
+                    {
+                        RM_LoadLevel(file.FullName);
+                    }
+                }
+                Recursive_LoadLevels(dir);
             }
         }
 
@@ -699,6 +786,145 @@ namespace CrateModLoader
             }
         }
 
+        void RM_LoadScripts(ref TwinsFile RM_Archive)
+        {
+            bool check = false;
+            if (RM_Archive.ContainsItem((uint)RM2_Sections.Code))
+            {
+                TwinsSection code_section = RM_Archive.GetItem<TwinsSection>((uint)RM2_Sections.Code);
+                if (code_section.ContainsItem((uint)RM2_Code_Sections.Script))
+                {
+                    TwinsSection script_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.Script);
+                    if (script_section.Records.Count > 0)
+                    {
+                        for (int i = 0; i < script_section.Records.Count; ++i)
+                        {
+                            Script scr = (Script)script_section.Records[i];
+                            if (Twins_Data.allScripts.Count > 0)
+                            {
+                                check = false;
+                                for (int d = 0; d < Twins_Data.allScripts.Count; d++)
+                                {
+                                    if (Twins_Data.allScripts[d].ID == scr.ID)
+                                    {
+                                        check = true;
+                                    }
+                                }
+                                if (!check)
+                                {
+                                    Twins_Data.allScripts.Add(scr);
+                                }
+                            }
+                            else
+                            {
+                                Twins_Data.allScripts.Add(scr);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        void RM_LoadObjects(ref TwinsFile RM_Archive)
+        {
+            bool check = false;
+            if (RM_Archive.ContainsItem((uint)RM2_Sections.Code))
+            {
+                TwinsSection code_section = RM_Archive.GetItem<TwinsSection>((uint)RM2_Sections.Code);
+                if (code_section.ContainsItem((uint)RM2_Code_Sections.Object))
+                {
+                    TwinsSection object_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.Object);
+                    if (object_section.Records.Count > 0)
+                    {
+                        for (int i = 0; i < object_section.Records.Count; ++i)
+                        {
+                            GameObject scr = (GameObject)object_section.Records[i];
+                            string[] nameFix = scr.Name.Split('|');
+                            scr.Name = nameFix[nameFix.Length - 1];
+                            scr.Name = scr.Name.Replace("act_", "");
+                            if (Twins_Data.allObjects.Count > 0)
+                            {
+                                check = false;
+                                for (int d = 0; d < Twins_Data.allObjects.Count; d++)
+                                {
+                                    if (Twins_Data.allObjects[d].ID == scr.ID)
+                                    {
+                                        check = true;
+                                    }
+                                }
+                                if (!check)
+                                {
+                                    Twins_Data.allObjects.Add(scr);
+                                }
+                            }
+                            else
+                            {
+                                Twins_Data.allObjects.Add(scr);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        void RM_CharacterObjectMod(ref TwinsFile RM_Archive)
+        {
+            if (RM_Archive.ContainsItem((uint)RM2_Sections.Code))
+            {
+                TwinsSection code_section = RM_Archive.GetItem<TwinsSection>((uint)RM2_Sections.Code);
+                /*
+                if (code_section.ContainsItem((uint)RM2_Code_Sections.Script))
+                {
+                    TwinsSection script_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.Script);
+                    if (script_section.Records.Count > 0)
+                    {
+                        script_section.Records.Add(Twins_Data.GetScriptByID(Twins_Data.ScriptID.HEAD_COM_GENERIC_CHARACTER_STRAFE_LEFT));
+                        script_section.Records.Add(Twins_Data.GetScriptByID(Twins_Data.ScriptID.COM_GENERIC_CHARACTER_STRAFE_LEFT));
+                        script_section.Records.Add(Twins_Data.GetScriptByID(Twins_Data.ScriptID.HEAD_COM_GENERIC_CHARACTER_STRAFE_RIGHT));
+                        script_section.Records.Add(Twins_Data.GetScriptByID(Twins_Data.ScriptID.COM_GENERIC_CHARACTER_STRAFE_RIGHT));
+                    }
+                }
+                */
+                if (code_section.ContainsItem((uint)RM2_Code_Sections.Object))
+                {
+                    TwinsSection obj_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.Object);
+                    if (obj_section.Records.Count > 0)
+                    {
+                        for (int obj = 0; obj < obj_section.Records.Count; obj++)
+                        {
+                            if (obj_section.Records[obj].ID == (uint)Twins_Data.ObjectID.CRASH)
+                            {
+                                GameObject gameObj = (GameObject)obj_section.Records[obj];
+                                //gameObj.Scripts[(int)Twins_Data.CharacterGameObjectScriptOrder.OnStrafeLeft] = (ushort)Twins_Data.ScriptID.HEAD_COM_GENERIC_CHARACTER_STRAFE_LEFT;
+                                //gameObj.Scripts[(int)Twins_Data.CharacterGameObjectScriptOrder.OnStrafeRight] = (ushort)Twins_Data.ScriptID.HEAD_COM_GENERIC_CHARACTER_STRAFE_RIGHT;
+                                gameObj.Scripts[(int)Twins_Data.CharacterGameObjectScriptOrder.OnFlyingKick] = (ushort)Twins_Data.ScriptID.HEAD_COM_CRASH_STOMP_KICK;
+                                gameObj.Scripts[(int)Twins_Data.CharacterGameObjectScriptOrder.OnFlyingKickLand] = (ushort)Twins_Data.ScriptID.HEAD_COM_CRASH_STOMP_KICK_LAND;
+
+                                obj_section.Records[obj] = gameObj;
+                            }
+                            else if (obj_section.Records[obj].ID == (uint)Twins_Data.ObjectID.CORTEX)
+                            {
+                                //GameObject gameObj = (GameObject)obj_section.Records[obj];
+
+                                //gameObj.Scripts[(int)Twins_Data.CharacterGameObjectScriptOrder.Unk35] = (ushort)Twins_Data.ScriptID.HEAD_COM_CORTEX_RECOIL;
+
+                                //obj_section.Records[obj] = gameObj;
+                            }
+                            else if (obj_section.Records[obj].ID == (uint)Twins_Data.ObjectID.NINA)
+                            {
+                                //GameObject gameObj = (GameObject)obj_section.Records[obj];
+                                //gameObj.Scripts[(int)Twins_Data.CharacterGameObjectScriptOrder.OnStrafeLeft] = (ushort)Twins_Data.ScriptID.HEAD_COM_GENERIC_CHARACTER_STRAFE_LEFT;
+                                //gameObj.Scripts[(int)Twins_Data.CharacterGameObjectScriptOrder.OnStrafeRight] = (ushort)Twins_Data.ScriptID.HEAD_COM_GENERIC_CHARACTER_STRAFE_RIGHT;
+
+                                //gameObj.Scripts[(int)Twins_Data.CharacterGameObjectScriptOrder.OnThrowPunch] = (ushort)Twins_Data.ScriptID.HEAD_COM_NINA_ENTER_VEHICLE;
+
+                                //obj_section.Records[obj] = gameObj;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         void RM_CharacterMod(ref TwinsFile RM_Archive)
         {
             for (uint section_id = (uint)RM2_Sections.Instances1; section_id <= (uint)RM2_Sections.Instances8; section_id++)
@@ -715,8 +941,8 @@ namespace CrateModLoader
                         if (instance.ObjectID == 0)
                         {
                             // Crash mods
-                            // Uncomment to enable ~TURBOSTRAFING~ for Crash
-                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.StrafingSpeed] = 15;
+
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.StrafingSpeed] = 5;
 
                             //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Static6] = 10;
 
@@ -725,7 +951,8 @@ namespace CrateModLoader
 
                             //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.JumpHeight] = 13;
 
-                            // Mega slide jump
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.RunSpeed] = 18;
+
                             //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.SlideJumpUnk24] = 33;
 
                             //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.SlideSpeed] = 30;
@@ -734,14 +961,11 @@ namespace CrateModLoader
                             instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.FlyingKickForwardSpeed] = 50;
                             instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.FlyingKickGravity] = 10;
 
-                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Static2] = 25; // 50
-                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Unk3] = 2.6f; // 5.2
-                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Static4] = 30; // 15
-                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Static6] = 50; // 0
-                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Unk7] = 5; // 2.5
-                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Unk10] = 20; // 10
-                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Unk13] = 0.3f; // 0.15
-                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Unk14] = 1; // 0.5
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Static1] = 0; // 1
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Unk3] = 0; // 5.2
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Static6] = 250; // 0
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Unk13] = 0; // 0.15
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Unk14] = 0; // 0.5
                             //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Static15] = 0; // 1
                             //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Unk28] = 0; // 0.05
                             //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Unk29] = 0; // 0.4
@@ -760,8 +984,6 @@ namespace CrateModLoader
                             //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.BodyslamHangTime] = 0.4f;
                             //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.BodyslamUpwardForce] = 10;
                             //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.BodyslamGravityForce] = 400;
-
-
 
                             //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.GunButtonHoldTimeToStartCharging] = 0.25f;
                             //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.GunChargeTime] = 0.5f;
@@ -789,19 +1011,12 @@ namespace CrateModLoader
                             //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.SlideUnk49] = 0.3f;
                             //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.SlideUnk50] = 0.3f;
 
-                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.StrafingSpeed] = 15;
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.StrafingSpeed] = 5;
                         }
                         else if (instance.ObjectID == 379)
                         {
                             // Mechabandicoot mods
                             //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.StrafingSpeed] = 10;
-
-                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.GunButtonHoldTimeToStartCharging] = 0.25f;
-                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.GunChargeTime] = 1f;
-                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.GunTimeBetweenChargedShots] = 0.5f;
-                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.GunTimeBetweenShots] = 0.05f;
-                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Unk55] = 0.5f;
-                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.RadialBlastChargeTime] = 0.1f;
                         }
                         instances.Records[i] = instance;
                     }

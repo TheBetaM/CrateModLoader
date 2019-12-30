@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Twinsanity;
 
 namespace CrateModLoader.GameSpecific.Twins
 {
@@ -240,29 +241,29 @@ namespace CrateModLoader.GameSpecific.Twins
         {
             // 1 for everyone
             Static1 = 0,
-            // 50 for everyone
-            Static2 = 1,
-            // different for mechabandicoot only (7.2 vs 5.2)
-            Unk3 = 2, 
-            // 15 for everyone
-            Static4 = 3,
 
-            /// <summary> Percentage of run speed as integer? </summary>
+            /// <summary> Object gravity while not grounded </summary>
+            AirGravity = 1,
+
+            // different for mechabandicoot only (7.2 vs 5.2)
+            Unk3 = 2,
+
+            /// <summary> Object gravity on the ground </summary>
+            BaseGravity = 3,
+            /// <summary> Percentage of run speed as integer? Walk-to-run speed scaling? </summary>
             WalkSpeedPercentage = 4,
 
             // 0 for everyone
             Static6 = 5,
-            // different for mechabandicoot only (12 vs 2.5)
-            Unk7 = 6,
 
+            /// <summary> Walking speed on the ground (Crash/Cortex/Nina 2.5, Mecha 12) </summary>
+            WalkSpeed = 6,
             /// <summary> Runninng speed on the ground (Crash 9, Cortex/Nina 7) </summary>
             RunSpeed = 7, 
             /// <summary> Set to 0 to disable strafing </summary>
             StrafingSpeed = 8,
-
-            // crash 10 and nina 7
-            Unk10 = 9,
-
+            /// <summary> Forward force after starting a spin throw | crash 10 and nina 7 </summary> 
+            SpinThrowForwardForce = 9,
             /// <summary> Length of spinning time </summary>
             SpinLength = 10,
             /// <summary> Delay between spins </summary>
@@ -361,6 +362,136 @@ namespace CrateModLoader.GameSpecific.Twins
 
             /// <summary> How long the radial blast charges while in mid-air </summary>
             RadialBlastChargeTime = 55,
+        }
+
+        public enum GameObjectScriptOrder
+        {
+            OnSpawn = 0,
+            OnTrigger = 1,
+            OnDamage = 2, // Explosion/Bodyslam/Gunfire/Nina punch
+            OnTouch = 3,
+            OnHeadbutt = 4,
+            OnLand = 5, // Something landed on top of this object
+            OnGettingSpinAttacked = 6,
+            OnGettingBodyslamAttacked = 7,
+            OnGettingSlideAttacked = 8,
+            OnPhysicsCollision = 9,
+            Unk10 = 10, // Some kind of damage
+        }
+        public enum CharacterGameObjectScriptOrder
+        {
+            OnSpawn = 0,
+            OnTrigger = 1,
+            OnDamage = 2, // Explosion/Bodyslam/Gunfire/Nina punch
+            OnTouch = 3,
+            OnHeadbutt = 4,
+            OnLand = 5, // Something landed on top of this object
+            OnGettingSpinAttacked = 6,
+            OnGettingBodyslamAttacked = 7,
+            OnGettingSlideAttacked = 8,
+            OnPhysicsCollision = 9,
+            Unk10 = 10, // Some kind of damage
+            // Character-specific from here on
+            OnFallingDeath = 11,
+            OnIdle = 12,
+            OnShuffleFeet = 13,
+            OnWalk = 14,
+            OnRun = 15,
+            OnStrafeLeft = 16,
+            OnStrafeRight = 17,
+            OnSpin = 18,
+            OnSpinEnd = 19,
+            OnSpinPunch = 20,
+            OnSpinPunchEnd = 21,
+            OnSlideJump = 22,
+            OnStandingJump = 23,
+            OnRunningJump = 24,
+            OnDoubleJump = 25,
+            OnMaxedDoubleJump = 26,
+            OnSuperKneeDropHang = 27,
+            OnSuperKneeDrop = 28,
+            OnFlyingKick = 29,
+            OnStompKick = 30,
+            OnRadialBlastHang = 31,
+            OnRadialBlast = 32,
+            OnShortFall = 33,
+            OnLongFall = 34,
+            Unk35 = 35,
+            Unk36 = 36,
+            OnFlyingKickFall = 37,
+            Unk38 = 38,
+            OnSoftLand = 39,
+            OnLandWhileMoving = 40,
+            OnHardLand = 41,
+            OnSuperKneeDropLand = 42,
+            Unk43 = 43,
+            OnFlyingKickLand = 44,
+            OnStompKickLand = 45,
+            OnStandToCrouch = 46,
+            OnCrouchToCrawl = 47,
+            OnCrawlToCrouch = 48,
+            OnCrouchToStand = 49,
+            OnCrawlToStand = 50,
+            OnRunToSlide = 51,
+            Unk52 = 52,
+            OnSlideToCrouch = 53,
+            OnSlideToStand = 54,
+            OnThrowHandExtend = 55,
+            OnAbortThrow = 56,
+            OnWallJumpReel = 57,
+            OnCeilingReel = 58,
+            OnAbortReel = 59,
+            OnThrowPunch = 60,
+            OnCeilingPropel = 61,
+            OnWallJumpHold = 62,
+            OnWallJumpRelease = 63,
+            OnWallJumpPropel = 64,
+            Unk65 = 65,
+            OnLeaveCoOp = 66,
+            OnDefaultDeath = 67,
+            OnBodyslam = 68,
+            OnSpinThrow = 69,
+            OnJumpThrow = 70,
+            OnDrawMultitool = 71,
+            OnSheathMultitool = 72,
+            OnFireMultitool = 73,
+            OnEnterVehicleMode = 74,
+            OnExitVehicleMode = 75,
+            OnEnterVehicleModeIdle = 76,
+            OnExitVehicleModeIdle = 77,
+            Unk78 = 78,
+            OnDefaultDeath2 = 79,
+            OnRecoil1 = 80,
+            OnRecoil2 = 81,
+            OnRecoil3 = 82,
+            OnRecoil4 = 83,
+            OnVehicleModifierHold = 84,
+            OnVehicleModifierRelease = 85,
+            OnSkateForwardsStraight = 86,
+            OnSkateForwardsLeft = 87,
+            OnSkateForwardsRight = 88,
+            OnSkateBackwardsStraight = 89,
+            OnSkateBackwardsLeft = 90,
+            OnSkateBackwardsRight = 91,
+            OnSkateCrouchStraight = 92,
+            OnSkateCrouchRight = 93,
+            OnSkateCrouchLeft = 94,
+            OnSkateLand = 95,
+            OnSkateFlatSpin = 96,
+            OnSkateSpinOver = 97,
+            OnVehicleGroundTrickForward = 98,
+            OnVehicleGroundTrickBackward = 99,
+            OnStandingJump2 = 100,
+            OnRunningJump2 = 101,
+            OnAboutToWinBrawl = 102,
+            OnWinBrawl = 103,
+            OnAboutToLoseBrawl = 104,
+            OnLoseBrawl = 105,
+            OnChargeMultitool = 106,
+            OnFailToFireMultitool = 107,
+            OnFailToRadialBlast = 108,
+            OnSkateJump = 109,
+            OnSkateImpact = 110,
         }
 
         public static List<TwinsLevelChunk> All_Chunks = new List<TwinsLevelChunk>()
@@ -968,6 +1099,8 @@ namespace CrateModLoader.GameSpecific.Twins
             new TwinsGem(ChunkType.AltEarth_Core_AftTreas,new Vector3(-15.992f,1.140f,91.121f)),
             new TwinsGem(ChunkType.AltEarth_Core_AftTreas,new Vector3(-8.199f,1.216f,77.091f)),
         };
+
+        
 
         public static void Twins_Randomize_Gems(ref Random randState)
         {

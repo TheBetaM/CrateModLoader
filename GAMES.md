@@ -44,9 +44,11 @@ API by BetaM, ManDude and eezstreet.
 Supported: All PS2 versions (.ISO format)  
 API by NeoKesha, Smartkin, ManDude and Marko. (https://github.com/Smartkin/twinsanity-editor)  
 ### Features:  
-- Randomize Crates 
+- Randomize Regular Crates 
 - Randomize Gem Locations  
 - Randomize Level Music  
+- Enable Flying Kick for Crash  
+- Enable Stomp Kick for Crash (Flying Kick variation)  
 - Version, seed and settings visible in the Autosave Disabled screen  
   
 ## Crash Tag Team Racing

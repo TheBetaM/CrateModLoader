@@ -102,6 +102,8 @@
       <DependentUpon>ModMenu_CNK.cs</DependentUpon>
     </Compile>
     <Compile Include="GameSpecific\Twins\Twins_Data.cs" />
+    <Compile Include="GameSpecific\Twins\Twins_Data_Objects.cs" />
+    <Compile Include="GameSpecific\Twins\Twins_Data_Scripts.cs" />
     <Compile Include="GameSpecific\TWOC\Modder_TWOC.cs" />
     <Compile Include="ModCrateManagerForm.cs">
       <SubType>Form</SubType>
