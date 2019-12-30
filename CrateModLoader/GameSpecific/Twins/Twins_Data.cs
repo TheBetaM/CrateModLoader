@@ -236,6 +236,133 @@ namespace CrateModLoader.GameSpecific.Twins
             BoilerUnused = 136,
         }
 
+        public enum CharacterInstanceFloats
+        {
+            // 1 for everyone
+            Static1 = 0,
+            // 50 for everyone
+            Static2 = 1,
+            // different for mechabandicoot only (7.2 vs 5.2)
+            Unk3 = 2, 
+            // 15 for everyone
+            Static4 = 3,
+
+            /// <summary> Percentage of run speed as integer? </summary>
+            WalkSpeedPercentage = 4,
+
+            // 0 for everyone
+            Static6 = 5,
+            // different for mechabandicoot only (12 vs 2.5)
+            Unk7 = 6,
+
+            /// <summary> Runninng speed on the ground (Crash 9, Cortex/Nina 7) </summary>
+            RunSpeed = 7, 
+            /// <summary> Set to 0 to disable strafing </summary>
+            StrafingSpeed = 8,
+
+            // crash 10 and nina 7
+            Unk10 = 9,
+
+            /// <summary> Length of spinning time </summary>
+            SpinLength = 10,
+            /// <summary> Delay between spins </summary>
+            SpinDelay = 11,
+
+            // crash only, default 0.15
+            Unk13 = 12,
+            // crash only, default 0.5
+            Unk14 = 13,
+            // 1 for everyone
+            Static15 = 14,
+
+            /// <summary> Speed while in mid-air | crash 8, cortex 6, nina 7 </summary>
+            JumpAirSpeed = 15,
+            /// <summary> Single jump height </summary>
+            JumpHeight = 16,
+            /// <summary> Jump arc variable </summary>
+            JumpArcUnk18 = 17,
+            /// <summary> Jump arc variable </summary>
+            JumpArcUnk19 = 18,
+            /// <summary> Jump speed off of edge (when long jump and flying kick aren't stored) | crash default 8 </summary>
+            JumpEdgeSpeed = 19,
+            /// <summary> Set to 0 to disable double jump, does nothing for Mecha </summary>
+            DoubleJumpHeight = 20,
+            /// <summary> Mandatory for double jump to work, default 64 </summary>
+            DoubleJumpUnk22 = 21,
+            /// <summary> Mandatory for double jump to work, default 72.951 </summary>
+            DoubleJumpArcUnk = 22,
+            /// <summary> Slide jump speed </summary>
+            SlideJumpUnk24 = 23,
+            /// <summary> Slide jump variable </summary>
+            SlideJumpUnk25 = 24,
+            /// <summary> Slide jump variable </summary>
+            SlideJumpUnk26 = 25,
+            /// <summary> Slide jump arc variable </summary>
+            SlideJumpUnk27 = 26,
+
+            // crash only, default 0.05
+            Unk28 = 27,
+            // crash only, different in the demo (1 instead of 0.4)
+            Unk29 = 28,
+            // crash and nina, default 0.05
+            Unk30 = 29,
+            // crash and nina, default 0.05
+            Unk31 = 30, 
+
+            /// <summary> Set to 0 to disable bodyslam, does nothing for Nina, Mecha </summary>
+            BodyslamHangTime = 31,
+            /// <summary> How much the bodyslam flies upward after it starts </summary>
+            BodyslamUpwardForce = 32,
+            /// <summary> How much the bodyslam slams downward after it's done flying upward </summary>
+            BodyslamGravityForce = 33,
+            /// <summary> How long the Flying Kick lasts, Set to 0 to disable flying kick, unused move, replaces bodyslam of the single jump (not double jump), does nothing for Nina, Cortex, Mecha </summary>
+            FlyingKickHangTime = 34,
+            /// <summary> How fast the flying kick is </summary>
+            FlyingKickForwardSpeed = 35,
+            /// <summary> Fall gravity after the flying kick ends (only applies when walking off edges for some reason) </summary>
+            FlyingKickGravity = 36, 
+            /// <summary> Set to 0 to disable radial blast, radial blast replaces single jump bodyslam </summary>
+            RadialBlastTimeToStart = 37,
+            /// <summary> Radial blast velocity value </summary>
+            RadialBlastUnk39 = 38,
+            /// <summary> Radial blast velocity value </summary>
+            RadialBlastUnk40 = 39,
+            /// <summary> Speed of crawling </summary>
+            CrawlSpeed = 40,
+            /// <summary> Time from standing to crouched, Set to 0 to disable crawl from standing (though crawling from sliding still possible if that's enabled, and breaks the game if this is set to 0) </summary>
+            CrawlTimeFromStand = 41,
+            /// <summary> Time from crouched to standing </summary>
+            CrawlTimeToStand = 42,
+            /// <summary> Time from crawling to running </summary>
+            CrawlTimeToRun = 43,
+            /// <summary> Set to 0 to disable slide </summary>
+            SlideSpeed = 44,
+            /// <summary> Slide variable </summary>
+            SlideSlowdownTime = 45,
+            /// <summary> Slide variable </summary>
+            SlideSlowdownTime2 = 46,
+            /// <summary> Slide variable </summary>
+            SlideSlowdownTime3 = 47,
+            /// <summary> Slide variable </summary>
+            SlideUnk49 = 48,
+            /// <summary> Slide variable </summary>
+            SlideUnk50 = 49,
+            /// <summary> How long should the firing button be held to start charging </summary>
+            GunButtonHoldTimeToStartCharging = 50,
+            /// <summary> How long the gun charges the shot </summary>
+            GunChargeTime = 51,
+            /// <summary> How long until the next charged shot fires while still holding the firing button </summary>
+            GunTimeBetweenChargedShots = 52,
+            /// <summary> How fast can regular shots be fired </summary>
+            GunTimeBetweenShots = 53,
+
+            // cortex/mecha/frontend only, default 0.5
+            Unk55 = 54,
+
+            /// <summary> How long the radial blast charges while in mid-air </summary>
+            RadialBlastChargeTime = 55,
+        }
+
         public static List<TwinsLevelChunk> All_Chunks = new List<TwinsLevelChunk>()
         {
             new TwinsLevelChunk(ChunkType.AltEarth_Core_AftTreas,LevelType.AntAgony,@"altearth\core\afttreas"),

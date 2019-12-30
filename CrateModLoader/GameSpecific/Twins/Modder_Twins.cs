@@ -18,7 +18,7 @@ namespace CrateModLoader
 			"Randomize Regular Crates", 
 			"Randomize Gem Locations",
             "Randomize Level Music",
-			"Prevent Sequence Breaks",
+			"Enable Flying Kick for Crash",
 			};
 
         public bool Twins_Randomize_CrateTypes = false; // TODO: Make this a toggle between CrateTypes/AllCrates in the mod menu?
@@ -31,6 +31,7 @@ namespace CrateModLoader
         public bool Twins_Randomize_Music = false;
         public bool Twins_Randomize_BossPatterns = false;// TODO
 		public bool Twins_Mod_PreventSequenceBreaks = false; // TODO
+        public bool Twins_Mod_FlyingKick = false;
         private string bdPath = "";
         public Random randState = new Random();
         public List<uint> CrateReplaceList = new List<uint>();
@@ -45,7 +46,8 @@ namespace CrateModLoader
             RandomizeAllCrates = 0,
             RandomizeGemLocations = 1,
             RandomizeMusic = 2,
-			ModPreventSB = 3,
+            ModFlyingKick = 3,
+			ModPreventSB = 4,
         }
 
         public void OptionChanged(int option, bool value)
@@ -65,6 +67,10 @@ namespace CrateModLoader
 			else if (option == (int)Twins_Options.ModPreventSB)
             {
                 Twins_Mod_PreventSequenceBreaks = value;
+            }
+            else if (option == (int)Twins_Options.ModFlyingKick)
+            {
+                Twins_Mod_FlyingKick = value;
             }
         }
 
@@ -378,6 +384,11 @@ namespace CrateModLoader
                 Twins_Edit_AllLevels = true;
             }
 
+            if (Twins_Mod_FlyingKick)
+            {
+                Twins_Edit_AllLevels = true;
+            }
+
             if (Twins_Edit_AllLevels)
             {
                 levelEdited = new bool[140];
@@ -472,6 +483,10 @@ namespace CrateModLoader
             if (Twins_Randomize_Music)
             {
                 RM_Randomize_Music(ref RM_Archive);
+            }
+            if (Twins_Mod_FlyingKick)
+            {
+                RM_CharacterMod(ref RM_Archive);
             }
 
             RM_Archive.SaveFile(path);
@@ -677,6 +692,116 @@ namespace CrateModLoader
                             instance.UnkI323 = new List<uint>() { sourceMusic, 255, instance.UnkI323[2] };
 
                             break;
+                        }
+                        instances.Records[i] = instance;
+                    }
+                }
+            }
+        }
+
+        void RM_CharacterMod(ref TwinsFile RM_Archive)
+        {
+            for (uint section_id = (uint)RM2_Sections.Instances1; section_id <= (uint)RM2_Sections.Instances8; section_id++)
+            {
+                if (!RM_Archive.ContainsItem(section_id)) continue;
+                TwinsSection section = RM_Archive.GetItem<TwinsSection>(section_id);
+                if (section.Records.Count > 0)
+                {
+                    if (!section.ContainsItem((uint)RM2_Instance_Sections.ObjectInstance)) continue;
+                    TwinsSection instances = section.GetItem<TwinsSection>((uint)RM2_Instance_Sections.ObjectInstance);
+                    for (int i = 0; i < instances.Records.Count; ++i)
+                    {
+                        Instance instance = (Instance)instances.Records[i];
+                        if (instance.ObjectID == 0)
+                        {
+                            // Crash mods
+                            // Uncomment to enable ~TURBOSTRAFING~ for Crash
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.StrafingSpeed] = 15;
+
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Static6] = 10;
+
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.SpinLength] = 0.4f;
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.SpinDelay] = 0.01f;
+
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.JumpHeight] = 13;
+
+                            // Mega slide jump
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.SlideJumpUnk24] = 33;
+
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.SlideSpeed] = 30;
+
+                            instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.FlyingKickHangTime] = 0.15f;
+                            instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.FlyingKickForwardSpeed] = 50;
+                            instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.FlyingKickGravity] = 10;
+
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Static2] = 25; // 50
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Unk3] = 2.6f; // 5.2
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Static4] = 30; // 15
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Static6] = 50; // 0
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Unk7] = 5; // 2.5
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Unk10] = 20; // 10
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Unk13] = 0.3f; // 0.15
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Unk14] = 1; // 0.5
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Static15] = 0; // 1
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Unk28] = 0; // 0.05
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Unk29] = 0; // 0.4
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Unk30] = 0; // 0.05
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Unk31] = 0; // 0.05
+
+                            break;
+                        }
+                        else if (instance.ObjectID == 74)
+                        {
+                            // Cortex mods
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.DoubleJumpHeight] = 16;
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.DoubleJumpUnk22] = 64;
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.DoubleJumpArcUnk] = 72.951f;
+
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.BodyslamHangTime] = 0.4f;
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.BodyslamUpwardForce] = 10;
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.BodyslamGravityForce] = 400;
+
+
+
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.GunButtonHoldTimeToStartCharging] = 0.25f;
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.GunChargeTime] = 0.5f;
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.GunTimeBetweenChargedShots] = 0.5f;
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.GunTimeBetweenShots] = 0.05f;
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Unk55] = 0.5f;
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.RadialBlastChargeTime] = 0.1f;
+                        }
+                        else if (instance.ObjectID == 347)
+                        {
+                            // Nina mods
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.DoubleJumpHeight] = 16;
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.DoubleJumpUnk22] = 64;
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.DoubleJumpArcUnk] = 72.951f;
+
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.CrawlSpeed] = 1.75f;
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.CrawlTimeFromStand] = 0.1f;
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.CrawlTimeToStand] = 0.1f;
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.CrawlTimeToRun] = 0.1f;
+
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.SlideSpeed] = 18;
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.SlideSlowdownTime] = 0.15f;
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.SlideSlowdownTime2] = 0.2f;
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.SlideSlowdownTime3] = 0.1f;
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.SlideUnk49] = 0.3f;
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.SlideUnk50] = 0.3f;
+
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.StrafingSpeed] = 15;
+                        }
+                        else if (instance.ObjectID == 379)
+                        {
+                            // Mechabandicoot mods
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.StrafingSpeed] = 10;
+
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.GunButtonHoldTimeToStartCharging] = 0.25f;
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.GunChargeTime] = 1f;
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.GunTimeBetweenChargedShots] = 0.5f;
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.GunTimeBetweenShots] = 0.05f;
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Unk55] = 0.5f;
+                            //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.RadialBlastChargeTime] = 0.1f;
                         }
                         instances.Records[i] = instance;
                     }
