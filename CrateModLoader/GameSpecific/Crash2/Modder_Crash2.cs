@@ -1,8 +1,7 @@
-﻿using System;
+﻿using Crash;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Windows.Forms;
-using Crash;
 //Crash 2 API by chekwob and ManDude
 
 namespace CrateModLoader
@@ -103,68 +102,61 @@ namespace CrateModLoader
             }
 
             // edit NSF
-            for (int i = 0; i < nsf.Chunks.Count; ++i)
+            foreach (Chunk chunk in nsf.Chunks)
             {
-                if (nsf.Chunks[i] is SoundChunk soundchunk)
+                if (chunk is SoundChunk soundchunk)
                 {
                     List<int> oldeids = new List<int>();
                     foreach (Entry entry in soundchunk.Entries)
                     {
                         oldeids.Add(entry.EID);
                     }
-                    for (int j = 0; j < soundchunk.Entries.Count; ++j)
+                    foreach (Entry entry in soundchunk.Entries)
                     {
-                        int eid = oldeids[rand.Next(oldeids.Count)];
-                        soundchunk.Entries[j].EID = eid;
-                        oldeids.Remove(eid);
+                        if (entry is SoundEntry soundentry)
+                        {
+                            int eid = oldeids[rand.Next(oldeids.Count)];
+                            entry.EID = eid;
+                            oldeids.Remove(eid);
+                        }
                     }
                 }
             }
 
             // edit NSD
-            for (int i = 0; i < nsf.Chunks.Count; i++)
-            {
-                if (nsf.Chunks[i] is EntryChunk chunk)
-                {
-                    List<int> nsdchunkentries = new List<int>();
-                    for (int j = 0; j < nsd.Index.Count; ++j)
-                    {
-                        NSDLink link = nsd.Index[j];
-                        if (i * 2 + 1 == link.ChunkID)
-                        {
-                            nsdchunkentries.Add(j);
-                        }
-                    }
-                    for (int j = 0; j < chunk.Entries.Count; ++j)
-                    {
-                        Entry entry = chunk.Entries[j];
-                        if (entry.EID != nsd.Index[nsdchunkentries[j]].EntryID)
-                        {
-                            //MessageBox.Show($"NSD hash map is not in correct order. Entry {entry.EName} in chunk {i*2+1} will be swapped.", "NSD hash map mismatch");
-                            int k = j;
-                            for (; k < nsdchunkentries.Count; ++k)
-                                if (entry.EID == nsd.Index[nsdchunkentries[k]].EntryID) break;
-                            var temp = nsd.Index[nsdchunkentries[j]];
-                            nsd.Index[nsdchunkentries[j]] = nsd.Index[nsdchunkentries[k]];
-                            nsd.Index[nsdchunkentries[k]] = temp;
-                        }
-                    }
-                }
-            }
-            List<int> eids = new List<int>();
-            foreach (NSDLink link in nsd.Index)
-            {
-                eids.Add(link.EntryID);
-            }
+            nsd.ChunkCount = nsf.Chunks.Count;
+            var indexdata = nsf.MakeNSDIndex();
+            nsd.HashKeyMap = indexdata.Item1;
+            nsd.Index = indexdata.Item2;
+
+            // patch object entity count
+            nsd.EntityCount = 0;
             foreach (Chunk chunk in nsf.Chunks)
             {
                 if (!(chunk is EntryChunk))
                     continue;
                 foreach (Entry entry in ((EntryChunk)chunk).Entries)
                 {
-                    if (entry is ZoneEntry)
+                    if (entry is ZoneEntry zone)
+                        foreach (Entity ent in zone.Entities)
+                            if (ent.ID != null)
+                                ++nsd.EntityCount;
+                }
+            }
+
+            // fix loadlists
+            int[] eids = new int[nsd.Index.Count];
+            for (int i = 0; i < eids.Length; ++i)
+                eids[i] = nsd.Index[i].EntryID;
+            foreach (Chunk chunk in nsf.Chunks)
+            {
+                if (!(chunk is EntryChunk))
+                    continue;
+                foreach (Entry entry in ((EntryChunk)chunk).Entries)
+                {
+                    if (entry is ZoneEntry zone)
                     {
-                        foreach (Entity ent in ((ZoneEntry)entry).Entities)
+                        foreach (Entity ent in zone.Entities)
                         {
                             if (ent.LoadListA != null)
                             {
@@ -172,7 +164,7 @@ namespace CrateModLoader
                                 {
                                     List<int> values = (List<int>)row.Values;
                                     values.Sort(delegate (int a, int b) {
-                                        return eids.IndexOf(a) - eids.IndexOf(b);
+                                        return Array.IndexOf(eids, a) - Array.IndexOf(eids, b);
                                     });
                                 }
                             }
@@ -182,33 +174,7 @@ namespace CrateModLoader
                                 {
                                     List<int> values = (List<int>)row.Values;
                                     values.Sort(delegate (int a, int b) {
-                                        return eids.IndexOf(a) - eids.IndexOf(b);
-                                    });
-                                }
-                            }
-                        }
-                    }
-                    else if (entry is NewZoneEntry)
-                    {
-                        foreach (Entity ent in ((NewZoneEntry)entry).Entities)
-                        {
-                            if (ent.LoadListA != null)
-                            {
-                                foreach (EntityPropertyRow<int> row in ent.LoadListA.Rows)
-                                {
-                                    List<int> values = (List<int>)row.Values;
-                                    values.Sort(delegate (int a, int b) {
-                                        return eids.IndexOf(a) - eids.IndexOf(b);
-                                    });
-                                }
-                            }
-                            if (ent.LoadListB != null)
-                            {
-                                foreach (EntityPropertyRow<int> row in ent.LoadListB.Rows)
-                                {
-                                    List<int> values = (List<int>)row.Values;
-                                    values.Sort(delegate (int a, int b) {
-                                        return eids.IndexOf(a) - eids.IndexOf(b);
+                                        return Array.IndexOf(eids, a) - Array.IndexOf(eids, b);
                                     });
                                 }
                             }
