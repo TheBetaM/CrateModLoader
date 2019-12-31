@@ -1068,7 +1068,7 @@ namespace CrateModLoader.GameSpecific.Twins
             new TwinsGem(ChunkType.AltEarth_Hub_AltDoc,new Vector3(-136.895f,5.400f,-78.230f)),
             new TwinsGem(ChunkType.AltEarth_Hub_AltDoc_B,new Vector3(-165.393f,7.817f,17.259f)),
             new TwinsGem(ChunkType.AltEarth_Hub_AltDoc_B,new Vector3(-164.816f,5.838f,-54.211f)),
-            new TwinsGem(ChunkType.AltEarth_Hub_AltDoc_C,new Vector3(-127.669f,1.753f,106.799f)),
+            //new TwinsGem(ChunkType.AltEarth_Hub_AltDoc_C,new Vector3(-127.669f,1.753f,106.799f)),
             new TwinsGem(ChunkType.AltEarth_Hub_AltDoc_C,new Vector3(130.223f,-0.628f,110.677f)),
             new TwinsGem(ChunkType.AltEarth_Hub_AltDoc_C,new Vector3(83.313f,4.056f,92.852f)),
             new TwinsGem(ChunkType.AltEarth_Hub_CoreEnt,new Vector3(25.247f,1.783f,-71.690f)),
