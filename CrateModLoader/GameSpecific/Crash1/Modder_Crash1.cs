@@ -1,8 +1,7 @@
-﻿using System;
+﻿using Crash;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Windows.Forms;
-using Crash;
 //Crash 1 API by chekwob and ManDude
 
 namespace CrateModLoader
@@ -97,60 +96,38 @@ namespace CrateModLoader
                 nsf = NSF.LoadAndProcess(File.ReadAllBytes(nsfFile.FullName), GameVersion.Crash1);
                 nsd = OldNSD.Load(File.ReadAllBytes(nsdFile.FullName));
             }
-
-            // edit NSF
             catch (LoadAbortedException)
             {
                 return;
             }
-            for (int i = 0; i < nsf.Chunks.Count; ++i)
+
+            // edit NSF
+            foreach (Chunk chunk in nsf.Chunks)
             {
-                if (nsf.Chunks[i] is SoundChunk soundchunk)
+                if (chunk is SoundChunk soundchunk)
                 {
                     List<int> oldeids = new List<int>();
                     foreach (Entry entry in soundchunk.Entries)
                     {
                         oldeids.Add(entry.EID);
                     }
-                    for (int j = 0; j < soundchunk.Entries.Count; ++j)
+                    foreach (Entry entry in soundchunk.Entries)
                     {
-                        int eid = oldeids[rand.Next(oldeids.Count)];
-                        soundchunk.Entries[j].EID = eid;
-                        oldeids.Remove(eid);
+                        if (entry is SoundEntry soundentry)
+                        {
+                            int eid = oldeids[rand.Next(oldeids.Count)];
+                            entry.EID = eid;
+                            oldeids.Remove(eid);
+                        }
                     }
                 }
             }
 
             // edit NSD
-            for (int i = 0; i < nsf.Chunks.Count; i++)
-            {
-                if (nsf.Chunks[i] is EntryChunk chunk)
-                {
-                    List<int> nsdchunkentries = new List<int>();
-                    for (int j = 0; j < nsd.Index.Count; ++j)
-                    {
-                        NSDLink link = nsd.Index[j];
-                        if (i*2+1 == link.ChunkID)
-                        {
-                            nsdchunkentries.Add(j);
-                        }
-                    }
-                    for (int j = 0; j < chunk.Entries.Count; ++j)
-                    {
-                        Entry entry = chunk.Entries[j];
-                        if (entry.EID != nsd.Index[nsdchunkentries[j]].EntryID)
-                        {
-                            //MessageBox.Show($"NSD hash map is not in correct order. Entry {entry.EName} in chunk {i*2+1} will be swapped.", "NSD hash map mismatch");
-                            int k = j;
-                            for (; k < nsdchunkentries.Count; ++k)
-                                if (entry.EID == nsd.Index[nsdchunkentries[k]].EntryID) break;
-                            var temp = nsd.Index[nsdchunkentries[j]];
-                            nsd.Index[nsdchunkentries[j]] = nsd.Index[nsdchunkentries[k]];
-                            nsd.Index[nsdchunkentries[k]] = temp;
-                        }
-                    }
-                }
-            }
+            nsd.ChunkCount = nsf.Chunks.Count;
+            var indexdata = nsf.MakeNSDIndex();
+            nsd.HashKeyMap = indexdata.Item1;
+            nsd.Index = indexdata.Item2;
 
             File.WriteAllBytes(nsfFile.FullName, nsf.Save());
             File.WriteAllBytes(nsdFile.FullName, nsd.Save());
