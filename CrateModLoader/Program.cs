@@ -112,7 +112,7 @@ namespace CrateModLoader
                 {
                     file.MoveTo(file.FullName);
                 }
-
+                
                 string args = "";
                 args += "/MODE BUILD ";
                 args += "/BUILDINPUTMODE STANDARD ";
@@ -149,6 +149,51 @@ namespace CrateModLoader
                 ISOcreatorProcess.StartInfo.Arguments = args;
                 ISOcreatorProcess.Start();
                 ISOcreatorProcess.WaitForExit();
+                
+
+                /* TODO: Figure out how to make it work with CDBuilder
+                CDBuilder isoBuild = new CDBuilder();
+                isoBuild.UseJoliet = true;
+                isoBuild.UpdateIsolinuxBootTable = false;
+                isoBuild.VolumeIdentifier = ISO_label;
+
+                HashSet<FileStream> files = new HashSet<FileStream>();
+
+                foreach (FileInfo file in di.GetFiles())
+                {
+                    if (file.Name.ToUpper() == "SYSTEM.CNF")
+                    {
+                        AddFile(isoBuild, file, string.Empty, files);
+                    }
+                }
+                foreach (FileInfo file in di.GetFiles())
+                {
+                    if (file.Name.ToUpper() == PS2_executable_name)
+                    {
+                        AddFile(isoBuild, file, string.Empty, files);
+                    }
+                }
+
+                foreach (DirectoryInfo dir in di.GetDirectories())
+                {
+                    isoBuild.AddDirectory(dir.Name);
+                    Recursive_AddDirs(isoBuild, dir, dir.Name + @"\", files);
+                }
+                foreach (FileInfo file in di.GetFiles())
+                {
+                    if (file.Name.ToUpper() != PS2_executable_name && file.Name.ToUpper() != "SYSTEM.CNF")
+                    {
+                        AddFile(isoBuild, file, string.Empty, files);
+                    }
+                }
+
+                isoBuild.Build(outputISOpath);
+
+                foreach (FileStream file in files)
+                {
+                    file.Close();
+                }
+                */
             }
             else if (isoType == ConsoleMode.PSP)
             {
@@ -231,9 +276,9 @@ namespace CrateModLoader
 
         void Recursive_AddDirs(CDBuilder isoBuild, DirectoryInfo di, string sName, HashSet<FileStream> files)
         {
-            isoBuild.AddDirectory(di.Name);
             foreach (DirectoryInfo dir in di.GetDirectories())
             {
+                isoBuild.AddDirectory(sName + dir.Name);
                 Recursive_AddDirs(isoBuild, dir, sName + dir.Name + @"\", files);
             }
             foreach (FileInfo file in di.GetFiles())
@@ -246,9 +291,13 @@ namespace CrateModLoader
         {
             var fstream = file.Open(FileMode.Open);
             if (isoType == ConsoleMode.PS1 || isoType == ConsoleMode.PS2)
+            {
                 isoBuild.AddFile(sName + file.Name + ";1", fstream);
+            }
             else
+            {
                 isoBuild.AddFile(sName + file.Name, fstream);
+            }
             files.Add(fstream);
         }
 
