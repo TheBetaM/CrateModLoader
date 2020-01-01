@@ -1,4 +1,4 @@
-# Crate Mod Loader
+# ![Crate Mod Loader](../master/CrateModLoader/Resources/cml_header.png)
 Randomizer and mod loader for PS1, PS2, PSP and GC games.  
 It detects, extracts, modifies and rebuilds disc image files in an easy to setup way.  
   
