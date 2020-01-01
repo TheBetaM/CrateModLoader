@@ -162,6 +162,7 @@
     <Content Include="Readme.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\cml_icon.png" />
     <Content Include="Tools\gcr.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

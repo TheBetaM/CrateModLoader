@@ -97,7 +97,7 @@
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 20);
             this.button1.TabIndex = 2;
-            this.button1.Text = "Browse";
+            this.button1.Text = "Browse...";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -147,7 +147,7 @@
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 20);
             this.button2.TabIndex = 7;
-            this.button2.Text = "Browse";
+            this.button2.Text = "Browse...";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
@@ -166,9 +166,9 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(11, 12);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(110, 13);
+            this.label4.Size = new System.Drawing.Size(92, 13);
             this.label4.TabIndex = 10;
-            this.label4.Text = "Crate Mod Loader 1.0";
+            this.label4.Text = "Crate Mod Loader";
             this.label4.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // button3

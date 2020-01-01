@@ -15,6 +15,7 @@ namespace CrateModLoader
         public ModLoaderForm()
         {
             InitializeComponent();
+            label4.Text = "Crate Mod Loader " + Program.ModProgram.releaseVersionString;
             label5.Text = "";
             label6.Text = "Waiting for input file...";
             button3.Enabled = false;
