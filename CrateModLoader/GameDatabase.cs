@@ -65,13 +65,13 @@ namespace CrateModLoader
                 },
                 RegionID_GCN = new RegionCode[] {
                     new RegionCode() {
-                    Name = "GCNE",
+                    Name = "GCNE7D",
                     Region = ModLoader.RegionType.NTSC_U },
                     new RegionCode() {
-                    Name = "GCNP",
+                    Name = "GCNP7D",
                     Region = ModLoader.RegionType.PAL },
                     new RegionCode() {
-                    Name = "GC8J",
+                    Name = "GC8JA4",
                     Region = ModLoader.RegionType.NTSC_J },
                 }
             },
@@ -109,22 +109,22 @@ namespace CrateModLoader
                 },
                 RegionID_GCN = new RegionCode[] {
                     new RegionCode() {
-                    Name = "G9RE",
+                    Name = "G9RE7D",
                     Region = ModLoader.RegionType.NTSC_U },
                     new RegionCode() {
-                    Name = "G9RH",
+                    Name = "G9RH7D",
                     Region = ModLoader.RegionType.PAL },
                     new RegionCode() {
-                    Name = "G9RJ",
+                    Name = "G9RJ7D",
                     Region = ModLoader.RegionType.NTSC_J },
                     new RegionCode() {
-                    Name = "G9RD",
+                    Name = "G9RD7D",
                     Region = ModLoader.RegionType.PAL },
                     new RegionCode() {
-                    Name = "G9RF",
+                    Name = "G9RF7D",
                     Region = ModLoader.RegionType.PAL },
                     new RegionCode() {
-                    Name = "G9RP",
+                    Name = "G9RP7D",
                     Region = ModLoader.RegionType.PAL },
                 },
                 RegionID_PSP = new RegionCode[] {
@@ -173,6 +173,17 @@ namespace CrateModLoader
                     new RegionCode() {
                     Name = "ULES-00917",
                     Region = ModLoader.RegionType.PAL },
+                },
+                RegionID_WII = new RegionCode[] {
+                    new RegionCode() {
+                    Name = "RQJE7D",
+                    Region = ModLoader.RegionType.NTSC_U },
+                    new RegionCode() {
+                    Name = "RQJP7D",
+                    Region = ModLoader.RegionType.PAL },
+                    new RegionCode() {
+                    Name = "RQJX7D",
+                    Region = ModLoader.RegionType.PAL },
                 }
             },
             new Game()
@@ -208,6 +219,17 @@ namespace CrateModLoader
                     Region = ModLoader.RegionType.NTSC_U },
                     new RegionCode() {
                     Name = "ULES-01171",
+                    Region = ModLoader.RegionType.PAL },
+                },
+                RegionID_WII = new RegionCode[] {
+                    new RegionCode() {
+                    Name = "RC8E7D",
+                    Region = ModLoader.RegionType.NTSC_U },
+                    new RegionCode() {
+                    Name = "RC8P7D",
+                    Region = ModLoader.RegionType.PAL },
+                    new RegionCode() {
+                    Name = "RC8X7D",
                     Region = ModLoader.RegionType.PAL },
                 }
             },
@@ -290,13 +312,13 @@ namespace CrateModLoader
                 },
                 RegionID_GCN = new RegionCode[] {
                     new RegionCode() {
-                    Name = "GCBE",
+                    Name = "GCBE7D",
                     Region = ModLoader.RegionType.NTSC_U },
                     new RegionCode() {
-                    Name = "GCBP",
+                    Name = "GCBP7D",
                     Region = ModLoader.RegionType.PAL },
                     new RegionCode() {
-                    Name = "GCBJ",
+                    Name = "GCBJA4",
                     Region = ModLoader.RegionType.NTSC_J },
                 },
             },

@@ -128,8 +128,16 @@ namespace CrateModLoader
             // Fixes names for PS2, and moves the archive for convenience
             //File.Move(Program.ModProgram.extractedPath + "/ASSETS.GFC;1", AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GFC");
             //File.Move(Program.ModProgram.extractedPath + "/ASSETS.GOB;1", AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GOB");
-            File.Move(Program.ModProgram.extractedPath + "/ASSETS.GFC", AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GFC");
-            File.Move(Program.ModProgram.extractedPath + "/ASSETS.GOB", AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GOB");
+            if (Program.ModProgram.isoType == ModLoader.ConsoleMode.GCN)
+            {
+                File.Move(Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.PS2_game_code_name.Substring(0, 4) + "/files/assets.gfc", AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GFC");
+                File.Move(Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.PS2_game_code_name.Substring(0, 4) + "/files/assets.gob", AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GOB");
+            }
+            else
+            {
+                File.Move(Program.ModProgram.extractedPath + "/ASSETS.GFC", AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GFC");
+                File.Move(Program.ModProgram.extractedPath + "/ASSETS.GOB", AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GOB");
+            }
 
             // Extract GOB
             Process GobExtract = new Process();
@@ -1378,10 +1386,20 @@ namespace CrateModLoader
                     csv_Credits_LineList.Add(csv_Credits[i]);
                 }
 
-                csv_Credits_LineList.Add("Crate Mod Loader " + Program.ModProgram.releaseVersionString + ",AlphaDance,1.25,C,4294950912,0,40");
-                csv_Credits_LineList.Add("Seed: " + Program.ModProgram.randoSeed + ",AlphaDance,1.25,C,4294950912,0,40");
-                csv_Credits_LineList.Add("Options: " + Program.ModProgram.optionsSelectedString + ",AlphaDance,1.25,C,4294950912,0,40");
-                csv_Credits_LineList.Add("Crash Nitro Kart,AlphaDance,1.25,C,4279304191,0,80");
+                if (Program.ModProgram.isoType == ModLoader.ConsoleMode.PS2)
+                {
+                    csv_Credits_LineList.Add("Crate Mod Loader " + Program.ModProgram.releaseVersionString + ",AlphaDance,1.25,C,4294950912,0,40");
+                    csv_Credits_LineList.Add("Seed: " + Program.ModProgram.randoSeed + ",AlphaDance,1.25,C,4294950912,0,40");
+                    csv_Credits_LineList.Add("Options: " + Program.ModProgram.optionsSelectedString + ",AlphaDance,1.25,C,4294950912,0,40");
+                    csv_Credits_LineList.Add("Crash Nitro Kart,AlphaDance,1.25,C,4279304191,0,80");
+                }
+                else
+                {
+                    csv_Credits_LineList.Add("Crate Mod Loader " + Program.ModProgram.releaseVersionString + ",AlphaDance,1.25,C,0xFF10FFFF,0,40");
+                    csv_Credits_LineList.Add("Seed: " + Program.ModProgram.randoSeed + ",AlphaDance,1.25,C,0xFF10FFFF,0,40");
+                    csv_Credits_LineList.Add("Options: " + Program.ModProgram.optionsSelectedString + ",AlphaDance,1.25,C,0xFF10FFFF,0,40");
+                    csv_Credits_LineList.Add("Crash Nitro Kart,AlphaDance,1.25,C,0xFF10FFFF,0,80");
+                }
 
                 for (int i = 4; i < csv_Credits.Length; i++)
                 {
@@ -1414,8 +1432,17 @@ namespace CrateModLoader
             // Fixes names for PS2, and moves the archive for convenience
             //File.Move(AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GFC", Program.ModProgram.extractedPath + "/ASSETS.GFC;1");
             //File.Move(AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GOB", Program.ModProgram.extractedPath + "/ASSETS.GOB;1");
-            File.Move(AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GFC", Program.ModProgram.extractedPath + "/ASSETS.GFC");
-            File.Move(AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GOB", Program.ModProgram.extractedPath + "/ASSETS.GOB");
+
+            if (Program.ModProgram.isoType == ModLoader.ConsoleMode.GCN)
+            {
+                File.Move(AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GFC", Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.PS2_game_code_name.Substring(0, 4) + "/files/assets.gfc");
+                File.Move(AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GOB", Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.PS2_game_code_name.Substring(0, 4) + "/files/assets.gob");
+            }
+            else
+            {
+                File.Move(AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GFC", Program.ModProgram.extractedPath + "/ASSETS.GFC");
+                File.Move(AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GOB", Program.ModProgram.extractedPath + "/ASSETS.GOB");
+            }
 
             // Extraction cleanup
             if (Directory.Exists(path_gob_extracted))

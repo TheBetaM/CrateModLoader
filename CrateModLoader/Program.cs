@@ -68,12 +68,19 @@ namespace CrateModLoader
         public bool outputPathSet = false;
         public bool keepTempFiles = false;
         private Process ISOcreatorProcess;
+        public OpenROM_SelectionType OpenROM_Selection = OpenROM_SelectionType.PSXPS2PSP;
 
         public Timer processTimer = new Timer();
 
         //ISO settings
         public string ISO_label;
 
+        public enum OpenROM_SelectionType
+        {
+            PSXPS2PSP = 1,
+            GCNWII = 2,
+            Any = 3,
+        }
         public enum ConsoleMode
         {
             Undefined = -1,
@@ -203,21 +210,50 @@ namespace CrateModLoader
             }
             else if (isoType == ConsoleMode.GCN)
             {
-                // Use GCR (or Wiimms ISO Tool?)
+                // Use GCIT (Wiims ISO Tool doesn't work for this?)
+
+                Directory.Move(extractedPath + @"\P-" + Program.ModProgram.PS2_game_code_name.Substring(0, 4) + @"\files\", extractedPath + @"\P-" + Program.ModProgram.PS2_game_code_name.Substring(0, 4) + @"\root\");
+
                 string args = "";
-                args += "rebuild image: ";
-                args += extractedPath + " " + outputISOpath;
+                args += extractedPath + @"\P-" + Program.ModProgram.PS2_game_code_name.Substring(0, 4) + " -q -d ";
+                args += "\"" + outputISOpath + "\" ";
 
                 ISOcreatorProcess = new Process();
-                ISOcreatorProcess.StartInfo.FileName = AppDomain.CurrentDomain.BaseDirectory + "/Tools/gcr.exe";
-                ISOcreatorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                ISOcreatorProcess.StartInfo.FileName = AppDomain.CurrentDomain.BaseDirectory + "/Tools/gcit.exe";
+                ISOcreatorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
                 ISOcreatorProcess.StartInfo.Arguments = args;
+                //ISOcreatorProcess.StartInfo.UseShellExecute = false;
+                //ISOcreatorProcess.StartInfo.RedirectStandardOutput = true;
+                //ISOcreatorProcess.StartInfo.CreateNoWindow = true;
                 ISOcreatorProcess.Start();
+
+                //Console.WriteLine(ISOcreatorProcess.StandardOutput.ReadToEnd());
+
                 ISOcreatorProcess.WaitForExit();
             }
             else if (isoType == ConsoleMode.WII)
             {
                 // Use Wiimms ISO Tool
+                string args = "copy ";
+                args += extractedPath + " ";
+                if (isoType == ConsoleMode.GCN)
+                {
+                    args += "--ciso ";
+                }
+                args += "\"" + outputISOpath + "\" ";
+
+                ISOcreatorProcess = new Process();
+                ISOcreatorProcess.StartInfo.FileName = AppDomain.CurrentDomain.BaseDirectory + "/Tools/wit/wit.exe";
+                //ISOcreatorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                ISOcreatorProcess.StartInfo.Arguments = args;
+                ISOcreatorProcess.StartInfo.UseShellExecute = false;
+                ISOcreatorProcess.StartInfo.RedirectStandardOutput = true;
+                ISOcreatorProcess.StartInfo.CreateNoWindow = true;
+                ISOcreatorProcess.Start();
+
+                Console.WriteLine(ISOcreatorProcess.StandardOutput.ReadToEnd());
+
+                ISOcreatorProcess.WaitForExit();
             }
             else if (isoType == ConsoleMode.XBOX)
             {
@@ -303,101 +339,122 @@ namespace CrateModLoader
 
         void LoadISO()
         {
-            try
+
+            if (isoType == ConsoleMode.GCN || isoType == ConsoleMode.WII)
             {
-                using (FileStream isoStream = File.Open(inputISOpath, FileMode.Open))
+                extractedPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"temp");
+
+                // TODO: add free space checks
+
+                string args = "extract ";
+                args += "\"" + inputISOpath + "\" ";
+                args += "\"" + extractedPath + "\" ";
+
+                ISOcreatorProcess = new Process();
+                ISOcreatorProcess.StartInfo.FileName = AppDomain.CurrentDomain.BaseDirectory + "/Tools/wit/wit.exe";
+                ISOcreatorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                ISOcreatorProcess.StartInfo.Arguments = args;
+                ISOcreatorProcess.Start();
+                ISOcreatorProcess.WaitForExit();
+            }
+            else
+            {
+                try
                 {
-                    FileInfo isoInfo = new FileInfo(inputISOpath);
-                    CDReader cd;
-                    FileStream tempbin = null;
-                    if (Path.GetExtension(inputISOpath).ToLower() == ".bin") // PS1 image
+                    using (FileStream isoStream = File.Open(inputISOpath, FileMode.Open))
                     {
-                        FileStream binconvout = new FileStream(AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso", FileMode.Create, FileAccess.Write);
-                        PSX2ISO.Run(isoStream, binconvout);
-                        binconvout.Close();
-                        tempbin = new FileStream(AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso", FileMode.Open, FileAccess.Read);
-                        cd = new CDReader(tempbin, true);
-                    }
-                    else
-                        cd = new CDReader(isoStream, true);
-                    ISO_label = cd.VolumeLabel;
-
-                    extractedPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"temp\");
-                    if (isoInfo.Length * 2 > GetTotalFreeSpace(extractedPath.Substring(0, 3)))
-                    {
-                        cd.Dispose();
-                        ErrorFinish("Extraction error: Not enough hard drive space where this program is!");
-                        return;
-                    }
-                    if (isoInfo.Length * 2 > GetTotalFreeSpace(outputISOpath.Substring(0, 3)))
-                    {
-                        cd.Dispose();
-                        ErrorFinish("Extraction error: Not enough hard drive space in the output path!");
-                        return;
-                    }
-
-                    processText.Text = "Extracting ISO...";
-                    //fileStream = cd.OpenFile(@"SYSTEM.CNF", FileMode.Open);
-
-                    if (!Directory.Exists(extractedPath))
-                    {
-                        Directory.CreateDirectory(extractedPath);
-                    }
-
-                    //Extracting ISO
-                    Stream fileStreamFrom = null;
-                    Stream fileStreamTo = null;
-                    if (cd.GetDirectories("").Length > 0)
-                    {
-                        foreach (string directory in cd.GetDirectories(""))
+                        FileInfo isoInfo = new FileInfo(inputISOpath);
+                        CDReader cd;
+                        FileStream tempbin = null;
+                        if (Path.GetExtension(inputISOpath).ToLower() == ".bin") // PS1 image
                         {
-                            Directory.CreateDirectory(extractedPath + directory);
-                            if (cd.GetDirectoryInfo(directory).GetFiles().Length > 0)
+                            FileStream binconvout = new FileStream(AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso", FileMode.Create, FileAccess.Write);
+                            PSX2ISO.Run(isoStream, binconvout);
+                            binconvout.Close();
+                            tempbin = new FileStream(AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso", FileMode.Open, FileAccess.Read);
+                            cd = new CDReader(tempbin, true);
+                        }
+                        else
+                            cd = new CDReader(isoStream, true);
+                        ISO_label = cd.VolumeLabel;
+
+                        extractedPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"temp\");
+                        if (isoInfo.Length * 2 > GetTotalFreeSpace(extractedPath.Substring(0, 3)))
+                        {
+                            cd.Dispose();
+                            ErrorFinish("Extraction error: Not enough hard drive space where this program is!");
+                            return;
+                        }
+                        if (isoInfo.Length * 2 > GetTotalFreeSpace(outputISOpath.Substring(0, 3)))
+                        {
+                            cd.Dispose();
+                            ErrorFinish("Extraction error: Not enough hard drive space in the output path!");
+                            return;
+                        }
+
+                        processText.Text = "Extracting ISO...";
+                        //fileStream = cd.OpenFile(@"SYSTEM.CNF", FileMode.Open);
+
+                        if (!Directory.Exists(extractedPath))
+                        {
+                            Directory.CreateDirectory(extractedPath);
+                        }
+
+                        //Extracting ISO
+                        Stream fileStreamFrom = null;
+                        Stream fileStreamTo = null;
+                        if (cd.GetDirectories("").Length > 0)
+                        {
+                            foreach (string directory in cd.GetDirectories(""))
                             {
-                                foreach (string file in cd.GetFiles(directory))
+                                Directory.CreateDirectory(extractedPath + directory);
+                                if (cd.GetDirectoryInfo(directory).GetFiles().Length > 0)
                                 {
-                                    fileStreamFrom = cd.OpenFile(file, FileMode.Open);
-                                    string filename = extractedPath + file;
-                                    filename = filename.Replace(";1", string.Empty);
-                                    fileStreamTo = File.Open(filename, FileMode.OpenOrCreate);
-                                    fileStreamFrom.CopyTo(fileStreamTo);
-                                    fileStreamFrom.Close();
-                                    fileStreamTo.Close();
+                                    foreach (string file in cd.GetFiles(directory))
+                                    {
+                                        fileStreamFrom = cd.OpenFile(file, FileMode.Open);
+                                        string filename = extractedPath + file;
+                                        filename = filename.Replace(";1", string.Empty);
+                                        fileStreamTo = File.Open(filename, FileMode.OpenOrCreate);
+                                        fileStreamFrom.CopyTo(fileStreamTo);
+                                        fileStreamFrom.Close();
+                                        fileStreamTo.Close();
+                                    }
+                                }
+                                if (cd.GetDirectories(directory).Length > 0)
+                                {
+                                    Recursive_CreateDirs(ref cd, directory, ref fileStreamFrom, ref fileStreamTo);
                                 }
                             }
-                            if (cd.GetDirectories(directory).Length > 0)
+                        }
+                        if (cd.GetDirectoryInfo("").GetFiles().Length > 0)
+                        {
+                            foreach (string file in cd.GetFiles(""))
                             {
-                                Recursive_CreateDirs(ref cd, directory, ref fileStreamFrom, ref fileStreamTo);
+                                fileStreamFrom = cd.OpenFile(file, FileMode.Open);
+                                string filename = extractedPath + "/" + file;
+                                filename = filename.Replace(";1", string.Empty);
+                                fileStreamTo = File.Open(filename, FileMode.OpenOrCreate);
+                                fileStreamFrom.CopyTo(fileStreamTo);
+                                fileStreamFrom.Close();
+                                fileStreamTo.Close();
                             }
                         }
-                    }
-                    if (cd.GetDirectoryInfo("").GetFiles().Length > 0)
-                    {
-                        foreach (string file in cd.GetFiles(""))
+
+                        cd.Dispose();
+
+                        if (tempbin != null)
                         {
-                            fileStreamFrom = cd.OpenFile(file, FileMode.Open);
-                            string filename = extractedPath + "/" + file;
-                            filename = filename.Replace(";1", string.Empty);
-                            fileStreamTo = File.Open(filename, FileMode.OpenOrCreate);
-                            fileStreamFrom.CopyTo(fileStreamTo);
-                            fileStreamFrom.Close();
-                            fileStreamTo.Close();
+                            tempbin.Dispose();
+                            File.Delete(AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso");
                         }
                     }
-
-                    cd.Dispose();
-
-                    if (tempbin != null)
-                    {
-                        tempbin.Dispose();
-                        File.Delete(AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso");
-                    }
                 }
-            }
-            catch
-            {
-                ErrorFinish("Cannot open game ROM!");
-                return;
+                catch
+                {
+                    ErrorFinish("Cannot open game ROM!");
+                    return;
+                }
             }
 
             ProgressProcess();
@@ -537,14 +594,30 @@ namespace CrateModLoader
 
                 foreach (DirectoryInfo dir in di.GetDirectories())
                 {
-                    dir.Delete(true);
+                    try
+                    {
+                        dir.Delete(true);
+                    }
+                    catch (IOException)
+                    {
+                        //Console.WriteLine("dir:" + dir.FullName);
+                        //Console.WriteLine("dirname:" + dir.Name);
+                    }
                 }
                 foreach (FileInfo file in di.GetFiles())
                 {
                     file.Delete();
                 }
 
-                di.Delete();
+                try
+                {
+                    di.Delete(true);
+                }
+                catch (IOException)
+                {
+                    //Console.WriteLine("di:" + di.FullName);
+                    //Console.WriteLine("dirame:" + di.Name);
+                }
             }
         }
 
@@ -608,72 +681,122 @@ namespace CrateModLoader
 
         public void CheckISO()
         {
-            try
+            bool foundMetaData = false;
+            if (OpenROM_Selection == OpenROM_SelectionType.GCNWII || OpenROM_Selection == OpenROM_SelectionType.Any)
             {
-                using (FileStream isoStream = File.Open(inputISOpath, FileMode.Open))
+                // Gamecube ROMs
+
+                string args = "ID6 ";
+                args += "\"" + inputISOpath + "\"";
+
+                string outputMessage = "";
+
+                ISOcreatorProcess = new Process();
+                ISOcreatorProcess.StartInfo.FileName = AppDomain.CurrentDomain.BaseDirectory + "/Tools/wit/wit.exe";
+                //ISOcreatorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
+                ISOcreatorProcess.StartInfo.Arguments = args;
+                ISOcreatorProcess.StartInfo.UseShellExecute = false;
+                ISOcreatorProcess.StartInfo.RedirectStandardOutput = true;
+                ISOcreatorProcess.StartInfo.CreateNoWindow = true;
+                ISOcreatorProcess.Start();
+
+                outputMessage = ISOcreatorProcess.StandardOutput.ReadToEnd();
+
+                ISOcreatorProcess.WaitForExit();
+
+                string titleID = outputMessage.Substring(0, 6);
+
+                if (titleID != "")
                 {
-                    CDReader cd;
-                    FileStream tempbin = null;
-                    isoType = ConsoleMode.Undefined;
-                    if (Path.GetExtension(inputISOpath).ToLower() == ".bin") // PS1 image
+                    int GameID = -1;
+                    for (int game = 0; game < GameDatabase.Games.Length; game++)
                     {
-                        FileStream binconvout = new FileStream(AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso", FileMode.Create, FileAccess.Write);
-                        PSX2ISO.Run(isoStream, binconvout);
-                        binconvout.Close();
-                        tempbin = new FileStream(AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso", FileMode.Open, FileAccess.Read);
-                        cd = new CDReader(tempbin, true);
-                        isoType = ConsoleMode.PS1;
-                    }
-                    else if (!CDReader.Detect(isoStream))
-                    {
-                        // Currently Gamecube ISO's end up here
-                        text_gameType.Text = "Game ROM - Invalid PS2/PSP ISO!";
-                        return;
-                    }
-                    else
-                    {
-                        cd = new CDReader(isoStream, true);
-                    }
-                    Stream fileStream;
-                    bool foundMetaData = false;
-                    if (cd.FileExists(@"SYSTEM.CNF"))
-                    {
-                        fileStream = cd.OpenFile(@"SYSTEM.CNF", FileMode.Open);
-                        using (StreamReader sr = new StreamReader(fileStream))
+                        if (GameDatabase.Games[game].RegionID_GCN != null && GameDatabase.Games[game].RegionID_GCN.Length > 0)
                         {
-                            string input;
-                            string titleID;
-                            int GameID = -1;
-                            input = sr.ReadLine();
-                            titleID = input;
-                            foundMetaData = false;
-                            if (isoType == ConsoleMode.PS1)
+                            foreach (RegionCode rcode in GameDatabase.Games[game].RegionID_GCN)
                             {
-                                for (int game = 0; game < GameDatabase.Games.Length; game++)
+                                if (titleID == rcode.Name)
                                 {
-                                    if (GameDatabase.Games[game].RegionID_PS1 != null && GameDatabase.Games[game].RegionID_PS1.Length > 0)
+                                    GameID = game;
+                                    SetGameType(GameID, ConsoleMode.GCN, rcode.Region);
+                                    PS2_game_code_name = rcode.Name;
+                                    foundMetaData = true;
+                                    break;
+                                }
+                            }
+                        }
+                        if (foundMetaData)
+                        {
+                            break;
+                        }
+                    }
+                    if (!foundMetaData)
+                    {
+                        for (int game = 0; game < GameDatabase.Games.Length; game++)
+                        {
+                            if (GameDatabase.Games[game].RegionID_WII != null && GameDatabase.Games[game].RegionID_WII.Length > 0)
+                            {
+                                foreach (RegionCode rcode in GameDatabase.Games[game].RegionID_WII)
+                                {
+                                    if (titleID == rcode.Name)
                                     {
-                                        foreach (RegionCode rcode in GameDatabase.Games[game].RegionID_PS1)
-                                        {
-                                            if (titleID == rcode.Name)
-                                            {
-                                                GameID = game;
-                                                SetGameType(GameID, ConsoleMode.PS1, rcode.Region);
-                                                PS2_executable_name = rcode.ExecName;
-                                                PS2_game_code_name = rcode.CodeName;
-                                                foundMetaData = true;
-                                                break;
-                                            }
-                                        }
-                                    }
-                                    if (foundMetaData)
-                                    {
+                                        GameID = game;
+                                        SetGameType(GameID, ConsoleMode.WII, rcode.Region);
+                                        PS2_game_code_name = rcode.Name;
+                                        foundMetaData = true;
                                         break;
                                     }
                                 }
                             }
-                            else
+                            if (foundMetaData)
                             {
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (!foundMetaData && OpenROM_Selection != OpenROM_SelectionType.GCNWII)
+            {
+                try
+                {
+                    using (FileStream isoStream = File.Open(inputISOpath, FileMode.Open))
+                    {
+                        CDReader cd;
+                        FileStream tempbin = null;
+                        isoType = ConsoleMode.Undefined;
+
+                        if (Path.GetExtension(inputISOpath).ToLower() == ".bin") // PS1 image
+                        {
+                            FileStream binconvout = new FileStream(AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso", FileMode.Create, FileAccess.Write);
+                            PSX2ISO.Run(isoStream, binconvout);
+                            binconvout.Close();
+                            tempbin = new FileStream(AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso", FileMode.Open, FileAccess.Read);
+                            cd = new CDReader(tempbin, true);
+                        }
+                        else if (!CDReader.Detect(isoStream))
+                        {
+                            // Currently Gamecube ISO's end up here
+                            text_gameType.Text = "Game ROM - Invalid PS1/PS2/PSP ROM!";
+                            return;
+                        }
+                        else
+                        {
+                            cd = new CDReader(isoStream, true);
+                        }
+                        Stream fileStream;
+                        if (cd.FileExists(@"SYSTEM.CNF"))
+                        {
+                            fileStream = cd.OpenFile(@"SYSTEM.CNF", FileMode.Open);
+                            using (StreamReader sr = new StreamReader(fileStream))
+                            {
+                                string input;
+                                string titleID;
+                                int GameID = -1;
+                                input = sr.ReadLine();
+                                titleID = input;
+                                foundMetaData = false;
                                 for (int game = 0; game < GameDatabase.Games.Length; game++)
                                 {
                                     if (GameDatabase.Games[game].RegionID_PS2 != null && GameDatabase.Games[game].RegionID_PS2.Length > 0)
@@ -696,120 +819,111 @@ namespace CrateModLoader
                                         break;
                                     }
                                 }
-                            }
-                        }
-                    }
-                    else if (cd.FileExists(@"UMD_DATA.BIN"))
-                    {
-                        fileStream = cd.OpenFile(@"UMD_DATA.BIN", FileMode.Open);
-                        using (StreamReader sr = new StreamReader(fileStream))
-                        {
-                            string input;
-                            string titleID;
-                            int GameID = -1;
-                            input = sr.ReadLine();
-                            titleID = input.Substring(0, 10);
-                            foundMetaData = false;
-                            for (int game = 0; game < GameDatabase.Games.Length; game++)
-                            {
-                                if (GameDatabase.Games[game].RegionID_PSP != null && GameDatabase.Games[game].RegionID_PSP.Length > 0)
+                                if (!foundMetaData)
                                 {
-                                    foreach (RegionCode rcode in GameDatabase.Games[game].RegionID_PSP)
+                                    for (int game = 0; game < GameDatabase.Games.Length; game++)
                                     {
-                                        if (titleID == rcode.Name)
+                                        if (GameDatabase.Games[game].RegionID_PS1 != null && GameDatabase.Games[game].RegionID_PS1.Length > 0)
                                         {
-                                            GameID = game;
-                                            SetGameType(GameID, ConsoleMode.PSP, rcode.Region);
-                                            foundMetaData = true;
+                                            foreach (RegionCode rcode in GameDatabase.Games[game].RegionID_PS1)
+                                            {
+                                                if (titleID == rcode.Name)
+                                                {
+                                                    GameID = game;
+                                                    SetGameType(GameID, ConsoleMode.PS1, rcode.Region);
+                                                    PS2_executable_name = rcode.ExecName;
+                                                    PS2_game_code_name = rcode.CodeName;
+                                                    foundMetaData = true;
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                        if (foundMetaData)
+                                        {
                                             break;
                                         }
                                     }
                                 }
-                                if (foundMetaData)
-                                {
-                                    break;
-                                }
                             }
                         }
-                    }
-                    else if (cd.FileExists(@"default.xbe"))
-                    {
-                        isoType = ConsoleMode.XBOX;
-                        //TODO: figure out xbox checks
-                    }
-                    else if (cd.DirectoryExists("systemdata") && cd.FileExists(@"systemdata\ISO.hdr"))
-                    {
-                        // CDReader can't detect Gamecube ISO's so GCR must be used instaed?
-                        fileStream = cd.OpenFile(@"systemdata\ISO.hdr", FileMode.Open);
-                        using (StreamReader sr = new StreamReader(fileStream))
+                        else if (cd.FileExists(@"UMD_DATA.BIN"))
                         {
-                            string input;
-                            string titleID;
-                            int GameID = -1;
-                            input = sr.ReadLine();
-                            titleID = input.Substring(0, 4);
-                            foundMetaData = false;
-                            for (int game = 0; game < GameDatabase.Games.Length; game++)
+                            fileStream = cd.OpenFile(@"UMD_DATA.BIN", FileMode.Open);
+                            using (StreamReader sr = new StreamReader(fileStream))
                             {
-                                if (GameDatabase.Games[game].RegionID_GCN != null && GameDatabase.Games[game].RegionID_GCN.Length > 0)
+                                string input;
+                                string titleID;
+                                int GameID = -1;
+                                input = sr.ReadLine();
+                                titleID = input.Substring(0, 10);
+                                foundMetaData = false;
+                                for (int game = 0; game < GameDatabase.Games.Length; game++)
                                 {
-                                    foreach (RegionCode rcode in GameDatabase.Games[game].RegionID_GCN)
+                                    if (GameDatabase.Games[game].RegionID_PSP != null && GameDatabase.Games[game].RegionID_PSP.Length > 0)
                                     {
-                                        if (titleID == rcode.Name)
+                                        foreach (RegionCode rcode in GameDatabase.Games[game].RegionID_PSP)
                                         {
-                                            GameID = game;
-                                            SetGameType(GameID, ConsoleMode.GCN, rcode.Region);
-                                            foundMetaData = true;
-                                            break;
+                                            if (titleID == rcode.Name)
+                                            {
+                                                GameID = game;
+                                                SetGameType(GameID, ConsoleMode.PSP, rcode.Region);
+                                                foundMetaData = true;
+                                                break;
+                                            }
                                         }
                                     }
-                                }
-                                if (foundMetaData)
-                                {
-                                    break;
+                                    if (foundMetaData)
+                                    {
+                                        break;
+                                    }
                                 }
                             }
                         }
-                    }
-                    else
-                    {
-                        foundMetaData = false;
-                    }
+                        else if (cd.FileExists(@"default.xbe"))
+                        {
+                            isoType = ConsoleMode.XBOX;
+                            //TODO: figure out xbox checks
+                        }
+                        else
+                        {
+                            foundMetaData = false;
+                        }
 
-                    if (!foundMetaData)
-                    {
-                        text_gameType.Text = "Game ROM - Unknown game ROM!";
-                        loadedISO = false;
-                    }
-                    else
-                    {
-                        loadedISO = true;
-                    }
-                    if (loadedISO && outputPathSet)
-                    {
-                        startButton.Enabled = true;
-                        processText.Text = "Ready!";
-                    }
-                    else if (loadedISO)
-                    {
-                        startButton.Enabled = false;
-                        processText.Text = "Waiting for output path...";
-                    }
+                        cd.Dispose();
 
-                    cd.Dispose();
-
-                    if (tempbin != null)
-                    {
-                        tempbin.Dispose();
-                        File.Delete(AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso");
+                        if (tempbin != null)
+                        {
+                            tempbin.Dispose();
+                            File.Delete(AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso");
+                        }
                     }
                 }
+                catch
+                {
+                    text_gameType.Text = "Game ROM - Could not open the game ROM!";
+                    loadedISO = false;
+                    return;
+                }
             }
-            catch
+
+            if (!foundMetaData)
             {
-                text_gameType.Text = "Game ROM - Could not open the game ROM!";
+                text_gameType.Text = "Game ROM - Unknown game ROM!";
                 loadedISO = false;
-                return;
+            }
+            else
+            {
+                loadedISO = true;
+            }
+            if (loadedISO && outputPathSet)
+            {
+                startButton.Enabled = true;
+                processText.Text = "Ready!";
+            }
+            else if (loadedISO)
+            {
+                startButton.Enabled = false;
+                processText.Text = "Waiting for output path...";
             }
         }
 
