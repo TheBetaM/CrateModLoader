@@ -102,10 +102,10 @@ namespace CrateModLoader
                     ExecName = "SLES_534.39",
                     CodeName = "SLES_53439", },
                     new RegionCode() {
-                    Name = @"BOOT2 = cdrom0:\SLPM_?????;1", // TODO, unknown
+                    Name = @"BOOT2 = cdrom0:\SLPM_660.90;1",
                     Region = ModLoader.RegionType.NTSC_J,
-                    ExecName = "SLPM_?????",
-                    CodeName = "SLPM_?????", },
+                    ExecName = "SLPM_660.90",
+                    CodeName = "SLPM_66090", },
                 },
                 RegionID_GCN = new RegionCode[] {
                     new RegionCode() {

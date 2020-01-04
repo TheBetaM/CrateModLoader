@@ -55,7 +55,7 @@ API by NeoKesha, Smartkin, ManDude and Marko. (https://github.com/Smartkin/twins
 - Version, seed and settings visible in the Autosave Disabled screen  
   
 ## Crash Tag Team Racing
-Supported: NTSC-U/PAL PS2 versions (.ISO format), All GC versions (.ISO format) (PSP not yet supported)  
+Supported: NTSC-U/PAL PS2 versions (.ISO format) (GC, PSP not yet supported)  
 APIs by NeoKesha and handsomematt. (https://github.com/handsomematt/Pure3D)  
 ### Features:  
 - Randomize Playable & Starting Characters
@@ -72,13 +72,13 @@ APIs by NeoKesha and handsomematt. (https://github.com/handsomematt/Pure3D)
 - Version, seed and settings visible in the Credits screen
   
 ## Crash of the Titans
-Supported: All PS2 versions (.ISO format), All Wii versions (.ISO format) (PSP not yet supported)  
+Supported: All PS2 versions (.ISO format) (Wii, PSP not yet supported)  
 API by NeoKesha.  
 ### Features:   
 - Test mod: Increased camera FOV in Episode 1
   
 ## Crash Mind Over Mutant
-Supported: All PS2 versions (.ISO format), All Wii versions (.ISO format) (PSP not yet supported)  
+Supported: All PS2 versions (.ISO format) (Wii, PSP not yet supported)  
 API by NeoKesha.  
 ### Features:    
 - Version, seed and settings visible in the Credits screen (not available on the Wii version yet)  

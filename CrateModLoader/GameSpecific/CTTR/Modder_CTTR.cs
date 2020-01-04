@@ -56,6 +56,7 @@ namespace CrateModLoader
         public string path_RCF_6 = ""; // XBOX
         public string path_RCF_sound = "";
         public string path_RCF_english = "";
+        private string basePath = "";
 
         public Random randState = new Random();
         public string[] modOptions = {
@@ -221,42 +222,50 @@ namespace CrateModLoader
             else if (console == ModLoader.ConsoleMode.GCN)
             {
                 path_executable = @"sys\main.dol";
-                path_RCF_default = @"root\adefault\default.rcf";
-                path_RCF_advent1 = @"root\advent\advent1.rcf";
-                path_RCF_advent2 = @"root\advent\advent2.rcf";
-                path_RCF_advent3 = @"root\advent\advent3.rcf";
-                path_RCF_adventa = @"root\advent\adventa.rcf";
-                path_RCF_common = @"root\common\common.rcf";
-                path_RCF_dino1 = @"root\dino\dino1.rcf";
-                path_RCF_dino2 = @"root\dino\dino2.rcf";
-                path_RCF_dino3 = @"root\dino\dino3.rcf";
-                path_RCF_dinoa = @"root\dino\dinoa.rcf";
-                path_RCF_egypt1 = @"root\egypt\egypt1.rcf";
-                path_RCF_egypt2 = @"root\egypt\egypt2.rcf";
-                path_RCF_egypt3 = @"root\egypt\egypt3.rcf";
-                path_RCF_english = @"root\english.rcf";
-                path_RCF_fairy1 = @"root\fairy\fairy1.rcf";
-                path_RCF_fairy2 = @"root\fairy\fairy2.rcf";
-                path_RCF_fairy3 = @"root\fairy\fairy3.rcf";
-                path_RCF_fairys = @"root\fairy\fairys.rcf";
-                path_RCF_frontend = @"root\common\frontend.rcf";
-                path_RCF_solar1 = @"root\solar\solar1.rcf";
-                path_RCF_solar2 = @"root\solar\solar2.rcf";
-                path_RCF_solar3 = @"root\solar\solar3.rcf";
-                path_RCF_solars = @"root\solar\solars.rcf";
-                path_RCF_onfoot0 = @"root\onfoot\onfoot.rcf";
-                path_RCF_onfoot1 = @"root\onfoot\onfoot1.rcf";
-                path_RCF_onfoot2 = @"root\onfoot\onfoot2.rcf";
-                path_RCF_onfoot3 = @"root\onfoot\onfoot3.rcf";
-                path_RCF_onfoot5 = @"root\onfoot\onfoot5.rcf";
-                path_RCF_onfoot6 = @"root\onfoot\onfoot6.rcf";
-                path_RCF_onfoot7 = @"root\onfoot\onfoot7.rcf";
+                path_RCF_default = @"files\adefault\default.rcf";
+                path_RCF_advent1 = @"files\advent\advent1.rcf";
+                path_RCF_advent2 = @"files\advent\advent2.rcf";
+                path_RCF_advent3 = @"files\advent\advent3.rcf";
+                path_RCF_adventa = @"files\advent\adventa.rcf";
+                path_RCF_common = @"files\common\common.rcf";
+                path_RCF_dino1 = @"files\dino\dino1.rcf";
+                path_RCF_dino2 = @"files\dino\dino2.rcf";
+                path_RCF_dino3 = @"files\dino\dino3.rcf";
+                path_RCF_dinoa = @"files\dino\dinoa.rcf";
+                path_RCF_egypt1 = @"files\egypt\egypt1.rcf";
+                path_RCF_egypt2 = @"files\egypt\egypt2.rcf";
+                path_RCF_egypt3 = @"files\egypt\egypt3.rcf";
+                path_RCF_english = @"files\english.rcf";
+                path_RCF_fairy1 = @"files\fairy\fairy1.rcf";
+                path_RCF_fairy2 = @"files\fairy\fairy2.rcf";
+                path_RCF_fairy3 = @"files\fairy\fairy3.rcf";
+                path_RCF_fairys = @"files\fairy\fairys.rcf";
+                path_RCF_frontend = @"files\common\frontend.rcf";
+                path_RCF_solar1 = @"files\solar\solar1.rcf";
+                path_RCF_solar2 = @"files\solar\solar2.rcf";
+                path_RCF_solar3 = @"files\solar\solar3.rcf";
+                path_RCF_solars = @"files\solar\solars.rcf";
+                path_RCF_onfoot0 = @"files\onfoot\onfoot.rcf";
+                path_RCF_onfoot1 = @"files\onfoot\onfoot1.rcf";
+                path_RCF_onfoot2 = @"files\onfoot\onfoot2.rcf";
+                path_RCF_onfoot3 = @"files\onfoot\onfoot3.rcf";
+                path_RCF_onfoot5 = @"files\onfoot\onfoot5.rcf";
+                path_RCF_onfoot6 = @"files\onfoot\onfoot6.rcf";
+                path_RCF_onfoot7 = @"files\onfoot\onfoot7.rcf";
             }
         }
 
         public void StartModProcess()
         {
             SetPaths(Program.ModProgram.isoType, Program.ModProgram.PS2_executable_name);
+            basePath = AppDomain.CurrentDomain.BaseDirectory + @"temp\";
+            if (Program.ModProgram.isoType == ModLoader.ConsoleMode.GCN)
+            {
+                basePath = AppDomain.CurrentDomain.BaseDirectory + @"temp\P-" + Program.ModProgram.PS2_game_code_name.Substring(0, 4) + @"\";
+                // The CTTR API does not work with the GCN version yet
+                return;
+            }
+
 
             randState = new Random(Program.ModProgram.randoSeed);
 
@@ -401,8 +410,8 @@ namespace CrateModLoader
             string feedback = "";
             string path_extr = "";
             RCF rcf_common= new RCF();
-            rcf_common.OpenRCF(AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_common);
-            path_extr = AppDomain.CurrentDomain.BaseDirectory + @"temp\cml_extr\";
+            rcf_common.OpenRCF(basePath + path_RCF_common);
+            path_extr = basePath + @"cml_extr\";
             Directory.CreateDirectory(path_extr);
             rcf_common.ExtractRCF(ref feedback, path_extr);
 
@@ -432,11 +441,11 @@ namespace CrateModLoader
             }
 
             rcf_common.Recalculate();
-            rcf_common.Pack(AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_common + "1", ref feedback);
+            rcf_common.Pack(basePath + path_RCF_common + "1", ref feedback);
 
             // Extraction cleanup
-            System.IO.File.Delete(AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_common);
-            System.IO.File.Move(AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_common + "1", AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_common);
+            System.IO.File.Delete(basePath + path_RCF_common);
+            System.IO.File.Move(basePath + path_RCF_common + "1", basePath + path_RCF_common);
             if (Directory.Exists(path_extr))
             {
                 DirectoryInfo di = new DirectoryInfo(path_extr);
@@ -454,8 +463,8 @@ namespace CrateModLoader
             }
             
             RCF rcf_default = new RCF();
-            rcf_default.OpenRCF(AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_default);
-            path_extr = AppDomain.CurrentDomain.BaseDirectory + @"temp\cml_extr\";
+            rcf_default.OpenRCF(basePath + path_RCF_default);
+            path_extr = basePath + @"cml_extr\";
             Directory.CreateDirectory(path_extr);
             rcf_default.ExtractRCF(ref feedback, path_extr);
 
@@ -485,11 +494,11 @@ namespace CrateModLoader
             }
 
             rcf_default.Recalculate();
-            rcf_default.Pack(AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_default + "1", ref feedback);
+            rcf_default.Pack(basePath + path_RCF_default + "1", ref feedback);
 
             // Extraction cleanup
-            System.IO.File.Delete(AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_default);
-            System.IO.File.Move(AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_default + "1", AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_default);
+            System.IO.File.Delete(basePath + path_RCF_default);
+            System.IO.File.Move(basePath + path_RCF_default + "1", basePath + path_RCF_default);
             if (Directory.Exists(path_extr))
             {
                 DirectoryInfo di = new DirectoryInfo(path_extr);
@@ -1037,8 +1046,8 @@ namespace CrateModLoader
             string feedback = "";
             string path_extr = "";
             RCF rcf_frontend = new RCF();
-            rcf_frontend.OpenRCF(AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_frontend);
-            path_extr = AppDomain.CurrentDomain.BaseDirectory + @"temp\cml_extr\";
+            rcf_frontend.OpenRCF(basePath + path_RCF_frontend);
+            path_extr = basePath + @"cml_extr\";
             Directory.CreateDirectory(path_extr);
             rcf_frontend.ExtractRCF(ref feedback, path_extr);
 
@@ -1070,11 +1079,11 @@ namespace CrateModLoader
             }
 
             rcf_frontend.Recalculate();
-            rcf_frontend.Pack(AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_frontend + "1", ref feedback);
+            rcf_frontend.Pack(basePath + path_RCF_frontend + "1", ref feedback);
 
             // Extraction cleanup
-            System.IO.File.Delete(AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_frontend);
-            System.IO.File.Move(AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_frontend + "1", AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_frontend);
+            System.IO.File.Delete(basePath + path_RCF_frontend);
+            System.IO.File.Move(basePath + path_RCF_frontend + "1", basePath + path_RCF_frontend);
             if (Directory.Exists(path_extr))
             {
                 DirectoryInfo di = new DirectoryInfo(path_extr);
