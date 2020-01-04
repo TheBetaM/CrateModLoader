@@ -81,4 +81,4 @@ API by NeoKesha.
 Supported: All PS2 versions (.ISO format) (Wii, PSP not yet supported)  
 API by NeoKesha.  
 ### Features:    
-- Version, seed and settings visible in the Credits screen (not available on the Wii version yet)  
+- Version, seed and settings visible in the Credits screen  
