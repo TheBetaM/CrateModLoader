@@ -55,7 +55,7 @@ API by NeoKesha, Smartkin, ManDude and Marko. (https://github.com/Smartkin/twins
 - Version, seed and settings visible in the Autosave Disabled screen  
   
 ## Crash Tag Team Racing
-Supported: NTSC-U/PAL PS2 versions (.ISO format) (GC, PSP not yet supported)  
+Supported: All PS2 versions (.ISO format) (GC, PSP not yet supported)  
 APIs by NeoKesha and handsomematt. (https://github.com/handsomematt/Pure3D)  
 ### Features:  
 - Randomize Playable & Starting Characters

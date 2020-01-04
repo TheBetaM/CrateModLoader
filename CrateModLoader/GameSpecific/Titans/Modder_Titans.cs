@@ -25,6 +25,13 @@ namespace CrateModLoader
 
         public void StartModProcess()
         {
+
+            if (Program.ModProgram.isoType == ModLoader.ConsoleMode.WII || Program.ModProgram.isoType == ModLoader.ConsoleMode.XBOX360)
+            {
+                // API doesn't work yet for WII/360 because the archive's too big
+                return;
+            }
+
             string path_RCF_frontend = "DEFAULT.RCF";
             //Fixes names for PS2
             //File.Move(Program.ModProgram.extractedPath + path_RCF_frontend + ";1", Program.ModProgram.extractedPath + path_RCF_frontend);
