@@ -553,11 +553,10 @@ namespace CrateModLoader.GameSpecific.Twins
 
         public enum PropertyFlags : uint
         {
-            DamageOnTouch = 0x8000,
-            EarthWormFlag = 0x9000,
-            RoamingEnemy = 0xB2E,
+            NotSolidToPlayer = 0x8104,
+            //Solid, does not damage characters
+            SolidObject = 0x7D00,
             GenericObject = 0x7D36,
-            BatEnemy = 0x8B2A,
             DisableObject = 0xC0000000,
         }
 

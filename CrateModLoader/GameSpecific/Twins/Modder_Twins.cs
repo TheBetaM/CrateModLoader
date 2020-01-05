@@ -14,32 +14,33 @@ namespace CrateModLoader
     class Modder_Twins
     {
 
-        public string[] modOptions = { 
-			"Randomize Regular Crates", 
-			"Randomize Gem Locations",
+        public string[] modOptions = {
+            "Randomize Regular Crates",
+            "Randomize Gem Locations",
             "Randomize Level Music",
             "Randomize Character Parameters",
-			"Enable Flying Kick for Crash",
+            "Enable Flying Kick for Crash",
             "Enable Stomp Kick for Crash (Flying Kick variation)",
             "Enable Double Jump for Cortex",
             "Enable Double Jump for Nina",
-            "Enable Unused Enemies"
-			};
+            "Enable Unused Enemies",
+            };
 
         public bool Twins_Randomize_CrateTypes = false; // TODO: Make this a toggle between CrateTypes/AllCrates in the mod menu?
         public bool Twins_Randomize_AllCrates = false;
-		public bool Twins_Randomize_GemLocations = false;
+        public bool Twins_Randomize_GemLocations = false;
         public bool Twins_Randomize_Enemies = false; // TODO
         public bool Twins_Randomize_PlayableChars = false; // TODO for a later version
         public bool Twins_Randomize_StartingChunk = false; // TODO, ExePatcher
         public bool Twins_Randomize_Music = false;
         public bool Twins_Randomize_CharacterParams = false; // TODO
-		public bool Twins_Mod_PreventSequenceBreaks = false; // TODO
+        public bool Twins_Mod_PreventSequenceBreaks = false; // TODO for a later version
         public bool Twins_Mod_FlyingKick = false;
         public bool Twins_Mod_StompKick = false;
         public bool Twins_Mod_DoubleJump_Cortex = false;
         public bool Twins_Mod_DoubleJump_Nina = false;
-        public bool Twins_Mod_EnableUnusedEnemies = false;
+        public bool Twins_Mod_EnableUnusedEnemies = false; // TODO: frogensteins, ants in coreEnt
+        public bool Twins_Mod_TestMod = false;
 
         private string bdPath = "";
         public Random randState = new Random();
@@ -57,10 +58,11 @@ namespace CrateModLoader
             RandomizeMusic = 2,
             RandomizeCharParams = 3,
             ModFlyingKick = 4,
-			ModStompKick = 5,
+            ModStompKick = 5,
             ModDoubleJumpCortex = 6,
             ModDoubleJumpNina = 7,
             ModEnableUnusedEnemies = 8,
+            ModTestMod = 9,
         }
 
         public void OptionChanged(int option, bool value)
@@ -77,7 +79,7 @@ namespace CrateModLoader
             {
                 Twins_Randomize_Music = value;
             }
-			else if (option == (int)Twins_Options.ModStompKick)
+            else if (option == (int)Twins_Options.ModStompKick)
             {
                 Twins_Mod_StompKick = value;
             }
@@ -100,6 +102,10 @@ namespace CrateModLoader
             else if (option == (int)Twins_Options.ModEnableUnusedEnemies)
             {
                 Twins_Mod_EnableUnusedEnemies = value;
+            }
+            else if (option == (int)Twins_Options.ModTestMod)
+            {
+                Twins_Mod_TestMod = value;
             }
         }
 
@@ -442,7 +448,7 @@ namespace CrateModLoader
             if (Twins_Randomize_Music)
             {
                 List<uint> temp_musicList = new List<uint>();
-                
+
                 musicTypes.Add((uint)Twins_Data.MusicID.Academy);
                 musicTypes.Add((uint)Twins_Data.MusicID.AcademyNoLaugh);
                 musicTypes.Add((uint)Twins_Data.MusicID.AltLab);
@@ -496,7 +502,7 @@ namespace CrateModLoader
                 Twins_Edit_AllLevels = true;
             }
 
-            if (Twins_Mod_FlyingKick || Twins_Mod_StompKick || Twins_Mod_DoubleJump_Cortex || Twins_Mod_DoubleJump_Nina)
+            if (Twins_Mod_FlyingKick || Twins_Mod_StompKick || Twins_Mod_DoubleJump_Cortex || Twins_Mod_DoubleJump_Nina || Twins_Mod_TestMod)
             {
                 Twins_Edit_AllLevels = true;
 
@@ -538,10 +544,14 @@ namespace CrateModLoader
 
                 File.WriteAllLines(AppDomain.CurrentDomain.BaseDirectory + "/Tools/AllScripts.txt", test_scriptList);
                 */
-                
+
             }
 
             if (Twins_Mod_EnableUnusedEnemies)
+            {
+                Twins_Edit_AllLevels = true;
+            }
+            if (Twins_Mod_TestMod)
             {
                 Twins_Edit_AllLevels = true;
             }
@@ -655,10 +665,11 @@ namespace CrateModLoader
             }
             if (Twins_Mod_EnableUnusedEnemies)
             {
-                if (chunkType == Twins_Data.ChunkType.Earth_Hub_Beach || chunkType == Twins_Data.ChunkType.Earth_Hub_HubA || chunkType == Twins_Data.ChunkType.Earth_Hub_HubB || chunkType == Twins_Data.ChunkType.Earth_Hub_HighPath)
-                {
-                    RM_EnableUnusedEnemies(ref RM_Archive);
-                }
+                RM_EnableUnusedEnemies(ref RM_Archive);
+            }
+            if (Twins_Mod_TestMod)
+            {
+                RM_TestMod(ref RM_Archive);
             }
 
             RM_Archive.SaveFile(path);
@@ -849,13 +860,13 @@ namespace CrateModLoader
                 return;
             }
 
-            
+
             for (int i = 0; i < Twins_Data.All_Gems.Count; i++)
             {
                 if (Twins_Data.All_Gems[i].chunk == chunkType)
                 {
                     Instance NewGem = new Instance();
-                    NewGem.Pos = new Pos(Twins_Data.All_Gems[i].pos.X, Twins_Data.All_Gems[i].pos.Y, Twins_Data.All_Gems[i].pos.Z,1f);
+                    NewGem.Pos = new Pos(Twins_Data.All_Gems[i].pos.X, Twins_Data.All_Gems[i].pos.Y, Twins_Data.All_Gems[i].pos.Z, 1f);
                     if (Twins_Data.All_Gems[i].type == Twins_Data.GemType.GEM_BLUE)
                     {
                         NewGem.ObjectID = (ushort)Twins_Data.GemID.GEM_BLUE;
@@ -1194,13 +1205,21 @@ namespace CrateModLoader
                         Instance instance = (Instance)instances.Records[i];
                         if (instance.ObjectID == (uint)Twins_Data.ObjectID.GLOBAL_BAT_DARKPURPLE)
                         {
-                            instance.UnkI32 -= (uint)Twins_Data.PropertyFlags.DisableObject;
+                            if (instance.UnkI32 > (uint)Twins_Data.PropertyFlags.DisableObject)
+                            {
+                                instance.UnkI32 -= (uint)Twins_Data.PropertyFlags.DisableObject;
+                            }
                         }
                         //todo: frogensteins, drones in coreent
                         instances.Records[i] = instance;
                     }
                 }
             }
+        }
+
+        void RM_TestMod(ref TwinsFile RM_Archive)
+        {
+            
         }
 
     }
