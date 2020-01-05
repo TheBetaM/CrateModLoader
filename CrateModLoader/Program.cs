@@ -9,6 +9,7 @@ using System.Text;
 using System.Media;
 using System.Diagnostics;
 using System.Reflection;
+using System.ComponentModel;
 using DiscUtils.Iso9660;
 //Crate Mod Loader Main Class
 
@@ -50,6 +51,7 @@ namespace CrateModLoader
         public NumericUpDown textbox_rando_seed;
         public Button button_modMenu;
         public Button button_modCrateMenu;
+        public BackgroundWorker asyncWorker;
         /// <summary> String used to show which version of CML the modded game was built with. </summary>
         public string releaseVersionString = "v1.0";
         /// <summary> String of bytes displaying which quick options were selected. (Automatically adjusts to more bytes depending on options available, min. 2 characters, 2 characters per 8 options) </summary>

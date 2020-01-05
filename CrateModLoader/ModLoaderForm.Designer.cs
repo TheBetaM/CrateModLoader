@@ -50,6 +50,7 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.button_openModMenu = new System.Windows.Forms.Button();
             this.button_modCrateMenu = new System.Windows.Forms.Button();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -277,6 +278,10 @@
             this.button_modCrateMenu.Visible = false;
             this.button_modCrateMenu.Click += new System.EventHandler(this.button_modCrateMenu_Click);
             // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.WorkerReportsProgress = true;
+            // 
             // ModLoaderForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -336,6 +341,7 @@
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Button button_openModMenu;
         private System.Windows.Forms.Button button_modCrateMenu;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }
 

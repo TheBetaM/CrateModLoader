@@ -34,6 +34,7 @@ namespace CrateModLoader
             Program.ModProgram.textbox_rando_seed = numericUpDown1;
             Program.ModProgram.button_modMenu = button_openModMenu;
             Program.ModProgram.button_modCrateMenu = button_modCrateMenu;
+            Program.ModProgram.asyncWorker = backgroundWorker1;
 
             progressBar1.Minimum = 1;
             progressBar1.Maximum = 4;
@@ -147,7 +148,8 @@ namespace CrateModLoader
 
         private void button_modCrateMenu_Click(object sender, EventArgs e)
         {
-            Program.ModProgram.OpenModCrateManager();
+            //Program.ModProgram.OpenModCrateManager();
+            MessageBox.Show("Coming in a future release!", "Not available yet", MessageBoxButtons.OK);
         }
 
         private void button_openModMenu_Click(object sender, EventArgs e)

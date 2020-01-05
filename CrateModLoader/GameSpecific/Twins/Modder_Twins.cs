@@ -120,8 +120,8 @@ namespace CrateModLoader
         {
             Textures = 0,
             Materials = 1,
-            Models = 2,
-            GraphicsCompilations = 3,
+            Meshes = 2,
+            Models = 3,
             RiggedModels = 4,
             Unknown1 = 5,
             GraphicsCompilationsExtra = 6,
@@ -234,9 +234,147 @@ namespace CrateModLoader
 
                 mainArchive.SaveFile(bdPath + "/Startup/Default.rm2");
             }
+            if (Twins_Randomize_AllCrates)
+            {
+                //Importing ammo crate
+                TwinsFile cortexlevelArchive = new TwinsFile();
+                cortexlevelArchive.LoadFile(bdPath + @"Levels\school\Cortex\cogpa01.rm2", TwinsFile.FileType.RM2);
+
+                List<GameObject> import_GObj = new List<GameObject>();
+                List<Texture> import_Tex = new List<Texture>();
+                List<Material> import_Mat = new List<Material>();
+                List<Mesh> import_Mesh = new List<Mesh>();
+                List<Model> import_Mdl = new List<Model>();
+                List<Script> import_Scr = new List<Script>();
+                List<TwinsItem> import_OGI = new List<TwinsItem>();
+
+                TwinsSection gfx_section = cortexlevelArchive.GetItem<TwinsSection>((uint)RM2_Sections.Graphics);
+                TwinsSection code_section = cortexlevelArchive.GetItem<TwinsSection>((uint)RM2_Sections.Code);
+                TwinsSection object_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.Object);
+                TwinsSection script_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.Script);
+                TwinsSection ogi_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.OGI);
+                TwinsSection tex_section = gfx_section.GetItem<TwinsSection>((uint)RM2_Graphics_Sections.Textures);
+                TwinsSection mat_section = gfx_section.GetItem<TwinsSection>((uint)RM2_Graphics_Sections.Materials);
+                TwinsSection mesh_section = gfx_section.GetItem<TwinsSection>((uint)RM2_Graphics_Sections.Meshes);
+                TwinsSection mdl_section = gfx_section.GetItem<TwinsSection>((uint)RM2_Graphics_Sections.Models);
+                for (int i = 0; i < script_section.Records.Count; ++i)
+                {
+                    Script scr = (Script)script_section.Records[i];
+                    if (scr.ID == (uint)Twins_Data.ScriptID.HEAD_COM_AMMO_CRATE_SMALL_TOUCHED)
+                    {
+                        import_Scr.Add(scr);
+                    }
+                    else if (scr.ID == (uint)Twins_Data.ScriptID.COM_AMMO_CRATE_SMALL_TOUCHED)
+                    {
+                        import_Scr.Add(scr);
+                    }
+                }
+                for (int i = 0; i < object_section.Records.Count; ++i)
+                {
+                    GameObject obj = (GameObject)object_section.Records[i];
+                    if (obj.ID == (uint)Twins_Data.ObjectID.AMMOCRATESMALL)
+                    {
+                        import_GObj.Add(obj);
+                    }
+                }
+                for (int i = 0; i < ogi_section.Records.Count; ++i)
+                {
+                    TwinsItem obj = (TwinsItem)ogi_section.Records[i];
+                    if (obj.ID == 1012 || obj.ID == 1013)
+                    {
+                        import_OGI.Add(obj);
+                    }
+                }
+                for (int i = 0; i < tex_section.Records.Count; ++i)
+                {
+                    Texture obj = (Texture)tex_section.Records[i];
+                    if (obj.ID == 579096643 || obj.ID == 1337357917)
+                    {
+                        import_Tex.Add(obj);
+                    }
+                }
+                for (int i = 0; i < mat_section.Records.Count; ++i)
+                {
+                    Material obj = (Material)mat_section.Records[i];
+                    if (obj.ID == 3145594139 || obj.ID == 2974101469 || obj.ID == 755441073 || obj.ID == 2631436731)
+                    {
+                        import_Mat.Add(obj);
+                    }
+                }
+                for (int i = 0; i < mesh_section.Records.Count; ++i)
+                {
+                    Mesh obj = (Mesh)mesh_section.Records[i];
+                    if (obj.ID == 4014807021 || obj.ID == 847180949 || obj.ID == 1222385729 || obj.ID == 1597590509 || obj.ID == 1972795289 || obj.ID == 2348000069)
+                    {
+                        import_Mesh.Add(obj);
+                    }
+                    else if (obj.ID == 2723204849 || obj.ID == 3098409629 || obj.ID == 3473614409 || obj.ID == 3848819189 || obj.ID == 4224023969)
+                    {
+                        import_Mesh.Add(obj);
+                    }
+                }
+                for (int i = 0; i < mdl_section.Records.Count; ++i)
+                {
+                    Model obj = (Model)mdl_section.Records[i];
+                    if (obj.ID == 2727310987 || obj.ID == 991942702 || obj.ID == 1367147482 || obj.ID == 1742352262 || obj.ID == 2117557042 || obj.ID == 2492761822)
+                    {
+                        import_Mdl.Add(obj);
+                    }
+                    else if (obj.ID == 2867966602 || obj.ID == 3243171382 || obj.ID == 3618376162 || obj.ID == 3993580942 || obj.ID == 73818426)
+                    {
+                        import_Mdl.Add(obj);
+                    }
+                }
+
+                TwinsFile mainArchive = new TwinsFile();
+                mainArchive.LoadFile(bdPath + @"Startup\Default.rm2", TwinsFile.FileType.RM2);
+
+                gfx_section = mainArchive.GetItem<TwinsSection>((uint)RM2_Sections.Graphics);
+                code_section = mainArchive.GetItem<TwinsSection>((uint)RM2_Sections.Code);
+                object_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.Object);
+                script_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.Script);
+                ogi_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.OGI);
+                tex_section = gfx_section.GetItem<TwinsSection>((uint)RM2_Graphics_Sections.Textures);
+                mat_section = gfx_section.GetItem<TwinsSection>((uint)RM2_Graphics_Sections.Materials);
+                mesh_section = gfx_section.GetItem<TwinsSection>((uint)RM2_Graphics_Sections.Meshes);
+                mdl_section = gfx_section.GetItem<TwinsSection>((uint)RM2_Graphics_Sections.Models);
+
+                for (int i = 0; i < import_GObj.Count; i++)
+                {
+                    object_section.Records.Add(import_GObj[i]);
+                }
+                for (int i = 0; i < import_Mat.Count; i++)
+                {
+                    mat_section.Records.Add(import_Mat[i]);
+                }
+                for (int i = 0; i < import_Mdl.Count; i++)
+                {
+                    mdl_section.Records.Add(import_Mdl[i]);
+                }
+                for (int i = 0; i < import_Mesh.Count; i++)
+                {
+                    mesh_section.Records.Add(import_Mesh[i]);
+                }
+                for (int i = 0; i < import_Scr.Count; i++)
+                {
+                    script_section.Records.Add(import_Scr[i]);
+                }
+                for (int i = 0; i < import_Tex.Count; i++)
+                {
+                    tex_section.Records.Add(import_Tex[i]);
+                }
+                for (int i = 0; i < import_OGI.Count; i++)
+                {
+                    ogi_section.Records.Add(import_OGI[i]);
+                }
+
+                mainArchive.SaveFile(bdPath + "/Startup/Default.rm2");
+            }
 
             if (Twins_Randomize_AllCrates)
             {
+
+                // Crates to insert
                 randCrateList = new List<uint>();
                 randCrateList.Add((uint)Twins_Data.ObjectID.BASICCRATE5);
                 //randCrateList.Add((uint)Twins_Data.ObjectID.TNT_CRATE);
@@ -245,13 +383,13 @@ namespace CrateModLoader
                 randCrateList.Add((uint)Twins_Data.ObjectID.WOODENSPRINGCRATE);
                 randCrateList.Add((uint)Twins_Data.ObjectID.REINFORCEDWOODENCRATE);
                 randCrateList.Add((uint)Twins_Data.ObjectID.AKUAKUCRATE);
-                //randCrateList.Add((uint)Twins_Data.ObjectID.EXTRA_LIFE_CRATE_CORTEX); Maybe try weighted random or when life crate is chosen choose from those three
-                //randCrateList.Add((uint)Twins_Data.ObjectID.EXTRA_LIFE_CRATE_NINA);
                 randCrateList.Add((uint)Twins_Data.ObjectID.IRONCRATE7);
                 randCrateList.Add((uint)Twins_Data.ObjectID.IRONSPRINGCRATE7);
                 randCrateList.Add((uint)Twins_Data.ObjectID.MULTIPLEHITCRATE1);
                 randCrateList.Add((uint)Twins_Data.ObjectID.SURPRISECRATE);
+                randCrateList.Add((uint)Twins_Data.ObjectID.AMMOCRATESMALL);
 
+                // Crates to replace
                 CrateReplaceList = new List<uint>();
                 CrateReplaceList.Add((uint)Twins_Data.ObjectID.BASICCRATE5);
                 //CrateReplaceList.Add((uint)Twins_Data.ObjectID.TNT_CRATE);
@@ -264,6 +402,7 @@ namespace CrateModLoader
                 //CrateReplaceList.Add((uint)Twins_Data.ObjectID.IRON_SPRING_CRATE);
                 CrateReplaceList.Add((uint)Twins_Data.ObjectID.MULTIPLEHITCRATE1);
                 CrateReplaceList.Add((uint)Twins_Data.ObjectID.SURPRISECRATE);
+                //CrateReplaceList.Add((uint)Twins_Data.ObjectID.AMMOCRATESMALL);
 
                 Twins_Edit_AllLevels = true;
             }
@@ -583,6 +722,11 @@ namespace CrateModLoader
         {
             randState = new Random((Program.ModProgram.randoSeed + (int)chunkType) % int.MaxValue);
             int target_item = 0;
+            int target_life = 0;
+            List<uint> lifecrates = new List<uint>();
+            lifecrates.Add((uint)Twins_Data.ObjectID.EXTRALIFECRATE);
+            lifecrates.Add((uint)Twins_Data.ObjectID.EXTRALIFECRATECORTEX);
+            lifecrates.Add((uint)Twins_Data.ObjectID.EXTRALIFECRATENINA);
             for (uint section_id = (uint)RM2_Sections.Instances1; section_id <= (uint)RM2_Sections.Instances8; section_id++)
             {
                 if (!RM_Archive.ContainsItem(section_id)) continue;
@@ -599,7 +743,16 @@ namespace CrateModLoader
                             if (instance.ObjectID == CrateReplaceList[d])
                             {
                                 target_item = randState.Next(0, randCrateList.Count);
-                                instance.ObjectID = (ushort)randCrateList[target_item];
+                                if (randCrateList[target_item] == (int)Twins_Data.ObjectID.EXTRALIFECRATE)
+                                {
+                                    target_life = randState.Next(0, lifecrates.Count);
+                                    target_item = (int)lifecrates[target_life];
+                                }
+                                else
+                                {
+                                    target_item = (int)randCrateList[target_item];
+                                }
+                                instance.ObjectID = (ushort)target_item;
                                 break;
                             }
                         }
