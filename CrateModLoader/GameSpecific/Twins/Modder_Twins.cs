@@ -23,6 +23,7 @@ namespace CrateModLoader
             "Enable Stomp Kick for Crash (Flying Kick variation)",
             "Enable Double Jump for Cortex",
             "Enable Double Jump for Nina",
+            "Enable Unused Enemies"
 			};
 
         public bool Twins_Randomize_CrateTypes = false; // TODO: Make this a toggle between CrateTypes/AllCrates in the mod menu?
@@ -38,6 +39,7 @@ namespace CrateModLoader
         public bool Twins_Mod_StompKick = false;
         public bool Twins_Mod_DoubleJump_Cortex = false;
         public bool Twins_Mod_DoubleJump_Nina = false;
+        public bool Twins_Mod_EnableUnusedEnemies = false;
 
         private string bdPath = "";
         public Random randState = new Random();
@@ -58,6 +60,7 @@ namespace CrateModLoader
 			ModStompKick = 5,
             ModDoubleJumpCortex = 6,
             ModDoubleJumpNina = 7,
+            ModEnableUnusedEnemies = 8,
         }
 
         public void OptionChanged(int option, bool value)
@@ -94,6 +97,10 @@ namespace CrateModLoader
             {
                 Twins_Randomize_CharacterParams = value;
             }
+            else if (option == (int)Twins_Options.ModEnableUnusedEnemies)
+            {
+                Twins_Mod_EnableUnusedEnemies = value;
+            }
         }
 
         public void UpdateModOptions()
@@ -122,11 +129,11 @@ namespace CrateModLoader
             Materials = 1,
             Meshes = 2,
             Models = 3,
-            RiggedModels = 4,
-            Unknown1 = 5,
-            GraphicsCompilationsExtra = 6,
+            ArmatureModel = 4,
+            ActorModel = 5,
+            StaticModel = 6,
             Terrains = 7,
-            Unknown2 = 8,
+            Skydome = 8,
         }
         public enum RM2_Code_Sections
         {
@@ -137,12 +144,13 @@ namespace CrateModLoader
             CodeModel = 4,
             Unknown = 5,
             SE = 6,
+            // also used for japanese
             SE_Eng = 7,
             SE_Fre = 8,
             SE_Ger = 9,
             SE_Spa = 10,
             SE_Ita = 11,
-            SE_Jpn = 12,
+            SE_Unused = 12,
         }
         public enum RM2_Instance_Sections
         {
@@ -240,6 +248,11 @@ namespace CrateModLoader
                 TwinsFile cortexlevelArchive = new TwinsFile();
                 cortexlevelArchive.LoadFile(bdPath + @"Levels\school\Cortex\cogpa01.rm2", TwinsFile.FileType.RM2);
 
+                // when exporting is done
+                //List<Twins_Data.ObjectID> exportList = new List<Twins_Data.ObjectID>();
+                //Twins_Data.ExportGameObject(ref cortexlevelArchive, Twins_Data.ObjectID.AMMOCRATESMALL,ref exportList);
+                //exportList.Clear();
+
                 List<GameObject> import_GObj = new List<GameObject>();
                 List<Texture> import_Tex = new List<Texture>();
                 List<Material> import_Mat = new List<Material>();
@@ -328,6 +341,10 @@ namespace CrateModLoader
 
                 TwinsFile mainArchive = new TwinsFile();
                 mainArchive.LoadFile(bdPath + @"Startup\Default.rm2", TwinsFile.FileType.RM2);
+
+                // when importing is done
+                //Twins_Data.ImportGameObject(ref mainArchive, Twins_Data.ObjectID.AMMOCRATESMALL,ref exportList);
+                //exportList.Clear();
 
                 gfx_section = mainArchive.GetItem<TwinsSection>((uint)RM2_Sections.Graphics);
                 code_section = mainArchive.GetItem<TwinsSection>((uint)RM2_Sections.Code);
@@ -524,6 +541,11 @@ namespace CrateModLoader
                 
             }
 
+            if (Twins_Mod_EnableUnusedEnemies)
+            {
+                Twins_Edit_AllLevels = true;
+            }
+
             if (Twins_Edit_AllLevels)
             {
                 levelEdited = new bool[140];
@@ -536,6 +558,7 @@ namespace CrateModLoader
 
                 Twins_Data.allScripts.Clear();
                 Twins_Data.allObjects.Clear();
+                Twins_Data.cachedGameObjects.Clear();
             }
 
             if (Twins_Edit_CodeText)
@@ -629,6 +652,13 @@ namespace CrateModLoader
             if (Twins_Mod_FlyingKick || Twins_Mod_StompKick || Twins_Mod_DoubleJump_Cortex || Twins_Mod_DoubleJump_Nina)
             {
                 RM_CharacterMod(ref RM_Archive);
+            }
+            if (Twins_Mod_EnableUnusedEnemies)
+            {
+                if (chunkType == Twins_Data.ChunkType.Earth_Hub_Beach || chunkType == Twins_Data.ChunkType.Earth_Hub_HubA || chunkType == Twins_Data.ChunkType.Earth_Hub_HubB || chunkType == Twins_Data.ChunkType.Earth_Hub_HighPath)
+                {
+                    RM_EnableUnusedEnemies(ref RM_Archive);
+                }
             }
 
             RM_Archive.SaveFile(path);
@@ -877,7 +907,7 @@ namespace CrateModLoader
                     for (int i = 0; i < instances.Records.Count; ++i)
                     {
                         Instance instance = (Instance)instances.Records[i];
-                        if (instance.ObjectID == 316) // DJ object
+                        if (instance.ObjectID == (ushort)Twins_Data.ObjectID.DJ)
                         {
                             uint sourceMusic = instance.UnkI323[0];
                             for (int m = 0; m < musicTypes.Count; m++)
@@ -1090,7 +1120,6 @@ namespace CrateModLoader
                             //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Unk30] = 0; // 0.05
                             //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Unk31] = 0; // 0.05
 
-                            break;
                         }
                         else if (instance.ObjectID == (uint)Twins_Data.ObjectID.CORTEX)
                         {
@@ -1144,6 +1173,30 @@ namespace CrateModLoader
                             // Mechabandicoot mods
                             //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.StrafingSpeed] = 10;
                         }
+                        instances.Records[i] = instance;
+                    }
+                }
+            }
+        }
+
+        void RM_EnableUnusedEnemies(ref TwinsFile RM_Archive)
+        {
+            for (uint section_id = (uint)RM2_Sections.Instances1; section_id <= (uint)RM2_Sections.Instances8; section_id++)
+            {
+                if (!RM_Archive.ContainsItem(section_id)) continue;
+                TwinsSection section = RM_Archive.GetItem<TwinsSection>(section_id);
+                if (section.Records.Count > 0)
+                {
+                    if (!section.ContainsItem((uint)RM2_Instance_Sections.ObjectInstance)) continue;
+                    TwinsSection instances = section.GetItem<TwinsSection>((uint)RM2_Instance_Sections.ObjectInstance);
+                    for (int i = 0; i < instances.Records.Count; ++i)
+                    {
+                        Instance instance = (Instance)instances.Records[i];
+                        if (instance.ObjectID == (uint)Twins_Data.ObjectID.GLOBAL_BAT_DARKPURPLE)
+                        {
+                            instance.UnkI32 -= (uint)Twins_Data.PropertyFlags.DisableObject;
+                        }
+                        //todo: frogensteins, drones in coreent
                         instances.Records[i] = instance;
                     }
                 }

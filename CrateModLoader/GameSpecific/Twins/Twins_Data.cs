@@ -237,6 +237,63 @@ namespace CrateModLoader.GameSpecific.Twins
             BoilerUnused = 136,
         }
 
+        private enum RM2_Sections
+        {
+            Graphics = 11,
+            Code = 10,
+            Particles = 8,
+            ColData = 9,
+            Instances1 = 0,
+            Instances2 = 1,
+            Instances3 = 2,
+            Instances4 = 3,
+            Instances5 = 4,
+            Instances6 = 5,
+            Instances7 = 6,
+            Instances8 = 7,
+        }
+        public enum RM2_Graphics_Sections
+        {
+            Textures = 0,
+            Materials = 1,
+            Meshes = 2,
+            Models = 3,
+            ArmatureModel = 4,
+            ActorModel = 5,
+            StaticModel = 6,
+            Terrains = 7,
+            Skydome = 8,
+        }
+        public enum RM2_Code_Sections
+        {
+            Object = 0,
+            Script = 1,
+            Animation = 2,
+            OGI = 3,
+            CodeModel = 4,
+            Unknown = 5,
+            SE = 6,
+            // also used for japanese
+            SE_Eng = 7,
+            SE_Fre = 8,
+            SE_Ger = 9,
+            SE_Spa = 10,
+            SE_Ita = 11,
+            SE_Unused = 12,
+        }
+        public enum RM2_Instance_Sections
+        {
+            UnknownInstance = 0,
+            AIPosition = 1,
+            AIPath = 2,
+            Position = 3,
+            Path = 4,
+            CollisionSurface = 5,
+            ObjectInstance = 6,
+            Trigger = 7,
+            Camera = 8,
+        }
+
         public enum CharacterInstanceFloats
         {
             // 1 for everyone
@@ -492,6 +549,16 @@ namespace CrateModLoader.GameSpecific.Twins
             OnFailToRadialBlast = 108,
             OnSkateJump = 109,
             OnSkateImpact = 110,
+        }
+
+        public enum PropertyFlags : uint
+        {
+            DamageOnTouch = 0x8000,
+            EarthWormFlag = 0x9000,
+            RoamingEnemy = 0xB2E,
+            GenericObject = 0x7D36,
+            BatEnemy = 0x8B2A,
+            DisableObject = 0xC0000000,
         }
 
         public static List<TwinsLevelChunk> All_Chunks = new List<TwinsLevelChunk>()
@@ -1171,6 +1238,617 @@ namespace CrateModLoader.GameSpecific.Twins
 
             return type;
         }
+
+        public static List<CachedGameObject> cachedGameObjects = new List<CachedGameObject>();
+
+        public static void ExportGameObject(ref TwinsFile RM_Archive, ObjectID objectID, ref List<ObjectID> objectsExported)
+        {
+            CachedGameObject gameObject = new CachedGameObject();
+
+            TwinsSection gfx_section = RM_Archive.GetItem<TwinsSection>((uint)RM2_Sections.Graphics);
+            TwinsSection tex_section = gfx_section.GetItem<TwinsSection>((uint)RM2_Graphics_Sections.Textures);
+            TwinsSection mat_section = gfx_section.GetItem<TwinsSection>((uint)RM2_Graphics_Sections.Materials);
+            TwinsSection mesh_section = gfx_section.GetItem<TwinsSection>((uint)RM2_Graphics_Sections.Meshes);
+            TwinsSection mdl_section = gfx_section.GetItem<TwinsSection>((uint)RM2_Graphics_Sections.Models);
+            TwinsSection armdl_section = gfx_section.GetItem<TwinsSection>((uint)RM2_Graphics_Sections.ArmatureModel);
+            TwinsSection acmdl_section = gfx_section.GetItem<TwinsSection>((uint)RM2_Graphics_Sections.ActorModel);
+
+            TwinsSection code_section = RM_Archive.GetItem<TwinsSection>((uint)RM2_Sections.Code);
+            TwinsSection anim_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.Animation);
+            TwinsSection object_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.Object);
+            TwinsSection script_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.Script);
+            TwinsSection ogi_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.OGI);
+            TwinsSection comdl_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.CodeModel);
+            TwinsSection sfx_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.SE);
+            TwinsSection sfx_eng_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.SE_Eng);
+            TwinsSection sfx_fre_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.SE_Fre);
+            TwinsSection sfx_ger_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.SE_Ger);
+            TwinsSection sfx_ita_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.SE_Ita);
+            TwinsSection sfx_spa_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.SE_Spa);
+            TwinsSection sfx_unu_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.SE_Unused);
+
+            // may need a check to see if the section exists?
+
+            GameObject targetObject = null;
+            for (int i = 0; i < object_section.Records.Count; i++)
+            {
+                if (object_section.Records[i].ID == (uint)objectID)
+                {
+                    targetObject = (GameObject)object_section.Records[i];
+                }
+            }
+            if (targetObject == null)
+            {
+                return;
+            }
+            objectsExported.Add(objectID);
+
+            ushort[] animList = targetObject.Anims;
+            List<ushort> export_anim = GetValidIDs(ref animList);
+
+            for (int i = 0; i < anim_section.Records.Count; i++)
+            {
+                if (export_anim.Contains((ushort)anim_section.Records[i].ID))
+                {
+                    if (gameObject.list_anims == null)
+                    {
+                        gameObject.list_anims = new List<TwinsItem>();
+                    }
+                    gameObject.list_anims.Add(anim_section.Records[i]);
+                }
+            }
+
+            ushort[] objList = targetObject.Objects;
+            List<ushort> export_objects = GetValidIDs(ref objList);
+            for (int i = 0; i < object_section.Records.Count; i++)
+            {
+                if ((ushort)objectID != object_section.Records[i].ID && !objectsExported.Contains((ObjectID)object_section.Records[i].ID) && export_objects.Contains((ushort)object_section.Records[i].ID))
+                {
+                    ExportGameObject(ref RM_Archive, (ObjectID)object_section.Records[i].ID, ref objectsExported);
+                    if (gameObject.list_subobjects == null)
+                    {
+                        gameObject.list_subobjects = new List<ObjectID>();
+                    }
+                    if (!gameObject.list_subobjects.Contains((ObjectID)object_section.Records[i].ID))
+                    {
+                        gameObject.list_subobjects.Add((ObjectID)object_section.Records[i].ID);
+                    }
+                }
+                else if ((ushort)objectID == object_section.Records[i].ID)
+                {
+                    gameObject.mainObject = (GameObject)object_section.Records[i];
+                }
+            }
+
+            ushort[] ogiList = targetObject.OGIs;
+            List<ushort> export_ogi = GetValidIDs(ref ogiList);
+
+            for (int i = 0; i < ogi_section.Records.Count; i++)
+            {
+                if (export_ogi.Contains((ushort)ogi_section.Records[i].ID))
+                {
+                    if (gameObject.list_ogi == null)
+                    {
+                        gameObject.list_ogi = new List<TwinsItem>();
+                    }
+                    gameObject.list_ogi.Add(ogi_section.Records[i]);
+                }
+            }
+
+            ushort[] scriptList = targetObject.Scripts;
+            List<ushort> export_script = GetValidIDs(ref scriptList);
+
+            for (int i = 0; i < script_section.Records.Count; i++)
+            {
+                if (export_script.Contains((ushort)script_section.Records[i].ID))
+                {
+                    if (gameObject.list_scripts == null)
+                    {
+                        gameObject.list_scripts = new List<Script>();
+                    }
+                    gameObject.list_scripts.Add((Script)script_section.Records[i]);
+                }
+            }
+
+            // gameobject -> codemodel
+            ushort[] codemodelList = targetObject.cCM;
+            List<ushort> export_comdl = GetValidIDs(ref codemodelList);
+
+            for (int i = 0; i < comdl_section.Records.Count; i++)
+            {
+                if (export_comdl.Contains((ushort)comdl_section.Records[i].ID))
+                {
+                    if (gameObject.list_codemodels == null)
+                    {
+                        gameObject.list_codemodels = new List<TwinsItem>();
+                    }
+                    gameObject.list_codemodels.Add(comdl_section.Records[i]);
+                }
+            }
+
+            ushort[] soundList = targetObject.Sounds;
+            List<ushort> export_sounds = GetValidIDs(ref soundList);
+
+            for (int i = 0; i < sfx_section.Records.Count; i++)
+            {
+                if (export_sounds.Contains((ushort)sfx_section.Records[i].ID))
+                {
+                    if (gameObject.list_sounds == null)
+                    {
+                        gameObject.list_sounds = new List<SoundEffect>();
+                    }
+                    gameObject.list_sounds.Add((SoundEffect)sfx_section.Records[i]);
+                }
+            }
+            for (int i = 0; i < sfx_eng_section.Records.Count; i++)
+            {
+                if (export_sounds.Contains((ushort)sfx_eng_section.Records[i].ID))
+                {
+                    if (gameObject.list_sounds_english == null)
+                    {
+                        gameObject.list_sounds_english = new List<SoundEffect>();
+                    }
+                    gameObject.list_sounds_english.Add((SoundEffect)sfx_eng_section.Records[i]);
+                }
+            }
+            for (int i = 0; i < sfx_ger_section.Records.Count; i++)
+            {
+                if (export_sounds.Contains((ushort)sfx_ger_section.Records[i].ID))
+                {
+                    if (gameObject.list_sounds_german == null)
+                    {
+                        gameObject.list_sounds_german = new List<SoundEffect>();
+                    }
+                    gameObject.list_sounds_german.Add((SoundEffect)sfx_ger_section.Records[i]);
+                }
+            }
+            for (int i = 0; i < sfx_fre_section.Records.Count; i++)
+            {
+                if (export_sounds.Contains((ushort)sfx_fre_section.Records[i].ID))
+                {
+                    if (gameObject.list_sounds_french == null)
+                    {
+                        gameObject.list_sounds_french = new List<SoundEffect>();
+                    }
+                    gameObject.list_sounds_french.Add((SoundEffect)sfx_fre_section.Records[i]);
+                }
+            }
+            for (int i = 0; i < sfx_ita_section.Records.Count; i++)
+            {
+                if (export_sounds.Contains((ushort)sfx_ita_section.Records[i].ID))
+                {
+                    if (gameObject.list_sounds_italian == null)
+                    {
+                        gameObject.list_sounds_italian = new List<SoundEffect>();
+                    }
+                    gameObject.list_sounds_italian.Add((SoundEffect)sfx_ita_section.Records[i]);
+                }
+            }
+            for (int i = 0; i < sfx_spa_section.Records.Count; i++)
+            {
+                if (export_sounds.Contains((ushort)sfx_spa_section.Records[i].ID))
+                {
+                    if (gameObject.list_sounds_spanish == null)
+                    {
+                        gameObject.list_sounds_spanish = new List<SoundEffect>();
+                    }
+                    gameObject.list_sounds_spanish.Add((SoundEffect)sfx_spa_section.Records[i]);
+                }
+            }
+            for (int i = 0; i < sfx_unu_section.Records.Count; i++)
+            {
+                if (export_sounds.Contains((ushort)sfx_unu_section.Records[i].ID))
+                {
+                    if (gameObject.list_sounds_unused == null)
+                    {
+                        gameObject.list_sounds_unused = new List<SoundEffect>();
+                    }
+                    gameObject.list_sounds_unused.Add((SoundEffect)sfx_unu_section.Records[i]);
+                }
+            }
+
+            // todo: ogi -> model, armaturemodel, actormodel
+            List<uint> export_mdl = new List<uint>();
+            List<uint> export_armdl = new List<uint>();
+            List<uint> export_acmdl = new List<uint>();
+            for (int ogi = 0; ogi < gameObject.list_ogi.Count; ogi++)
+            {
+                //export_armdl.Add(gameObject.list_ogi[ogi].ArmatureModelID);
+                //export_acmdl.Add(gameObject.list_ogi[ogi].ActorModelID);
+                //for (int i = 0; i < gameObject.list_ogi[ogi].ModelIDs.Length; i++)
+                //{
+                //    export_mdl.Add(gameObject.list_ogi[ogi].ModelIDs[i]);
+                //}
+            }
+            for (int i = 0; i < mdl_section.Records.Count; i++)
+            {
+                if (export_mdl.Contains(mdl_section.Records[i].ID))
+                {
+                    if (gameObject.list_models == null)
+                    {
+                        gameObject.list_models = new List<Model>();
+                    }
+                    gameObject.list_models.Add((Model)mdl_section.Records[i]);
+                }
+            }
+            for (int i = 0; i < armdl_section.Records.Count; i++)
+            {
+                if (export_armdl.Contains(armdl_section.Records[i].ID))
+                {
+                    if (gameObject.list_armaturemodels == null)
+                    {
+                        gameObject.list_armaturemodels = new List<TwinsItem>();
+                    }
+                    gameObject.list_armaturemodels.Add(armdl_section.Records[i]);
+                }
+            }
+            for (int i = 0; i < acmdl_section.Records.Count; i++)
+            {
+                if (export_acmdl.Contains(acmdl_section.Records[i].ID))
+                {
+                    if (gameObject.list_actormodels == null)
+                    {
+                        gameObject.list_actormodels = new List<TwinsItem>();
+                    }
+                    gameObject.list_actormodels.Add(acmdl_section.Records[i]);
+                }
+            }
+
+            List<uint> export_mat = new List<uint>();
+            List<uint> export_mesh = new List<uint>();
+            for (int mdl = 0; mdl < gameObject.list_models.Count; mdl++)
+            {
+                export_mesh.Add(gameObject.list_models[mdl].MeshID);
+                for (int i = 0; i < gameObject.list_models[mdl].MaterialIDs.Length; i++)
+                {
+                    export_mat.Add(gameObject.list_models[mdl].MaterialIDs[i]);
+                }
+            }
+            for (int i = 0; i < mesh_section.Records.Count; i++)
+            {
+                if (export_mesh.Contains(mesh_section.Records[i].ID))
+                {
+                    if (gameObject.list_meshes == null)
+                    {
+                        gameObject.list_meshes = new List<Mesh>();
+                    }
+                    gameObject.list_meshes.Add((Mesh)mesh_section.Records[i]);
+                }
+            }
+            for (int i = 0; i < mat_section.Records.Count; i++)
+            {
+                if (export_mat.Contains(mat_section.Records[i].ID))
+                {
+                    if (gameObject.list_materials == null)
+                    {
+                        gameObject.list_materials = new List<Material>();
+                    }
+                    gameObject.list_materials.Add((Material)mat_section.Records[i]);
+                }
+            }
+
+            List<uint> export_tex = new List<uint>();
+            for (int mat = 0; mat < gameObject.list_materials.Count; mat++)
+            {
+                export_tex.Add(gameObject.list_materials[mat].Tex);
+            }
+            for (int i = 0; i < tex_section.Records.Count; i++)
+            {
+                if (export_tex.Contains(tex_section.Records[i].ID))
+                {
+                    if (gameObject.list_textures == null)
+                    {
+                        gameObject.list_textures = new List<Texture>();
+                    }
+                    gameObject.list_textures.Add((Texture)tex_section.Records[i]);
+                }
+            }
+
+            bool loadedTemplate = false;
+            for (uint section_id = (uint)RM2_Sections.Instances1; section_id <= (uint)RM2_Sections.Instances8; section_id++)
+            {
+                if (!RM_Archive.ContainsItem(section_id)) continue;
+                TwinsSection section = RM_Archive.GetItem<TwinsSection>(section_id);
+                if (section.Records.Count > 0)
+                {
+                    if (!section.ContainsItem((uint)RM2_Instance_Sections.ObjectInstance)) continue;
+                    TwinsSection instances = section.GetItem<TwinsSection>((uint)RM2_Instance_Sections.ObjectInstance);
+                    for (int i = 0; i < instances.Records.Count; ++i)
+                    {
+                        Instance instance = (Instance)instances.Records[i];
+                        if (instance.ObjectID == (ushort)objectID)
+                        {
+                            gameObject.instanceTemplate = new InstanceTemplate()
+                            {
+                                ObjectID = instance.ObjectID,
+                                Properties = instance.UnkI32,
+                                Flags = instance.UnkI321,
+                                FloatVars = instance.UnkI322,
+                                IntVars = instance.UnkI323,
+                                InstancesNum = instance.SomeNum1,
+                                PositionsNum = instance.SomeNum2,
+                                PathsNum = instance.SomeNum3,
+                                InstanceIDs = instance.InstanceIDs,
+                                PositionIDs = instance.PositionIDs,
+                                PathIDs = instance.PathIDs
+                            };
+                            loadedTemplate = true;
+                            break;
+                        }
+                    }
+                    if (loadedTemplate)
+                    {
+                        break;
+                    }
+                }
+                if (loadedTemplate)
+                {
+                    break;
+                }
+            }
+
+            cachedGameObjects.Add(gameObject);
+        }
+
+        public static List<ushort> GetValidIDs(ref ushort[] itemList)
+        {
+            List<ushort> validItems = new List<ushort>();
+
+            for (int i = 0; i < itemList.Length; i++)
+            {
+                if (itemList[i] != 65535 && !validItems.Contains(itemList[i]))
+                {
+                    validItems.Add(itemList[i]);
+                }
+            }
+
+            return validItems;
+        }
+
+        public static void ImportGameObject(ref TwinsFile RM_Archive, ObjectID objectID, ref List<ObjectID> importedObjects)
+        {
+            if (cachedGameObjects.Count <= 0)
+            {
+                return;
+            }
+            int targetObject = -1;
+            for (int i = 0; i < cachedGameObjects.Count; i++)
+            {
+                if (cachedGameObjects[i].mainObject.ID == (uint)objectID)
+                {
+                    targetObject = i;
+                    break;
+                }
+            }
+            if (targetObject == -1)
+            {
+                return;
+            }
+            if (importedObjects.Contains(objectID))
+            {
+                return;
+            }
+            importedObjects.Add(objectID);
+
+            if (cachedGameObjects[targetObject].list_subobjects != null & cachedGameObjects[targetObject].list_subobjects.Count > 0)
+            {
+                for (int i = 0; i < cachedGameObjects[targetObject].list_subobjects.Count; i++)
+                {
+                    ImportGameObject(ref RM_Archive, cachedGameObjects[targetObject].list_subobjects[i], ref importedObjects);
+                }
+            }
+
+            TwinsSection gfx_section = RM_Archive.GetItem<TwinsSection>((uint)RM2_Sections.Graphics);
+            TwinsSection tex_section = gfx_section.GetItem<TwinsSection>((uint)RM2_Graphics_Sections.Textures);
+            TwinsSection mat_section = gfx_section.GetItem<TwinsSection>((uint)RM2_Graphics_Sections.Materials);
+            TwinsSection mesh_section = gfx_section.GetItem<TwinsSection>((uint)RM2_Graphics_Sections.Meshes);
+            TwinsSection mdl_section = gfx_section.GetItem<TwinsSection>((uint)RM2_Graphics_Sections.Models);
+            TwinsSection armdl_section = gfx_section.GetItem<TwinsSection>((uint)RM2_Graphics_Sections.ArmatureModel);
+            TwinsSection acmdl_section = gfx_section.GetItem<TwinsSection>((uint)RM2_Graphics_Sections.ActorModel);
+
+            TwinsSection code_section = RM_Archive.GetItem<TwinsSection>((uint)RM2_Sections.Code);
+            TwinsSection anim_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.Animation);
+            TwinsSection object_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.Object);
+            TwinsSection script_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.Script);
+            TwinsSection ogi_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.OGI);
+            TwinsSection comdl_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.CodeModel);
+            TwinsSection sfx_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.SE);
+            TwinsSection sfx_eng_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.SE_Eng);
+            TwinsSection sfx_fre_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.SE_Fre);
+            TwinsSection sfx_ger_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.SE_Ger);
+            TwinsSection sfx_ita_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.SE_Ita);
+            TwinsSection sfx_spa_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.SE_Spa);
+            TwinsSection sfx_unu_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.SE_Unused);
+
+            // may need a check to see if the section exists?
+
+            if (cachedGameObjects[targetObject].list_textures != null && cachedGameObjects[targetObject].list_textures.Count > 0)
+            {
+                for (int i = 0; i < cachedGameObjects[targetObject].list_textures.Count; i++)
+                {
+                    if (!SectionContainsItemID(ref tex_section.Records, cachedGameObjects[targetObject].list_textures[i].ID))
+                    {
+                        tex_section.Records.Add(cachedGameObjects[targetObject].list_textures[i]);
+                    }
+                }
+            }
+            if (cachedGameObjects[targetObject].list_materials != null && cachedGameObjects[targetObject].list_materials.Count > 0)
+            {
+                for (int i = 0; i < cachedGameObjects[targetObject].list_materials.Count; i++)
+                {
+                    if (!SectionContainsItemID(ref mat_section.Records, cachedGameObjects[targetObject].list_materials[i].ID))
+                    {
+                        mat_section.Records.Add(cachedGameObjects[targetObject].list_materials[i]);
+                    }
+                }
+            }
+            if (cachedGameObjects[targetObject].list_meshes != null && cachedGameObjects[targetObject].list_meshes.Count > 0)
+            {
+                for (int i = 0; i < cachedGameObjects[targetObject].list_meshes.Count; i++)
+                {
+                    if (!SectionContainsItemID(ref mesh_section.Records, cachedGameObjects[targetObject].list_meshes[i].ID))
+                    {
+                        mesh_section.Records.Add(cachedGameObjects[targetObject].list_meshes[i]);
+                    }
+                }
+            }
+            if (cachedGameObjects[targetObject].list_models != null && cachedGameObjects[targetObject].list_models.Count > 0)
+            {
+                for (int i = 0; i < cachedGameObjects[targetObject].list_models.Count; i++)
+                {
+                    if (!SectionContainsItemID(ref mdl_section.Records, cachedGameObjects[targetObject].list_models[i].ID))
+                    {
+                        mdl_section.Records.Add(cachedGameObjects[targetObject].list_models[i]);
+                    }
+                }
+            }
+            if (cachedGameObjects[targetObject].list_armaturemodels != null && cachedGameObjects[targetObject].list_armaturemodels.Count > 0)
+            {
+                for (int i = 0; i < cachedGameObjects[targetObject].list_armaturemodels.Count; i++)
+                {
+                    if (!SectionContainsItemID(ref armdl_section.Records, cachedGameObjects[targetObject].list_armaturemodels[i].ID))
+                    {
+                        armdl_section.Records.Add(cachedGameObjects[targetObject].list_armaturemodels[i]);
+                    }
+                }
+            }
+            if (cachedGameObjects[targetObject].list_actormodels != null && cachedGameObjects[targetObject].list_actormodels.Count > 0)
+            {
+                for (int i = 0; i < cachedGameObjects[targetObject].list_actormodels.Count; i++)
+                {
+                    if (!SectionContainsItemID(ref acmdl_section.Records, cachedGameObjects[targetObject].list_actormodels[i].ID))
+                    {
+                        acmdl_section.Records.Add(cachedGameObjects[targetObject].list_actormodels[i]);
+                    }
+                }
+            }
+            if (cachedGameObjects[targetObject].list_anims != null && cachedGameObjects[targetObject].list_anims.Count > 0)
+            {
+                for (int i = 0; i < cachedGameObjects[targetObject].list_anims.Count; i++)
+                {
+                    if (!SectionContainsItemID(ref anim_section.Records, cachedGameObjects[targetObject].list_anims[i].ID))
+                    {
+                        anim_section.Records.Add(cachedGameObjects[targetObject].list_anims[i]);
+                    }
+                }
+            }
+            if (cachedGameObjects[targetObject].list_scripts != null && cachedGameObjects[targetObject].list_scripts.Count > 0)
+            {
+                for (int i = 0; i < cachedGameObjects[targetObject].list_scripts.Count; i++)
+                {
+                    if (!SectionContainsItemID(ref script_section.Records, cachedGameObjects[targetObject].list_scripts[i].ID))
+                    {
+                        script_section.Records.Add(cachedGameObjects[targetObject].list_scripts[i]);
+                    }
+                }
+            }
+            if (cachedGameObjects[targetObject].list_ogi != null && cachedGameObjects[targetObject].list_ogi.Count > 0)
+            {
+                for (int i = 0; i < cachedGameObjects[targetObject].list_ogi.Count; i++)
+                {
+                    if (!SectionContainsItemID(ref ogi_section.Records, cachedGameObjects[targetObject].list_ogi[i].ID))
+                    {
+                        ogi_section.Records.Add(cachedGameObjects[targetObject].list_ogi[i]);
+                    }
+                }
+            }
+            if (cachedGameObjects[targetObject].list_codemodels != null && cachedGameObjects[targetObject].list_codemodels.Count > 0)
+            {
+                for (int i = 0; i < cachedGameObjects[targetObject].list_codemodels.Count; i++)
+                {
+                    if (!SectionContainsItemID(ref comdl_section.Records, cachedGameObjects[targetObject].list_codemodels[i].ID))
+                    {
+                        comdl_section.Records.Add(cachedGameObjects[targetObject].list_codemodels[i]);
+                    }
+                }
+            }
+            if (cachedGameObjects[targetObject].list_sounds != null && cachedGameObjects[targetObject].list_sounds.Count > 0)
+            {
+                for (int i = 0; i < cachedGameObjects[targetObject].list_sounds.Count; i++)
+                {
+                    if (!SectionContainsItemID(ref sfx_section.Records, cachedGameObjects[targetObject].list_sounds[i].ID))
+                    {
+                        sfx_section.Records.Add(cachedGameObjects[targetObject].list_sounds[i]);
+                    }
+                }
+            }
+            if (cachedGameObjects[targetObject].list_sounds_english != null && cachedGameObjects[targetObject].list_sounds_english.Count > 0)
+            {
+                for (int i = 0; i < cachedGameObjects[targetObject].list_sounds_english.Count; i++)
+                {
+                    if (!SectionContainsItemID(ref sfx_eng_section.Records, cachedGameObjects[targetObject].list_sounds_english[i].ID))
+                    {
+                        sfx_eng_section.Records.Add(cachedGameObjects[targetObject].list_sounds_english[i]);
+                    }
+                }
+            }
+            if (cachedGameObjects[targetObject].list_sounds_french != null && cachedGameObjects[targetObject].list_sounds_french.Count > 0)
+            {
+                for (int i = 0; i < cachedGameObjects[targetObject].list_sounds_german.Count; i++)
+                {
+                    if (!SectionContainsItemID(ref sfx_ger_section.Records, cachedGameObjects[targetObject].list_sounds_german[i].ID))
+                    {
+                        sfx_ger_section.Records.Add(cachedGameObjects[targetObject].list_sounds_german[i]);
+                    }
+                }
+            }
+            if (cachedGameObjects[targetObject].list_sounds_german != null && cachedGameObjects[targetObject].list_sounds_german.Count > 0)
+            {
+                for (int i = 0; i < cachedGameObjects[targetObject].list_sounds_french.Count; i++)
+                {
+                    if (!SectionContainsItemID(ref sfx_fre_section.Records, cachedGameObjects[targetObject].list_sounds_french[i].ID))
+                    {
+                        sfx_fre_section.Records.Add(cachedGameObjects[targetObject].list_sounds_french[i]);
+                    }
+                }
+            }
+            if (cachedGameObjects[targetObject].list_sounds_italian != null && cachedGameObjects[targetObject].list_sounds_italian.Count > 0)
+            {
+                for (int i = 0; i < cachedGameObjects[targetObject].list_sounds_italian.Count; i++)
+                {
+                    if (!SectionContainsItemID(ref sfx_ita_section.Records, cachedGameObjects[targetObject].list_sounds_italian[i].ID))
+                    {
+                        sfx_ita_section.Records.Add(cachedGameObjects[targetObject].list_sounds_italian[i]);
+                    }
+                }
+            }
+            if (cachedGameObjects[targetObject].list_sounds_spanish != null && cachedGameObjects[targetObject].list_sounds_spanish.Count > 0)
+            {
+                for (int i = 0; i < cachedGameObjects[targetObject].list_sounds_spanish.Count; i++)
+                {
+                    if (!SectionContainsItemID(ref sfx_spa_section.Records, cachedGameObjects[targetObject].list_sounds_spanish[i].ID))
+                    {
+                        sfx_spa_section.Records.Add(cachedGameObjects[targetObject].list_sounds_spanish[i]);
+                    }
+                }
+            }
+            if (cachedGameObjects[targetObject].list_sounds_unused != null && cachedGameObjects[targetObject].list_sounds_unused.Count > 0)
+            {
+                for (int i = 0; i < cachedGameObjects[targetObject].list_sounds_unused.Count; i++)
+                {
+                    if (!SectionContainsItemID(ref sfx_unu_section.Records, cachedGameObjects[targetObject].list_sounds_unused[i].ID))
+                    {
+                        sfx_unu_section.Records.Add(cachedGameObjects[targetObject].list_sounds_unused[i]);
+                    }
+                }
+            }
+
+            object_section.Records.Add(cachedGameObjects[targetObject].mainObject);
+
+        }
+
+        private static bool SectionContainsItemID(ref List<TwinsItem> section, uint ID)
+        {
+            for (int i = 0; i < section.Count; i++)
+            {
+                if (section[i].ID == ID)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
     }
 
     struct TwinsLevelChunk
@@ -1208,6 +1886,50 @@ namespace CrateModLoader.GameSpecific.Twins
             type = Twins_Data.GemType.GEM_RED;
             pos = p;
         }
+    }
+
+    struct CachedGameObject
+    {
+        public GameObject mainObject;
+        public List<TwinsItem> list_anims;
+        public List<Model> list_models;
+        public List<TwinsItem> list_armaturemodels;
+        public List<TwinsItem> list_codemodels;
+        public List<TwinsItem> list_actormodels;
+        public List<Material> list_materials;
+        public List<Mesh> list_meshes;
+        public List<TwinsItem> list_ogi;
+        public List<Script> list_scripts;
+        public List<SoundEffect> list_sounds;
+        public List<SoundEffect> list_sounds_english;
+        public List<SoundEffect> list_sounds_french;
+        public List<SoundEffect> list_sounds_german;
+        public List<SoundEffect> list_sounds_italian;
+        public List<SoundEffect> list_sounds_spanish;
+        public List<SoundEffect> list_sounds_unused;
+        public List<Texture> list_textures;
+        public List<Twins_Data.ObjectID> list_subobjects;
+        public InstanceTemplate instanceTemplate;
+    }
+
+    struct InstanceTemplate
+    {
+        public ushort ObjectID;
+        //UnkI32, in hex
+        public uint Properties;
+        public List<uint> Flags;
+        public List<float> FloatVars;
+        public List<uint> IntVars;
+
+        //These are based on other instances in the same chunk so just use their count
+        public List<ushort> InstanceIDs;
+        public List<ushort> PathIDs;
+        public List<ushort> PositionIDs;
+
+        //These are always at 10?
+        public int InstancesNum;
+        public int PositionsNum;
+        public int PathsNum;
     }
 
     struct Vector3
