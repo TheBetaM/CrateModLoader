@@ -17,6 +17,7 @@ namespace CrateModLoader
         public string[] modOptions = {
             "Randomize Regular Crates",
             "Randomize Gem Locations",
+            "Randomize Enemies",
             "Randomize Level Music",
             "Randomize Character Parameters",
             "Enable Flying Kick for Crash",
@@ -49,20 +50,23 @@ namespace CrateModLoader
         public List<uint> gemObjectList = new List<uint>();
         public List<uint> musicTypes = new List<uint>();
         public List<uint> randMusicList = new List<uint>();
+        public List<Twins_Data.ObjectID> EnemyReplaceList = new List<Twins_Data.ObjectID>();
+        public List<Twins_Data.ObjectID> EnemyInsertList = new List<Twins_Data.ObjectID>();
         public bool[] levelEdited;
 
         public enum Twins_Options
         {
             RandomizeAllCrates = 0,
             RandomizeGemLocations = 1,
-            RandomizeMusic = 2,
-            RandomizeCharParams = 3,
-            ModFlyingKick = 4,
-            ModStompKick = 5,
-            ModDoubleJumpCortex = 6,
-            ModDoubleJumpNina = 7,
-            ModEnableUnusedEnemies = 8,
-            ModTestMod = 9,
+            RandomizeEnemies = 2,
+            RandomizeMusic = 3,
+            RandomizeCharParams = 4,
+            ModFlyingKick = 5,
+            ModStompKick = 6,
+            ModDoubleJumpCortex = 7,
+            ModDoubleJumpNina = 8,
+            ModEnableUnusedEnemies = 9,
+            ModTestMod = 10,
         }
 
         public void OptionChanged(int option, bool value)
@@ -102,6 +106,10 @@ namespace CrateModLoader
             else if (option == (int)Twins_Options.ModEnableUnusedEnemies)
             {
                 Twins_Mod_EnableUnusedEnemies = value;
+            }
+            else if (option == (int)Twins_Options.RandomizeEnemies)
+            {
+                //Twins_Randomize_Enemies = value; //not ready yet
             }
             else if (option == (int)Twins_Options.ModTestMod)
             {
@@ -203,7 +211,7 @@ namespace CrateModLoader
 
                 if (Twins_Randomize_CrateTypes)
                 {
-                    crateList.Add((uint)Twins_Data.ObjectID.BASICCRATE5);
+                    crateList.Add((uint)Twins_Data.ObjectID.BASICCRATE);
                     //crateList.Add((uint)Twins_Data.ObjectID.TNT_CRATE);
                     //crateList.Add((uint)Twins_Data.ObjectID.NITRO_CRATE);
                     crateList.Add((uint)Twins_Data.ObjectID.EXTRALIFECRATE);
@@ -212,12 +220,12 @@ namespace CrateModLoader
                     crateList.Add((uint)Twins_Data.ObjectID.AKUAKUCRATE);
                     //crateList.Add((uint)Twins_Data.ObjectID.EXTRA_LIFE_CRATE_CORTEX);
                     //crateList.Add((uint)Twins_Data.ObjectID.EXTRA_LIFE_CRATE_NINA);
-                    crateList.Add((uint)Twins_Data.ObjectID.IRONCRATE7);
-                    crateList.Add((uint)Twins_Data.ObjectID.IRONSPRINGCRATE7);
-                    crateList.Add((uint)Twins_Data.ObjectID.MULTIPLEHITCRATE1);
+                    crateList.Add((uint)Twins_Data.ObjectID.IRONCRATE);
+                    crateList.Add((uint)Twins_Data.ObjectID.IRONSPRINGCRATE);
+                    crateList.Add((uint)Twins_Data.ObjectID.MULTIPLEHITCRATE);
                     crateList.Add((uint)Twins_Data.ObjectID.SURPRISECRATE);
 
-                    posList.Add((uint)Twins_Data.ObjectID.BASICCRATE5);
+                    posList.Add((uint)Twins_Data.ObjectID.BASICCRATE);
                     //posList.Add((uint)Twins_Data.ObjectID.TNT_CRATE);
                     //posList.Add((uint)Twins_Data.ObjectID.NITRO_CRATE);
                     posList.Add((uint)Twins_Data.ObjectID.EXTRALIFECRATE);
@@ -226,9 +234,9 @@ namespace CrateModLoader
                     posList.Add((uint)Twins_Data.ObjectID.AKUAKUCRATE);
                     //posList.Add((uint)Twins_Data.ObjectID.EXTRA_LIFE_CRATE_CORTEX);
                     //posList.Add((uint)Twins_Data.ObjectID.EXTRA_LIFE_CRATE_NINA);
-                    posList.Add((uint)Twins_Data.ObjectID.IRONCRATE7);
-                    posList.Add((uint)Twins_Data.ObjectID.IRONSPRINGCRATE7);
-                    posList.Add((uint)Twins_Data.ObjectID.MULTIPLEHITCRATE1);
+                    posList.Add((uint)Twins_Data.ObjectID.IRONCRATE);
+                    posList.Add((uint)Twins_Data.ObjectID.IRONSPRINGCRATE);
+                    posList.Add((uint)Twins_Data.ObjectID.MULTIPLEHITCRATE);
                     posList.Add((uint)Twins_Data.ObjectID.SURPRISECRATE);
 
                     int target_item = 0;
@@ -399,22 +407,22 @@ namespace CrateModLoader
 
                 // Crates to insert
                 randCrateList = new List<uint>();
-                randCrateList.Add((uint)Twins_Data.ObjectID.BASICCRATE5);
+                randCrateList.Add((uint)Twins_Data.ObjectID.BASICCRATE);
                 //randCrateList.Add((uint)Twins_Data.ObjectID.TNT_CRATE);
                 //randCrateList.Add((uint)Twins_Data.ObjectID.NITRO_CRATE);
                 randCrateList.Add((uint)Twins_Data.ObjectID.EXTRALIFECRATE);
                 randCrateList.Add((uint)Twins_Data.ObjectID.WOODENSPRINGCRATE);
                 randCrateList.Add((uint)Twins_Data.ObjectID.REINFORCEDWOODENCRATE);
                 randCrateList.Add((uint)Twins_Data.ObjectID.AKUAKUCRATE);
-                randCrateList.Add((uint)Twins_Data.ObjectID.IRONCRATE7);
-                randCrateList.Add((uint)Twins_Data.ObjectID.IRONSPRINGCRATE7);
-                randCrateList.Add((uint)Twins_Data.ObjectID.MULTIPLEHITCRATE1);
+                randCrateList.Add((uint)Twins_Data.ObjectID.IRONCRATE);
+                randCrateList.Add((uint)Twins_Data.ObjectID.IRONSPRINGCRATE);
+                randCrateList.Add((uint)Twins_Data.ObjectID.MULTIPLEHITCRATE);
                 randCrateList.Add((uint)Twins_Data.ObjectID.SURPRISECRATE);
                 randCrateList.Add((uint)Twins_Data.ObjectID.AMMOCRATESMALL);
 
                 // Crates to replace
                 CrateReplaceList = new List<uint>();
-                CrateReplaceList.Add((uint)Twins_Data.ObjectID.BASICCRATE5);
+                CrateReplaceList.Add((uint)Twins_Data.ObjectID.BASICCRATE);
                 //CrateReplaceList.Add((uint)Twins_Data.ObjectID.TNT_CRATE);
                 //CrateReplaceList.Add((uint)Twins_Data.ObjectID.NITRO_CRATE);
                 CrateReplaceList.Add((uint)Twins_Data.ObjectID.EXTRALIFECRATE);
@@ -423,7 +431,7 @@ namespace CrateModLoader
                 CrateReplaceList.Add((uint)Twins_Data.ObjectID.AKUAKUCRATE);
                 //CrateReplaceList.Add((uint)Twins_Data.ObjectID.IRON_CRATE);
                 //CrateReplaceList.Add((uint)Twins_Data.ObjectID.IRON_SPRING_CRATE);
-                CrateReplaceList.Add((uint)Twins_Data.ObjectID.MULTIPLEHITCRATE1);
+                CrateReplaceList.Add((uint)Twins_Data.ObjectID.MULTIPLEHITCRATE);
                 CrateReplaceList.Add((uint)Twins_Data.ObjectID.SURPRISECRATE);
                 //CrateReplaceList.Add((uint)Twins_Data.ObjectID.AMMOCRATESMALL);
 
@@ -502,7 +510,7 @@ namespace CrateModLoader
                 Twins_Edit_AllLevels = true;
             }
 
-            if (Twins_Mod_FlyingKick || Twins_Mod_StompKick || Twins_Mod_DoubleJump_Cortex || Twins_Mod_DoubleJump_Nina || Twins_Mod_TestMod)
+            if (Twins_Mod_FlyingKick || Twins_Mod_StompKick || Twins_Mod_DoubleJump_Cortex || Twins_Mod_DoubleJump_Nina || Twins_Randomize_Enemies || Twins_Mod_TestMod)
             {
                 Twins_Edit_AllLevels = true;
 
@@ -523,27 +531,116 @@ namespace CrateModLoader
                 Twins_Data.allScripts.Sort((x, y) => x.ID.CompareTo(y.ID));
                 Twins_Data.allObjects.Sort((x, y) => x.ID.CompareTo(y.ID));
 
-                /*
-                List<string> test_scriptList = new List<string>();
-
-                test_scriptList.Add("public enum ObjectID {");
-
-                for (int i = 0; i < Twins_Data.allObjects.Count; i++)
+                if (Twins_Randomize_Enemies)
                 {
-                    if (Twins_Data.allObjects[i].Name != null && Twins_Data.allObjects[i].Name != "")
+                    EnemyReplaceList.Add(Twins_Data.ObjectID.GLOBAL_MONKEY);
+                    EnemyReplaceList.Add(Twins_Data.ObjectID.GLOBAL_CHICKEN);
+                    EnemyReplaceList.Add(Twins_Data.ObjectID.GLOBAL_CRAB);
+                    EnemyReplaceList.Add(Twins_Data.ObjectID.GLOBAL_SKUNK);
+                    EnemyReplaceList.Add(Twins_Data.ObjectID.EARTH_TRIBESMAN_SHIELDBEARER);
+                    EnemyReplaceList.Add(Twins_Data.ObjectID.EARTH_TRIBESMAN);
+                    EnemyReplaceList.Add(Twins_Data.ObjectID.GLOBAL_BAT_DARKPURPLE);
+                    EnemyReplaceList.Add(Twins_Data.ObjectID.GLOBAL_BAT_ICE);
+                    EnemyReplaceList.Add(Twins_Data.ObjectID.PIRANHAPLANT);
+                    EnemyReplaceList.Add(Twins_Data.ObjectID.GLOBAL_PIG_WILDBOAR);
+                    EnemyReplaceList.Add(Twins_Data.ObjectID.GLOBAL_RAT_INTERMEDIATE);
+                    EnemyReplaceList.Add(Twins_Data.ObjectID.GLOBAL_RAT_DARKBROWN);
+                    EnemyReplaceList.Add(Twins_Data.ObjectID.GLOBAL_RAT_DARKPURPLE);
+                    EnemyReplaceList.Add(Twins_Data.ObjectID.GLOBAL_RAT_GREY);
+                    EnemyReplaceList.Add(Twins_Data.ObjectID.GLOBAL_RAT_LIGHTBROWN);
+                    EnemyReplaceList.Add(Twins_Data.ObjectID.GLOBAL_RAT_LIGHTPURPLE);
+                    EnemyReplaceList.Add(Twins_Data.ObjectID.GLOBAL_RAT_MEDIUMBROWN);
+                    EnemyReplaceList.Add(Twins_Data.ObjectID.GLOBAL_RAT_WHITE);
+                    EnemyReplaceList.Add(Twins_Data.ObjectID.PENGUIN);
+                    EnemyReplaceList.Add(Twins_Data.ObjectID.GLOBAL_CORTEX_CAMERABOT);
+                    //EnemyReplaceList.Add(Twins_Data.ObjectID.RHINO_PIRATE);
+                    EnemyReplaceList.Add(Twins_Data.ObjectID.SCHOOL_DOG);
+                    EnemyReplaceList.Add(Twins_Data.ObjectID.GLOBAL_COCKROACH);
+                    //EnemyReplaceList.Add(Twins_Data.ObjectID.GLOBAL_BEETLE_DARKPURPLE);
+                    EnemyReplaceList.Add(Twins_Data.ObjectID.GLOBAL_BEETLE_PROJECTILE);
+                    EnemyReplaceList.Add(Twins_Data.ObjectID.SCHOOL_FROGENSTEIN);
+                    EnemyReplaceList.Add(Twins_Data.ObjectID.SCHOOL_ZOMBOT);
+                    EnemyReplaceList.Add(Twins_Data.ObjectID.DRONE_BASIC);
+                    EnemyReplaceList.Add(Twins_Data.ObjectID.DRONE_DRILLER);
+                    EnemyReplaceList.Add(Twins_Data.ObjectID.DRONE_FLAMER);
+                    EnemyReplaceList.Add(Twins_Data.ObjectID.DRONE_FLYER);
+                    EnemyReplaceList.Add(Twins_Data.ObjectID.DRONE_SOLDIER);
+                    EnemyReplaceList.Add(Twins_Data.ObjectID.DRONE_BERSERKER);
+
+                    EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_MONKEY);
+                    EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_CHICKEN);
+                    EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_CRAB);
+                    //EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_SKUNK); // todo: skunk requires 2 positions? training skunk 1 position
+                    EnemyInsertList.Add(Twins_Data.ObjectID.EARTH_TRIBESMAN_SHIELDBEARER);
+                    EnemyInsertList.Add(Twins_Data.ObjectID.EARTH_TRIBESMAN);
+                    EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_BAT_DARKPURPLE);
+                    EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_BAT_ICE);
+                    EnemyInsertList.Add(Twins_Data.ObjectID.PIRANHAPLANT);
+                    EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_PIG_WILDBOAR);
+                    EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_RAT_INTERMEDIATE);
+                    //EnemyInsertList.Add(Twins_Data.ObjectID.MINI_MON); //todo: missing instance values for a generic one
+                    EnemyInsertList.Add(Twins_Data.ObjectID.PENGUIN);
+                    EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_CORTEX_CAMERABOT);
+                    //EnemyInsertList.Add(Twins_Data.ObjectID.RHINO_PIRATE); //todo: missing instance values for a generic one
+                    EnemyInsertList.Add(Twins_Data.ObjectID.SCHOOL_DOG);
+                    EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_COCKROACH);
+                    //EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_BEETLE_DARKPURPLE);
+                    EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_BEETLE_PROJECTILE);
+                    //EnemyInsertList.Add(Twins_Data.ObjectID.SCHOOL_FROGENSTEIN); // todo: enable frogensteins
+                    EnemyInsertList.Add(Twins_Data.ObjectID.SCHOOL_ZOMBOT);
+                    EnemyInsertList.Add(Twins_Data.ObjectID.DRONE_BASIC);
+                    EnemyInsertList.Add(Twins_Data.ObjectID.DRONE_DRILLER);
+                    EnemyInsertList.Add(Twins_Data.ObjectID.DRONE_FLAMER);
+                    EnemyInsertList.Add(Twins_Data.ObjectID.DRONE_FLYER);
+                    EnemyInsertList.Add(Twins_Data.ObjectID.DRONE_SOLDIER);
+                    EnemyInsertList.Add(Twins_Data.ObjectID.DRONE_BERSERKER);
+
+                    for (int i = 0; i < Twins_Data.cachedGameObjects.Count; i++)
                     {
-                        test_scriptList.Add(Twins_Data.allObjects[i].Name + " = " + Twins_Data.allObjects[i].ID + ",");
-                    }
-                    else
-                    {
-                        test_scriptList.Add("Object" + Twins_Data.allObjects[i].ID + " = " + Twins_Data.allObjects[i].ID + ",");
+                        if (Twins_Data.cachedGameObjects[i].mainObject.ID == (uint)Twins_Data.ObjectID.GLOBAL_BAT_DARKPURPLE)
+                        {
+                            if (Twins_Data.cachedGameObjects[i].instanceTemplate.Properties > (uint)Twins_Data.PropertyFlags.DisableObject)
+                            {
+                                Twins_Data.cachedGameObjects[i] = new CachedGameObject()
+                                {
+                                    mainObject = Twins_Data.cachedGameObjects[i].mainObject,
+                                    instanceTemplate = new InstanceTemplate()
+                                    {
+                                        Properties = Twins_Data.cachedGameObjects[i].instanceTemplate.Properties - (uint)Twins_Data.PropertyFlags.DisableObject,
+                                        Flags = Twins_Data.cachedGameObjects[i].instanceTemplate.Flags,
+                                        FloatVars = Twins_Data.cachedGameObjects[i].instanceTemplate.FloatVars,
+                                        InstanceIDs = Twins_Data.cachedGameObjects[i].instanceTemplate.InstanceIDs,
+                                        InstancesNum = Twins_Data.cachedGameObjects[i].instanceTemplate.InstancesNum,
+                                        IntVars = Twins_Data.cachedGameObjects[i].instanceTemplate.IntVars,
+                                        ObjectID = Twins_Data.cachedGameObjects[i].instanceTemplate.ObjectID,
+                                        PathIDs = Twins_Data.cachedGameObjects[i].instanceTemplate.PathIDs,
+                                        PathsNum = Twins_Data.cachedGameObjects[i].instanceTemplate.PathsNum,
+                                        PositionIDs = Twins_Data.cachedGameObjects[i].instanceTemplate.PositionIDs,
+                                        PositionsNum = Twins_Data.cachedGameObjects[i].instanceTemplate.PositionsNum
+                                    },
+                                    list_actormodels = Twins_Data.cachedGameObjects[i].list_actormodels,
+                                    list_anims = Twins_Data.cachedGameObjects[i].list_anims,
+                                    list_armaturemodels = Twins_Data.cachedGameObjects[i].list_armaturemodels,
+                                    list_codemodels = Twins_Data.cachedGameObjects[i].list_codemodels,
+                                    list_materials = Twins_Data.cachedGameObjects[i].list_materials,
+                                    list_meshes = Twins_Data.cachedGameObjects[i].list_meshes,
+                                    list_models = Twins_Data.cachedGameObjects[i].list_models,
+                                    list_ogi = Twins_Data.cachedGameObjects[i].list_ogi,
+                                    list_scripts = Twins_Data.cachedGameObjects[i].list_scripts,
+                                    list_sounds = Twins_Data.cachedGameObjects[i].list_sounds,
+                                    list_sounds_english = Twins_Data.cachedGameObjects[i].list_sounds_english,
+                                    list_sounds_french = Twins_Data.cachedGameObjects[i].list_sounds_french,
+                                    list_sounds_german = Twins_Data.cachedGameObjects[i].list_sounds_german,
+                                    list_sounds_italian = Twins_Data.cachedGameObjects[i].list_sounds_italian,
+                                    list_sounds_spanish = Twins_Data.cachedGameObjects[i].list_sounds_spanish,
+                                    list_sounds_unused = Twins_Data.cachedGameObjects[i].list_sounds_unused,
+                                    list_subobjects = Twins_Data.cachedGameObjects[i].list_subobjects,
+                                    list_textures = Twins_Data.cachedGameObjects[i].list_textures
+                                };
+                            }
+                        }
                     }
                 }
-
-                test_scriptList.Add("};");
-
-                File.WriteAllLines(AppDomain.CurrentDomain.BaseDirectory + "/Tools/AllScripts.txt", test_scriptList);
-                */
 
             }
 
@@ -655,6 +752,10 @@ namespace CrateModLoader
             {
                 RM_Randomize_Music(ref RM_Archive);
             }
+            if (Twins_Randomize_Enemies)
+            {
+                RM_Randomize_Enemies(ref RM_Archive);
+            }
             if (Twins_Mod_StompKick)
             {
                 RM_CharacterObjectMod(ref RM_Archive);
@@ -694,6 +795,83 @@ namespace CrateModLoader
 
             RM_LoadScripts(ref RM_Archive);
             RM_LoadObjects(ref RM_Archive);
+
+            if (Twins_Randomize_Enemies)
+            {
+                List<Twins_Data.ObjectID> ExportedObjects = new List<Twins_Data.ObjectID>();
+                if (chunkType == Twins_Data.ChunkType.Earth_Hub_Beach)
+                {
+                    Twins_Data.ExportGameObject(ref RM_Archive, Twins_Data.ObjectID.GLOBAL_MONKEY, ref ExportedObjects);
+                    Twins_Data.ExportGameObject(ref RM_Archive, Twins_Data.ObjectID.GLOBAL_CHICKEN, ref ExportedObjects);
+                    Twins_Data.ExportGameObject(ref RM_Archive, Twins_Data.ObjectID.GLOBAL_CRAB, ref ExportedObjects);
+                }
+                else if (chunkType == Twins_Data.ChunkType.Earth_Hub_HubB)
+                {
+                    Twins_Data.ExportGameObject(ref RM_Archive, Twins_Data.ObjectID.GLOBAL_SKUNK, ref ExportedObjects);
+                    Twins_Data.ExportGameObject(ref RM_Archive, Twins_Data.ObjectID.PIRANHAPLANT, ref ExportedObjects);
+                    Twins_Data.ExportGameObject(ref RM_Archive, Twins_Data.ObjectID.GLOBAL_BAT_DARKPURPLE, ref ExportedObjects);
+                }
+                else if (chunkType == Twins_Data.ChunkType.Earth_Hub_HubA)
+                {
+                    Twins_Data.ExportGameObject(ref RM_Archive, Twins_Data.ObjectID.EARTH_TRIBESMAN_SHIELDBEARER, ref ExportedObjects);
+                }
+                else if (chunkType == Twins_Data.ChunkType.Earth_Totem_L03Beach)
+                {
+                    Twins_Data.ExportGameObject(ref RM_Archive, Twins_Data.ObjectID.EARTH_TRIBESMAN, ref ExportedObjects);
+                    Twins_Data.ExportGameObject(ref RM_Archive, Twins_Data.ObjectID.GLOBAL_PIG_WILDBOAR, ref ExportedObjects);
+                }
+                else if (chunkType == Twins_Data.ChunkType.Ice_HighSeas_GPA07)
+                {
+                    Twins_Data.ExportGameObject(ref RM_Archive, Twins_Data.ObjectID.GLOBAL_RAT_INTERMEDIATE, ref ExportedObjects);
+                }
+                else if (chunkType == Twins_Data.ChunkType.Earth_Hub_HubD)
+                {
+                    Twins_Data.ExportGameObject(ref RM_Archive, Twins_Data.ObjectID.MINI_MON, ref ExportedObjects);
+                }
+                else if (chunkType == Twins_Data.ChunkType.Ice_IceClimb_BergExt)
+                {
+                    Twins_Data.ExportGameObject(ref RM_Archive, Twins_Data.ObjectID.PENGUIN, ref ExportedObjects);
+                    Twins_Data.ExportGameObject(ref RM_Archive, Twins_Data.ObjectID.GLOBAL_CORTEX_CAMERABOT, ref ExportedObjects);
+                    Twins_Data.ExportGameObject(ref RM_Archive, Twins_Data.ObjectID.GLOBAL_BAT_ICE, ref ExportedObjects);
+                }
+                else if (chunkType == Twins_Data.ChunkType.Ice_HighSeas_GPA03)
+                {
+                    Twins_Data.ExportGameObject(ref RM_Archive, Twins_Data.ObjectID.RHINO_PIRATE, ref ExportedObjects);
+                }
+                else if (chunkType == Twins_Data.ChunkType.School_Crash_CrGPA03)
+                {
+                    Twins_Data.ExportGameObject(ref RM_Archive, Twins_Data.ObjectID.SCHOOL_FROGENSTEIN, ref ExportedObjects);
+                }
+                else if (chunkType == Twins_Data.ChunkType.School_Crash_CrGPA04)
+                {
+                    Twins_Data.ExportGameObject(ref RM_Archive, Twins_Data.ObjectID.SCHOOL_DOG, ref ExportedObjects);
+                }
+                else if (chunkType == Twins_Data.ChunkType.School_Crash_CrLib)
+                {
+                    Twins_Data.ExportGameObject(ref RM_Archive, Twins_Data.ObjectID.SCHOOL_ZOMBOT, ref ExportedObjects);
+                }
+                else if (chunkType == Twins_Data.ChunkType.School_Boiler_Boiler_X)
+                {
+                    Twins_Data.ExportGameObject(ref RM_Archive, Twins_Data.ObjectID.GLOBAL_COCKROACH, ref ExportedObjects);
+                    Twins_Data.ExportGameObject(ref RM_Archive, Twins_Data.ObjectID.GLOBAL_BEETLE_PROJECTILE, ref ExportedObjects);
+                }
+                else if (chunkType == Twins_Data.ChunkType.AltEarth_Core_CoreA)
+                {
+                    Twins_Data.ExportGameObject(ref RM_Archive, Twins_Data.ObjectID.DRONE_BERSERKER, ref ExportedObjects);
+                    Twins_Data.ExportGameObject(ref RM_Archive, Twins_Data.ObjectID.DRONE_DRILLER, ref ExportedObjects);
+                    Twins_Data.ExportGameObject(ref RM_Archive, Twins_Data.ObjectID.DRONE_SOLDIER, ref ExportedObjects);
+                }
+                else if (chunkType == Twins_Data.ChunkType.AltEarth_Core_CoreB)
+                {
+                    Twins_Data.ExportGameObject(ref RM_Archive, Twins_Data.ObjectID.DRONE_FLYER, ref ExportedObjects);
+                    Twins_Data.ExportGameObject(ref RM_Archive, Twins_Data.ObjectID.DRONE_FLAMER, ref ExportedObjects);
+                }
+                else if (chunkType == Twins_Data.ChunkType.School_Rooftop_BusChase)
+                {
+                    Twins_Data.ExportGameObject(ref RM_Archive, Twins_Data.ObjectID.DRONE_BASIC, ref ExportedObjects);
+                }
+                //Twins_Data.ExportGameObject(ref RM_Archive, Twins_Data.ObjectID.SCHOOL_JANITOR, ref ExportedObjects);
+            }
         }
 
         void Recursive_EditLevels(DirectoryInfo di)
@@ -1212,6 +1390,95 @@ namespace CrateModLoader
                         }
                         //todo: frogensteins, drones in coreent
                         instances.Records[i] = instance;
+                    }
+                }
+            }
+        }
+
+        void RM_Randomize_Enemies(ref TwinsFile RM_Archive)
+        {
+            int targetPos = 0;
+            Twins_Data.ObjectID targetObjectID;
+            List<Twins_Data.ObjectID> importedObjects = new List<Twins_Data.ObjectID>();
+            bool EnemyFound = false;
+            for (uint section_id = (uint)RM2_Sections.Instances1; section_id <= (uint)RM2_Sections.Instances8; section_id++)
+            {
+                if (!RM_Archive.ContainsItem(section_id)) continue;
+                TwinsSection section = RM_Archive.GetItem<TwinsSection>(section_id);
+                if (section.Records.Count > 0)
+                {
+                    if (!section.ContainsItem((uint)RM2_Instance_Sections.ObjectInstance)) continue;
+                    TwinsSection instances = section.GetItem<TwinsSection>((uint)RM2_Instance_Sections.ObjectInstance);
+                    for (int i = 0; i < instances.Records.Count; ++i)
+                    {
+                        Instance instance = (Instance)instances.Records[i];
+                        for (int obj = 0; obj < EnemyReplaceList.Count; obj++)
+                        {
+                            if (instance.ObjectID == (uint)EnemyReplaceList[obj])
+                            {
+                                EnemyFound = true;
+                            }
+                        }
+                        if (EnemyFound)
+                        {
+                            targetPos = randState.Next(0, EnemyInsertList.Count);
+                            targetObjectID = EnemyInsertList[targetPos];
+                            Twins_Data.ImportGameObject(ref RM_Archive, targetObjectID, ref importedObjects);
+                            InstanceTemplate template = Twins_Data.GetInstanceTemplateByObjectID(targetObjectID);
+                            if (template.ObjectID == 0 && instance.SomeNum1 == 0)
+                            {
+                                // For objects that are placed at runtime
+                                template = new InstanceTemplate()
+                                {
+                                    ObjectID = (ushort)targetObjectID,
+                                    InstancesNum = 10,
+                                    PathsNum = 10,
+                                    PositionsNum = 10,
+                                    Properties = 0x8B2E,
+                                    Flags = new List<uint>() { 10000 },
+                                    FloatVars = new List<float>() { 1, 25, 1.4f, 15, 100, 0, 6, 6 },
+                                    IntVars = new List<uint>() { 0, 0, 1 },
+                                    InstanceIDs = new List<ushort>(),
+                                    PathIDs = new List<ushort>(),
+                                    PositionIDs = new List<ushort>(),
+                                };
+                            }
+                            instance.ObjectID = template.ObjectID;
+                            instance.SomeNum1 = template.InstancesNum;
+                            instance.SomeNum2 = template.PathsNum;
+                            instance.SomeNum3 = template.PositionsNum;
+                            instance.UnkI32 = template.Properties;
+                            instance.UnkI321 = template.Flags;
+                            instance.UnkI322 = template.FloatVars;
+                            instance.UnkI323 = template.IntVars;
+                            // todo: figure out if these are needed and how to avoid them (procedurally generate?)
+                            instance.InstanceIDs = new List<ushort>();
+                            if (template.InstanceIDs.Count > 0)
+                            {
+                                for (int a = 0; a < template.InstanceIDs.Count; a++)
+                                {
+                                    instance.InstanceIDs.Add(0);
+                                }
+                            }
+                            instance.PathIDs = new List<ushort>();
+                            if (template.PathIDs.Count > 0)
+                            {
+                                for (int a = 0; a < template.PathIDs.Count; a++)
+                                {
+                                    instance.PathIDs.Add(0);
+                                }
+                            }
+                            instance.PositionIDs = new List<ushort>();
+                            if (template.PositionIDs.Count > 0)
+                            {
+                                for (int a = 0; a < template.PositionIDs.Count; a++)
+                                {
+                                    instance.PositionIDs.Add(0);
+                                }
+                            }
+                        }
+                        instances.Records[i] = instance;
+                        EnemyFound = false;
                     }
                 }
             }

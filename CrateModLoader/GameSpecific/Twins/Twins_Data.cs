@@ -1242,6 +1242,21 @@ namespace CrateModLoader.GameSpecific.Twins
 
         public static void ExportGameObject(ref TwinsFile RM_Archive, ObjectID objectID, ref List<ObjectID> objectsExported)
         {
+            if (objectsExported.Contains(objectID))
+            {
+                return;
+            }
+            if (cachedGameObjects.Count > 0)
+            {
+                for (int i = 0; i < cachedGameObjects.Count; i++)
+                {
+                    if (cachedGameObjects[i].mainObject.ID == (uint)objectID)
+                    {
+                        return;
+                    }
+                }
+            }
+
             CachedGameObject gameObject = new CachedGameObject();
 
             TwinsSection gfx_section = RM_Archive.GetItem<TwinsSection>((uint)RM2_Sections.Graphics);
@@ -1557,22 +1572,26 @@ namespace CrateModLoader.GameSpecific.Twins
                         Instance instance = (Instance)instances.Records[i];
                         if (instance.ObjectID == (ushort)objectID)
                         {
-                            gameObject.instanceTemplate = new InstanceTemplate()
+                            // try an instance without dependencies on other instances first
+                            if ((instance.InstanceIDs == null || instance.InstanceIDs.Count == 0) && (instance.PathIDs == null || instance.PathIDs.Count == 0) && (instance.PositionIDs == null || instance.PositionIDs.Count == 0))
                             {
-                                ObjectID = instance.ObjectID,
-                                Properties = instance.UnkI32,
-                                Flags = instance.UnkI321,
-                                FloatVars = instance.UnkI322,
-                                IntVars = instance.UnkI323,
-                                InstancesNum = instance.SomeNum1,
-                                PositionsNum = instance.SomeNum2,
-                                PathsNum = instance.SomeNum3,
-                                InstanceIDs = instance.InstanceIDs,
-                                PositionIDs = instance.PositionIDs,
-                                PathIDs = instance.PathIDs
-                            };
-                            loadedTemplate = true;
-                            break;
+                                gameObject.instanceTemplate = new InstanceTemplate()
+                                {
+                                    ObjectID = instance.ObjectID,
+                                    Properties = instance.UnkI32,
+                                    Flags = instance.UnkI321,
+                                    FloatVars = instance.UnkI322,
+                                    IntVars = instance.UnkI323,
+                                    InstancesNum = instance.SomeNum1,
+                                    PositionsNum = instance.SomeNum2,
+                                    PathsNum = instance.SomeNum3,
+                                    InstanceIDs = instance.InstanceIDs,
+                                    PositionIDs = instance.PositionIDs,
+                                    PathIDs = instance.PathIDs
+                                };
+                                loadedTemplate = true;
+                                break;
+                            }
                         }
                     }
                     if (loadedTemplate)
@@ -1583,6 +1602,50 @@ namespace CrateModLoader.GameSpecific.Twins
                 if (loadedTemplate)
                 {
                     break;
+                }
+            }
+            if (!loadedTemplate)
+            {
+                for (uint section_id = (uint)RM2_Sections.Instances1; section_id <= (uint)RM2_Sections.Instances8; section_id++)
+                {
+                    if (!RM_Archive.ContainsItem(section_id)) continue;
+                    TwinsSection section = RM_Archive.GetItem<TwinsSection>(section_id);
+                    if (section.Records.Count > 0)
+                    {
+                        if (!section.ContainsItem((uint)RM2_Instance_Sections.ObjectInstance)) continue;
+                        TwinsSection instances = section.GetItem<TwinsSection>((uint)RM2_Instance_Sections.ObjectInstance);
+                        for (int i = 0; i < instances.Records.Count; ++i)
+                        {
+                            Instance instance = (Instance)instances.Records[i];
+                            if (instance.ObjectID == (ushort)objectID)
+                            {
+                                gameObject.instanceTemplate = new InstanceTemplate()
+                                {
+                                    ObjectID = instance.ObjectID,
+                                    Properties = instance.UnkI32,
+                                    Flags = instance.UnkI321,
+                                    FloatVars = instance.UnkI322,
+                                    IntVars = instance.UnkI323,
+                                    InstancesNum = instance.SomeNum1,
+                                    PositionsNum = instance.SomeNum2,
+                                    PathsNum = instance.SomeNum3,
+                                    InstanceIDs = instance.InstanceIDs,
+                                    PositionIDs = instance.PositionIDs,
+                                    PathIDs = instance.PathIDs
+                                };
+                                loadedTemplate = true;
+                                break;
+                            }
+                        }
+                        if (loadedTemplate)
+                        {
+                            break;
+                        }
+                    }
+                    if (loadedTemplate)
+                    {
+                        break;
+                    }
                 }
             }
 
@@ -1846,6 +1909,18 @@ namespace CrateModLoader.GameSpecific.Twins
                 }
             }
             return false;
+        }
+
+        public static InstanceTemplate GetInstanceTemplateByObjectID(ObjectID objectID)
+        {
+            for (int i = 0; i < cachedGameObjects.Count; i++)
+            {
+                if (cachedGameObjects[i].mainObject.ID == (uint)objectID)
+                {
+                    return cachedGameObjects[i].instanceTemplate;
+                }
+            }
+            return new InstanceTemplate();
         }
 
     }

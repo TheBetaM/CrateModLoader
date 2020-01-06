@@ -52,6 +52,7 @@ API by NeoKesha, Smartkin, ManDude and Marko. (https://github.com/Smartkin/twins
 - Enable Stomp Kick for Crash (Flying Kick variation)  
 - Enable Double Jump for Cortex  
 - Enable Double Jump for Nina  
+- Enable Unused Enemies
 - Version, seed and settings visible in the Autosave Disabled screen  
   
 ## Crash Tag Team Racing
