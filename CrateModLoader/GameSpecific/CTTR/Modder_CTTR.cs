@@ -7,7 +7,7 @@ using System.IO;
 using CTTR;
 using Pure3D;
 //CTTR API by NeoKesha
-//Pure3D API by handsomematt (https://github.com/handsomematt/Pure3D)
+//Pure3D API by handsomematt (https://github.com/handsomematt/Pure3D) with modifications by BetaM
 //Version number, seed and options are displayed in the Credits accessible from the main menu.
 
 namespace CrateModLoader
@@ -72,16 +72,26 @@ namespace CrateModLoader
             "Randomize Run & Gun",
             "Add Unused Cutscenes",
             "Prevent Sequence Breaks" };
-        public bool CTTR_rand_hubs = false; // todo: gem keys in missionobjectives_x, unlock failure message, key missions
+        public bool CTTR_rand_hubs = false; // todo: gem keys in missionobjectives_x and platforming_objects, unlock failure message, key missions
         public bool CTTR_rand_tracks = false; // todo: arenas
         public bool CTTR_rand_minigames = false; // todo: minigame challenges aswell
         public bool CTTR_rand_missions = false; // todo, genericobjectives, missionobjectives_x, level NIS+NPC
         public bool CTTR_rand_characters = false; // todo: idle animation
-        public bool CTTR_rand_carstats = false; // todo: vehicles
+        public bool CTTR_rand_carstats = false; // todo: vehicles, levels/common for speed tier values
         public bool CTTR_rand_racelaps = false;
         public bool CTTR_rand_battlekos = false;
         public bool CTTR_rand_crashinator = false; // todo: kamikaze
         public bool CTTR_rand_runandgun = false; // todo: railshooter
+        public bool CTTR_rand_stuntarena = false; //todo: permament_objects, stunt_objects
+        public bool CTTR_rand_surfaceparams = false; //todo: car_effect_objects
+        public bool CTTR_rand_powerupdistribution = false; // todo: driving_objects
+        public bool CTTR_rand_npclocations = false; // todo: NPC - locator list
+        public bool CTTR_rand_powerupeffects = false; //todo: driving_objects
+        public bool CTTR_rand_weapons = false; // todo: turretmotifs
+        public bool CTTR_rand_killrewards = false; //todo: levels/common
+
+        public bool CTTR_replace_crashinator_with_coneattack = false; //todo
+        public bool CTTR_add_powerups_in_timetrial = false; // todo: timetrial/props, see: bonus11
         public bool CTTR_add_unused_cutscenes = false; // todo, NIS + an objective?
         public bool CTTR_add_sequence_break_checks = false; // todo, genericobjectives
         public enum CTTR_Options
@@ -147,6 +157,14 @@ namespace CrateModLoader
         {
             Program.ModProgram.PrepareOptionsList(modOptions);
         }
+
+        private List<int> randChars = new List<int>();
+        private List<int> randHubs = new List<int>();
+        private List<int> randTracks = new List<int>();
+        private List<int> randMinigames = new List<int>();
+        private List<int> randLaps = new List<int>();
+        private List<int> randKOs = new List<int>();
+        private List<int> randGems = new List<int>();
 
         public void SetPaths(ModLoader.ConsoleMode console, string exec_name = "")
         {
@@ -297,7 +315,7 @@ namespace CrateModLoader
 
         void EditDefaultAndCommon()
         {
-            List<int> randChars = new List<int>();
+            randChars = new List<int>();
             if (CTTR_rand_characters)
             {
                 int maxPlayableCharacters = 2;
@@ -316,7 +334,7 @@ namespace CrateModLoader
                     possibleChars.Remove(targetChar);
                 }
             }
-            List<int> randHubs = new List<int>();
+            randHubs = new List<int>();
             if (CTTR_rand_hubs)
             {
                 List<int> possibleHubs = new List<int>();
@@ -333,7 +351,7 @@ namespace CrateModLoader
                     possibleHubs.Remove(targetHub);
                 }
             }
-            List<int> randTracks = new List<int>();
+            randTracks = new List<int>();
             if (CTTR_rand_tracks)
             {
                 List<int> possibleTracks = new List<int>();
@@ -350,7 +368,7 @@ namespace CrateModLoader
                     possibleTracks.Remove(targetTrack);
                 }
             }
-            List<int> randMinigames = new List<int>();
+            randMinigames = new List<int>();
             if (CTTR_rand_tracks)
             {
                 List<int> possibleMinigames = new List<int>();
@@ -367,7 +385,7 @@ namespace CrateModLoader
                     possibleMinigames.Remove(targetMinigame);
                 }
             }
-            List<int> randLaps = new List<int>();
+            randLaps = new List<int>();
             if (CTTR_rand_racelaps)
             {
                 for (int i = 0; i < 15; i++)
@@ -375,7 +393,7 @@ namespace CrateModLoader
                     randLaps.Add(randState.Next(1,10));
                 }
             }
-            List<int> randKOs = new List<int>();
+            randKOs = new List<int>();
             if (CTTR_rand_battlekos)
             {
                 for (int i = 0; i < 5; i++)
@@ -383,7 +401,7 @@ namespace CrateModLoader
                     randKOs.Add(randState.Next(5, 20));
                 }
             }
-            List<int> randGems = new List<int>();
+            randGems = new List<int>();
             if (CTTR_rand_hubs)
             {
                 List<int> possibleGems = new List<int>();
@@ -406,64 +424,49 @@ namespace CrateModLoader
                 }
             }
 
-            //Warning: The CTTR API only likes paths with \ backslashes
+            Modify_RCF(path_RCF_default);
+            Modify_RCF(path_RCF_common);
+            if (path_RCF_onfoot0 != "")
+            {
+                Modify_RCF(path_RCF_onfoot0);
+            }
+            if (path_RCF_onfoot1 != "")
+            {
+                Modify_RCF(path_RCF_onfoot1);
+            }
+            if (path_RCF_onfoot2 != "")
+            {
+                Modify_RCF(path_RCF_onfoot2);
+            }
+            if (path_RCF_onfoot3 != "")
+            {
+                Modify_RCF(path_RCF_onfoot3);
+            }
+            if (path_RCF_onfoot4 != "")
+            {
+                Modify_RCF(path_RCF_onfoot4);
+            }
+            if (path_RCF_onfoot5 != "")
+            {
+                Modify_RCF(path_RCF_onfoot5);
+            }
+            if (path_RCF_onfoot6 != "")
+            {
+                Modify_RCF(path_RCF_onfoot6);
+            }
+            if (path_RCF_onfoot7 != "")
+            {
+                Modify_RCF(path_RCF_onfoot7);
+            }
+
+        }
+
+        void Modify_RCF(string path)
+        {
             string feedback = "";
             string path_extr = "";
-            RCF rcf_common= new RCF();
-            rcf_common.OpenRCF(basePath + path_RCF_common);
-            path_extr = basePath + @"cml_extr\";
-            Directory.CreateDirectory(path_extr);
-            rcf_common.ExtractRCF(ref feedback, path_extr);
-
-            if (CTTR_rand_characters)
-            {
-                Randomize_Characters(path_extr, ref rcf_common, ref randChars);
-            }
-            if (CTTR_rand_hubs)
-            {
-                Randomize_Hubs(path_extr, ref rcf_common, ref randHubs, ref randGems);
-            }
-            if (CTTR_rand_tracks)
-            {
-                Randomize_Tracks(path_extr, ref rcf_common, ref randTracks);
-            }
-            if (CTTR_rand_minigames)
-            {
-                Randomize_Minigames(path_extr, ref rcf_common, ref randMinigames);
-            }
-            if (CTTR_rand_racelaps)
-            {
-                Randomize_Race_Laps(path_extr, ref rcf_common, ref randLaps);
-            }
-            if (CTTR_rand_battlekos)
-            {
-                Randomize_Battle_KOs(path_extr, ref rcf_common, ref randKOs);
-            }
-
-            rcf_common.Recalculate();
-            rcf_common.Pack(basePath + path_RCF_common + "1", ref feedback);
-
-            // Extraction cleanup
-            System.IO.File.Delete(basePath + path_RCF_common);
-            System.IO.File.Move(basePath + path_RCF_common + "1", basePath + path_RCF_common);
-            if (Directory.Exists(path_extr))
-            {
-                DirectoryInfo di = new DirectoryInfo(path_extr);
-
-                foreach (FileInfo file in di.EnumerateFiles())
-                {
-                    file.Delete();
-                }
-                foreach (DirectoryInfo dir in di.EnumerateDirectories())
-                {
-                    dir.Delete(true);
-                }
-
-                Directory.Delete(path_extr);
-            }
-            
             RCF rcf_default = new RCF();
-            rcf_default.OpenRCF(basePath + path_RCF_default);
+            rcf_default.OpenRCF(basePath + path);
             path_extr = basePath + @"cml_extr\";
             Directory.CreateDirectory(path_extr);
             rcf_default.ExtractRCF(ref feedback, path_extr);
@@ -494,11 +497,11 @@ namespace CrateModLoader
             }
 
             rcf_default.Recalculate();
-            rcf_default.Pack(basePath + path_RCF_default + "1", ref feedback);
+            rcf_default.Pack(basePath + path + "1", ref feedback);
 
             // Extraction cleanup
-            System.IO.File.Delete(basePath + path_RCF_default);
-            System.IO.File.Move(basePath + path_RCF_default + "1", basePath + path_RCF_default);
+            System.IO.File.Delete(basePath + path);
+            System.IO.File.Move(basePath + path + "1", basePath + path);
             if (Directory.Exists(path_extr))
             {
                 DirectoryInfo di = new DirectoryInfo(path_extr);
@@ -514,7 +517,6 @@ namespace CrateModLoader
 
                 Directory.Delete(path_extr);
             }
-            
         }
 
         void Randomize_Characters(string path_extr, ref RCF rcf_file, ref List<int> randChars)
@@ -607,26 +609,34 @@ namespace CrateModLoader
                 }
             }
             
-            // Todo: Changing Crash's idle animation to that of the randomized character
-            // Need to add saving P3D to the P3D API
-            /*
-            if (randChars[0] != (int)CTTR_Data.DriverID.Crash && System.IO.File.Exists(path_extr + @"art\animation\" + CTTR_Data.DriverNames[randChars[0]] + "_onfoot_animations.p3d"))
+            // Swapping idle animation for platforming character
+            if (randChars[0] != (int)CTTR_Data.DriverID.Crash)
             {
+                int[] targetAnimPos;
                 Pure3D.File targetCharAnim = new Pure3D.File();
-                targetCharAnim.Load(path_extr + @"art\animation\\" + CTTR_Data.DriverNames[randChars[0]] + "_onfoot_animations.p3d");
-
-                Pure3D.Chunks.Animation targetIdleAnim = targetCharAnim.RootChunk.GetChildrenByName<Pure3D.Chunks.Animation>("onfoot_idle")[0];
+                if (System.IO.File.Exists(path_extr + @"art\animation\" + CTTR_Data.DriverNames[randChars[0]] + "_onfoot_animations.p3d"))
+                {
+                    targetAnimPos = new int[] { 0, 4, 0, 0, 4, 0, 0, 3 };
+                    targetCharAnim.Load(path_extr + @"art\animation\\" + CTTR_Data.DriverNames[randChars[0]] + "_onfoot_animations.p3d");
+                }
+                else if (System.IO.File.Exists(path_extr + @"art\animation\" + CTTR_Data.DriverNames[randChars[0]] + "_onfoot_midway_animations.p3d"))
+                {
+                    targetAnimPos = new int[] { 0, 3, 0, 0, 1, 0, 13, 3 };
+                    targetCharAnim.Load(path_extr + @"art\animation\\" + CTTR_Data.DriverNames[randChars[0]] + "_onfoot_midway_animations.p3d");
+                }
+                else
+                {
+                    return;
+                }
+                
+                Pure3D.Chunk targetIdleAnim = targetCharAnim.RootChunk.Children[targetAnimPos[randChars[0]]];
 
                 if (System.IO.File.Exists(path_extr + @"art\animation\crash_onfoot_animations.p3d"))
                 {
                     Pure3D.File CrashOnfootAnim = new Pure3D.File();
                     CrashOnfootAnim.Load(path_extr + @"art\animation\crash_onfoot_animations.p3d");
 
-                    Pure3D.Chunks.Animation[] anims = CrashOnfootAnim.RootChunk.GetChildrenByName<Pure3D.Chunks.Animation>("onfoot_idle");
-                    if (anims.Length > 0)
-                    {
-                        CrashOnfootAnim.RootChunk.GetChildrenByName<Pure3D.Chunks.Animation>("onfoot_idle")[0] = targetIdleAnim;
-                    }
+                    CrashOnfootAnim.RootChunk.Children[0] = targetIdleAnim;
 
                     CrashOnfootAnim.Save(path_extr + @"art\animation\crash_onfoot_animations1.p3d");
                     System.IO.File.Delete(path_extr + @"art\animation\crash_onfoot_animations.p3d");
@@ -646,11 +656,7 @@ namespace CrateModLoader
                     Pure3D.File CrashOnfootMidwayAnim = new Pure3D.File();
                     CrashOnfootMidwayAnim.Load(path_extr + @"art\animation\crash_onfoot_midway_animations.p3d");
 
-                    Pure3D.Chunks.Animation[] anims = CrashOnfootMidwayAnim.RootChunk.GetChildrenByName<Pure3D.Chunks.Animation>("onfoot_idle");
-                    if (anims.Length > 0)
-                    {
-                        CrashOnfootMidwayAnim.RootChunk.GetChildrenByName<Pure3D.Chunks.Animation>("onfoot_idle")[0] = targetIdleAnim;
-                    }
+                    CrashOnfootMidwayAnim.RootChunk.Children[0] = targetIdleAnim;
 
                     CrashOnfootMidwayAnim.Save(path_extr + @"art\animation\crash_onfoot_midway_animations1.p3d");
                     System.IO.File.Delete(path_extr + @"art\animation\crash_onfoot_midway_animations.p3d");
@@ -666,7 +672,7 @@ namespace CrateModLoader
                     }
                 }
             }
-            */
+
         }
         void Randomize_Hubs(string path_extr, ref RCF rcf_file, ref List<int> randHubs, ref List<int> randGems)
         {
@@ -1099,6 +1105,37 @@ namespace CrateModLoader
 
                 Directory.Delete(path_extr);
             }
+        }
+
+        public void OpenModMenu()
+        {
+            /*
+            Pure3D.File targetCharAnim = new Pure3D.File();
+            targetCharAnim.Load(AppDomain.CurrentDomain.BaseDirectory + "/Tools/ngin_onfoot_animations.p3d");
+            Pure3D.Chunk targetIdleAnim = targetCharAnim.RootChunk.Children[0];
+
+            Pure3D.File CrashOnfootAnim1 = new Pure3D.File();
+            CrashOnfootAnim1.Load(AppDomain.CurrentDomain.BaseDirectory + "/Tools/crash_onfoot_animations.p3d");
+            CrashOnfootAnim1.Save(AppDomain.CurrentDomain.BaseDirectory + "/Tools/crash_onfoot_animations_norm.p3d");
+
+            Pure3D.File CrashOnfootAnim = new Pure3D.File();
+            CrashOnfootAnim.Load(AppDomain.CurrentDomain.BaseDirectory + "/Tools/crash_onfoot_animations.p3d");
+
+            CrashOnfootAnim.RootChunk.Children[0] = targetIdleAnim;
+
+            CrashOnfootAnim.Save(AppDomain.CurrentDomain.BaseDirectory + "/Tools/crash_onfoot_animations1.p3d");
+
+            Pure3D.File CrashOnfootMidwayAnim1 = new Pure3D.File();
+            CrashOnfootMidwayAnim1.Load(AppDomain.CurrentDomain.BaseDirectory + "/Tools/crash_onfoot_midway_animations.p3d");
+            CrashOnfootMidwayAnim1.Save(AppDomain.CurrentDomain.BaseDirectory + "/Tools/crash_onfoot_midway_animations_norm.p3d");
+
+            Pure3D.File CrashOnfootMidwayAnim = new Pure3D.File();
+            CrashOnfootMidwayAnim.Load(AppDomain.CurrentDomain.BaseDirectory + "/Tools/crash_onfoot_midway_animations.p3d");
+
+            CrashOnfootMidwayAnim.RootChunk.Children[0] = targetIdleAnim;
+
+            CrashOnfootMidwayAnim.Save(AppDomain.CurrentDomain.BaseDirectory + "/Tools/crash_onfoot_midway_animations1.p3d");
+            */
         }
     }
 }
