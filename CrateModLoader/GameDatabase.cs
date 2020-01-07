@@ -85,7 +85,7 @@ namespace CrateModLoader
                     ModLoader.ConsoleMode.PSP,
                     ModLoader.ConsoleMode.XBOX,
                 },
-                API_Credit = "API by NeoKesha",
+                API_Credit = "APIs by NeoKesha, handsomematt and BetaM",
                 Icon = Properties.Resources.icon_crash,
                 ModderClass = typeof(Modder_CTTR),
                 ModMenuEnabled = false,

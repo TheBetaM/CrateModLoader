@@ -60,7 +60,7 @@ namespace CrateModLoader
 
         public Random randState = new Random();
         public string[] modOptions = {
-            "Randomize Playable & Starting Characters",
+            "Randomize Platforming & Starting Characters",
             "Randomize Hub Entrances",
             "Randomize Track Entrances",
             "Randomize Minigames",
