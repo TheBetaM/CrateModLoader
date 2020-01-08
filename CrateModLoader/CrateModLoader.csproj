@@ -58,10 +58,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>tools\DiscUtils.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Pure3D, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>GameSpecific\CTTR\Pure3D.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -91,6 +87,73 @@
     <Compile Include="GameSpecific\Crash3\Modder_Crash3.cs" />
     <Compile Include="GameSpecific\CTR\Modder_CTR.cs" />
     <Compile Include="GameSpecific\CTTR\CTTR_Data.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunk.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\Animation.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\AnimationGroup.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\AnimationGroupList.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\AnimationSize.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\BaseEmitter.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\BillboardDisplayInfo.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\BillboardPerspectiveInfo.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\BillboardQuad.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\BillboardQuadGroup.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\BoundingBox.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\BoundingSphere.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\Camera.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\CarCameraData.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\ChannelInterpolationMode.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\ColourList.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\CompositeDrawable.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\CompositeDrawableEffectList.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\CompositeDrawableProp.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\CompositeDrawablePropList.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\CompositeDrawableSkin.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\CompositeDrawableSkinList.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\CompositeDrawableSortOrder.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\CompressedQuaternionChannel.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\Image.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\ImageData.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\IndexList.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\Locator.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\MatrixList.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\MatrixPalette.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\Mesh.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\Named.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\NormalList.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\PackedNormalList.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\ParticleAnimation.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\ParticleInstancingInfo.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\ParticleSystemFactory.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\PhysicsInertiaMatrix.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\PhysicsJoint.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\PhysicsObject.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\PhysicsVector.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\PositionList.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\PrimitiveGroup.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\QuaternionChannel.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\Root.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\Shader.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\ShaderParam.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\Skeleton.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\SkeletonJoint.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\SkeletonJointBonePreserve.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\SkeletonJointMirrorMap.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\Skin.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\SpriteEmitter.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\Texture.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\Unknown.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\UVList.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\Vector1Channel.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\Vector2Channel.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\Vector3Channel.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\VersionNamed.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\VertexShader.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\WeightList.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\WorldDef.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\ChunkType.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\File.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Types.cs" />
+    <Compile Include="GameSpecific\CTTR\Pure3D\Util.cs" />
     <Compile Include="GameSpecific\MoM\Modder_MoM.cs" />
     <Compile Include="GameSpecific\Titans\Modder_Titans.cs" />
     <Compile Include="GameSpecific\Twins\Modder_Twins.cs" />
