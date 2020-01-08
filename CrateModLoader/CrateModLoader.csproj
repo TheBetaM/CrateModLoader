@@ -87,6 +87,7 @@
     <Compile Include="GameSpecific\Crash3\Modder_Crash3.cs" />
     <Compile Include="GameSpecific\CTR\Modder_CTR.cs" />
     <Compile Include="GameSpecific\CTTR\CTTR_Data.cs" />
+    <Compile Include="GameSpecific\CTTR\CTTR_Data_Text.cs" />
     <Compile Include="GameSpecific\CTTR\Pure3D\Chunk.cs" />
     <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\Animation.cs" />
     <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\AnimationChannelCount.cs" />

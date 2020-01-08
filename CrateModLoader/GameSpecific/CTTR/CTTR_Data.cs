@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CrateModLoader
+namespace CrateModLoader.GameSpecific.CTTR
 {
-    static class CTTR_Data
+    static partial class CTTR_Data
     {
         public enum CharacterID
         {

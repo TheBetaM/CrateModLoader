@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using CTTR;
 using Pure3D;
+using CrateModLoader.GameSpecific.CTTR;
 //CTTR API by NeoKesha
 //Pure3D API by handsomematt (https://github.com/handsomematt/Pure3D) with modifications by BetaM
 //Version number, seed and options are displayed in the Credits accessible from the main menu.
@@ -1198,37 +1199,37 @@ namespace CrateModLoader
             {
                 chunkPos = targetFile.RootChunk.GetChildIndexByName<Pure3D.Chunks.FrontendLanguage>("loading");
                 Pure3D.Chunks.FrontendLanguage lang = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("loading").Children[0];
-                lang.TextStrings[1] = "Really long loading text for testing!";
-                lang.TextStrings[2] = "Really long loading text for testing!!";
-                lang.TextStrings[3] = "Really long loading text for testing!!!";
-                lang.TextStrings[4] = "Really long loading text for testing!!!!";
+                lang.TextStrings[(int)CTTR_Data.TextBibleID_Loading.Loading] = "Really long loading text for testing!";
+                lang.TextStrings[(int)CTTR_Data.TextBibleID_Loading.LoadingDot] = "Really long loading text for testing!!";
+                lang.TextStrings[(int)CTTR_Data.TextBibleID_Loading.LoadingDotDot] = "Really long loading text for testing!!!";
+                lang.TextStrings[(int)CTTR_Data.TextBibleID_Loading.LoadingDotDotDot] = "Really long loading text for testing!!!!";
                 if (targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("loading").Children.Count > 1)
                 {
                     Pure3D.Chunks.FrontendLanguage lang1 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("loading").Children[1];
-                    lang1.TextStrings[1] = "Really long loading text for testing!";
-                    lang1.TextStrings[2] = "Really long loading text for testing!!";
-                    lang1.TextStrings[3] = "Really long loading text for testing!!!";
-                    lang1.TextStrings[4] = "Really long loading text for testing!!!!";
+                    lang1.TextStrings[(int)CTTR_Data.TextBibleID_Loading.Loading] = "Really long loading text for testing!";
+                    lang1.TextStrings[(int)CTTR_Data.TextBibleID_Loading.LoadingDot] = "Really long loading text for testing!!";
+                    lang1.TextStrings[(int)CTTR_Data.TextBibleID_Loading.LoadingDotDot] = "Really long loading text for testing!!!";
+                    lang1.TextStrings[(int)CTTR_Data.TextBibleID_Loading.LoadingDotDotDot] = "Really long loading text for testing!!!!";
                     Pure3D.Chunks.FrontendLanguage lang2 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("loading").Children[2];
-                    lang2.TextStrings[1] = "Really long loading text for testing!";
-                    lang2.TextStrings[2] = "Really long loading text for testing!!";
-                    lang2.TextStrings[3] = "Really long loading text for testing!!!";
-                    lang2.TextStrings[4] = "Really long loading text for testing!!!!";
+                    lang2.TextStrings[(int)CTTR_Data.TextBibleID_Loading.Loading] = "Really long loading text for testing!";
+                    lang2.TextStrings[(int)CTTR_Data.TextBibleID_Loading.LoadingDot] = "Really long loading text for testing!!";
+                    lang2.TextStrings[(int)CTTR_Data.TextBibleID_Loading.LoadingDotDot] = "Really long loading text for testing!!!";
+                    lang2.TextStrings[(int)CTTR_Data.TextBibleID_Loading.LoadingDotDotDot] = "Really long loading text for testing!!!!";
                     Pure3D.Chunks.FrontendLanguage lang3 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("loading").Children[3];
-                    lang3.TextStrings[1] = "Really long loading text for testing!";
-                    lang3.TextStrings[2] = "Really long loading text for testing!!";
-                    lang3.TextStrings[3] = "Really long loading text for testing!!!";
-                    lang3.TextStrings[4] = "Really long loading text for testing!!!!";
+                    lang3.TextStrings[(int)CTTR_Data.TextBibleID_Loading.Loading] = "Really long loading text for testing!";
+                    lang3.TextStrings[(int)CTTR_Data.TextBibleID_Loading.LoadingDot] = "Really long loading text for testing!!";
+                    lang3.TextStrings[(int)CTTR_Data.TextBibleID_Loading.LoadingDotDot] = "Really long loading text for testing!!!";
+                    lang3.TextStrings[(int)CTTR_Data.TextBibleID_Loading.LoadingDotDotDot] = "Really long loading text for testing!!!!";
                     Pure3D.Chunks.FrontendLanguage lang4 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("loading").Children[4];
-                    lang4.TextStrings[1] = "Really long loading text for testing!";
-                    lang4.TextStrings[2] = "Really long loading text for testing!!";
-                    lang4.TextStrings[3] = "Really long loading text for testing!!!";
-                    lang4.TextStrings[4] = "Really long loading text for testing!!!!";
+                    lang4.TextStrings[(int)CTTR_Data.TextBibleID_Loading.Loading] = "Really long loading text for testing!";
+                    lang4.TextStrings[(int)CTTR_Data.TextBibleID_Loading.LoadingDot] = "Really long loading text for testing!!";
+                    lang4.TextStrings[(int)CTTR_Data.TextBibleID_Loading.LoadingDotDot] = "Really long loading text for testing!!!";
+                    lang4.TextStrings[(int)CTTR_Data.TextBibleID_Loading.LoadingDotDotDot] = "Really long loading text for testing!!!!";
                     Pure3D.Chunks.FrontendLanguage lang5 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("loading").Children[5];
-                    lang5.TextStrings[1] = "Really long loading text for testing!";
-                    lang5.TextStrings[2] = "Really long loading text for testing!!";
-                    lang5.TextStrings[3] = "Really long loading text for testing!!!";
-                    lang5.TextStrings[4] = "Really long loading text for testing!!!!";
+                    lang5.TextStrings[(int)CTTR_Data.TextBibleID_Loading.Loading] = "Really long loading text for testing!";
+                    lang5.TextStrings[(int)CTTR_Data.TextBibleID_Loading.LoadingDot] = "Really long loading text for testing!!";
+                    lang5.TextStrings[(int)CTTR_Data.TextBibleID_Loading.LoadingDotDot] = "Really long loading text for testing!!!";
+                    lang5.TextStrings[(int)CTTR_Data.TextBibleID_Loading.LoadingDotDotDot] = "Really long loading text for testing!!!!";
                 }
             }
 
@@ -1236,19 +1237,63 @@ namespace CrateModLoader
             {
                 chunkPos = targetFile.RootChunk.GetChildIndexByName<Pure3D.Chunks.FrontendLanguage>("frontend");
                 Pure3D.Chunks.FrontendLanguage lang6 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("frontend").Children[0];
-                lang6.TextStrings[171] = "Really long loading text for testing!";
+                lang6.TextStrings[(int)CTTR_Data.TextBibleID_Frontend.EnterThePark] = "Really long loading text for testing!";
                 if (targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("frontend").Children.Count > 1)
                 {
                     Pure3D.Chunks.FrontendLanguage lang7 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("frontend").Children[1];
-                    lang7.TextStrings[171] = "Really long loading text for testing!";
+                    lang7.TextStrings[(int)CTTR_Data.TextBibleID_Frontend.EnterThePark] = "Really long loading text for testing!";
                     Pure3D.Chunks.FrontendLanguage lang8 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("frontend").Children[2];
-                    lang8.TextStrings[171] = "Really long loading text for testing!";
+                    lang8.TextStrings[(int)CTTR_Data.TextBibleID_Frontend.EnterThePark] = "Really long loading text for testing!";
                     Pure3D.Chunks.FrontendLanguage lang9 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("frontend").Children[3];
-                    lang9.TextStrings[171] = "Really long loading text for testing!";
+                    lang9.TextStrings[(int)CTTR_Data.TextBibleID_Frontend.EnterThePark] = "Really long loading text for testing!";
                     Pure3D.Chunks.FrontendLanguage lang11 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("frontend").Children[4];
-                    lang11.TextStrings[171] = "Really long loading text for testing!";
+                    lang11.TextStrings[(int)CTTR_Data.TextBibleID_Frontend.EnterThePark] = "Really long loading text for testing!";
                     Pure3D.Chunks.FrontendLanguage lang12 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("frontend").Children[5];
-                    lang12.TextStrings[171] = "Really long loading text for testing!";
+                    lang12.TextStrings[(int)CTTR_Data.TextBibleID_Frontend.EnterThePark] = "Really long loading text for testing!";
+                }
+            }
+
+            if (targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("ingame") != null)
+            {
+                chunkPos = targetFile.RootChunk.GetChildIndexByName<Pure3D.Chunks.FrontendLanguage>("ingame");
+                Pure3D.Chunks.FrontendLanguage lang6 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("ingame").Children[0];
+                lang6.TextStrings[(int)CTTR_Data.TextBibleID_Ingame.Pause] = "Really long loading text for testing!";
+                if (targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("ingame").Children.Count > 1)
+                {
+                    Pure3D.Chunks.FrontendLanguage lang7 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("ingame").Children[1];
+                    lang7.TextStrings[(int)CTTR_Data.TextBibleID_Ingame.Pause] = "Really long loading text for testing!";
+                    Pure3D.Chunks.FrontendLanguage lang8 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("ingame").Children[2];
+                    lang8.TextStrings[(int)CTTR_Data.TextBibleID_Ingame.Pause] = "Really long loading text for testing!";
+                    Pure3D.Chunks.FrontendLanguage lang9 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("ingame").Children[3];
+                    lang9.TextStrings[(int)CTTR_Data.TextBibleID_Ingame.Pause] = "Really long loading text for testing!";
+                    Pure3D.Chunks.FrontendLanguage lang11 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("ingame").Children[4];
+                    lang11.TextStrings[(int)CTTR_Data.TextBibleID_Ingame.Pause] = "Really long loading text for testing!";
+                    Pure3D.Chunks.FrontendLanguage lang12 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("ingame").Children[5];
+                    lang12.TextStrings[(int)CTTR_Data.TextBibleID_Ingame.Pause] = "Really long loading text for testing!";
+                }
+            }
+
+            if (targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("onfoot") != null)
+            {
+                chunkPos = targetFile.RootChunk.GetChildIndexByName<Pure3D.Chunks.FrontendLanguage>("onfoot");
+                Pure3D.Chunks.FrontendLanguage lang6 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("onfoot").Children[0];
+                if (lang6.TextStrings.Count <= (int)CTTR_Data.TextBibleID_Onfoot.WumpaWhip)
+                {
+                    return;
+                }
+                lang6.TextStrings[(int)CTTR_Data.TextBibleID_Onfoot.WumpaWhip] = "Really long loading text for testing!";
+                if (targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("onfoot").Children.Count > 1)
+                {
+                    Pure3D.Chunks.FrontendLanguage lang7 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("onfoot").Children[1];
+                    lang7.TextStrings[(int)CTTR_Data.TextBibleID_Onfoot.WumpaWhip] = "Really long loading text for testing!";
+                    Pure3D.Chunks.FrontendLanguage lang8 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("onfoot").Children[2];
+                    lang8.TextStrings[(int)CTTR_Data.TextBibleID_Onfoot.WumpaWhip] = "Really long loading text for testing!";
+                    Pure3D.Chunks.FrontendLanguage lang9 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("onfoot").Children[3];
+                    lang9.TextStrings[(int)CTTR_Data.TextBibleID_Onfoot.WumpaWhip] = "Really long loading text for testing!";
+                    Pure3D.Chunks.FrontendLanguage lang11 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("onfoot").Children[4];
+                    lang11.TextStrings[(int)CTTR_Data.TextBibleID_Onfoot.WumpaWhip] = "Really long loading text for testing!";
+                    Pure3D.Chunks.FrontendLanguage lang12 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("onfoot").Children[5];
+                    lang12.TextStrings[(int)CTTR_Data.TextBibleID_Onfoot.WumpaWhip] = "Really long loading text for testing!";
                 }
             }
 
