@@ -7,6 +7,7 @@ namespace Pure3D
     /// <summary>
     /// Applies a Pure3D type identifier to a Chunk type, allowing it to be read.
     /// </summary>
+    //[AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public class ChunkType : Attribute
     {
         public uint TypeID { get; set; }

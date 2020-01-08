@@ -46,7 +46,17 @@ namespace Pure3D.Chunks
             BinaryWriter writer = new BinaryWriter(stream);
             writer.Write(Version);
             base.WriteHeader(stream);
-            writer.Write(new byte[] { (byte)BillboardMode[0], (byte)BillboardMode[1], (byte)BillboardMode[2], (byte)BillboardMode[3], });
+            for (int i = 0; i < 4; i++)
+            {
+                if (i < BillboardMode.Length)
+                {
+                    writer.Write((byte)BillboardMode[i]);
+                }
+                else
+                {
+                    writer.Write((byte)0x00);
+                }
+            }
             Util.WriteVector3(writer, Translation);
             writer.Write(Colour);
             Util.WriteVector2(writer, Uv0);

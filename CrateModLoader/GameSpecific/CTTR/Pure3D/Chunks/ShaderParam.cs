@@ -19,7 +19,17 @@ namespace Pure3D.Chunks
         public override void WriteHeader(Stream stream)
         {
             BinaryWriter writer = new BinaryWriter(stream);
-            writer.Write(new byte[] { (byte)Param[0], (byte)Param[1], (byte)Param[2], (byte)Param[3], });
+            for (int i = 0; i < 4; i++)
+            {
+                if (i < Param.Length)
+                {
+                    writer.Write((byte)Param[i]);
+                }
+                else
+                {
+                    writer.Write((byte)0x00);
+                }
+            }
         }
 
         public override string ToString()

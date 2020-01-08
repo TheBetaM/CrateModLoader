@@ -29,7 +29,17 @@ namespace Pure3D.Chunks
         {
             BinaryWriter writer = new BinaryWriter(stream);
             base.WriteHeader(stream);
-            writer.Write(new byte[] { (byte)AnimType[0], (byte)AnimType[1], (byte)AnimType[2], (byte)AnimType[3], });
+            for (int i = 0; i < 4; i++)
+            {
+                if (i < AnimType.Length)
+                {
+                    writer.Write((byte)AnimType[i]);
+                }
+                else
+                {
+                    writer.Write((byte)0x00);
+                }
+            }
             writer.Write(NumberOfFrames);
             writer.Write(FrameRate);
             writer.Write(Looping);

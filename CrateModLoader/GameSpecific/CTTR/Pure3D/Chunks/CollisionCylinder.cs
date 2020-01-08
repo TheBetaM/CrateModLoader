@@ -1,13 +1,14 @@
-using System.IO;
+﻿using System.IO;
+using System.Text;
 
 namespace Pure3D.Chunks
 {
-    [ChunkType(66060320)]
-    public class WorldDef : Chunk
+    [ChunkType(117506051)]
+    public class CollisionCylinder : Chunk
     {
         public byte[] Data;
 
-        public WorldDef(File file, uint type) : base(file, type)
+        public CollisionCylinder(File file, uint type) : base(file, type)
         {
 
         }
@@ -25,7 +26,7 @@ namespace Pure3D.Chunks
 
         public override string ToString()
         {
-            return $"WorldDef";
+            return $"Collision Cylinder";
         }
     }
 }

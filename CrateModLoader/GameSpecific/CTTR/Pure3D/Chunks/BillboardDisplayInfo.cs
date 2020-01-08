@@ -33,7 +33,17 @@ namespace Pure3D.Chunks
             BinaryWriter writer = new BinaryWriter(stream);
             writer.Write(Version);
             Util.WriteQuaternion(writer, Rotation);
-            writer.Write(new byte[] { (byte)CutOffMode[0], (byte)CutOffMode[1], (byte)CutOffMode[2], (byte)CutOffMode[3], });
+            for (int i = 0; i < 4; i++)
+            {
+                if (i < CutOffMode.Length)
+                {
+                    writer.Write((byte)CutOffMode[i]);
+                }
+                else
+                {
+                    writer.Write((byte)0x00);
+                }
+            }
             Util.WriteVector2(writer, UVOffsetRange);
             writer.Write(SourceRange);
             writer.Write(EdgeRange);

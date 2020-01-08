@@ -50,12 +50,27 @@ namespace Pure3D.Chunks
 
         public enum Formats : uint
         {
+            RAW = 0,
             PNG = 1,
+            TGA = 2,
+            BMP = 3,
+            IPU = 4,
+            DXT = 5,
             DXT1 = 6,
+            DXT2 = 7,
             DXT3 = 8,
+            DXT4 = 9,
             DXT5 = 10,
-            P3DI = 11,
-            P3DI2 = 25,
+            PS2_4bit = 11,
+            PS2_8bit = 12,
+            PS2_16bit = 13,
+            PS2_32bit = 14,
+            GameCube_4bit = 15,
+            GameCube_8bit = 16,
+            GameCube_16bit = 17,
+            GameCube_32bit = 18,
+            GameCube_DXT1 = 19,
+            PSP_4bit = 25,
         }
     }
 }

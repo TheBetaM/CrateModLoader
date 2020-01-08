@@ -88,7 +88,7 @@ namespace CrateModLoader
                 API_Credit = "APIs by NeoKesha, handsomematt and BetaM",
                 Icon = Properties.Resources.icon_crash,
                 ModderClass = typeof(Modder_CTTR),
-                ModMenuEnabled = false,
+                ModMenuEnabled = true,
                 ModCratesSupported = true,
                 RegionID_PS2 = new RegionCode[] {
                     new RegionCode() {

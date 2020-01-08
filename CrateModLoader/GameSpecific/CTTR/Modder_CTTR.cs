@@ -71,7 +71,9 @@ namespace CrateModLoader
             "Randomize Crashinator",
             "Randomize Run & Gun",
             "Add Unused Cutscenes",
-            "Prevent Sequence Breaks" };
+            "Prevent Sequence Breaks",
+        };
+
         public bool CTTR_rand_hubs = false; // todo: gem keys in missionobjectives_x and platforming_objects, unlock failure message, key missions
         public bool CTTR_rand_tracks = false; // todo: arenas
         public bool CTTR_rand_minigames = false; // todo: minigame challenges aswell
@@ -94,20 +96,23 @@ namespace CrateModLoader
         public bool CTTR_add_powerups_in_timetrial = false; // todo: timetrial/props, see: bonus11
         public bool CTTR_add_unused_cutscenes = false; // todo, NIS + an objective?
         public bool CTTR_add_sequence_break_checks = false; // todo, genericobjectives
+        public bool CTTR_test_mod = false;
+
         public enum CTTR_Options
         {
             RandomizeCharacters = 0,
             RandomizeHubs = 1,
             RandomizeTracks = 2,
-            RandomizeMinigames = 4,
-            RandomizeMissions = 5,
-            RandomizeCarStats = 6,
-            RandomizeRaceLaps = 7,
-            RandomizeBattleKOs = 8,
-            RandomizeCrashinator = 9,
-            RandomizeRunAndGun = 10,
-            AddUnusedCutscenes = 11,
-            PreventSequenceBreaks = 12,
+            RandomizeMinigames = 3,
+            RandomizeMissions = 4,
+            RandomizeCarStats = 5,
+            RandomizeRaceLaps = 6,
+            RandomizeBattleKOs = 7,
+            RandomizeCrashinator = 8,
+            RandomizeRunAndGun = 9,
+            AddUnusedCutscenes = 10,
+            PreventSequenceBreaks = 11,
+            TestMod = 12,
         }
 
         public void OptionChanged(int option,bool value)
@@ -150,6 +155,9 @@ namespace CrateModLoader
                 case CTTR_Options.RandomizeRunAndGun:
                     CTTR_rand_runandgun = value;
                     break;
+                case CTTR_Options.TestMod:
+                    CTTR_test_mod = value;
+                    break;
             }
         }
 
@@ -168,6 +176,48 @@ namespace CrateModLoader
 
         public void SetPaths(ModLoader.ConsoleMode console, string exec_name = "")
         {
+            path_RCF_default = "";
+            path_RCF_common = "";
+            path_RCF_frontend = "";
+            path_executable = "";
+            path_RCF_onfoot0 = "";
+            path_RCF_onfoot1 = "";
+            path_RCF_onfoot2 = "";
+            path_RCF_onfoot3 = "";
+            path_RCF_onfoot4 = "";
+            path_RCF_onfoot5 = "";
+            path_RCF_onfoot6 = "";
+            path_RCF_onfoot7 = "";
+            path_RCF_advent1 = "";
+            path_RCF_advent2 = "";
+            path_RCF_advent3 = "";
+            path_RCF_adventa = "";
+            path_RCF_dino1 = "";
+            path_RCF_dino2 = "";
+            path_RCF_dino3 = "";
+            path_RCF_dinoa = "";
+            path_RCF_egypt1 = "";
+            path_RCF_egypt2 = "";
+            path_RCF_egypt3 = "";
+            path_RCF_egypta = "";
+            path_RCF_fairy1 = "";
+            path_RCF_fairy2 = "";
+            path_RCF_fairy3 = "";
+            path_RCF_fairys = "";
+            path_RCF_solar1 = "";
+            path_RCF_solar2 = "";
+            path_RCF_solar3 = "";
+            path_RCF_solars = "";
+            path_RCF_0 = "";
+            path_RCF_1 = "";
+            path_RCF_2 = "";
+            path_RCF_3 = "";
+            path_RCF_4 = "";
+            path_RCF_5 = "";
+            path_RCF_6 = ""; 
+            path_RCF_sound = "";
+            path_RCF_english = "";
+
             if (console == ModLoader.ConsoleMode.PS2)
             {
                 path_executable = exec_name;
@@ -293,7 +343,7 @@ namespace CrateModLoader
             bool Editing_Credits = true;
             bool Editing_DefaultCommon = false;
 
-            if (CTTR_rand_characters || CTTR_rand_hubs || CTTR_rand_tracks || CTTR_rand_minigames || CTTR_rand_missions || CTTR_rand_carstats || CTTR_rand_racelaps || CTTR_rand_battlekos || CTTR_rand_crashinator || CTTR_rand_runandgun)
+            if (CTTR_rand_characters || CTTR_rand_hubs || CTTR_rand_tracks || CTTR_rand_minigames || CTTR_rand_missions || CTTR_rand_carstats || CTTR_rand_racelaps || CTTR_rand_battlekos || CTTR_rand_crashinator || CTTR_rand_runandgun || CTTR_test_mod)
             {
                 Editing_DefaultCommon = true;
             }
@@ -424,8 +474,18 @@ namespace CrateModLoader
                 }
             }
 
-            Modify_RCF(path_RCF_default);
-            Modify_RCF(path_RCF_common);
+            if (path_RCF_default != "")
+            {
+                Modify_RCF(path_RCF_default);
+            }
+            if (path_RCF_common != "")
+            {
+                Modify_RCF(path_RCF_common);
+            }
+            if (path_RCF_frontend != "")
+            {
+                Modify_RCF(path_RCF_frontend);
+            }
             if (path_RCF_onfoot0 != "")
             {
                 Modify_RCF(path_RCF_onfoot0);
@@ -494,6 +554,10 @@ namespace CrateModLoader
             if (CTTR_rand_battlekos)
             {
                 Randomize_Battle_KOs(path_extr, ref rcf_default, ref randKOs);
+            }
+            if (CTTR_test_mod)
+            {
+                CTTR_TestMod(path_extr, ref rcf_default);
             }
 
             rcf_default.Recalculate();
@@ -1127,6 +1191,131 @@ namespace CrateModLoader
             }
         }
 
+        void TestMod2(ref Pure3D.File targetFile)
+        {
+            int chunkPos;
+            if (targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("loading") != null)
+            {
+                chunkPos = targetFile.RootChunk.GetChildIndexByName<Pure3D.Chunks.FrontendLanguage>("loading");
+                Pure3D.Chunks.FrontendLanguage lang = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("loading").Children[0];
+                lang.TextStrings[1] = "Really long loading text for testing!";
+                lang.TextStrings[2] = "Really long loading text for testing!!";
+                lang.TextStrings[3] = "Really long loading text for testing!!!";
+                lang.TextStrings[4] = "Really long loading text for testing!!!!";
+                if (targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("loading").Children.Count > 1)
+                {
+                    Pure3D.Chunks.FrontendLanguage lang1 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("loading").Children[1];
+                    lang1.TextStrings[1] = "Really long loading text for testing!";
+                    lang1.TextStrings[2] = "Really long loading text for testing!!";
+                    lang1.TextStrings[3] = "Really long loading text for testing!!!";
+                    lang1.TextStrings[4] = "Really long loading text for testing!!!!";
+                    Pure3D.Chunks.FrontendLanguage lang2 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("loading").Children[2];
+                    lang2.TextStrings[1] = "Really long loading text for testing!";
+                    lang2.TextStrings[2] = "Really long loading text for testing!!";
+                    lang2.TextStrings[3] = "Really long loading text for testing!!!";
+                    lang2.TextStrings[4] = "Really long loading text for testing!!!!";
+                    Pure3D.Chunks.FrontendLanguage lang3 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("loading").Children[3];
+                    lang3.TextStrings[1] = "Really long loading text for testing!";
+                    lang3.TextStrings[2] = "Really long loading text for testing!!";
+                    lang3.TextStrings[3] = "Really long loading text for testing!!!";
+                    lang3.TextStrings[4] = "Really long loading text for testing!!!!";
+                    Pure3D.Chunks.FrontendLanguage lang4 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("loading").Children[4];
+                    lang4.TextStrings[1] = "Really long loading text for testing!";
+                    lang4.TextStrings[2] = "Really long loading text for testing!!";
+                    lang4.TextStrings[3] = "Really long loading text for testing!!!";
+                    lang4.TextStrings[4] = "Really long loading text for testing!!!!";
+                    Pure3D.Chunks.FrontendLanguage lang5 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("loading").Children[5];
+                    lang5.TextStrings[1] = "Really long loading text for testing!";
+                    lang5.TextStrings[2] = "Really long loading text for testing!!";
+                    lang5.TextStrings[3] = "Really long loading text for testing!!!";
+                    lang5.TextStrings[4] = "Really long loading text for testing!!!!";
+                }
+            }
+
+            if (targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("frontend") != null)
+            {
+                chunkPos = targetFile.RootChunk.GetChildIndexByName<Pure3D.Chunks.FrontendLanguage>("frontend");
+                Pure3D.Chunks.FrontendLanguage lang6 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("frontend").Children[0];
+                lang6.TextStrings[171] = "Really long loading text for testing!";
+                if (targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("frontend").Children.Count > 1)
+                {
+                    Pure3D.Chunks.FrontendLanguage lang7 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("frontend").Children[1];
+                    lang7.TextStrings[171] = "Really long loading text for testing!";
+                    Pure3D.Chunks.FrontendLanguage lang8 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("frontend").Children[2];
+                    lang8.TextStrings[171] = "Really long loading text for testing!";
+                    Pure3D.Chunks.FrontendLanguage lang9 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("frontend").Children[3];
+                    lang9.TextStrings[171] = "Really long loading text for testing!";
+                    Pure3D.Chunks.FrontendLanguage lang11 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("frontend").Children[4];
+                    lang11.TextStrings[171] = "Really long loading text for testing!";
+                    Pure3D.Chunks.FrontendLanguage lang12 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("frontend").Children[5];
+                    lang12.TextStrings[171] = "Really long loading text for testing!";
+                }
+            }
+
+        }
+
+        void TestMod1(string path_extr, string file_name, ref RCF rcf_file)
+        {
+            Pure3D.File targetFile = new Pure3D.File();
+            if (System.IO.File.Exists(path_extr + file_name))
+            {
+                targetFile.Load(path_extr + file_name);
+            }
+            else
+            {
+                return;
+            }
+
+            TestMod2(ref targetFile);
+
+            targetFile.Save(path_extr + file_name + "1");
+            System.IO.File.Delete(path_extr + file_name);
+            System.IO.File.Move(path_extr + file_name + "1", path_extr + file_name);
+
+            for (int i = 0; i < rcf_file.Header.T2File.Length; i++)
+            {
+                if (rcf_file.Header.T2File[i].Name == file_name)
+                {
+                    rcf_file.Header.T2File[i].External = path_extr + file_name;
+                    break;
+                }
+            }
+        }
+
+        void CTTR_TestMod(string path_extr, ref RCF rcf_file)
+        {
+            string[] files = {
+                @"art\frontend\frontend.p3d",
+                @"art\frontend\frontend_pal.p3d",
+                @"art\frontend\frontend_japan.p3d",
+                @"art\frontend\loading.p3d",
+                @"art\frontend\loading_pal.p3d",
+                @"art\frontend\loading_japan.p3d",
+                @"art\frontend\onfoot.p3d",
+                @"art\frontend\onfoot_pal.p3d",
+                @"art\frontend\onfoot_japan.p3d",
+                @"art\frontend\bootup.p3d",
+                @"art\frontend\bootup_pal.p3d",
+                @"art\frontend\bootup_japan.p3d",
+                @"art\frontend\arena.p3d",
+                @"art\frontend\arena_pal.p3d",
+                @"art\frontend\arena_japan.p3d",
+                @"art\frontend\driving.p3d",
+                @"art\frontend\driving_pal.p3d",
+                @"art\frontend\driving_japan.p3d",
+                @"art\frontend\minigame.p3d",
+                @"art\frontend\minigame_pal.p3d",
+                @"art\frontend\minigame_japan.p3d",
+                @"art\frontend\stunt.p3d",
+                @"art\frontend\stunt_pal.p3d",
+                @"art\frontend\stunt_japan.p3d",
+            };
+            for (int i = 0 ; i < files.Length; i++)
+            {
+                TestMod1(path_extr, files[i], ref rcf_file);
+            }
+        }
+
         public void OpenModMenu()
         {
             
@@ -1134,11 +1323,15 @@ namespace CrateModLoader
             //targetCharAnim.Load(AppDomain.CurrentDomain.BaseDirectory + "/Tools/ngin_onfoot_animations.p3d");
             //Pure3D.Chunk targetIdleAnim = targetCharAnim.RootChunk.Children[0];
 
-            //Pure3D.File CrashOnfootAnim1 = new Pure3D.File();
-            //CrashOnfootAnim1.Load(AppDomain.CurrentDomain.BaseDirectory + "/Tools/crash_onfoot_animations.p3d");
-            //CrashOnfootAnim1.RootChunk.GetChildrenByName<Pure3D.Chunks.Animation>("onfoot_death")[0].Name = "onfoot_death_big_lol";
-            //Console.WriteLine("\nNow saving...\n");
-            //CrashOnfootAnim1.Save(AppDomain.CurrentDomain.BaseDirectory + "/Tools/crash_onfoot_animations1.p3d");
+            Pure3D.File CrashOnfootAnim1 = new Pure3D.File();
+            CrashOnfootAnim1.Load(AppDomain.CurrentDomain.BaseDirectory + "/Tools/file.p3d");
+            PrintHierarchy(CrashOnfootAnim1.RootChunk, 0);
+
+            Pure3D.Chunks.FrontendLanguage lang = CrashOnfootAnim1.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("loading").GetChildByName<Pure3D.Chunks.FrontendLanguage>(@"D:\Empire\depot\game\export\art\frontend\scrooby\resources\textbible\loadingE");
+            lang.TextStrings[1] = "Really long loading text for testing!";
+
+            Console.WriteLine("\nNow saving...\n");
+            CrashOnfootAnim1.Save(AppDomain.CurrentDomain.BaseDirectory + "/Tools/file1.p3d");
 
             /*
             Pure3D.File CrashOnfootAnim = new Pure3D.File();
@@ -1161,5 +1354,14 @@ namespace CrateModLoader
             */
             
         }
+
+        void PrintHierarchy(Pure3D.Chunk chunk, int indent)
+        {
+            Console.WriteLine("{1}{0}", chunk.ToString(), new String('\t', indent));
+
+            foreach (var child in chunk.Children)
+                PrintHierarchy(child, indent + 1);
+        }
+
     }
 }

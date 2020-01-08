@@ -44,7 +44,17 @@ namespace Pure3D.Chunks
         {
             BinaryWriter writer = new BinaryWriter(stream);
             writer.Write(Version);
-            writer.Write(new byte[] { (byte)Parameter[0], (byte)Parameter[1], (byte)Parameter[2], (byte)Parameter[3], });
+            for (int i = 0; i < 4; i++)
+            {
+                if (i < Parameter.Length)
+                {
+                    writer.Write((byte)Parameter[i]);
+                }
+                else
+                {
+                    writer.Write((byte)0x00);
+                }
+            }
             writer.Write(Mapping);
             Util.WriteVector3(writer, Constants);
             writer.Write(NumberOfFrames);
