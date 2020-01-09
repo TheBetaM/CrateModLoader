@@ -88,8 +88,8 @@ namespace CrateModLoader
                 API_Credit = "APIs by NeoKesha and BetaM",
                 Icon = Properties.Resources.icon_crash,
                 ModderClass = typeof(Modder_CTTR),
-                ModMenuEnabled = true,
-                ModCratesSupported = false,
+                ModMenuEnabled = false,
+                ModCratesSupported = true,
                 RegionID_PS2 = new RegionCode[] {
                     new RegionCode() {
                     Name = @"BOOT2 = cdrom0:\SLUS_211.91;1",

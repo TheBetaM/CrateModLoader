@@ -103,7 +103,7 @@ namespace Pure3D
             chunkStart = stream.Position - 4;
             headerSize = reader.ReadUInt32();
             chunkSize = reader.ReadUInt32();
-            Console.WriteLine($"Header size: {headerSize}, chunk size {chunkSize}.");
+            //Console.WriteLine($"Header size: {headerSize}, chunk size {chunkSize}.");
 
             if (headerSize > chunkSize)
                 throw new Exception($"Header size {headerSize} greater then chunk size {chunkSize}.");
@@ -118,7 +118,7 @@ namespace Pure3D
 
             ReadHeader(stream, headerSize - 12);
 
-            Console.WriteLine(this.ToString());
+            //Console.WriteLine(this.ToString());
 
             if (readChildren)
                 ReadChildren(stream);
