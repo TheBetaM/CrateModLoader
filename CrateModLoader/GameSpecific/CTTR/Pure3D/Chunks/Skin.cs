@@ -3,8 +3,10 @@ using System.IO;
 namespace Pure3D.Chunks
 {
     [ChunkType(65537)]
-    public class Skin : Mesh
+    public class Skin : Named // Used to be Mesh type, but that doesn't work in CTTR
     {
+        public uint Version;
+        public uint NumPrimGroups; // should be equal to children.
         public string SkeletonName;
         public ulong SkeletonName_padding;
 
@@ -32,7 +34,7 @@ namespace Pure3D.Chunks
 
         public override string ToString()
         {
-            return $"Skin: {Name} (Skeleton: {SkeletonName}) ({NumPrimGroups} Prim Groups)";
+            return $"Skin: {Name} (Version: {Version} Skeleton: {SkeletonName}) ({NumPrimGroups} Prim Groups)";
         }
     }
 }

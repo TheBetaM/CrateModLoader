@@ -21,6 +21,7 @@ namespace Pure3D.Chunks
         public override void WriteHeader(Stream stream)
         {
             BinaryWriter writer = new BinaryWriter(stream);
+            base.WriteHeader(stream);
             Util.WriteString(writer, SkeletonName, SkeletonName_padding);
         }
 

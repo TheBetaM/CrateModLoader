@@ -85,11 +85,11 @@ namespace CrateModLoader
                     ModLoader.ConsoleMode.PSP,
                     ModLoader.ConsoleMode.XBOX,
                 },
-                API_Credit = "APIs by NeoKesha, handsomematt and BetaM",
+                API_Credit = "APIs by NeoKesha and BetaM",
                 Icon = Properties.Resources.icon_crash,
                 ModderClass = typeof(Modder_CTTR),
                 ModMenuEnabled = true,
-                ModCratesSupported = true,
+                ModCratesSupported = false,
                 RegionID_PS2 = new RegionCode[] {
                     new RegionCode() {
                     Name = @"BOOT2 = cdrom0:\SLUS_211.91;1",

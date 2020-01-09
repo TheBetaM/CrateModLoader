@@ -30,7 +30,7 @@ namespace Pure3D.Chunks
 
         public override string ToString()
         {
-            return $"Locator: {Name}";
+            return $"Locator: {Name} X: {Position.X} Y: {Position.Y} Z: {Position.Z} ";
         }
     }
 }

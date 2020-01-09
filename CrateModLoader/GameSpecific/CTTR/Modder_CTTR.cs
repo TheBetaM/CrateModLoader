@@ -8,7 +8,7 @@ using CTTR;
 using Pure3D;
 using CrateModLoader.GameSpecific.CTTR;
 //CTTR API by NeoKesha
-//Pure3D API by handsomematt (https://github.com/handsomematt/Pure3D) with modifications by BetaM
+//Pure3D API by BetaM (based on https://github.com/handsomematt/Pure3D)
 //Version number, seed and options are displayed in the Credits accessible from the main menu.
 
 namespace CrateModLoader
@@ -1396,9 +1396,6 @@ namespace CrateModLoader
             Pure3D.File CrashOnfootAnim1 = new Pure3D.File();
             CrashOnfootAnim1.Load(AppDomain.CurrentDomain.BaseDirectory + "/Tools/file.p3d");
             PrintHierarchy(CrashOnfootAnim1.RootChunk, 0);
-
-            Pure3D.Chunks.FrontendLanguage lang = CrashOnfootAnim1.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("loading").GetChildByName<Pure3D.Chunks.FrontendLanguage>(@"D:\Empire\depot\game\export\art\frontend\scrooby\resources\textbible\loadingE");
-            lang.TextStrings[1] = "Really long loading text for testing!";
 
             Console.WriteLine("\nNow saving...\n");
             CrashOnfootAnim1.Save(AppDomain.CurrentDomain.BaseDirectory + "/Tools/file1.p3d");

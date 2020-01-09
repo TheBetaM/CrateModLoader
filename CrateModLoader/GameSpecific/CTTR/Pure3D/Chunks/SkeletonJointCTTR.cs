@@ -1,32 +1,43 @@
 ﻿using System.IO;
 using System.Text;
+using System;
 
 namespace Pure3D.Chunks
 {
     [ChunkType(143361)]
-    public class SkeletonJointCTTR : Chunk
+    public class SkeletonJointCTTR : Named
     {
         public byte[] Data;
+        public uint SkeletonParent;
+        public Matrix RestPose;
 
         public SkeletonJointCTTR(File file, uint type) : base(file, type)
         {
-
         }
 
         public override void ReadHeader(Stream stream, long length)
         {
-            Data = new BinaryReader(stream).ReadBytes((int)length);
+            BinaryReader reader = new BinaryReader(stream);
+
+            long currentPos = reader.BaseStream.Position;
+
+            base.ReadHeader(stream, length);
+            SkeletonParent = reader.ReadUInt32();
+            RestPose = Util.ReadMatrix(reader);
+
         }
 
         public override void WriteHeader(Stream stream)
         {
             BinaryWriter writer = new BinaryWriter(stream);
-            writer.Write(Data);
+            base.WriteHeader(stream);
+            writer.Write(SkeletonParent);
+            Util.WriteMatrix(writer, RestPose);
         }
 
         public override string ToString()
         {
-            return $"Skeleton Joint CTTR";
+            return $"Skeleton Joint CTTR: {Name} SkeletonParent { SkeletonParent } ";
         }
     }
 }

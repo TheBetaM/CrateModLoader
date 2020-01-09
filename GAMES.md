@@ -58,7 +58,7 @@ API by NeoKesha, Smartkin, ManDude and Marko. (https://github.com/Smartkin/twins
   
 ## Crash Tag Team Racing
 Supported: All PS2 versions (.ISO format) (GC, PSP not yet supported)  
-APIs by NeoKesha, handsomematt and BetaM. (https://github.com/handsomematt/Pure3D)  
+APIs by NeoKesha and BetaM. (based on https://github.com/handsomematt/Pure3D)  
 ### Features:  
 - Randomize Platforming & Starting Characters
 - Randomize Hub Entrances
