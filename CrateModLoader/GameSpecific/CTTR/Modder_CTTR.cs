@@ -71,6 +71,11 @@ namespace CrateModLoader
             "Randomize Battle KO's",
             "Randomize Crashinator",
             "Randomize Run & Gun",
+            "Randomize Stunt Arena",
+            "Randomize Surface Parameters",
+            "Randomize Powerup Distribution",
+            "Randozmie Powerup Effects",
+            "Randomize Weapons",
             "Add Unused Cutscenes",
             "Prevent Sequence Breaks",
         };
@@ -79,7 +84,7 @@ namespace CrateModLoader
         public bool CTTR_rand_tracks = false; // todo: arenas
         public bool CTTR_rand_minigames = false; // todo: minigame challenges aswell
         public bool CTTR_rand_missions = false; // todo, genericobjectives, missionobjectives_x, level NIS+NPC
-        public bool CTTR_rand_characters = false; // todo: idle animation
+        public bool CTTR_rand_characters = false; // todo: change missions to unlock crash and cortex if they're not in the starting pool
         public bool CTTR_rand_carstats = false; // todo: vehicles, levels/common for speed tier values
         public bool CTTR_rand_racelaps = false;
         public bool CTTR_rand_battlekos = false;
@@ -111,9 +116,14 @@ namespace CrateModLoader
             RandomizeBattleKOs = 7,
             RandomizeCrashinator = 8,
             RandomizeRunAndGun = 9,
-            AddUnusedCutscenes = 10,
-            PreventSequenceBreaks = 11,
-            TestMod = 12,
+            RandomizeStuntArena = 10,
+            RandomizeSurfaceParams = 11,
+            RandomizePowerupDistribution = 12,
+            RandomizePowerupEffects = 13,
+            RandomizeWeapons = 14,
+            AddUnusedCutscenes = 15,
+            PreventSequenceBreaks = 16,
+            TestMod = 17,
         }
 
         public void OptionChanged(int option,bool value)
@@ -155,6 +165,21 @@ namespace CrateModLoader
                     break;
                 case CTTR_Options.RandomizeRunAndGun:
                     CTTR_rand_runandgun = value;
+                    break;
+                case CTTR_Options.RandomizeStuntArena:
+                    CTTR_rand_stuntarena = value;
+                    break;
+                case CTTR_Options.RandomizeSurfaceParams:
+                    CTTR_rand_surfaceparams = value;
+                    break;
+                case CTTR_Options.RandomizePowerupDistribution:
+                    CTTR_rand_powerupdistribution = value;
+                    break;
+                case CTTR_Options.RandomizePowerupEffects:
+                    CTTR_rand_powerupeffects = value;
+                    break;
+                case CTTR_Options.RandomizeWeapons:
+                    CTTR_rand_weapons= value;
                     break;
                 case CTTR_Options.TestMod:
                     CTTR_test_mod = value;
@@ -331,7 +356,7 @@ namespace CrateModLoader
             if (Program.ModProgram.isoType == ModLoader.ConsoleMode.GCN)
             {
                 basePath = AppDomain.CurrentDomain.BaseDirectory + @"temp\P-" + Program.ModProgram.PS2_game_code_name.Substring(0, 4) + @"\";
-                // The CTTR API does not work with the GCN version yet
+                // The RCF API does not work with the GCN version yet
                 return;
             }
 

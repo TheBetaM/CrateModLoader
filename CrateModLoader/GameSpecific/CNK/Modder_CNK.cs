@@ -39,6 +39,8 @@ namespace CrateModLoader
         //public bool Randomize_Obstacles = false; //TODO obstacles
         //public bool Randomize_Cup_Points = false; // Maybe? gameprogression
         public bool Randomize_Weapons = false;
+        //public bool Randomize_Characters = false; //TODO model file replacement, name replacement, main menu model replacement, voices.csv
+        
         public bool Mod_SpeedUp_Mask_Hints = false;
         public bool Mod_Disable_Fadeout = false;
         //public bool Mod_Mask_Hints_NoMask = false; //TODO, hinthistory.csv

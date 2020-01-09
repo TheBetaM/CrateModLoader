@@ -69,6 +69,11 @@ APIs by NeoKesha, handsomematt and BetaM. (https://github.com/handsomematt/Pure3
 - Randomize Race Laps
 - Randomize Crashinator
 - Randomize Run & Gun
+- Randomize Stunt Arena
+- Randomize Surface Parameters
+- Randomize Powerup Distribution
+- Randomize Powerup Effects
+- Randomize Weapons
 - Add Unused Cutscenes
 - Prevent Sequence Breaks
 - Version, seed and settings visible in the Credits screen
