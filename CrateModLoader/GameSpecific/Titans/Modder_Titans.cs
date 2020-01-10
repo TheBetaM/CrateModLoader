@@ -36,8 +36,7 @@ namespace CrateModLoader
             //Fixes names for PS2
             //File.Move(Program.ModProgram.extractedPath + path_RCF_frontend + ";1", Program.ModProgram.extractedPath + path_RCF_frontend);
 
-            //Warning: The CTTR API only likes paths with \ backslashes
-            string feedback = "";
+            //Warning: The RCF API only likes paths with \ backslashes
             string path_extr = "";
             RCF rcf_frontend = new RCF();
             rcf_frontend.OpenRCF(AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_frontend);

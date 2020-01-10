@@ -12,6 +12,7 @@ See [this list](../master/GAMES.md) for supported games and their features.
 # Credits
 
 - [BetaM](https://www.youtube.com/channel/UCL-EwV5XqypMUJ5zVHaBjAw) (Creator)    
+- [CDRomatron](https://github.com/CDRomatron)  
 - [ManDude](https://github.com/ManDude)  
 
 # License

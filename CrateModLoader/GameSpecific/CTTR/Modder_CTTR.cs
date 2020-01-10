@@ -7,7 +7,7 @@ using System.IO;
 using RadcoreCementFile;
 using Pure3D;
 using CrateModLoader.GameSpecific.CTTR;
-//CTTR API by NeoKesha
+//RCF API by NeoKesha
 //Pure3D API by BetaM (based on https://github.com/handsomematt/Pure3D)
 //Version number, seed and options are displayed in the Credits accessible from the main menu.
 
