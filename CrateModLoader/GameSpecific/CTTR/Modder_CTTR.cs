@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using CTTR;
+using RadcoreCementFile;
 using Pure3D;
 using CrateModLoader.GameSpecific.CTTR;
 //CTTR API by NeoKesha
@@ -549,13 +549,12 @@ namespace CrateModLoader
 
         void Modify_RCF(string path)
         {
-            string feedback = "";
             string path_extr = "";
             RCF rcf_default = new RCF();
             rcf_default.OpenRCF(basePath + path);
             path_extr = basePath + @"cml_extr\";
             Directory.CreateDirectory(path_extr);
-            rcf_default.ExtractRCF(ref feedback, path_extr);
+            rcf_default.ExtractRCF(path_extr);
 
             if (CTTR_rand_characters)
             {
@@ -587,7 +586,7 @@ namespace CrateModLoader
             }
 
             rcf_default.Recalculate();
-            rcf_default.Pack(basePath + path + "1", ref feedback);
+            rcf_default.Pack(basePath + path + "1");
 
             // Extraction cleanup
             System.IO.File.Delete(basePath + path);
@@ -1158,14 +1157,13 @@ namespace CrateModLoader
 
         void Mod_EditCredits()
         {
-            //Warning: The CTTR API only likes paths with \ backslashes
-            string feedback = "";
+            //Warning: The RCF API only likes paths with \ backslashes
             string path_extr = "";
             RCF rcf_frontend = new RCF();
             rcf_frontend.OpenRCF(basePath + path_RCF_frontend);
             path_extr = basePath + @"cml_extr\";
             Directory.CreateDirectory(path_extr);
-            rcf_frontend.ExtractRCF(ref feedback, path_extr);
+            rcf_frontend.ExtractRCF(path_extr);
 
             string[] frontend_lines = System.IO.File.ReadAllLines(path_extr + @"design\levels\common\frontend.god");
 
@@ -1195,7 +1193,7 @@ namespace CrateModLoader
             }
 
             rcf_frontend.Recalculate();
-            rcf_frontend.Pack(basePath + path_RCF_frontend + "1", ref feedback);
+            rcf_frontend.Pack(basePath + path_RCF_frontend + "1");
 
             // Extraction cleanup
             System.IO.File.Delete(basePath + path_RCF_frontend);

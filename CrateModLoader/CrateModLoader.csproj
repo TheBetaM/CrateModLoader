@@ -47,9 +47,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>GameSpecific\CTR\CTRFramework.dll</HintPath>
     </Reference>
-    <Reference Include="CTTR">
-      <HintPath>GameSpecific\CTTR\CTTR.dll</HintPath>
-    </Reference>
     <Reference Include="DiscUtils, Version=0.11.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>tools\DiscUtils.dll</HintPath>

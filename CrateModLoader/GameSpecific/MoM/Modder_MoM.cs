@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using CTTR;
+using RadcoreCementFile;
 //MoM API by NeoKesha
 //Version number, seed and options are displayed in the Credits accessible from the main menu.
 
@@ -43,7 +43,7 @@ namespace CrateModLoader
             rcf_frontend.OpenRCF(AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_frontend);
             path_extr = AppDomain.CurrentDomain.BaseDirectory + @"temp\cml_extr\";
             Directory.CreateDirectory(path_extr);
-            rcf_frontend.ExtractRCF(ref feedback, path_extr);
+            rcf_frontend.ExtractRCF(path_extr);
 
             // Proof of concept mod replacing credits text
             string[] credits_lines = File.ReadAllLines(path_extr + @"script\CreditsList.txt");
@@ -81,7 +81,7 @@ namespace CrateModLoader
             }
 
             rcf_frontend.Recalculate();
-            rcf_frontend.Pack(AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_frontend + "1", ref feedback);
+            rcf_frontend.Pack(AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_frontend + "1");
 
             // Extraction cleanup
             File.Delete(AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_frontend);

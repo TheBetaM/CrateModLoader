@@ -1,6 +1,7 @@
 ﻿using System;
+using System.IO;
 // RCF API by NeoKesha
-// Converted from VisualBasic, needs fixing
+// Converted from VisualBasic
 
 namespace RadcoreCementFile
 {
@@ -44,17 +45,17 @@ namespace RadcoreCementFile
         public RCF_HEADER Header;
         public void OpenRCF(string Path)
         {
-            if (!System.IO.File.Exists(Path))
+            if (!File.Exists(Path))
                 return;
             RCF_Path = Path;
-            System.IO.FileStream RCF = new System.IO.FileStream(RCF_Path, System.IO.FileMode.Open, System.IO.FileAccess.Read);
-            System.IO.BinaryReader RCFReader = new System.IO.BinaryReader(RCF);
+            FileStream RCF = new FileStream(RCF_Path, FileMode.Open, FileAccess.Read);
+            BinaryReader RCFReader = new BinaryReader(RCF);
             Header.signature = "";
             for (Int32 i = 1; i <= 32; i++)
             {
-                char ch = RCFReader.ReadChar();
-                if (ch != (char)0x00)
-                    Header.signature += ch;
+                byte ch = RCFReader.ReadByte();
+                if (ch != 0x00)
+                    Header.signature += (char)ch;
                 else
                     break;
             }
@@ -71,24 +72,23 @@ namespace RadcoreCementFile
             RCF.Position = Header.T1Offset;
             for (Int32 i = 0; i <= Header.Files - 1; i++)
             {
-                var withBlock = Header.T1File[i];
-                withBlock.ID = RCFReader.ReadUInt32();
-                withBlock.Offset = RCFReader.ReadUInt32();
-                withBlock.Size = RCFReader.ReadUInt32();
+                Header.T1File[i].ID = RCFReader.ReadUInt32();
+                Header.T1File[i].Offset = RCFReader.ReadUInt32();
+                Header.T1File[i].Size = RCFReader.ReadUInt32();
             }
             RCF.Position = Header.T2Offset;
             Header.NamesAligment = RCFReader.ReadUInt32();
             Header.Gap2 = RCFReader.ReadUInt32();
             for (Int32 i = 0; i <= Header.Files - 1; i++)
             {
-                var withBlock = Header.T2File[i];
-                withBlock.SomeShit1 = RCFReader.ReadUInt32();
-                withBlock.Align = RCFReader.ReadUInt32();
-                withBlock.Gap1 = RCFReader.ReadUInt32();
-                withBlock.NameLen = RCFReader.ReadUInt32();
-                withBlock.Name = RCFReader.ReadChars((int)withBlock.NameLen - 1).ToString();
-                withBlock.Gap2 = (uint)RCFReader.ReadInt32();
-                withBlock.External = "";
+                Header.T2File[i].SomeShit1 = RCFReader.ReadUInt32();
+                Header.T2File[i].Align = RCFReader.ReadUInt32();
+                Header.T2File[i].Gap1 = RCFReader.ReadUInt32();
+                Header.T2File[i].NameLen = RCFReader.ReadUInt32();
+                char[] tempName = RCFReader.ReadChars((int)Header.T2File[i].NameLen - 1);
+                Header.T2File[i].Name = new string(tempName);
+                Header.T2File[i].Gap2 = (uint)RCFReader.ReadInt32();
+                Header.T2File[i].External = "";
             }
             Int32 n = 1;
             while (n < Header.Files)
@@ -139,11 +139,11 @@ namespace RadcoreCementFile
                 return;
             if (Path[Path.Length - 1] != '\\')
                 Path += @"\";
-            System.IO.FileStream RCF = new System.IO.FileStream(RCF_Path, System.IO.FileMode.Open, System.IO.FileAccess.Read);
-            System.IO.BinaryReader RCFReader = new System.IO.BinaryReader(RCF);
+            FileStream RCF = new FileStream(RCF_Path, FileMode.Open, FileAccess.Read);
+            BinaryReader RCFReader = new BinaryReader(RCF);
             string[] Folders = Header.T2File[ind].Name.Split('\\');
-            System.IO.FileStream File = new System.IO.FileStream(Path + Folders[Folders.Length - 1], System.IO.FileMode.Create, System.IO.FileAccess.Write);
-            System.IO.BinaryWriter FileWriter = new System.IO.BinaryWriter(File);
+            FileStream File = new FileStream(Path + Folders[Folders.Length - 1], FileMode.Create, FileAccess.Write);
+            BinaryWriter FileWriter = new BinaryWriter(File);
             RCF.Position = Header.T1File[Header.T2File[ind].Ref].Offset;
             FileWriter.Write(RCFReader.ReadBytes((int)Header.T1File[Header.T2File[ind].Ref].Size));
             FileWriter.Close();
@@ -152,29 +152,28 @@ namespace RadcoreCementFile
             RCF.Close();
             return;
         }
-        public void ExtractRCF(ref string feedback, string Path)
+        public void ExtractRCF(string Path)
         {
-            if (!System.IO.File.Exists(RCF_Path))
+            if (!File.Exists(RCF_Path))
                 return;
             if (Path[Path.Length - 1] != '\\')
                 Path += @"\";
-            System.IO.FileStream RCF = new System.IO.FileStream(RCF_Path, System.IO.FileMode.Open, System.IO.FileAccess.Read);
-            System.IO.BinaryReader RCFReader = new System.IO.BinaryReader(RCF);
-            string BaseStr = feedback;
+            FileStream RCF = new FileStream(RCF_Path, FileMode.Open, FileAccess.Read);
+            BinaryReader RCFReader = new BinaryReader(RCF);
             for (Int32 i = 0; i <= Header.Files - 1; i++)
             {
-                string @checked = Path;
+                string check = Path;
                 string[] Folders = Header.T2File[i].Name.Split('\\');
                 for (Int32 j = 0; j <= Folders.Length - 2; j++)
                 {
-                    @checked += Folders[j] + @"\";
-                    if (!System.IO.Directory.Exists(@checked))
-                        System.IO.Directory.CreateDirectory(@checked);
+                    check += Folders[j] + @"\";
+                    if (!Directory.Exists(check))
+                        Directory.CreateDirectory(check);
                 }
-                @checked += Folders[Folders.Length - 1];
-                feedback = BaseStr + " " + Folders[Folders.Length - 1] + " " + (i + 1).ToString() + @"\" + Header.Files.ToString();
-                System.IO.FileStream File = new System.IO.FileStream(@checked, System.IO.FileMode.Create, System.IO.FileAccess.Write);
-                System.IO.BinaryWriter FileWriter = new System.IO.BinaryWriter(File);
+                check += Folders[Folders.Length - 1];
+                //Console.WriteLine("RCF Extract: " + Folders[Folders.Length - 1] + " " + (i + 1).ToString() + @"\" + Header.Files.ToString());
+                FileStream File = new FileStream(check, FileMode.Create, FileAccess.Write);
+                BinaryWriter FileWriter = new BinaryWriter(File);
                 RCF.Position = Header.T1File[Header.T2File[i].Ref].Offset;
                 FileWriter.Write(RCFReader.ReadBytes((int)Header.T1File[Header.T2File[i].Ref].Size));
                 FileWriter.Close();
@@ -182,43 +181,41 @@ namespace RadcoreCementFile
             }
             RCFReader.Close();
             RCF.Close();
-            feedback = BaseStr;
             return;
         }
         /// <summary>
         ///     ''' Uses T1 index
         ///     ''' </summary>
-        public void GetStream(UInt32 ind, ref System.IO.MemoryStream MS)
+        public void GetStream(UInt32 ind, ref MemoryStream MS)
         {
-            MS = new System.IO.MemoryStream((int)Header.T1File[ind].Size);
-            System.IO.FileStream RCF = new System.IO.FileStream(RCF_Path, System.IO.FileMode.Open, System.IO.FileAccess.Read);
-            System.IO.BinaryReader RCFReader = new System.IO.BinaryReader(RCF);
+            MS = new MemoryStream((int)Header.T1File[ind].Size);
+            FileStream RCF = new FileStream(RCF_Path, FileMode.Open, FileAccess.Read);
+            BinaryReader RCFReader = new BinaryReader(RCF);
             RCF.Position = Header.T1File[ind].Offset;
-            System.IO.BinaryWriter MSW = new System.IO.BinaryWriter(MS);
+            BinaryWriter MSW = new BinaryWriter(MS);
             MSW.Write(RCFReader.ReadBytes((int)Header.T1File[ind].Size));
             RCFReader.Close();
             RCF.Close();
             return;
         }
-        public void GetStream(UInt32 ind, ref System.IO.FileStream MS)
+        public void GetStream(UInt32 ind, ref FileStream MS)
         {
-            System.IO.FileStream RCF = new System.IO.FileStream(RCF_Path, System.IO.FileMode.Open, System.IO.FileAccess.Read);
-            System.IO.BinaryReader RCFReader = new System.IO.BinaryReader(RCF);
+            FileStream RCF = new FileStream(RCF_Path, FileMode.Open, FileAccess.Read);
+            BinaryReader RCFReader = new BinaryReader(RCF);
             RCF.Position = Header.T1File[ind].Offset;
-            System.IO.BinaryWriter MSW = new System.IO.BinaryWriter(MS);
+            BinaryWriter MSW = new BinaryWriter(MS);
             MSW.Write(RCFReader.ReadBytes((int)Header.T1File[ind].Size));
             RCFReader.Close();
             RCF.Close();
             return;
         }
-        public void Pack(string NewPath, ref string feedback, UInt32 Alignment = 2048)
+        public void Pack(string NewPath, UInt32 Alignment = 2048)
         {
             if (NewPath == RCF_Path)
                 return;
-            System.IO.FileStream NRCF = new System.IO.FileStream(NewPath, System.IO.FileMode.Create, System.IO.FileAccess.Write);
-            System.IO.BinaryWriter NRCFWriter = new System.IO.BinaryWriter(NRCF);
-            string BaseStr = feedback;
-            feedback = BaseStr + " Recalculating...";
+            FileStream NRCF = new FileStream(NewPath, FileMode.Create, FileAccess.Write);
+            BinaryWriter NRCFWriter = new BinaryWriter(NRCF);
+            //Console.WriteLine("RCF: Recalculating...");
             Recalculate(Alignment);
             for (Int32 i = 0; i <= 31; i++)
             {
@@ -227,7 +224,7 @@ namespace RadcoreCementFile
                 else
                     NRCFWriter.Write(System.Convert.ToByte(0));
             }
-            feedback = BaseStr + " Writing header...";
+            //Console.WriteLine("RCF: Writing header...");
             NRCFWriter.Write(Header.Flags);
             NRCFWriter.Write(Header.T1Offset);
             NRCFWriter.Write(Header.T1Size);
@@ -259,16 +256,15 @@ namespace RadcoreCementFile
             ORCF.OpenRCF(RCF_Path);
             for (UInt32 i = 0; i <= Header.Files - 1; i++)
             {
-                feedback = BaseStr + " " + Header.T2File[Header.T1File[i].Pos].Name + " " + (i + 1).ToString() + @"\" + Header.Files.ToString();
+                //Console.WriteLine("RCF Pack: " + Header.T2File[Header.T1File[i].Pos].Name + " " + (i + 1).ToString() + @"\" + Header.Files.ToString());
                 NRCF.Position = Header.T1File[i].Offset;
                 if (Header.T2File[Header.T1File[i].Pos].External == "")
                     ORCF.GetStream(i, ref NRCF);
                 else
-                    NRCFWriter.Write(System.IO.File.ReadAllBytes(Header.T2File[Header.T1File[i].Pos].External));
+                    NRCFWriter.Write(File.ReadAllBytes(Header.T2File[Header.T1File[i].Pos].External));
             }
             NRCFWriter.Close();
             NRCF.Close();
-            feedback = BaseStr;
             return;
         }
         public void Recalculate(UInt32 Alignment = 2048)
@@ -288,7 +284,7 @@ namespace RadcoreCementFile
                 Header.T1File[ind].Offset = ((offset + size - 1) / Alignment + 1) * Alignment;
                 if (Header.T2File[i].External != "")
                 {
-                    System.IO.FileInfo FI = new System.IO.FileInfo(Header.T2File[i].External);
+                    FileInfo FI = new FileInfo(Header.T2File[i].External);
                     Header.T1File[ind].Size = (uint)FI.Length;
                 }
                 offset = Header.T1File[ind].Offset;
