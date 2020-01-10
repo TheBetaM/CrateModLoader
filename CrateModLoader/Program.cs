@@ -209,6 +209,29 @@ namespace CrateModLoader
                 // Use PSPTools?
                 //UMD.ISO IsoFile = new UMD.ISO();
                 //IsoFile.CreateISO(extractedPath, outputISOpath, true);
+
+                CDBuilder isoBuild = new CDBuilder();
+                isoBuild.UseJoliet = true;
+                isoBuild.VolumeIdentifier = ISO_label;
+
+                DirectoryInfo di = new DirectoryInfo(extractedPath);
+                HashSet<FileStream> files = new HashSet<FileStream>();
+
+                foreach (DirectoryInfo dir in di.GetDirectories())
+                {
+                    Recursive_AddDirs(isoBuild, dir, dir.Name + @"\", files);
+                }
+                foreach (FileInfo file in di.GetFiles())
+                {
+                    AddFile(isoBuild, file, string.Empty, files);
+                }
+
+                isoBuild.Build(outputISOpath);
+
+                foreach (FileStream file in files)
+                {
+                    file.Close();
+                }
             }
             else if (isoType == ConsoleMode.GCN)
             {
@@ -710,44 +733,23 @@ namespace CrateModLoader
 
                 ISOcreatorProcess.WaitForExit();
 
-                string titleID = outputMessage.Substring(0, 6);
-
-                if (titleID != "")
+                if (outputMessage.Length > 0 && outputMessage.Length <= 8)
                 {
-                    int GameID = -1;
-                    for (int game = 0; game < GameDatabase.Games.Length; game++)
+                    string titleID = outputMessage.Substring(0, 6);
+
+                    if (titleID != "")
                     {
-                        if (GameDatabase.Games[game].RegionID_GCN != null && GameDatabase.Games[game].RegionID_GCN.Length > 0)
-                        {
-                            foreach (RegionCode rcode in GameDatabase.Games[game].RegionID_GCN)
-                            {
-                                if (titleID == rcode.Name)
-                                {
-                                    GameID = game;
-                                    SetGameType(GameID, ConsoleMode.GCN, rcode.Region);
-                                    PS2_game_code_name = rcode.Name;
-                                    foundMetaData = true;
-                                    break;
-                                }
-                            }
-                        }
-                        if (foundMetaData)
-                        {
-                            break;
-                        }
-                    }
-                    if (!foundMetaData)
-                    {
+                        int GameID = -1;
                         for (int game = 0; game < GameDatabase.Games.Length; game++)
                         {
-                            if (GameDatabase.Games[game].RegionID_WII != null && GameDatabase.Games[game].RegionID_WII.Length > 0)
+                            if (GameDatabase.Games[game].RegionID_GCN != null && GameDatabase.Games[game].RegionID_GCN.Length > 0)
                             {
-                                foreach (RegionCode rcode in GameDatabase.Games[game].RegionID_WII)
+                                foreach (RegionCode rcode in GameDatabase.Games[game].RegionID_GCN)
                                 {
                                     if (titleID == rcode.Name)
                                     {
                                         GameID = game;
-                                        SetGameType(GameID, ConsoleMode.WII, rcode.Region);
+                                        SetGameType(GameID, ConsoleMode.GCN, rcode.Region);
                                         PS2_game_code_name = rcode.Name;
                                         foundMetaData = true;
                                         break;
@@ -757,6 +759,30 @@ namespace CrateModLoader
                             if (foundMetaData)
                             {
                                 break;
+                            }
+                        }
+                        if (!foundMetaData)
+                        {
+                            for (int game = 0; game < GameDatabase.Games.Length; game++)
+                            {
+                                if (GameDatabase.Games[game].RegionID_WII != null && GameDatabase.Games[game].RegionID_WII.Length > 0)
+                                {
+                                    foreach (RegionCode rcode in GameDatabase.Games[game].RegionID_WII)
+                                    {
+                                        if (titleID == rcode.Name)
+                                        {
+                                            GameID = game;
+                                            SetGameType(GameID, ConsoleMode.WII, rcode.Region);
+                                            PS2_game_code_name = rcode.Name;
+                                            foundMetaData = true;
+                                            break;
+                                        }
+                                    }
+                                }
+                                if (foundMetaData)
+                                {
+                                    break;
+                                }
                             }
                         }
                     }
