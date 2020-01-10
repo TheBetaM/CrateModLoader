@@ -356,8 +356,6 @@ namespace CrateModLoader
             if (Program.ModProgram.isoType == ModLoader.ConsoleMode.GCN)
             {
                 basePath = AppDomain.CurrentDomain.BaseDirectory + @"temp\P-" + Program.ModProgram.PS2_game_code_name.Substring(0, 4) + @"\";
-                // The RCF API does not work with the GCN version yet
-                return;
             }
 
 
@@ -588,6 +586,7 @@ namespace CrateModLoader
             rcf_default.Recalculate();
             rcf_default.Pack(basePath + path + "1");
 
+
             // Extraction cleanup
             System.IO.File.Delete(basePath + path);
             System.IO.File.Move(basePath + path + "1", basePath + path);
@@ -601,6 +600,10 @@ namespace CrateModLoader
                 }
                 foreach (DirectoryInfo dir in di.EnumerateDirectories())
                 {
+                    //Console.WriteLine("di:" + di.FullName);
+                    //Console.WriteLine("diame:" + di.Name);
+                    //Console.WriteLine("dir:" + dir.FullName);
+                    //Console.WriteLine("dirame:" + dir.Name);
                     dir.Delete(true);
                 }
 
@@ -1195,6 +1198,7 @@ namespace CrateModLoader
             rcf_frontend.Recalculate();
             rcf_frontend.Pack(basePath + path_RCF_frontend + "1");
 
+
             // Extraction cleanup
             System.IO.File.Delete(basePath + path_RCF_frontend);
             System.IO.File.Move(basePath + path_RCF_frontend + "1", basePath + path_RCF_frontend);
@@ -1386,17 +1390,32 @@ namespace CrateModLoader
 
         public void OpenModMenu()
         {
-            
+
             //Pure3D.File targetCharAnim = new Pure3D.File();
             //targetCharAnim.Load(AppDomain.CurrentDomain.BaseDirectory + "/Tools/ngin_onfoot_animations.p3d");
             //Pure3D.Chunk targetIdleAnim = targetCharAnim.RootChunk.Children[0];
 
+            /*
+            string path_extr = "";
+            basePath = AppDomain.CurrentDomain.BaseDirectory + @"\Tools\";
+            RCF rcf_frontend = new RCF();
+            rcf_frontend.OpenRCF(basePath + @"default.rcf");
+            path_extr = basePath + @"cml_extr\";
+            Directory.CreateDirectory(path_extr);
+            rcf_frontend.ExtractRCF(path_extr);
+
+            rcf_frontend.Recalculate();
+            rcf_frontend.Pack(basePath + @"default.rcf1");
+            */
+
+            /*
             Pure3D.File CrashOnfootAnim1 = new Pure3D.File();
             CrashOnfootAnim1.Load(AppDomain.CurrentDomain.BaseDirectory + "/Tools/file.p3d");
             PrintHierarchy(CrashOnfootAnim1.RootChunk, 0);
 
             Console.WriteLine("\nNow saving...\n");
             CrashOnfootAnim1.Save(AppDomain.CurrentDomain.BaseDirectory + "/Tools/file1.p3d");
+            */
 
             /*
             Pure3D.File CrashOnfootAnim = new Pure3D.File();
@@ -1417,7 +1436,7 @@ namespace CrateModLoader
 
             CrashOnfootMidwayAnim.Save(AppDomain.CurrentDomain.BaseDirectory + "/Tools/crash_onfoot_midway_animations1.p3d");
             */
-            
+
         }
 
         void PrintHierarchy(Pure3D.Chunk chunk, int indent)

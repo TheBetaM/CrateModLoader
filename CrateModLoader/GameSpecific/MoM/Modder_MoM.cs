@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using RadcoreCementFile;
-//MoM API by NeoKesha
+//RCF API by NeoKesha
 //Version number, seed and options are displayed in the Credits accessible from the main menu.
 
 namespace CrateModLoader
@@ -24,22 +24,27 @@ namespace CrateModLoader
             Program.ModProgram.PrepareOptionsList(modOptions);
         }
 
+        private string basePath = "";
+
         public void StartModProcess()
         {
-            if (Program.ModProgram.isoType == ModLoader.ConsoleMode.WII || Program.ModProgram.isoType == ModLoader.ConsoleMode.XBOX360)
-            {
-                // API doesn't work yet for WII/360 because the archive's too big
-                return;
-            }
 
             string path_RCF_frontend = "DEFAULT.RCF";
+
+            basePath = AppDomain.CurrentDomain.BaseDirectory + @"temp\";
+            if (Program.ModProgram.isoType == ModLoader.ConsoleMode.WII)
+            {
+                path_RCF_frontend = "default.rcf";
+                basePath = AppDomain.CurrentDomain.BaseDirectory + @"temp\DATA\files\";
+            }
+
             //Fixes names for PS2
             //File.Move(Program.ModProgram.extractedPath + path_RCF_frontend + ";1", Program.ModProgram.extractedPath + path_RCF_frontend);
 
             //Warning: The RCF API only likes paths with \ backslashes
             string path_extr = "";
             RCF rcf_frontend = new RCF();
-            rcf_frontend.OpenRCF(AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_frontend);
+            rcf_frontend.OpenRCF(basePath + path_RCF_frontend);
             path_extr = AppDomain.CurrentDomain.BaseDirectory + @"temp\cml_extr\";
             Directory.CreateDirectory(path_extr);
             rcf_frontend.ExtractRCF(path_extr);
@@ -80,11 +85,11 @@ namespace CrateModLoader
             }
 
             rcf_frontend.Recalculate();
-            rcf_frontend.Pack(AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_frontend + "1");
+            rcf_frontend.Pack(basePath + path_RCF_frontend + "1");
 
             // Extraction cleanup
-            File.Delete(AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_frontend);
-            File.Move(AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_frontend + "1", AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path_RCF_frontend);
+            File.Delete(basePath + path_RCF_frontend);
+            File.Move(basePath + path_RCF_frontend + "1", basePath + path_RCF_frontend);
             if (Directory.Exists(path_extr))
             {
                 DirectoryInfo di = new DirectoryInfo(path_extr);
