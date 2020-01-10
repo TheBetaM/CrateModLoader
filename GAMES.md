@@ -79,13 +79,13 @@ APIs by NeoKesha and BetaM. (based on https://github.com/handsomematt/Pure3D)
 - Version, seed and settings visible in the Credits screen
   
 ## Crash of the Titans
-Supported: All PS2 versions (.ISO format) (Wii, PSP not yet supported)  
+Supported: All PS2 versions (.ISO format), All Wii versions (.ISO/.WBFS formats) (PSP not yet supported)  
 API by NeoKesha.  
 ### Features:   
 - Test mod: Increased camera FOV in Episode 1
   
 ## Crash Mind Over Mutant
-Supported: All PS2 versions (.ISO format) (Wii, PSP not yet supported)  
+Supported: All PS2 versions (.ISO format), All Wii versions (.ISO/.WBFS formats) (PSP not yet supported)
 API by NeoKesha.  
 ### Features:    
 - Version, seed and settings visible in the Credits screen  
