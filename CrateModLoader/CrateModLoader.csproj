@@ -225,6 +225,7 @@
     <Compile Include="ModCrateManagerForm.Designer.cs">
       <DependentUpon>ModCrateManagerForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ModLoader.cs" />
     <Compile Include="ModLoaderForm.cs">
       <SubType>Form</SubType>
     </Compile>
