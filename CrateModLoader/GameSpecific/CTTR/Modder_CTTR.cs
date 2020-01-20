@@ -200,7 +200,7 @@ namespace CrateModLoader
         private List<int> randKOs = new List<int>();
         private List<int> randGems = new List<int>();
 
-        public void SetPaths(ModLoader.ConsoleMode console, string exec_name = "")
+        public void SetPaths(ConsoleMode console, string exec_name = "")
         {
             path_RCF_default = "";
             path_RCF_common = "";
@@ -244,7 +244,7 @@ namespace CrateModLoader
             path_RCF_sound = "";
             path_RCF_english = "";
 
-            if (console == ModLoader.ConsoleMode.PS2)
+            if (console == ConsoleMode.PS2)
             {
                 path_executable = exec_name;
                 path_RCF_default = @"ADEFAULT\DEFAULT.RCF";
@@ -278,7 +278,7 @@ namespace CrateModLoader
                 path_RCF_onfoot5 = @"ONFOOT\ONFOOT5.RCF";
                 path_RCF_onfoot6 = @"ONFOOT\ONFOOT6.RCF";
             }
-            else if (console == ModLoader.ConsoleMode.PSP)
+            else if (console == ConsoleMode.PSP)
             {
                 path_executable = @"PSP_GAME\SYSDIR\BOOT.BIN";
                 path_RCF_default = @"PSP_GAME\USRDIR\adefault\default.rcf";
@@ -313,7 +313,7 @@ namespace CrateModLoader
                 path_RCF_onfoot5 = @"PSP_GAME\USRDIR\onfoot\onfoot5.rcf";
                 path_RCF_onfoot6 = @"PSP_GAME\USRDIR\onfoot\onfoot6.rcf";
             }
-            else if (console == ModLoader.ConsoleMode.GCN)
+            else if (console == ConsoleMode.GCN)
             {
                 path_executable = @"sys\main.dol";
                 path_RCF_default = @"files\adefault\default.rcf";
@@ -353,7 +353,7 @@ namespace CrateModLoader
         {
             SetPaths(Program.ModProgram.isoType, Program.ModProgram.PS2_executable_name);
             basePath = AppDomain.CurrentDomain.BaseDirectory + @"temp\";
-            if (Program.ModProgram.isoType == ModLoader.ConsoleMode.GCN)
+            if (Program.ModProgram.isoType == ConsoleMode.GCN)
             {
                 basePath = AppDomain.CurrentDomain.BaseDirectory + @"temp\P-" + Program.ModProgram.PS2_game_code_name.Substring(0, 4) + @"\";
             }

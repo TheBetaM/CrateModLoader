@@ -58,7 +58,7 @@ namespace CrateModLoader
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                Program.ModProgram.OpenROM_Selection = (ModLoader.OpenROM_SelectionType)openFileDialog1.FilterIndex;
+                Program.ModProgram.OpenROM_Selection = (OpenROM_SelectionType)openFileDialog1.FilterIndex;
                 Program.ModProgram.inputISOpath = openFileDialog1.FileName;
                 Program.ModProgram.CheckISO();
                 textBox1.Text = Program.ModProgram.inputISOpath;

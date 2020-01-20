@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections;
+﻿using DiscUtils.Iso9660;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.IO;
-using System.Text;
-using System.Media;
-using System.Diagnostics;
-using System.Reflection;
 using System.ComponentModel;
-using DiscUtils.Iso9660;
+using System.Diagnostics;
+using System.IO;
+using System.Media;
+using System.Reflection;
+using System.Windows.Forms;
 //Crate Mod Loader Main Class
 
 namespace CrateModLoader
@@ -29,6 +25,31 @@ namespace CrateModLoader
             ModProgramForm = new ModLoaderForm();
             Application.Run(ModProgramForm);
         }
+    }
+
+    public enum OpenROM_SelectionType
+    {
+        PSXPS2PSP = 1,
+        GCNWII = 2,
+        Any = 3,
+    }
+    public enum ConsoleMode
+    {
+        Undefined = -1,
+        PSP = 0,
+        PS2 = 1,
+        XBOX = 2,
+        GCN = 3,
+        PS1 = 4,
+        WII = 5,
+        XBOX360 = 6,
+    }
+    public enum RegionType
+    {
+        Undefined = -1,
+        NTSC_U = 0,
+        PAL = 1,
+        NTSC_J = 2,
     }
 
     public class ModLoader
@@ -76,31 +97,6 @@ namespace CrateModLoader
 
         //ISO settings
         public string ISO_label;
-
-        public enum OpenROM_SelectionType
-        {
-            PSXPS2PSP = 1,
-            GCNWII = 2,
-            Any = 3,
-        }
-        public enum ConsoleMode
-        {
-            Undefined = -1,
-            PSP = 0,
-            PS2 = 1,
-            XBOX = 2,
-            GCN = 3,
-            PS1 = 4,
-            WII = 5,
-            XBOX360 = 6,
-        }
-        public enum RegionType
-        {
-            Undefined = -1,
-            NTSC_U = 0,
-            PAL = 1,
-            NTSC_J = 2,
-        }
 
         // Build the ISO
         void CreateISO()

@@ -678,11 +678,11 @@ namespace CrateModLoader
             if (Twins_Edit_CodeText)
             {
                 string[] CodeText;
-                if (Program.ModProgram.targetRegion == ModLoader.RegionType.NTSC_U)
+                if (Program.ModProgram.targetRegion == RegionType.NTSC_U)
                 {
                     CodeText = File.ReadAllLines(bdPath + "/Language/Code/American.txt");
                 }
-                else if (Program.ModProgram.targetRegion == ModLoader.RegionType.PAL)
+                else if (Program.ModProgram.targetRegion == RegionType.PAL)
                 {
                     CodeText = File.ReadAllLines(bdPath + "/Language/Code/English.txt");
                 }
@@ -711,11 +711,11 @@ namespace CrateModLoader
                     CodeText[i] = CodeText_LineList[i];
                 }
 
-                if (Program.ModProgram.targetRegion == ModLoader.RegionType.NTSC_U)
+                if (Program.ModProgram.targetRegion == RegionType.NTSC_U)
                 {
                     File.WriteAllLines(bdPath + "/Language/Code/American.txt", CodeText);
                 }
-                else if (Program.ModProgram.targetRegion == ModLoader.RegionType.PAL)
+                else if (Program.ModProgram.targetRegion == RegionType.PAL)
                 {
                     File.WriteAllLines(bdPath + "/Language/Code/English.txt", CodeText);
                 }

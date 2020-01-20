@@ -130,7 +130,7 @@ namespace CrateModLoader
             // Fixes names for PS2, and moves the archive for convenience
             //File.Move(Program.ModProgram.extractedPath + "/ASSETS.GFC;1", AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GFC");
             //File.Move(Program.ModProgram.extractedPath + "/ASSETS.GOB;1", AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GOB");
-            if (Program.ModProgram.isoType == ModLoader.ConsoleMode.GCN)
+            if (Program.ModProgram.isoType == ConsoleMode.GCN)
             {
                 File.Move(Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.PS2_game_code_name.Substring(0, 4) + "/files/assets.gfc", AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GFC");
                 File.Move(Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.PS2_game_code_name.Substring(0, 4) + "/files/assets.gob", AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GOB");
@@ -1388,7 +1388,7 @@ namespace CrateModLoader
                     csv_Credits_LineList.Add(csv_Credits[i]);
                 }
 
-                if (Program.ModProgram.isoType == ModLoader.ConsoleMode.PS2)
+                if (Program.ModProgram.isoType == ConsoleMode.PS2)
                 {
                     csv_Credits_LineList.Add("Crate Mod Loader " + Program.ModProgram.releaseVersionString + ",AlphaDance,1.25,C,4294950912,0,40");
                     csv_Credits_LineList.Add("Seed: " + Program.ModProgram.randoSeed + ",AlphaDance,1.25,C,4294950912,0,40");
@@ -1435,7 +1435,7 @@ namespace CrateModLoader
             //File.Move(AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GFC", Program.ModProgram.extractedPath + "/ASSETS.GFC;1");
             //File.Move(AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GOB", Program.ModProgram.extractedPath + "/ASSETS.GOB;1");
 
-            if (Program.ModProgram.isoType == ModLoader.ConsoleMode.GCN)
+            if (Program.ModProgram.isoType == ConsoleMode.GCN)
             {
                 File.Move(AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GFC", Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.PS2_game_code_name.Substring(0, 4) + "/files/assets.gfc");
                 File.Move(AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GOB", Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.PS2_game_code_name.Substring(0, 4) + "/files/assets.gob");

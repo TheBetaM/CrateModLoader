@@ -31,7 +31,7 @@ namespace CrateModLoader
             string path_RCF_frontend = "DEFAULT.RCF";
 
             basePath = AppDomain.CurrentDomain.BaseDirectory + @"temp\";
-            if (Program.ModProgram.isoType == ModLoader.ConsoleMode.WII)
+            if (Program.ModProgram.isoType == ConsoleMode.WII)
             {
                 path_RCF_frontend = "default.rcf";
                 basePath = AppDomain.CurrentDomain.BaseDirectory + @"temp\files\";
