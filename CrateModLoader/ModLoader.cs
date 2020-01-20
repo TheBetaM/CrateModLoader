@@ -44,7 +44,6 @@ namespace CrateModLoader
         public Label processText;
         public ProgressBar progressBar;
         public Button startButton;
-        public int processProgress = 0;
         public Label text_gameType;
         public Label text_optionsLabel;
         public PictureBox image_gameIcon;
@@ -77,8 +76,6 @@ namespace CrateModLoader
         public bool keepTempFiles = false;
         private Process ISOcreatorProcess;
         public OpenROM_SelectionType OpenROM_Selection = OpenROM_SelectionType.PSXPS2PSP;
-
-        public Timer processTimer = new Timer();
 
         //ISO settings
         public string ISO_label;
@@ -369,105 +366,93 @@ namespace CrateModLoader
             }
             else
             {
-                try
+                using (FileStream isoStream = File.Open(inputISOpath, FileMode.Open))
                 {
-                    using (FileStream isoStream = File.Open(inputISOpath, FileMode.Open))
+                    FileInfo isoInfo = new FileInfo(inputISOpath);
+                    CDReader cd;
+                    FileStream tempbin = null;
+                    if (Path.GetExtension(inputISOpath).ToLower() == ".bin") // PS1 image
                     {
-                        FileInfo isoInfo = new FileInfo(inputISOpath);
-                        CDReader cd;
-                        FileStream tempbin = null;
-                        if (Path.GetExtension(inputISOpath).ToLower() == ".bin") // PS1 image
-                        {
-                            FileStream binconvout = new FileStream(AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso", FileMode.Create, FileAccess.Write);
-                            PSX2ISO.Run(isoStream, binconvout);
-                            binconvout.Close();
-                            tempbin = new FileStream(AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso", FileMode.Open, FileAccess.Read);
-                            cd = new CDReader(tempbin, true);
-                        }
-                        else
-                            cd = new CDReader(isoStream, true);
-                        ISO_label = cd.VolumeLabel;
+                        FileStream binconvout = new FileStream(AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso", FileMode.Create, FileAccess.Write);
+                        PSX2ISO.Run(isoStream, binconvout);
+                        binconvout.Close();
+                        tempbin = new FileStream(AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso", FileMode.Open, FileAccess.Read);
+                        cd = new CDReader(tempbin, true);
+                    }
+                    else
+                        cd = new CDReader(isoStream, true);
+                    ISO_label = cd.VolumeLabel;
 
-                        extractedPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"temp\");
-                        if (isoInfo.Length * 2 > GetTotalFreeSpace(extractedPath.Substring(0, 3)))
-                        {
-                            cd.Dispose();
-                            ErrorFinish("Extraction error: Not enough hard drive space where this program is!");
-                            return;
-                        }
-                        if (isoInfo.Length * 2 > GetTotalFreeSpace(outputISOpath.Substring(0, 3)))
-                        {
-                            cd.Dispose();
-                            ErrorFinish("Extraction error: Not enough hard drive space in the output path!");
-                            return;
-                        }
-
-                        processText.Text = "Extracting ISO...";
-                        //fileStream = cd.OpenFile(@"SYSTEM.CNF", FileMode.Open);
-
-                        if (!Directory.Exists(extractedPath))
-                        {
-                            Directory.CreateDirectory(extractedPath);
-                        }
-
-                        //Extracting ISO
-                        Stream fileStreamFrom = null;
-                        Stream fileStreamTo = null;
-                        if (cd.GetDirectories("").Length > 0)
-                        {
-                            foreach (string directory in cd.GetDirectories(""))
-                            {
-                                Directory.CreateDirectory(extractedPath + directory);
-                                if (cd.GetDirectoryInfo(directory).GetFiles().Length > 0)
-                                {
-                                    foreach (string file in cd.GetFiles(directory))
-                                    {
-                                        fileStreamFrom = cd.OpenFile(file, FileMode.Open);
-                                        string filename = extractedPath + file;
-                                        filename = filename.Replace(";1", string.Empty);
-                                        fileStreamTo = File.Open(filename, FileMode.OpenOrCreate);
-                                        fileStreamFrom.CopyTo(fileStreamTo);
-                                        fileStreamFrom.Close();
-                                        fileStreamTo.Close();
-                                    }
-                                }
-                                if (cd.GetDirectories(directory).Length > 0)
-                                {
-                                    Recursive_CreateDirs(ref cd, directory, ref fileStreamFrom, ref fileStreamTo);
-                                }
-                            }
-                        }
-                        if (cd.GetDirectoryInfo("").GetFiles().Length > 0)
-                        {
-                            foreach (string file in cd.GetFiles(""))
-                            {
-                                fileStreamFrom = cd.OpenFile(file, FileMode.Open);
-                                string filename = extractedPath + "/" + file;
-                                filename = filename.Replace(";1", string.Empty);
-                                fileStreamTo = File.Open(filename, FileMode.OpenOrCreate);
-                                fileStreamFrom.CopyTo(fileStreamTo);
-                                fileStreamFrom.Close();
-                                fileStreamTo.Close();
-                            }
-                        }
-
+                    extractedPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"temp\");
+                    if (isoInfo.Length * 2 > GetTotalFreeSpace(extractedPath.Substring(0, 3)))
+                    {
                         cd.Dispose();
+                        throw new IOException("Extraction error: Not enough hard drive space where this program is!");
+                    }
+                    if (isoInfo.Length * 2 > GetTotalFreeSpace(outputISOpath.Substring(0, 3)))
+                    {
+                        cd.Dispose();
+                        throw new IOException("Extraction error: Not enough hard drive space in the output path!");
+                    }
 
-                        if (tempbin != null)
+                    asyncWorker.ReportProgress(25);
+                    //fileStream = cd.OpenFile(@"SYSTEM.CNF", FileMode.Open);
+
+                    if (!Directory.Exists(extractedPath))
+                    {
+                        Directory.CreateDirectory(extractedPath);
+                    }
+
+                    //Extracting ISO
+                    Stream fileStreamFrom = null;
+                    Stream fileStreamTo = null;
+                    if (cd.GetDirectories("").Length > 0)
+                    {
+                        foreach (string directory in cd.GetDirectories(""))
                         {
-                            tempbin.Dispose();
-                            File.Delete(AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso");
+                            Directory.CreateDirectory(extractedPath + directory);
+                            if (cd.GetDirectoryInfo(directory).GetFiles().Length > 0)
+                            {
+                                foreach (string file in cd.GetFiles(directory))
+                                {
+                                    fileStreamFrom = cd.OpenFile(file, FileMode.Open);
+                                    string filename = extractedPath + file;
+                                    filename = filename.Replace(";1", string.Empty);
+                                    fileStreamTo = File.Open(filename, FileMode.OpenOrCreate);
+                                    fileStreamFrom.CopyTo(fileStreamTo);
+                                    fileStreamFrom.Close();
+                                    fileStreamTo.Close();
+                                }
+                            }
+                            if (cd.GetDirectories(directory).Length > 0)
+                            {
+                                Recursive_CreateDirs(ref cd, directory, ref fileStreamFrom, ref fileStreamTo);
+                            }
                         }
                     }
-                }
-                catch
-                {
-                    ErrorFinish("Cannot open game ROM!");
-                    return;
+                    if (cd.GetDirectoryInfo("").GetFiles().Length > 0)
+                    {
+                        foreach (string file in cd.GetFiles(""))
+                        {
+                            fileStreamFrom = cd.OpenFile(file, FileMode.Open);
+                            string filename = extractedPath + "/" + file;
+                            filename = filename.Replace(";1", string.Empty);
+                            fileStreamTo = File.Open(filename, FileMode.OpenOrCreate);
+                            fileStreamFrom.CopyTo(fileStreamTo);
+                            fileStreamFrom.Close();
+                            fileStreamTo.Close();
+                        }
+                    }
+
+                    cd.Dispose();
+
+                    if (tempbin != null)
+                    {
+                        tempbin.Dispose();
+                        File.Delete(AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso");
+                    }
                 }
             }
-
-            ProgressProcess();
         }
 
         private void Recursive_CreateDirs(ref CDReader cd, string dir, ref Stream fileStreamFrom, ref Stream fileStreamTo)
@@ -507,62 +492,25 @@ namespace CrateModLoader
 
         public void StartButtonPressed()
         {
-            if (processProgress == 0)
+            if (!asyncWorker.IsBusy)
             {
-                processText.Text = "Extracting game...";
-                processProgress = 0;
-                progressBar.Value = progressBar.Minimum;
-
-                processTimer.Tick += new EventHandler(DelayedProcessStart); // FIXME : change to a background worker instead of a timer
-                processTimer.Interval = 1000;
-                processTimer.Start();
-            }
-            else if (processProgress > 0)
-            {
-                ProgressProcess();
+                asyncWorker.DoWork += new DoWorkEventHandler(asyncWorker_DoWork);
+                asyncWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(asyncWorker_RunWorkerCompleted);
+                asyncWorker.ProgressChanged += new ProgressChangedEventHandler(asyncWorker_ProgressChanged);
+                asyncWorker.RunWorkerAsync();
             }
         }
 
-        private void DelayedProcessStart(Object myObject, EventArgs myEventArgs)
+        private void asyncWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            processTimer.Stop();
-            ProgressProcess();
-        }
+            BackgroundWorker a = sender as BackgroundWorker;
 
-        public void ProgressProcess()
-        {
-            processProgress++;
-            
-            if (processProgress == 1)
-            {
-                LoadISO();
-            }
-            else if (processProgress == 2)
-            {
-                progressBar.PerformStep();
-                processTimer.Start();
-                processText.Text = "Modding game...";
-            }
-            else if (processProgress == 3)
-            {
-                EditGameContent();
-                //startButton.Enabled = true; //DEBUG, pressing the button again will progress
-            }
-            else if (processProgress == 4)
-            {
-                progressBar.PerformStep();
-                processTimer.Start();
-                processText.Text = "Building game...";
-            }
-            else if (processProgress == 5)
-            {
-                FinishISO();
-            }
-            else
-            {
-                progressBar.PerformStep();
-                ProcessFinished();
-            }
+            a.ReportProgress(0);
+            LoadISO();
+            a.ReportProgress(50);
+            EditGameContent();
+            a.ReportProgress(75);
+            FinishISO();
         }
 
         public void EditGameContent()
@@ -577,11 +525,8 @@ namespace CrateModLoader
             catch (Exception ex)
             {
                 DeleteTempFiles();
-                ErrorFinish("Modding error: " + ex.Message);
-                return;
+                throw ex;
             }
-
-            ProgressProcess();
         }
 
         public void FinishISO()
@@ -592,8 +537,6 @@ namespace CrateModLoader
             {
                 DeleteTempFiles();
             }
-
-            ProgressProcess();
         }
 
         void DeleteTempFiles()
@@ -631,20 +574,50 @@ namespace CrateModLoader
             }
         }
 
-        public void ProcessFinished()
+        private void asyncWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            processText.Text = "Finished!";
-            SystemSounds.Beep.Play();
+            progressBar.Value = 100;
+            if (e.Error != null)
+            {
+                progressBar.Value = progressBar.Minimum;
+                SystemSounds.Beep.Play();
+                processText.Text = "Error: " + e.Error.Message;
+            }
+            else if (!e.Cancelled)
+            {
+                processText.Text = "Finished!";
+                SystemSounds.Beep.Play();
+            }
+            else
+            {
+                progressBar.Value = progressBar.Minimum;
+                processText.Text = "Canceled!";
+            }
             EnableInteraction();
+            asyncWorker.DoWork -= asyncWorker_DoWork;
+            asyncWorker.RunWorkerCompleted -= asyncWorker_RunWorkerCompleted;
+            asyncWorker.ProgressChanged -= asyncWorker_ProgressChanged;
         }
 
-        public void ErrorFinish(string errorType)
+        private void asyncWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            processProgress = 0;
-            progressBar.Value = progressBar.Minimum;
-            SystemSounds.Beep.Play();
-            processText.Text = "Error: " + errorType;
-            EnableInteraction();
+            progressBar.Value = e.ProgressPercentage;
+            if (e.ProgressPercentage == 0)
+            {
+                processText.Text = "Extracting game...";
+            }
+            else if (e.ProgressPercentage == 25)
+            {
+                processText.Text = "Extracting ISO...";
+            }
+            else if (e.ProgressPercentage == 50)
+            {
+                processText.Text = "Modding game...";
+            }
+            else if (e.ProgressPercentage == 75)
+            {
+                processText.Text = "Building game...";
+            }
         }
 
         public void OptionChanged(int option,bool value)
