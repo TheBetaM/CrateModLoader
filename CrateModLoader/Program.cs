@@ -13,9 +13,9 @@ namespace CrateModLoader
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            ModProgram = new ModLoader();
             using (ModProgramForm = new ModLoaderForm())
             {
-                ModProgram = new ModLoader();
                 Application.Run(ModProgramForm);
             }
         }
