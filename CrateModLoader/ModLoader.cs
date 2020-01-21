@@ -342,10 +342,12 @@ namespace CrateModLoader
 
         void LoadISO()
         {
+            /* verify if extracted path is correct
             if (Directory.Exists(extractedPath))
             {
                 DeleteTempFiles();
             }
+            */
 
             if (isoType == ConsoleMode.GCN || isoType == ConsoleMode.WII)
             {
