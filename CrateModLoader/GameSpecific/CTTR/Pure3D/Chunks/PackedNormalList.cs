@@ -6,6 +6,7 @@ namespace Pure3D.Chunks
     [ChunkType(65552)]
     public class PackedNormalList : Chunk
     {
+        public uint NormalsCount;
         public byte[] Normals;
 
         public PackedNormalList(File file, uint type) : base(file, type)
@@ -15,8 +16,8 @@ namespace Pure3D.Chunks
         public override void ReadHeader(Stream stream, long length)
         {
             BinaryReader reader = new BinaryReader(stream);
-            uint len = reader.ReadUInt32();
-            Normals = reader.ReadBytes((int)len);
+            NormalsCount = reader.ReadUInt32();
+            Normals = reader.ReadBytes((int)NormalsCount);
         }
 
         public override void WriteHeader(Stream stream)

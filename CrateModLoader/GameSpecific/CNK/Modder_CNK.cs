@@ -1388,7 +1388,7 @@ namespace CrateModLoader
                     csv_Credits_LineList.Add(csv_Credits[i]);
                 }
 
-                if (Program.ModProgram.isoType == ConsoleMode.PS2)
+                if (!csv_Credits[3].Contains(",0x") && !csv_Credits[3].Contains(", 0x") && !csv_Credits[3].Contains(",0x"))
                 {
                     csv_Credits_LineList.Add("Crate Mod Loader " + Program.ModProgram.releaseVersionString + ",AlphaDance,1.25,C,4294950912,0,40");
                     csv_Credits_LineList.Add("Seed: " + Program.ModProgram.randoSeed + ",AlphaDance,1.25,C,4294950912,0,40");

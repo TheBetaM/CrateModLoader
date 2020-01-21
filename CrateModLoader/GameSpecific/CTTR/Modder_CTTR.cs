@@ -1413,6 +1413,9 @@ namespace CrateModLoader
             CrashOnfootAnim1.Load(AppDomain.CurrentDomain.BaseDirectory + "/Tools/file.p3d");
             PrintHierarchy(CrashOnfootAnim1.RootChunk, 0);
 
+            GameSpecific.CTTR.Pure3D.ModelExporter.AddSkinnedModelWithAnimations(ref CrashOnfootAnim1.RootChunk.GetChildren<Pure3D.Chunks.Skin>()[0], ref CrashOnfootAnim1.RootChunk.GetChildren<Pure3D.Chunks.SkeletonCTTR>()[0], ref shaders);
+            GameSpecific.CTTR.Pure3D.ModelExporter.ExportModel(AppDomain.CurrentDomain.BaseDirectory + "/Tools/out.dae");
+
             Console.WriteLine("\nNow saving...\n");
             CrashOnfootAnim1.Save(AppDomain.CurrentDomain.BaseDirectory + "/Tools/file1.p3d");
             */

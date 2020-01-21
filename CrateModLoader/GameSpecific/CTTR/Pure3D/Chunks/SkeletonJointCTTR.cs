@@ -37,7 +37,16 @@ namespace Pure3D.Chunks
 
         public override string ToString()
         {
-            return $"Skeleton Joint CTTR: {Name} SkeletonParent { SkeletonParent } ";
+            string SkeletonParentName = "";
+            if (SkeletonParent > 0)
+            {
+                SkeletonParentName = Parent.GetChildren<SkeletonJointCTTR>()[SkeletonParent].Name;
+            }
+            else
+            {
+                SkeletonParentName = "Root";
+            }
+            return $"Skeleton Joint CTTR: {Name} SkeletonParent { SkeletonParent }, SkeletonParentName { SkeletonParentName } ";
         }
     }
 }
