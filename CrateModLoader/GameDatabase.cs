@@ -491,8 +491,6 @@ namespace CrateModLoader
         public bool ModMenuEnabled;
         /// <summary> Set to true to enable mod crates. </summary>
         public bool ModCratesSupported;
-        /// <summary> List of quick options. </summary>
-        public string[] ModOptions;
         /// <summary> List of region identifiers for PS1 games. </summary>
         public RegionCode[] RegionID_PS1;
         /// <summary> List of region identifiers for PS2 games. </summary>

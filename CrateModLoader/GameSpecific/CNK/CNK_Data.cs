@@ -8,7 +8,6 @@ namespace CrateModLoader.GameSpecific.CNK
 {
     static partial class CNK_Data
     {
-        public static int DriverAmount = 16;
 
         public enum Drivers
         {
@@ -28,9 +27,19 @@ namespace CrateModLoader.GameSpecific.CNK
             Tiny = 13,
             Zam = 14,
             Zem = 15,
+            Nash = 16,
+            Krunk = 17,
+            EmperorVelo = 18,
+            BigNorm = 19,
+            SmallNorm = 20,
+            Geary = 21,
+            GearyMinion = 22,
+            VeloMinion = 23,
         }
         public static string[] DriverTypes = new string[] { "coco", "crash", "cortex", "crunch", "dingodile", "fakecrash", "ngin", "noxide", "ntrance", "ntropy", "polar", "pura", "realvelo", "tiny", "zam", "zem" };
-       
+        public static string[] DriverModelTypes = new string[] { "coco", "crash", "ncortex", "crunch", "dingodile", "fakecrash", "ngin", "noxide", "ntrance", "ntropy", "polar", "pura", "realvelo", "tiny", "zam", "zem", "barinboss", "earthboss", "empvelo", "fenombigboss", "fenomlittleboss", "tekneeboss", "tekneeminion", "velominion" };
+        public static string[] DriverAudioTypes = new string[] { "cob", "crb", "dnc", "cnb", "ddl", "fcb", "ngn", "oxd", "ntn", "ntp", "plr", "pur", "rvl", "tny", "zam", "zem", "nsh", "kgo", "vlo", "bnm", "lnm", "oto", "scr", "vlm" };
+
         public enum SubModeID
         {
             Hub = 0,

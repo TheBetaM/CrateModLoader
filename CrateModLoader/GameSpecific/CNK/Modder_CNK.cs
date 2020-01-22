@@ -23,6 +23,7 @@ namespace CrateModLoader
             "Randomize Surface Parameters",
             "Randomize Powerup Distribution",
             "Randomize Powerup Effects",
+            "Randomize Character Models",
             "Disable Fadeout Overlay",
             "Disable Unlock Popups",
             "Speed Up Mask Hints",
@@ -39,8 +40,9 @@ namespace CrateModLoader
         //public bool Randomize_Obstacles = false; //TODO obstacles
         //public bool Randomize_Cup_Points = false; // Maybe? gameprogression
         public bool Randomize_Weapons = false;
-        //public bool Randomize_Characters = false; //TODO model file replacement, name replacement, main menu model replacement, voices.csv
-        
+        public bool Randomize_Characters = false; //TODO: voices.csv, icon replacement, name replacement, main menu model replacement
+        //public bool Randomize_Music = false; //TODO music.csv
+
         public bool Mod_SpeedUp_Mask_Hints = false;
         public bool Mod_Disable_Fadeout = false;
         //public bool Mod_Mask_Hints_NoMask = false; //TODO, hinthistory.csv
@@ -57,9 +59,10 @@ namespace CrateModLoader
             RandomizeSurfaceParameters = 5,
             RandomizeWeaponPools = 6,
             RandomizeWeapons = 7,
-            DisableFadeout = 8,
-            DisablePopups = 9,
-            SpeedUpMaskHints = 10,
+            RandomizeCharacters = 8,
+            DisableFadeout = 9,
+            DisablePopups = 10,
+            SpeedUpMaskHints = 11,
         }
 
         public void OptionChanged(int option, bool value)
@@ -107,6 +110,10 @@ namespace CrateModLoader
             else if (option == (int)CNK_Options.DisablePopups)
             {
                 Mod_Disable_Unlock_Popups = value;
+            }
+            else if (option == (int)CNK_Options.RandomizeCharacters)
+            {
+                Randomize_Characters = value;
             }
         }
 
@@ -187,6 +194,10 @@ namespace CrateModLoader
             //bool Editing_CSV_AI_WeaponSelection = false;
             bool Editing_CSV_Credits = true;
 
+            if (Randomize_Characters)
+            {
+                Mod_Randomize_Characters(ref randState);
+            }
             if (Randomize_Hub_Requirements)
             {
                 Editing_CSV_AdventureTracksManager = true;
@@ -207,7 +218,7 @@ namespace CrateModLoader
             if (Randomize_Character_Stats)
             {
                 Editing_CSV_CharacterPhysics = true;
-                for (int i = 0; i < CNK_Data.DriverAmount; i++)
+                for (int i = 0; i < 16; i++)
                 {
                     CNK_Data.CNK_Randomize_CharacterStats(ref randState, i);
                 }
@@ -253,8 +264,6 @@ namespace CrateModLoader
             {
                 Editing_CSV_HintsConfig = true;
             }
-
-            
 
             if (Editing_CSV_AdventureTracksManager)
             {
@@ -1419,6 +1428,47 @@ namespace CrateModLoader
 
 
             EndModProcess();
+        }
+
+        void Mod_Randomize_Characters(ref Random randState)
+        {
+            //Replace model files
+            string modelpath = path_gob_extracted;
+            if (Program.ModProgram.isoType == ConsoleMode.PS2)
+            {
+                modelpath += "/ps2/gfx/chars/";
+            }
+            else if (Program.ModProgram.isoType == ConsoleMode.XBOX)
+            {
+                modelpath += "/xbox/gfx/chars/";
+            }
+            else
+            {
+                modelpath += "/gcn/gfx/chars/";
+            }
+
+            List<int> charList = new List<int>();
+            List<int> charList_rand = new List<int>();
+            int target_id = 0;
+
+            //Change 22 to 24 to add geary and velo minions, untested
+            for (int i = 0; i < 22; i++)
+            {
+                charList.Add(i);
+                File.Move(modelpath + CNK_Data.DriverModelTypes[i] + ".igb", modelpath + "Driver" + i + ".igb");
+            }
+
+            for (int i = 0; i < 22; i++)
+            {
+                target_id = randState.Next(0, charList.Count);
+                charList_rand.Add(charList[target_id]);
+                charList.RemoveAt(target_id);
+            }
+
+            for (int i = 0; i < 22; i++)
+            {
+                File.Move(modelpath + "Driver" + charList_rand[i] + ".igb", modelpath + CNK_Data.DriverModelTypes[i] + ".igb");
+            }
         }
 
         public void EndModProcess()
