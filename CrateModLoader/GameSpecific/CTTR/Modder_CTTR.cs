@@ -532,27 +532,27 @@ namespace CrateModLoader
 
             if (Options[RandomizeCharacters].Enabled)
             {
-                Randomize_Characters(path_extr, ref rcf_default, ref randChars);
+                Randomize_Characters(path_extr, rcf_default, randChars);
             }
             if (Options[RandomizeHubs].Enabled)
             {
-                Randomize_Hubs(path_extr, ref rcf_default, ref randHubs, ref randGems);
+                Randomize_Hubs(path_extr, rcf_default, randHubs, randGems);
             }
             if (Options[RandomizeTracks].Enabled)
             {
-                Randomize_Tracks(path_extr, ref rcf_default, ref randTracks);
+                Randomize_Tracks(path_extr, rcf_default, randTracks);
             }
             if (Options[RandomizeMinigames].Enabled)
             {
-                Randomize_Minigames(path_extr, ref rcf_default, ref randMinigames);
+                Randomize_Minigames(path_extr, rcf_default, randMinigames);
             }
             if (Options[RandomizeRaceLaps].Enabled)
             {
-                Randomize_Race_Laps(path_extr, ref rcf_default, ref randLaps);
+                Randomize_Race_Laps(path_extr, rcf_default, randLaps);
             }
             if (Options[RandomizeBattleKOs].Enabled)
             {
-                Randomize_Battle_KOs(path_extr, ref rcf_default, ref randKOs);
+                Randomize_Battle_KOs(path_extr, rcf_default, randKOs);
             }
 
             rcf_default.Recalculate();
@@ -583,10 +583,8 @@ namespace CrateModLoader
             }
         }
 
-        void Randomize_Characters(string path_extr, ref RCF rcf_file, ref List<int> randChars)
+        void Randomize_Characters(string path_extr, RCF rcf_file, List<int> randChars)
         {
-            
-
             if (System.IO.File.Exists(path_extr + @"design\permanent\genericobjectives.god"))
             {
                 string[] startup_lines = System.IO.File.ReadAllLines(path_extr + @"design\permanent\genericobjectives.god");
@@ -599,7 +597,7 @@ namespace CrateModLoader
                 int characterList_Start = 0;
                 int characterList_End = 0;
                 List<string> DefaultUnlocks = new List<string>();
-                if (CTTR_Data.LUA_LoadObject(ref LineList, "Objective", "UnlockDefaults", ref characterList_Start, ref characterList_End, ref DefaultUnlocks))
+                if (CTTR_Data.LUA_LoadObject(LineList, "Objective", "UnlockDefaults", ref characterList_Start, ref characterList_End, DefaultUnlocks))
                 {
                     DefaultUnlocks.Clear();
                     DefaultUnlocks.Add("this.SetName(\"UnlockDefaults\")");
@@ -608,7 +606,7 @@ namespace CrateModLoader
                         DefaultUnlocks.Add("this.AddAction_UnlockCar(\"" + CTTR_Data.DriverNames[randChars[i]] + "\",1)");
                     }
                 }
-                CTTR_Data.LUA_SaveObject(ref LineList, "Objective", "UnlockDefaults", ref DefaultUnlocks);
+                CTTR_Data.LUA_SaveObject(LineList, "Objective", "UnlockDefaults", DefaultUnlocks);
 
                 startup_lines = new string[LineList.Count];
                 for (int i = 0; i < LineList.Count; i++)
@@ -639,7 +637,7 @@ namespace CrateModLoader
                 int skin_Start = 0;
                 int skin_End = 0;
                 List<string> SkinObj = new List<string>();
-                if (CTTR_Data.LUA_LoadObject(ref LineList, "Skin", "CrashDefault", ref skin_Start, ref skin_End, ref SkinObj))
+                if (CTTR_Data.LUA_LoadObject(LineList, "Skin", "CrashDefault", ref skin_Start, ref skin_End, SkinObj))
                 {
                     for (int i = 0; i < SkinObj.Count; i++)
                     {
@@ -653,7 +651,7 @@ namespace CrateModLoader
                         }
                     }
                 }
-                CTTR_Data.LUA_SaveObject(ref LineList, "Skin", "CrashDefault", ref SkinObj);
+                CTTR_Data.LUA_SaveObject(LineList, "Skin", "CrashDefault", SkinObj);
 
                 skins_lines = new string[LineList.Count];
                 for (int i = 0; i < LineList.Count; i++)
@@ -758,7 +756,7 @@ namespace CrateModLoader
             }
 
         }
-        void Randomize_Hubs(string path_extr, ref RCF rcf_file, ref List<int> randHubs, ref List<int> randGems)
+        void Randomize_Hubs(string path_extr, RCF rcf_file, List<int> randHubs, List<int> randGems)
         {
             if (System.IO.File.Exists(path_extr + @"design\permanent\genericobjectives.god"))
             {
@@ -775,16 +773,16 @@ namespace CrateModLoader
                 for (int i = 0; i < 5; i++)
                 {
                     string targetHub = CTTR_Data.HubNamesSimple[i + 1];
-                    if (CTTR_Data.LUA_LoadObject(ref LineList, "Objective", "ChangeLevelMidwayTo" + targetHub, ref List_Start, ref List_End, ref ChangeHubObjective))
+                    if (CTTR_Data.LUA_LoadObject(LineList, "Objective", "ChangeLevelMidwayTo" + targetHub, ref List_Start, ref List_End, ChangeHubObjective))
                     {
                         ChangeHubObjective[ChangeHubObjective.Count - 3] = "this.AddAction_ChangeLevel(\"" + CTTR_Data.HubNames[randHubs[i]] + "\",\"StartLocationFromMidway\")";
-                        CTTR_Data.LUA_SaveObject(ref LineList, "Objective", "ChangeLevelMidwayTo" + targetHub, ref ChangeHubObjective);
+                        CTTR_Data.LUA_SaveObject(LineList, "Objective", "ChangeLevelMidwayTo" + targetHub, ChangeHubObjective);
                     }
                     ChangeHubObjective.Clear();
-                    if (CTTR_Data.LUA_LoadObject(ref LineList, "Objective", "ChangeLevel" + CTTR_Data.HubNamesSimple[randHubs[i]] + "ToMidway", ref List_Start, ref List_End, ref ChangeHubObjective))
+                    if (CTTR_Data.LUA_LoadObject(LineList, "Objective", "ChangeLevel" + CTTR_Data.HubNamesSimple[randHubs[i]] + "ToMidway", ref List_Start, ref List_End, ChangeHubObjective))
                     {
                         ChangeHubObjective[ChangeHubObjective.Count - 3] = "this.AddAction_ChangeLevel(\"onfoot_midway\",\"StartLocationFrom" + targetHub + "\")";
-                        CTTR_Data.LUA_SaveObject(ref LineList, "Objective", "ChangeLevel" + CTTR_Data.HubNamesSimple[randHubs[i]] + "ToMidway", ref ChangeHubObjective);
+                        CTTR_Data.LUA_SaveObject(LineList, "Objective", "ChangeLevel" + CTTR_Data.HubNamesSimple[randHubs[i]] + "ToMidway", ChangeHubObjective);
                     }
                     ChangeHubObjective.Clear();
                 }
@@ -823,7 +821,7 @@ namespace CrateModLoader
                     List<string> ChangeHubObjective = new List<string>();
                     for (int i = 0; i < CTTR_Data.MissionObjectiveTypes.Length; i++)
                     {
-                        if (CTTR_Data.LUA_LoadObject(ref LineList, "Objective", CTTR_Data.MissionObjectiveHubNamesSimple[i] + "KeyCollection", ref List_Start, ref List_End, ref ChangeHubObjective))
+                        if (CTTR_Data.LUA_LoadObject(LineList, "Objective", CTTR_Data.MissionObjectiveHubNamesSimple[i] + "KeyCollection", ref List_Start, ref List_End, ChangeHubObjective))
                         {
                             for (int a = 0; a < ChangeHubObjective.Count; a++)
                             {
@@ -840,10 +838,10 @@ namespace CrateModLoader
                                     ChangeHubObjective[a] = "this.AddRequirement_ObjectiveComplete(\"Unlock" + CTTR_Data.MissionObjectiveHubNamesSimple[randGems[i]] + "Gate\")";
                                 }
                             }
-                            CTTR_Data.LUA_SaveObject(ref LineList, "Objective", CTTR_Data.MissionObjectiveHubNamesSimple[i] + "KeyCollection", ref ChangeHubObjective);
+                            CTTR_Data.LUA_SaveObject(LineList, "Objective", CTTR_Data.MissionObjectiveHubNamesSimple[i] + "KeyCollection", ChangeHubObjective);
                         }
                         ChangeHubObjective.Clear();
-                        if (CTTR_Data.LUA_LoadObject(ref LineList, "Objective", "Unlock" + CTTR_Data.MissionObjectiveHubNamesSimple[i] + "Gate", ref List_Start, ref List_End, ref ChangeHubObjective))
+                        if (CTTR_Data.LUA_LoadObject(LineList, "Objective", "Unlock" + CTTR_Data.MissionObjectiveHubNamesSimple[i] + "Gate", ref List_Start, ref List_End, ChangeHubObjective))
                         {
                             for (int a = 0; a < ChangeHubObjective.Count; a++)
                             {
@@ -860,7 +858,7 @@ namespace CrateModLoader
                                     ChangeHubObjective[a] = "this.AddAction_SetRadarNavPoint(\"Nav" + CTTR_Data.MissionObjectiveHubNamesSimple[randGems[i]] + "Weenie\")";
                                 }
                             }
-                            CTTR_Data.LUA_SaveObject(ref LineList, "Objective", "Unlock" + CTTR_Data.MissionObjectiveHubNamesSimple[i] + "Gate", ref ChangeHubObjective);
+                            CTTR_Data.LUA_SaveObject(LineList, "Objective", "Unlock" + CTTR_Data.MissionObjectiveHubNamesSimple[i] + "Gate", ChangeHubObjective);
                         }
                         ChangeHubObjective.Clear();
                     }
@@ -885,7 +883,7 @@ namespace CrateModLoader
             }
             */
         }
-        void Randomize_Tracks(string path_extr, ref RCF rcf_file, ref List<int> randTracks)
+        void Randomize_Tracks(string path_extr, RCF rcf_file, List<int> randTracks)
         {
             if (System.IO.File.Exists(path_extr + @"design\permanent\genericobjectives.god"))
             {
@@ -901,30 +899,30 @@ namespace CrateModLoader
                 List<string> ChangeHubObjective = new List<string>();
                 for (int i = 0; i < 15; i++)
                 {
-                    if (CTTR_Data.LUA_LoadObject(ref LineList, "Objective", "StartRace" + CTTR_Data.TrackNamesSimple[i], ref List_Start, ref List_End, ref ChangeHubObjective))
+                    if (CTTR_Data.LUA_LoadObject(LineList, "Objective", "StartRace" + CTTR_Data.TrackNamesSimple[i], ref List_Start, ref List_End, ChangeHubObjective))
                     {
                         ChangeHubObjective[ChangeHubObjective.Count - 3] = "this.AddAction_UnlockRace(\"" + CTTR_Data.TrackNames[randTracks[i]] + "\")";
                         ChangeHubObjective[ChangeHubObjective.Count - 2] = "this.AddAction_StartRace(\"" + CTTR_Data.TrackNames[randTracks[i]] + "\",\"ReturnFromRace" + CTTR_Data.TrackNamesSimple[i] + "\")";
-                        CTTR_Data.LUA_SaveObject(ref LineList, "Objective", "StartRace" + CTTR_Data.TrackNamesSimple[i], ref ChangeHubObjective);
+                        CTTR_Data.LUA_SaveObject(LineList, "Objective", "StartRace" + CTTR_Data.TrackNamesSimple[i], ChangeHubObjective);
                     }
                     ChangeHubObjective.Clear();
                 }
-                if (CTTR_Data.LUA_LoadObject(ref LineList, "Objective", "StartRaceFromMidway2", ref List_Start, ref List_End, ref ChangeHubObjective))
+                if (CTTR_Data.LUA_LoadObject(LineList, "Objective", "StartRaceFromMidway2", ref List_Start, ref List_End, ChangeHubObjective))
                 {
                     ChangeHubObjective[ChangeHubObjective.Count - 2] = "this.AddAction_StartRace(\"" + CTTR_Data.TrackNames[randTracks[0]] + "\",\"ReturnFromMidwayRaces\")";
-                    CTTR_Data.LUA_SaveObject(ref LineList, "Objective", "StartRaceFromMidway2", ref ChangeHubObjective);
+                    CTTR_Data.LUA_SaveObject(LineList, "Objective", "StartRaceFromMidway2", ChangeHubObjective);
                 }
                 ChangeHubObjective.Clear();
-                if (CTTR_Data.LUA_LoadObject(ref LineList, "Objective", "StartRaceFromMidway3", ref List_Start, ref List_End, ref ChangeHubObjective))
+                if (CTTR_Data.LUA_LoadObject(LineList, "Objective", "StartRaceFromMidway3", ref List_Start, ref List_End, ChangeHubObjective))
                 {
                     ChangeHubObjective[ChangeHubObjective.Count - 2] = "this.AddAction_StartRace(\"" + CTTR_Data.TrackNames[randTracks[0]] + "\",\"ReturnFromMidwayRaces2\")";
-                    CTTR_Data.LUA_SaveObject(ref LineList, "Objective", "StartRaceFromMidway3", ref ChangeHubObjective);
+                    CTTR_Data.LUA_SaveObject(LineList, "Objective", "StartRaceFromMidway3", ChangeHubObjective);
                 }
                 ChangeHubObjective.Clear();
-                if (CTTR_Data.LUA_LoadObject(ref LineList, "Objective", "BuyRaceTicketWithTrack", ref List_Start, ref List_End, ref ChangeHubObjective))
+                if (CTTR_Data.LUA_LoadObject(LineList, "Objective", "BuyRaceTicketWithTrack", ref List_Start, ref List_End, ChangeHubObjective))
                 {
                     ChangeHubObjective[ChangeHubObjective.Count - 2] = "this.AddAction_UnlockRace(\"" + CTTR_Data.TrackNames[randTracks[0]] + "\")";
-                    CTTR_Data.LUA_SaveObject(ref LineList, "Objective", "BuyRaceTicketWithTrack", ref ChangeHubObjective);
+                    CTTR_Data.LUA_SaveObject(LineList, "Objective", "BuyRaceTicketWithTrack", ChangeHubObjective);
                 }
                 ChangeHubObjective.Clear();
 
@@ -961,11 +959,11 @@ namespace CrateModLoader
                     List<string> ChangeHubObjective = new List<string>();
                     for (int i = 0; i < 15; i++)
                     {
-                        if (CTTR_Data.LUA_LoadObject(ref LineList, "Objective", "UnlockRace" + CTTR_Data.TrackNamesSimple[i], ref List_Start, ref List_End, ref ChangeHubObjective))
+                        if (CTTR_Data.LUA_LoadObject(LineList, "Objective", "UnlockRace" + CTTR_Data.TrackNamesSimple[i], ref List_Start, ref List_End, ChangeHubObjective))
                         {
                             ChangeHubObjective[ChangeHubObjective.Count - 2] = "this.AddAction_UnlockRace(\"" + CTTR_Data.TrackNames[randTracks[i]] + "\")";
                             ChangeHubObjective[ChangeHubObjective.Count - 1] = "this.AddAction_DisplayMessage(\"" + CTTR_Data.TrackGateNames[randTracks[i]] +"\",1.0,6.0)";
-                            CTTR_Data.LUA_SaveObject(ref LineList, "Objective", "UnlockRace" + CTTR_Data.TrackNamesSimple[i], ref ChangeHubObjective);
+                            CTTR_Data.LUA_SaveObject(LineList, "Objective", "UnlockRace" + CTTR_Data.TrackNamesSimple[i], ChangeHubObjective);
                         }
                         ChangeHubObjective.Clear();
                     }
@@ -989,7 +987,7 @@ namespace CrateModLoader
                 }
             }
         }
-        void Randomize_Minigames(string path_extr, ref RCF rcf_file, ref List<int> randMinigames)
+        void Randomize_Minigames(string path_extr, RCF rcf_file, List<int> randMinigames)
         {
             if (System.IO.File.Exists(path_extr + @"design\permanent\genericobjectives.god"))
             {
@@ -1005,10 +1003,10 @@ namespace CrateModLoader
                 List<string> ChangeHubObjective = new List<string>();
                 for (int i = 0; i < 8; i++)
                 {
-                    if (CTTR_Data.LUA_LoadObject(ref LineList, "Objective", CTTR_Data.MinigameObjectiveTypes[i], ref List_Start, ref List_End, ref ChangeHubObjective))
+                    if (CTTR_Data.LUA_LoadObject(LineList, "Objective", CTTR_Data.MinigameObjectiveTypes[i], ref List_Start, ref List_End, ChangeHubObjective))
                     {
                         ChangeHubObjective[ChangeHubObjective.Count - 3] = "this.AddAction_UnlockMiniGame(\"OFMiniGames/" + CTTR_Data.MinigameTypeNames[randMinigames[i]] + "\")";
-                        CTTR_Data.LUA_SaveObject(ref LineList, "Objective", CTTR_Data.MinigameObjectiveTypes[i], ref ChangeHubObjective);
+                        CTTR_Data.LUA_SaveObject(LineList, "Objective", CTTR_Data.MinigameObjectiveTypes[i], ChangeHubObjective);
                     }
                     ChangeHubObjective.Clear();
                 }
@@ -1031,7 +1029,7 @@ namespace CrateModLoader
                 }
             }
         }
-        void Randomize_Race_Laps(string path_extr, ref RCF rcf_file, ref List<int> randLaps)
+        void Randomize_Race_Laps(string path_extr, RCF rcf_file, List<int> randLaps)
         {
             if (System.IO.File.Exists(path_extr + @"design\startup.god"))
             {
@@ -1085,7 +1083,7 @@ namespace CrateModLoader
                 }
             }
         }
-        void Randomize_Battle_KOs(string path_extr, ref RCF rcf_file, ref List<int> randKOs)
+        void Randomize_Battle_KOs(string path_extr, RCF rcf_file, List<int> randKOs)
         {
             if (System.IO.File.Exists(path_extr + @"design\startup.god"))
             {
