@@ -93,7 +93,7 @@ namespace CrateModLoader
             Options.Add(DisableFadeout, new ModOption("Disable Fadeout Overlay"));
             Options.Add(DisablePopups, new ModOption("Disable Unlock Popups"));
             Options.Add(SpeedUpMaskHints, new ModOption("Speed Up Mask Hints"));
-            Options.Add(NoAlchemyEarrape, new ModOption("Remove Earrape Alchemy Intro"));
+            Options.Add(NoAlchemyEarrape, new ModOption("Remove Earrape Alchemy Intro", true));
         }
 
         internal string path_gob_extracted = "";
