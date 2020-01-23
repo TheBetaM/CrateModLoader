@@ -86,7 +86,7 @@ namespace CrateModLoader
             Options.Add(RandomizeSurfaceParameters, new ModOption("Randomize Surface Parameters"));
             Options.Add(RandomizeWeaponPools, new ModOption("Randomize Powerup Distribution"));
             Options.Add(RandomizeWeapons, new ModOption("Randomize Powerup Effects"));
-            Options.Add(RandomizeCharacters, new ModOption("Randomize Character Models")); //TODO: voices.csv, icon replacement, name replacement, main menu model replacement
+            Options.Add(RandomizeCharacters, new ModOption("Randomize Character Models")); //TODO: voices.csv, later version: icon replacement, name replacement, main menu model replacement, adventure character select model
             //Options.Add(RandomizeMusic, new ModOption()); //TODO music.csv
             //Options.Add(NoMask, new ModOption()); //TODO, hinthistory.csv
             Options.Add(DisableFadeout, new ModOption("Disable Fadeout Overlay"));
@@ -173,13 +173,13 @@ namespace CrateModLoader
             {
                 Editing_CSV_AdventureTracksManager = true;
                 Editing_CSV_GoalsToRewardsConverter = true;
-                CNK_Data.CNK_Randomize_ReqsRewards(ref randState);
+                CNK_Data.CNK_Randomize_ReqsRewards(randState);
             }
             if (Options[RandomizeHubPads].Enabled)
             {
                 Editing_CSV_WarpPadInfo = true;
                 Editing_CSV_AdventureCup = true;
-                CNK_Data.CNK_Randomize_WarpPads(ref randState);
+                CNK_Data.CNK_Randomize_WarpPads(randState);
             }
             if (Options[RandomizeKartStats].Enabled)
             {

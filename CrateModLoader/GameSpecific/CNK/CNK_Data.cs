@@ -594,7 +594,7 @@ namespace CrateModLoader.GameSpecific.CNK
             c_UIStats_Turn[targetDriver] = (int)Math.Ceiling((c_TurnRateNormal[targetDriver] / 1.5) * c_UIStats_MaxValue[targetDriver]);
         }
 
-        public static void CNK_Randomize_ReqsRewards(ref Random randState)
+        public static void CNK_Randomize_ReqsRewards(Random randState)
         {
             Adv_TracksManager_EntryList.Clear();
             //todo
@@ -667,10 +667,8 @@ namespace CrateModLoader.GameSpecific.CNK
             }
         }
 
-        public static void CNK_Randomize_WarpPads(ref Random randState)
+        public static void CNK_Randomize_WarpPads(Random randState)
         {
-            int targetPos = 0;
-
             //todo: hubs? boss cutscenes, velorace testing
 
             //Tracks
@@ -719,6 +717,7 @@ namespace CrateModLoader.GameSpecific.CNK
                 PadInfoNameID.Track_Teknee3,
             };
 
+            int targetPos;
             for (int i = 0; i < Adv_WarpPadInfo_EntryList.Count; i++)
             {
                 if (ValidReplacements.Contains(Adv_WarpPadInfo_EntryList[i].PadName))
