@@ -68,7 +68,7 @@
             "Nothing"});
             this.checkedListBox1.Location = new System.Drawing.Point(11, 273);
             this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(311, 0);
+            this.checkedListBox1.Size = new System.Drawing.Size(311, 30);
             this.checkedListBox1.TabIndex = 0;
             this.checkedListBox1.Visible = false;
             this.checkedListBox1.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged);
@@ -287,7 +287,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(424, 241);
+            this.ClientSize = new System.Drawing.Size(424, 281);
             this.Controls.Add(this.button_modCrateMenu);
             this.Controls.Add(this.button_openModMenu);
             this.Controls.Add(this.checkBox1);

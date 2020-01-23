@@ -98,15 +98,6 @@ namespace CrateModLoader
             Program.ModProgram.outputISOpath = textBox2.Text;
         }
 
-        private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            for (int i = 0; i < checkedListBox1.Items.Count; i++)
-            {
-                Program.ModProgram.OptionChanged(i, checkedListBox1.GetItemChecked(i));
-            }
-            checkedListBox1.ClearSelected();
-        }
-
         private void button3_Click(object sender, EventArgs e)
         {
             Program.ModProgram.DisableInteraction();
@@ -142,6 +133,15 @@ namespace CrateModLoader
         private void button_openModMenu_Click(object sender, EventArgs e)
         {
             Program.ModProgram.OpenModMenu();
+        }
+
+        private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CheckedListBox c = sender as CheckedListBox;
+            if (c.Items[c.SelectedIndex] is ModOption o)
+            {
+                o.Enabled = c.GetItemChecked(c.SelectedIndex);
+            }
         }
     }
 }

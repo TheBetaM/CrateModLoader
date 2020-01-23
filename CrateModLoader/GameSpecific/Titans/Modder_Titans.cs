@@ -1,33 +1,67 @@
-﻿using System;
+﻿using RadcoreCementFile;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
-using RadcoreCementFile;
 //RCF API by NeoKesha
 
 namespace CrateModLoader
 {
-    class Modder_Titans
+    public sealed class Modder_Titans : Modder
     {
-        public string[] modOptions = { "No options available" };
-
-        public void OptionChanged(int option, bool value)
+        public Modder_Titans()
         {
-            //TODO
-        }
-
-        public void UpdateModOptions()
-        {
-            Program.ModProgram.PrepareOptionsList(modOptions);
+            Game = new Game()
+            {
+                Name = "Crash Mind Over Mutant",
+                Consoles = new List<ConsoleMode>
+                {
+                    ConsoleMode.PS2,
+                    ConsoleMode.PSP,
+                    ConsoleMode.WII,
+                    ConsoleMode.XBOX360,
+                },
+                API_Credit = "API by NeoKesha",
+                Icon = Properties.Resources.icon_titans,
+                ModMenuEnabled = false,
+                ModCratesSupported = true,
+                RegionID_PS2 = new RegionCode[] {
+                    new RegionCode() {
+                    Name = @"BOOT2 = cdrom0:\SLUS_217.28;1",
+                    Region = RegionType.NTSC_U,
+                    ExecName = "SLUS_217.28",
+                    CodeName = "SLUS_21728", },
+                    new RegionCode() {
+                    Name = @"BOOT2 = cdrom0:\SLES_552.04;1",
+                    Region = RegionType.PAL,
+                    ExecName = "SLES_552.04",
+                    CodeName = "SLES_55204", },
+                },
+                RegionID_PSP = new RegionCode[] {
+                    new RegionCode() {
+                    Name = "ULUS-10377",
+                    Region = RegionType.NTSC_U },
+                    new RegionCode() {
+                    Name = "ULES-01171",
+                    Region = RegionType.PAL },
+                },
+                RegionID_WII = new RegionCode[] {
+                    new RegionCode() {
+                    Name = "RC8E7D",
+                    Region = RegionType.NTSC_U },
+                    new RegionCode() {
+                    Name = "RC8P7D",
+                    Region = RegionType.PAL },
+                    new RegionCode() {
+                    Name = "RC8X7D",
+                    Region = RegionType.PAL },
+                }
+            };
         }
 
         private string basePath = "";
 
-        public void StartModProcess()
+        public override void StartModProcess()
         {
-
             string path_RCF_frontend = "DEFAULT.RCF";
 
             basePath = AppDomain.CurrentDomain.BaseDirectory + @"temp\";

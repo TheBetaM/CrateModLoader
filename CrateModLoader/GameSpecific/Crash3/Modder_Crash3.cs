@@ -6,35 +6,46 @@ using System.IO;
 
 namespace CrateModLoader
 {
-    sealed class Modder_Crash3
+    public sealed class Modder_Crash3 : Modder
     {
-        public string[] modOptions = {
-            "Randomize sound effects"
-        };
+        internal const int RandomizeADIO = 0;
 
-        public bool RandomizeADIO = false;
-
-        public enum ModOptions
+        public Modder_Crash3()
         {
-            RandomizeADIO = 0
-        }
-
-        public void OptionChanged(int option, bool value)
-        {
-            switch ((ModOptions)option)
+            Game = new Game()
             {
-                case ModOptions.RandomizeADIO:
-                    RandomizeADIO = value;
-                    break;
-            }
+                Name = "Crash Bandicoot: Warped",
+                Consoles = new List<ConsoleMode>
+                {
+                    ConsoleMode.PS1
+                },
+                API_Credit = "API by chekwob and ManDude",
+                Icon = null,
+                ModMenuEnabled = false,
+                ModCratesSupported = true,
+                RegionID_PS1 = new RegionCode[] {
+                    new RegionCode() {
+                    Name = @"BOOT = cdrom:\SCUS_942.44;1",
+                    Region = RegionType.NTSC_U,
+                    ExecName = "SCUS_942.44",
+                    CodeName = "SCUS_94244", },
+                    new RegionCode() {
+                    Name = @"BOOT = cdrom:\SCES_014.20;1",
+                    Region = RegionType.PAL,
+                    ExecName = "SCES_014.20",
+                    CodeName = "SCES_01420", },
+                    new RegionCode() {
+                    Name = @"BOOT = cdrom:\SCPS_100.73;1",
+                    Region = RegionType.NTSC_J,
+                    ExecName = "SCPS_100.73",
+                    CodeName = "SCPS_10073", },
+                },
+            };
+
+            Options.Add(RandomizeADIO, new ModOption("Randomize sound effects"));
         }
 
-        public void UpdateModOptions()
-        {
-            Program.ModProgram.PrepareOptionsList(modOptions);
-        }
-
-        public void StartModProcess()
+        public override void StartModProcess()
         {
             // there is nothing for us to do here...
 
@@ -43,7 +54,7 @@ namespace CrateModLoader
             EndModProcess();
         }
 
-        private void ModProcess()
+        protected override void ModProcess()
         {
             Random rand = new Random(Program.ModProgram.randoSeed);
 
@@ -63,7 +74,7 @@ namespace CrateModLoader
                     //MessageBox.Show($"NSF/NSD file pair mismatch. First mismatch:\n\n{nsfFile.Name}\n{nsdFile.Name}");
                     continue;
                 }
-                if (RandomizeADIO) Mod_RandomizeADIO(nsfFile, nsdFile, rand);
+                if (Options[RandomizeADIO].Enabled) Mod_RandomizeADIO(nsfFile, nsdFile, rand);
             }
 
             ErrorManager.ExitSkipRegion();
@@ -82,12 +93,12 @@ namespace CrateModLoader
             }
         }
 
-        public void EndModProcess()
+        protected override void EndModProcess()
         {
             // ...or here
         }
 
-        private void Mod_RandomizeADIO(FileInfo nsfFile, FileInfo nsdFile, Random rand)
+        internal void Mod_RandomizeADIO(FileInfo nsfFile, FileInfo nsdFile, Random rand)
         {
             NSF nsf;
             NewNSD nsd;
