@@ -138,9 +138,12 @@ namespace CrateModLoader
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             CheckedListBox c = sender as CheckedListBox;
-            if (c.Items[c.SelectedIndex] is ModOption o)
+            for (int i = 0; i < c.Items.Count; ++i)
             {
-                o.Enabled = c.GetItemChecked(c.SelectedIndex);
+                if (c.Items[i] is ModOption o)
+                {
+                    o.Enabled = c.GetItemChecked(i);
+                }
             }
         }
     }
