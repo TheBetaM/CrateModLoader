@@ -654,7 +654,7 @@ namespace CrateModLoader
                         {
                             foreach (var rc in Modder.Game.RegionID_GCN)
                                 if (rc.Region == targetRegion)
-                                    PS2_game_code_name = rc.Name;
+                                    PS2_game_code_name = rc.CodeName;
                         }
                         else
                         {
@@ -663,7 +663,7 @@ namespace CrateModLoader
                             {
                                 foreach (var rc in Modder.Game.RegionID_WII)
                                     if (rc.Region == targetRegion)
-                                        PS2_game_code_name = rc.Name;
+                                        PS2_game_code_name = rc.CodeName;
                             }
                         }
                     }
@@ -709,7 +709,7 @@ namespace CrateModLoader
                                 {
                                     foreach (var rc in Modder.Game.RegionID_PS2)
                                         if (rc.Region == targetRegion)
-                                            PS2_game_code_name = rc.Name;
+                                            PS2_game_code_name = rc.CodeName;
                                 }
                                 else
                                 {
@@ -718,7 +718,7 @@ namespace CrateModLoader
                                     {
                                         foreach (var rc in Modder.Game.RegionID_PS1)
                                             if (rc.Region == targetRegion)
-                                                PS2_game_code_name = rc.Name;
+                                                PS2_game_code_name = rc.CodeName;
                                     }
                                 }
                             }
@@ -734,7 +734,7 @@ namespace CrateModLoader
                                 {
                                     foreach (var rc in Modder.Game.RegionID_PSP)
                                         if (rc.Region == targetRegion)
-                                            PS2_game_code_name = rc.Name;
+                                            PS2_game_code_name = rc.CodeName;
                                 }
                             }
                         }
