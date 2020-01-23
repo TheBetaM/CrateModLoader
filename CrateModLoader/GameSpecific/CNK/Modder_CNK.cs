@@ -29,6 +29,7 @@ namespace CrateModLoader
         internal const int RandomizeCupPoints             = 14;
         internal const int RandomizeMusic                 = 15;
         internal const int NoMask                         = 16;
+        internal const int NoAlchemyEarrape               = 17;
 
         public Modder_CNK()
         {
@@ -92,6 +93,7 @@ namespace CrateModLoader
             Options.Add(DisableFadeout, new ModOption("Disable Fadeout Overlay"));
             Options.Add(DisablePopups, new ModOption("Disable Unlock Popups"));
             Options.Add(SpeedUpMaskHints, new ModOption("Speed Up Mask Hints"));
+            Options.Add(NoAlchemyEarrape, new ModOption("Remove Earrape Alchemy Intro"));
         }
 
         internal string path_gob_extracted = "";
@@ -165,6 +167,10 @@ namespace CrateModLoader
             //bool Editing_CSV_AI_WeaponSelection = false;
             bool Editing_CSV_Credits = true;
 
+            if (Options[NoAlchemyEarrape].Enabled)
+            {
+                File.Delete(Program.ModProgram.extractedPath + "/VIDEO/INTRO/ALCHEMY.SFD");
+            }
             if (Options[RandomizeCharacters].Enabled)
             {
                 Mod_Randomize_Characters(randState);
@@ -1420,7 +1426,6 @@ namespace CrateModLoader
 
             List<int> charList = new List<int>();
             List<int> charList_rand = new List<int>();
-            int target_id = 0;
 
             //Change 22 to 24 to add geary and velo minions, untested
             for (int i = 0; i < 22; i++)
@@ -1431,7 +1436,7 @@ namespace CrateModLoader
 
             for (int i = 0; i < 22; i++)
             {
-                target_id = randState.Next(0, charList.Count);
+                int target_id = randState.Next(0, charList.Count);
                 charList_rand.Add(charList[target_id]);
                 charList.RemoveAt(target_id);
             }
