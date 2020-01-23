@@ -70,17 +70,17 @@ namespace CrateModLoader
                 },
             };
 
-            Options.Add(RandomizeAllCrates, new ModOption("Randomize Regular Crates")); // todo: change missions to unlock crash and cortex if they're not in the starting pool
-            //Options.Add(RandomizeCrateTypes, new ModOption("Randomize All Crates")); // todo: change missions to unlock crash and cortex if they're not in the starting pool
-            Options.Add(RandomizeGemLocations, new ModOption("Randomize Gem Locations")); // todo: gem keys in missionobjectives_x and platforming_objects, unlock failure message, key missions
-            Options.Add(RandomizeEnemies, new ModOption("Randomize Enemies")); // todo: arenas
-            Options.Add(RandomizeMusic, new ModOption("Randomize Level Music")); // todo: minigame challenges aswell
-            Options.Add(RandomizeCharParams, new ModOption("Randomize Character Parameters"));// todo, genericobjectives, missionobjectives_x, level NIS+NPC
-            Options.Add(ModFlyingKick, new ModOption("Enable Flying Kick for Crash")); // todo: vehicles, levels/common for speed tier values
+            Options.Add(RandomizeCrateTypes, new ModOption("Randomize Regular Crates")); // TODO: Make this a toggle between CrateTypes/AllCrates in the mod menu?
+            Options.Add(RandomizeAllCrates, new ModOption("Randomize All Crates"));
+            Options.Add(RandomizeGemLocations, new ModOption("Randomize Gem Locations"));
+            Options.Add(RandomizeEnemies, new ModOption("Randomize Enemies")); // TODO
+            Options.Add(RandomizeMusic, new ModOption("Randomize Level Music"));
+            Options.Add(RandomizeCharParams, new ModOption("Randomize Character Parameters"));
+            Options.Add(ModFlyingKick, new ModOption("Enable Flying Kick for Crash"));
             Options.Add(ModStompKick, new ModOption("Enable Stomp Kick for Crash (Flying Kick variation)"));
             Options.Add(ModDoubleJumpCortex, new ModOption("Enable Double Jump for Cortex"));
-            Options.Add(ModDoubleJumpNina, new ModOption("Enable Double Jump for Nina")); // todo: kamikaze
-            Options.Add(ModEnableUnusedEnemies, new ModOption("Enable Unused Enemies")); // todo: railshooter
+            Options.Add(ModDoubleJumpNina, new ModOption("Enable Double Jump for Nina"));
+            Options.Add(ModEnableUnusedEnemies, new ModOption("Enable Unused Enemies")); // TODO: frogensteins, ants in coreEnt
         }
 
         internal string bdPath = "";
