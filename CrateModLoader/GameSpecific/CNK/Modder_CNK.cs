@@ -169,7 +169,10 @@ namespace CrateModLoader
 
             if (Options[NoAlchemyEarrape].Enabled)
             {
-                File.Delete(Program.ModProgram.extractedPath + "/VIDEO/INTRO/ALCHEMY.SFD");
+                if (Program.ModProgram.isoType == ConsoleMode.PS2)
+                    File.Delete(Program.ModProgram.extractedPath + "/VIDEO/INTRO/ALCHEMY.SFD;1");
+                else
+                    File.Delete(Program.ModProgram.extractedPath + "/VIDEO/INTRO/ALCHEMY.SFD");
             }
             if (Options[RandomizeCharacters].Enabled)
             {
