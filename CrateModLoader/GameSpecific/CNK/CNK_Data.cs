@@ -594,7 +594,7 @@ namespace CrateModLoader.GameSpecific.CNK
             c_UIStats_Turn[targetDriver] = (int)Math.Ceiling((c_TurnRateNormal[targetDriver] / 1.5) * c_UIStats_MaxValue[targetDriver]);
         }
 
-        public static void CNK_Randomize_ReqsRewards()
+        public static void CNK_Randomize_ReqsRewards(ref Random randState)
         {
             Adv_TracksManager_EntryList.Clear();
             //todo
@@ -667,12 +667,198 @@ namespace CrateModLoader.GameSpecific.CNK
             }
         }
 
-        public static void CNK_Randomize_WarpPads()
+        public static void CNK_Randomize_WarpPads(ref Random randState)
         {
-            //todo
+            int targetPos = 0;
+
+            //todo: hubs? boss cutscenes, velorace testing
+
+            //Tracks
+            List<TrackID> ValidTracks = new List<TrackID>();
+            List<PadInfoDescID> ValidDesc = new List<PadInfoDescID>();
+            ValidTracks.Add(TrackID.Earth_1);
+            ValidDesc.Add(PadInfoDescID.world_earth1);
+            ValidTracks.Add(TrackID.Earth_2);
+            ValidDesc.Add(PadInfoDescID.world_earth2);
+            ValidTracks.Add(TrackID.Earth_3);
+            ValidDesc.Add(PadInfoDescID.world_earth3);
+            ValidTracks.Add(TrackID.Barin_1);
+            ValidDesc.Add(PadInfoDescID.world_barin1);
+            ValidTracks.Add(TrackID.Barin_2);
+            ValidDesc.Add(PadInfoDescID.world_barin2);
+            ValidTracks.Add(TrackID.Barin_3);
+            ValidDesc.Add(PadInfoDescID.world_barin3);
+            ValidTracks.Add(TrackID.Fenom_1);
+            ValidDesc.Add(PadInfoDescID.world_fenom1);
+            ValidTracks.Add(TrackID.Fenom_2);
+            ValidDesc.Add(PadInfoDescID.world_fenom2);
+            ValidTracks.Add(TrackID.Fenom_3);
+            ValidDesc.Add(PadInfoDescID.world_fenom3);
+            ValidTracks.Add(TrackID.Teknee_1);
+            ValidDesc.Add(PadInfoDescID.world_teknee1);
+            ValidTracks.Add(TrackID.Teknee_2);
+            ValidDesc.Add(PadInfoDescID.world_teknee2);
+            ValidTracks.Add(TrackID.Teknee_3);
+            ValidDesc.Add(PadInfoDescID.world_teknee3);
+            //ValidTracks.Add(TrackID.VeloRace); testing required
+            //ValidDesc.Add(PadInfoDescID.world_velo);
+
+            PadInfoNameID[] ValidReplacements = new PadInfoNameID[]
+            {
+                PadInfoNameID.Track_Earth1,
+                PadInfoNameID.Track_Earth2,
+                PadInfoNameID.Track_Earth3,
+                PadInfoNameID.Track_Barin1,
+                PadInfoNameID.Track_Barin2,
+                PadInfoNameID.Track_Barin3,
+                PadInfoNameID.Track_Fenomena1,
+                PadInfoNameID.Track_Fenomena2,
+                PadInfoNameID.Track_Fenomena3,
+                PadInfoNameID.Track_Teknee1,
+                PadInfoNameID.Track_Teknee2,
+                PadInfoNameID.Track_Teknee3,
+            };
+
             for (int i = 0; i < Adv_WarpPadInfo_EntryList.Count; i++)
             {
-                Adv_WarpPadInfo_EntryList[i] = new WarpPadInfoEntry(Adv_WarpPadInfo_EntryList[i].PadName, Adv_WarpPadInfo_EntryList[i].PadDesc, Adv_WarpPadInfo_EntryList[i].Track, Adv_WarpPadInfo_EntryList[i].isWarpGate, Adv_WarpPadInfo_EntryList[i].PrimaryActEvent, Adv_WarpPadInfo_EntryList[i].SecondaryEvent, Adv_WarpPadInfo_EntryList[i].LockedEvent, Adv_WarpPadInfo_EntryList[i].LockedEvent2, Adv_WarpPadInfo_EntryList[i].BaseRewardEvent, Adv_WarpPadInfo_EntryList[i].RelicWonEvent, Adv_WarpPadInfo_EntryList[i].TokenWonEvent);
+                if (ValidReplacements.Contains(Adv_WarpPadInfo_EntryList[i].PadName))
+                {
+                    targetPos = randState.Next(0, ValidTracks.Count);
+                    Adv_WarpPadInfo_EntryList[i] = new WarpPadInfoEntry(Adv_WarpPadInfo_EntryList[i].PadName, ValidDesc[targetPos], ValidTracks[targetPos], Adv_WarpPadInfo_EntryList[i].isWarpGate, Adv_WarpPadInfo_EntryList[i].PrimaryActEvent, Adv_WarpPadInfo_EntryList[i].SecondaryEvent, Adv_WarpPadInfo_EntryList[i].LockedEvent, Adv_WarpPadInfo_EntryList[i].LockedEvent2, Adv_WarpPadInfo_EntryList[i].BaseRewardEvent, Adv_WarpPadInfo_EntryList[i].RelicWonEvent, Adv_WarpPadInfo_EntryList[i].TokenWonEvent);
+                    ValidTracks.RemoveAt(targetPos);
+                    ValidDesc.RemoveAt(targetPos);
+                }
+            }
+
+            //Crystal Arenas
+            List<TrackID> ValidArenas = new List<TrackID>();
+            List<PadInfoDescID> ValidDescArena = new List<PadInfoDescID>();
+            ValidArenas.Add(TrackID.Arena_1);
+            ValidArenas.Add(TrackID.Arena_2);
+            ValidArenas.Add(TrackID.Arena_3);
+            ValidArenas.Add(TrackID.Arena_4);
+            ValidArenas.Add(TrackID.Arena_5);
+            ValidDescArena.Add(PadInfoDescID.world_arena1);
+            ValidDescArena.Add(PadInfoDescID.world_arena2);
+            ValidDescArena.Add(PadInfoDescID.world_arena3);
+            ValidDescArena.Add(PadInfoDescID.world_arena4);
+            ValidDescArena.Add(PadInfoDescID.world_arena5);
+
+            PadInfoNameID[] ValidReplacementsArena = new PadInfoNameID[]
+            {
+                PadInfoNameID.Arena_EarthArena,
+                PadInfoNameID.Arena_BarinArena,
+                PadInfoNameID.Arena_FenomenaArena,
+                PadInfoNameID.Arena_TekneeArena,
+            };
+
+            for (int i = 0; i < Adv_WarpPadInfo_EntryList.Count; i++)
+            {
+                if (ValidReplacementsArena.Contains(Adv_WarpPadInfo_EntryList[i].PadName))
+                {
+                    targetPos = randState.Next(0, ValidArenas.Count);
+                    Adv_WarpPadInfo_EntryList[i] = new WarpPadInfoEntry(Adv_WarpPadInfo_EntryList[i].PadName, ValidDescArena[targetPos], ValidArenas[targetPos], Adv_WarpPadInfo_EntryList[i].isWarpGate, Adv_WarpPadInfo_EntryList[i].PrimaryActEvent, Adv_WarpPadInfo_EntryList[i].SecondaryEvent, Adv_WarpPadInfo_EntryList[i].LockedEvent, Adv_WarpPadInfo_EntryList[i].LockedEvent2, Adv_WarpPadInfo_EntryList[i].BaseRewardEvent, Adv_WarpPadInfo_EntryList[i].RelicWonEvent, Adv_WarpPadInfo_EntryList[i].TokenWonEvent);
+                    ValidArenas.RemoveAt(targetPos);
+                    ValidDescArena.RemoveAt(targetPos);
+                }
+            }
+
+            //Bosses
+            List<TrackID> ValidBosses = new List<TrackID>();
+            List<PadInfoDescID> ValidDescBoss = new List<PadInfoDescID>();
+            ValidBosses.Add(TrackID.Earth_2);
+            ValidBosses.Add(TrackID.Barin_3);
+            ValidBosses.Add(TrackID.Fenom_1);
+            ValidBosses.Add(TrackID.Teknee_2);
+            ValidDescBoss.Add(PadInfoDescID.warp_kongo);
+            ValidDescBoss.Add(PadInfoDescID.warp_nash);
+            ValidDescBoss.Add(PadInfoDescID.warp_norm);
+            ValidDescBoss.Add(PadInfoDescID.warp_otto);
+            //ValidBosses.Add(TrackID.VeloRace);
+            //ValidDescBoss.Add(PadInfoDescID.velo_race_title);
+
+            PadInfoNameID[] ValidReplacementsBoss = new PadInfoNameID[]
+            {
+                PadInfoNameID.Boss_EarthBoss,
+                PadInfoNameID.Boss_BarinBoss,
+                PadInfoNameID.Boss_FenomenaBoss,
+                PadInfoNameID.Boss_TekneeBoss,
+            };
+
+            for (int i = 0; i < Adv_WarpPadInfo_EntryList.Count; i++)
+            {
+                if (ValidReplacementsBoss.Contains(Adv_WarpPadInfo_EntryList[i].PadName))
+                {
+                    targetPos = randState.Next(0, ValidBosses.Count);
+                    Adv_WarpPadInfo_EntryList[i] = new WarpPadInfoEntry(Adv_WarpPadInfo_EntryList[i].PadName, ValidDescBoss[targetPos], ValidBosses[targetPos], Adv_WarpPadInfo_EntryList[i].isWarpGate, Adv_WarpPadInfo_EntryList[i].PrimaryActEvent, Adv_WarpPadInfo_EntryList[i].SecondaryEvent, Adv_WarpPadInfo_EntryList[i].LockedEvent, Adv_WarpPadInfo_EntryList[i].LockedEvent2, Adv_WarpPadInfo_EntryList[i].BaseRewardEvent, Adv_WarpPadInfo_EntryList[i].RelicWonEvent, Adv_WarpPadInfo_EntryList[i].TokenWonEvent);
+                    ValidBosses.RemoveAt(targetPos);
+                    ValidDescBoss.RemoveAt(targetPos);
+                }
+            }
+
+            //Gem Cups
+            List<TrackID> GemTracks = new List<TrackID>();
+            GemTracks.Add(TrackID.Earth_1);
+            GemTracks.Add(TrackID.Earth_2);
+            GemTracks.Add(TrackID.Earth_3);
+            GemTracks.Add(TrackID.Barin_1);
+            GemTracks.Add(TrackID.Barin_2);
+            GemTracks.Add(TrackID.Barin_3);
+            GemTracks.Add(TrackID.Fenom_1);
+            GemTracks.Add(TrackID.Fenom_2);
+            GemTracks.Add(TrackID.Fenom_3);
+            GemTracks.Add(TrackID.Teknee_1);
+            GemTracks.Add(TrackID.Teknee_2);
+            GemTracks.Add(TrackID.Teknee_3);
+            //GemTracks.Add(TrackID.VeloRace); testing required
+
+            for (int i = 0; i < GemCup_Red.Length; i++)
+            {
+                targetPos = randState.Next(0, GemTracks.Count);
+                GemCup_Red[i] = GemTracks[targetPos];
+                GemTracks.RemoveAt(targetPos);
+            }
+            for (int i = 0; i < GemCup_Blue.Length; i++)
+            {
+                targetPos = randState.Next(0, GemTracks.Count);
+                GemCup_Blue[i] = GemTracks[targetPos];
+                GemTracks.RemoveAt(targetPos);
+            }
+            for (int i = 0; i < GemCup_Green.Length; i++)
+            {
+                targetPos = randState.Next(0, GemTracks.Count);
+                GemCup_Green[i] = GemTracks[targetPos];
+                GemTracks.RemoveAt(targetPos);
+            }
+            for (int i = 0; i < GemCup_Purple.Length; i++)
+            {
+                targetPos = randState.Next(0, GemTracks.Count);
+                GemCup_Purple[i] = GemTracks[targetPos];
+                GemTracks.RemoveAt(targetPos);
+            }
+
+            for (int i = 0; i < Adv_GoalsToRewards_EntryList.Count; i++)
+            {
+                if (Adv_GoalsToRewards_EntryList[i].Reward == RewardID.Gem_Blue)
+                {
+                    Adv_GoalsToRewards_EntryList[i] = new GoalsToRewardsEntry(GemCup_Blue[0], SubModeID.Gem, RewardID.Gem_Blue);
+                }
+                else if (Adv_GoalsToRewards_EntryList[i].Reward == RewardID.Gem_Green)
+                {
+                    Adv_GoalsToRewards_EntryList[i] = new GoalsToRewardsEntry(GemCup_Green[0], SubModeID.Gem, RewardID.Gem_Green);
+                }
+                else if (Adv_GoalsToRewards_EntryList[i].Reward == RewardID.Gem_Purple)
+                {
+                    Adv_GoalsToRewards_EntryList[i] = new GoalsToRewardsEntry(GemCup_Purple[0], SubModeID.Gem, RewardID.Gem_Purple);
+                }
+                else if (Adv_GoalsToRewards_EntryList[i].Reward == RewardID.Gem_Red)
+                {
+                    Adv_GoalsToRewards_EntryList[i] = new GoalsToRewardsEntry(GemCup_Red[0], SubModeID.Gem, RewardID.Gem_Red);
+                }
+                else if (Adv_GoalsToRewards_EntryList[i].Reward == RewardID.Gem_Yellow)
+                {
+                    Adv_GoalsToRewards_EntryList[i] = new GoalsToRewardsEntry(GemCup_Yellow[0], SubModeID.Gem, RewardID.Gem_Yellow);
+                }
             }
             for (int i = 0; i < Adv_WarpPadInfo_EntryList.Count; i++)
             {

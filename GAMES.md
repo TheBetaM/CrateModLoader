@@ -35,6 +35,7 @@ API by BetaM, ManDude and eezstreet.
 - Randomize Surface Parameters
 - Randomize Powerup Distribution
 - Randomize Powerup Effects
+- Randomize Character Models
 - Disable Fadeout Overlay
 - Disable Unlock Popups
 - Speed Up Mask Hints

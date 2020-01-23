@@ -40,7 +40,7 @@ namespace CrateModLoader
         //public bool Randomize_Obstacles = false; //TODO obstacles
         //public bool Randomize_Cup_Points = false; // Maybe? gameprogression
         public bool Randomize_Weapons = false;
-        public bool Randomize_Characters = false; //TODO: voices.csv, icon replacement, name replacement, main menu model replacement
+        public bool Randomize_Characters = false; //TODO: voices.csv, later version: icon replacement, name replacement, main menu model replacement, adventure character select model
         //public bool Randomize_Music = false; //TODO music.csv
 
         public bool Mod_SpeedUp_Mask_Hints = false;
@@ -202,13 +202,13 @@ namespace CrateModLoader
             {
                 Editing_CSV_AdventureTracksManager = true;
                 Editing_CSV_GoalsToRewardsConverter = true;
-                CNK_Data.CNK_Randomize_ReqsRewards();
+                CNK_Data.CNK_Randomize_ReqsRewards(ref randState);
             }
             if (Randomize_Hub_Pads)
             {
                 Editing_CSV_WarpPadInfo = true;
                 Editing_CSV_AdventureCup = true;
-                CNK_Data.CNK_Randomize_WarpPads();
+                CNK_Data.CNK_Randomize_WarpPads(ref randState);
             }
             if (Randomize_Kart_Stats)
             {
