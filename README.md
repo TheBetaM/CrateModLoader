@@ -6,7 +6,7 @@ See [this list](../master/GAMES.md) for supported games and their features.
 
 # Building Prerequisites
 
-- Microsoft Visual Studio 2017
+- Microsoft Visual Studio 2017 version 15.3 (C# 7.1)
 - .NET 4.5.2
 
 # Credits
