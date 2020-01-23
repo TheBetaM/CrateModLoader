@@ -6,11 +6,11 @@ using System.Diagnostics;
 using System.IO;
 using System.Media;
 using System.Reflection;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace CrateModLoader
 {
-
     public enum OpenROM_SelectionType
     {
         PSXPS2PSP = 1,
@@ -59,14 +59,24 @@ namespace CrateModLoader
         public BackgroundWorker asyncWorker;
         /// <summary> String used to show which version of CML the modded game was built with. </summary>
         public string releaseVersionString = "v1.0";
-        /// <summary> String of bytes displaying which quick options were selected. (Automatically adjusts to more bytes depending on options available, min. 2 characters, 2 characters per 8 options) </summary>
-        public string optionsSelectedString = "00";
+        /// <summary> String of bits displaying which quick options were selected (automatically adjusts according the amount of quick options) - first character is first option from the top </summary>
+        public string optionsSelectedString
+        {
+            get
+            {
+                string str = string.Empty;
+                foreach (ModOption option in list_modOptions.Items)
+                {
+                    str += Convert.ToInt32(option.Enabled).ToString();
+                }
+                return str;
+            }
+        }
 
         public string inputISOpath = "";
         public string outputISOpath = "";
         public ConsoleMode isoType = ConsoleMode.Undefined;
-        public int targetGame = -1;
-        public object GameClass;
+        public Modder Modder;
         public RegionType targetRegion = RegionType.Undefined;
         public string extractedPath = "";
         public string PS2_executable_name = "";
@@ -428,7 +438,7 @@ namespace CrateModLoader
                             }
                             if (cd.GetDirectories(directory).Length > 0)
                             {
-                                Recursive_CreateDirs(ref cd, directory, ref fileStreamFrom, ref fileStreamTo);
+                                Recursive_CreateDirs(cd, directory, fileStreamFrom, fileStreamTo);
                             }
                         }
                     }
@@ -457,7 +467,7 @@ namespace CrateModLoader
             }
         }
 
-        private void Recursive_CreateDirs(ref CDReader cd, string dir, ref Stream fileStreamFrom, ref Stream fileStreamTo)
+        private void Recursive_CreateDirs(CDReader cd, string dir, Stream fileStreamFrom, Stream fileStreamTo)
         {
             foreach (string directory in cd.GetDirectories(dir))
             {
@@ -475,7 +485,7 @@ namespace CrateModLoader
                 }
                 if (cd.GetDirectories(directory).Length > 0)
                 {
-                    Recursive_CreateDirs(ref cd, directory, ref fileStreamFrom, ref fileStreamTo);
+                    Recursive_CreateDirs(cd, directory, fileStreamFrom, fileStreamTo);
                 }
             }
         }
@@ -517,18 +527,7 @@ namespace CrateModLoader
 
         public void EditGameContent()
         {
-            Type thisType = GameDatabase.Games[targetGame].ModderClass;
-            MethodInfo theMethod = thisType.GetMethod("StartModProcess");
-
-            try
-            {
-                theMethod.Invoke(GameClass, null);
-            }
-            catch (Exception ex)
-            {
-                DeleteTempFiles();
-                throw ex;
-            }
+            Modder.StartModProcess();
         }
 
         public void FinishISO()
@@ -622,59 +621,14 @@ namespace CrateModLoader
             }
         }
 
-        public void OptionChanged(int option,bool value)
-        {
-            Type thisType = GameDatabase.Games[targetGame].ModderClass;
-            MethodInfo theMethod = thisType.GetMethod("OptionChanged");
-            try
-            {
-                theMethod.Invoke(GameClass, new object[] { option, value });
-            }
-            catch
-            {
-                DialogResult dialogResult = MessageBox.Show("This game doesn't have mod options!", "Error", MessageBoxButtons.OK);
-                return;
-            }
-
-            //Setting Options String
-            if (list_modOptions.Items.Count > 0)
-            {
-                int optionCount = list_modOptions.Items.Count;
-                int byteCount = (int)Math.Ceiling(optionCount / 8d);
-                byte[] optionsSelected = new byte[byteCount];
-                for (int i = 0; i < optionCount; i++)
-                {
-                    if (list_modOptions.GetItemCheckState(i) == CheckState.Checked)
-                    {
-                        optionsSelected[(int)Math.Floor(i / 8d)] += (byte)Math.Pow(2, i % 8);
-                    }
-                }
-                optionsSelectedString = optionsSelected[0].ToString("X2");
-                if (optionsSelected.Length > 1)
-                {
-                    for (int i = 1; i < optionsSelected.Length; i++)
-                    {
-                        if (optionsSelected[i] != 0x00)
-                        {
-                            optionsSelectedString += optionsSelected[i].ToString("X2");
-                        }
-                    }
-                }
-                //Console.WriteLine("options " + optionsSelectedString);
-            }
-        }
-
         public void CheckISO()
         {
-            bool foundMetaData = false;
             if (OpenROM_Selection == OpenROM_SelectionType.GCNWII || OpenROM_Selection == OpenROM_SelectionType.Any)
             {
                 // Gamecube ROMs
 
                 string args = "ID6 ";
                 args += "\"" + inputISOpath + "\"";
-
-                string outputMessage = "";
 
                 ISOcreatorProcess = new Process();
                 ISOcreatorProcess.StartInfo.FileName = AppDomain.CurrentDomain.BaseDirectory + "/Tools/wit/wit.exe";
@@ -685,7 +639,7 @@ namespace CrateModLoader
                 ISOcreatorProcess.StartInfo.CreateNoWindow = true;
                 ISOcreatorProcess.Start();
 
-                outputMessage = ISOcreatorProcess.StandardOutput.ReadToEnd();
+                string outputMessage = ISOcreatorProcess.StandardOutput.ReadToEnd();
 
                 ISOcreatorProcess.WaitForExit();
 
@@ -693,59 +647,29 @@ namespace CrateModLoader
                 {
                     string titleID = outputMessage.Substring(0, 6);
 
-                    if (titleID != "")
+                    if (!string.IsNullOrWhiteSpace(titleID))
                     {
-                        int GameID = -1;
-                        for (int game = 0; game < GameDatabase.Games.Length; game++)
+                        SetGameType(titleID, ConsoleMode.GCN);
+                        if (Modder != null)
                         {
-                            if (GameDatabase.Games[game].RegionID_GCN != null && GameDatabase.Games[game].RegionID_GCN.Length > 0)
-                            {
-                                foreach (RegionCode rcode in GameDatabase.Games[game].RegionID_GCN)
-                                {
-                                    if (titleID == rcode.Name)
-                                    {
-                                        GameID = game;
-                                        SetGameType(GameID, ConsoleMode.GCN, rcode.Region);
-                                        PS2_game_code_name = rcode.Name;
-                                        foundMetaData = true;
-                                        break;
-                                    }
-                                }
-                            }
-                            if (foundMetaData)
-                            {
-                                break;
-                            }
+                            foreach (var rc in Modder.Game.RegionID_GCN)
+                                if (rc.Region == targetRegion)
+                                    PS2_game_code_name = rc.Name;
                         }
-                        if (!foundMetaData)
+                        else
                         {
-                            for (int game = 0; game < GameDatabase.Games.Length; game++)
+                            SetGameType(titleID, ConsoleMode.WII);
+                            if (Modder != null)
                             {
-                                if (GameDatabase.Games[game].RegionID_WII != null && GameDatabase.Games[game].RegionID_WII.Length > 0)
-                                {
-                                    foreach (RegionCode rcode in GameDatabase.Games[game].RegionID_WII)
-                                    {
-                                        if (titleID == rcode.Name)
-                                        {
-                                            GameID = game;
-                                            SetGameType(GameID, ConsoleMode.WII, rcode.Region);
-                                            PS2_game_code_name = rcode.Name;
-                                            foundMetaData = true;
-                                            break;
-                                        }
-                                    }
-                                }
-                                if (foundMetaData)
-                                {
-                                    break;
-                                }
+                                foreach (var rc in Modder.Game.RegionID_WII)
+                                    if (rc.Region == targetRegion)
+                                        PS2_game_code_name = rc.Name;
                             }
                         }
                     }
                 }
             }
-
-            if (!foundMetaData && OpenROM_Selection != OpenROM_SelectionType.GCNWII)
+            else if (OpenROM_Selection != OpenROM_SelectionType.GCNWII)
             {
                 try
                 {
@@ -779,57 +703,22 @@ namespace CrateModLoader
                             fileStream = cd.OpenFile(@"SYSTEM.CNF", FileMode.Open);
                             using (StreamReader sr = new StreamReader(fileStream))
                             {
-                                string input;
-                                string titleID;
-                                int GameID = -1;
-                                input = sr.ReadLine();
-                                titleID = input;
-                                foundMetaData = false;
-                                for (int game = 0; game < GameDatabase.Games.Length; game++)
+                                string titleID = sr.ReadLine();
+                                SetGameType(titleID, ConsoleMode.PS2);
+                                if (Modder != null)
                                 {
-                                    if (GameDatabase.Games[game].RegionID_PS2 != null && GameDatabase.Games[game].RegionID_PS2.Length > 0)
-                                    {
-                                        foreach (RegionCode rcode in GameDatabase.Games[game].RegionID_PS2)
-                                        {
-                                            if (titleID == rcode.Name)
-                                            {
-                                                GameID = game;
-                                                SetGameType(GameID, ConsoleMode.PS2, rcode.Region);
-                                                PS2_executable_name = rcode.ExecName;
-                                                PS2_game_code_name = rcode.CodeName;
-                                                foundMetaData = true;
-                                                break;
-                                            }
-                                        }
-                                    }
-                                    if (foundMetaData)
-                                    {
-                                        break;
-                                    }
+                                    foreach (var rc in Modder.Game.RegionID_PS2)
+                                        if (rc.Region == targetRegion)
+                                            PS2_game_code_name = rc.Name;
                                 }
-                                if (!foundMetaData)
+                                else
                                 {
-                                    for (int game = 0; game < GameDatabase.Games.Length; game++)
+                                    SetGameType(titleID, ConsoleMode.PS1);
+                                    if (Modder != null)
                                     {
-                                        if (GameDatabase.Games[game].RegionID_PS1 != null && GameDatabase.Games[game].RegionID_PS1.Length > 0)
-                                        {
-                                            foreach (RegionCode rcode in GameDatabase.Games[game].RegionID_PS1)
-                                            {
-                                                if (titleID == rcode.Name)
-                                                {
-                                                    GameID = game;
-                                                    SetGameType(GameID, ConsoleMode.PS1, rcode.Region);
-                                                    PS2_executable_name = rcode.ExecName;
-                                                    PS2_game_code_name = rcode.CodeName;
-                                                    foundMetaData = true;
-                                                    break;
-                                                }
-                                            }
-                                        }
-                                        if (foundMetaData)
-                                        {
-                                            break;
-                                        }
+                                        foreach (var rc in Modder.Game.RegionID_PS1)
+                                            if (rc.Region == targetRegion)
+                                                PS2_game_code_name = rc.Name;
                                     }
                                 }
                             }
@@ -839,31 +728,13 @@ namespace CrateModLoader
                             fileStream = cd.OpenFile(@"UMD_DATA.BIN", FileMode.Open);
                             using (StreamReader sr = new StreamReader(fileStream))
                             {
-                                string input;
-                                string titleID;
-                                int GameID = -1;
-                                input = sr.ReadLine();
-                                titleID = input.Substring(0, 10);
-                                foundMetaData = false;
-                                for (int game = 0; game < GameDatabase.Games.Length; game++)
+                                string titleID = sr.ReadLine().Substring(0, 10);
+                                SetGameType(titleID, ConsoleMode.PSP);
+                                if (Modder != null)
                                 {
-                                    if (GameDatabase.Games[game].RegionID_PSP != null && GameDatabase.Games[game].RegionID_PSP.Length > 0)
-                                    {
-                                        foreach (RegionCode rcode in GameDatabase.Games[game].RegionID_PSP)
-                                        {
-                                            if (titleID == rcode.Name)
-                                            {
-                                                GameID = game;
-                                                SetGameType(GameID, ConsoleMode.PSP, rcode.Region);
-                                                foundMetaData = true;
-                                                break;
-                                            }
-                                        }
-                                    }
-                                    if (foundMetaData)
-                                    {
-                                        break;
-                                    }
+                                    foreach (var rc in Modder.Game.RegionID_PSP)
+                                        if (rc.Region == targetRegion)
+                                            PS2_game_code_name = rc.Name;
                                 }
                             }
                         }
@@ -874,7 +745,7 @@ namespace CrateModLoader
                         }
                         else
                         {
-                            foundMetaData = false;
+                            Modder = null;
                         }
 
                         cd.Dispose();
@@ -894,7 +765,7 @@ namespace CrateModLoader
                 }
             }
 
-            if (!foundMetaData)
+            if (Modder == null)
             {
                 text_gameType.Text = "Game ROM - Unknown game ROM!";
                 loadedISO = false;
@@ -915,14 +786,37 @@ namespace CrateModLoader
             }
         }
 
-
-        void SetGameType(int type, ConsoleMode console, RegionType region)
+        void SetGameType(string serial, ConsoleMode console)
         {
-            targetGame = type;
-            Type targetType = GameDatabase.Games[targetGame].ModderClass;
-            GameClass = Activator.CreateInstance(targetType);
-
-            targetRegion = region;
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            foreach (Type type in assembly.GetTypes())
+            {
+                if (type.IsAbstract || !typeof(Modder).IsAssignableFrom(type)) // only get non-abstract modders
+                    continue;
+                Modder = (Modder)Activator.CreateInstance(type);
+                if (!Modder.Game.Consoles.Contains(console))
+                    continue;
+                RegionCode[] codelist =
+                      console == ConsoleMode.PS2 ? Modder.Game.RegionID_PS2
+                    : console == ConsoleMode.PS1 ? Modder.Game.RegionID_PS1
+                    : console == ConsoleMode.PSP ? Modder.Game.RegionID_PSP
+                    : console == ConsoleMode.GCN ? Modder.Game.RegionID_GCN
+                    : console == ConsoleMode.WII ? Modder.Game.RegionID_WII
+                    : null;
+                Modder oldmodder = Modder;
+                Modder = null;
+                foreach (var r in codelist)
+                {
+                    if (r.Name == serial)
+                    {
+                        targetRegion = r.Region;
+                        Modder = oldmodder;
+                        break;
+                    }
+                }
+                if (Modder != null)
+                    break;
+            }
             isoType = console;
 
             string cons_mod = "";
@@ -959,59 +853,36 @@ namespace CrateModLoader
                 cons_mod = "360";
             }
 
-            string region_mod = "";
-            if (region == RegionType.Undefined)
+            string region_mod;
+            switch (targetRegion)
             {
-                region_mod = "ERROR_REGION";
-            }
-            else if (region == RegionType.NTSC_U)
-            {
-                region_mod = "NTSC-U";
-            }
-            else if (region == RegionType.PAL)
-            {
-                region_mod = "PAL";
-            }
-            else if (region == RegionType.NTSC_J)
-            {
-                region_mod = "NTSC-J";
+                case RegionType.NTSC_J:
+                    region_mod = "NTSC-J";
+                    break;
+                case RegionType.NTSC_U:
+                    region_mod = "NTSC-U";
+                    break;
+                case RegionType.PAL:
+                    region_mod = "PAL";
+                    break;
+                default:
+                    region_mod = "ERROR_REGION";
+                    break;
             }
 
-            if (type == -1)
+            if (Modder == null)
             {
                 text_gameType.Text = "Game ROM - ERROR_GAME";
             }
             else
             {
-                string apiCredit = GameDatabase.Games[targetGame].API_Credit;
-                string gameName = GameDatabase.Games[targetGame].Name;
-                bool hasModMenu = GameDatabase.Games[targetGame].ModMenuEnabled;
-                bool hasModCrates = GameDatabase.Games[targetGame].ModCratesSupported;
-                System.Drawing.Image gameIcon = GameDatabase.Games[targetGame].Icon;
+                Image gameIcon = Modder.Game.Icon;
 
-                if (!hasModMenu)
-                {
-                    button_modMenu.Enabled = false;
-                    button_modMenu.Visible = false;
-                }
-                else
-                {
-                    button_modMenu.Enabled = true;
-                    button_modMenu.Visible = true;
-                }
-                if (!hasModCrates)
-                {
-                    button_modCrateMenu.Enabled = false;
-                    button_modCrateMenu.Visible = false;
-                }
-                else
-                {
-                    button_modCrateMenu.Enabled = true;
-                    button_modCrateMenu.Visible = true;
-                }
+                button_modMenu.Enabled = button_modMenu.Visible = Modder.Game.ModMenuEnabled;
+                button_modCrateMenu.Enabled = button_modCrateMenu.Visible = Modder.Game.ModCratesSupported;
 
-                text_gameType.Text = "Game ROM - " + gameName + " " + region_mod + " " + cons_mod + " detected!";
-                text_optionsLabel.Text = gameName + " Quick Options (" + apiCredit + ")";
+                text_gameType.Text = string.Format("Game ROM - {0} {1} {2} detected!", Modder.Game.Name, region_mod, cons_mod);
+                text_optionsLabel.Text = string.Format("{0} Quick Options ({1})", Modder.Game.Name, Modder.Game.API_Credit);
                 if (gameIcon != null)
                 {
                     image_gameIcon.Image = gameIcon;
@@ -1021,41 +892,27 @@ namespace CrateModLoader
                 {
                     image_gameIcon.Visible = false;
                 }
+
                 list_modOptions.Items.Clear();
-
-                int height = 320;
-                if (main_form.Size.Height < height)
+                if (Modder.Options.Count > 0)
                 {
-                    main_form.Size = new System.Drawing.Size(main_form.Size.Width, height);
+                    foreach (var option in Modder.Options.Values)
+                    {
+                        list_modOptions.Items.Add(option, option.Enabled);
+                    }
+                    int height = 320 + (list_modOptions.Items.Count * 15);
+                    list_modOptions.Visible = list_modOptions.Enabled = list_modOptions.Items.Count > 0;
+                    if (main_form.Size.Height < height)
+                    {
+                        main_form.Size = new Size(main_form.Size.Width, height);
+                    }
+                    main_form.MinimumSize = new Size(main_form.MinimumSize.Width, height);
                 }
-                main_form.MinimumSize = new System.Drawing.Size(main_form.MinimumSize.Width, height);
-
-                Type thisType = GameDatabase.Games[targetGame].ModderClass;
-                MethodInfo theMethod = thisType.GetMethod("UpdateModOptions");
-                try
+                else
                 {
-                    theMethod.Invoke(GameClass, null);
-                }
-                catch
-                {
-                    DialogResult dialogResult = MessageBox.Show("This game doesn't have quick options!", "Error", MessageBoxButtons.OK);
-                    return;
+                    list_modOptions.Items.Add("No options available", false);
                 }
             }
-            
-        }
-
-        public void PrepareOptionsList(string[] modOptions)
-        {
-            list_modOptions.Items.Clear();
-            list_modOptions.Items.AddRange(modOptions);
-            int height = 320 + (list_modOptions.Items.Count * 15);
-            list_modOptions.Visible = true;
-            if (main_form.Size.Height < height)
-            {
-                main_form.Size = new System.Drawing.Size(main_form.Size.Width, height);
-            }
-            main_form.MinimumSize = new System.Drawing.Size(main_form.MinimumSize.Width, height);
         }
 
         public void OpenModCrateManager()
@@ -1073,19 +930,9 @@ namespace CrateModLoader
         {
             // Individual Game Mod Menu
             // Detailed settings UI for some games
-            // Set availability in GameDatabase (ModMenuEnabled variable)
+            // Set availability in the respective modder's Game struct (ModMenuEnabled variable)
 
-            Type thisType = GameDatabase.Games[targetGame].ModderClass;
-            MethodInfo theMethod = thisType.GetMethod("OpenModMenu");
-            try
-            {
-                theMethod.Invoke(GameClass, null);
-            }
-            catch
-            {
-                DialogResult dialogResult = MessageBox.Show("This game doesn't have a mod menu!", "Error", MessageBoxButtons.OK);
-                return;
-            }
+            Modder.OpenModMenu();
         }
 
         public void DisableInteraction()

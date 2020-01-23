@@ -88,7 +88,7 @@ namespace CrateModLoader.GameSpecific.CNK
         };
         
 
-        public static void CNK_Randomize_SufParams(ref Random randState)
+        public static void CNK_Randomize_SufParams(Random randState)
         {
             double target_val = 0;
             target_val = randState.NextDouble() + 0.5;
@@ -96,7 +96,7 @@ namespace CrateModLoader.GameSpecific.CNK
             Surface_m_SpeedAccelIncreasePercent[(int)SurfaceTypes.eSURFACETYPE_TRACK_DIRT_FAST] = 0.02f;
         }
 
-        public static void CNK_Randomize_StaticShock(ref Random randState)
+        public static void CNK_Randomize_StaticShock(Random randState)
         {
             StaticShock_m_NormalTime = randState.Next(15, 45) * 100;
             StaticShock_m_JuicedTime = StaticShock_m_NormalTime * 2;
@@ -106,7 +106,7 @@ namespace CrateModLoader.GameSpecific.CNK
             StaticShock_m_DistanceForHome = randState.Next(9,15);
         }
 
-        public static void CNK_Randomize_PowerShield(ref Random randState)
+        public static void CNK_Randomize_PowerShield(Random randState)
         {
             PowerShield_m_Time = randState.Next(4, 16) * 1000f;
             PowerShield_m_ZapSpeed = randState.Next(6, 12);
@@ -121,13 +121,13 @@ namespace CrateModLoader.GameSpecific.CNK
             PowerShield_m_ColRadius = PowerShield_m_RangeForZapping / 4.3f;
         }
 
-        public static void CNK_Randomize_TurboBoost(ref Random randState)
+        public static void CNK_Randomize_TurboBoost(Random randState)
         {
             TurboBoost_m_NormalTime = randState.Next(60,120) * 100f;
             TurboBoost_m_JuicedTime = TurboBoost_m_NormalTime * 1.5f;
         }
 
-        public static void CNK_Randomize_TNTCrate(ref Random randState)
+        public static void CNK_Randomize_TNTCrate(Random randState)
         {
             TNT_m_Time = 4300;
             TNT_m_TimeBeforeHiddenChar = 2500;
@@ -139,7 +139,7 @@ namespace CrateModLoader.GameSpecific.CNK
             TNT_m_ExplScaleJuiced = TNT_m_ExplScale + 0.1f;
         }
 
-        public static void CNK_Randomize_FreezingMine(ref Random randState)
+        public static void CNK_Randomize_FreezingMine(Random randState)
         {
             FreezingMine_m_NormalFreezeTime = randState.Next(15, 45) * 100;
             FreezingMine_m_JuicedFreezeTime = randState.Next(9, 15) * 1000;
@@ -153,7 +153,7 @@ namespace CrateModLoader.GameSpecific.CNK
             FreezingMine_m_ExplScaleJuiced = FreezingMine_m_ExplScale * 2f;
         }
 
-        public static void CNK_Randomize_RedEye(ref Random randState)
+        public static void CNK_Randomize_RedEye(Random randState)
         {
             RedEye_Acceleration = randState.Next(25,75) + (float)randState.NextDouble();
             RedEye_Deceleration = randState.Next(10,20) + (float)randState.NextDouble();
@@ -168,7 +168,7 @@ namespace CrateModLoader.GameSpecific.CNK
             RedEye_FullSpeedTurnSlowdown = 4f;
         }
 
-        public static void CNK_Randomize_InvincMask(ref Random randState)
+        public static void CNK_Randomize_InvincMask(Random randState)
         {
             InvincMask_m_NormalTime = randState.Next(60, 100) * 100;
             InvincMask_m_JuicedTime = InvincMask_m_NormalTime + ((int)Math.Ceiling(InvincMask_m_NormalTime/2f));
@@ -184,7 +184,7 @@ namespace CrateModLoader.GameSpecific.CNK
             InvincMask_m_ColRadius = randState.Next(1, 3) + (float)randState.NextDouble();
         }
 
-        public static void CNK_Randomize_BowlingBomb(ref Random randState)
+        public static void CNK_Randomize_BowlingBomb(Random randState)
         {
             //todo
             BowlingBomb_m_Speed = randState.Next(50,80);
@@ -214,7 +214,7 @@ namespace CrateModLoader.GameSpecific.CNK
             BowlingBomb_m_ExplScaleJuiced = BowlingBomb_m_ExplScale * 1.5f;
         }
 
-        public static void CNK_Randomize_HomingMissle(ref Random randState)
+        public static void CNK_Randomize_HomingMissle(Random randState)
         {
             //todo
             HomingMissle_m_TrackingFrontDistance = 50f;
@@ -251,7 +251,7 @@ namespace CrateModLoader.GameSpecific.CNK
             HomingMissle_m_ExplScaleJuiced = HomingMissle_m_ExplScale;
         }
 
-        public static void CNK_Randomize_Tornado(ref Random randState)
+        public static void CNK_Randomize_Tornado(Random randState)
         {
             //todo
             Tornado_m_TrackingFrontDistance = 35f;
@@ -287,14 +287,14 @@ namespace CrateModLoader.GameSpecific.CNK
             Tornado_m_ViewRangleOfTarget = 0.707f;
         }
 
-        public static void CNK_Randomize_WeaponSelection(ref Random randState)
+        public static void CNK_Randomize_WeaponSelection(Random randState)
         {
             //todo
             double target_val = 0;
             target_val = randState.NextDouble() + 0.5;
         }
 
-        public static void CNK_Randomize_KartStats(ref Random randState)
+        public static void CNK_Randomize_KartStats(Random randState)
         {
             double target_val = 0;
             target_val = randState.NextDouble() + 0.5;
@@ -509,7 +509,7 @@ namespace CrateModLoader.GameSpecific.CNK
 
         }
 
-        public static void CNK_Randomize_CharacterStats(ref Random randState, int targetDriver)
+        public static void CNK_Randomize_CharacterStats(Random randState, int targetDriver)
         {
             //float target_val = 0;
             //target_val = randState.NextDouble() + 0.5;

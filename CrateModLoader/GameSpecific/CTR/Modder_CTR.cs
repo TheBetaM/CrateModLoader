@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using CTRFramework;
 using CTRFramework.Shared;
@@ -11,33 +8,48 @@ using bigtool;
 
 namespace CrateModLoader
 {
-    class Modder_CTR
+    public sealed class Modder_CTR : Modder
     {
-        public string[] modOptions = { "No options available" };
+        internal const int RandomizeAdvCharacters = 0;
 
-        public enum CTR_Options
+        public Modder_CTR()
         {
-            RandomizeAdvCharacters = 0,
-        }
-
-        public bool CTR_Rand_1PCharacters = false;
-
-        public void OptionChanged(int option, bool value)
-        {
-            if (option == (int)CTR_Options.RandomizeAdvCharacters)
+            Game = new Game()
             {
-                CTR_Rand_1PCharacters = value;
-            }
-        }
+                Name = "Crash Team Racing",
+                Consoles = new List<ConsoleMode>
+                {
+                    ConsoleMode.PS1
+                },
+                API_Credit = "API by DCxDemo",
+                Icon = null,
+                ModMenuEnabled = false,
+                ModCratesSupported = true,
+                RegionID_PS1 = new RegionCode[] {
+                    new RegionCode() {
+                    Name = @"BOOT = cdrom:\SCUS_944.26;1",
+                    Region = RegionType.NTSC_U,
+                    ExecName = "SCUS_944.26",
+                    CodeName = "SCUS_94426", },
+                    new RegionCode() {
+                    Name = @"BOOT = cdrom:\SCES_021.05;1",
+                    Region = RegionType.PAL,
+                    ExecName = "SCES_021.05",
+                    CodeName = "SCES_02105", },
+                    new RegionCode() {
+                    Name = @"BOOT = cdrom:\SCPS_101.18;1",
+                    Region = RegionType.NTSC_J,
+                    ExecName = "SCPS_101.18",
+                    CodeName = "SCPS_10118", },
+                },
+            };
 
-        public void UpdateModOptions()
-        {
-            Program.ModProgram.PrepareOptionsList(modOptions);
+            //Options.Add(RandomizeAdvCharacters, new ModOption("Randomize adventure mode characters"));
         }
 
         private string basePath = "";
 
-        public void StartModProcess()
+        public override void StartModProcess()
         {
 
             string path_Bigfile = "BIGFILE.BIG";
@@ -50,7 +62,7 @@ namespace CrateModLoader
             ModProcess();
         }
 
-        public void ModProcess()
+        protected override void ModProcess()
         {
 
             string path_extr = AppDomain.CurrentDomain.BaseDirectory + @"temp\BIGFILE\";
@@ -92,7 +104,7 @@ namespace CrateModLoader
             EndModProcess();
         }
 
-        public void EndModProcess()
+        protected override void EndModProcess()
         {
             string path_Bigfile = "BIGFILE.TXT";
 

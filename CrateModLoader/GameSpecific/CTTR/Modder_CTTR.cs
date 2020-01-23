@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using RadcoreCementFile;
 using Pure3D;
+using Pure3D.Chunks;
 using CrateModLoader.GameSpecific.CTTR;
 //RCF API by NeoKesha
 //Pure3D API by BetaM (based on https://github.com/handsomematt/Pure3D)
@@ -13,184 +11,161 @@ using CrateModLoader.GameSpecific.CTTR;
 
 namespace CrateModLoader
 {
-    class Modder_CTTR
+    public sealed class Modder_CTTR : Modder
     {
+        internal string path_RCF_default = "";
+        internal string path_RCF_common = "";
+        internal string path_RCF_frontend = "";
+        internal string path_executable = "";
+        internal string path_RCF_onfoot0 = "";
+        internal string path_RCF_onfoot1 = "";
+        internal string path_RCF_onfoot2 = "";
+        internal string path_RCF_onfoot3 = "";
+        internal string path_RCF_onfoot4 = ""; // PSP
+        internal string path_RCF_onfoot5 = "";
+        internal string path_RCF_onfoot6 = "";
+        internal string path_RCF_onfoot7 = ""; // GC
+        internal string path_RCF_advent1 = "";
+        internal string path_RCF_advent2 = "";
+        internal string path_RCF_advent3 = "";
+        internal string path_RCF_adventa = "";
+        internal string path_RCF_dino1 = "";
+        internal string path_RCF_dino2 = "";
+        internal string path_RCF_dino3 = "";
+        internal string path_RCF_dinoa = "";
+        internal string path_RCF_egypt1 = "";
+        internal string path_RCF_egypt2 = "";
+        internal string path_RCF_egypt3 = "";
+        internal string path_RCF_egypta = ""; // PSP/PS2
+        internal string path_RCF_fairy1 = "";
+        internal string path_RCF_fairy2 = "";
+        internal string path_RCF_fairy3 = "";
+        internal string path_RCF_fairys = "";
+        internal string path_RCF_solar1 = "";
+        internal string path_RCF_solar2 = "";
+        internal string path_RCF_solar3 = "";
+        internal string path_RCF_solars = "";
+        internal string path_RCF_0 = ""; // XBOX
+        internal string path_RCF_1 = ""; // XBOX
+        internal string path_RCF_2 = ""; // XBOX
+        internal string path_RCF_3 = ""; // XBOX
+        internal string path_RCF_4 = ""; // XBOX
+        internal string path_RCF_5 = ""; // XBOX
+        internal string path_RCF_6 = ""; // XBOX
+        internal string path_RCF_sound = "";
+        internal string path_RCF_english = "";
+        internal string basePath = "";
 
-        public string path_RCF_default = "";
-        public string path_RCF_common = "";
-        public string path_RCF_frontend = "";
-        public string path_executable = "";
-        public string path_RCF_onfoot0 = "";
-        public string path_RCF_onfoot1 = "";
-        public string path_RCF_onfoot2 = "";
-        public string path_RCF_onfoot3 = "";
-        public string path_RCF_onfoot4 = ""; // PSP
-        public string path_RCF_onfoot5 = "";
-        public string path_RCF_onfoot6 = "";
-        public string path_RCF_onfoot7 = ""; // GC
-        public string path_RCF_advent1 = "";
-        public string path_RCF_advent2 = "";
-        public string path_RCF_advent3 = "";
-        public string path_RCF_adventa = "";
-        public string path_RCF_dino1 = "";
-        public string path_RCF_dino2 = "";
-        public string path_RCF_dino3 = "";
-        public string path_RCF_dinoa = "";
-        public string path_RCF_egypt1 = "";
-        public string path_RCF_egypt2 = "";
-        public string path_RCF_egypt3 = "";
-        public string path_RCF_egypta = ""; // PSP/PS2
-        public string path_RCF_fairy1 = "";
-        public string path_RCF_fairy2 = "";
-        public string path_RCF_fairy3 = "";
-        public string path_RCF_fairys = "";
-        public string path_RCF_solar1 = "";
-        public string path_RCF_solar2 = "";
-        public string path_RCF_solar3 = "";
-        public string path_RCF_solars = "";
-        public string path_RCF_0 = ""; // XBOX
-        public string path_RCF_1 = ""; // XBOX
-        public string path_RCF_2 = ""; // XBOX
-        public string path_RCF_3 = ""; // XBOX
-        public string path_RCF_4 = ""; // XBOX
-        public string path_RCF_5 = ""; // XBOX
-        public string path_RCF_6 = ""; // XBOX
-        public string path_RCF_sound = "";
-        public string path_RCF_english = "";
-        private string basePath = "";
+        internal const int RandomizeCharacters          = 0;
+        internal const int RandomizeHubs                = 1;
+        internal const int RandomizeTracks              = 2;
+        internal const int RandomizeMinigames           = 3;
+        internal const int RandomizeMissions            = 4;
+        internal const int RandomizeCarStats            = 5;
+        internal const int RandomizeRaceLaps            = 6;
+        internal const int RandomizeBattleKOs           = 7;
+        internal const int RandomizeCrashinator         = 8;
+        internal const int RandomizeRunAndGun           = 9;
+        internal const int RandomizeStuntArena          = 10;
+        internal const int RandomizeSurfaceParams       = 11;
+        internal const int RandomizePowerupDistribution = 12;
+        internal const int RandomizePowerupEffects      = 13;
+        internal const int RandomizeWeapons             = 14;
+        internal const int AddUnusedCutscenes           = 15;
+        internal const int PreventSequenceBreaks        = 16;
+        internal const int RandomizeNPCs                = 17;
+        internal const int AddPowerupsTimeTrial         = 18;
+        internal const int ReokaceCrashinatorConeAttack = 19;
+
+        public Modder_CTTR()
+        {
+            Game = new Game()
+            {
+                Name = "Crash Tag Team Racing",
+                Consoles = new List<ConsoleMode>
+                {
+                    ConsoleMode.PS2,
+                    ConsoleMode.GCN,
+                    ConsoleMode.PSP,
+                    ConsoleMode.XBOX,
+                },
+                API_Credit = "APIs by NeoKesha and BetaM",
+                Icon = Properties.Resources.icon_crash,
+                ModMenuEnabled = false,
+                ModCratesSupported = true,
+                RegionID_PS2 = new RegionCode[] {
+                    new RegionCode() {
+                    Name = @"BOOT2 = cdrom0:\SLUS_211.91;1",
+                    Region = RegionType.NTSC_U,
+                    ExecName = "SLUS_211.91",
+                    CodeName = "SLUS_21191", },
+                    new RegionCode() {
+                    Name = @"BOOT2 = cdrom0:\SLES_534.39;1",
+                    Region = RegionType.PAL,
+                    ExecName = "SLES_534.39",
+                    CodeName = "SLES_53439", },
+                    new RegionCode() {
+                    Name = @"BOOT2 = cdrom0:\SLPM_660.90;1",
+                    Region = RegionType.NTSC_J,
+                    ExecName = "SLPM_660.90",
+                    CodeName = "SLPM_66090", },
+                },
+                RegionID_GCN = new RegionCode[] {
+                    new RegionCode() {
+                    Name = "G9RE7D",
+                    Region = RegionType.NTSC_U },
+                    new RegionCode() {
+                    Name = "G9RH7D",
+                    Region = RegionType.PAL },
+                    new RegionCode() {
+                    Name = "G9RJ7D",
+                    Region = RegionType.NTSC_J },
+                    new RegionCode() {
+                    Name = "G9RD7D",
+                    Region = RegionType.PAL },
+                    new RegionCode() {
+                    Name = "G9RF7D",
+                    Region = RegionType.PAL },
+                    new RegionCode() {
+                    Name = "G9RP7D",
+                    Region = RegionType.PAL },
+                },
+                RegionID_PSP = new RegionCode[] {
+                    new RegionCode() {
+                    Name = "ULUS-10044",
+                    Region = RegionType.NTSC_U },
+                    new RegionCode() {
+                    Name = "ULJM-05036",
+                    Region = RegionType.PAL },
+                    new RegionCode() {
+                    Name = "ULES-00168",
+                    Region = RegionType.NTSC_J },
+                }
+            };
+
+            Options.Add(RandomizeCharacters, new ModOption("Randomize Platforming & Starting Characters")); // todo: change missions to unlock crash and cortex if they're not in the starting pool
+            Options.Add(RandomizeHubs, new ModOption("Randomize Hub Entrances")); // todo: gem keys in missionobjectives_x and platforming_objects, unlock failure message, key missions
+            Options.Add(RandomizeTracks, new ModOption("Randomize Track Entrances")); // todo: arenas
+            Options.Add(RandomizeMinigames, new ModOption("Randomize Minigames")); // todo: minigame challenges aswell
+            Options.Add(RandomizeMissions, new ModOption("Randomize Missions"));// todo, genericobjectives, missionobjectives_x, level NIS+NPC
+            Options.Add(RandomizeCarStats, new ModOption("Randomize Car Stats")); // todo: vehicles, levels/common for speed tier values
+            Options.Add(RandomizeRaceLaps, new ModOption("Randomize Race Laps"));
+            Options.Add(RandomizeBattleKOs, new ModOption("Randomize Battle KO's"));
+            Options.Add(RandomizeCrashinator, new ModOption("Randomize Crashinator")); // todo: kamikaze
+            Options.Add(RandomizeRunAndGun, new ModOption("Randomize Run & Gun")); // todo: railshooter
+            Options.Add(RandomizeStuntArena, new ModOption("Randomize Stunt Arena")); //todo: permament_objects, stunt_objects
+            Options.Add(RandomizeSurfaceParams, new ModOption("Randomize Surface Parameters")); //todo: car_effect_objects
+            Options.Add(RandomizePowerupDistribution, new ModOption("Randomize Powerup Distribution")); // todo: driving_objects
+            Options.Add(RandomizePowerupEffects, new ModOption("Randomize Powerup Effects")); //todo: driving_objects
+            Options.Add(RandomizeWeapons, new ModOption("Randomize Weapons")); // todo: turretmotifs
+            //Options.Add(RandomizeNPCs, new ModOption("Randomize NPC Locations")); // todo: NPC - locator list
+            Options.Add(AddUnusedCutscenes, new ModOption("Add Unused Cutscenes")); // todo, NIS + an objective?
+            //Options.Add(AddPowerupsTimeTrial, new ModOption("Add Powerups in Time Trial")); // todo: timetrial/props, see: bonus11
+            Options.Add(PreventSequenceBreaks, new ModOption("Prevent Sequence Breaks")); // todo, genericobjectives
+            //Options.Add(ReokaceCrashinatorConeAttack, new ModOption("Replace Crashinator with Cone Attack")); // todo
+        }
 
         public Random randState = new Random();
-        public string[] modOptions = {
-            "Randomize Platforming & Starting Characters",
-            "Randomize Hub Entrances",
-            "Randomize Track Entrances",
-            "Randomize Minigames",
-            "Randomize Missions",
-            "Randomize Car Stats",
-            "Randomize Race Laps",
-            "Randomize Battle KO's",
-            "Randomize Crashinator",
-            "Randomize Run & Gun",
-            "Randomize Stunt Arena",
-            "Randomize Surface Parameters",
-            "Randomize Powerup Distribution",
-            "Randozmie Powerup Effects",
-            "Randomize Weapons",
-            "Add Unused Cutscenes",
-            "Prevent Sequence Breaks",
-        };
-
-        public bool CTTR_rand_hubs = false; // todo: gem keys in missionobjectives_x and platforming_objects, unlock failure message, key missions
-        public bool CTTR_rand_tracks = false; // todo: arenas
-        public bool CTTR_rand_minigames = false; // todo: minigame challenges aswell
-        public bool CTTR_rand_missions = false; // todo, genericobjectives, missionobjectives_x, level NIS+NPC
-        public bool CTTR_rand_characters = false; // todo: change missions to unlock crash and cortex if they're not in the starting pool
-        public bool CTTR_rand_carstats = false; // todo: vehicles, levels/common for speed tier values
-        public bool CTTR_rand_racelaps = false;
-        public bool CTTR_rand_battlekos = false;
-        public bool CTTR_rand_crashinator = false; // todo: kamikaze
-        public bool CTTR_rand_runandgun = false; // todo: railshooter
-        public bool CTTR_rand_stuntarena = false; //todo: permament_objects, stunt_objects
-        public bool CTTR_rand_surfaceparams = false; //todo: car_effect_objects
-        public bool CTTR_rand_powerupdistribution = false; // todo: driving_objects
-        public bool CTTR_rand_npclocations = false; // todo: NPC - locator list
-        public bool CTTR_rand_powerupeffects = false; //todo: driving_objects
-        public bool CTTR_rand_weapons = false; // todo: turretmotifs
-        public bool CTTR_rand_killrewards = false; //todo: levels/common
-
-        public bool CTTR_replace_crashinator_with_coneattack = false; //todo
-        public bool CTTR_add_powerups_in_timetrial = false; // todo: timetrial/props, see: bonus11
-        public bool CTTR_add_unused_cutscenes = false; // todo, NIS + an objective?
-        public bool CTTR_add_sequence_break_checks = false; // todo, genericobjectives
-        public bool CTTR_test_mod = false;
-
-        public enum CTTR_Options
-        {
-            RandomizeCharacters = 0,
-            RandomizeHubs = 1,
-            RandomizeTracks = 2,
-            RandomizeMinigames = 3,
-            RandomizeMissions = 4,
-            RandomizeCarStats = 5,
-            RandomizeRaceLaps = 6,
-            RandomizeBattleKOs = 7,
-            RandomizeCrashinator = 8,
-            RandomizeRunAndGun = 9,
-            RandomizeStuntArena = 10,
-            RandomizeSurfaceParams = 11,
-            RandomizePowerupDistribution = 12,
-            RandomizePowerupEffects = 13,
-            RandomizeWeapons = 14,
-            AddUnusedCutscenes = 15,
-            PreventSequenceBreaks = 16,
-            TestMod = 17,
-        }
-
-        public void OptionChanged(int option,bool value)
-        {
-            switch ((CTTR_Options)option)
-            {
-                case CTTR_Options.RandomizeCharacters:
-                    CTTR_rand_characters = value;
-                    break;
-                case CTTR_Options.AddUnusedCutscenes:
-                    CTTR_add_unused_cutscenes = value;
-                    break;
-                case CTTR_Options.PreventSequenceBreaks:
-                    CTTR_add_sequence_break_checks = value;
-                    break;
-                case CTTR_Options.RandomizeHubs:
-                    CTTR_rand_hubs = value;
-                    break;
-                case CTTR_Options.RandomizeMinigames:
-                    CTTR_rand_minigames = value;
-                    break;
-                case CTTR_Options.RandomizeMissions:
-                    CTTR_rand_missions = value;
-                    break;
-                case CTTR_Options.RandomizeTracks:
-                    CTTR_rand_tracks = value;
-                    break;
-                case CTTR_Options.RandomizeCarStats:
-                    CTTR_rand_carstats = value;
-                    break;
-                case CTTR_Options.RandomizeBattleKOs:
-                    CTTR_rand_battlekos = value;
-                    break;
-                case CTTR_Options.RandomizeRaceLaps:
-                    CTTR_rand_racelaps = value;
-                    break;
-                case CTTR_Options.RandomizeCrashinator:
-                    CTTR_rand_crashinator = value;
-                    break;
-                case CTTR_Options.RandomizeRunAndGun:
-                    CTTR_rand_runandgun = value;
-                    break;
-                case CTTR_Options.RandomizeStuntArena:
-                    CTTR_rand_stuntarena = value;
-                    break;
-                case CTTR_Options.RandomizeSurfaceParams:
-                    CTTR_rand_surfaceparams = value;
-                    break;
-                case CTTR_Options.RandomizePowerupDistribution:
-                    CTTR_rand_powerupdistribution = value;
-                    break;
-                case CTTR_Options.RandomizePowerupEffects:
-                    CTTR_rand_powerupeffects = value;
-                    break;
-                case CTTR_Options.RandomizeWeapons:
-                    CTTR_rand_weapons= value;
-                    break;
-                case CTTR_Options.TestMod:
-                    CTTR_test_mod = value;
-                    break;
-            }
-        }
-
-        public void UpdateModOptions()
-        {
-            Program.ModProgram.PrepareOptionsList(modOptions);
-        }
 
         private List<int> randChars = new List<int>();
         private List<int> randHubs = new List<int>();
@@ -349,7 +324,7 @@ namespace CrateModLoader
             }
         }
 
-        public void StartModProcess()
+        public override void StartModProcess()
         {
             SetPaths(Program.ModProgram.isoType, Program.ModProgram.PS2_executable_name);
             basePath = AppDomain.CurrentDomain.BaseDirectory + @"temp\";
@@ -367,7 +342,16 @@ namespace CrateModLoader
             bool Editing_Credits = true;
             bool Editing_DefaultCommon = false;
 
-            if (CTTR_rand_characters || CTTR_rand_hubs || CTTR_rand_tracks || CTTR_rand_minigames || CTTR_rand_missions || CTTR_rand_carstats || CTTR_rand_racelaps || CTTR_rand_battlekos || CTTR_rand_crashinator || CTTR_rand_runandgun || CTTR_test_mod)
+            if (Options[RandomizeCharacters].Enabled ||
+                Options[RandomizeHubs].Enabled ||
+                Options[RandomizeTracks].Enabled ||
+                Options[RandomizeMinigames].Enabled ||
+                Options[RandomizeMissions].Enabled ||
+                Options[RandomizeCarStats].Enabled ||
+                Options[RandomizeRaceLaps].Enabled ||
+                Options[RandomizeBattleKOs].Enabled ||
+                Options[RandomizeCrashinator].Enabled ||
+                Options[RandomizeRunAndGun].Enabled)
             {
                 Editing_DefaultCommon = true;
             }
@@ -390,7 +374,7 @@ namespace CrateModLoader
         void EditDefaultAndCommon()
         {
             randChars = new List<int>();
-            if (CTTR_rand_characters)
+            if (Options[RandomizeCharacters].Enabled)
             {
                 int maxPlayableCharacters = 2;
 
@@ -400,16 +384,17 @@ namespace CrateModLoader
                 {
                     possibleChars.Add(i);
                 }
-                int targetChar = -1;
+
                 for (int i = 0; i < maxPlayableCharacters; i++)
                 {
-                    targetChar = possibleChars[randState.Next(0, possibleChars.Count)];
+                    int targetChar = possibleChars[randState.Next(0, possibleChars.Count)];
                     randChars.Add(targetChar);
                     possibleChars.Remove(targetChar);
                 }
             }
             randHubs = new List<int>();
-            if (CTTR_rand_hubs)
+            randGems = new List<int>();
+            if (Options[RandomizeHubs].Enabled)
             {
                 List<int> possibleHubs = new List<int>();
 
@@ -417,67 +402,13 @@ namespace CrateModLoader
                 {
                     possibleHubs.Add(i);
                 }
-                int targetHub = -1;
+
                 for (int i = 0; i < 5; i++)
                 {
-                    targetHub = possibleHubs[randState.Next(0, possibleHubs.Count)];
+                    int targetHub = possibleHubs[randState.Next(0, possibleHubs.Count)];
                     randHubs.Add(targetHub);
                     possibleHubs.Remove(targetHub);
                 }
-            }
-            randTracks = new List<int>();
-            if (CTTR_rand_tracks)
-            {
-                List<int> possibleTracks = new List<int>();
-
-                for (int i = 0; i < 15; i++)
-                {
-                    possibleTracks.Add(i);
-                }
-                int targetTrack = -1;
-                for (int i = 0; i < 15; i++)
-                {
-                    targetTrack = possibleTracks[randState.Next(0, possibleTracks.Count)];
-                    randTracks.Add(targetTrack);
-                    possibleTracks.Remove(targetTrack);
-                }
-            }
-            randMinigames = new List<int>();
-            if (CTTR_rand_tracks)
-            {
-                List<int> possibleMinigames = new List<int>();
-
-                for (int i = 0; i < 8; i++)
-                {
-                    possibleMinigames.Add(i);
-                }
-                int targetMinigame = -1;
-                for (int i = 0; i < 8; i++)
-                {
-                    targetMinigame = possibleMinigames[randState.Next(0, possibleMinigames.Count)];
-                    randMinigames.Add(targetMinigame);
-                    possibleMinigames.Remove(targetMinigame);
-                }
-            }
-            randLaps = new List<int>();
-            if (CTTR_rand_racelaps)
-            {
-                for (int i = 0; i < 15; i++)
-                {
-                    randLaps.Add(randState.Next(1,10));
-                }
-            }
-            randKOs = new List<int>();
-            if (CTTR_rand_battlekos)
-            {
-                for (int i = 0; i < 5; i++)
-                {
-                    randKOs.Add(randState.Next(5, 20));
-                }
-            }
-            randGems = new List<int>();
-            if (CTTR_rand_hubs)
-            {
                 List<int> possibleGems = new List<int>();
 
                 possibleGems.Add(0);
@@ -485,16 +416,62 @@ namespace CrateModLoader
                 possibleGems.Add(2);
                 possibleGems.Add(4);
                 possibleGems.Add(5);
-                int targetGem = -1;
                 for (int i = 0; i < 5; i++)
                 {
-                    targetGem = possibleGems[randState.Next(0, possibleGems.Count)];
+                    int targetGem = possibleGems[randState.Next(0, possibleGems.Count)];
                     randGems.Add(targetGem);
                     possibleGems.Remove(targetGem);
                     if (i == 2)
                     {
                         randGems.Add(3);
                     }
+                }
+            }
+            randTracks = new List<int>();
+            randMinigames = new List<int>();
+            if (Options[RandomizeTracks].Enabled)
+            {
+                List<int> possibleTracks = new List<int>();
+
+                for (int i = 0; i < 15; i++)
+                {
+                    possibleTracks.Add(i);
+                }
+
+                for (int i = 0; i < 15; i++)
+                {
+                    int targetTrack = possibleTracks[randState.Next(0, possibleTracks.Count)];
+                    randTracks.Add(targetTrack);
+                    possibleTracks.Remove(targetTrack);
+                }
+                List<int> possibleMinigames = new List<int>();
+
+                for (int i = 0; i < 8; i++)
+                {
+                    possibleMinigames.Add(i);
+                }
+
+                for (int i = 0; i < 8; i++)
+                {
+                    int targetMinigame = possibleMinigames[randState.Next(0, possibleMinigames.Count)];
+                    randMinigames.Add(targetMinigame);
+                    possibleMinigames.Remove(targetMinigame);
+                }
+            }
+            randLaps = new List<int>();
+            if (Options[RandomizeRaceLaps].Enabled)
+            {
+                for (int i = 0; i < 15; i++)
+                {
+                    randLaps.Add(randState.Next(1,10));
+                }
+            }
+            randKOs = new List<int>();
+            if (Options[RandomizeBattleKOs].Enabled)
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    randKOs.Add(randState.Next(5, 20));
                 }
             }
 
@@ -547,40 +524,35 @@ namespace CrateModLoader
 
         void Modify_RCF(string path)
         {
-            string path_extr = "";
             RCF rcf_default = new RCF();
             rcf_default.OpenRCF(basePath + path);
-            path_extr = basePath + @"cml_extr\";
+            string path_extr = basePath + @"cml_extr\";
             Directory.CreateDirectory(path_extr);
             rcf_default.ExtractRCF(path_extr);
 
-            if (CTTR_rand_characters)
+            if (Options[RandomizeCharacters].Enabled)
             {
                 Randomize_Characters(path_extr, ref rcf_default, ref randChars);
             }
-            if (CTTR_rand_hubs)
+            if (Options[RandomizeHubs].Enabled)
             {
                 Randomize_Hubs(path_extr, ref rcf_default, ref randHubs, ref randGems);
             }
-            if (CTTR_rand_tracks)
+            if (Options[RandomizeTracks].Enabled)
             {
                 Randomize_Tracks(path_extr, ref rcf_default, ref randTracks);
             }
-            if (CTTR_rand_minigames)
+            if (Options[RandomizeMinigames].Enabled)
             {
                 Randomize_Minigames(path_extr, ref rcf_default, ref randMinigames);
             }
-            if (CTTR_rand_racelaps)
+            if (Options[RandomizeRaceLaps].Enabled)
             {
                 Randomize_Race_Laps(path_extr, ref rcf_default, ref randLaps);
             }
-            if (CTTR_rand_battlekos)
+            if (Options[RandomizeBattleKOs].Enabled)
             {
                 Randomize_Battle_KOs(path_extr, ref rcf_default, ref randKOs);
-            }
-            if (CTTR_test_mod)
-            {
-                CTTR_TestMod(path_extr, ref rcf_default);
             }
 
             rcf_default.Recalculate();
@@ -719,14 +691,14 @@ namespace CrateModLoader
                 }
 
                 Pure3D.Chunk targetIdleAnim;
-                if (targetCharAnim.RootChunk.GetChildByName<Pure3D.Chunks.Animation>("onfoot_idle") != null)
+                if (targetCharAnim.RootChunk.GetChildByName<Animation>("onfoot_idle") != null)
                 {
-                    targetIdleAnim = targetCharAnim.RootChunk.GetChildByName<Pure3D.Chunks.Animation>("onfoot_idle");
+                    targetIdleAnim = targetCharAnim.RootChunk.GetChildByName<Animation>("onfoot_idle");
                 }
-                else if (targetCharAnim.RootChunk.GetChildByName<Pure3D.Chunks.Animation>("onfoot_talk_bored") != null) // Nina doesn't have an idle animation
+                else if (targetCharAnim.RootChunk.GetChildByName<Animation>("onfoot_talk_bored") != null) // Nina doesn't have an idle animation
                 {
-                    Pure3D.Chunks.Animation targetIdleAnimAnim;
-                    targetIdleAnimAnim = targetCharAnim.RootChunk.GetChildByName<Pure3D.Chunks.Animation>("onfoot_talk_bored");
+                    Animation targetIdleAnimAnim;
+                    targetIdleAnimAnim = targetCharAnim.RootChunk.GetChildByName<Animation>("onfoot_talk_bored");
                     targetIdleAnimAnim.Name = "onfoot_idle";
                     targetIdleAnim = (Pure3D.Chunk)targetIdleAnimAnim;
                 }
@@ -740,10 +712,10 @@ namespace CrateModLoader
                     Pure3D.File CrashOnfootAnim = new Pure3D.File();
                     CrashOnfootAnim.Load(path_extr + @"art\animation\crash_onfoot_animations.p3d");
 
-                    if (CrashOnfootAnim.RootChunk.GetChildByName<Pure3D.Chunks.Animation>("onfoot_idle") != null)
+                    if (CrashOnfootAnim.RootChunk.GetChildByName<Animation>("onfoot_idle") != null)
                     {
-                        int animIndex = CrashOnfootAnim.RootChunk.GetChildByName<Pure3D.Chunks.Animation>("onfoot_idle").Parent.GetChildIndexByName<Pure3D.Chunks.Animation>("onfoot_idle");
-                        CrashOnfootAnim.RootChunk.GetChildByName<Pure3D.Chunks.Animation>("onfoot_idle").Parent.Children[animIndex] = targetIdleAnim;
+                        int animIndex = CrashOnfootAnim.RootChunk.GetChildByName<Animation>("onfoot_idle").Parent.GetChildIndexByName<Animation>("onfoot_idle");
+                        CrashOnfootAnim.RootChunk.GetChildByName<Animation>("onfoot_idle").Parent.Children[animIndex] = targetIdleAnim;
                     }
 
                     CrashOnfootAnim.Save(path_extr + @"art\animation\crash_onfoot_animations1.p3d");
@@ -764,10 +736,10 @@ namespace CrateModLoader
                     Pure3D.File CrashOnfootMidwayAnim = new Pure3D.File();
                     CrashOnfootMidwayAnim.Load(path_extr + @"art\animation\crash_onfoot_midway_animations.p3d");
 
-                    if (CrashOnfootMidwayAnim.RootChunk.GetChildByName<Pure3D.Chunks.Animation>("onfoot_idle") != null)
+                    if (CrashOnfootMidwayAnim.RootChunk.GetChildByName<Animation>("onfoot_idle") != null)
                     {
-                        int animIndex = CrashOnfootMidwayAnim.RootChunk.GetChildByName<Pure3D.Chunks.Animation>("onfoot_idle").Parent.GetChildIndexByName<Pure3D.Chunks.Animation>("onfoot_idle");
-                        CrashOnfootMidwayAnim.RootChunk.GetChildByName<Pure3D.Chunks.Animation>("onfoot_idle").Parent.Children[animIndex] = targetIdleAnim;
+                        int animIndex = CrashOnfootMidwayAnim.RootChunk.GetChildByName<Animation>("onfoot_idle").Parent.GetChildIndexByName<Animation>("onfoot_idle");
+                        CrashOnfootMidwayAnim.RootChunk.GetChildByName<Animation>("onfoot_idle").Parent.Children[animIndex] = targetIdleAnim;
                     }
 
                     CrashOnfootMidwayAnim.Save(path_extr + @"art\animation\crash_onfoot_midway_animations1.p3d");
@@ -799,11 +771,10 @@ namespace CrateModLoader
 
                 int List_Start = 0;
                 int List_End = 0;
-                string targetHub = "";
                 List<string> ChangeHubObjective = new List<string>();
                 for (int i = 0; i < 5; i++)
                 {
-                    targetHub = CTTR_Data.HubNamesSimple[i + 1];
+                    string targetHub = CTTR_Data.HubNamesSimple[i + 1];
                     if (CTTR_Data.LUA_LoadObject(ref LineList, "Objective", "ChangeLevelMidwayTo" + targetHub, ref List_Start, ref List_End, ref ChangeHubObjective))
                     {
                         ChangeHubObjective[ChangeHubObjective.Count - 3] = "this.AddAction_ChangeLevel(\"" + CTTR_Data.HubNames[randHubs[i]] + "\",\"StartLocationFromMidway\")";
@@ -1160,11 +1131,10 @@ namespace CrateModLoader
 
         void Mod_EditCredits()
         {
-            //Warning: The RCF API only likes paths with \ backslashes
-            string path_extr = "";
             RCF rcf_frontend = new RCF();
             rcf_frontend.OpenRCF(basePath + path_RCF_frontend);
-            path_extr = basePath + @"cml_extr\";
+            //Warning: The RCF API only likes paths with \ backslashes
+            string path_extr = basePath + @"cml_extr\";
             Directory.CreateDirectory(path_extr);
             rcf_frontend.ExtractRCF(path_extr);
 
@@ -1219,176 +1189,7 @@ namespace CrateModLoader
             }
         }
 
-        void TestMod2(ref Pure3D.File targetFile)
-        {
-            int chunkPos;
-            if (targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("loading") != null)
-            {
-                chunkPos = targetFile.RootChunk.GetChildIndexByName<Pure3D.Chunks.FrontendLanguage>("loading");
-                Pure3D.Chunks.FrontendLanguage lang = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("loading").Children[0];
-                lang.TextStrings[(int)CTTR_Data.TextBibleID_Loading.Loading] = "Really long loading text for testing!";
-                lang.TextStrings[(int)CTTR_Data.TextBibleID_Loading.LoadingDot] = "Really long loading text for testing!!";
-                lang.TextStrings[(int)CTTR_Data.TextBibleID_Loading.LoadingDotDot] = "Really long loading text for testing!!!";
-                lang.TextStrings[(int)CTTR_Data.TextBibleID_Loading.LoadingDotDotDot] = "Really long loading text for testing!!!!";
-                if (targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("loading").Children.Count > 1)
-                {
-                    Pure3D.Chunks.FrontendLanguage lang1 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("loading").Children[1];
-                    lang1.TextStrings[(int)CTTR_Data.TextBibleID_Loading.Loading] = "Really long loading text for testing!";
-                    lang1.TextStrings[(int)CTTR_Data.TextBibleID_Loading.LoadingDot] = "Really long loading text for testing!!";
-                    lang1.TextStrings[(int)CTTR_Data.TextBibleID_Loading.LoadingDotDot] = "Really long loading text for testing!!!";
-                    lang1.TextStrings[(int)CTTR_Data.TextBibleID_Loading.LoadingDotDotDot] = "Really long loading text for testing!!!!";
-                    Pure3D.Chunks.FrontendLanguage lang2 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("loading").Children[2];
-                    lang2.TextStrings[(int)CTTR_Data.TextBibleID_Loading.Loading] = "Really long loading text for testing!";
-                    lang2.TextStrings[(int)CTTR_Data.TextBibleID_Loading.LoadingDot] = "Really long loading text for testing!!";
-                    lang2.TextStrings[(int)CTTR_Data.TextBibleID_Loading.LoadingDotDot] = "Really long loading text for testing!!!";
-                    lang2.TextStrings[(int)CTTR_Data.TextBibleID_Loading.LoadingDotDotDot] = "Really long loading text for testing!!!!";
-                    Pure3D.Chunks.FrontendLanguage lang3 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("loading").Children[3];
-                    lang3.TextStrings[(int)CTTR_Data.TextBibleID_Loading.Loading] = "Really long loading text for testing!";
-                    lang3.TextStrings[(int)CTTR_Data.TextBibleID_Loading.LoadingDot] = "Really long loading text for testing!!";
-                    lang3.TextStrings[(int)CTTR_Data.TextBibleID_Loading.LoadingDotDot] = "Really long loading text for testing!!!";
-                    lang3.TextStrings[(int)CTTR_Data.TextBibleID_Loading.LoadingDotDotDot] = "Really long loading text for testing!!!!";
-                    Pure3D.Chunks.FrontendLanguage lang4 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("loading").Children[4];
-                    lang4.TextStrings[(int)CTTR_Data.TextBibleID_Loading.Loading] = "Really long loading text for testing!";
-                    lang4.TextStrings[(int)CTTR_Data.TextBibleID_Loading.LoadingDot] = "Really long loading text for testing!!";
-                    lang4.TextStrings[(int)CTTR_Data.TextBibleID_Loading.LoadingDotDot] = "Really long loading text for testing!!!";
-                    lang4.TextStrings[(int)CTTR_Data.TextBibleID_Loading.LoadingDotDotDot] = "Really long loading text for testing!!!!";
-                    Pure3D.Chunks.FrontendLanguage lang5 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("loading").Children[5];
-                    lang5.TextStrings[(int)CTTR_Data.TextBibleID_Loading.Loading] = "Really long loading text for testing!";
-                    lang5.TextStrings[(int)CTTR_Data.TextBibleID_Loading.LoadingDot] = "Really long loading text for testing!!";
-                    lang5.TextStrings[(int)CTTR_Data.TextBibleID_Loading.LoadingDotDot] = "Really long loading text for testing!!!";
-                    lang5.TextStrings[(int)CTTR_Data.TextBibleID_Loading.LoadingDotDotDot] = "Really long loading text for testing!!!!";
-                }
-            }
-
-            if (targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("frontend") != null)
-            {
-                chunkPos = targetFile.RootChunk.GetChildIndexByName<Pure3D.Chunks.FrontendLanguage>("frontend");
-                Pure3D.Chunks.FrontendLanguage lang6 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("frontend").Children[0];
-                lang6.TextStrings[(int)CTTR_Data.TextBibleID_Frontend.EnterThePark] = "Really long loading text for testing!";
-                if (targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("frontend").Children.Count > 1)
-                {
-                    Pure3D.Chunks.FrontendLanguage lang7 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("frontend").Children[1];
-                    lang7.TextStrings[(int)CTTR_Data.TextBibleID_Frontend.EnterThePark] = "Really long loading text for testing!";
-                    Pure3D.Chunks.FrontendLanguage lang8 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("frontend").Children[2];
-                    lang8.TextStrings[(int)CTTR_Data.TextBibleID_Frontend.EnterThePark] = "Really long loading text for testing!";
-                    Pure3D.Chunks.FrontendLanguage lang9 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("frontend").Children[3];
-                    lang9.TextStrings[(int)CTTR_Data.TextBibleID_Frontend.EnterThePark] = "Really long loading text for testing!";
-                    Pure3D.Chunks.FrontendLanguage lang11 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("frontend").Children[4];
-                    lang11.TextStrings[(int)CTTR_Data.TextBibleID_Frontend.EnterThePark] = "Really long loading text for testing!";
-                    Pure3D.Chunks.FrontendLanguage lang12 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("frontend").Children[5];
-                    lang12.TextStrings[(int)CTTR_Data.TextBibleID_Frontend.EnterThePark] = "Really long loading text for testing!";
-                }
-            }
-
-            if (targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("ingame") != null)
-            {
-                chunkPos = targetFile.RootChunk.GetChildIndexByName<Pure3D.Chunks.FrontendLanguage>("ingame");
-                Pure3D.Chunks.FrontendLanguage lang6 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("ingame").Children[0];
-                lang6.TextStrings[(int)CTTR_Data.TextBibleID_Ingame.Pause] = "Really long loading text for testing!";
-                if (targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("ingame").Children.Count > 1)
-                {
-                    Pure3D.Chunks.FrontendLanguage lang7 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("ingame").Children[1];
-                    lang7.TextStrings[(int)CTTR_Data.TextBibleID_Ingame.Pause] = "Really long loading text for testing!";
-                    Pure3D.Chunks.FrontendLanguage lang8 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("ingame").Children[2];
-                    lang8.TextStrings[(int)CTTR_Data.TextBibleID_Ingame.Pause] = "Really long loading text for testing!";
-                    Pure3D.Chunks.FrontendLanguage lang9 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("ingame").Children[3];
-                    lang9.TextStrings[(int)CTTR_Data.TextBibleID_Ingame.Pause] = "Really long loading text for testing!";
-                    Pure3D.Chunks.FrontendLanguage lang11 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("ingame").Children[4];
-                    lang11.TextStrings[(int)CTTR_Data.TextBibleID_Ingame.Pause] = "Really long loading text for testing!";
-                    Pure3D.Chunks.FrontendLanguage lang12 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("ingame").Children[5];
-                    lang12.TextStrings[(int)CTTR_Data.TextBibleID_Ingame.Pause] = "Really long loading text for testing!";
-                }
-            }
-
-            if (targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("onfoot") != null)
-            {
-                chunkPos = targetFile.RootChunk.GetChildIndexByName<Pure3D.Chunks.FrontendLanguage>("onfoot");
-                Pure3D.Chunks.FrontendLanguage lang6 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("onfoot").Children[0];
-                if (lang6.TextStrings.Count <= (int)CTTR_Data.TextBibleID_Onfoot.WumpaWhip)
-                {
-                    return;
-                }
-                lang6.TextStrings[(int)CTTR_Data.TextBibleID_Onfoot.WumpaWhip] = "Really long loading text for testing!";
-                if (targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("onfoot").Children.Count > 1)
-                {
-                    Pure3D.Chunks.FrontendLanguage lang7 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("onfoot").Children[1];
-                    lang7.TextStrings[(int)CTTR_Data.TextBibleID_Onfoot.WumpaWhip] = "Really long loading text for testing!";
-                    Pure3D.Chunks.FrontendLanguage lang8 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("onfoot").Children[2];
-                    lang8.TextStrings[(int)CTTR_Data.TextBibleID_Onfoot.WumpaWhip] = "Really long loading text for testing!";
-                    Pure3D.Chunks.FrontendLanguage lang9 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("onfoot").Children[3];
-                    lang9.TextStrings[(int)CTTR_Data.TextBibleID_Onfoot.WumpaWhip] = "Really long loading text for testing!";
-                    Pure3D.Chunks.FrontendLanguage lang11 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("onfoot").Children[4];
-                    lang11.TextStrings[(int)CTTR_Data.TextBibleID_Onfoot.WumpaWhip] = "Really long loading text for testing!";
-                    Pure3D.Chunks.FrontendLanguage lang12 = (Pure3D.Chunks.FrontendLanguage)targetFile.RootChunk.GetChildByName<Pure3D.Chunks.FrontendTextBible>("onfoot").Children[5];
-                    lang12.TextStrings[(int)CTTR_Data.TextBibleID_Onfoot.WumpaWhip] = "Really long loading text for testing!";
-                }
-            }
-
-        }
-
-        void TestMod1(string path_extr, string file_name, ref RCF rcf_file)
-        {
-            Pure3D.File targetFile = new Pure3D.File();
-            if (System.IO.File.Exists(path_extr + file_name))
-            {
-                targetFile.Load(path_extr + file_name);
-            }
-            else
-            {
-                return;
-            }
-
-            TestMod2(ref targetFile);
-
-            targetFile.Save(path_extr + file_name + "1");
-            System.IO.File.Delete(path_extr + file_name);
-            System.IO.File.Move(path_extr + file_name + "1", path_extr + file_name);
-
-            for (int i = 0; i < rcf_file.Header.T2File.Length; i++)
-            {
-                if (rcf_file.Header.T2File[i].Name == file_name)
-                {
-                    rcf_file.Header.T2File[i].External = path_extr + file_name;
-                    break;
-                }
-            }
-        }
-
-        void CTTR_TestMod(string path_extr, ref RCF rcf_file)
-        {
-            string[] files = {
-                @"art\frontend\frontend.p3d",
-                @"art\frontend\frontend_pal.p3d",
-                @"art\frontend\frontend_japan.p3d",
-                @"art\frontend\loading.p3d",
-                @"art\frontend\loading_pal.p3d",
-                @"art\frontend\loading_japan.p3d",
-                @"art\frontend\onfoot.p3d",
-                @"art\frontend\onfoot_pal.p3d",
-                @"art\frontend\onfoot_japan.p3d",
-                @"art\frontend\bootup.p3d",
-                @"art\frontend\bootup_pal.p3d",
-                @"art\frontend\bootup_japan.p3d",
-                @"art\frontend\arena.p3d",
-                @"art\frontend\arena_pal.p3d",
-                @"art\frontend\arena_japan.p3d",
-                @"art\frontend\driving.p3d",
-                @"art\frontend\driving_pal.p3d",
-                @"art\frontend\driving_japan.p3d",
-                @"art\frontend\minigame.p3d",
-                @"art\frontend\minigame_pal.p3d",
-                @"art\frontend\minigame_japan.p3d",
-                @"art\frontend\stunt.p3d",
-                @"art\frontend\stunt_pal.p3d",
-                @"art\frontend\stunt_japan.p3d",
-            };
-            for (int i = 0 ; i < files.Length; i++)
-            {
-                TestMod1(path_extr, files[i], ref rcf_file);
-            }
-        }
-
-        public void OpenModMenu()
+        public override void OpenModMenu()
         {
 
             //Pure3D.File targetCharAnim = new Pure3D.File();
@@ -1413,7 +1214,7 @@ namespace CrateModLoader
             CrashOnfootAnim1.Load(AppDomain.CurrentDomain.BaseDirectory + "/Tools/file.p3d");
             PrintHierarchy(CrashOnfootAnim1.RootChunk, 0);
 
-            GameSpecific.CTTR.Pure3D.ModelExporter.AddSkinnedModelWithAnimations(ref CrashOnfootAnim1.RootChunk.GetChildren<Pure3D.Chunks.Skin>()[0], ref CrashOnfootAnim1.RootChunk.GetChildren<Pure3D.Chunks.SkeletonCTTR>()[0], ref shaders);
+            GameSpecific.CTTR.Pure3D.ModelExporter.AddSkinnedModelWithAnimations(ref CrashOnfootAnim1.RootChunk.GetChildren<Skin>()[0], ref CrashOnfootAnim1.RootChunk.GetChildren<SkeletonCTTR>()[0], ref shaders);
             GameSpecific.CTTR.Pure3D.ModelExporter.ExportModel(AppDomain.CurrentDomain.BaseDirectory + "/Tools/out.dae");
 
             Console.WriteLine("\nNow saving...\n");
@@ -1442,9 +1243,9 @@ namespace CrateModLoader
 
         }
 
-        void PrintHierarchy(Pure3D.Chunk chunk, int indent)
+        void PrintHierarchy(Chunk chunk, int indent)
         {
-            Console.WriteLine("{1}{0}", chunk.ToString(), new String('\t', indent));
+            Console.WriteLine("{1}{0}", chunk.ToString(), new string('\t', indent));
 
             foreach (var child in chunk.Children)
                 PrintHierarchy(child, indent + 1);

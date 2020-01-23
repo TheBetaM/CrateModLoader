@@ -1,138 +1,110 @@
-﻿using System;
+﻿using CrateModLoader.GameSpecific.CNK;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Diagnostics;
 using System.IO;
-using CrateModLoader.GameSpecific.CNK;
 //CNK Tools/API by BetaM, ManDude and eezstreet.
 //Version number, seed and options are displayed in the Credits accessible from the main menu.
 
 namespace CrateModLoader
 {
-    class Modder_CNK
+    public sealed class Modder_CNK : Modder
     {
+        // these values can be anything, as long as they're unique, otherwise an argument exception may be thrown when adding options
+        // constants get transformed into their respective values at compile time
+        internal const int RandomizeHubPads               = 0;
+        internal const int RandomizeAdventureRequirements = 1;
+        internal const int RandomizeCharacterStats        = 2;
+        internal const int RandomizeKartStats             = 3;
+        internal const int RandomizeAIKartStats           = 4;
+        internal const int RandomizeSurfaceParameters     = 5;
+        internal const int RandomizeWeaponPools           = 6;
+        internal const int RandomizeWeapons               = 7;
+        internal const int RandomizeCharacters            = 8;
+        internal const int DisableFadeout                 = 9;
+        internal const int DisablePopups                  = 10;
+        internal const int SpeedUpMaskHints               = 11;
+        internal const int RandomizeWumpaCrate            = 12;
+        internal const int RandomizeObstacles             = 13;
+        internal const int RandomizeCupPoints             = 14;
+        internal const int RandomizeMusic                 = 15;
+        internal const int NoMask                         = 16;
 
-        public string[] modOptions = {
-            "Randomize Adventure Hub Warp Pads & Cups",
-            "Randomize Adventure Requirements & Rewards",
-            "Randomize Character Stats",
-            "Randomize Kart Stats",
-            "Randomize AI Kart Stats",
-            "Randomize Surface Parameters",
-            "Randomize Powerup Distribution",
-            "Randomize Powerup Effects",
-            "Randomize Character Models",
-            "Disable Fadeout Overlay",
-            "Disable Unlock Popups",
-            "Speed Up Mask Hints",
-        };
-
-        public bool Randomize_Hub_Pads = false;
-        public bool Randomize_Hub_Requirements = false;
-        public bool Randomize_Character_Stats = false;
-        public bool Randomize_Kart_Stats = false;
-        public bool Randomize_AI_Kart_Stats = false;
-        //public bool Randomize_Wumpa_Crate = false; //TODO dda
-        public bool Randomize_Surface_Parameters = false;
-        public bool Randomize_Weapon_Pools = false;
-        //public bool Randomize_Obstacles = false; //TODO obstacles
-        //public bool Randomize_Cup_Points = false; // Maybe? gameprogression
-        public bool Randomize_Weapons = false;
-        public bool Randomize_Characters = false; //TODO: voices.csv, icon replacement, name replacement, main menu model replacement
-        //public bool Randomize_Music = false; //TODO music.csv
-
-        public bool Mod_SpeedUp_Mask_Hints = false;
-        public bool Mod_Disable_Fadeout = false;
-        //public bool Mod_Mask_Hints_NoMask = false; //TODO, hinthistory.csv
-        public bool Mod_Disable_Unlock_Popups = false;
-        private string path_gob_extracted = "";
-
-        public enum CNK_Options
+        public Modder_CNK()
         {
-            RandomizeHubPads = 0,
-            RandomizeAdventureRequirements = 1,
-            RandomizeCharacterStats = 2,
-            RandomizeKartStats = 3,
-            RandomizeAIKartStats = 4,
-            RandomizeSurfaceParameters = 5,
-            RandomizeWeaponPools = 6,
-            RandomizeWeapons = 7,
-            RandomizeCharacters = 8,
-            DisableFadeout = 9,
-            DisablePopups = 10,
-            SpeedUpMaskHints = 11,
+            Game = new Game()
+            {
+                Name = "Crash Nitro Kart",
+                Consoles = new List<ConsoleMode>
+                {
+                    ConsoleMode.PS2,
+                    ConsoleMode.GCN,
+                    ConsoleMode.XBOX
+                },
+                API_Credit = "Tools/API by BetaM, ManDude and eezstreet",
+                Icon = Properties.Resources.icon_cnk,
+                ModMenuEnabled = false,
+                ModCratesSupported = true,
+                RegionID_PS2 = new RegionCode[] {
+                    new RegionCode() {
+                    Name = @"BOOT2 = cdrom0:\SLUS_206.49;1",
+                    Region = RegionType.NTSC_U,
+                    ExecName = "SLUS_206.49",
+                    CodeName = "SLUS_20649", },
+                    new RegionCode() {
+                    Name = @"BOOT2 = cdrom0:\SLES_515.11;1",
+                    Region = RegionType.PAL,
+                    ExecName = "SLES_515.11",
+                    CodeName = "SLES_51511", },
+                    new RegionCode() {
+                    Name = @"BOOT2 = cdrom0:\SLPM_660.67;1",
+                    Region = RegionType.NTSC_J,
+                    ExecName = "SLPM_660.67",
+                    CodeName = "SLPM_66067", },
+                },
+                RegionID_GCN = new RegionCode[] {
+                    new RegionCode() {
+                    Name = "GCNE7D",
+                    Region = RegionType.NTSC_U },
+                    new RegionCode() {
+                    Name = "GCNP7D",
+                    Region = RegionType.PAL },
+                    new RegionCode() {
+                    Name = "GC8JA4",
+                    Region = RegionType.NTSC_J },
+                }
+            };
+
+            Options.Add(RandomizeHubPads, new ModOption("Randomize Adventure Hub Warp Pads & Cups"));
+            Options.Add(RandomizeAdventureRequirements, new ModOption("Randomize Adventure Requirements & Rewards"));
+            Options.Add(RandomizeCharacterStats, new ModOption("Randomize Character Stats"));
+            Options.Add(RandomizeKartStats, new ModOption("Randomize Kart Stats"));
+            Options.Add(RandomizeAIKartStats, new ModOption("Randomize AI Kart Stats"));
+            //Options.Add(RandomizeWumpaCrate, new ModOption()); //TODO dda
+            //Options.Add(RandomizeObstacles, new ModOption()); //TODO obstacles
+            //Options.Add(RandomizeCupPoints, new ModOption()); // Maybe? gameprogression
+            Options.Add(RandomizeSurfaceParameters, new ModOption("Randomize Surface Parameters"));
+            Options.Add(RandomizeWeaponPools, new ModOption("Randomize Powerup Distribution"));
+            Options.Add(RandomizeWeapons, new ModOption("Randomize Powerup Effects"));
+            Options.Add(RandomizeCharacters, new ModOption("Randomize Character Models")); //TODO: voices.csv, icon replacement, name replacement, main menu model replacement
+            //Options.Add(RandomizeMusic, new ModOption()); //TODO music.csv
+            //Options.Add(NoMask, new ModOption()); //TODO, hinthistory.csv
+            Options.Add(DisableFadeout, new ModOption("Disable Fadeout Overlay"));
+            Options.Add(DisablePopups, new ModOption("Disable Unlock Popups"));
+            Options.Add(SpeedUpMaskHints, new ModOption("Speed Up Mask Hints"));
         }
 
-        public void OptionChanged(int option, bool value)
-        {
-            if (option == (int)CNK_Options.RandomizeHubPads)
-            {
-                Randomize_Hub_Pads = value;
-            }
-            else if (option == (int)CNK_Options.RandomizeCharacterStats)
-            {
-                Randomize_Character_Stats = value;
-            }
-            else if (option == (int)CNK_Options.DisableFadeout)
-            {
-                Mod_Disable_Fadeout = value;
-            }
-            else if (option == (int)CNK_Options.RandomizeKartStats)
-            {
-                Randomize_Kart_Stats = value;   
-            }
-            else if (option == (int)CNK_Options.RandomizeAIKartStats)
-            {
-                Randomize_AI_Kart_Stats = value;
-            }
-            else if (option == (int)CNK_Options.RandomizeWeapons)
-            {
-                Randomize_Weapons = value;
-            }
-            else if (option == (int)CNK_Options.SpeedUpMaskHints)
-            {
-                Mod_SpeedUp_Mask_Hints = value;
-            }
-            else if (option == (int)CNK_Options.RandomizeAdventureRequirements)
-            {
-                Randomize_Hub_Requirements = value;
-            }
-            else if (option == (int)CNK_Options.RandomizeWeaponPools)
-            {
-                Randomize_Weapon_Pools = value;
-            }
-            else if (option == (int)CNK_Options.RandomizeSurfaceParameters)
-            {
-                Randomize_Surface_Parameters = value;
-            }
-            else if (option == (int)CNK_Options.DisablePopups)
-            {
-                Mod_Disable_Unlock_Popups = value;
-            }
-            else if (option == (int)CNK_Options.RandomizeCharacters)
-            {
-                Randomize_Characters = value;
-            }
-        }
+        internal string path_gob_extracted = "";
 
-        public void UpdateModOptions()
-        {
-            Program.ModProgram.PrepareOptionsList(modOptions);
-        }
-
-        public void OpenModMenu()
+        public override void OpenModMenu()
         {
             GameSpecific.ModMenu_CNK modMenu = new GameSpecific.ModMenu_CNK();
-            modMenu.Owner = Program.ModProgramForm;
-            modMenu.Show();
+            modMenu.Show(Program.ModProgramForm);
         }
 
         public Random randState = new Random();
-        
 
-        public void StartModProcess()
+        public override void StartModProcess()
         {
             // Fixes names for PS2, and moves the archive for convenience
             //File.Move(Program.ModProgram.extractedPath + "/ASSETS.GFC;1", AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GFC");
@@ -163,9 +135,8 @@ namespace CrateModLoader
             ModProcess();
         }
 
-        void ModProcess()
+        protected override void ModProcess()
         {
-
             randState = new Random(Program.ModProgram.randoSeed);
 
             bool Editing_CSV_AdventureTracksManager = false;
@@ -194,41 +165,41 @@ namespace CrateModLoader
             //bool Editing_CSV_AI_WeaponSelection = false;
             bool Editing_CSV_Credits = true;
 
-            if (Randomize_Characters)
+            if (Options[RandomizeCharacters].Enabled)
             {
-                Mod_Randomize_Characters(ref randState);
+                Mod_Randomize_Characters(randState);
             }
-            if (Randomize_Hub_Requirements)
+            if (Options[RandomizeAdventureRequirements].Enabled)
             {
                 Editing_CSV_AdventureTracksManager = true;
                 Editing_CSV_GoalsToRewardsConverter = true;
                 CNK_Data.CNK_Randomize_ReqsRewards();
             }
-            if (Randomize_Hub_Pads)
+            if (Options[RandomizeHubPads].Enabled)
             {
                 Editing_CSV_WarpPadInfo = true;
                 Editing_CSV_AdventureCup = true;
                 CNK_Data.CNK_Randomize_WarpPads();
             }
-            if (Randomize_Kart_Stats)
+            if (Options[RandomizeKartStats].Enabled)
             {
                 Editing_CSV_KartPhysicsBase = true;
-                CNK_Data.CNK_Randomize_KartStats(ref randState);
+                CNK_Data.CNK_Randomize_KartStats(randState);
             }
-            if (Randomize_Character_Stats)
+            if (Options[RandomizeCharacterStats].Enabled)
             {
                 Editing_CSV_CharacterPhysics = true;
                 for (int i = 0; i < 16; i++)
                 {
-                    CNK_Data.CNK_Randomize_CharacterStats(ref randState, i);
+                    CNK_Data.CNK_Randomize_CharacterStats(randState, i);
                 }
             }
-            if (Randomize_Surface_Parameters)
+            if (Options[RandomizeSurfaceParameters].Enabled)
             {
                 Editing_CSV_SurfaceParams = true;
-                CNK_Data.CNK_Randomize_SufParams(ref randState);
+                CNK_Data.CNK_Randomize_SufParams(randState);
             }
-            if (Randomize_Weapons)
+            if (Options[RandomizeWeapons].Enabled)
             {
                 Editing_CSV_PowerShield = true;
                 Editing_CSV_FreezingMine = true;
@@ -240,27 +211,27 @@ namespace CrateModLoader
                 Editing_CSV_TurboBoost = true;
                 Editing_CSV_BowlingBomb = true;
                 Editing_CSV_StaticShock = true;
-                CNK_Data.CNK_Randomize_PowerShield(ref randState);
-                CNK_Data.CNK_Randomize_BowlingBomb(ref randState);
-                CNK_Data.CNK_Randomize_FreezingMine(ref randState);
-                CNK_Data.CNK_Randomize_HomingMissle(ref randState);
-                CNK_Data.CNK_Randomize_InvincMask(ref randState);
-                CNK_Data.CNK_Randomize_RedEye(ref randState);
-                CNK_Data.CNK_Randomize_TNTCrate(ref randState);
-                CNK_Data.CNK_Randomize_Tornado(ref randState);
-                CNK_Data.CNK_Randomize_TurboBoost(ref randState);
-                CNK_Data.CNK_Randomize_StaticShock(ref randState);
+                CNK_Data.CNK_Randomize_PowerShield(randState);
+                CNK_Data.CNK_Randomize_BowlingBomb(randState);
+                CNK_Data.CNK_Randomize_FreezingMine(randState);
+                CNK_Data.CNK_Randomize_HomingMissle(randState);
+                CNK_Data.CNK_Randomize_InvincMask(randState);
+                CNK_Data.CNK_Randomize_RedEye(randState);
+                CNK_Data.CNK_Randomize_TNTCrate(randState);
+                CNK_Data.CNK_Randomize_Tornado(randState);
+                CNK_Data.CNK_Randomize_TurboBoost(randState);
+                CNK_Data.CNK_Randomize_StaticShock(randState);
             }
-            if (Randomize_Weapon_Pools)
+            if (Options[RandomizeWeaponPools].Enabled)
             {
                 Editing_CSV_PlayerWeaponSelection = true;
                 Editing_CSV_PlayerWeaponSelection_Boss = true;
             }
-            if (Mod_Disable_Unlock_Popups)
+            if (Options[DisablePopups].Enabled)
             {
                 Editing_CSV_Unlockables = true;
             }
-            if (Mod_SpeedUp_Mask_Hints)
+            if (Options[SpeedUpMaskHints].Enabled)
             {
                 Editing_CSV_HintsConfig = true;
             }
@@ -519,10 +490,10 @@ namespace CrateModLoader
                 
             }
 
-            if (Randomize_AI_Kart_Stats)
+            if (Options[RandomizeAIKartStats].Enabled)
             {
                 Editing_CSV_AI_KartPhysicsBase = true;
-                CNK_Data.CNK_Randomize_KartStats(ref randState);
+                CNK_Data.CNK_Randomize_KartStats(randState);
             }
             if (Editing_CSV_AI_KartPhysicsBase)
             {
@@ -1029,135 +1000,135 @@ namespace CrateModLoader
             {
                 string[] csv_PlayerWeaponSel = File.ReadAllLines(path_gob_extracted + "common/dda/playerweaponselection.csv");
 
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Track_Earth_1] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Earth_1, ref CNK_Data.WeaponSelection_Track_Earth_1);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Track_Earth_2] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Earth_2, ref CNK_Data.WeaponSelection_Track_Earth_2);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Track_Earth_3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Earth_3, ref CNK_Data.WeaponSelection_Track_Earth_3);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Track_Barin_1] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Barin_1, ref CNK_Data.WeaponSelection_Track_Barin_1);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Track_Barin_2] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Barin_2, ref CNK_Data.WeaponSelection_Track_Barin_2);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Track_Barin_3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Barin_3, ref CNK_Data.WeaponSelection_Track_Barin_3);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Track_Fenom_1] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Fenom_1, ref CNK_Data.WeaponSelection_Track_Fenom_1);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Track_Fenom_2] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Fenom_2, ref CNK_Data.WeaponSelection_Track_Fenom_2);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Track_Fenom_3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Fenom_3, ref CNK_Data.WeaponSelection_Track_Fenom_3);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Track_Teknee_1] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Teknee_1, ref CNK_Data.WeaponSelection_Track_Teknee_1);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Track_Teknee_2] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Teknee_2, ref CNK_Data.WeaponSelection_Track_Teknee_2);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Track_Teknee_3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Teknee_3, ref CNK_Data.WeaponSelection_Track_Teknee_3);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Track_VeloRace] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_VeloRace, ref CNK_Data.WeaponSelection_Track_VeloRace);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Track_Arena_1] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Arena_1, ref CNK_Data.WeaponSelection_Track_Arena_1);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Track_Arena_2] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Arena_2, ref CNK_Data.WeaponSelection_Track_Arena_2);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Track_Arena_3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Arena_3, ref CNK_Data.WeaponSelection_Track_Arena_3);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Track_Arena_4] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Arena_4, ref CNK_Data.WeaponSelection_Track_Arena_4);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Track_Arena_5] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Arena_5, ref CNK_Data.WeaponSelection_Track_Arena_5);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Track_Arena_6] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Arena_6, ref CNK_Data.WeaponSelection_Track_Arena_6);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Track_Arena_7] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Arena_7, ref CNK_Data.WeaponSelection_Track_Arena_7);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Track_Lobby] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Lobby, ref CNK_Data.WeaponSelection_Track_Lobby);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Mode_Adv_Trophy] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Adv_Trophy, ref CNK_Data.WeaponSelection_Mode_Adv_Trophy);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Mode_Adv_CNK] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Adv_CNK, ref CNK_Data.WeaponSelection_Mode_Adv_CNK);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Mode_Adv_Gem] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Adv_Gem, ref CNK_Data.WeaponSelection_Mode_Adv_Gem);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Mode_Adv_Boss] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Adv_Boss, ref CNK_Data.WeaponSelection_Mode_Adv_Boss);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Mode_Adv_Crystal] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Adv_Crystal, ref CNK_Data.WeaponSelection_Mode_Adv_Crystal);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Mode_Arcade] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Arcade, ref CNK_Data.WeaponSelection_Mode_Arcade);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Mode_Versus] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Versus, ref CNK_Data.WeaponSelection_Mode_Versus);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Mode_CrystalRace] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_CrystalRace, ref CNK_Data.WeaponSelection_Mode_CrystalRace);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Mode_Battle_Point] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Battle_Point, ref CNK_Data.WeaponSelection_Mode_Battle_Point);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Mode_Battle_Time] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Battle_Time, ref CNK_Data.WeaponSelection_Mode_Battle_Time);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Mode_Battle_Domination] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Battle_Domination, ref CNK_Data.WeaponSelection_Mode_Battle_Domination);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Mode_Battle_CTF] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Battle_CTF, ref CNK_Data.WeaponSelection_Mode_Battle_CTF);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Mode_Battle_KOTR] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Battle_KOTR, ref CNK_Data.WeaponSelection_Mode_Battle_KOTR);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Mode_Battle_Crystal] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Battle_Crystal, ref CNK_Data.WeaponSelection_Mode_Battle_Crystal);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Mode_Lobby] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Lobby, ref CNK_Data.WeaponSelection_Mode_Lobby);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Rank_1st] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Rank_1st, ref CNK_Data.WeaponSelection_Rank_1st);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Rank_2nd] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Rank_2nd, ref CNK_Data.WeaponSelection_Rank_2nd);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Rank_3rd] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Rank_3rd, ref CNK_Data.WeaponSelection_Rank_3rd);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Rank_4th] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Rank_4th, ref CNK_Data.WeaponSelection_Rank_4th);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Rank_5th] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Rank_5th, ref CNK_Data.WeaponSelection_Rank_5th);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Rank_6th] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Rank_6th, ref CNK_Data.WeaponSelection_Rank_6th);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Rank_7th] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Rank_7th, ref CNK_Data.WeaponSelection_Rank_7th);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Rank_8th] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Rank_8th, ref CNK_Data.WeaponSelection_Rank_8th);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Progress_0] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_0, ref CNK_Data.WeaponSelection_Progress_0);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Progress_5] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_5, ref CNK_Data.WeaponSelection_Progress_5);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Progress_10] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_10, ref CNK_Data.WeaponSelection_Progress_10);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Progress_15] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_15, ref CNK_Data.WeaponSelection_Progress_15);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Progress_20] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_20, ref CNK_Data.WeaponSelection_Progress_20);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Progress_25] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_25, ref CNK_Data.WeaponSelection_Progress_25);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Progress_30] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_30, ref CNK_Data.WeaponSelection_Progress_30);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Progress_35] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_35, ref CNK_Data.WeaponSelection_Progress_35);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Progress_40] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_40, ref CNK_Data.WeaponSelection_Progress_40);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Progress_45] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_45, ref CNK_Data.WeaponSelection_Progress_45);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Progress_50] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_50, ref CNK_Data.WeaponSelection_Progress_50);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Progress_55] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_55, ref CNK_Data.WeaponSelection_Progress_55);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Progress_60] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_60, ref CNK_Data.WeaponSelection_Progress_60);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Progress_65] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_65, ref CNK_Data.WeaponSelection_Progress_65);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Progress_70] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_70, ref CNK_Data.WeaponSelection_Progress_70);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Progress_75] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_75, ref CNK_Data.WeaponSelection_Progress_75);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Progress_80] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_80, ref CNK_Data.WeaponSelection_Progress_80);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Progress_85] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_85, ref CNK_Data.WeaponSelection_Progress_85);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Progress_90] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_90, ref CNK_Data.WeaponSelection_Progress_90);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Progress_95] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_95, ref CNK_Data.WeaponSelection_Progress_95);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActivePower_CLEANINGFLUID] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_CLEANINGFLUID, ref CNK_Data.WeaponSelection_ActivePower_CLEANINGFLUID);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActivePower_CURSED] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_CURSED, ref CNK_Data.WeaponSelection_ActivePower_CURSED);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActivePower_EXPLOSIVE_CRATE] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_EXPLOSIVE_CRATE, ref CNK_Data.WeaponSelection_ActivePower_EXPLOSIVE_CRATE);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActivePower_GRACED] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_GRACED, ref CNK_Data.WeaponSelection_ActivePower_GRACED);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActivePower_ICED] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_ICED, ref CNK_Data.WeaponSelection_ActivePower_ICED);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActivePower_INVINCIBILITY_MASKS] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_INVINCIBILITY_MASKS, ref CNK_Data.WeaponSelection_ActivePower_INVINCIBILITY_MASKS);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActivePower_INVISIBILITY] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_INVISIBILITY, ref CNK_Data.WeaponSelection_ActivePower_INVISIBILITY);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActivePower_INVULNERABLE] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_INVULNERABLE, ref CNK_Data.WeaponSelection_ActivePower_INVULNERABLE);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActivePower_MIMECUBE] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_MIMECUBE, ref CNK_Data.WeaponSelection_ActivePower_MIMECUBE);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActivePower_POWERSHIELD_ZAPPED] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_POWERSHIELD_ZAPPED, ref CNK_Data.WeaponSelection_ActivePower_POWERSHIELD_ZAPPED);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActivePower_POWER_SHIELD] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_POWER_SHIELD, ref CNK_Data.WeaponSelection_ActivePower_POWER_SHIELD);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActivePower_RESETTING] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_RESETTING, ref CNK_Data.WeaponSelection_ActivePower_RESETTING);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActivePower_ROLLINGBRUSH] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_ROLLINGBRUSH, ref CNK_Data.WeaponSelection_ActivePower_ROLLINGBRUSH);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActivePower_SPIKYFRUIT] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_SPIKYFRUIT, ref CNK_Data.WeaponSelection_ActivePower_SPIKYFRUIT);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActivePower_STATICSHOCKED] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_STATICSHOCKED, ref CNK_Data.WeaponSelection_ActivePower_STATICSHOCKED);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActivePower_SUPER_ENGINE] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_SUPER_ENGINE, ref CNK_Data.WeaponSelection_ActivePower_SUPER_ENGINE);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActivePower_TEAMINVULNERABLE] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_TEAMINVULNERABLE, ref CNK_Data.WeaponSelection_ActivePower_TEAMINVULNERABLE);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActivePower_TEETHSTRIP] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_TEETHSTRIP, ref CNK_Data.WeaponSelection_ActivePower_TEETHSTRIP);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActivePower_TIMEBUBBLE] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_TIMEBUBBLE, ref CNK_Data.WeaponSelection_ActivePower_TIMEBUBBLE);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActivePower_TROPY_CLOCKS] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_TROPY_CLOCKS, ref CNK_Data.WeaponSelection_ActivePower_TROPY_CLOCKS);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActivePower_TURBO_BOOSTS] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_TURBO_BOOSTS, ref CNK_Data.WeaponSelection_ActivePower_TURBO_BOOSTS);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActivePower_WINDUPJAW] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_WINDUPJAW, ref CNK_Data.WeaponSelection_ActivePower_WINDUPJAW);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActiveWep_BOWLING_BOMB] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_BOWLING_BOMB, ref CNK_Data.WeaponSelection_ActiveWep_BOWLING_BOMB);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActiveWep_BOWLING_BOMB_X3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_BOWLING_BOMB_X3, ref CNK_Data.WeaponSelection_ActiveWep_BOWLING_BOMB_X3);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActiveWep_EXPCRATE_X3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_EXPCRATE_X3, ref CNK_Data.WeaponSelection_ActiveWep_EXPCRATE_X3);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActiveWep_EXPLOSIVE_CRATE] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_EXPLOSIVE_CRATE, ref CNK_Data.WeaponSelection_ActiveWep_EXPLOSIVE_CRATE);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActiveWep_FREEZEMINE_X3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_FREEZEMINE_X3, ref CNK_Data.WeaponSelection_ActiveWep_FREEZEMINE_X3);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActiveWep_FREEZING_MINE] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_FREEZING_MINE, ref CNK_Data.WeaponSelection_ActiveWep_FREEZING_MINE);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActiveWep_HOMING_MISSLE] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_HOMING_MISSLE, ref CNK_Data.WeaponSelection_ActiveWep_HOMING_MISSLE);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActiveWep_HOMING_MISSLE_X3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_HOMING_MISSLE_X3, ref CNK_Data.WeaponSelection_ActiveWep_HOMING_MISSLE_X3);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActiveWep_INVINCIBILITY_MASKS] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_INVINCIBILITY_MASKS, ref CNK_Data.WeaponSelection_ActiveWep_INVINCIBILITY_MASKS);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActiveWep_INVISIBILITY] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_INVISIBILITY, ref CNK_Data.WeaponSelection_ActiveWep_INVISIBILITY);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActiveWep_POWER_SHIELD] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_POWER_SHIELD, ref CNK_Data.WeaponSelection_ActiveWep_POWER_SHIELD);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActiveWep_REDEYE] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_REDEYE, ref CNK_Data.WeaponSelection_ActiveWep_REDEYE);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActiveWep_STATICSHOCK_X3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_STATICSHOCK_X3, ref CNK_Data.WeaponSelection_ActiveWep_STATICSHOCK_X3);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActiveWep_STATIC_SHOCK] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_STATIC_SHOCK, ref CNK_Data.WeaponSelection_ActiveWep_STATIC_SHOCK);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActiveWep_SUPER_ENGINE] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_SUPER_ENGINE, ref CNK_Data.WeaponSelection_ActiveWep_SUPER_ENGINE);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActiveWep_TORNADO] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_TORNADO, ref CNK_Data.WeaponSelection_ActiveWep_TORNADO);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActiveWep_TROPY_CLOCK] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_TROPY_CLOCK, ref CNK_Data.WeaponSelection_ActiveWep_TROPY_CLOCK);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActiveWep_TURBO_BOOSTS] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_TURBO_BOOSTS, ref CNK_Data.WeaponSelection_ActiveWep_TURBO_BOOSTS);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActiveWep_TURBO_BOOST_X3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_TURBO_BOOST_X3, ref CNK_Data.WeaponSelection_ActiveWep_TURBO_BOOST_X3);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActiveWep_VOODOO_DOLL] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_VOODOO_DOLL, ref CNK_Data.WeaponSelection_ActiveWep_VOODOO_DOLL);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.KartsInFront_0] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsInFront_0, ref CNK_Data.WeaponSelection_KartsInFront_0);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.KartsInFront_1] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsInFront_1, ref CNK_Data.WeaponSelection_KartsInFront_1);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.KartsInFront_2] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsInFront_2, ref CNK_Data.WeaponSelection_KartsInFront_2);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.KartsInFront_3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsInFront_3, ref CNK_Data.WeaponSelection_KartsInFront_3);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.KartsInFront_4] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsInFront_4, ref CNK_Data.WeaponSelection_KartsInFront_4);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.KartsInFront_5] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsInFront_5, ref CNK_Data.WeaponSelection_KartsInFront_5);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.KartsInFront_6] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsInFront_6, ref CNK_Data.WeaponSelection_KartsInFront_6);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.KartsInFront_7] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsInFront_7, ref CNK_Data.WeaponSelection_KartsInFront_7);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.KartsInFront_8] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsInFront_8, ref CNK_Data.WeaponSelection_KartsInFront_8);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.KartsBehind_0] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsBehind_0, ref CNK_Data.WeaponSelection_KartsBehind_0);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.KartsBehind_1] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsBehind_1, ref CNK_Data.WeaponSelection_KartsBehind_1);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.KartsBehind_2] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsBehind_2, ref CNK_Data.WeaponSelection_KartsBehind_2);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.KartsBehind_3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsBehind_3, ref CNK_Data.WeaponSelection_KartsBehind_3);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.KartsBehind_4] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsBehind_4, ref CNK_Data.WeaponSelection_KartsBehind_4);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.KartsBehind_5] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsBehind_5, ref CNK_Data.WeaponSelection_KartsBehind_5);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.KartsBehind_6] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsBehind_6, ref CNK_Data.WeaponSelection_KartsBehind_6);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.KartsBehind_7] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsBehind_7, ref CNK_Data.WeaponSelection_KartsBehind_7);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.KartsBehind_8] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsBehind_8, ref CNK_Data.WeaponSelection_KartsBehind_8);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Difficulty_Easiest] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Difficulty_Easiest, ref CNK_Data.WeaponSelection_Difficulty_Easiest);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Difficulty_Hardest] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Difficulty_Hardest, ref CNK_Data.WeaponSelection_Difficulty_Hardest);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Buddy_Ahead] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Buddy_Ahead, ref CNK_Data.WeaponSelection_Buddy_Ahead);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Buddy_Behind] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Buddy_Behind, ref CNK_Data.WeaponSelection_Buddy_Behind);
-                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Buddy_InRange] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Buddy_InRange, ref CNK_Data.WeaponSelection_Buddy_InRange);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Track_Earth_1] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Earth_1, CNK_Data.WeaponSelection_Track_Earth_1);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Track_Earth_2] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Earth_2, CNK_Data.WeaponSelection_Track_Earth_2);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Track_Earth_3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Earth_3, CNK_Data.WeaponSelection_Track_Earth_3);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Track_Barin_1] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Barin_1, CNK_Data.WeaponSelection_Track_Barin_1);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Track_Barin_2] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Barin_2, CNK_Data.WeaponSelection_Track_Barin_2);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Track_Barin_3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Barin_3, CNK_Data.WeaponSelection_Track_Barin_3);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Track_Fenom_1] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Fenom_1, CNK_Data.WeaponSelection_Track_Fenom_1);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Track_Fenom_2] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Fenom_2, CNK_Data.WeaponSelection_Track_Fenom_2);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Track_Fenom_3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Fenom_3, CNK_Data.WeaponSelection_Track_Fenom_3);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Track_Teknee_1] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Teknee_1, CNK_Data.WeaponSelection_Track_Teknee_1);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Track_Teknee_2] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Teknee_2, CNK_Data.WeaponSelection_Track_Teknee_2);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Track_Teknee_3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Teknee_3, CNK_Data.WeaponSelection_Track_Teknee_3);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Track_VeloRace] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_VeloRace, CNK_Data.WeaponSelection_Track_VeloRace);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Track_Arena_1] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Arena_1, CNK_Data.WeaponSelection_Track_Arena_1);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Track_Arena_2] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Arena_2, CNK_Data.WeaponSelection_Track_Arena_2);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Track_Arena_3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Arena_3, CNK_Data.WeaponSelection_Track_Arena_3);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Track_Arena_4] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Arena_4, CNK_Data.WeaponSelection_Track_Arena_4);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Track_Arena_5] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Arena_5, CNK_Data.WeaponSelection_Track_Arena_5);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Track_Arena_6] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Arena_6, CNK_Data.WeaponSelection_Track_Arena_6);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Track_Arena_7] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Arena_7, CNK_Data.WeaponSelection_Track_Arena_7);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Track_Lobby] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Lobby, CNK_Data.WeaponSelection_Track_Lobby);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Mode_Adv_Trophy] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Adv_Trophy, CNK_Data.WeaponSelection_Mode_Adv_Trophy);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Mode_Adv_CNK] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Adv_CNK, CNK_Data.WeaponSelection_Mode_Adv_CNK);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Mode_Adv_Gem] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Adv_Gem, CNK_Data.WeaponSelection_Mode_Adv_Gem);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Mode_Adv_Boss] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Adv_Boss, CNK_Data.WeaponSelection_Mode_Adv_Boss);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Mode_Adv_Crystal] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Adv_Crystal, CNK_Data.WeaponSelection_Mode_Adv_Crystal);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Mode_Arcade] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Arcade, CNK_Data.WeaponSelection_Mode_Arcade);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Mode_Versus] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Versus, CNK_Data.WeaponSelection_Mode_Versus);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Mode_CrystalRace] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_CrystalRace, CNK_Data.WeaponSelection_Mode_CrystalRace);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Mode_Battle_Point] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Battle_Point, CNK_Data.WeaponSelection_Mode_Battle_Point);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Mode_Battle_Time] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Battle_Time, CNK_Data.WeaponSelection_Mode_Battle_Time);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Mode_Battle_Domination] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Battle_Domination, CNK_Data.WeaponSelection_Mode_Battle_Domination);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Mode_Battle_CTF] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Battle_CTF, CNK_Data.WeaponSelection_Mode_Battle_CTF);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Mode_Battle_KOTR] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Battle_KOTR, CNK_Data.WeaponSelection_Mode_Battle_KOTR);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Mode_Battle_Crystal] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Battle_Crystal, CNK_Data.WeaponSelection_Mode_Battle_Crystal);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Mode_Lobby] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Lobby, CNK_Data.WeaponSelection_Mode_Lobby);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Rank_1st] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Rank_1st, CNK_Data.WeaponSelection_Rank_1st);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Rank_2nd] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Rank_2nd, CNK_Data.WeaponSelection_Rank_2nd);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Rank_3rd] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Rank_3rd, CNK_Data.WeaponSelection_Rank_3rd);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Rank_4th] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Rank_4th, CNK_Data.WeaponSelection_Rank_4th);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Rank_5th] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Rank_5th, CNK_Data.WeaponSelection_Rank_5th);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Rank_6th] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Rank_6th, CNK_Data.WeaponSelection_Rank_6th);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Rank_7th] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Rank_7th, CNK_Data.WeaponSelection_Rank_7th);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Rank_8th] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Rank_8th, CNK_Data.WeaponSelection_Rank_8th);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Progress_0] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_0, CNK_Data.WeaponSelection_Progress_0);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Progress_5] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_5, CNK_Data.WeaponSelection_Progress_5);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Progress_10] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_10, CNK_Data.WeaponSelection_Progress_10);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Progress_15] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_15, CNK_Data.WeaponSelection_Progress_15);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Progress_20] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_20, CNK_Data.WeaponSelection_Progress_20);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Progress_25] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_25, CNK_Data.WeaponSelection_Progress_25);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Progress_30] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_30, CNK_Data.WeaponSelection_Progress_30);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Progress_35] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_35, CNK_Data.WeaponSelection_Progress_35);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Progress_40] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_40, CNK_Data.WeaponSelection_Progress_40);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Progress_45] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_45, CNK_Data.WeaponSelection_Progress_45);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Progress_50] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_50, CNK_Data.WeaponSelection_Progress_50);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Progress_55] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_55, CNK_Data.WeaponSelection_Progress_55);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Progress_60] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_60, CNK_Data.WeaponSelection_Progress_60);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Progress_65] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_65, CNK_Data.WeaponSelection_Progress_65);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Progress_70] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_70, CNK_Data.WeaponSelection_Progress_70);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Progress_75] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_75, CNK_Data.WeaponSelection_Progress_75);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Progress_80] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_80, CNK_Data.WeaponSelection_Progress_80);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Progress_85] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_85, CNK_Data.WeaponSelection_Progress_85);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Progress_90] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_90, CNK_Data.WeaponSelection_Progress_90);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Progress_95] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_95, CNK_Data.WeaponSelection_Progress_95);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActivePower_CLEANINGFLUID] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_CLEANINGFLUID, CNK_Data.WeaponSelection_ActivePower_CLEANINGFLUID);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActivePower_CURSED] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_CURSED, CNK_Data.WeaponSelection_ActivePower_CURSED);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActivePower_EXPLOSIVE_CRATE] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_EXPLOSIVE_CRATE, CNK_Data.WeaponSelection_ActivePower_EXPLOSIVE_CRATE);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActivePower_GRACED] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_GRACED, CNK_Data.WeaponSelection_ActivePower_GRACED);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActivePower_ICED] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_ICED, CNK_Data.WeaponSelection_ActivePower_ICED);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActivePower_INVINCIBILITY_MASKS] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_INVINCIBILITY_MASKS, CNK_Data.WeaponSelection_ActivePower_INVINCIBILITY_MASKS);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActivePower_INVISIBILITY] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_INVISIBILITY, CNK_Data.WeaponSelection_ActivePower_INVISIBILITY);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActivePower_INVULNERABLE] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_INVULNERABLE, CNK_Data.WeaponSelection_ActivePower_INVULNERABLE);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActivePower_MIMECUBE] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_MIMECUBE, CNK_Data.WeaponSelection_ActivePower_MIMECUBE);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActivePower_POWERSHIELD_ZAPPED] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_POWERSHIELD_ZAPPED, CNK_Data.WeaponSelection_ActivePower_POWERSHIELD_ZAPPED);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActivePower_POWER_SHIELD] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_POWER_SHIELD, CNK_Data.WeaponSelection_ActivePower_POWER_SHIELD);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActivePower_RESETTING] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_RESETTING, CNK_Data.WeaponSelection_ActivePower_RESETTING);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActivePower_ROLLINGBRUSH] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_ROLLINGBRUSH, CNK_Data.WeaponSelection_ActivePower_ROLLINGBRUSH);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActivePower_SPIKYFRUIT] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_SPIKYFRUIT, CNK_Data.WeaponSelection_ActivePower_SPIKYFRUIT);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActivePower_STATICSHOCKED] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_STATICSHOCKED, CNK_Data.WeaponSelection_ActivePower_STATICSHOCKED);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActivePower_SUPER_ENGINE] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_SUPER_ENGINE, CNK_Data.WeaponSelection_ActivePower_SUPER_ENGINE);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActivePower_TEAMINVULNERABLE] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_TEAMINVULNERABLE, CNK_Data.WeaponSelection_ActivePower_TEAMINVULNERABLE);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActivePower_TEETHSTRIP] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_TEETHSTRIP, CNK_Data.WeaponSelection_ActivePower_TEETHSTRIP);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActivePower_TIMEBUBBLE] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_TIMEBUBBLE, CNK_Data.WeaponSelection_ActivePower_TIMEBUBBLE);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActivePower_TROPY_CLOCKS] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_TROPY_CLOCKS, CNK_Data.WeaponSelection_ActivePower_TROPY_CLOCKS);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActivePower_TURBO_BOOSTS] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_TURBO_BOOSTS, CNK_Data.WeaponSelection_ActivePower_TURBO_BOOSTS);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActivePower_WINDUPJAW] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_WINDUPJAW, CNK_Data.WeaponSelection_ActivePower_WINDUPJAW);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActiveWep_BOWLING_BOMB] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_BOWLING_BOMB, CNK_Data.WeaponSelection_ActiveWep_BOWLING_BOMB);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActiveWep_BOWLING_BOMB_X3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_BOWLING_BOMB_X3, CNK_Data.WeaponSelection_ActiveWep_BOWLING_BOMB_X3);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActiveWep_EXPCRATE_X3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_EXPCRATE_X3, CNK_Data.WeaponSelection_ActiveWep_EXPCRATE_X3);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActiveWep_EXPLOSIVE_CRATE] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_EXPLOSIVE_CRATE, CNK_Data.WeaponSelection_ActiveWep_EXPLOSIVE_CRATE);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActiveWep_FREEZEMINE_X3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_FREEZEMINE_X3, CNK_Data.WeaponSelection_ActiveWep_FREEZEMINE_X3);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActiveWep_FREEZING_MINE] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_FREEZING_MINE, CNK_Data.WeaponSelection_ActiveWep_FREEZING_MINE);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActiveWep_HOMING_MISSLE] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_HOMING_MISSLE, CNK_Data.WeaponSelection_ActiveWep_HOMING_MISSLE);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActiveWep_HOMING_MISSLE_X3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_HOMING_MISSLE_X3, CNK_Data.WeaponSelection_ActiveWep_HOMING_MISSLE_X3);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActiveWep_INVINCIBILITY_MASKS] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_INVINCIBILITY_MASKS, CNK_Data.WeaponSelection_ActiveWep_INVINCIBILITY_MASKS);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActiveWep_INVISIBILITY] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_INVISIBILITY, CNK_Data.WeaponSelection_ActiveWep_INVISIBILITY);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActiveWep_POWER_SHIELD] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_POWER_SHIELD, CNK_Data.WeaponSelection_ActiveWep_POWER_SHIELD);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActiveWep_REDEYE] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_REDEYE, CNK_Data.WeaponSelection_ActiveWep_REDEYE);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActiveWep_STATICSHOCK_X3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_STATICSHOCK_X3, CNK_Data.WeaponSelection_ActiveWep_STATICSHOCK_X3);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActiveWep_STATIC_SHOCK] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_STATIC_SHOCK, CNK_Data.WeaponSelection_ActiveWep_STATIC_SHOCK);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActiveWep_SUPER_ENGINE] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_SUPER_ENGINE, CNK_Data.WeaponSelection_ActiveWep_SUPER_ENGINE);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActiveWep_TORNADO] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_TORNADO, CNK_Data.WeaponSelection_ActiveWep_TORNADO);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActiveWep_TROPY_CLOCK] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_TROPY_CLOCK, CNK_Data.WeaponSelection_ActiveWep_TROPY_CLOCK);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActiveWep_TURBO_BOOSTS] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_TURBO_BOOSTS, CNK_Data.WeaponSelection_ActiveWep_TURBO_BOOSTS);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActiveWep_TURBO_BOOST_X3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_TURBO_BOOST_X3, CNK_Data.WeaponSelection_ActiveWep_TURBO_BOOST_X3);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.ActiveWep_VOODOO_DOLL] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_VOODOO_DOLL, CNK_Data.WeaponSelection_ActiveWep_VOODOO_DOLL);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.KartsInFront_0] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsInFront_0, CNK_Data.WeaponSelection_KartsInFront_0);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.KartsInFront_1] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsInFront_1, CNK_Data.WeaponSelection_KartsInFront_1);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.KartsInFront_2] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsInFront_2, CNK_Data.WeaponSelection_KartsInFront_2);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.KartsInFront_3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsInFront_3, CNK_Data.WeaponSelection_KartsInFront_3);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.KartsInFront_4] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsInFront_4, CNK_Data.WeaponSelection_KartsInFront_4);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.KartsInFront_5] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsInFront_5, CNK_Data.WeaponSelection_KartsInFront_5);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.KartsInFront_6] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsInFront_6, CNK_Data.WeaponSelection_KartsInFront_6);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.KartsInFront_7] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsInFront_7, CNK_Data.WeaponSelection_KartsInFront_7);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.KartsInFront_8] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsInFront_8, CNK_Data.WeaponSelection_KartsInFront_8);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.KartsBehind_0] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsBehind_0, CNK_Data.WeaponSelection_KartsBehind_0);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.KartsBehind_1] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsBehind_1, CNK_Data.WeaponSelection_KartsBehind_1);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.KartsBehind_2] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsBehind_2, CNK_Data.WeaponSelection_KartsBehind_2);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.KartsBehind_3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsBehind_3, CNK_Data.WeaponSelection_KartsBehind_3);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.KartsBehind_4] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsBehind_4, CNK_Data.WeaponSelection_KartsBehind_4);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.KartsBehind_5] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsBehind_5, CNK_Data.WeaponSelection_KartsBehind_5);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.KartsBehind_6] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsBehind_6, CNK_Data.WeaponSelection_KartsBehind_6);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.KartsBehind_7] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsBehind_7, CNK_Data.WeaponSelection_KartsBehind_7);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.KartsBehind_8] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsBehind_8, CNK_Data.WeaponSelection_KartsBehind_8);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Difficulty_Easiest] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Difficulty_Easiest, CNK_Data.WeaponSelection_Difficulty_Easiest);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Difficulty_Hardest] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Difficulty_Hardest, CNK_Data.WeaponSelection_Difficulty_Hardest);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Buddy_Ahead] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Buddy_Ahead, CNK_Data.WeaponSelection_Buddy_Ahead);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Buddy_Behind] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Buddy_Behind, CNK_Data.WeaponSelection_Buddy_Behind);
+                csv_PlayerWeaponSel[(int)CNK_Data.WeaponSelectionRows.Buddy_InRange] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Buddy_InRange, CNK_Data.WeaponSelection_Buddy_InRange);
 
                 File.WriteAllLines(path_gob_extracted + "common/dda/playerweaponselection.csv", csv_PlayerWeaponSel);
             }
@@ -1165,135 +1136,135 @@ namespace CrateModLoader
             {
                 string[] csv_PlayerWeaponSelBoss = File.ReadAllLines(path_gob_extracted + "common/dda/playerweaponselection_boss.csv");
 
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Track_Earth_1] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Earth_1, ref CNK_Data.WeaponSelection_Track_Earth_1);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Track_Earth_2] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Earth_2, ref CNK_Data.WeaponSelection_Track_Earth_2);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Track_Earth_3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Earth_3, ref CNK_Data.WeaponSelection_Track_Earth_3);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Track_Barin_1] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Barin_1, ref CNK_Data.WeaponSelection_Track_Barin_1);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Track_Barin_2] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Barin_2, ref CNK_Data.WeaponSelection_Track_Barin_2);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Track_Barin_3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Barin_3, ref CNK_Data.WeaponSelection_Track_Barin_3);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Track_Fenom_1] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Fenom_1, ref CNK_Data.WeaponSelection_Track_Fenom_1);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Track_Fenom_2] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Fenom_2, ref CNK_Data.WeaponSelection_Track_Fenom_2);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Track_Fenom_3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Fenom_3, ref CNK_Data.WeaponSelection_Track_Fenom_3);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Track_Teknee_1] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Teknee_1, ref CNK_Data.WeaponSelection_Track_Teknee_1);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Track_Teknee_2] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Teknee_2, ref CNK_Data.WeaponSelection_Track_Teknee_2);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Track_Teknee_3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Teknee_3, ref CNK_Data.WeaponSelection_Track_Teknee_3);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Track_VeloRace] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_VeloRace, ref CNK_Data.WeaponSelection_Track_VeloRace);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Track_Arena_1] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Arena_1, ref CNK_Data.WeaponSelection_Track_Arena_1);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Track_Arena_2] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Arena_2, ref CNK_Data.WeaponSelection_Track_Arena_2);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Track_Arena_3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Arena_3, ref CNK_Data.WeaponSelection_Track_Arena_3);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Track_Arena_4] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Arena_4, ref CNK_Data.WeaponSelection_Track_Arena_4);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Track_Arena_5] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Arena_5, ref CNK_Data.WeaponSelection_Track_Arena_5);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Track_Arena_6] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Arena_6, ref CNK_Data.WeaponSelection_Track_Arena_6);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Track_Arena_7] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Arena_7, ref CNK_Data.WeaponSelection_Track_Arena_7);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Track_Lobby] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Lobby, ref CNK_Data.WeaponSelection_Track_Lobby);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Mode_Adv_Trophy] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Adv_Trophy, ref CNK_Data.WeaponSelection_Mode_Adv_Trophy);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Mode_Adv_CNK] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Adv_CNK, ref CNK_Data.WeaponSelection_Mode_Adv_CNK);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Mode_Adv_Gem] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Adv_Gem, ref CNK_Data.WeaponSelection_Mode_Adv_Gem);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Mode_Adv_Boss] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Adv_Boss, ref CNK_Data.WeaponSelection_Mode_Adv_Boss);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Mode_Adv_Crystal] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Adv_Crystal, ref CNK_Data.WeaponSelection_Mode_Adv_Crystal);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Mode_Arcade] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Arcade, ref CNK_Data.WeaponSelection_Mode_Arcade);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Mode_Versus] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Versus, ref CNK_Data.WeaponSelection_Mode_Versus);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Mode_CrystalRace] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_CrystalRace, ref CNK_Data.WeaponSelection_Mode_CrystalRace);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Mode_Battle_Point] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Battle_Point, ref CNK_Data.WeaponSelection_Mode_Battle_Point);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Mode_Battle_Time] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Battle_Time, ref CNK_Data.WeaponSelection_Mode_Battle_Time);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Mode_Battle_Domination] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Battle_Domination, ref CNK_Data.WeaponSelection_Mode_Battle_Domination);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Mode_Battle_CTF] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Battle_CTF, ref CNK_Data.WeaponSelection_Mode_Battle_CTF);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Mode_Battle_KOTR] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Battle_KOTR, ref CNK_Data.WeaponSelection_Mode_Battle_KOTR);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Mode_Battle_Crystal] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Battle_Crystal, ref CNK_Data.WeaponSelection_Mode_Battle_Crystal);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Mode_Lobby] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Lobby, ref CNK_Data.WeaponSelection_Mode_Lobby);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Rank_1st] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Rank_1st, ref CNK_Data.WeaponSelection_Rank_1st);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Rank_2nd] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Rank_2nd, ref CNK_Data.WeaponSelection_Rank_2nd);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Rank_3rd] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Rank_3rd, ref CNK_Data.WeaponSelection_Rank_3rd);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Rank_4th] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Rank_4th, ref CNK_Data.WeaponSelection_Rank_4th);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Rank_5th] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Rank_5th, ref CNK_Data.WeaponSelection_Rank_5th);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Rank_6th] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Rank_6th, ref CNK_Data.WeaponSelection_Rank_6th);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Rank_7th] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Rank_7th, ref CNK_Data.WeaponSelection_Rank_7th);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Rank_8th] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Rank_8th, ref CNK_Data.WeaponSelection_Rank_8th);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Progress_0] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_0, ref CNK_Data.WeaponSelection_Progress_0);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Progress_5] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_5, ref CNK_Data.WeaponSelection_Progress_5);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Progress_10] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_10, ref CNK_Data.WeaponSelection_Progress_10);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Progress_15] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_15, ref CNK_Data.WeaponSelection_Progress_15);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Progress_20] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_20, ref CNK_Data.WeaponSelection_Progress_20);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Progress_25] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_25, ref CNK_Data.WeaponSelection_Progress_25);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Progress_30] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_30, ref CNK_Data.WeaponSelection_Progress_30);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Progress_35] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_35, ref CNK_Data.WeaponSelection_Progress_35);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Progress_40] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_40, ref CNK_Data.WeaponSelection_Progress_40);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Progress_45] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_45, ref CNK_Data.WeaponSelection_Progress_45);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Progress_50] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_50, ref CNK_Data.WeaponSelection_Progress_50);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Progress_55] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_55, ref CNK_Data.WeaponSelection_Progress_55);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Progress_60] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_60, ref CNK_Data.WeaponSelection_Progress_60);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Progress_65] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_65, ref CNK_Data.WeaponSelection_Progress_65);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Progress_70] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_70, ref CNK_Data.WeaponSelection_Progress_70);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Progress_75] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_75, ref CNK_Data.WeaponSelection_Progress_75);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Progress_80] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_80, ref CNK_Data.WeaponSelection_Progress_80);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Progress_85] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_85, ref CNK_Data.WeaponSelection_Progress_85);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Progress_90] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_90, ref CNK_Data.WeaponSelection_Progress_90);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Progress_95] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_95, ref CNK_Data.WeaponSelection_Progress_95);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActivePower_CLEANINGFLUID] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_CLEANINGFLUID, ref CNK_Data.WeaponSelection_ActivePower_CLEANINGFLUID);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActivePower_CURSED] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_CURSED, ref CNK_Data.WeaponSelection_ActivePower_CURSED);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActivePower_EXPLOSIVE_CRATE] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_EXPLOSIVE_CRATE, ref CNK_Data.WeaponSelection_ActivePower_EXPLOSIVE_CRATE);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActivePower_GRACED] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_GRACED, ref CNK_Data.WeaponSelection_ActivePower_GRACED);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActivePower_ICED] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_ICED, ref CNK_Data.WeaponSelection_ActivePower_ICED);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActivePower_INVINCIBILITY_MASKS] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_INVINCIBILITY_MASKS, ref CNK_Data.WeaponSelection_ActivePower_INVINCIBILITY_MASKS);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActivePower_INVISIBILITY] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_INVISIBILITY, ref CNK_Data.WeaponSelection_ActivePower_INVISIBILITY);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActivePower_INVULNERABLE] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_INVULNERABLE, ref CNK_Data.WeaponSelection_ActivePower_INVULNERABLE);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActivePower_MIMECUBE] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_MIMECUBE, ref CNK_Data.WeaponSelection_ActivePower_MIMECUBE);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActivePower_POWERSHIELD_ZAPPED] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_POWERSHIELD_ZAPPED, ref CNK_Data.WeaponSelection_ActivePower_POWERSHIELD_ZAPPED);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActivePower_POWER_SHIELD] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_POWER_SHIELD, ref CNK_Data.WeaponSelection_ActivePower_POWER_SHIELD);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActivePower_RESETTING] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_RESETTING, ref CNK_Data.WeaponSelection_ActivePower_RESETTING);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActivePower_ROLLINGBRUSH] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_ROLLINGBRUSH, ref CNK_Data.WeaponSelection_ActivePower_ROLLINGBRUSH);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActivePower_SPIKYFRUIT] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_SPIKYFRUIT, ref CNK_Data.WeaponSelection_ActivePower_SPIKYFRUIT);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActivePower_STATICSHOCKED] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_STATICSHOCKED, ref CNK_Data.WeaponSelection_ActivePower_STATICSHOCKED);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActivePower_SUPER_ENGINE] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_SUPER_ENGINE, ref CNK_Data.WeaponSelection_ActivePower_SUPER_ENGINE);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActivePower_TEAMINVULNERABLE] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_TEAMINVULNERABLE, ref CNK_Data.WeaponSelection_ActivePower_TEAMINVULNERABLE);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActivePower_TEETHSTRIP] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_TEETHSTRIP, ref CNK_Data.WeaponSelection_ActivePower_TEETHSTRIP);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActivePower_TIMEBUBBLE] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_TIMEBUBBLE, ref CNK_Data.WeaponSelection_ActivePower_TIMEBUBBLE);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActivePower_TROPY_CLOCKS] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_TROPY_CLOCKS, ref CNK_Data.WeaponSelection_ActivePower_TROPY_CLOCKS);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActivePower_TURBO_BOOSTS] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_TURBO_BOOSTS, ref CNK_Data.WeaponSelection_ActivePower_TURBO_BOOSTS);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActivePower_WINDUPJAW] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_WINDUPJAW, ref CNK_Data.WeaponSelection_ActivePower_WINDUPJAW);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActiveWep_BOWLING_BOMB] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_BOWLING_BOMB, ref CNK_Data.WeaponSelection_ActiveWep_BOWLING_BOMB);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActiveWep_BOWLING_BOMB_X3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_BOWLING_BOMB_X3, ref CNK_Data.WeaponSelection_ActiveWep_BOWLING_BOMB_X3);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActiveWep_EXPCRATE_X3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_EXPCRATE_X3, ref CNK_Data.WeaponSelection_ActiveWep_EXPCRATE_X3);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActiveWep_EXPLOSIVE_CRATE] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_EXPLOSIVE_CRATE, ref CNK_Data.WeaponSelection_ActiveWep_EXPLOSIVE_CRATE);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActiveWep_FREEZEMINE_X3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_FREEZEMINE_X3, ref CNK_Data.WeaponSelection_ActiveWep_FREEZEMINE_X3);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActiveWep_FREEZING_MINE] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_FREEZING_MINE, ref CNK_Data.WeaponSelection_ActiveWep_FREEZING_MINE);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActiveWep_HOMING_MISSLE] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_HOMING_MISSLE, ref CNK_Data.WeaponSelection_ActiveWep_HOMING_MISSLE);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActiveWep_HOMING_MISSLE_X3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_HOMING_MISSLE_X3, ref CNK_Data.WeaponSelection_ActiveWep_HOMING_MISSLE_X3);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActiveWep_INVINCIBILITY_MASKS] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_INVINCIBILITY_MASKS, ref CNK_Data.WeaponSelection_ActiveWep_INVINCIBILITY_MASKS);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActiveWep_INVISIBILITY] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_INVISIBILITY, ref CNK_Data.WeaponSelection_ActiveWep_INVISIBILITY);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActiveWep_POWER_SHIELD] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_POWER_SHIELD, ref CNK_Data.WeaponSelection_ActiveWep_POWER_SHIELD);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActiveWep_REDEYE] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_REDEYE, ref CNK_Data.WeaponSelection_ActiveWep_REDEYE);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActiveWep_STATICSHOCK_X3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_STATICSHOCK_X3, ref CNK_Data.WeaponSelection_ActiveWep_STATICSHOCK_X3);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActiveWep_STATIC_SHOCK] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_STATIC_SHOCK, ref CNK_Data.WeaponSelection_ActiveWep_STATIC_SHOCK);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActiveWep_SUPER_ENGINE] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_SUPER_ENGINE, ref CNK_Data.WeaponSelection_ActiveWep_SUPER_ENGINE);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActiveWep_TORNADO] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_TORNADO, ref CNK_Data.WeaponSelection_ActiveWep_TORNADO);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActiveWep_TROPY_CLOCK] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_TROPY_CLOCK, ref CNK_Data.WeaponSelection_ActiveWep_TROPY_CLOCK);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActiveWep_TURBO_BOOSTS] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_TURBO_BOOSTS, ref CNK_Data.WeaponSelection_ActiveWep_TURBO_BOOSTS);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActiveWep_TURBO_BOOST_X3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_TURBO_BOOST_X3, ref CNK_Data.WeaponSelection_ActiveWep_TURBO_BOOST_X3);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActiveWep_VOODOO_DOLL] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_VOODOO_DOLL, ref CNK_Data.WeaponSelection_ActiveWep_VOODOO_DOLL);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.KartsInFront_0] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsInFront_0, ref CNK_Data.WeaponSelection_KartsInFront_0);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.KartsInFront_1] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsInFront_1, ref CNK_Data.WeaponSelection_KartsInFront_1);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.KartsInFront_2] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsInFront_2, ref CNK_Data.WeaponSelection_KartsInFront_2);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.KartsInFront_3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsInFront_3, ref CNK_Data.WeaponSelection_KartsInFront_3);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.KartsInFront_4] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsInFront_4, ref CNK_Data.WeaponSelection_KartsInFront_4);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.KartsInFront_5] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsInFront_5, ref CNK_Data.WeaponSelection_KartsInFront_5);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.KartsInFront_6] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsInFront_6, ref CNK_Data.WeaponSelection_KartsInFront_6);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.KartsInFront_7] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsInFront_7, ref CNK_Data.WeaponSelection_KartsInFront_7);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.KartsInFront_8] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsInFront_8, ref CNK_Data.WeaponSelection_KartsInFront_8);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.KartsBehind_0] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsBehind_0, ref CNK_Data.WeaponSelection_KartsBehind_0);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.KartsBehind_1] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsBehind_1, ref CNK_Data.WeaponSelection_KartsBehind_1);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.KartsBehind_2] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsBehind_2, ref CNK_Data.WeaponSelection_KartsBehind_2);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.KartsBehind_3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsBehind_3, ref CNK_Data.WeaponSelection_KartsBehind_3);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.KartsBehind_4] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsBehind_4, ref CNK_Data.WeaponSelection_KartsBehind_4);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.KartsBehind_5] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsBehind_5, ref CNK_Data.WeaponSelection_KartsBehind_5);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.KartsBehind_6] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsBehind_6, ref CNK_Data.WeaponSelection_KartsBehind_6);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.KartsBehind_7] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsBehind_7, ref CNK_Data.WeaponSelection_KartsBehind_7);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.KartsBehind_8] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsBehind_8, ref CNK_Data.WeaponSelection_KartsBehind_8);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Difficulty_Easiest] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Difficulty_Easiest, ref CNK_Data.WeaponSelection_Difficulty_Easiest);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Difficulty_Hardest] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Difficulty_Hardest, ref CNK_Data.WeaponSelection_Difficulty_Hardest);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Buddy_Ahead] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Buddy_Ahead, ref CNK_Data.WeaponSelection_Buddy_Ahead);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Buddy_Behind] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Buddy_Behind, ref CNK_Data.WeaponSelection_Buddy_Behind);
-                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Buddy_InRange] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Buddy_InRange, ref CNK_Data.WeaponSelection_Buddy_InRange);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Track_Earth_1] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Earth_1, CNK_Data.WeaponSelection_Track_Earth_1);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Track_Earth_2] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Earth_2, CNK_Data.WeaponSelection_Track_Earth_2);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Track_Earth_3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Earth_3, CNK_Data.WeaponSelection_Track_Earth_3);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Track_Barin_1] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Barin_1, CNK_Data.WeaponSelection_Track_Barin_1);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Track_Barin_2] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Barin_2, CNK_Data.WeaponSelection_Track_Barin_2);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Track_Barin_3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Barin_3, CNK_Data.WeaponSelection_Track_Barin_3);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Track_Fenom_1] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Fenom_1, CNK_Data.WeaponSelection_Track_Fenom_1);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Track_Fenom_2] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Fenom_2, CNK_Data.WeaponSelection_Track_Fenom_2);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Track_Fenom_3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Fenom_3, CNK_Data.WeaponSelection_Track_Fenom_3);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Track_Teknee_1] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Teknee_1, CNK_Data.WeaponSelection_Track_Teknee_1);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Track_Teknee_2] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Teknee_2, CNK_Data.WeaponSelection_Track_Teknee_2);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Track_Teknee_3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Teknee_3, CNK_Data.WeaponSelection_Track_Teknee_3);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Track_VeloRace] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_VeloRace, CNK_Data.WeaponSelection_Track_VeloRace);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Track_Arena_1] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Arena_1, CNK_Data.WeaponSelection_Track_Arena_1);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Track_Arena_2] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Arena_2, CNK_Data.WeaponSelection_Track_Arena_2);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Track_Arena_3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Arena_3, CNK_Data.WeaponSelection_Track_Arena_3);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Track_Arena_4] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Arena_4, CNK_Data.WeaponSelection_Track_Arena_4);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Track_Arena_5] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Arena_5, CNK_Data.WeaponSelection_Track_Arena_5);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Track_Arena_6] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Arena_6, CNK_Data.WeaponSelection_Track_Arena_6);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Track_Arena_7] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Arena_7, CNK_Data.WeaponSelection_Track_Arena_7);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Track_Lobby] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Track_Lobby, CNK_Data.WeaponSelection_Track_Lobby);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Mode_Adv_Trophy] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Adv_Trophy, CNK_Data.WeaponSelection_Mode_Adv_Trophy);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Mode_Adv_CNK] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Adv_CNK, CNK_Data.WeaponSelection_Mode_Adv_CNK);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Mode_Adv_Gem] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Adv_Gem, CNK_Data.WeaponSelection_Mode_Adv_Gem);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Mode_Adv_Boss] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Adv_Boss, CNK_Data.WeaponSelection_Mode_Adv_Boss);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Mode_Adv_Crystal] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Adv_Crystal, CNK_Data.WeaponSelection_Mode_Adv_Crystal);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Mode_Arcade] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Arcade, CNK_Data.WeaponSelection_Mode_Arcade);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Mode_Versus] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Versus, CNK_Data.WeaponSelection_Mode_Versus);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Mode_CrystalRace] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_CrystalRace, CNK_Data.WeaponSelection_Mode_CrystalRace);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Mode_Battle_Point] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Battle_Point, CNK_Data.WeaponSelection_Mode_Battle_Point);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Mode_Battle_Time] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Battle_Time, CNK_Data.WeaponSelection_Mode_Battle_Time);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Mode_Battle_Domination] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Battle_Domination, CNK_Data.WeaponSelection_Mode_Battle_Domination);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Mode_Battle_CTF] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Battle_CTF, CNK_Data.WeaponSelection_Mode_Battle_CTF);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Mode_Battle_KOTR] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Battle_KOTR, CNK_Data.WeaponSelection_Mode_Battle_KOTR);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Mode_Battle_Crystal] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Battle_Crystal, CNK_Data.WeaponSelection_Mode_Battle_Crystal);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Mode_Lobby] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Mode_Lobby, CNK_Data.WeaponSelection_Mode_Lobby);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Rank_1st] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Rank_1st, CNK_Data.WeaponSelection_Rank_1st);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Rank_2nd] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Rank_2nd, CNK_Data.WeaponSelection_Rank_2nd);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Rank_3rd] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Rank_3rd, CNK_Data.WeaponSelection_Rank_3rd);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Rank_4th] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Rank_4th, CNK_Data.WeaponSelection_Rank_4th);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Rank_5th] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Rank_5th, CNK_Data.WeaponSelection_Rank_5th);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Rank_6th] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Rank_6th, CNK_Data.WeaponSelection_Rank_6th);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Rank_7th] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Rank_7th, CNK_Data.WeaponSelection_Rank_7th);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Rank_8th] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Rank_8th, CNK_Data.WeaponSelection_Rank_8th);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Progress_0] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_0, CNK_Data.WeaponSelection_Progress_0);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Progress_5] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_5, CNK_Data.WeaponSelection_Progress_5);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Progress_10] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_10, CNK_Data.WeaponSelection_Progress_10);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Progress_15] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_15, CNK_Data.WeaponSelection_Progress_15);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Progress_20] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_20, CNK_Data.WeaponSelection_Progress_20);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Progress_25] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_25, CNK_Data.WeaponSelection_Progress_25);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Progress_30] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_30, CNK_Data.WeaponSelection_Progress_30);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Progress_35] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_35, CNK_Data.WeaponSelection_Progress_35);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Progress_40] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_40, CNK_Data.WeaponSelection_Progress_40);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Progress_45] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_45, CNK_Data.WeaponSelection_Progress_45);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Progress_50] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_50, CNK_Data.WeaponSelection_Progress_50);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Progress_55] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_55, CNK_Data.WeaponSelection_Progress_55);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Progress_60] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_60, CNK_Data.WeaponSelection_Progress_60);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Progress_65] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_65, CNK_Data.WeaponSelection_Progress_65);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Progress_70] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_70, CNK_Data.WeaponSelection_Progress_70);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Progress_75] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_75, CNK_Data.WeaponSelection_Progress_75);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Progress_80] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_80, CNK_Data.WeaponSelection_Progress_80);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Progress_85] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_85, CNK_Data.WeaponSelection_Progress_85);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Progress_90] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_90, CNK_Data.WeaponSelection_Progress_90);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Progress_95] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Progress_95, CNK_Data.WeaponSelection_Progress_95);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActivePower_CLEANINGFLUID] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_CLEANINGFLUID, CNK_Data.WeaponSelection_ActivePower_CLEANINGFLUID);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActivePower_CURSED] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_CURSED, CNK_Data.WeaponSelection_ActivePower_CURSED);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActivePower_EXPLOSIVE_CRATE] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_EXPLOSIVE_CRATE, CNK_Data.WeaponSelection_ActivePower_EXPLOSIVE_CRATE);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActivePower_GRACED] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_GRACED, CNK_Data.WeaponSelection_ActivePower_GRACED);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActivePower_ICED] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_ICED, CNK_Data.WeaponSelection_ActivePower_ICED);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActivePower_INVINCIBILITY_MASKS] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_INVINCIBILITY_MASKS, CNK_Data.WeaponSelection_ActivePower_INVINCIBILITY_MASKS);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActivePower_INVISIBILITY] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_INVISIBILITY, CNK_Data.WeaponSelection_ActivePower_INVISIBILITY);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActivePower_INVULNERABLE] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_INVULNERABLE, CNK_Data.WeaponSelection_ActivePower_INVULNERABLE);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActivePower_MIMECUBE] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_MIMECUBE, CNK_Data.WeaponSelection_ActivePower_MIMECUBE);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActivePower_POWERSHIELD_ZAPPED] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_POWERSHIELD_ZAPPED, CNK_Data.WeaponSelection_ActivePower_POWERSHIELD_ZAPPED);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActivePower_POWER_SHIELD] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_POWER_SHIELD, CNK_Data.WeaponSelection_ActivePower_POWER_SHIELD);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActivePower_RESETTING] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_RESETTING, CNK_Data.WeaponSelection_ActivePower_RESETTING);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActivePower_ROLLINGBRUSH] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_ROLLINGBRUSH, CNK_Data.WeaponSelection_ActivePower_ROLLINGBRUSH);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActivePower_SPIKYFRUIT] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_SPIKYFRUIT, CNK_Data.WeaponSelection_ActivePower_SPIKYFRUIT);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActivePower_STATICSHOCKED] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_STATICSHOCKED, CNK_Data.WeaponSelection_ActivePower_STATICSHOCKED);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActivePower_SUPER_ENGINE] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_SUPER_ENGINE, CNK_Data.WeaponSelection_ActivePower_SUPER_ENGINE);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActivePower_TEAMINVULNERABLE] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_TEAMINVULNERABLE, CNK_Data.WeaponSelection_ActivePower_TEAMINVULNERABLE);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActivePower_TEETHSTRIP] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_TEETHSTRIP, CNK_Data.WeaponSelection_ActivePower_TEETHSTRIP);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActivePower_TIMEBUBBLE] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_TIMEBUBBLE, CNK_Data.WeaponSelection_ActivePower_TIMEBUBBLE);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActivePower_TROPY_CLOCKS] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_TROPY_CLOCKS, CNK_Data.WeaponSelection_ActivePower_TROPY_CLOCKS);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActivePower_TURBO_BOOSTS] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_TURBO_BOOSTS, CNK_Data.WeaponSelection_ActivePower_TURBO_BOOSTS);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActivePower_WINDUPJAW] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActivePower_WINDUPJAW, CNK_Data.WeaponSelection_ActivePower_WINDUPJAW);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActiveWep_BOWLING_BOMB] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_BOWLING_BOMB, CNK_Data.WeaponSelection_ActiveWep_BOWLING_BOMB);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActiveWep_BOWLING_BOMB_X3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_BOWLING_BOMB_X3, CNK_Data.WeaponSelection_ActiveWep_BOWLING_BOMB_X3);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActiveWep_EXPCRATE_X3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_EXPCRATE_X3, CNK_Data.WeaponSelection_ActiveWep_EXPCRATE_X3);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActiveWep_EXPLOSIVE_CRATE] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_EXPLOSIVE_CRATE, CNK_Data.WeaponSelection_ActiveWep_EXPLOSIVE_CRATE);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActiveWep_FREEZEMINE_X3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_FREEZEMINE_X3, CNK_Data.WeaponSelection_ActiveWep_FREEZEMINE_X3);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActiveWep_FREEZING_MINE] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_FREEZING_MINE, CNK_Data.WeaponSelection_ActiveWep_FREEZING_MINE);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActiveWep_HOMING_MISSLE] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_HOMING_MISSLE, CNK_Data.WeaponSelection_ActiveWep_HOMING_MISSLE);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActiveWep_HOMING_MISSLE_X3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_HOMING_MISSLE_X3, CNK_Data.WeaponSelection_ActiveWep_HOMING_MISSLE_X3);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActiveWep_INVINCIBILITY_MASKS] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_INVINCIBILITY_MASKS, CNK_Data.WeaponSelection_ActiveWep_INVINCIBILITY_MASKS);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActiveWep_INVISIBILITY] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_INVISIBILITY, CNK_Data.WeaponSelection_ActiveWep_INVISIBILITY);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActiveWep_POWER_SHIELD] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_POWER_SHIELD, CNK_Data.WeaponSelection_ActiveWep_POWER_SHIELD);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActiveWep_REDEYE] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_REDEYE, CNK_Data.WeaponSelection_ActiveWep_REDEYE);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActiveWep_STATICSHOCK_X3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_STATICSHOCK_X3, CNK_Data.WeaponSelection_ActiveWep_STATICSHOCK_X3);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActiveWep_STATIC_SHOCK] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_STATIC_SHOCK, CNK_Data.WeaponSelection_ActiveWep_STATIC_SHOCK);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActiveWep_SUPER_ENGINE] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_SUPER_ENGINE, CNK_Data.WeaponSelection_ActiveWep_SUPER_ENGINE);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActiveWep_TORNADO] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_TORNADO, CNK_Data.WeaponSelection_ActiveWep_TORNADO);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActiveWep_TROPY_CLOCK] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_TROPY_CLOCK, CNK_Data.WeaponSelection_ActiveWep_TROPY_CLOCK);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActiveWep_TURBO_BOOSTS] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_TURBO_BOOSTS, CNK_Data.WeaponSelection_ActiveWep_TURBO_BOOSTS);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActiveWep_TURBO_BOOST_X3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_TURBO_BOOST_X3, CNK_Data.WeaponSelection_ActiveWep_TURBO_BOOST_X3);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.ActiveWep_VOODOO_DOLL] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.ActiveWep_VOODOO_DOLL, CNK_Data.WeaponSelection_ActiveWep_VOODOO_DOLL);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.KartsInFront_0] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsInFront_0, CNK_Data.WeaponSelection_KartsInFront_0);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.KartsInFront_1] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsInFront_1, CNK_Data.WeaponSelection_KartsInFront_1);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.KartsInFront_2] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsInFront_2, CNK_Data.WeaponSelection_KartsInFront_2);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.KartsInFront_3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsInFront_3, CNK_Data.WeaponSelection_KartsInFront_3);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.KartsInFront_4] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsInFront_4, CNK_Data.WeaponSelection_KartsInFront_4);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.KartsInFront_5] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsInFront_5, CNK_Data.WeaponSelection_KartsInFront_5);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.KartsInFront_6] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsInFront_6, CNK_Data.WeaponSelection_KartsInFront_6);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.KartsInFront_7] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsInFront_7, CNK_Data.WeaponSelection_KartsInFront_7);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.KartsInFront_8] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsInFront_8, CNK_Data.WeaponSelection_KartsInFront_8);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.KartsBehind_0] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsBehind_0, CNK_Data.WeaponSelection_KartsBehind_0);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.KartsBehind_1] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsBehind_1, CNK_Data.WeaponSelection_KartsBehind_1);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.KartsBehind_2] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsBehind_2, CNK_Data.WeaponSelection_KartsBehind_2);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.KartsBehind_3] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsBehind_3, CNK_Data.WeaponSelection_KartsBehind_3);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.KartsBehind_4] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsBehind_4, CNK_Data.WeaponSelection_KartsBehind_4);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.KartsBehind_5] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsBehind_5, CNK_Data.WeaponSelection_KartsBehind_5);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.KartsBehind_6] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsBehind_6, CNK_Data.WeaponSelection_KartsBehind_6);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.KartsBehind_7] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsBehind_7, CNK_Data.WeaponSelection_KartsBehind_7);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.KartsBehind_8] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.KartsBehind_8, CNK_Data.WeaponSelection_KartsBehind_8);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Difficulty_Easiest] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Difficulty_Easiest, CNK_Data.WeaponSelection_Difficulty_Easiest);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Difficulty_Hardest] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Difficulty_Hardest, CNK_Data.WeaponSelection_Difficulty_Hardest);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Buddy_Ahead] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Buddy_Ahead, CNK_Data.WeaponSelection_Buddy_Ahead);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Buddy_Behind] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Buddy_Behind, CNK_Data.WeaponSelection_Buddy_Behind);
+                csv_PlayerWeaponSelBoss[(int)CNK_Data.WeaponSelectionRows.Buddy_InRange] = CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows.Buddy_InRange, CNK_Data.WeaponSelection_Buddy_InRange);
 
                 File.WriteAllLines(path_gob_extracted + "common/dda/playerweaponselection_boss.csv", csv_PlayerWeaponSelBoss);
             }
@@ -1330,7 +1301,7 @@ namespace CrateModLoader
                 File.WriteAllLines(path_gob_extracted + "common/hints/config.csv", csv_HintsConfig);
             }
 
-            if (Mod_Disable_Fadeout)
+            if (Options[DisableFadeout].Enabled)
             {
                 DirectoryInfo dir_hud = new DirectoryInfo(path_gob_extracted + "common/hud/");
                 foreach (FileInfo file in dir_hud.EnumerateFiles())
@@ -1430,7 +1401,7 @@ namespace CrateModLoader
             EndModProcess();
         }
 
-        void Mod_Randomize_Characters(ref Random randState)
+        void Mod_Randomize_Characters(Random randState)
         {
             //Replace model files
             string modelpath = path_gob_extracted;
@@ -1471,7 +1442,7 @@ namespace CrateModLoader
             }
         }
 
-        public void EndModProcess()
+        protected override void EndModProcess()
         {
             // Build GOB
             Process GobExtract = new Process();
@@ -1562,7 +1533,7 @@ namespace CrateModLoader
             cur_line += ",";
             return cur_line;
         }
-        string CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows RowID, ref float[] RowTable)
+        string CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows RowID, float[] RowTable)
         {
             string row_text = "";
             row_text += ",,";

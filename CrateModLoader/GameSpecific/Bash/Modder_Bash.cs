@@ -1,43 +1,55 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace CrateModLoader
 {
-    class Modder_Bash
+    public sealed class Modder_Bash : Modder
     {
-        public string[] modOptions = { "No options available" };
-
-        public enum Bash_Options
+        public Modder_Bash()
         {
-            RandomizeSomething = 0,
+            Game = new Game()
+            {
+                Name = "Crash Bash",
+                Consoles = new List<ConsoleMode>
+                {
+                    ConsoleMode.PS1
+                },
+                API_Credit = "No API available",
+                Icon = null,
+                ModMenuEnabled = false,
+                ModCratesSupported = true,
+                RegionID_PS1 = new RegionCode[] {
+                    new RegionCode() {
+                    Name = @"BOOT = cdrom:\SCUS_945.70;1",
+                    Region = RegionType.NTSC_U,
+                    ExecName = "SCUS_945.70",
+                    CodeName = "SCUS_94570", },
+                    new RegionCode() {
+                    Name = @"BOOT = cdrom:\SCES_028.34;1",
+                    Region = RegionType.PAL,
+                    ExecName = "SCES_028.34",
+                    CodeName = "SCES_02834", },
+                    new RegionCode() {
+                    Name = @"BOOT = cdrom:\SCPS_101.40;1",
+                    Region = RegionType.NTSC_J,
+                    ExecName = "SCPS_101.40",
+                    CodeName = "SCPS_10140", },
+                },
+            };
         }
 
-        public void OptionChanged(int option, bool value)
-        {
-            // TODO
-        }
-
-        public void UpdateModOptions()
-        {
-            Program.ModProgram.PrepareOptionsList(modOptions);
-        }
-
-        public void StartModProcess()
+        public override void StartModProcess()
         {
             // TODO
             ModProcess();
         }
 
-        public void ModProcess()
+        protected override void ModProcess()
         {
             // TODO
             EndModProcess();
         }
 
-        public void EndModProcess()
+        protected override void EndModProcess()
         {
             // TODO
         }

@@ -407,7 +407,7 @@ namespace CrateModLoader.GameSpecific.CTTR
             "Not Used",
         };
 
-        public static bool LUA_FindObject(ref List<string> lua_script, string object_type, string object_name, ref int object_start, ref int object_end)
+        public static bool LUA_FindObject(List<string> lua_script, string object_type, string object_name, ref int object_start, ref int object_end)
         {
             string pattern = "BeginObject " + object_type + " " + object_name;
             for (int i = 0; i < lua_script.Count; i++)
@@ -429,7 +429,7 @@ namespace CrateModLoader.GameSpecific.CTTR
             return false;
         }
 
-        public static bool LUA_LoadObject(ref List<string> lua_script, string object_type, string object_name, ref int object_start, ref int object_end, ref List<string> object_content)
+        public static bool LUA_LoadObject(List<string> lua_script, string object_type, string object_name, ref int object_start, ref int object_end, List<string> object_content)
         {
             string pattern = "BeginObject " + object_type + " " + object_name;
             for (int i = 0; i < lua_script.Count; i++)
@@ -454,7 +454,7 @@ namespace CrateModLoader.GameSpecific.CTTR
             }
             return false;
         }
-        public static bool LUA_SaveObject(ref List<string> lua_script, string object_type, string object_name, ref List<string> object_content)
+        public static bool LUA_SaveObject(List<string> lua_script, string object_type, string object_name, List<string> object_content)
         {
             string pattern = "BeginObject " + object_type + " " + object_name;
             for (int i = 0; i < lua_script.Count; i++)

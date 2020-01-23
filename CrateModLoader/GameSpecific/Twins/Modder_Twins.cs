@@ -1,126 +1,98 @@
-﻿using System;
+﻿using CrateModLoader.GameSpecific.Twins;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
-using CrateModLoader.GameSpecific.Twins;
 using Twinsanity;
 //Twinsanity API by NeoKesha, Smartkin, ManDude and Marko (https://github.com/Smartkin/twinsanity-editor)
 //Version number, seed and options are displayed in the Autosave Disabled screen accessible by starting a new game without saving or just disabling autosave.
 
 namespace CrateModLoader
 {
-    class Modder_Twins
+    public sealed class Modder_Twins : Modder
     {
+        internal const int RandomizeAllCrates       = 0;
+        internal const int RandomizeCrateTypes      = 10;
+        internal const int RandomizeGemLocations    = 1;
+        internal const int RandomizeEnemies         = 2;
+        internal const int RandomizeMusic           = 3;
+        internal const int RandomizeCharParams      = 4;
+        internal const int ModFlyingKick            = 5;
+        internal const int ModStompKick             = 6;
+        internal const int ModDoubleJumpCortex      = 7;
+        internal const int ModDoubleJumpNina        = 8;
+        internal const int ModEnableUnusedEnemies   = 9;
 
-        public string[] modOptions = {
-            "Randomize Regular Crates",
-            "Randomize Gem Locations",
-            "Randomize Enemies",
-            "Randomize Level Music",
-            "Randomize Character Parameters",
-            "Enable Flying Kick for Crash",
-            "Enable Stomp Kick for Crash (Flying Kick variation)",
-            "Enable Double Jump for Cortex",
-            "Enable Double Jump for Nina",
-            "Enable Unused Enemies",
+        public Modder_Twins()
+        {
+            Game = new Game()
+            {
+                Name = "Crash Twinsanity",
+                Consoles = new List<ConsoleMode>
+                {
+                    ConsoleMode.PS2,
+                    ConsoleMode.XBOX,
+                },
+                API_Credit = "API by NeoKesha, Smartkin, ManDude and Marko",
+                Icon = Properties.Resources.icon_twins,
+                ModMenuEnabled = false,
+                ModCratesSupported = true,
+                RegionID_PS2 = new RegionCode[] {
+                    new RegionCode() {
+                    Name = @"BOOT2 = cdrom0:\SLUS_209.09;1 ",
+                    Region = RegionType.NTSC_U,
+                    ExecName = "SLUS_209.09",
+                    CodeName = "SLUS_20909", },
+                    new RegionCode() {
+                    Name = @"BOOT2 = cdrom0:\SLES_525.68;1 ",
+                    Region = RegionType.PAL,
+                    ExecName = "SLES_525.68",
+                    CodeName = "SLES_52568", },
+                    new RegionCode() {
+                    Name = @"BOOT2 = cdrom0:\SLPM_658.01;1 ",
+                    Region = RegionType.NTSC_J,
+                    ExecName = "SLPM_658.01",
+                    CodeName = "SLPM_65801", },
+                    new RegionCode() {
+                    Name = @"BOOT2 = cdrom0:\SLUS_209.09;1",
+                    Region = RegionType.NTSC_U,
+                    ExecName = "SLUS_209.09",
+                    CodeName = "SLUS_20909", },
+                    new RegionCode() {
+                    Name = @"BOOT2 = cdrom0:\SLES_525.68;1",
+                    Region = RegionType.PAL,
+                    ExecName = "SLES_525.68",
+                    CodeName = "SLES_52568", },
+                    new RegionCode() {
+                    Name = @"BOOT2 = cdrom0:\SLPM_658.01;1",
+                    Region = RegionType.NTSC_J,
+                    ExecName = "SLPM_658.01",
+                    CodeName = "SLPM_65801", },
+                },
             };
 
-        public bool Twins_Randomize_CrateTypes = false; // TODO: Make this a toggle between CrateTypes/AllCrates in the mod menu?
-        public bool Twins_Randomize_AllCrates = false;
-        public bool Twins_Randomize_GemLocations = false;
-        public bool Twins_Randomize_Enemies = false; // TODO
-        public bool Twins_Randomize_PlayableChars = false; // TODO for a later version
-        public bool Twins_Randomize_StartingChunk = false; // TODO, ExePatcher, later version
-        public bool Twins_Randomize_Music = false;
-        public bool Twins_Randomize_CharacterParams = false;
-        public bool Twins_Mod_PreventSequenceBreaks = false; // TODO for a later version
-        public bool Twins_Mod_FlyingKick = false;
-        public bool Twins_Mod_StompKick = false;
-        public bool Twins_Mod_DoubleJump_Cortex = false;
-        public bool Twins_Mod_DoubleJump_Nina = false;
-        public bool Twins_Mod_EnableUnusedEnemies = false; // TODO: frogensteins, ants in coreEnt
-        public bool Twins_Mod_TestMod = false;
-
-        private string bdPath = "";
-        public Random randState = new Random();
-        public List<uint> CrateReplaceList = new List<uint>();
-        public List<uint> randCrateList = new List<uint>();
-        public List<uint> gemObjectList = new List<uint>();
-        public List<uint> musicTypes = new List<uint>();
-        public List<uint> randMusicList = new List<uint>();
-        public List<Twins_Data.ObjectID> EnemyReplaceList = new List<Twins_Data.ObjectID>();
-        public List<Twins_Data.ObjectID> EnemyInsertList = new List<Twins_Data.ObjectID>();
-        public bool[] levelEdited;
-
-        public enum Twins_Options
-        {
-            RandomizeAllCrates = 0,
-            RandomizeGemLocations = 1,
-            RandomizeEnemies = 2,
-            RandomizeMusic = 3,
-            RandomizeCharParams = 4,
-            ModFlyingKick = 5,
-            ModStompKick = 6,
-            ModDoubleJumpCortex = 7,
-            ModDoubleJumpNina = 8,
-            ModEnableUnusedEnemies = 9,
-            ModTestMod = 10,
+            Options.Add(RandomizeAllCrates, new ModOption("Randomize Regular Crates")); // todo: change missions to unlock crash and cortex if they're not in the starting pool
+            //Options.Add(RandomizeCrateTypes, new ModOption("Randomize All Crates")); // todo: change missions to unlock crash and cortex if they're not in the starting pool
+            Options.Add(RandomizeGemLocations, new ModOption("Randomize Gem Locations")); // todo: gem keys in missionobjectives_x and platforming_objects, unlock failure message, key missions
+            Options.Add(RandomizeEnemies, new ModOption("Randomize Enemies")); // todo: arenas
+            Options.Add(RandomizeMusic, new ModOption("Randomize Level Music")); // todo: minigame challenges aswell
+            Options.Add(RandomizeCharParams, new ModOption("Randomize Character Parameters"));// todo, genericobjectives, missionobjectives_x, level NIS+NPC
+            Options.Add(ModFlyingKick, new ModOption("Enable Flying Kick for Crash")); // todo: vehicles, levels/common for speed tier values
+            Options.Add(ModStompKick, new ModOption("Enable Stomp Kick for Crash (Flying Kick variation)"));
+            Options.Add(ModDoubleJumpCortex, new ModOption("Enable Double Jump for Cortex"));
+            Options.Add(ModDoubleJumpNina, new ModOption("Enable Double Jump for Nina")); // todo: kamikaze
+            Options.Add(ModEnableUnusedEnemies, new ModOption("Enable Unused Enemies")); // todo: railshooter
         }
 
-        public void OptionChanged(int option, bool value)
-        {
-            if (option == (int)Twins_Options.RandomizeGemLocations)
-            {
-                Twins_Randomize_GemLocations = value;
-            }
-            else if (option == (int)Twins_Options.RandomizeAllCrates)
-            {
-                Twins_Randomize_AllCrates = value;
-            }
-            else if (option == (int)Twins_Options.RandomizeMusic)
-            {
-                Twins_Randomize_Music = value;
-            }
-            else if (option == (int)Twins_Options.ModStompKick)
-            {
-                Twins_Mod_StompKick = value;
-            }
-            else if (option == (int)Twins_Options.ModFlyingKick)
-            {
-                Twins_Mod_FlyingKick = value;
-            }
-            else if (option == (int)Twins_Options.ModDoubleJumpCortex)
-            {
-                Twins_Mod_DoubleJump_Cortex = value;
-            }
-            else if (option == (int)Twins_Options.ModDoubleJumpNina)
-            {
-                Twins_Mod_DoubleJump_Nina = value;
-            }
-            else if (option == (int)Twins_Options.RandomizeCharParams)
-            {
-                Twins_Randomize_CharacterParams = value;
-            }
-            else if (option == (int)Twins_Options.ModEnableUnusedEnemies)
-            {
-                Twins_Mod_EnableUnusedEnemies = value;
-            }
-            else if (option == (int)Twins_Options.RandomizeEnemies)
-            {
-                //Twins_Randomize_Enemies = value; //not ready yet
-            }
-            else if (option == (int)Twins_Options.ModTestMod)
-            {
-                Twins_Mod_TestMod = value;
-            }
-        }
-
-        public void UpdateModOptions()
-        {
-            Program.ModProgram.PrepareOptionsList(modOptions);
-        }
+        internal string bdPath = "";
+        internal Random randState = new Random();
+        internal List<uint> CrateReplaceList = new List<uint>();
+        internal List<uint> randCrateList = new List<uint>();
+        internal List<uint> gemObjectList = new List<uint>();
+        internal List<uint> musicTypes = new List<uint>();
+        internal List<uint> randMusicList = new List<uint>();
+        internal List<Twins_Data.ObjectID> EnemyReplaceList = new List<Twins_Data.ObjectID>();
+        internal List<Twins_Data.ObjectID> EnemyInsertList = new List<Twins_Data.ObjectID>();
+        internal bool[] levelEdited;
 
         private enum RM2_Sections
         {
@@ -179,7 +151,7 @@ namespace CrateModLoader
             Camera = 8,
         }
 
-        public void StartModProcess()
+        public override void StartModProcess()
         {
             // Extract BD
             bdPath = System.IO.Path.Combine(Program.ModProgram.extractedPath, "cml_extr/");
@@ -193,7 +165,7 @@ namespace CrateModLoader
             ModProcess();
         }
 
-        public void ModProcess()
+        protected override void ModProcess()
         {
             //Start Modding
             randState = new Random(Program.ModProgram.randoSeed);
@@ -201,7 +173,7 @@ namespace CrateModLoader
             bool Twins_Edit_CodeText = true;
             bool Twins_Edit_AllLevels = false;
 
-            if (Twins_Randomize_CrateTypes)
+            if (Options[RandomizeCrateTypes].Enabled)
             {
                 TwinsFile mainArchive = new TwinsFile();
                 mainArchive.LoadFile(bdPath + @"Startup\Default.rm2", TwinsFile.FileType.RM2);
@@ -209,54 +181,51 @@ namespace CrateModLoader
                 List<uint> crateList = new List<uint>();
                 List<uint> posList = new List<uint>();
 
-                if (Twins_Randomize_CrateTypes)
+                crateList.Add((uint)Twins_Data.ObjectID.BASICCRATE);
+                //crateList.Add((uint)Twins_Data.ObjectID.TNT_CRATE);
+                //crateList.Add((uint)Twins_Data.ObjectID.NITRO_CRATE);
+                crateList.Add((uint)Twins_Data.ObjectID.EXTRALIFECRATE);
+                crateList.Add((uint)Twins_Data.ObjectID.WOODENSPRINGCRATE);
+                crateList.Add((uint)Twins_Data.ObjectID.REINFORCEDWOODENCRATE);
+                crateList.Add((uint)Twins_Data.ObjectID.AKUAKUCRATE);
+                //crateList.Add((uint)Twins_Data.ObjectID.EXTRA_LIFE_CRATE_CORTEX);
+                //crateList.Add((uint)Twins_Data.ObjectID.EXTRA_LIFE_CRATE_NINA);
+                crateList.Add((uint)Twins_Data.ObjectID.IRONCRATE);
+                crateList.Add((uint)Twins_Data.ObjectID.IRONSPRINGCRATE);
+                crateList.Add((uint)Twins_Data.ObjectID.MULTIPLEHITCRATE);
+                crateList.Add((uint)Twins_Data.ObjectID.SURPRISECRATE);
+
+                posList.Add((uint)Twins_Data.ObjectID.BASICCRATE);
+                //posList.Add((uint)Twins_Data.ObjectID.TNT_CRATE);
+                //posList.Add((uint)Twins_Data.ObjectID.NITRO_CRATE);
+                posList.Add((uint)Twins_Data.ObjectID.EXTRALIFECRATE);
+                posList.Add((uint)Twins_Data.ObjectID.WOODENSPRINGCRATE);
+                posList.Add((uint)Twins_Data.ObjectID.REINFORCEDWOODENCRATE);
+                posList.Add((uint)Twins_Data.ObjectID.AKUAKUCRATE);
+                //posList.Add((uint)Twins_Data.ObjectID.EXTRA_LIFE_CRATE_CORTEX);
+                //posList.Add((uint)Twins_Data.ObjectID.EXTRA_LIFE_CRATE_NINA);
+                posList.Add((uint)Twins_Data.ObjectID.IRONCRATE);
+                posList.Add((uint)Twins_Data.ObjectID.IRONSPRINGCRATE);
+                posList.Add((uint)Twins_Data.ObjectID.MULTIPLEHITCRATE);
+                posList.Add((uint)Twins_Data.ObjectID.SURPRISECRATE);
+
+                int target_item = 0;
+
+                while (posList.Count > 0)
                 {
-                    crateList.Add((uint)Twins_Data.ObjectID.BASICCRATE);
-                    //crateList.Add((uint)Twins_Data.ObjectID.TNT_CRATE);
-                    //crateList.Add((uint)Twins_Data.ObjectID.NITRO_CRATE);
-                    crateList.Add((uint)Twins_Data.ObjectID.EXTRALIFECRATE);
-                    crateList.Add((uint)Twins_Data.ObjectID.WOODENSPRINGCRATE);
-                    crateList.Add((uint)Twins_Data.ObjectID.REINFORCEDWOODENCRATE);
-                    crateList.Add((uint)Twins_Data.ObjectID.AKUAKUCRATE);
-                    //crateList.Add((uint)Twins_Data.ObjectID.EXTRA_LIFE_CRATE_CORTEX);
-                    //crateList.Add((uint)Twins_Data.ObjectID.EXTRA_LIFE_CRATE_NINA);
-                    crateList.Add((uint)Twins_Data.ObjectID.IRONCRATE);
-                    crateList.Add((uint)Twins_Data.ObjectID.IRONSPRINGCRATE);
-                    crateList.Add((uint)Twins_Data.ObjectID.MULTIPLEHITCRATE);
-                    crateList.Add((uint)Twins_Data.ObjectID.SURPRISECRATE);
-
-                    posList.Add((uint)Twins_Data.ObjectID.BASICCRATE);
-                    //posList.Add((uint)Twins_Data.ObjectID.TNT_CRATE);
-                    //posList.Add((uint)Twins_Data.ObjectID.NITRO_CRATE);
-                    posList.Add((uint)Twins_Data.ObjectID.EXTRALIFECRATE);
-                    posList.Add((uint)Twins_Data.ObjectID.WOODENSPRINGCRATE);
-                    posList.Add((uint)Twins_Data.ObjectID.REINFORCEDWOODENCRATE);
-                    posList.Add((uint)Twins_Data.ObjectID.AKUAKUCRATE);
-                    //posList.Add((uint)Twins_Data.ObjectID.EXTRA_LIFE_CRATE_CORTEX);
-                    //posList.Add((uint)Twins_Data.ObjectID.EXTRA_LIFE_CRATE_NINA);
-                    posList.Add((uint)Twins_Data.ObjectID.IRONCRATE);
-                    posList.Add((uint)Twins_Data.ObjectID.IRONSPRINGCRATE);
-                    posList.Add((uint)Twins_Data.ObjectID.MULTIPLEHITCRATE);
-                    posList.Add((uint)Twins_Data.ObjectID.SURPRISECRATE);
-
-                    int target_item = 0;
-
-                    while (posList.Count > 0)
-                    {
-                        target_item = randState.Next(0, crateList.Count);
-                        TwinsSection objectdata = mainArchive.GetItem<TwinsSection>((uint)RM2_Sections.Code).GetItem<TwinsSection>((uint)RM2_Code_Sections.Object);
-                        if (objectdata.ContainsItem(posList[0]))
-                            objectdata.GetItem<TwinsItem>(posList[0]).ID = crateList[target_item];
-                        posList.RemoveAt(0);
-                        crateList.RemoveAt(target_item);
-                    }
-                    posList.Clear();
-                    crateList.Clear();
+                    target_item = randState.Next(0, crateList.Count);
+                    TwinsSection objectdata = mainArchive.GetItem<TwinsSection>((uint)RM2_Sections.Code).GetItem<TwinsSection>((uint)RM2_Code_Sections.Object);
+                    if (objectdata.ContainsItem(posList[0]))
+                        objectdata.GetItem<TwinsItem>(posList[0]).ID = crateList[target_item];
+                    posList.RemoveAt(0);
+                    crateList.RemoveAt(target_item);
                 }
+                posList.Clear();
+                crateList.Clear();
 
                 mainArchive.SaveFile(bdPath + "/Startup/Default.rm2");
             }
-            if (Twins_Randomize_AllCrates)
+            if (Options[RandomizeAllCrates].Enabled)
             {
                 //Importing ammo crate
                 TwinsFile cortexlevelArchive = new TwinsFile();
@@ -402,7 +371,7 @@ namespace CrateModLoader
                 mainArchive.SaveFile(bdPath + "/Startup/Default.rm2");
             }
 
-            if (Twins_Randomize_AllCrates)
+            if (Options[RandomizeAllCrates].Enabled)
             {
 
                 // Crates to insert
@@ -438,7 +407,7 @@ namespace CrateModLoader
                 Twins_Edit_AllLevels = true;
             }
 
-            if (Twins_Randomize_GemLocations)
+            if (Options[RandomizeGemLocations].Enabled)
             {
                 Twins_Data.Twins_Randomize_Gems(ref randState);
 
@@ -453,7 +422,7 @@ namespace CrateModLoader
                 Twins_Edit_AllLevels = true;
             }
 
-            if (Twins_Randomize_Music)
+            if (Options[RandomizeMusic].Enabled)
             {
                 List<uint> temp_musicList = new List<uint>();
 
@@ -510,7 +479,7 @@ namespace CrateModLoader
                 Twins_Edit_AllLevels = true;
             }
 
-            if (Twins_Mod_FlyingKick || Twins_Mod_StompKick || Twins_Mod_DoubleJump_Cortex || Twins_Mod_DoubleJump_Nina || Twins_Randomize_Enemies || Twins_Mod_TestMod)
+            if (Options[ModFlyingKick].Enabled || Options[ModStompKick].Enabled || Options[ModDoubleJumpCortex].Enabled || Options[ModDoubleJumpNina].Enabled || Options[RandomizeEnemies].Enabled)
             {
                 Twins_Edit_AllLevels = true;
 
@@ -525,13 +494,13 @@ namespace CrateModLoader
                 TwinsFile mainArchiveLoad = new TwinsFile();
                 mainArchiveLoad.LoadFile(bdPath + @"Startup\Default.rm2", TwinsFile.FileType.RM2);
 
-                RM_LoadScripts(ref mainArchiveLoad);
-                RM_LoadObjects(ref mainArchiveLoad);
+                RM_LoadScripts(mainArchiveLoad);
+                RM_LoadObjects(mainArchiveLoad);
 
                 Twins_Data.allScripts.Sort((x, y) => x.ID.CompareTo(y.ID));
                 Twins_Data.allObjects.Sort((x, y) => x.ID.CompareTo(y.ID));
 
-                if (Twins_Randomize_Enemies)
+                if (Options[RandomizeEnemies].Enabled)
                 {
                     EnemyReplaceList.Add(Twins_Data.ObjectID.GLOBAL_MONKEY);
                     EnemyReplaceList.Add(Twins_Data.ObjectID.GLOBAL_CHICKEN);
@@ -644,19 +613,15 @@ namespace CrateModLoader
 
             }
 
-            if (Twins_Mod_EnableUnusedEnemies)
+            if (Options[ModEnableUnusedEnemies].Enabled)
             {
                 Twins_Edit_AllLevels = true;
             }
-            if (Twins_Randomize_CharacterParams)
+            if (Options[RandomizeCharParams].Enabled)
             {
                 Twins_Data.Twins_Randomize_Character((int)Twins_Data.CharacterID.Crash, ref randState);
                 Twins_Data.Twins_Randomize_Character((int)Twins_Data.CharacterID.Cortex, ref randState);
                 Twins_Data.Twins_Randomize_Character((int)Twins_Data.CharacterID.Nina, ref randState);
-                Twins_Edit_AllLevels = true;
-            }
-            if (Twins_Mod_TestMod)
-            {
                 Twins_Edit_AllLevels = true;
             }
 
@@ -747,41 +712,38 @@ namespace CrateModLoader
             TwinsFile RM_Archive = new TwinsFile();
             RM_Archive.LoadFile(path, TwinsFile.FileType.RM2);
 
-            if (Twins_Randomize_AllCrates)
+            if (Options[RandomizeAllCrates].Enabled)
             {
-                RM_Randomize_Crates(ref RM_Archive, ref chunkType);
+                RM_Randomize_Crates(RM_Archive, chunkType);
             }
-            if (Twins_Randomize_GemLocations)
+            if (Options[RandomizeGemLocations].Enabled)
             {
-                RM_Randomize_Gems(ref RM_Archive, ref chunkType);
+                RM_Randomize_Gems(RM_Archive, chunkType);
             }
-            if (Twins_Randomize_Music)
+            if (Options[RandomizeMusic].Enabled)
             {
-                RM_Randomize_Music(ref RM_Archive);
+                RM_Randomize_Music(RM_Archive);
             }
-            if (Twins_Randomize_Enemies)
+            if (Options[RandomizeEnemies].Enabled)
             {
-                RM_Randomize_Enemies(ref RM_Archive);
+                RM_Randomize_Enemies(RM_Archive);
             }
-            if (Twins_Mod_StompKick)
+            if (Options[ModStompKick].Enabled)
             {
-                RM_CharacterObjectMod(ref RM_Archive);
+                RM_CharacterObjectMod(RM_Archive);
             }
-            if (Twins_Mod_FlyingKick || Twins_Mod_StompKick || Twins_Mod_DoubleJump_Cortex || Twins_Mod_DoubleJump_Nina || Twins_Randomize_CharacterParams)
+            if (Options[ModFlyingKick].Enabled || Options[ModStompKick].Enabled || Options[ModDoubleJumpNina].Enabled || Options[ModDoubleJumpCortex].Enabled || Options[RandomizeCharParams].Enabled)
             {
-                RM_CharacterMod(ref RM_Archive);
+                RM_CharacterMod(RM_Archive);
             }
-            if (Twins_Mod_EnableUnusedEnemies)
+            if (Options[ModEnableUnusedEnemies].Enabled)
             {
-                RM_EnableUnusedEnemies(ref RM_Archive);
-            }
-            if (Twins_Mod_TestMod)
-            {
-                RM_TestMod(ref RM_Archive);
+                RM_EnableUnusedEnemies(RM_Archive);
             }
 
             RM_Archive.SaveFile(path);
         }
+        
         void RM_LoadLevel(string path)
         {
             Twins_Data.ChunkType chunkType = Twins_Data.ChunkPathToType(path, System.IO.Path.Combine(Program.ModProgram.extractedPath, @"cml_extr\"));
@@ -800,10 +762,10 @@ namespace CrateModLoader
             TwinsFile RM_Archive = new TwinsFile();
             RM_Archive.LoadFile(path, TwinsFile.FileType.RM2);
 
-            RM_LoadScripts(ref RM_Archive);
-            RM_LoadObjects(ref RM_Archive);
+            RM_LoadScripts(RM_Archive);
+            RM_LoadObjects(RM_Archive);
 
-            if (Twins_Randomize_Enemies)
+            if (Options[RandomizeEnemies].Enabled)
             {
                 List<Twins_Data.ObjectID> ExportedObjects = new List<Twins_Data.ObjectID>();
                 if (chunkType == Twins_Data.ChunkType.Earth_Hub_Beach)
@@ -910,7 +872,7 @@ namespace CrateModLoader
             }
         }
 
-        public void EndModProcess()
+        protected override void EndModProcess()
         {
             CrateReplaceList.Clear();
             randCrateList.Clear();
@@ -944,15 +906,15 @@ namespace CrateModLoader
         }
 
 
-        void RM_Randomize_Crates(ref TwinsFile RM_Archive, ref Twins_Data.ChunkType chunkType)
+        void RM_Randomize_Crates(TwinsFile RM_Archive, Twins_Data.ChunkType chunkType)
         {
             randState = new Random((Program.ModProgram.randoSeed + (int)chunkType) % int.MaxValue);
-            int target_item = 0;
-            int target_life = 0;
-            List<uint> lifecrates = new List<uint>();
-            lifecrates.Add((uint)Twins_Data.ObjectID.EXTRALIFECRATE);
-            lifecrates.Add((uint)Twins_Data.ObjectID.EXTRALIFECRATECORTEX);
-            lifecrates.Add((uint)Twins_Data.ObjectID.EXTRALIFECRATENINA);
+            List<uint> lifecrates = new List<uint>
+            {
+                (uint)Twins_Data.ObjectID.EXTRALIFECRATE,
+                (uint)Twins_Data.ObjectID.EXTRALIFECRATECORTEX,
+                (uint)Twins_Data.ObjectID.EXTRALIFECRATENINA
+            };
             for (uint section_id = (uint)RM2_Sections.Instances1; section_id <= (uint)RM2_Sections.Instances8; section_id++)
             {
                 if (!RM_Archive.ContainsItem(section_id)) continue;
@@ -968,10 +930,10 @@ namespace CrateModLoader
                         {
                             if (instance.ObjectID == CrateReplaceList[d])
                             {
-                                target_item = randState.Next(0, randCrateList.Count);
+                                int target_item = randState.Next(0, randCrateList.Count);
                                 if (randCrateList[target_item] == (int)Twins_Data.ObjectID.EXTRALIFECRATE)
                                 {
-                                    target_life = randState.Next(0, lifecrates.Count);
+                                    int target_life = randState.Next(0, lifecrates.Count);
                                     target_item = (int)lifecrates[target_life];
                                 }
                                 else
@@ -1039,7 +1001,7 @@ namespace CrateModLoader
             }
         }
 
-        void RM_Randomize_Gems(ref TwinsFile RM_Archive, ref Twins_Data.ChunkType chunkType)
+        void RM_Randomize_Gems(TwinsFile RM_Archive, Twins_Data.ChunkType chunkType)
         {
             if (chunkType == Twins_Data.ChunkType.Invalid)
             {
@@ -1141,7 +1103,7 @@ namespace CrateModLoader
             }
         }
 
-        void RM_Randomize_Music(ref TwinsFile RM_Archive)
+        void RM_Randomize_Music(TwinsFile RM_Archive)
         {
             for (uint section_id = (uint)RM2_Sections.Instances1; section_id <= (uint)RM2_Sections.Instances8; section_id++)
             {
@@ -1174,9 +1136,8 @@ namespace CrateModLoader
             }
         }
 
-        void RM_LoadScripts(ref TwinsFile RM_Archive)
+        void RM_LoadScripts(TwinsFile RM_Archive)
         {
-            bool check = false;
             if (RM_Archive.ContainsItem((uint)RM2_Sections.Code))
             {
                 TwinsSection code_section = RM_Archive.GetItem<TwinsSection>((uint)RM2_Sections.Code);
@@ -1190,7 +1151,7 @@ namespace CrateModLoader
                             Script scr = (Script)script_section.Records[i];
                             if (Twins_Data.allScripts.Count > 0)
                             {
-                                check = false;
+                                bool check = false;
                                 for (int d = 0; d < Twins_Data.allScripts.Count; d++)
                                 {
                                     if (Twins_Data.allScripts[d].ID == scr.ID)
@@ -1212,9 +1173,9 @@ namespace CrateModLoader
                 }
             }
         }
-        void RM_LoadObjects(ref TwinsFile RM_Archive)
+        
+        void RM_LoadObjects(TwinsFile RM_Archive)
         {
-            bool check = false;
             if (RM_Archive.ContainsItem((uint)RM2_Sections.Code))
             {
                 TwinsSection code_section = RM_Archive.GetItem<TwinsSection>((uint)RM2_Sections.Code);
@@ -1231,7 +1192,7 @@ namespace CrateModLoader
                             scr.Name = scr.Name.Replace("act_", "");
                             if (Twins_Data.allObjects.Count > 0)
                             {
-                                check = false;
+                                bool check = false;
                                 for (int d = 0; d < Twins_Data.allObjects.Count; d++)
                                 {
                                     if (Twins_Data.allObjects[d].ID == scr.ID)
@@ -1254,7 +1215,7 @@ namespace CrateModLoader
             }
         }
 
-        void RM_CharacterObjectMod(ref TwinsFile RM_Archive)
+        void RM_CharacterObjectMod(TwinsFile RM_Archive)
         {
             if (RM_Archive.ContainsItem((uint)RM2_Sections.Code))
             {
@@ -1285,7 +1246,7 @@ namespace CrateModLoader
                                 //gameObj.Scripts[(int)Twins_Data.CharacterGameObjectScriptOrder.OnStrafeLeft] = (ushort)Twins_Data.ScriptID.HEAD_COM_GENERIC_CHARACTER_STRAFE_LEFT;
                                 //gameObj.Scripts[(int)Twins_Data.CharacterGameObjectScriptOrder.OnStrafeRight] = (ushort)Twins_Data.ScriptID.HEAD_COM_GENERIC_CHARACTER_STRAFE_RIGHT;
 
-                                if (Twins_Mod_StompKick)
+                                if (Options[ModStompKick].Enabled)
                                 {
                                     gameObj.Scripts[(int)Twins_Data.CharacterGameObjectScriptOrder.OnFlyingKick] = (ushort)Twins_Data.ScriptID.HEAD_COM_CRASH_STOMP_KICK;
                                     gameObj.Scripts[(int)Twins_Data.CharacterGameObjectScriptOrder.OnFlyingKickLand] = (ushort)Twins_Data.ScriptID.HEAD_COM_CRASH_STOMP_KICK_LAND;
@@ -1317,7 +1278,7 @@ namespace CrateModLoader
             }
         }
 
-        void RM_CharacterMod(ref TwinsFile RM_Archive)
+        void RM_CharacterMod(TwinsFile RM_Archive)
         {
             for (uint section_id = (uint)RM2_Sections.Instances1; section_id <= (uint)RM2_Sections.Instances8; section_id++)
             {
@@ -1334,7 +1295,7 @@ namespace CrateModLoader
                         {
                             // Crash mods
 
-                            if (Twins_Randomize_CharacterParams)
+                            if (Options[RandomizeCharParams].Enabled)
                             {
                                 instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.AirGravity] = Twins_Data.CharFloats_AirGravity[(int)Twins_Data.CharacterID.Crash];
                                 instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.BaseGravity] = Twins_Data.CharFloats_BaseGravity[(int)Twins_Data.CharacterID.Crash];
@@ -1394,7 +1355,7 @@ namespace CrateModLoader
                                 instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Unk55] = Twins_Data.CharFloats_Unk55[(int)Twins_Data.CharacterID.Crash];
                             }
 
-                            if (Twins_Mod_FlyingKick || Twins_Mod_StompKick)
+                            if (Options[ModFlyingKick].Enabled || Options[ModStompKick].Enabled)
                             {
                                 instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.FlyingKickHangTime] = 0.15f;
                                 instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.FlyingKickForwardSpeed] = 50;
@@ -1408,7 +1369,7 @@ namespace CrateModLoader
                         {
                             // Cortex mods
 
-                            if (Twins_Randomize_CharacterParams)
+                            if (Options[RandomizeCharParams].Enabled)
                             {
                                 instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.AirGravity] = Twins_Data.CharFloats_AirGravity[(int)Twins_Data.CharacterID.Cortex];
                                 instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.BaseGravity] = Twins_Data.CharFloats_BaseGravity[(int)Twins_Data.CharacterID.Cortex];
@@ -1468,7 +1429,7 @@ namespace CrateModLoader
                                 instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Unk55] = Twins_Data.CharFloats_Unk55[(int)Twins_Data.CharacterID.Cortex];
                             }
 
-                            if (Twins_Mod_DoubleJump_Cortex)
+                            if (Options[ModDoubleJumpCortex].Enabled)
                             {
                                 instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.DoubleJumpHeight] = 16;
                                 instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.DoubleJumpUnk22] = 64;
@@ -1482,7 +1443,7 @@ namespace CrateModLoader
                         {
                             // Nina mods
 
-                            if (Twins_Randomize_CharacterParams)
+                            if (Options[RandomizeCharParams].Enabled)
                             {
                                 instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.AirGravity] = Twins_Data.CharFloats_AirGravity[(int)Twins_Data.CharacterID.Nina];
                                 instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.BaseGravity] = Twins_Data.CharFloats_BaseGravity[(int)Twins_Data.CharacterID.Nina];
@@ -1542,7 +1503,7 @@ namespace CrateModLoader
                                 instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Unk55] = Twins_Data.CharFloats_Unk55[(int)Twins_Data.CharacterID.Nina];
                             }
 
-                            if (Twins_Mod_DoubleJump_Nina)
+                            if (Options[ModDoubleJumpNina].Enabled)
                             {
                                 instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.DoubleJumpHeight] = 16;
                                 instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.DoubleJumpUnk22] = 64;
@@ -1556,7 +1517,7 @@ namespace CrateModLoader
                         {
                             // Mechabandicoot mods
 
-                            if (Twins_Randomize_CharacterParams)
+                            if (Options[RandomizeCharParams].Enabled)
                             {
                                 instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.AirGravity] = Twins_Data.CharFloats_AirGravity[(int)Twins_Data.CharacterID.Mechabandicoot];
                                 instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.BaseGravity] = Twins_Data.CharFloats_BaseGravity[(int)Twins_Data.CharacterID.Mechabandicoot];
@@ -1624,7 +1585,7 @@ namespace CrateModLoader
             }
         }
 
-        void RM_EnableUnusedEnemies(ref TwinsFile RM_Archive)
+        void RM_EnableUnusedEnemies(TwinsFile RM_Archive)
         {
             for (uint section_id = (uint)RM2_Sections.Instances1; section_id <= (uint)RM2_Sections.Instances8; section_id++)
             {
@@ -1651,10 +1612,8 @@ namespace CrateModLoader
             }
         }
 
-        void RM_Randomize_Enemies(ref TwinsFile RM_Archive)
+        void RM_Randomize_Enemies(TwinsFile RM_Archive)
         {
-            int targetPos = 0;
-            Twins_Data.ObjectID targetObjectID;
             List<Twins_Data.ObjectID> importedObjects = new List<Twins_Data.ObjectID>();
             bool EnemyFound = false;
             for (uint section_id = (uint)RM2_Sections.Instances1; section_id <= (uint)RM2_Sections.Instances8; section_id++)
@@ -1677,8 +1636,8 @@ namespace CrateModLoader
                         }
                         if (EnemyFound)
                         {
-                            targetPos = randState.Next(0, EnemyInsertList.Count);
-                            targetObjectID = EnemyInsertList[targetPos];
+                            int targetPos = randState.Next(0, EnemyInsertList.Count);
+                            Twins_Data.ObjectID targetObjectID = EnemyInsertList[targetPos];
                             Twins_Data.ImportGameObject(ref RM_Archive, targetObjectID, ref importedObjects);
                             InstanceTemplate template = Twins_Data.GetInstanceTemplateByObjectID(targetObjectID);
                             if (template.ObjectID == 0 && instance.SomeNum1 == 0)
@@ -1739,11 +1698,5 @@ namespace CrateModLoader
                 }
             }
         }
-
-        void RM_TestMod(ref TwinsFile RM_Archive)
-        {
-            
-        }
-
     }
 }
