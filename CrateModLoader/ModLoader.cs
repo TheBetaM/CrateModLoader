@@ -129,7 +129,7 @@ namespace CrateModLoader
                 args += "/DEST " + outputISOpath + " ";
                 args += "/FILESYSTEM \"ISO9660 + UDF\" ";
                 args += "/UDFREVISION \"1.02\" ";
-                args += "/VOLUMELABEL \"" + ProductCode + "\" ";
+                args += "/VOLUMELABEL \"" + ISO_label + "\" ";
                 args += "/OVERWRITE YES ";
                 args += "/START ";
                 args += "/CLOSE ";
