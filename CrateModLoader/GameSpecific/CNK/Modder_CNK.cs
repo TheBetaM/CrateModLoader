@@ -29,7 +29,7 @@ namespace CrateModLoader
         internal const int RandomizeCupPoints             = 14;
         internal const int RandomizeMusic                 = 15;
         internal const int NoMask                         = 16;
-        internal const int NoAlchemyEarrape               = 17;
+        internal const int NoAlchemyIntro                 = 17;
 
         public Modder_CNK()
         {
@@ -93,7 +93,7 @@ namespace CrateModLoader
             Options.Add(DisableFadeout, new ModOption("Disable Fadeout Overlay"));
             Options.Add(DisablePopups, new ModOption("Disable Unlock Popups"));
             Options.Add(SpeedUpMaskHints, new ModOption("Speed Up Mask Hints"));
-            Options.Add(NoAlchemyEarrape, new ModOption("Remove Earrape Alchemy Intro", true));
+            Options.Add(NoAlchemyIntro, new ModOption("Remove Alchemy Intro", true));
         }
 
         internal string path_gob_extracted = "";
@@ -108,13 +108,11 @@ namespace CrateModLoader
 
         public override void StartModProcess()
         {
-            // Fixes names for PS2, and moves the archive for convenience
-            //File.Move(Program.ModProgram.extractedPath + "/ASSETS.GFC;1", AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GFC");
-            //File.Move(Program.ModProgram.extractedPath + "/ASSETS.GOB;1", AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GOB");
+
             if (Program.ModProgram.isoType == ConsoleMode.GCN)
             {
-                File.Move(Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.PS2_game_code_name.Substring(0, 4) + "/files/assets.gfc", AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GFC");
-                File.Move(Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.PS2_game_code_name.Substring(0, 4) + "/files/assets.gob", AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GOB");
+                File.Move(Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/assets.gfc", AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GFC");
+                File.Move(Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/assets.gob", AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GOB");
             }
             else
             {
@@ -167,12 +165,12 @@ namespace CrateModLoader
             //bool Editing_CSV_AI_WeaponSelection = false;
             bool Editing_CSV_Credits = true;
 
-            if (Options[NoAlchemyEarrape].Enabled)
+            if (Options[NoAlchemyIntro].Enabled)
             {
                 if (Program.ModProgram.isoType == ConsoleMode.PS2)
                     File.Delete(Program.ModProgram.extractedPath + "/VIDEO/INTRO/ALCHEMY.SFD;1");
                 else
-                    File.Delete(Program.ModProgram.extractedPath + "/VIDEO/INTRO/ALCHEMY.SFD");
+                    File.Delete(Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/video/intro/alchemy.sfd");
             }
             if (Options[RandomizeCharacters].Enabled)
             {
@@ -1460,14 +1458,11 @@ namespace CrateModLoader
             GobExtract.Start();
             GobExtract.WaitForExit();
 
-            // Fixes names for PS2, and moves the archive for convenience
-            //File.Move(AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GFC", Program.ModProgram.extractedPath + "/ASSETS.GFC;1");
-            //File.Move(AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GOB", Program.ModProgram.extractedPath + "/ASSETS.GOB;1");
 
             if (Program.ModProgram.isoType == ConsoleMode.GCN)
             {
-                File.Move(AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GFC", Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.PS2_game_code_name.Substring(0, 4) + "/files/assets.gfc");
-                File.Move(AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GOB", Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.PS2_game_code_name.Substring(0, 4) + "/files/assets.gob");
+                File.Move(AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GFC", Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/assets.gfc");
+                File.Move(AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GOB", Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/assets.gob");
             }
             else
             {

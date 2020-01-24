@@ -80,7 +80,7 @@ namespace CrateModLoader
         public RegionType targetRegion = RegionType.Undefined;
         public string extractedPath = "";
         public string PS2_executable_name = "";
-        public string PS2_game_code_name = "";
+        public string ProductCode = "";
         public bool loadedISO = false;
         public bool outputPathSet = false;
         public bool keepTempFiles = false;
@@ -129,7 +129,7 @@ namespace CrateModLoader
                 args += "/DEST " + outputISOpath + " ";
                 args += "/FILESYSTEM \"ISO9660 + UDF\" ";
                 args += "/UDFREVISION \"1.02\" ";
-                args += "/VOLUMELABEL \"" + PS2_game_code_name + "\" ";
+                args += "/VOLUMELABEL \"" + ProductCode + "\" ";
                 args += "/OVERWRITE YES ";
                 args += "/START ";
                 args += "/CLOSE ";
@@ -225,10 +225,10 @@ namespace CrateModLoader
             {
                 // Use GCIT (Wiims ISO Tool doesn't work for this?)
 
-                Directory.Move(extractedPath + @"\P-" + Program.ModProgram.PS2_game_code_name.Substring(0, 4) + @"\files\", extractedPath + @"\P-" + Program.ModProgram.PS2_game_code_name.Substring(0, 4) + @"\root\");
+                Directory.Move(extractedPath + @"\P-" + Program.ModProgram.ProductCode.Substring(0, 4) + @"\files\", extractedPath + @"\P-" + Program.ModProgram.ProductCode.Substring(0, 4) + @"\root\");
 
                 string args = "";
-                args += extractedPath + @"\P-" + Program.ModProgram.PS2_game_code_name.Substring(0, 4) + " -q -d ";
+                args += extractedPath + @"\P-" + Program.ModProgram.ProductCode.Substring(0, 4) + " -q -d ";
                 args += "\"" + outputISOpath + "\" ";
 
                 ISOcreatorProcess = new Process();
@@ -652,18 +652,18 @@ namespace CrateModLoader
                         SetGameType(titleID, ConsoleMode.GCN);
                         if (Modder != null)
                         {
-                            foreach (var rc in Modder.Game.RegionID_GCN)
-                                if (rc.Region == targetRegion)
-                                    PS2_game_code_name = rc.CodeName;
+                            //foreach (var rc in Modder.Game.RegionID_GCN)
+                                //if (rc.Region == targetRegion)
+                                    ProductCode = titleID;
                         }
                         else
                         {
                             SetGameType(titleID, ConsoleMode.WII);
                             if (Modder != null)
                             {
-                                foreach (var rc in Modder.Game.RegionID_WII)
-                                    if (rc.Region == targetRegion)
-                                        PS2_game_code_name = rc.CodeName;
+                                //foreach (var rc in Modder.Game.RegionID_WII)
+                                //if (rc.Region == targetRegion)
+                                ProductCode = titleID;
                             }
                         }
                     }
@@ -709,7 +709,7 @@ namespace CrateModLoader
                                 {
                                     foreach (var rc in Modder.Game.RegionID_PS2)
                                         if (rc.Region == targetRegion)
-                                            PS2_game_code_name = rc.CodeName;
+                                            ProductCode = rc.CodeName;
                                 }
                                 else
                                 {
@@ -718,7 +718,7 @@ namespace CrateModLoader
                                     {
                                         foreach (var rc in Modder.Game.RegionID_PS1)
                                             if (rc.Region == targetRegion)
-                                                PS2_game_code_name = rc.CodeName;
+                                                ProductCode = rc.CodeName;
                                     }
                                 }
                             }
@@ -732,9 +732,9 @@ namespace CrateModLoader
                                 SetGameType(titleID, ConsoleMode.PSP);
                                 if (Modder != null)
                                 {
-                                    foreach (var rc in Modder.Game.RegionID_PSP)
-                                        if (rc.Region == targetRegion)
-                                            PS2_game_code_name = rc.CodeName;
+                                    //foreach (var rc in Modder.Game.RegionID_PSP)
+                                    //if (rc.Region == targetRegion)
+                                    ProductCode = titleID;
                                 }
                             }
                         }

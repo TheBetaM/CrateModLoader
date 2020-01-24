@@ -330,9 +330,8 @@ namespace CrateModLoader
             basePath = AppDomain.CurrentDomain.BaseDirectory + @"temp\";
             if (Program.ModProgram.isoType == ConsoleMode.GCN)
             {
-                basePath = AppDomain.CurrentDomain.BaseDirectory + @"temp\P-" + Program.ModProgram.PS2_game_code_name.Substring(0, 4) + @"\";
+                basePath = AppDomain.CurrentDomain.BaseDirectory + @"temp\P-" + Program.ModProgram.ProductCode.Substring(0, 4) + @"\";
             }
-
 
             randState = new Random(Program.ModProgram.randoSeed);
 
