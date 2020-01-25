@@ -12,7 +12,7 @@ namespace CrateModLoader
         {
             Game = new Game()
             {
-                Name = "Crash Mind Over Mutant",
+                Name = "Crash of the Titans",
                 Consoles = new List<ConsoleMode>
                 {
                     ConsoleMode.PS2,
@@ -26,36 +26,38 @@ namespace CrateModLoader
                 ModCratesSupported = true,
                 RegionID_PS2 = new RegionCode[] {
                     new RegionCode() {
-                    Name = @"BOOT2 = cdrom0:\SLUS_217.28;1",
+                    Name = @"BOOT2 = cdrom0:\SLUS_215.83;1",
                     Region = RegionType.NTSC_U,
-                    ExecName = "SLUS_217.28",
-                    CodeName = "SLUS_21728", },
+                    ExecName = "SLUS_215.83",
+                    CodeName = "SLUS_21583", },
                     new RegionCode() {
-                    Name = @"BOOT2 = cdrom0:\SLES_552.04;1",
+                    Name = @"BOOT2 = cdrom0:\SLES_548.41;1",
                     Region = RegionType.PAL,
-                    ExecName = "SLES_552.04",
-                    CodeName = "SLES_55204", },
+                    ExecName = "SLES_548.41",
+                    CodeName = "SLES_54841", },
                 },
                 RegionID_PSP = new RegionCode[] {
                     new RegionCode() {
-                    Name = "ULUS-10377",
+                    Name = "ULUS-10304",
                     Region = RegionType.NTSC_U },
                     new RegionCode() {
-                    Name = "ULES-01171",
+                    Name = "ULES-00917",
                     Region = RegionType.PAL },
                 },
                 RegionID_WII = new RegionCode[] {
                     new RegionCode() {
-                    Name = "RC8E7D",
+                    Name = "RQJE7D",
                     Region = RegionType.NTSC_U },
                     new RegionCode() {
-                    Name = "RC8P7D",
+                    Name = "RQJP7D",
                     Region = RegionType.PAL },
                     new RegionCode() {
-                    Name = "RC8X7D",
+                    Name = "RQJX7D",
                     Region = RegionType.PAL },
                 }
             };
+
+            Options.Add(0, new ModOption("No Options Available"));
         }
 
         private string basePath = "";

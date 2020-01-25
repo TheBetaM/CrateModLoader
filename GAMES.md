@@ -26,19 +26,19 @@ API by DCxDemo. (https://github.com/DCxDemo/CTR-tools)
   
 ## Crash Nitro Kart
 Supported: All PS2 versions (.ISO format), All GC versions (.ISO format)  
-API by BetaM, ManDude and eezstreet.  
+Tools/API by BetaM, ManDude and eezstreet.  
 ### Features:  
 - Randomize Adventure Hub Warp Pads & Cups
 - Randomize Adventure Requirements & Rewards
 - Randomize Character Stats
 - Randomize Kart Stats
-- Randomize Surface Parameters
-- Randomize Powerup Distribution
 - Randomize Powerup Effects
-- Randomize Character Models
+- Randomize Drivers  
+- Randomize Karts  
 - Disable Fadeout Overlay
 - Disable Unlock Popups
-- Speed Up Mask Hints
+- Speed Up Mask Hints  
+- Remove Intro Videos  
 - Version, seed and settings visible in the Credits screen
   
 ## Crash Twinsanity

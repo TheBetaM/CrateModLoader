@@ -65,9 +65,12 @@ namespace CrateModLoader
             get
             {
                 string str = string.Empty;
-                foreach (ModOption option in list_modOptions.Items)
+                if (list_modOptions != null && list_modOptions.Items.Count > 0)
                 {
-                    str += Convert.ToInt32(option.Enabled).ToString();
+                    foreach (ModOption option in list_modOptions.Items)
+                    {
+                        str += Convert.ToInt32(option.Enabled).ToString();
+                    }
                 }
                 return str;
             }
@@ -197,7 +200,7 @@ namespace CrateModLoader
                 // Use PSPTools?
                 //UMD.ISO IsoFile = new UMD.ISO();
                 //IsoFile.CreateISO(extractedPath, outputISOpath, true);
-
+                
                 CDBuilder isoBuild = new CDBuilder();
                 isoBuild.UseJoliet = true;
                 isoBuild.VolumeIdentifier = ISO_label;

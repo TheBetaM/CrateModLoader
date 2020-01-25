@@ -57,6 +57,8 @@ namespace CrateModLoader
                     Region = RegionType.PAL },
                 }
             };
+
+            Options.Add(0, new ModOption("No Options Available"));
         }
 
         internal string basePath = "";
@@ -70,6 +72,11 @@ namespace CrateModLoader
             {
                 path_RCF_frontend = "default.rcf";
                 basePath = AppDomain.CurrentDomain.BaseDirectory + @"temp\DATA\files\";
+            }
+            else if (Program.ModProgram.isoType == ConsoleMode.PSP)
+            {
+                path_RCF_frontend = "default.rcf";
+                basePath = AppDomain.CurrentDomain.BaseDirectory + @"temp\PSP_GAME\USRDIR\";
             }
 
             //Fixes names for PS2

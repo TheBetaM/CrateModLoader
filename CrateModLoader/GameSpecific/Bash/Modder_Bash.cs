@@ -35,6 +35,8 @@ namespace CrateModLoader
                     CodeName = "SCPS_10140", },
                 },
             };
+
+            Options.Add(0, new ModOption("No Options Available"));
         }
 
         public override void StartModProcess()

@@ -77,25 +77,24 @@ namespace CrateModLoader
                 }
             };
 
-            Options.Add(RandomizeHubPads, new ModOption("Randomize Adventure Hub Warp Pads & Cups"));
-            Options.Add(RandomizeAdventureRequirements, new ModOption("Randomize Adventure Requirements & Rewards"));
-            Options.Add(RandomizeCharacterStats, new ModOption("Randomize Character Stats"));
-            Options.Add(RandomizeKartStats, new ModOption("Randomize Kart Stats"));
-            Options.Add(RandomizeAIKartStats, new ModOption("Randomize AI Kart Stats"));
+            Options.Add(RandomizeHubPads, new ModOption("Randomize Adventure Warp Pads & Cups"));
+            Options.Add(RandomizeAdventureRequirements, new ModOption("Randomize Adventure Requirements & Rewards")); // TODO
+            Options.Add(RandomizeCharacterStats, new ModOption("Randomize Character Stats")); // TODO
+            Options.Add(RandomizeKartStats, new ModOption("Randomize Kart Stats")); // TODO
             //Options.Add(RandomizeWumpaCrate, new ModOption()); //TODO dda
             //Options.Add(RandomizeObstacles, new ModOption()); //TODO obstacles
             //Options.Add(RandomizeCupPoints, new ModOption()); // Maybe? gameprogression
-            Options.Add(RandomizeSurfaceParameters, new ModOption("Randomize Surface Parameters"));
-            Options.Add(RandomizeWeaponPools, new ModOption("Randomize Powerup Distribution"));
-            Options.Add(RandomizeWeapons, new ModOption("Randomize Powerup Effects"));
+            //Options.Add(RandomizeSurfaceParameters, new ModOption("Randomize Surface Parameters")); // TODO: later version
+            //Options.Add(RandomizeWeaponPools, new ModOption("Randomize Powerup Distribution")); // TODO: later version
+            Options.Add(RandomizeWeapons, new ModOption("Randomize Powerup Effects")); // TODO
             Options.Add(RandomizeCharacters, new ModOption("Randomize Drivers")); //TODO: later version: icon replacement, name replacement, main menu model replacement, adventure character select model
             Options.Add(RandomizeKarts, new ModOption("Randomize Karts"));
             //Options.Add(RandomizeMusic, new ModOption()); //TODO music.csv
             //Options.Add(NoMask, new ModOption()); //TODO, hinthistory.csv
-            Options.Add(DisableFadeout, new ModOption("Disable Fadeout Overlay"));
+            Options.Add(DisableFadeout, new ModOption("Disable Fadeout/Flash Overlay"));
             Options.Add(DisablePopups, new ModOption("Disable Unlock Popups"));
             Options.Add(SpeedUpMaskHints, new ModOption("Speed Up Mask Hints"));
-            Options.Add(NoAlchemyIntro, new ModOption("Remove Alchemy Intro", true));
+            Options.Add(NoAlchemyIntro, new ModOption("Remove Intro Videos", true));
         }
 
         internal string path_gob_extracted = "";
@@ -172,16 +171,68 @@ namespace CrateModLoader
                 if (Program.ModProgram.isoType == ConsoleMode.PS2)
                 {
                     if (File.Exists(Program.ModProgram.extractedPath + "/VIDEO/INTRO/ALCHEMY.SFD;1"))
-                    {
                         File.Delete(Program.ModProgram.extractedPath + "/VIDEO/INTRO/ALCHEMY.SFD;1");
-                    }
+                    if (File.Exists(Program.ModProgram.extractedPath + "/VIDEO/INTRO/FCO.SFD;1"))
+                        File.Delete(Program.ModProgram.extractedPath + "/VIDEO/INTRO/FCO.SFD;1");
+                    if (File.Exists(Program.ModProgram.extractedPath + "/VIDEO/INTRO/FCODUT.SFD;1"))
+                        File.Delete(Program.ModProgram.extractedPath + "/VIDEO/INTRO/FCODUT.SFD;1");
+                    if (File.Exists(Program.ModProgram.extractedPath + "/VIDEO/INTRO/FCOENG.SFD;1"))
+                        File.Delete(Program.ModProgram.extractedPath + "/VIDEO/INTRO/FCOENG.SFD;1");
+                    if (File.Exists(Program.ModProgram.extractedPath + "/VIDEO/INTRO/FCOFRE.SFD;1"))
+                        File.Delete(Program.ModProgram.extractedPath + "/VIDEO/INTRO/FCOFRE.SFD;1");
+                    if (File.Exists(Program.ModProgram.extractedPath + "/VIDEO/INTRO/FCOGER.SFD;1"))
+                        File.Delete(Program.ModProgram.extractedPath + "/VIDEO/INTRO/FCOGER.SFD;1");
+                    if (File.Exists(Program.ModProgram.extractedPath + "/VIDEO/INTRO/FCOITA.SFD;1"))
+                        File.Delete(Program.ModProgram.extractedPath + "/VIDEO/INTRO/FCOITA.SFD;1");
+                    if (File.Exists(Program.ModProgram.extractedPath + "/VIDEO/INTRO/FCOSPA.SFD;1"))
+                        File.Delete(Program.ModProgram.extractedPath + "/VIDEO/INTRO/FCOSPA.SFD;1");
+                    if (File.Exists(Program.ModProgram.extractedPath + "/VIDEO/INTRO/SCO.SFD;1"))
+                        File.Delete(Program.ModProgram.extractedPath + "/VIDEO/INTRO/SCO.SFD;1");
+                    if (File.Exists(Program.ModProgram.extractedPath + "/VIDEO/INTRO/SCODUT.SFD;1"))
+                        File.Delete(Program.ModProgram.extractedPath + "/VIDEO/INTRO/SCODUT.SFD;1");
+                    if (File.Exists(Program.ModProgram.extractedPath + "/VIDEO/INTRO/SCOENG.SFD;1"))
+                        File.Delete(Program.ModProgram.extractedPath + "/VIDEO/INTRO/SCOENG.SFD;1");
+                    if (File.Exists(Program.ModProgram.extractedPath + "/VIDEO/INTRO/SCOFRE.SFD;1"))
+                        File.Delete(Program.ModProgram.extractedPath + "/VIDEO/INTRO/SCOFRE.SFD;1");
+                    if (File.Exists(Program.ModProgram.extractedPath + "/VIDEO/INTRO/SCOGER.SFD;1"))
+                        File.Delete(Program.ModProgram.extractedPath + "/VIDEO/INTRO/SCOGER.SFD;1");
+                    if (File.Exists(Program.ModProgram.extractedPath + "/VIDEO/INTRO/SCOITA.SFD;1"))
+                        File.Delete(Program.ModProgram.extractedPath + "/VIDEO/INTRO/SCOITA.SFD;1");
+                    if (File.Exists(Program.ModProgram.extractedPath + "/VIDEO/INTRO/SCOSPA.SFD;1"))
+                        File.Delete(Program.ModProgram.extractedPath + "/VIDEO/INTRO/SCOSPA.SFD;1");
                 }
                 else if (Program.ModProgram.isoType == ConsoleMode.GCN)
                 {
                     if (File.Exists(Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/video/intro/alchemy.sfd"))
-                    {
                         File.Delete(Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/video/intro/alchemy.sfd");
-                    }
+                    if (File.Exists(Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/video/intro/fco.sfd"))
+                        File.Delete(Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/video/intro/fco.sfd");
+                    if (File.Exists(Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/video/intro/fcodut.sfd"))
+                        File.Delete(Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/video/intro/fcodut.sfd");
+                    if (File.Exists(Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/video/intro/fcoeng.sfd"))
+                        File.Delete(Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/video/intro/fcoeng.sfd");
+                    if (File.Exists(Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/video/intro/fcofre.sfd"))
+                        File.Delete(Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/video/intro/fcofre.sfd");
+                    if (File.Exists(Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/video/intro/fcoger.sfd"))
+                        File.Delete(Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/video/intro/fcoger.sfd");
+                    if (File.Exists(Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/video/intro/fcoita.sfd"))
+                        File.Delete(Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/video/intro/fcoita.sfd");
+                    if (File.Exists(Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/video/intro/fcospa.sfd"))
+                        File.Delete(Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/video/intro/fcospa.sfd");
+                    if (File.Exists(Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/video/intro/sco.sfd"))
+                        File.Delete(Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/video/intro/sco.sfd");
+                    if (File.Exists(Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/video/intro/scodut.sfd"))
+                        File.Delete(Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/video/intro/scodut.sfd");
+                    if (File.Exists(Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/video/intro/scoeng.sfd"))
+                        File.Delete(Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/video/intro/scoeng.sfd");
+                    if (File.Exists(Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/video/intro/scofre.sfd"))
+                        File.Delete(Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/video/intro/scofre.sfd");
+                    if (File.Exists(Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/video/intro/scoger.sfd"))
+                        File.Delete(Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/video/intro/scoger.sfd");
+                    if (File.Exists(Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/video/intro/scoita.sfd"))
+                        File.Delete(Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/video/intro/scoita.sfd");
+                    if (File.Exists(Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/video/intro/scospa.sfd"))
+                        File.Delete(Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/video/intro/scospa.sfd");
                 }
                 else
                 {
@@ -221,11 +272,13 @@ namespace CrateModLoader
                     CNK_Data.CNK_Randomize_CharacterStats(randState, i);
                 }
             }
+            /*
             if (Options[RandomizeSurfaceParameters].Enabled)
             {
                 Editing_CSV_SurfaceParams = true;
                 CNK_Data.CNK_Randomize_SufParams(randState);
             }
+            */
             if (Options[RandomizeWeapons].Enabled)
             {
                 Editing_CSV_PowerShield = true;
@@ -249,11 +302,13 @@ namespace CrateModLoader
                 CNK_Data.CNK_Randomize_TurboBoost(randState);
                 CNK_Data.CNK_Randomize_StaticShock(randState);
             }
+            /*
             if (Options[RandomizeWeaponPools].Enabled)
             {
                 Editing_CSV_PlayerWeaponSelection = true;
                 Editing_CSV_PlayerWeaponSelection_Boss = true;
             }
+            */
             if (Options[DisablePopups].Enabled)
             {
                 Editing_CSV_Unlockables = true;
@@ -517,7 +572,7 @@ namespace CrateModLoader
                 
             }
 
-            if (Options[RandomizeAIKartStats].Enabled)
+            if (Options[RandomizeKartStats].Enabled)
             {
                 Editing_CSV_AI_KartPhysicsBase = true;
                 CNK_Data.CNK_Randomize_KartStats(randState);
