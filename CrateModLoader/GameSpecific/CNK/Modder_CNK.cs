@@ -21,15 +21,16 @@ namespace CrateModLoader
         internal const int RandomizeWeaponPools           = 6;
         internal const int RandomizeWeapons               = 7;
         internal const int RandomizeCharacters            = 8;
-        internal const int DisableFadeout                 = 9;
-        internal const int DisablePopups                  = 10;
-        internal const int SpeedUpMaskHints               = 11;
-        internal const int RandomizeWumpaCrate            = 12;
-        internal const int RandomizeObstacles             = 13;
-        internal const int RandomizeCupPoints             = 14;
-        internal const int RandomizeMusic                 = 15;
-        internal const int NoMask                         = 16;
-        internal const int NoAlchemyIntro                 = 17;
+        internal const int RandomizeKarts                 = 9;
+        internal const int DisableFadeout                 = 10;
+        internal const int DisablePopups                  = 11;
+        internal const int SpeedUpMaskHints               = 12;
+        internal const int RandomizeWumpaCrate            = 13;
+        internal const int RandomizeObstacles             = 14;
+        internal const int RandomizeCupPoints             = 15;
+        internal const int RandomizeMusic                 = 16;
+        internal const int NoMask                         = 17;
+        internal const int NoAlchemyIntro                 = 18;
 
         public Modder_CNK()
         {
@@ -87,7 +88,8 @@ namespace CrateModLoader
             Options.Add(RandomizeSurfaceParameters, new ModOption("Randomize Surface Parameters"));
             Options.Add(RandomizeWeaponPools, new ModOption("Randomize Powerup Distribution"));
             Options.Add(RandomizeWeapons, new ModOption("Randomize Powerup Effects"));
-            Options.Add(RandomizeCharacters, new ModOption("Randomize Character Models")); //TODO: voices.csv, later version: icon replacement, name replacement, main menu model replacement, adventure character select model
+            Options.Add(RandomizeCharacters, new ModOption("Randomize Drivers")); //TODO: later version: icon replacement, name replacement, main menu model replacement, adventure character select model
+            Options.Add(RandomizeKarts, new ModOption("Randomize Karts"));
             //Options.Add(RandomizeMusic, new ModOption()); //TODO music.csv
             //Options.Add(NoMask, new ModOption()); //TODO, hinthistory.csv
             Options.Add(DisableFadeout, new ModOption("Disable Fadeout Overlay"));
@@ -168,13 +170,31 @@ namespace CrateModLoader
             if (Options[NoAlchemyIntro].Enabled)
             {
                 if (Program.ModProgram.isoType == ConsoleMode.PS2)
-                    File.Delete(Program.ModProgram.extractedPath + "/VIDEO/INTRO/ALCHEMY.SFD;1");
+                {
+                    if (File.Exists(Program.ModProgram.extractedPath + "/VIDEO/INTRO/ALCHEMY.SFD;1"))
+                    {
+                        File.Delete(Program.ModProgram.extractedPath + "/VIDEO/INTRO/ALCHEMY.SFD;1");
+                    }
+                }
+                else if (Program.ModProgram.isoType == ConsoleMode.GCN)
+                {
+                    if (File.Exists(Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/video/intro/alchemy.sfd"))
+                    {
+                        File.Delete(Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/video/intro/alchemy.sfd");
+                    }
+                }
                 else
-                    File.Delete(Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/video/intro/alchemy.sfd");
+                {
+                    //Xbox
+                }
             }
             if (Options[RandomizeCharacters].Enabled)
             {
                 Mod_Randomize_Characters(randState);
+            }
+            if (Options[RandomizeKarts].Enabled)
+            {
+                Mod_Randomize_Karts(randState);
             }
             if (Options[RandomizeAdventureRequirements].Enabled)
             {
@@ -1446,6 +1466,84 @@ namespace CrateModLoader
             {
                 File.Move(modelpath + "Driver" + charList_rand[i] + ".igb", modelpath + CNK_Data.DriverModelTypes[i] + ".igb");
             }
+
+            //Replace voices (todo: some drivers have voiceline IDs that others don't)
+            string[] csv_voices = File.ReadAllLines(path_gob_extracted + "common/audio/voices.csv");
+
+            List<string> csv_Voices_LineList = new List<string>();
+            for (int i = 0; i < csv_voices.Length; i++)
+            {
+                csv_Voices_LineList.Add(csv_voices[i]);
+            }
+
+            string cur_line = "";
+            int targetChar = 0;
+            for (int i = 2; i < csv_Voices_LineList.Count; i++)
+            {
+                cur_line = csv_Voices_LineList[i];
+                if (cur_line.Length > 2)
+                {
+                    for (int a = 0; a < charList_rand.Count; a++)
+                    {
+                        if (cur_line.Substring(0, 3) == CNK_Data.DriverAudioTypes[a])
+                        {
+                            targetChar = charList_rand[a];
+                            cur_line = cur_line.Substring(0, 7) + CNK_Data.DriverAudioTypes[targetChar].Substring(0,1) + "/" + CNK_Data.DriverAudioTypes[targetChar] + cur_line.Substring(12);
+                        }
+                    }
+                }
+                csv_Voices_LineList[i] = cur_line;
+            }
+
+            csv_voices = new string[csv_Voices_LineList.Count];
+            for (int i = 0; i < csv_Voices_LineList.Count; i++)
+            {
+                csv_voices[i] = csv_Voices_LineList[i];
+            }
+
+            File.WriteAllLines(path_gob_extracted + "common/audio/voices.csv", csv_voices);
+        }
+
+        void Mod_Randomize_Karts(Random randState)
+        {
+            //Replace model files
+            string modelpath = path_gob_extracted;
+            if (Program.ModProgram.isoType == ConsoleMode.PS2)
+            {
+                modelpath += "/ps2/gfx/karts/";
+            }
+            else if (Program.ModProgram.isoType == ConsoleMode.XBOX)
+            {
+                modelpath += "/xbox/gfx/karts/";
+            }
+            else
+            {
+                modelpath += "/gcn/gfx/karts/";
+            }
+
+            List<int> kartList = new List<int>();
+            List<int> kartList_rand = new List<int>();
+            string[] KartTypes = new string[] { "crash", "ncortex", "noxide", "ntrance", "boss_krunk", "boss_nash", "boss_norm_b", "boss_norm_l", "boss_geary", "boss_velo" , "boss" };
+
+            //Boss karts crash the game
+            for (int i = 0; i < 4; i++)
+            {
+                kartList.Add(i);
+                File.Move(modelpath + KartTypes[i] + ".igb", modelpath + "Kart" + i + ".igb");
+            }
+
+            for (int i = 0; i < 4; i++)
+            {
+                int target_id = randState.Next(0, kartList.Count);
+                kartList_rand.Add(kartList[target_id]);
+                kartList.RemoveAt(target_id);
+            }
+
+            for (int i = 0; i < 4; i++)
+            {
+                File.Move(modelpath + "Kart" + kartList_rand[i] + ".igb", modelpath + KartTypes[i] + ".igb");
+            }
+
         }
 
         protected override void EndModProcess()
