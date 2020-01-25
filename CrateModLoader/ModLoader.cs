@@ -197,32 +197,24 @@ namespace CrateModLoader
             }
             else if (isoType == ConsoleMode.PSP)
             {
-                // Use PSPTools?
-                //UMD.ISO IsoFile = new UMD.ISO();
-                //IsoFile.CreateISO(extractedPath, outputISOpath, true);
-                
-                CDBuilder isoBuild = new CDBuilder();
-                isoBuild.UseJoliet = true;
-                isoBuild.VolumeIdentifier = ISO_label;
+                // Use WQSG_UMD
+                File.Copy(inputISOpath, AppDomain.CurrentDomain.BaseDirectory + "/Tools/Game.iso");
 
-                DirectoryInfo di = new DirectoryInfo(extractedPath);
-                HashSet<FileStream> files = new HashSet<FileStream>();
+                string args = "";
+                args += @"--iso=";
+                args += AppDomain.CurrentDomain.BaseDirectory + "/Tools/Game.iso";
+                args += @" --file=";
+                args += extractedPath + "PSP_GAME";
+                //args += " --log";
 
-                foreach (DirectoryInfo dir in di.GetDirectories())
-                {
-                    Recursive_AddDirs(isoBuild, dir, dir.Name + @"\", files);
-                }
-                foreach (FileInfo file in di.GetFiles())
-                {
-                    AddFile(isoBuild, file, string.Empty, files);
-                }
+                ISOcreatorProcess = new Process();
+                ISOcreatorProcess.StartInfo.FileName = AppDomain.CurrentDomain.BaseDirectory + "/Tools/WQSG_UMD.exe";
+                ISOcreatorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                ISOcreatorProcess.StartInfo.Arguments = args;
+                ISOcreatorProcess.Start();
+                ISOcreatorProcess.WaitForExit();
 
-                isoBuild.Build(outputISOpath);
-
-                foreach (FileStream file in files)
-                {
-                    file.Close();
-                }
+                File.Move(AppDomain.CurrentDomain.BaseDirectory + "/Tools/Game.iso", outputISOpath);
             }
             else if (isoType == ConsoleMode.GCN)
             {

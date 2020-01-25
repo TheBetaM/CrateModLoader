@@ -410,6 +410,9 @@
     <Content Include="Tools\wit\wit.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Tools\WQSG_UMD.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Resources\icon_titans.png" />
     <None Include="Resources\icon_cnk.png" />
     <None Include="Resources\icon_twins.png" />

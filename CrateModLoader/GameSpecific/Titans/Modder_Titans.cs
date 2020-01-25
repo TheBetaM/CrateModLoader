@@ -72,6 +72,11 @@ namespace CrateModLoader
                 path_RCF_frontend = "default.rcf";
                 basePath = AppDomain.CurrentDomain.BaseDirectory + @"temp\files\";
             }
+            else if (Program.ModProgram.isoType == ConsoleMode.PSP)
+            {
+                path_RCF_frontend = "default.rcf";
+                basePath = AppDomain.CurrentDomain.BaseDirectory + @"temp\PSP_GAME\USRDIR\";
+            }
 
             //Fixes names for PS2
             //File.Move(Program.ModProgram.extractedPath + path_RCF_frontend + ";1", Program.ModProgram.extractedPath + path_RCF_frontend);
