@@ -65,7 +65,7 @@ namespace CrateModLoader
             get
             {
                 string str = string.Empty;
-                if (list_modOptions != null && list_modOptions.Items.Count > 0)
+                if (list_modOptions != null)
                 {
                     for (int l = 0; l < (list_modOptions.Items.Count+31) / 32; ++l)
                     {
