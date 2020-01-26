@@ -867,7 +867,7 @@ namespace CrateModLoader
                 button_modMenu.Enabled = button_modMenu.Visible = false;
                 button_modCrateMenu.Enabled = button_modCrateMenu.Visible = false;
 
-                text_gameType.Text = "Game not supported detected.";
+                text_gameType.Text = "Unsupported game detected.";
                 text_optionsLabel.Text = string.Empty;
 
                 image_gameIcon.Visible = false;
