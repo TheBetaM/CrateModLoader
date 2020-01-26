@@ -861,9 +861,16 @@ namespace CrateModLoader
                     break;
             }
 
+            list_modOptions.Items.Clear();
             if (Modder == null)
             {
-                text_gameType.Text = "Game ROM - ERROR_GAME";
+                button_modMenu.Enabled = button_modMenu.Visible = false;
+                button_modCrateMenu.Enabled = button_modCrateMenu.Visible = false;
+
+                text_gameType.Text = "Game not supported detected.";
+                text_optionsLabel.Text = string.Empty;
+
+                image_gameIcon.Visible = false;
             }
             else
             {
@@ -884,7 +891,6 @@ namespace CrateModLoader
                     image_gameIcon.Visible = false;
                 }
 
-                list_modOptions.Items.Clear();
                 if (Modder.Options.Count > 0)
                 {
                     foreach (var option in Modder.Options.Values)
@@ -896,14 +902,14 @@ namespace CrateModLoader
                 {
                     list_modOptions.Items.Add("No options available", false);
                 }
-                int height = 320 + (list_modOptions.Items.Count * 15);
-                list_modOptions.Visible = list_modOptions.Enabled = list_modOptions.Items.Count > 0;
-                if (main_form.Size.Height < height)
-                {
-                    main_form.Size = new Size(main_form.Size.Width, height);
-                }
-                main_form.MinimumSize = new Size(main_form.MinimumSize.Width, height);
             }
+            int height = 320 + (list_modOptions.Items.Count * 15);
+            list_modOptions.Visible = list_modOptions.Enabled = list_modOptions.Items.Count > 0;
+            if (main_form.Size.Height < height)
+            {
+                main_form.Size = new Size(main_form.Size.Width, height);
+            }
+            main_form.MinimumSize = new Size(main_form.MinimumSize.Width, height);
         }
 
         public void OpenModCrateManager()
