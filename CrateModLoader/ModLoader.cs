@@ -59,7 +59,7 @@ namespace CrateModLoader
         public BackgroundWorker asyncWorker;
         /// <summary> String used to show which version of CML the modded game was built with. </summary>
         public string releaseVersionString = "v1.0";
-        /// <summary> String of bits displaying which quick options were selected (automatically adjusts according the amount of quick options) - first character is first option from the top </summary>
+        /// <summary> Hexadecimal display of which quick options were selected (automatically adjusts according the amount of quick options) - MSB is first option from the top </summary>
         public string optionsSelectedString
         {
             get
@@ -67,9 +67,18 @@ namespace CrateModLoader
                 string str = string.Empty;
                 if (list_modOptions != null && list_modOptions.Items.Count > 0)
                 {
-                    foreach (ModOption option in list_modOptions.Items)
+                    for (int l = 0; l < (list_modOptions.Items.Count+31) / 32; ++l)
                     {
-                        str += Convert.ToInt32(option.Enabled).ToString();
+                        int val = 0;
+                        for (int i = 0, s = Math.Min(32,list_modOptions.Items.Count - l * 32); i < s; ++i)
+                        {
+                            if (list_modOptions.Items[l*32+i] is ModOption o)
+                            {
+                                if (o.Enabled)
+                                    val |= 1 << (31 - i);
+                            }
+                        }
+                        str += val.ToString("X08");
                     }
                 }
                 return str;
