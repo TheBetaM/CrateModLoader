@@ -692,11 +692,9 @@ namespace CrateModLoader
                         {
                             cd = new CDReader(isoStream, true);
                         }
-                        Stream fileStream;
                         if (cd.FileExists(@"SYSTEM.CNF"))
                         {
-                            fileStream = cd.OpenFile(@"SYSTEM.CNF", FileMode.Open);
-                            using (StreamReader sr = new StreamReader(fileStream))
+                            using (StreamReader sr = new StreamReader(cd.OpenFile(@"SYSTEM.CNF", FileMode.Open)))
                             {
                                 string titleID = sr.ReadLine();
                                 SetGameType(titleID, ConsoleMode.PS2);
@@ -720,8 +718,7 @@ namespace CrateModLoader
                         }
                         else if (cd.FileExists(@"UMD_DATA.BIN"))
                         {
-                            fileStream = cd.OpenFile(@"UMD_DATA.BIN", FileMode.Open);
-                            using (StreamReader sr = new StreamReader(fileStream))
+                            using (StreamReader sr = new StreamReader(cd.OpenFile(@"UMD_DATA.BIN", FileMode.Open)))
                             {
                                 string titleID = sr.ReadLine().Substring(0, 10);
                                 SetGameType(titleID, ConsoleMode.PSP);
@@ -783,29 +780,28 @@ namespace CrateModLoader
 
         void SetGameType(string serial, ConsoleMode console)
         {
+            Modder = null;
             Assembly assembly = Assembly.GetExecutingAssembly();
             foreach (Type type in assembly.GetTypes())
             {
                 if (type.IsAbstract || !typeof(Modder).IsAssignableFrom(type)) // only get non-abstract modders
                     continue;
-                Modder = (Modder)Activator.CreateInstance(type);
-                if (!Modder.Game.Consoles.Contains(console))
+                Modder modder = (Modder)Activator.CreateInstance(type);
+                if (!modder.Game.Consoles.Contains(console))
                     continue;
                 RegionCode[] codelist =
-                      console == ConsoleMode.PS2 ? Modder.Game.RegionID_PS2
-                    : console == ConsoleMode.PS1 ? Modder.Game.RegionID_PS1
-                    : console == ConsoleMode.PSP ? Modder.Game.RegionID_PSP
-                    : console == ConsoleMode.GCN ? Modder.Game.RegionID_GCN
-                    : console == ConsoleMode.WII ? Modder.Game.RegionID_WII
+                      console == ConsoleMode.PS2 ? modder.Game.RegionID_PS2
+                    : console == ConsoleMode.PS1 ? modder.Game.RegionID_PS1
+                    : console == ConsoleMode.PSP ? modder.Game.RegionID_PSP
+                    : console == ConsoleMode.GCN ? modder.Game.RegionID_GCN
+                    : console == ConsoleMode.WII ? modder.Game.RegionID_WII
                     : null;
-                Modder oldmodder = Modder;
-                Modder = null;
                 foreach (var r in codelist)
                 {
                     if (r.Name == serial)
                     {
                         targetRegion = r.Region;
-                        Modder = oldmodder;
+                        Modder = modder;
                         break;
                     }
                 }
@@ -895,18 +891,18 @@ namespace CrateModLoader
                     {
                         list_modOptions.Items.Add(option, option.Enabled);
                     }
-                    int height = 320 + (list_modOptions.Items.Count * 15);
-                    list_modOptions.Visible = list_modOptions.Enabled = list_modOptions.Items.Count > 0;
-                    if (main_form.Size.Height < height)
-                    {
-                        main_form.Size = new Size(main_form.Size.Width, height);
-                    }
-                    main_form.MinimumSize = new Size(main_form.MinimumSize.Width, height);
                 }
                 else
                 {
                     list_modOptions.Items.Add("No options available", false);
                 }
+                int height = 320 + (list_modOptions.Items.Count * 15);
+                list_modOptions.Visible = list_modOptions.Enabled = list_modOptions.Items.Count > 0;
+                if (main_form.Size.Height < height)
+                {
+                    main_form.Size = new Size(main_form.Size.Width, height);
+                }
+                main_form.MinimumSize = new Size(main_form.MinimumSize.Width, height);
             }
         }
 

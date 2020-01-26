@@ -57,8 +57,6 @@ namespace CrateModLoader
                     Region = RegionType.PAL },
                 }
             };
-
-            Options.Add(0, new ModOption("No Options Available"));
         }
 
         internal string basePath = "";

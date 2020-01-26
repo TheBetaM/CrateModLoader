@@ -48,8 +48,6 @@ namespace CrateModLoader
                     Region = RegionType.NTSC_J },
                 },
             };
-
-            Options.Add(0, new ModOption("No Options Available"));
         }
 
         public override void StartModProcess()
