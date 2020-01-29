@@ -59,6 +59,7 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.label7 = new System.Windows.Forms.Label();
+            this.folderBrowserDialog2 = new System.Windows.Forms.FolderBrowserDialog();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -314,10 +315,10 @@
             this.radioButton_FromFolder.AutoSize = true;
             this.radioButton_FromFolder.Location = new System.Drawing.Point(85, 1);
             this.radioButton_FromFolder.Name = "radioButton_FromFolder";
-            this.radioButton_FromFolder.Size = new System.Drawing.Size(134, 17);
+            this.radioButton_FromFolder.Size = new System.Drawing.Size(80, 17);
             this.radioButton_FromFolder.TabIndex = 22;
             this.radioButton_FromFolder.TabStop = true;
-            this.radioButton_FromFolder.Text = "From Folder/Disc Drive";
+            this.radioButton_FromFolder.Text = "From Folder";
             this.radioButton_FromFolder.UseVisualStyleBackColor = true;
             this.radioButton_FromFolder.CheckedChanged += new System.EventHandler(this.radioButton_FromFolder_CheckedChanged);
             // 
@@ -351,10 +352,12 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.Controls.Add(this.radioButton_FromROM);
             this.panel1.Controls.Add(this.radioButton_FromFolder);
+            this.panel1.Enabled = false;
             this.panel1.Location = new System.Drawing.Point(80, 85);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(253, 19);
             this.panel1.TabIndex = 26;
+            this.panel1.Visible = false;
             // 
             // panel2
             // 
@@ -451,6 +454,7 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog2;
     }
 }
 

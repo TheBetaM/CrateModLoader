@@ -38,21 +38,6 @@ namespace CrateModLoader
                 ModCratesSupported = true,
                 RegionID_PS2 = new RegionCode[] {
                     new RegionCode() {
-                    Name = @"BOOT2 = cdrom0:\SLUS_209.09;1 ",
-                    Region = RegionType.NTSC_U,
-                    ExecName = "SLUS_209.09",
-                    CodeName = "SLUS_20909", },
-                    new RegionCode() {
-                    Name = @"BOOT2 = cdrom0:\SLES_525.68;1 ",
-                    Region = RegionType.PAL,
-                    ExecName = "SLES_525.68",
-                    CodeName = "SLES_52568", },
-                    new RegionCode() {
-                    Name = @"BOOT2 = cdrom0:\SLPM_658.01;1 ",
-                    Region = RegionType.NTSC_J,
-                    ExecName = "SLPM_658.01",
-                    CodeName = "SLPM_65801", },
-                    new RegionCode() {
                     Name = @"BOOT2 = cdrom0:\SLUS_209.09;1",
                     Region = RegionType.NTSC_U,
                     ExecName = "SLUS_209.09",
@@ -667,6 +652,10 @@ namespace CrateModLoader
                     if (CodeText_LineList[i] == "to enable autosave,~return to the pause menu~and re-save the game.") //todo: japanese equivalent
                     {
                         CodeText_LineList[i] = "to enable autosave,~return to the pause menu~and re-save the game.~crate mod loader " + Program.ModProgram.releaseVersionString.ToLower() + "~" + "seed: " + Program.ModProgram.randoSeed + "~" + "options: " + Program.ModProgram.optionsSelectedString.ToLower() + "";
+                    }
+                    else if (CodeText_LineList[i] == "autosave disabled")
+                    {
+                        CodeText_LineList[i] = "autosave disabled~";
                     }
                 }
 

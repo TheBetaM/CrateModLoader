@@ -52,6 +52,7 @@ namespace CrateModLoader
         public Button button_browse1;
         public Button button_browse2;
         public Button button_randomize;
+        public TextBox textbox_input_path;
         public TextBox textbox_output_path;
         public NumericUpDown textbox_rando_seed;
         public Button button_modMenu;
@@ -100,6 +101,8 @@ namespace CrateModLoader
         public bool loadedISO = false;
         public bool outputPathSet = false;
         public bool keepTempFiles = false;
+        public bool inputDirectoryMode = false;
+        public bool outputDirectoryMode = false;
         private Process ISOcreatorProcess;
         public OpenROM_SelectionType OpenROM_Selection = OpenROM_SelectionType.PSXPS2PSP;
 
@@ -109,7 +112,47 @@ namespace CrateModLoader
         // Build the ISO
         void CreateISO()
         {
-            if (isoType == ConsoleMode.PS2)
+            if (outputDirectoryMode)
+            {
+                //Directory Mode
+                DirectoryInfo di = new DirectoryInfo(extractedPath);
+                if (isoType == ConsoleMode.PS2)
+                {
+                    foreach (DirectoryInfo dir in di.EnumerateDirectories())
+                    {
+                        foreach (FileInfo file in dir.EnumerateFiles())
+                        {
+                            file.MoveTo(file.FullName);
+                        }
+                        Recursive_RenameFiles(dir);
+                    }
+                    foreach (FileInfo file in di.EnumerateFiles())
+                    {
+                        file.MoveTo(file.FullName);
+                    }
+                }
+
+                if (!Directory.Exists(outputISOpath))
+                {
+                    Directory.CreateDirectory(outputISOpath);
+                }
+
+                string pathparent = outputISOpath + @"\";
+                foreach (DirectoryInfo dir in di.EnumerateDirectories())
+                {
+                    Directory.CreateDirectory(pathparent + dir.Name);
+                    foreach (FileInfo file in dir.EnumerateFiles())
+                    {
+                        file.CopyTo(pathparent + dir.Name + @"\" + file.Name);
+                    }
+                    Recursive_CopyFiles(dir, pathparent + dir.Name + @"\");
+                }
+                foreach (FileInfo file in di.EnumerateFiles())
+                {
+                    file.CopyTo(pathparent + file.Name);
+                }
+            }
+            else if (isoType == ConsoleMode.PS2)
             {
                 //Use ImgBurn
                 DirectoryInfo di = new DirectoryInfo(extractedPath);
@@ -210,6 +253,10 @@ namespace CrateModLoader
             }
             else if (isoType == ConsoleMode.PSP)
             {
+                if (inputDirectoryMode)
+                {
+                    throw new Exception("Building PSP ROMs from directories is not supported!");
+                }
                 // Use WQSG_UMD
                 File.Copy(inputISOpath, AppDomain.CurrentDomain.BaseDirectory + "/Tools/Game.iso");
 
@@ -344,6 +391,20 @@ namespace CrateModLoader
             }
         }
 
+        void Recursive_CopyFiles(DirectoryInfo di, string pathparent)
+        {
+            foreach (DirectoryInfo dir in di.EnumerateDirectories())
+            {
+                Directory.CreateDirectory(pathparent + dir.Name);
+                string pathchild = pathparent + dir.Name + @"\";
+                foreach (FileInfo file in dir.EnumerateFiles())
+                {
+                    file.CopyTo(pathchild + file.Name);
+                }
+                Recursive_CopyFiles(dir, pathchild);
+            }
+        }
+
         void AddFile(CDBuilder isoBuild, FileInfo file, string sName, HashSet<FileStream> files)
         {
             var fstream = file.Open(FileMode.Open);
@@ -366,7 +427,34 @@ namespace CrateModLoader
                 DeleteTempFiles();
             }
 
-            if (isoType == ConsoleMode.GCN || isoType == ConsoleMode.WII)
+            if (inputDirectoryMode)
+            {
+                DirectoryInfo di = new DirectoryInfo(inputISOpath);
+                if (!di.Exists)
+                {
+                    throw new IOException("Extraction error: Input directory cannot be accessed!");
+                }
+
+                Directory.CreateDirectory(extractedPath);
+
+                asyncWorker.ReportProgress(25);
+
+                string pathparent = extractedPath + @"\";
+                foreach (DirectoryInfo dir in di.EnumerateDirectories())
+                {
+                    Directory.CreateDirectory(pathparent + dir.Name);
+                    foreach (FileInfo file in dir.EnumerateFiles())
+                    {
+                        file.CopyTo(pathparent + dir.Name + @"\" + file.Name);
+                    }
+                    Recursive_CopyFiles(dir, pathparent + dir.Name + @"\");
+                }
+                foreach (FileInfo file in di.EnumerateFiles())
+                {
+                    file.CopyTo(pathparent + file.Name);
+                }
+            }
+            else if (isoType == ConsoleMode.GCN || isoType == ConsoleMode.WII)
             {
                 // TODO: add free space checks
                 extractedPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"temp");
@@ -616,7 +704,14 @@ namespace CrateModLoader
             }
             else if (e.ProgressPercentage == 25)
             {
-                processText.Text = "Extracting game...";
+                if (inputDirectoryMode)
+                {
+                    processText.Text = "Copying files...";
+                }
+                else
+                {
+                    processText.Text = "Extracting game...";
+                }
             }
             else if (e.ProgressPercentage == 50)
             {
@@ -624,14 +719,106 @@ namespace CrateModLoader
             }
             else if (e.ProgressPercentage == 75)
             {
-                processText.Text = "Building game...";
+                if (outputDirectoryMode)
+                {
+                    processText.Text = "Copying modded files...";
+                }
+                else
+                {
+                    processText.Text = "Building game...";
+                }
             }
         }
 
         public void CheckISO()
         {
             Modder = null;
-            if (OpenROM_Selection == OpenROM_SelectionType.GCNWII || OpenROM_Selection == OpenROM_SelectionType.Any)
+
+            if (inputDirectoryMode)
+            {
+                try
+                {
+                    isoType = ConsoleMode.Undefined;
+
+                    if (File.Exists(inputISOpath + @"SYSTEM.CNF"))
+                    {
+                        using (StreamReader sr = new StreamReader(inputISOpath + @"SYSTEM.CNF"))
+                        {
+                            string titleID = sr.ReadLine();
+                            SetGameType(titleID, ConsoleMode.PS2);
+                            if (Modder != null)
+                            {
+                                foreach (var rc in Modder.Game.RegionID_PS2)
+                                    if (rc.Region == targetRegion)
+                                        ProductCode = rc.CodeName;
+                            }
+                            else
+                            {
+                                SetGameType(titleID, ConsoleMode.PS1);
+                                if (Modder != null)
+                                {
+                                    foreach (var rc in Modder.Game.RegionID_PS1)
+                                        if (rc.Region == targetRegion)
+                                            ProductCode = rc.CodeName;
+                                }
+                            }
+                        }
+                    }
+                    else if (File.Exists(inputISOpath + @"UMD_DATA.BIN"))
+                    {
+                        using (StreamReader sr = new StreamReader(inputISOpath + @"UMD_DATA.BIN"))
+                        {
+                            string titleID = sr.ReadLine().Substring(0, 10);
+                            SetGameType(titleID, ConsoleMode.PSP);
+                            if (Modder != null)
+                            {
+                                ProductCode = titleID;
+                            }
+                        }
+                    }
+                    else if (File.Exists(inputISOpath + @"default.xbe"))
+                    {
+                        isoType = ConsoleMode.XBOX;
+                        //TODO: figure out xbox checks
+                    }
+                    else if (File.Exists(inputISOpath + @"sys/main.dol") && File.Exists(inputISOpath + @"sys/boot.bin"))
+                    {
+                        isoType = ConsoleMode.GCN;
+
+                        using (StreamReader sr = new StreamReader(inputISOpath + @"sys/boot.bin"))
+                        {
+                            string titleID = sr.ReadLine().Substring(0, 6);
+                            SetGameType(titleID, ConsoleMode.GCN);
+                            if (Modder != null)
+                            {
+                                ProductCode = titleID;
+                            }
+                            else
+                            {
+                                SetGameType(titleID, ConsoleMode.WII);
+                                if (Modder != null)
+                                {
+                                    ProductCode = titleID;
+                                }
+                            }
+                        }
+
+                    }
+                    else
+                    {
+                        Modder = null;
+                    }
+                    ISO_label = ProductCode;
+                }
+                catch
+                {
+                    text_gameType.Text = "Could not open the game directory!";
+                    loadedISO = false;
+                    ResetGameSpecific();
+                    return;
+                }
+            }
+            else if (OpenROM_Selection == OpenROM_SelectionType.GCNWII || OpenROM_Selection == OpenROM_SelectionType.Any)
             {
                 // Gamecube/Wii ROMs
 
@@ -760,6 +947,7 @@ namespace CrateModLoader
                 {
                     text_gameType.Text = "Could not open the game ROM!";
                     loadedISO = false;
+                    ResetGameSpecific();
                     return;
                 }
             }
@@ -790,19 +978,7 @@ namespace CrateModLoader
                 {
                     processText.Text = "Waiting for input...";
 
-                    button_modMenu.Enabled = button_modMenu.Visible = false;
-                    button_modCrateMenu.Enabled = button_modCrateMenu.Visible = false;
-
-                    text_optionsLabel.Text = string.Empty;
-
-                    image_gameIcon.Visible = false;
-
-                    list_modOptions.Visible = list_modOptions.Enabled = false;
-                    if (main_form.Size.Height > 280)
-                    {
-                        main_form.Size = new Size(main_form.Size.Width, 280);
-                    }
-                    main_form.MinimumSize = new Size(main_form.MinimumSize.Width, 280);
+                    ResetGameSpecific();
                 }
             }
         }
@@ -827,7 +1003,7 @@ namespace CrateModLoader
                     : null;
                 foreach (var r in codelist)
                 {
-                    if (r.Name == serial)
+                    if (serial.Contains(r.Name))
                     {
                         targetRegion = r.Region;
                         Modder = modder;
@@ -996,11 +1172,49 @@ namespace CrateModLoader
 
         public void UpdateInputSetting()
         {
-            // TODO
+            inputDirectoryMode = button_radio_FromFolder.Checked;
+
+            processText.Text = "Waiting for input...";
+            textbox_input_path.Text = "";
+            inputISOpath = "";
+
+            ResetGameSpecific();
         }
         public void UpdateOutputSetting()
         {
-            // TODO
+            outputDirectoryMode = button_radio_ToFolder.Checked;
+
+            textbox_output_path.Text = "";
+            outputISOpath = "";
+
+            if (loadedISO)
+            {
+                processText.Text = "Waiting for output path...";
+            }
+
+            startButton.Enabled = false;
+        }
+
+        void ResetGameSpecific()
+        {
+            Modder = null;
+
+            startButton.Enabled = false;
+
+            button_modMenu.Enabled = button_modMenu.Visible = false;
+            button_modCrateMenu.Enabled = button_modCrateMenu.Visible = false;
+
+            text_optionsLabel.Text = string.Empty;
+            text_gameType.Text = string.Empty;
+
+            image_gameIcon.Visible = false;
+
+            list_modOptions.Visible = list_modOptions.Enabled = false;
+            if (main_form.Size.Height > 280)
+            {
+                main_form.Size = new Size(main_form.Size.Width, 280);
+            }
+            main_form.MinimumSize = new Size(main_form.MinimumSize.Width, 280);
         }
     }
 }

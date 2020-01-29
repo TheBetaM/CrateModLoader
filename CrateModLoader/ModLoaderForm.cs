@@ -25,6 +25,7 @@ namespace CrateModLoader
             Program.ModProgram.button_browse1 = button1;
             Program.ModProgram.button_browse2 = button2;
             Program.ModProgram.button_randomize = button4;
+            Program.ModProgram.textbox_input_path = textBox1;
             Program.ModProgram.textbox_output_path = textBox2;
             Program.ModProgram.textbox_rando_seed = numericUpDown1;
             Program.ModProgram.button_modMenu = button_openModMenu;
@@ -51,24 +52,59 @@ namespace CrateModLoader
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //openFileDialog1.Filter = "PS2/PSP ISO (*.iso)|*.iso|GC ISO (*.iso)|*.iso|PSX BIN (*.bin)|*.bin|WII ISO (*.iso)|*.iso|PSX/PS2 Directory (system.cnf)|*.cnf|PSP Directory (umd_data.bin)|*.bin|GC/WII Directory (opening.bnr)|*.bnr|XBOX Directory (*.xbe)|*.xbe|360 Directory (*.xex)|*.xex|All files (*.*)|*.*";
-            openFileDialog1.Filter = "PSX/PS2/PSP ROM (*.iso; *.bin)|*.iso;*.bin|GC/WII ROM (*.iso; *.wbfs)|*.iso;*.wbfs|All files (*.*)|*.*";
-
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            if (Program.ModProgram.inputDirectoryMode)
             {
-                Program.ModProgram.OpenROM_Selection = (OpenROM_SelectionType)openFileDialog1.FilterIndex;
-                Program.ModProgram.inputISOpath = openFileDialog1.FileName;
-                Program.ModProgram.CheckISO();
-                textBox1.Text = Program.ModProgram.inputISOpath;
+                if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    Program.ModProgram.OpenROM_Selection = OpenROM_SelectionType.Any;
+                    Program.ModProgram.inputISOpath = folderBrowserDialog1.SelectedPath + @"\";
+                    Program.ModProgram.CheckISO();
+                    textBox1.Text = Program.ModProgram.inputISOpath;
+                }
             }
+            else
+            {
+                //openFileDialog1.Filter = "PS2/PSP ISO (*.iso)|*.iso|GC ISO (*.iso)|*.iso|PSX BIN (*.bin)|*.bin|WII ISO (*.iso)|*.iso|PSX/PS2 Directory (system.cnf)|*.cnf|PSP Directory (umd_data.bin)|*.bin|GC/WII Directory (opening.bnr)|*.bnr|XBOX Directory (*.xbe)|*.xbe|360 Directory (*.xex)|*.xex|All files (*.*)|*.*";
+                openFileDialog1.Filter = "PSX/PS2/PSP ROM (*.iso; *.bin)|*.iso;*.bin|GC/WII ROM (*.iso; *.wbfs)|*.iso;*.wbfs|All files (*.*)|*.*";
+
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    Program.ModProgram.OpenROM_Selection = (OpenROM_SelectionType)openFileDialog1.FilterIndex;
+                    Program.ModProgram.inputISOpath = openFileDialog1.FileName;
+                    Program.ModProgram.CheckISO();
+                    textBox1.Text = Program.ModProgram.inputISOpath;
+                }
+            }
+            
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            saveFileDialog1.Filter = "ISO (*.iso)|*.iso|BIN (*.bin)|*.bin|All files (*.*)|*.*";
+            if (Program.ModProgram.outputDirectoryMode)
+            {
+                if (folderBrowserDialog2.ShowDialog() == DialogResult.OK)
+                {
+                    Program.ModProgram.outputISOpath = folderBrowserDialog2.SelectedPath + @"\";
+                    textBox2.Text = Program.ModProgram.outputISOpath;
+                    Program.ModProgram.outputPathSet = true;
+                    if (Program.ModProgram.loadedISO && Program.ModProgram.outputPathSet)
+                    {
+                        button3.Enabled = true;
+                        label6.Text = "Ready!";
+                    }
+                    else
+                    {
+                        button3.Enabled = false;
+                    }
+                }
+            }
+            else
+            {
+                saveFileDialog1.Filter = "ISO (*.iso)|*.iso|BIN (*.bin)|*.bin|All files (*.*)|*.*";
 
-            saveFileDialog1.FileName = "ModdedGame.iso";
-            saveFileDialog1.ShowDialog();
+                saveFileDialog1.FileName = "ModdedGame.iso";
+                saveFileDialog1.ShowDialog();
+            }
         }
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
