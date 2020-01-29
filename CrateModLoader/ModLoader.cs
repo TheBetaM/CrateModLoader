@@ -58,7 +58,6 @@ namespace CrateModLoader
         public Button button_modCrateMenu;
         public RadioButton button_radio_FromROM;
         public RadioButton button_radio_FromFolder;
-        public RadioButton button_radio_FromDiscDrive;
         public RadioButton button_radio_ToROM;
         public RadioButton button_radio_ToFolder;
         public BackgroundWorker asyncWorker;
@@ -695,7 +694,7 @@ namespace CrateModLoader
                         else if (!CDReader.Detect(isoStream))
                         {
                             // Currently Gamecube ISO's end up here
-                            text_gameType.Text = "Game ROM - Invalid PS1/PS2/PSP ROM!";
+                            text_gameType.Text = "Invalid PS1/PS2/PSP ROM!";
                             return;
                         }
                         else
@@ -759,7 +758,7 @@ namespace CrateModLoader
                 }
                 catch
                 {
-                    text_gameType.Text = "Game ROM - Could not open the game ROM!";
+                    text_gameType.Text = "Could not open the game ROM!";
                     loadedISO = false;
                     return;
                 }
@@ -767,7 +766,7 @@ namespace CrateModLoader
 
             if (Modder == null)
             {
-                text_gameType.Text = "Game ROM - Unknown game ROM!";
+                text_gameType.Text = "Unknown game ROM!";
                 loadedISO = false;
             }
             else
@@ -909,8 +908,8 @@ namespace CrateModLoader
                 button_modMenu.Enabled = button_modMenu.Visible = Modder.Game.ModMenuEnabled;
                 button_modCrateMenu.Enabled = button_modCrateMenu.Visible = Modder.Game.ModCratesSupported;
 
-                text_gameType.Text = string.Format("Game ROM - {0} {1} {2} detected!", Modder.Game.Name, region_mod, cons_mod);
-                text_optionsLabel.Text = string.Format("{0} Quick Options ({1})", Modder.Game.Name, Modder.Game.API_Credit);
+                text_gameType.Text = string.Format("{0} {1} {2} detected!", Modder.Game.Name, region_mod, cons_mod);
+                text_optionsLabel.Text = string.Format("Quick Options ({1})", Modder.Game.Name, Modder.Game.API_Credit);
                 if (gameIcon != null)
                 {
                     image_gameIcon.Image = gameIcon;
@@ -973,7 +972,6 @@ namespace CrateModLoader
             textbox_rando_seed.ReadOnly = true;
             button_modMenu.Enabled = false;
             button_modCrateMenu.Enabled = false;
-            button_radio_FromDiscDrive.Enabled = false;
             button_radio_FromFolder.Enabled = false;
             button_radio_FromROM.Enabled = false;
             button_radio_ToFolder.Enabled = false;
@@ -990,7 +988,6 @@ namespace CrateModLoader
             textbox_rando_seed.ReadOnly = false;
             button_modMenu.Enabled = true;
             button_modCrateMenu.Enabled = true;
-            button_radio_FromDiscDrive.Enabled = true;
             button_radio_FromFolder.Enabled = true;
             button_radio_FromROM.Enabled = true;
             button_radio_ToFolder.Enabled = true;

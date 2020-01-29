@@ -11,12 +11,13 @@ namespace CrateModLoader
             InitializeComponent();
             label4.Text = "Crate Mod Loader " + Program.ModProgram.releaseVersionString;
             label5.Text = "";
+            label7.Text = "";
             label6.Text = "Waiting for input..";
             button3.Enabled = false;
             Program.ModProgram.processText = label6;
             Program.ModProgram.progressBar = progressBar1;
             Program.ModProgram.startButton = button3;
-            Program.ModProgram.text_gameType = label1;
+            Program.ModProgram.text_gameType = label7;
             Program.ModProgram.text_optionsLabel = label5;
             Program.ModProgram.list_modOptions = checkedListBox1;
             Program.ModProgram.main_form = this;
@@ -28,7 +29,6 @@ namespace CrateModLoader
             Program.ModProgram.textbox_rando_seed = numericUpDown1;
             Program.ModProgram.button_modMenu = button_openModMenu;
             Program.ModProgram.button_modCrateMenu = button_modCrateMenu;
-            Program.ModProgram.button_radio_FromDiscDrive = radioButton_FromDiscDrive;
             Program.ModProgram.button_radio_FromFolder = radioButton_FromFolder;
             Program.ModProgram.button_radio_FromROM = radioButton_FromROM;
             Program.ModProgram.button_radio_ToFolder = radioButton_ToFolder;
@@ -160,11 +160,6 @@ namespace CrateModLoader
         }
 
         private void radioButton_FromFolder_CheckedChanged(object sender, EventArgs e)
-        {
-            Program.ModProgram.UpdateInputSetting();
-        }
-
-        private void radioButton_FromDiscDrive_CheckedChanged(object sender, EventArgs e)
         {
             Program.ModProgram.UpdateInputSetting();
         }
