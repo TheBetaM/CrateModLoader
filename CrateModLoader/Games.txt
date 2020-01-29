@@ -1,0 +1,86 @@
+Crate Mod Loader Supported Games & Features
+  
+Crash Bandicoot
+Supported: All PS1 versions (.BIN/.ISO formats)  
+API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)  
+Features:  
+- Randomize Sound Effects  
+  
+Crash Bandicoot 2: Cortex Strikes Back
+Supported: All PS1 versions (.BIN/.ISO formats)  
+API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)  
+Features:  
+- Randomize Sound Effects  
+  
+Crash Bandicoot: Warped
+Supported: All PS1 versions (.BIN/.ISO formats)  
+API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)  
+Features:  
+- Randomize Sound Effects  
+  
+Crash Nitro Kart
+Supported: All PS2 versions (.ISO format), All GC versions (.ISO format)  
+Tools/API by BetaM, ManDude and eezstreet.  
+Features:  
+- Randomize Adventure Hub Warp Pads & Cups
+- Randomize Adventure Requirements & Rewards
+- Randomize Character Stats
+- Randomize Kart Stats
+- Randomize Powerup Effects
+- Randomize Drivers  
+- Randomize Karts  
+- Disable Fadeout Overlay
+- Disable Unlock Popups
+- Speed Up Mask Hints  
+- Remove Intro Videos  
+- Version, seed and settings visible in the Credits screen
+  
+Crash Twinsanity
+Supported: All PS2 versions (.ISO format)  
+API by NeoKesha, Smartkin, ManDude and Marko. (https://github.com/Smartkin/twinsanity-editor)  
+Features:  
+- Randomize Regular Crates 
+- Randomize Gem Locations  
+- Randomize Enemies  
+- Randomize Level Music  
+- Randomize Character Parameters  
+- Enable Flying Kick for Crash  
+- Enable Stomp Kick for Crash (Flying Kick variation)  
+- Enable Double Jump for Cortex  
+- Enable Double Jump for Nina  
+- Enable Unused Enemies  
+- Version, seed and settings visible in the Autosave Disabled screen  
+  
+Crash Tag Team Racing
+Supported: All PS2 versions (.ISO format), All PSP versions (.ISO format) (GC not yet supported)  
+APIs by NeoKesha and BetaM. (based on https://github.com/handsomematt/Pure3D)  
+Features:  
+- Randomize Platforming & Starting Characters
+- Randomize Hub Entrances
+- Randomize Track Entrances
+- Randomize Minigames
+- Randomize Missions
+- Randomize Car Stats
+- Randomize Race Laps
+- Randomize Crashinator
+- Randomize Run & Gun
+- Randomize Stunt Arena
+- Randomize Surface Parameters
+- Randomize Powerup Distribution
+- Randomize Powerup Effects
+- Randomize Weapons
+- Add Unused Cutscenes
+- Prevent Sequence Breaks
+- Version, seed and settings visible in the Credits screen
+  
+Crash of the Titans
+Supported: All PS2 versions (.ISO format), All Wii versions (.ISO/.WBFS formats), All PSP versions (.ISO format)  
+API by NeoKesha.  
+Features:   
+- Test mod: Increased camera FOV in Episode 1
+  
+Crash Mind Over Mutant
+Supported: All PS2 versions (.ISO format), All Wii versions (.ISO/.WBFS formats), All PSP versions (.ISO format)  
+API by NeoKesha.  
+Features:    
+- Version, seed and settings visible in the Credits screen  

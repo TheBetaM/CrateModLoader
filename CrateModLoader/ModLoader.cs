@@ -356,18 +356,16 @@ namespace CrateModLoader
 
         void LoadISO()
         {
-            /* verify if extracted path is correct
+            extractedPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"temp\");
             if (Directory.Exists(extractedPath))
             {
                 DeleteTempFiles();
             }
-            */
 
             if (isoType == ConsoleMode.GCN || isoType == ConsoleMode.WII)
             {
-                extractedPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"temp");
-
                 // TODO: add free space checks
+                extractedPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"temp");
 
                 string args = "extract ";
                 args += "\"" + inputISOpath + "\" ";
@@ -399,7 +397,6 @@ namespace CrateModLoader
                         cd = new CDReader(isoStream, true);
                     ISO_label = cd.VolumeLabel;
 
-                    extractedPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"temp\");
                     if (isoInfo.Length * 2 > GetTotalFreeSpace(extractedPath.Substring(0, 3)))
                     {
                         cd.Dispose();

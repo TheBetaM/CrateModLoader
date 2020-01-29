@@ -4,6 +4,8 @@ It detects, extracts, modifies and rebuilds disc image files in an easy to setup
 
 Visit https://github.com/TheBetaM/CrateModLoader/blob/master/GAMES.md for a list of supported games and features.  
 
+Website: https://github.com/TheBetaM/CrateModLoader/
+
 License Information
 
 This program is free software: you can redistribute it and/or modify

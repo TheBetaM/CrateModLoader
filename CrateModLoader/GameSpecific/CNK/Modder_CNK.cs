@@ -110,28 +110,34 @@ namespace CrateModLoader
         public override void StartModProcess()
         {
 
-            if (Program.ModProgram.isoType == ConsoleMode.GCN)
-            {
-                File.Move(Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/assets.gfc", AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GFC");
-                File.Move(Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/assets.gob", AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GOB");
-            }
-            else
-            {
-                File.Move(Program.ModProgram.extractedPath + "/ASSETS.GFC", AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GFC");
-                File.Move(Program.ModProgram.extractedPath + "/ASSETS.GOB", AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GOB");
-            }
-
             // Extract GOB
             Process GobExtract = new Process();
             GobExtract.StartInfo.FileName = AppDomain.CurrentDomain.BaseDirectory + "/Tools/gobextract.exe";
             GobExtract.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            GobExtract.StartInfo.Arguments = "Tools/ASSETS.GOB" + " " + "Tools/cml_extr";
+            //GobExtract.StartInfo.Arguments = "Tools/ASSETS.GOB" + " " + "Tools/cml_extr";
+            if (Program.ModProgram.isoType == ConsoleMode.GCN)
+            {
+                GobExtract.StartInfo.Arguments = "temp/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/assets.gob" + " " + "temp/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/cml_extr";
+            }
+            else if (Program.ModProgram.isoType == ConsoleMode.PS2)
+            {
+                GobExtract.StartInfo.Arguments = "temp/ASSETS.GOB" + " " + "temp/cml_extr";
+            }
             GobExtract.Start();
             GobExtract.WaitForExit();
-            path_gob_extracted = AppDomain.CurrentDomain.BaseDirectory + "/Tools/cml_extr/";
 
-            File.Delete(AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GFC");
-            File.Delete(AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GOB");
+            if (Program.ModProgram.isoType == ConsoleMode.GCN)
+            {
+                File.Delete(AppDomain.CurrentDomain.BaseDirectory + "/temp/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/assets.gfc");
+                File.Delete(AppDomain.CurrentDomain.BaseDirectory + "/temp/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/assets.gob");
+                path_gob_extracted = AppDomain.CurrentDomain.BaseDirectory + "/temp/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/cml_extr/";
+            }
+            else if (Program.ModProgram.isoType == ConsoleMode.PS2)
+            {
+                File.Delete(AppDomain.CurrentDomain.BaseDirectory + "/temp/ASSETS.GFC");
+                File.Delete(AppDomain.CurrentDomain.BaseDirectory + "/temp/ASSETS.GOB");
+                path_gob_extracted = AppDomain.CurrentDomain.BaseDirectory + "/temp/cml_extr/";
+            }
 
             ModProcess();
         }
@@ -1607,21 +1613,17 @@ namespace CrateModLoader
             Process GobExtract = new Process();
             GobExtract.StartInfo.FileName = AppDomain.CurrentDomain.BaseDirectory + "/Tools/gobextract.exe";
             GobExtract.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            GobExtract.StartInfo.Arguments = "Tools/ASSETS.GOB" + " " + "Tools/cml_extr" + " -create 1";
-            GobExtract.Start();
-            GobExtract.WaitForExit();
-
-
+            //GobExtract.StartInfo.Arguments = "Tools/ASSETS.GOB" + " " + "Tools/cml_extr" + " -create 1";
             if (Program.ModProgram.isoType == ConsoleMode.GCN)
             {
-                File.Move(AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GFC", Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/assets.gfc");
-                File.Move(AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GOB", Program.ModProgram.extractedPath + "/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/assets.gob");
+                GobExtract.StartInfo.Arguments = "temp/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/assets.gob" + " " + "temp/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/cml_extr" + " -create 1";
             }
-            else
+            else if (Program.ModProgram.isoType == ConsoleMode.PS2)
             {
-                File.Move(AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GFC", Program.ModProgram.extractedPath + "/ASSETS.GFC");
-                File.Move(AppDomain.CurrentDomain.BaseDirectory + "/Tools/ASSETS.GOB", Program.ModProgram.extractedPath + "/ASSETS.GOB");
+                GobExtract.StartInfo.Arguments = "temp/ASSETS.GOB" + " " + "temp/cml_extr" + " -create 1";
             }
+            GobExtract.Start();
+            GobExtract.WaitForExit();
 
             // Extraction cleanup
             if (Directory.Exists(path_gob_extracted))
