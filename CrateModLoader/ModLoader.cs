@@ -56,6 +56,11 @@ namespace CrateModLoader
         public NumericUpDown textbox_rando_seed;
         public Button button_modMenu;
         public Button button_modCrateMenu;
+        public RadioButton button_radio_FromROM;
+        public RadioButton button_radio_FromFolder;
+        public RadioButton button_radio_FromDiscDrive;
+        public RadioButton button_radio_ToROM;
+        public RadioButton button_radio_ToFolder;
         public BackgroundWorker asyncWorker;
         /// <summary> String used to show which version of CML the modded game was built with. </summary>
         public string releaseVersionString = "v1.0";
@@ -626,6 +631,7 @@ namespace CrateModLoader
 
         public void CheckISO()
         {
+            Modder = null;
             if (OpenROM_Selection == OpenROM_SelectionType.GCNWII || OpenROM_Selection == OpenROM_SelectionType.Any)
             {
                 // Gamecube/Wii ROMs
@@ -773,10 +779,32 @@ namespace CrateModLoader
                 startButton.Enabled = true;
                 processText.Text = "Ready!";
             }
-            else if (loadedISO)
+            else
             {
                 startButton.Enabled = false;
-                processText.Text = "Waiting for output path...";
+
+                if (loadedISO)
+                {
+                    processText.Text = "Waiting for output path...";
+                }
+                else
+                {
+                    processText.Text = "Waiting for input...";
+
+                    button_modMenu.Enabled = button_modMenu.Visible = false;
+                    button_modCrateMenu.Enabled = button_modCrateMenu.Visible = false;
+
+                    text_optionsLabel.Text = string.Empty;
+
+                    image_gameIcon.Visible = false;
+
+                    list_modOptions.Visible = list_modOptions.Enabled = false;
+                    if (main_form.Size.Height > 280)
+                    {
+                        main_form.Size = new Size(main_form.Size.Width, 280);
+                    }
+                    main_form.MinimumSize = new Size(main_form.MinimumSize.Width, 280);
+                }
             }
         }
 
@@ -945,6 +973,11 @@ namespace CrateModLoader
             textbox_rando_seed.ReadOnly = true;
             button_modMenu.Enabled = false;
             button_modCrateMenu.Enabled = false;
+            button_radio_FromDiscDrive.Enabled = false;
+            button_radio_FromFolder.Enabled = false;
+            button_radio_FromROM.Enabled = false;
+            button_radio_ToFolder.Enabled = false;
+            button_radio_ToROM.Enabled = false;
         }
         public void EnableInteraction()
         {
@@ -957,6 +990,20 @@ namespace CrateModLoader
             textbox_rando_seed.ReadOnly = false;
             button_modMenu.Enabled = true;
             button_modCrateMenu.Enabled = true;
+            button_radio_FromDiscDrive.Enabled = true;
+            button_radio_FromFolder.Enabled = true;
+            button_radio_FromROM.Enabled = true;
+            button_radio_ToFolder.Enabled = true;
+            button_radio_ToROM.Enabled = true;
+        }
+
+        public void UpdateInputSetting()
+        {
+            // TODO
+        }
+        public void UpdateOutputSetting()
+        {
+            // TODO
         }
     }
 }

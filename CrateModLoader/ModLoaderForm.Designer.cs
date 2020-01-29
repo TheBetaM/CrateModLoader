@@ -51,8 +51,17 @@
             this.button_openModMenu = new System.Windows.Forms.Button();
             this.button_modCrateMenu = new System.Windows.Forms.Button();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.radioButton_FromROM = new System.Windows.Forms.RadioButton();
+            this.radioButton_FromFolder = new System.Windows.Forms.RadioButton();
+            this.radioButton_FromDiscDrive = new System.Windows.Forms.RadioButton();
+            this.radioButton_ToROM = new System.Windows.Forms.RadioButton();
+            this.radioButton_ToFolder = new System.Windows.Forms.RadioButton();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // checkedListBox1
@@ -66,7 +75,7 @@
             this.checkedListBox1.FormattingEnabled = true;
             this.checkedListBox1.Items.AddRange(new object[] {
             "Nothing"});
-            this.checkedListBox1.Location = new System.Drawing.Point(11, 273);
+            this.checkedListBox1.Location = new System.Drawing.Point(10, 275);
             this.checkedListBox1.Name = "checkedListBox1";
             this.checkedListBox1.Size = new System.Drawing.Size(311, 0);
             this.checkedListBox1.TabIndex = 0;
@@ -85,7 +94,7 @@
             // 
             this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Location = new System.Drawing.Point(11, 111);
+            this.textBox1.Location = new System.Drawing.Point(11, 126);
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
             this.textBox1.Size = new System.Drawing.Size(311, 20);
@@ -94,7 +103,7 @@
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(336, 111);
+            this.button1.Location = new System.Drawing.Point(336, 126);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 20);
             this.button1.TabIndex = 2;
@@ -105,7 +114,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 93);
+            this.label1.Location = new System.Drawing.Point(10, 85);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(63, 13);
             this.label1.TabIndex = 3;
@@ -124,7 +133,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(8, 136);
+            this.label2.Location = new System.Drawing.Point(10, 152);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(64, 13);
             this.label2.TabIndex = 5;
@@ -135,7 +144,7 @@
             // 
             this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox2.Location = new System.Drawing.Point(11, 153);
+            this.textBox2.Location = new System.Drawing.Point(11, 171);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(311, 20);
             this.textBox2.TabIndex = 6;
@@ -144,7 +153,7 @@
             // button2
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Location = new System.Drawing.Point(336, 153);
+            this.button2.Location = new System.Drawing.Point(336, 171);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 20);
             this.button2.TabIndex = 7;
@@ -155,7 +164,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(8, 178);
+            this.label3.Location = new System.Drawing.Point(10, 203);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(91, 13);
             this.label3.TabIndex = 8;
@@ -165,7 +174,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(11, 12);
+            this.label4.Location = new System.Drawing.Point(10, 12);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(92, 13);
             this.label4.TabIndex = 10;
@@ -188,21 +197,26 @@
             // 
             this.numericUpDown1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.numericUpDown1.Location = new System.Drawing.Point(11, 194);
+            this.numericUpDown1.Location = new System.Drawing.Point(110, 200);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             2147483647,
             0,
             0,
             0});
             this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(311, 20);
+            this.numericUpDown1.Size = new System.Drawing.Size(212, 20);
             this.numericUpDown1.TabIndex = 12;
+            this.numericUpDown1.Value = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
             this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
             // 
             // button4
             // 
             this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button4.Location = new System.Drawing.Point(336, 194);
+            this.button4.Location = new System.Drawing.Point(336, 200);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(75, 20);
             this.button4.TabIndex = 13;
@@ -213,7 +227,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(8, 254);
+            this.label5.Location = new System.Drawing.Point(10, 256);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(383, 13);
             this.label5.TabIndex = 14;
@@ -224,7 +238,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.label6.Location = new System.Drawing.Point(8, 65);
+            this.label6.Location = new System.Drawing.Point(10, 66);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(66, 13);
             this.label6.TabIndex = 15;
@@ -235,7 +249,7 @@
             // 
             this.checkBox1.AutoSize = true;
             this.checkBox1.Enabled = false;
-            this.checkBox1.Location = new System.Drawing.Point(200, 225);
+            this.checkBox1.Location = new System.Drawing.Point(199, 231);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(163, 17);
             this.checkBox1.TabIndex = 18;
@@ -247,7 +261,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox1.Location = new System.Drawing.Point(350, 275);
+            this.pictureBox1.Location = new System.Drawing.Point(349, 277);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(64, 64);
             this.pictureBox1.TabIndex = 16;
@@ -257,7 +271,7 @@
             // button_openModMenu
             // 
             this.button_openModMenu.Enabled = false;
-            this.button_openModMenu.Location = new System.Drawing.Point(94, 221);
+            this.button_openModMenu.Location = new System.Drawing.Point(93, 227);
             this.button_openModMenu.Name = "button_openModMenu";
             this.button_openModMenu.Size = new System.Drawing.Size(100, 23);
             this.button_openModMenu.TabIndex = 19;
@@ -269,7 +283,7 @@
             // button_modCrateMenu
             // 
             this.button_modCrateMenu.Enabled = false;
-            this.button_modCrateMenu.Location = new System.Drawing.Point(13, 221);
+            this.button_modCrateMenu.Location = new System.Drawing.Point(12, 227);
             this.button_modCrateMenu.Name = "button_modCrateMenu";
             this.button_modCrateMenu.Size = new System.Drawing.Size(75, 23);
             this.button_modCrateMenu.TabIndex = 20;
@@ -282,12 +296,97 @@
             // 
             this.backgroundWorker1.WorkerReportsProgress = true;
             // 
+            // radioButton_FromROM
+            // 
+            this.radioButton_FromROM.AutoSize = true;
+            this.radioButton_FromROM.Location = new System.Drawing.Point(3, 1);
+            this.radioButton_FromROM.Name = "radioButton_FromROM";
+            this.radioButton_FromROM.Size = new System.Drawing.Size(76, 17);
+            this.radioButton_FromROM.TabIndex = 21;
+            this.radioButton_FromROM.TabStop = true;
+            this.radioButton_FromROM.Text = "From ROM";
+            this.radioButton_FromROM.UseVisualStyleBackColor = true;
+            this.radioButton_FromROM.CheckedChanged += new System.EventHandler(this.radioButton_FromROM_CheckedChanged);
+            // 
+            // radioButton_FromFolder
+            // 
+            this.radioButton_FromFolder.AutoSize = true;
+            this.radioButton_FromFolder.Location = new System.Drawing.Point(85, 1);
+            this.radioButton_FromFolder.Name = "radioButton_FromFolder";
+            this.radioButton_FromFolder.Size = new System.Drawing.Size(80, 17);
+            this.radioButton_FromFolder.TabIndex = 22;
+            this.radioButton_FromFolder.TabStop = true;
+            this.radioButton_FromFolder.Text = "From Folder";
+            this.radioButton_FromFolder.UseVisualStyleBackColor = true;
+            this.radioButton_FromFolder.CheckedChanged += new System.EventHandler(this.radioButton_FromFolder_CheckedChanged);
+            // 
+            // radioButton_FromDiscDrive
+            // 
+            this.radioButton_FromDiscDrive.AutoSize = true;
+            this.radioButton_FromDiscDrive.Location = new System.Drawing.Point(171, 1);
+            this.radioButton_FromDiscDrive.Name = "radioButton_FromDiscDrive";
+            this.radioButton_FromDiscDrive.Size = new System.Drawing.Size(100, 17);
+            this.radioButton_FromDiscDrive.TabIndex = 23;
+            this.radioButton_FromDiscDrive.TabStop = true;
+            this.radioButton_FromDiscDrive.Text = "From Disc Drive";
+            this.radioButton_FromDiscDrive.UseVisualStyleBackColor = true;
+            this.radioButton_FromDiscDrive.CheckedChanged += new System.EventHandler(this.radioButton_FromDiscDrive_CheckedChanged);
+            // 
+            // radioButton_ToROM
+            // 
+            this.radioButton_ToROM.AutoSize = true;
+            this.radioButton_ToROM.Location = new System.Drawing.Point(3, 2);
+            this.radioButton_ToROM.Name = "radioButton_ToROM";
+            this.radioButton_ToROM.Size = new System.Drawing.Size(66, 17);
+            this.radioButton_ToROM.TabIndex = 24;
+            this.radioButton_ToROM.TabStop = true;
+            this.radioButton_ToROM.Text = "To ROM";
+            this.radioButton_ToROM.UseVisualStyleBackColor = true;
+            this.radioButton_ToROM.CheckedChanged += new System.EventHandler(this.radioButton_ToROM_CheckedChanged);
+            // 
+            // radioButton_ToFolder
+            // 
+            this.radioButton_ToFolder.AutoSize = true;
+            this.radioButton_ToFolder.Location = new System.Drawing.Point(75, 2);
+            this.radioButton_ToFolder.Name = "radioButton_ToFolder";
+            this.radioButton_ToFolder.Size = new System.Drawing.Size(70, 17);
+            this.radioButton_ToFolder.TabIndex = 25;
+            this.radioButton_ToFolder.TabStop = true;
+            this.radioButton_ToFolder.Text = "To Folder";
+            this.radioButton_ToFolder.UseVisualStyleBackColor = true;
+            this.radioButton_ToFolder.CheckedChanged += new System.EventHandler(this.radioButton_ToFolder_CheckedChanged);
+            // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.radioButton_FromROM);
+            this.panel1.Controls.Add(this.radioButton_FromFolder);
+            this.panel1.Controls.Add(this.radioButton_FromDiscDrive);
+            this.panel1.Location = new System.Drawing.Point(13, 101);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(309, 19);
+            this.panel1.TabIndex = 26;
+            // 
+            // panel2
+            // 
+            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel2.Controls.Add(this.radioButton_ToROM);
+            this.panel2.Controls.Add(this.radioButton_ToFolder);
+            this.panel2.Location = new System.Drawing.Point(80, 148);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(242, 20);
+            this.panel2.TabIndex = 27;
+            // 
             // ModLoaderForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(424, 241);
+            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.button_modCrateMenu);
             this.Controls.Add(this.button_openModMenu);
             this.Controls.Add(this.checkBox1);
@@ -313,6 +412,10 @@
             this.Text = "Crate Mod Loader";
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -342,6 +445,13 @@
         private System.Windows.Forms.Button button_openModMenu;
         private System.Windows.Forms.Button button_modCrateMenu;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.RadioButton radioButton_FromROM;
+        private System.Windows.Forms.RadioButton radioButton_FromFolder;
+        private System.Windows.Forms.RadioButton radioButton_FromDiscDrive;
+        private System.Windows.Forms.RadioButton radioButton_ToROM;
+        private System.Windows.Forms.RadioButton radioButton_ToFolder;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panel2;
     }
 }
 

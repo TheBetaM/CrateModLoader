@@ -11,7 +11,7 @@ namespace CrateModLoader
             InitializeComponent();
             label4.Text = "Crate Mod Loader " + Program.ModProgram.releaseVersionString;
             label5.Text = "";
-            label6.Text = "Waiting for input file...";
+            label6.Text = "Waiting for input..";
             button3.Enabled = false;
             Program.ModProgram.processText = label6;
             Program.ModProgram.progressBar = progressBar1;
@@ -28,7 +28,14 @@ namespace CrateModLoader
             Program.ModProgram.textbox_rando_seed = numericUpDown1;
             Program.ModProgram.button_modMenu = button_openModMenu;
             Program.ModProgram.button_modCrateMenu = button_modCrateMenu;
+            Program.ModProgram.button_radio_FromDiscDrive = radioButton_FromDiscDrive;
+            Program.ModProgram.button_radio_FromFolder = radioButton_FromFolder;
+            Program.ModProgram.button_radio_FromROM = radioButton_FromROM;
+            Program.ModProgram.button_radio_ToFolder = radioButton_ToFolder;
+            Program.ModProgram.button_radio_ToROM = radioButton_ToROM;
             Program.ModProgram.asyncWorker = backgroundWorker1;
+            radioButton_FromROM.Checked = true;
+            radioButton_ToROM.Checked = true;
 
             progressBar1.Minimum = 0;
             progressBar1.Maximum = 100;
@@ -145,6 +152,31 @@ namespace CrateModLoader
                     o.Enabled = c.GetItemChecked(i);
                 }
             }
+        }
+
+        private void radioButton_FromROM_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.ModProgram.UpdateInputSetting();
+        }
+
+        private void radioButton_FromFolder_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.ModProgram.UpdateInputSetting();
+        }
+
+        private void radioButton_FromDiscDrive_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.ModProgram.UpdateInputSetting();
+        }
+
+        private void radioButton_ToROM_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.ModProgram.UpdateOutputSetting();
+        }
+
+        private void radioButton_ToFolder_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.ModProgram.UpdateOutputSetting();
         }
     }
 }
