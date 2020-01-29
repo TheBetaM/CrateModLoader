@@ -38,6 +38,8 @@ namespace CrateModLoader
             radioButton_FromROM.Checked = true;
             radioButton_ToROM.Checked = true;
 
+            toolTip1.SetToolTip(radioButton_ToFolder, "Not supported by PS1/PS2 software");
+
             progressBar1.Minimum = 0;
             progressBar1.Maximum = 100;
             progressBar1.Value = 0;
