@@ -371,6 +371,8 @@ namespace CrateModLoader
                 args += "\"" + inputISOpath + "\" ";
                 args += "\"" + extractedPath + "\" ";
 
+                asyncWorker.ReportProgress(25);
+
                 ISOcreatorProcess = new Process();
                 ISOcreatorProcess.StartInfo.FileName = AppDomain.CurrentDomain.BaseDirectory + "/Tools/wit/wit.exe";
                 ISOcreatorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
@@ -606,11 +608,11 @@ namespace CrateModLoader
             progressBar.Value = e.ProgressPercentage;
             if (e.ProgressPercentage == 0)
             {
-                processText.Text = "Extracting game...";
+                processText.Text = "Preparing...";
             }
             else if (e.ProgressPercentage == 25)
             {
-                processText.Text = "Extracting ISO...";
+                processText.Text = "Extracting game...";
             }
             else if (e.ProgressPercentage == 50)
             {
@@ -626,7 +628,7 @@ namespace CrateModLoader
         {
             if (OpenROM_Selection == OpenROM_SelectionType.GCNWII || OpenROM_Selection == OpenROM_SelectionType.Any)
             {
-                // Gamecube ROMs
+                // Gamecube/Wii ROMs
 
                 string args = "ID6 ";
                 args += "\"" + inputISOpath + "\"";
@@ -653,17 +655,13 @@ namespace CrateModLoader
                         SetGameType(titleID, ConsoleMode.GCN);
                         if (Modder != null)
                         {
-                            //foreach (var rc in Modder.Game.RegionID_GCN)
-                                //if (rc.Region == targetRegion)
-                                    ProductCode = titleID;
+                            ProductCode = titleID;
                         }
                         else
                         {
                             SetGameType(titleID, ConsoleMode.WII);
                             if (Modder != null)
                             {
-                                //foreach (var rc in Modder.Game.RegionID_WII)
-                                //if (rc.Region == targetRegion)
                                 ProductCode = titleID;
                             }
                         }
@@ -730,8 +728,6 @@ namespace CrateModLoader
                                 SetGameType(titleID, ConsoleMode.PSP);
                                 if (Modder != null)
                                 {
-                                    //foreach (var rc in Modder.Game.RegionID_PSP)
-                                    //if (rc.Region == targetRegion)
                                     ProductCode = titleID;
                                 }
                             }
@@ -923,7 +919,7 @@ namespace CrateModLoader
             // Mod Crate Manager Window: 
             // Either a checkbox list of .zip files in a mod directory OR
             // A list with a button that lets you manually add .zip files
-            // Set availability in GameDatabase (ModCratesSupported variable)
+            // Set availability in the respective modder's Game struct (ModCratesSupported variable) 
             ModCrateManagerForm modCrateManagerMenu = new ModCrateManagerForm();
             modCrateManagerMenu.Owner = Program.ModProgramForm;
             modCrateManagerMenu.Show();
