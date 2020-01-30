@@ -506,7 +506,6 @@ namespace CrateModLoader
                 // TODO: add free space checks
                 string args = "-x ";
                 args += "\"" + inputISOpath + "\" ";
-                args += "-d \"" + extractedPath + "\" ";
 
                 asyncWorker.ReportProgress(25);
 
@@ -516,6 +515,8 @@ namespace CrateModLoader
                 ISOcreatorProcess.StartInfo.Arguments = args;
                 ISOcreatorProcess.Start();
                 ISOcreatorProcess.WaitForExit();
+
+                Directory.Move(AppDomain.CurrentDomain.BaseDirectory + @"\" + Path.GetFileNameWithoutExtension(inputISOpath), extractedPath);
             }
             else
             {
@@ -941,7 +942,67 @@ namespace CrateModLoader
                 }
                 if (Modder == null && (OpenROM_Selection == OpenROM_SelectionType.XBOX || OpenROM_Selection == OpenROM_SelectionType.Any))
                 {
-                    //TODO
+                    // TODO: add free space checks
+                    extractedPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"temp\");
+                    DeleteTempFiles();
+
+                    string args = "";
+                    args += "\"" + inputISOpath + "\" ";
+
+                    ISOcreatorProcess = new Process();
+                    ISOcreatorProcess.StartInfo.FileName = AppDomain.CurrentDomain.BaseDirectory + "/Tools/extract-xiso.exe";
+                    ISOcreatorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
+                    ISOcreatorProcess.StartInfo.Arguments = args;
+                    ISOcreatorProcess.Start();
+                    ISOcreatorProcess.WaitForExit();
+
+                    Directory.Move(AppDomain.CurrentDomain.BaseDirectory + @"\" + Path.GetFileNameWithoutExtension(inputISOpath), extractedPath);
+
+                    processText.Text = "Reading XISO...";
+
+                    if (File.Exists(extractedPath + @"default.xbe"))
+                    {
+                        isoType = ConsoleMode.XBOX;
+                        //Based on OpenXDK
+                        using (FileStream fileStream = new FileStream(extractedPath + @"default.xbe", FileMode.Open, FileAccess.Read, FileShare.Read))
+                        {
+                            fileStream.Seek(0x0118, SeekOrigin.Begin);
+                            BinaryReader reader = new BinaryReader(fileStream);
+                            uint CertOffset = reader.ReadUInt16();
+                            fileStream.Seek(CertOffset, SeekOrigin.Begin);
+                            fileStream.Seek(CertOffset + 0x0008, SeekOrigin.Begin);
+                            uint CertID = reader.ReadUInt32();
+                            fileStream.Seek(CertOffset + 0x000C, SeekOrigin.Begin);
+                            byte[] CertNameUnicode = new byte[2];
+                            string TitleName = "";
+                            for (int i = 0; i < 40; i++)
+                            {
+                                CertNameUnicode[0] = reader.ReadByte();
+                                CertNameUnicode[1] = reader.ReadByte();
+                                TitleName += System.Text.Encoding.Unicode.GetString(CertNameUnicode);
+                            }
+                            fileStream.Seek(CertOffset + 0x00A0, SeekOrigin.Begin);
+                            uint CertRegion = reader.ReadUInt32();
+                            fileStream.Seek(CertOffset + 0x00AC, SeekOrigin.Begin);
+                            uint CertVersion = reader.ReadUInt32();
+
+                            /*
+                            Console.WriteLine("Cert offset: " + CertOffset.ToString("X"));
+                            Console.WriteLine("Cert Title ID: " + CertID);
+                            Console.WriteLine("Cert Region: " + CertRegion);
+                            Console.WriteLine("Cert Version: " + CertVersion);
+                            Console.WriteLine("Cert Name: " + TitleName);
+                            */
+
+                            SetGameType(TitleName, ConsoleMode.XBOX, CertRegion);
+                        }
+                    }
+                    else
+                    {
+                        processText.Text = "Waiting for input...";
+                    }
+
+                    DeleteTempFiles();
                 }
                 if (Modder == null && (OpenROM_Selection == OpenROM_SelectionType.PSXPS2PSP || OpenROM_Selection == OpenROM_SelectionType.Any))
                 {
