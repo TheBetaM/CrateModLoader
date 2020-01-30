@@ -1,5 +1,5 @@
 <p align="center">
-![Crate Mod Loader](../master/CrateModLoader/Resources/cml_header.png)  
+<img src="../master/CrateModLoader/Resources/cml_header.png" width="433" height="200" alt="Crate Mod Loader"> 
 </p>
   
 Randomizer and mod loader for PS1, PS2, PSP, XBOX, GC and Wii games.  
