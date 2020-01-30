@@ -327,13 +327,13 @@ namespace CrateModLoader
             else if (isoType == ConsoleMode.XBOX)
             {
                 //Use extract-xiso
-                string args = "-c -Q ";
+                string args = "-c ";
                 args += extractedPath + " ";
                 args += "\"" + outputISOpath + "\" ";
 
                 ISOcreatorProcess = new Process();
                 ISOcreatorProcess.StartInfo.FileName = AppDomain.CurrentDomain.BaseDirectory + "/Tools/extract-xiso.exe";
-                ISOcreatorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                ISOcreatorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
                 ISOcreatorProcess.StartInfo.Arguments = args;
                 ISOcreatorProcess.Start();
 
@@ -441,8 +441,11 @@ namespace CrateModLoader
 
             if (inputDirectoryMode && !outputDirectoryMode)
             {
-                // To fix: PS1, PS2 require ISO label; PSP requires ISO file;
-                throw new Exception("Building ROMs from directories is not supported yet!");
+                // To fix: PS1, PS2 require ISO label; PSP requires ISO file; GCN/Wii needs testing but should work with the right files
+                if (isoType == ConsoleMode.PS1 || isoType == ConsoleMode.PS2 || isoType == ConsoleMode.PSP)
+                {
+                    throw new Exception("Building ROMs from directories with this console is not supported yet!");
+                }
             }
             if (outputDirectoryMode)
             {
@@ -501,7 +504,7 @@ namespace CrateModLoader
             else if (isoType == ConsoleMode.XBOX)
             {
                 // TODO: add free space checks
-                string args = "-x -Q ";
+                string args = "-x ";
                 args += "\"" + inputISOpath + "\" ";
                 args += "-d \"" + extractedPath + "\" ";
 
@@ -509,7 +512,7 @@ namespace CrateModLoader
 
                 ISOcreatorProcess = new Process();
                 ISOcreatorProcess.StartInfo.FileName = AppDomain.CurrentDomain.BaseDirectory + "/Tools/extract-xiso.exe";
-                ISOcreatorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                ISOcreatorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
                 ISOcreatorProcess.StartInfo.Arguments = args;
                 ISOcreatorProcess.Start();
                 ISOcreatorProcess.WaitForExit();
@@ -1131,6 +1134,7 @@ namespace CrateModLoader
                                 targetRegion = r.Region;
                                 RegionNotSupported = false;
                                 Modder = modder;
+                                break;
                             }
                             else
                             {
@@ -1142,8 +1146,8 @@ namespace CrateModLoader
                             targetRegion = r.Region;
                             Modder = modder;
                             RegionNotSupported = false;
+                            break;
                         }
-                        break;
                     }
                 }
 
@@ -1323,23 +1327,6 @@ namespace CrateModLoader
         public void UpdateInputSetting()
         {
             inputDirectoryMode = button_radio_FromFolder.Checked;
-
-            //Temp until fix
-            if (inputDirectoryMode)
-            {
-                outputDirectoryMode = true;
-                button_radio_ToFolder.Checked = true;
-                button_radio_ToROM.Checked = false;
-                button_radio_ToROM.Enabled = false;
-                textbox_output_path.Text = "";
-                outputISOpath = "";
-                outputPathSet = false;
-                startButton.Enabled = false;
-            }
-            else
-            {
-                button_radio_ToROM.Enabled = true;
-            }
 
             processText.Text = "Waiting for input...";
             textbox_input_path.Text = "";
