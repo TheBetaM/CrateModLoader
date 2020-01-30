@@ -5,6 +5,8 @@
 Randomizer and mod loader for PS1, PS2, PSP, XBOX, GC and Wii games.  
 It detects, extracts, modifies and rebuilds disc image files and directories in an easy to setup way.  
   
+Visit the [Releases](https://github.com/TheBetaM/CrateModLoader/releases) section to find the latest release.  
+  
 See [this list](../master/GAMES.md) for supported games and their features.
 
 # Building Prerequisites
