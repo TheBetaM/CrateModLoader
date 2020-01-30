@@ -75,7 +75,7 @@ namespace CrateModLoader
                 path_RCF_frontend = "default.rcf";
                 basePath = AppDomain.CurrentDomain.BaseDirectory + @"temp\PSP_GAME\USRDIR\";
             }
-            else
+            else if  (Program.ModProgram.isoType == ConsoleMode.XBOX360)
             {
                 path_RCF_frontend = "default.rcf";
                 basePath = AppDomain.CurrentDomain.BaseDirectory + @"temp\";

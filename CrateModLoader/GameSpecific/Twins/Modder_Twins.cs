@@ -148,6 +148,12 @@ namespace CrateModLoader
 
         public override void StartModProcess()
         {
+            if (Program.ModProgram.isoType == ConsoleMode.XBOX)
+            {
+                // No need to extract BD/BH on Xbox, but RMX/SMX level files are not working in the API at the moment
+                return;
+            }
+
             // Extract BD
             bdPath = System.IO.Path.Combine(Program.ModProgram.extractedPath, "cml_extr/");
             Directory.CreateDirectory(bdPath);
