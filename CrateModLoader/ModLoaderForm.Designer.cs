@@ -354,12 +354,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.Controls.Add(this.radioButton_FromROM);
             this.panel1.Controls.Add(this.radioButton_FromFolder);
-            this.panel1.Enabled = false;
             this.panel1.Location = new System.Drawing.Point(80, 85);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(253, 19);
             this.panel1.TabIndex = 26;
-            this.panel1.Visible = false;
             // 
             // panel2
             // 

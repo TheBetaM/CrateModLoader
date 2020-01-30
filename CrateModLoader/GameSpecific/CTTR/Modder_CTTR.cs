@@ -140,7 +140,17 @@ namespace CrateModLoader
                     new RegionCode() {
                     Name = "ULES-00168",
                     Region = RegionType.NTSC_J },
-                }
+                },
+                RegionID_XBOX = new RegionCode[] {
+                    new RegionCode() {
+                    Name = "Crash Tag Team Racing",
+                    Region = RegionType.NTSC_U,
+                    RegionNumber = 7, },
+                    new RegionCode() {
+                    Name = "Crash Tag Team Racing",
+                    Region = RegionType.PAL,
+                    RegionNumber = 4, },
+                },
             };
 
             Options.Add(RandomizeCharacters, new ModOption("Randomize Platforming & Starting Characters")); // todo: change missions to unlock crash and cortex if they're not in the starting pool
@@ -322,6 +332,45 @@ namespace CrateModLoader
                 path_RCF_onfoot6 = @"files\onfoot\onfoot6.rcf";
                 path_RCF_onfoot7 = @"files\onfoot\onfoot7.rcf";
             }
+            else
+            {
+                path_executable = @"default.xbe";
+                path_RCF_advent1 = @"advent\advent1.rcf";
+                path_RCF_advent2 = @"advent\advent2.rcf";
+                path_RCF_advent3 = @"advent\advent3.rcf";
+                path_RCF_adventa = @"advent\adventa.rcf";
+                path_RCF_common = @"common\common.rcf";
+                path_RCF_dino1 = @"dino\dino1.rcf";
+                path_RCF_dino2 = @"dino\dino2.rcf";
+                path_RCF_dino3 = @"dino\dino3.rcf";
+                path_RCF_dinoa = @"dino\dinoa.rcf";
+                path_RCF_egypt1 = @"egypt\egypt1.rcf";
+                path_RCF_egypt2 = @"egypt\egypt2.rcf";
+                path_RCF_egypt3 = @"egypt\egypt3.rcf";
+                path_RCF_fairy1 = @"fairy\fairy1.rcf";
+                path_RCF_fairy2 = @"fairy\fairy2.rcf";
+                path_RCF_fairy3 = @"fairy\fairy3.rcf";
+                path_RCF_fairys = @"fairy\fairys.rcf";
+                path_RCF_frontend = @"common\frontend.rcf";
+                path_RCF_solar1 = @"solar\solar1.rcf";
+                path_RCF_solar2 = @"solar\solar2.rcf";
+                path_RCF_solar3 = @"solar\solar3.rcf";
+                path_RCF_solars = @"solar\solars.rcf";
+                path_RCF_onfoot0 = @"onfoot\onfoot.rcf";
+                path_RCF_onfoot1 = @"onfoot\onfoot1.rcf";
+                path_RCF_onfoot2 = @"onfoot\onfoot2.rcf";
+                path_RCF_onfoot3 = @"onfoot\onfoot3.rcf";
+                path_RCF_onfoot5 = @"onfoot\onfoot5.rcf";
+                path_RCF_onfoot6 = @"onfoot\onfoot6.rcf";
+                path_RCF_0 = @"0\0.rcf";
+                path_RCF_1 = @"1\1.rcf";
+                path_RCF_2 = @"2\2.rcf";
+                path_RCF_3 = @"3\3.rcf";
+                path_RCF_4 = @"4\4.rcf";
+                path_RCF_5 = @"5\5.rcf";
+                path_RCF_6 = @"6\6.rcf";
+                path_RCF_sound = @"sound\sound.rcf";
+            }
         }
 
         public override void StartModProcess()
@@ -335,8 +384,6 @@ namespace CrateModLoader
 
             randState = new Random(Program.ModProgram.randoSeed);
 
-            //Fixes names for PS2
-            //File.Move(Program.ModProgram.extractedPath + path_RCF_frontend + ";1", Program.ModProgram.extractedPath + path_RCF_frontend);
 
             bool Editing_Credits = true;
             bool Editing_DefaultCommon = false;
@@ -364,10 +411,7 @@ namespace CrateModLoader
             {
                 Mod_EditCredits();
             }
-            
 
-            //Fixes names for PS2
-            //File.Move(Program.ModProgram.extractedPath + path_RCF_frontend, Program.ModProgram.extractedPath + path_RCF_frontend + ";1");
         }
 
         void EditDefaultAndCommon()

@@ -296,6 +296,12 @@
     <Content Include="Tools\CTR\filenames_alt.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Tools\extract-xiso LICENSE.TXT">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Tools\extract-xiso.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Tools\gcit.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

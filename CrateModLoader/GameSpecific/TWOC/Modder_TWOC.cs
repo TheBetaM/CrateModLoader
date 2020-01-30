@@ -47,6 +47,21 @@ namespace CrateModLoader
                     Name = "GCBJA4",
                     Region = RegionType.NTSC_J },
                 },
+                RegionID_XBOX = new RegionCode[]
+                {
+                    new RegionCode() {
+                        Name = "Crash Bandicoot: tWoC",
+                        Region = RegionType.NTSC_U,
+                        RegionNumber = 1, },
+                    new RegionCode() {
+                        Name = "Crash Bandicoot: tWoC",
+                        Region = RegionType.NTSC_U,
+                        RegionNumber = 7, },
+                    new RegionCode() {
+                        Name = "Crash Bandicoot: tWoC",
+                        Region = RegionType.PAL,
+                        RegionNumber = 4, },
+                },
             };
         }
 

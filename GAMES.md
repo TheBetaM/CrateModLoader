@@ -25,7 +25,7 @@ API by DCxDemo. (https://github.com/DCxDemo/CTR-tools)
 - TBD  
   
 ## Crash Nitro Kart
-Supported: All PS2 versions (.ISO format), All GC versions (.ISO format)  
+Supported: All PS2 versions (.ISO format), All GC versions (.ISO format), All XBOX versions (.ISO format)  
 Tools/API by BetaM, ManDude and eezstreet.  
 ### Features:  
 - Randomize Adventure Hub Warp Pads & Cups
@@ -42,7 +42,7 @@ Tools/API by BetaM, ManDude and eezstreet.
 - Version, seed and settings visible in the Credits screen
   
 ## Crash Twinsanity
-Supported: All PS2 versions (.ISO format)  
+Supported: All PS2 versions (.ISO format) (XBOX not supported yet)  
 API by NeoKesha, Smartkin, ManDude and Marko. (https://github.com/Smartkin/twinsanity-editor)  
 ### Features:  
 - Randomize Regular Crates 
@@ -58,7 +58,7 @@ API by NeoKesha, Smartkin, ManDude and Marko. (https://github.com/Smartkin/twins
 - Version, seed and settings visible in the Autosave Disabled screen  
   
 ## Crash Tag Team Racing
-Supported: All PS2 versions (.ISO format), All PSP versions (.ISO format) (GC not yet supported)  
+Supported: All PS2 versions (.ISO format), All PSP versions (.ISO format), All XBOX versions (.ISO format) (GC not supported yet)  
 APIs by NeoKesha and BetaM. (based on https://github.com/handsomematt/Pure3D)  
 ### Features:  
 - Randomize Platforming & Starting Characters
@@ -80,13 +80,13 @@ APIs by NeoKesha and BetaM. (based on https://github.com/handsomematt/Pure3D)
 - Version, seed and settings visible in the Credits screen
   
 ## Crash of the Titans
-Supported: All PS2 versions (.ISO format), All Wii versions (.ISO/.WBFS formats), All PSP versions (.ISO format)  
+Supported: All PS2 versions (.ISO format), All Wii versions (.ISO/.WBFS formats), All PSP versions (.ISO format) (XBOX 360 not supported yet)  
 API by NeoKesha.  
 ### Features:   
 - Test mod: Increased camera FOV in Episode 1
   
 ## Crash Mind Over Mutant
-Supported: All PS2 versions (.ISO format), All Wii versions (.ISO/.WBFS formats), All PSP versions (.ISO format)  
+Supported: All PS2 versions (.ISO format), All Wii versions (.ISO/.WBFS formats), All PSP versions (.ISO format) (XBOX 360 not supported yet)  
 API by NeoKesha.  
 ### Features:    
 - Version, seed and settings visible in the Credits screen  

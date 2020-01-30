@@ -74,7 +74,17 @@ namespace CrateModLoader
                     new RegionCode() {
                     Name = "GC8JA4",
                     Region = RegionType.NTSC_J },
-                }
+                },
+                RegionID_XBOX = new RegionCode[] {
+                    new RegionCode() {
+                    Name = "Crash Nitro Kart",
+                    Region = RegionType.NTSC_U,
+                    RegionNumber = 7, },
+                    new RegionCode() {
+                    Name = "Crash Nitro Kart",
+                    Region = RegionType.PAL,
+                    RegionNumber = 4, },
+                },
             };
 
             Options.Add(RandomizeHubPads, new ModOption("Randomize Adventure Warp Pads & Cups"));
@@ -119,7 +129,7 @@ namespace CrateModLoader
             {
                 GobExtract.StartInfo.Arguments = "temp/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/assets.gob" + " " + "temp/P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "/files/cml_extr";
             }
-            else if (Program.ModProgram.isoType == ConsoleMode.PS2)
+            else
             {
                 GobExtract.StartInfo.Arguments = "temp/ASSETS.GOB" + " " + "temp/cml_extr";
             }
@@ -136,6 +146,12 @@ namespace CrateModLoader
             {
                 File.Delete(AppDomain.CurrentDomain.BaseDirectory + "/temp/ASSETS.GFC");
                 File.Delete(AppDomain.CurrentDomain.BaseDirectory + "/temp/ASSETS.GOB");
+                path_gob_extracted = AppDomain.CurrentDomain.BaseDirectory + "/temp/cml_extr/";
+            }
+            else
+            {
+                File.Delete(AppDomain.CurrentDomain.BaseDirectory + "/temp/assets.gfc");
+                File.Delete(AppDomain.CurrentDomain.BaseDirectory + "/temp/assets.gob");
                 path_gob_extracted = AppDomain.CurrentDomain.BaseDirectory + "/temp/cml_extr/";
             }
 
@@ -242,7 +258,36 @@ namespace CrateModLoader
                 }
                 else
                 {
-                    //Xbox
+                    if (File.Exists(Program.ModProgram.extractedPath + "/video/intro/alchemy.sfd"))
+                        File.Delete(Program.ModProgram.extractedPath + "/video/intro/alchemy.sfd");
+                    if (File.Exists(Program.ModProgram.extractedPath + "/video/intro/fco.sfd"))
+                        File.Delete(Program.ModProgram.extractedPath + "/video/intro/fco.sfd");
+                    if (File.Exists(Program.ModProgram.extractedPath + "/video/intro/fcodut.sfd"))
+                        File.Delete(Program.ModProgram.extractedPath + "/video/intro/fcodut.sfd");
+                    if (File.Exists(Program.ModProgram.extractedPath + "/video/intro/fcoeng.sfd"))
+                        File.Delete(Program.ModProgram.extractedPath + "/video/intro/fcoeng.sfd");
+                    if (File.Exists(Program.ModProgram.extractedPath + "/video/intro/fcofre.sfd"))
+                        File.Delete(Program.ModProgram.extractedPath + "/video/intro/fcofre.sfd");
+                    if (File.Exists(Program.ModProgram.extractedPath + "/video/intro/fcoger.sfd"))
+                        File.Delete(Program.ModProgram.extractedPath + "/video/intro/fcoger.sfd");
+                    if (File.Exists(Program.ModProgram.extractedPath + "/video/intro/fcoita.sfd"))
+                        File.Delete(Program.ModProgram.extractedPath + "/video/intro/fcoita.sfd");
+                    if (File.Exists(Program.ModProgram.extractedPath + "/video/intro/fcospa.sfd"))
+                        File.Delete(Program.ModProgram.extractedPath + "/video/intro/fcospa.sfd");
+                    if (File.Exists(Program.ModProgram.extractedPath + "/video/intro/sco.sfd"))
+                        File.Delete(Program.ModProgram.extractedPath + "/video/intro/sco.sfd");
+                    if (File.Exists(Program.ModProgram.extractedPath + "/video/intro/scodut.sfd"))
+                        File.Delete(Program.ModProgram.extractedPath + "/video/intro/scodut.sfd");
+                    if (File.Exists(Program.ModProgram.extractedPath + "/video/intro/scoeng.sfd"))
+                        File.Delete(Program.ModProgram.extractedPath + "/video/intro/scoeng.sfd");
+                    if (File.Exists(Program.ModProgram.extractedPath + "/video/intro/scofre.sfd"))
+                        File.Delete(Program.ModProgram.extractedPath + "/video/intro/scofre.sfd");
+                    if (File.Exists(Program.ModProgram.extractedPath + "/video/intro/scoger.sfd"))
+                        File.Delete(Program.ModProgram.extractedPath + "/video/intro/scoger.sfd");
+                    if (File.Exists(Program.ModProgram.extractedPath + "/video/intro/scoita.sfd"))
+                        File.Delete(Program.ModProgram.extractedPath + "/video/intro/scoita.sfd");
+                    if (File.Exists(Program.ModProgram.extractedPath + "/video/intro/scospa.sfd"))
+                        File.Delete(Program.ModProgram.extractedPath + "/video/intro/scospa.sfd");
                 }
             }
             if (Options[RandomizeCharacters].Enabled)
@@ -1621,6 +1666,10 @@ namespace CrateModLoader
             else if (Program.ModProgram.isoType == ConsoleMode.PS2)
             {
                 GobExtract.StartInfo.Arguments = "temp/ASSETS.GOB" + " " + "temp/cml_extr" + " -create 1";
+            }
+            else
+            {
+                GobExtract.StartInfo.Arguments = "temp/assets.gob" + " " + "temp/cml_extr" + " -create 1";
             }
             GobExtract.Start();
             GobExtract.WaitForExit();

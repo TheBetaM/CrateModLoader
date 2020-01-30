@@ -76,9 +76,12 @@ namespace CrateModLoader
                 path_RCF_frontend = "default.rcf";
                 basePath = AppDomain.CurrentDomain.BaseDirectory + @"temp\PSP_GAME\USRDIR\";
             }
+            else
+            {
+                path_RCF_frontend = "default.rcf";
+                basePath = AppDomain.CurrentDomain.BaseDirectory + @"temp\";
+            }
 
-            //Fixes names for PS2
-            //File.Move(Program.ModProgram.extractedPath + path_RCF_frontend + ";1", Program.ModProgram.extractedPath + path_RCF_frontend);
             RCF rcf_frontend = new RCF();
             rcf_frontend.OpenRCF(basePath + path_RCF_frontend);
 
@@ -144,9 +147,6 @@ namespace CrateModLoader
                 Directory.Delete(path_extr);
             }
 
-
-            //Fixes names for PS2
-            //File.Move(Program.ModProgram.extractedPath + path_RCF_frontend, Program.ModProgram.extractedPath + path_RCF_frontend + ";1");
         }
     }
 }

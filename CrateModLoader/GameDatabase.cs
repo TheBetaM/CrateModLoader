@@ -27,6 +27,10 @@ namespace CrateModLoader
         public RegionCode[] RegionID_GCN;
         /// <summary> List of region identifiers for WII games. </summary>
         public RegionCode[] RegionID_WII;
+        /// <summary> List of region identifiers for XBOX games. </summary>
+        public RegionCode[] RegionID_XBOX;
+        /// <summary> List of region identifiers for XBOX 360 games. </summary>
+        public RegionCode[] RegionID_XBOX360;
     }
 
     public struct RegionCode
@@ -35,5 +39,7 @@ namespace CrateModLoader
         public RegionType Region;
         public string ExecName;
         public string CodeName;
+        public int RegionNumber;
+        public int VersionNumber;
     }
 }

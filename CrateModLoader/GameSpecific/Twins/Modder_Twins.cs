@@ -53,6 +53,16 @@ namespace CrateModLoader
                     ExecName = "SLPM_658.01",
                     CodeName = "SLPM_65801", },
                 },
+                RegionID_XBOX = new RegionCode[] {
+                    new RegionCode() {
+                    Name = "Crash Twinsanity",
+                    Region = RegionType.NTSC_U,
+                    RegionNumber = 7, },
+                    new RegionCode() {
+                    Name = "Crash Twinsanity",
+                    Region = RegionType.PAL,
+                    RegionNumber = 4, },
+                },
             };
 
             Options.Add(RandomizeCrateTypes, new ModOption("Randomize Regular Crates")); // TODO: Make this a toggle between CrateTypes/AllCrates in the mod menu?
