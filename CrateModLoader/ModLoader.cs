@@ -441,8 +441,8 @@ namespace CrateModLoader
 
             if (inputDirectoryMode && !outputDirectoryMode)
             {
-                // To fix: PS1, PS2 require ISO label; PSP requires ISO file; GCN/Wii needs testing but should work with the right files
-                if (isoType == ConsoleMode.PS1 || isoType == ConsoleMode.PS2 || isoType == ConsoleMode.PSP)
+                // To fix: PS1, PS2 require ISO label; PSP requires ISO file; GCN: Incorrect paths because of product code folder
+                if (isoType == ConsoleMode.PS1 || isoType == ConsoleMode.PS2 || isoType == ConsoleMode.PSP || isoType == ConsoleMode.GCN)
                 {
                     throw new Exception("Building ROMs from directories with this console is not supported yet!");
                 }
