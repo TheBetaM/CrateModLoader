@@ -656,7 +656,7 @@ namespace CrateModLoader
                 }
                 else
                 {
-                    CodeText = File.ReadAllLines(bdPath + "/Language/Code/Japanese.txt");
+                    CodeText = File.ReadAllLines(bdPath + "/Language/Code/Japanese.txt", System.Text.Encoding.Default);
                 }
 
                 List<string> CodeText_LineList = new List<string>();
@@ -667,13 +667,21 @@ namespace CrateModLoader
 
                 for (int i = 0; i < CodeText_LineList.Count; i++)
                 {
-                    if (CodeText_LineList[i] == "to enable autosave,~return to the pause menu~and re-save the game.") //todo: japanese equivalent
+                    if (CodeText_LineList[i] == "to enable autosave,~return to the pause menu~and re-save the game.")
                     {
                         CodeText_LineList[i] = "to enable autosave,~return to the pause menu~and re-save the game.~crate mod loader " + Program.ModProgram.releaseVersionString.ToLower() + "~" + "seed: " + Program.ModProgram.randoSeed + "~" + "options: " + Program.ModProgram.optionsSelectedString.ToLower() + "";
                     }
                     else if (CodeText_LineList[i] == "autosave disabled")
                     {
                         CodeText_LineList[i] = "autosave disabled~";
+                    }
+                    else if (i == 39 && Program.ModProgram.targetRegion == RegionType.NTSC_J)
+                    {
+                        CodeText_LineList[i] += "~";
+                    }
+                    else if (i == 40 && Program.ModProgram.targetRegion == RegionType.NTSC_J)
+                    {
+                        CodeText_LineList[i] += "~" + Program.ModProgram.releaseVersionString.ToLower() + "~" + "" + Program.ModProgram.randoSeed + "~" + "" + Program.ModProgram.optionsSelectedString.ToLower() + "";
                     }
                 }
 
@@ -693,7 +701,7 @@ namespace CrateModLoader
                 }
                 else
                 {
-                    File.WriteAllLines(bdPath + "/Language/Code/Japanese.txt", CodeText);
+                    File.WriteAllLines(bdPath + "/Language/Code/Japanese.txt", CodeText, System.Text.Encoding.Default);
                 }
             }
 
@@ -1709,5 +1717,6 @@ namespace CrateModLoader
                 }
             }
         }
+
     }
 }
