@@ -64,8 +64,8 @@ namespace CrateModLoader
         public override void StartModProcess()
         {
             string path_RCF_frontend = "DEFAULT.RCF";
-
             basePath = AppDomain.CurrentDomain.BaseDirectory + @"temp\";
+
             if (Program.ModProgram.isoType == ConsoleMode.WII)
             {
                 path_RCF_frontend = "default.rcf";

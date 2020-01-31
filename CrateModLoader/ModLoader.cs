@@ -35,6 +35,7 @@ namespace CrateModLoader
         NTSC_U = 0,
         PAL = 1,
         NTSC_J = 2,
+        Global = 3,
     }
 
     //Crate Mod Loader Main Class
@@ -1275,6 +1276,9 @@ namespace CrateModLoader
                     break;
                 case RegionType.PAL:
                     region_mod = "PAL";
+                    break;
+                case RegionType.Global:
+                    region_mod = "";
                     break;
                 default:
                     region_mod = "(Unknown Region)";

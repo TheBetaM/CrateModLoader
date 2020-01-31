@@ -103,7 +103,7 @@ namespace CrateModLoader
             //Options.Add(NoMask, new ModOption()); //TODO, hinthistory.csv
             Options.Add(DisableFadeout, new ModOption("Disable Fadeout/Flash Overlay"));
             Options.Add(DisablePopups, new ModOption("Disable Unlock Popups"));
-            Options.Add(SpeedUpMaskHints, new ModOption("Speed Up Mask Hints"));
+            Options.Add(SpeedUpMaskHints, new ModOption("Speed Up Mask Hint Appearance"));
             Options.Add(NoAlchemyIntro, new ModOption("Remove Intro Videos", true));
         }
 

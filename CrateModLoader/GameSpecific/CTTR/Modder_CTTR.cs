@@ -75,7 +75,7 @@ namespace CrateModLoader
         internal const int PreventSequenceBreaks        = 16;
         internal const int RandomizeNPCs                = 17;
         internal const int AddPowerupsTimeTrial         = 18;
-        internal const int ReokaceCrashinatorConeAttack = 19;
+        internal const int ReplaceCrashinatorConeAttack = 19;
 
         public Modder_CTTR()
         {
@@ -153,26 +153,26 @@ namespace CrateModLoader
                 },
             };
 
-            Options.Add(RandomizeCharacters, new ModOption("Randomize Platforming & Starting Characters")); // todo: change missions to unlock crash and cortex if they're not in the starting pool
-            Options.Add(RandomizeHubs, new ModOption("Randomize Hub Entrances")); // todo: gem keys in missionobjectives_x and platforming_objects, unlock failure message, key missions
+            Options.Add(RandomizeCharacters, new ModOption("Randomize Platforming Character")); // todo: change missions to unlock crash and cortex if they're not in the starting pool
+            //Options.Add(RandomizeHubs, new ModOption("Randomize Hub Entrances")); // todo: gem keys in missionobjectives_x and platforming_objects, unlock failure message, key missions
             Options.Add(RandomizeTracks, new ModOption("Randomize Track Entrances")); // todo: arenas
             Options.Add(RandomizeMinigames, new ModOption("Randomize Minigames")); // todo: minigame challenges aswell
-            Options.Add(RandomizeMissions, new ModOption("Randomize Missions"));// todo, genericobjectives, missionobjectives_x, level NIS+NPC
-            Options.Add(RandomizeCarStats, new ModOption("Randomize Car Stats")); // todo: vehicles, levels/common for speed tier values
+            //Options.Add(RandomizeMissions, new ModOption("Randomize Missions"));// todo, genericobjectives, missionobjectives_x, level NIS+NPC
+            //Options.Add(RandomizeCarStats, new ModOption("Randomize Car Stats")); // todo: vehicles, levels/common for speed tier values
             Options.Add(RandomizeRaceLaps, new ModOption("Randomize Race Laps"));
-            Options.Add(RandomizeBattleKOs, new ModOption("Randomize Battle KO's"));
-            Options.Add(RandomizeCrashinator, new ModOption("Randomize Crashinator")); // todo: kamikaze
-            Options.Add(RandomizeRunAndGun, new ModOption("Randomize Run & Gun")); // todo: railshooter
-            Options.Add(RandomizeStuntArena, new ModOption("Randomize Stunt Arena")); //todo: permament_objects, stunt_objects
-            Options.Add(RandomizeSurfaceParams, new ModOption("Randomize Surface Parameters")); //todo: car_effect_objects
-            Options.Add(RandomizePowerupDistribution, new ModOption("Randomize Powerup Distribution")); // todo: driving_objects
-            Options.Add(RandomizePowerupEffects, new ModOption("Randomize Powerup Effects")); //todo: driving_objects
-            Options.Add(RandomizeWeapons, new ModOption("Randomize Weapons")); // todo: turretmotifs
+            //Options.Add(RandomizeBattleKOs, new ModOption("Randomize Battle KO's")); // doesn't work?
+            //Options.Add(RandomizeCrashinator, new ModOption("Randomize Crashinator")); // todo: kamikaze
+            //Options.Add(RandomizeRunAndGun, new ModOption("Randomize Run & Gun")); // todo: railshooter
+            //Options.Add(RandomizeStuntArena, new ModOption("Randomize Stunt Arena")); //todo: permament_objects, stunt_objects
+            //Options.Add(RandomizeSurfaceParams, new ModOption("Randomize Surface Parameters")); //todo: car_effect_objects
+            //Options.Add(RandomizePowerupDistribution, new ModOption("Randomize Powerup Distribution")); // todo: driving_objects
+            //Options.Add(RandomizePowerupEffects, new ModOption("Randomize Powerup Effects")); //todo: driving_objects
+            //Options.Add(RandomizeWeapons, new ModOption("Randomize Weapons")); // todo: turretmotifs
             //Options.Add(RandomizeNPCs, new ModOption("Randomize NPC Locations")); // todo: NPC - locator list
-            Options.Add(AddUnusedCutscenes, new ModOption("Add Unused Cutscenes")); // todo, NIS + an objective?
+            //Options.Add(AddUnusedCutscenes, new ModOption("Add Unused Cutscenes")); // todo, NIS + an objective?
             //Options.Add(AddPowerupsTimeTrial, new ModOption("Add Powerups in Time Trial")); // todo: timetrial/props, see: bonus11
-            Options.Add(PreventSequenceBreaks, new ModOption("Prevent Sequence Breaks")); // todo, genericobjectives
-            //Options.Add(ReokaceCrashinatorConeAttack, new ModOption("Replace Crashinator with Cone Attack")); // todo
+            Options.Add(PreventSequenceBreaks, new ModOption("Prevent Sequence Breaks"));
+            //Options.Add(ReplaceCrashinatorConeAttack, new ModOption("Replace Crashinator with Cone Attack")); // todo
         }
 
         public Random randState = new Random();
@@ -389,15 +389,16 @@ namespace CrateModLoader
             bool Editing_DefaultCommon = false;
 
             if (Options[RandomizeCharacters].Enabled ||
-                Options[RandomizeHubs].Enabled ||
+                //Options[RandomizeHubs].Enabled ||
                 Options[RandomizeTracks].Enabled ||
                 Options[RandomizeMinigames].Enabled ||
-                Options[RandomizeMissions].Enabled ||
-                Options[RandomizeCarStats].Enabled ||
-                Options[RandomizeRaceLaps].Enabled ||
-                Options[RandomizeBattleKOs].Enabled ||
-                Options[RandomizeCrashinator].Enabled ||
-                Options[RandomizeRunAndGun].Enabled)
+                Options[PreventSequenceBreaks].Enabled ||
+                //Options[RandomizeMissions].Enabled ||
+                //Options[RandomizeCarStats].Enabled ||
+                Options[RandomizeRaceLaps].Enabled )
+                //Options[RandomizeBattleKOs].Enabled ||
+                //Options[RandomizeCrashinator].Enabled ||
+                //Options[RandomizeRunAndGun].Enabled)
             {
                 Editing_DefaultCommon = true;
             }
@@ -437,6 +438,7 @@ namespace CrateModLoader
             }
             randHubs = new List<int>();
             randGems = new List<int>();
+            /*
             if (Options[RandomizeHubs].Enabled)
             {
                 List<int> possibleHubs = new List<int>();
@@ -470,6 +472,7 @@ namespace CrateModLoader
                     }
                 }
             }
+            */
             randTracks = new List<int>();
             randMinigames = new List<int>();
             if (Options[RandomizeTracks].Enabled)
@@ -506,10 +509,11 @@ namespace CrateModLoader
             {
                 for (int i = 0; i < 15; i++)
                 {
-                    randLaps.Add(randState.Next(1,10));
+                    randLaps.Add(randState.Next(1,7));
                 }
             }
             randKOs = new List<int>();
+            /*
             if (Options[RandomizeBattleKOs].Enabled)
             {
                 for (int i = 0; i < 5; i++)
@@ -517,6 +521,7 @@ namespace CrateModLoader
                     randKOs.Add(randState.Next(5, 20));
                 }
             }
+            */
 
             if (path_RCF_default != "")
             {
@@ -577,10 +582,12 @@ namespace CrateModLoader
             {
                 Randomize_Characters(path_extr, rcf_default, randChars);
             }
+            /*
             if (Options[RandomizeHubs].Enabled)
             {
                 Randomize_Hubs(path_extr, rcf_default, randHubs, randGems);
             }
+            */
             if (Options[RandomizeTracks].Enabled)
             {
                 Randomize_Tracks(path_extr, rcf_default, randTracks);
@@ -593,9 +600,15 @@ namespace CrateModLoader
             {
                 Randomize_Race_Laps(path_extr, rcf_default, randLaps);
             }
+            /*
             if (Options[RandomizeBattleKOs].Enabled)
             {
                 Randomize_Battle_KOs(path_extr, rcf_default, randKOs);
+            }
+            */
+            if (Options[PreventSequenceBreaks].Enabled)
+            {
+                Mod_PreventSequenceBreaks(path_extr, rcf_default);
             }
 
             rcf_default.Recalculate();
@@ -615,10 +628,6 @@ namespace CrateModLoader
                 }
                 foreach (DirectoryInfo dir in di.EnumerateDirectories())
                 {
-                    //Console.WriteLine("di:" + di.FullName);
-                    //Console.WriteLine("diame:" + di.Name);
-                    //Console.WriteLine("dir:" + dir.FullName);
-                    //Console.WriteLine("dirame:" + dir.Name);
                     dir.Delete(true);
                 }
 
@@ -628,6 +637,7 @@ namespace CrateModLoader
 
         void Randomize_Characters(string path_extr, RCF rcf_file, List<int> randChars)
         {
+            /* TODO later, because it requires mission logic to unlock Crash/Cortex
             if (System.IO.File.Exists(path_extr + @"design\permanent\genericobjectives.god"))
             {
                 string[] startup_lines = System.IO.File.ReadAllLines(path_extr + @"design\permanent\genericobjectives.god");
@@ -668,6 +678,7 @@ namespace CrateModLoader
                     }
                 }
             }
+            */
             if (randChars[0] != (int)CTTR_Data.DriverID.Crash && System.IO.File.Exists(path_extr + @"design\permanent\skins.god"))
             {
                 string[] skins_lines = System.IO.File.ReadAllLines(path_extr + @"design\permanent\skins.god");
@@ -1164,6 +1175,103 @@ namespace CrateModLoader
                     if (rcf_file.Header.T2File[i].Name == @"design\startup.god")
                     {
                         rcf_file.Header.T2File[i].External = path_extr + @"design\startup.god";
+                        break;
+                    }
+                }
+            }
+        }
+
+        void Mod_PreventSequenceBreaks(string path_extr, RCF rcf_file)
+        {
+            if (System.IO.File.Exists(path_extr + @"design\permanent\genericobjectives.god"))
+            {
+                string[] objective_lines = System.IO.File.ReadAllLines(path_extr + @"design\permanent\genericobjectives.god");
+                List<string> LineList = new List<string>();
+                for (int i = 0; i < objective_lines.Length; i++)
+                {
+                    LineList.Add(objective_lines[i]);
+                }
+
+                int List_Start = 0;
+                int List_End = 0;
+                List<string> ChangeHubObjective = new List<string>();
+                for (int i = 0; i < 8; i++)
+                {
+                    if (CTTR_Data.LUA_LoadObject(LineList, "Objective", "ChangeLevelMidwayToFairy", ref List_Start, ref List_End, ChangeHubObjective))
+                    {
+                        ChangeHubObjective.Insert(2, "this.AddRequirement_CheckNamedFlag(\"GateUnlocked_fairy\",true)");
+                        CTTR_Data.LUA_SaveObject(LineList, "Objective", "ChangeLevelMidwayToFairy", ChangeHubObjective);
+                    }
+                    if (CTTR_Data.LUA_LoadObject(LineList, "Objective", "ChangeLevelMidwayToDino", ref List_Start, ref List_End, ChangeHubObjective))
+                    {
+                        ChangeHubObjective.Insert(2, "this.AddRequirement_CheckNamedFlag(\"GateUnlocked_dino\",true)");
+                        CTTR_Data.LUA_SaveObject(LineList, "Objective", "ChangeLevelMidwayToDino", ChangeHubObjective);
+                    }
+                    if (CTTR_Data.LUA_LoadObject(LineList, "Objective", "ChangeLevelMidwayToEgypt", ref List_Start, ref List_End, ChangeHubObjective))
+                    {
+                        ChangeHubObjective.Insert(2, "this.AddRequirement_CheckNamedFlag(\"GateUnlocked_egypt\",true)");
+                        CTTR_Data.LUA_SaveObject(LineList, "Objective", "ChangeLevelMidwayToEgypt", ChangeHubObjective);
+                    }
+                    if (CTTR_Data.LUA_LoadObject(LineList, "Objective", "ChangeLevelMidwayToSolar", ref List_Start, ref List_End, ChangeHubObjective))
+                    {
+                        ChangeHubObjective.Insert(2, "this.AddRequirement_CheckNamedFlag(\"GateUnlocked_solar\",true)");
+                        CTTR_Data.LUA_SaveObject(LineList, "Objective", "ChangeLevelMidwayToSolar", ChangeHubObjective);
+                    }
+                    ChangeHubObjective.Clear();
+                }
+
+                objective_lines = new string[LineList.Count];
+                for (int i = 0; i < LineList.Count; i++)
+                {
+                    objective_lines[i] = LineList[i];
+                }
+
+                System.IO.File.WriteAllLines(path_extr + @"design\permanent\genericobjectives.god", objective_lines);
+
+                for (int i = 0; i < rcf_file.Header.T2File.Length; i++)
+                {
+                    if (rcf_file.Header.T2File[i].Name == @"design\permanent\genericobjectives.god")
+                    {
+                        rcf_file.Header.T2File[i].External = path_extr + @"design\permanent\genericobjectives.god";
+                        break;
+                    }
+                }
+            }
+            if (System.IO.File.Exists(path_extr + @"design\permanent\missionobjectives_fairy.god"))
+            {
+                string[] objective_lines = System.IO.File.ReadAllLines(path_extr + @"design\permanent\missionobjectives_fairy.god");
+                List<string> LineList = new List<string>();
+                for (int i = 0; i < objective_lines.Length; i++)
+                {
+                    LineList.Add(objective_lines[i]);
+                }
+
+                int List_Start = 0;
+                int List_End = 0;
+                List<string> ChangeHubObjective = new List<string>();
+                for (int i = 0; i < 8; i++)
+                {
+                    if (CTTR_Data.LUA_LoadObject(LineList, "Objective", "DinoKeyCollection", ref List_Start, ref List_End, ChangeHubObjective))
+                    {
+                        ChangeHubObjective.Insert(2, "this.AddRequirement_CheckNamedFlag(\"WeenieUnlocked_fairy\",true)");
+                        CTTR_Data.LUA_SaveObject(LineList, "Objective", "DinoKeyCollection", ChangeHubObjective);
+                    }
+                    ChangeHubObjective.Clear();
+                }
+
+                objective_lines = new string[LineList.Count];
+                for (int i = 0; i < LineList.Count; i++)
+                {
+                    objective_lines[i] = LineList[i];
+                }
+
+                System.IO.File.WriteAllLines(path_extr + @"design\permanent\missionobjectives_fairy.god", objective_lines);
+
+                for (int i = 0; i < rcf_file.Header.T2File.Length; i++)
+                {
+                    if (rcf_file.Header.T2File[i].Name == @"design\permanent\missionobjectives_fairy.god")
+                    {
+                        rcf_file.Header.T2File[i].External = path_extr + @"design\permanent\missionobjectives_fairy.god";
                         break;
                     }
                 }

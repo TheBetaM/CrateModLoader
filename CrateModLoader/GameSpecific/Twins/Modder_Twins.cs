@@ -65,17 +65,17 @@ namespace CrateModLoader
                 },
             };
 
-            Options.Add(RandomizeCrateTypes, new ModOption("Randomize Regular Crates")); // TODO: Make this a toggle between CrateTypes/AllCrates in the mod menu?
-            Options.Add(RandomizeAllCrates, new ModOption("Randomize All Crates"));
+            Options.Add(RandomizeCrateTypes, new ModOption("Randomize Crate Types")); // TODO: Make this a toggle between CrateTypes/AllCrates in the mod menu?
+            Options.Add(RandomizeAllCrates, new ModOption("Randomize Individual Crates"));
             Options.Add(RandomizeGemLocations, new ModOption("Randomize Gem Locations"));
-            Options.Add(RandomizeEnemies, new ModOption("Randomize Enemies")); // TODO
+            //Options.Add(RandomizeEnemies, new ModOption("Randomize Enemies")); // TODO
             Options.Add(RandomizeMusic, new ModOption("Randomize Level Music"));
             Options.Add(RandomizeCharParams, new ModOption("Randomize Character Parameters"));
-            Options.Add(ModFlyingKick, new ModOption("Enable Flying Kick for Crash"));
+            Options.Add(ModFlyingKick, new ModOption("Enable Flying Kick for Crash (Jump + Circle)"));
             Options.Add(ModStompKick, new ModOption("Enable Stomp Kick for Crash (Flying Kick variation)"));
             Options.Add(ModDoubleJumpCortex, new ModOption("Enable Double Jump for Cortex"));
             Options.Add(ModDoubleJumpNina, new ModOption("Enable Double Jump for Nina"));
-            Options.Add(ModEnableUnusedEnemies, new ModOption("Enable Unused Enemies")); // TODO: frogensteins, ants in coreEnt
+            Options.Add(ModEnableUnusedEnemies, new ModOption("Enable Some Unused Enemies")); // TODO: frogensteins, ants in coreEnt
         }
 
         internal string bdPath = "";
@@ -480,7 +480,7 @@ namespace CrateModLoader
                 Twins_Edit_AllLevels = true;
             }
 
-            if (Options[ModFlyingKick].Enabled || Options[ModStompKick].Enabled || Options[ModDoubleJumpCortex].Enabled || Options[ModDoubleJumpNina].Enabled || Options[RandomizeEnemies].Enabled)
+            if (Options[ModFlyingKick].Enabled || Options[ModStompKick].Enabled || Options[ModDoubleJumpCortex].Enabled || Options[ModDoubleJumpNina].Enabled) // || Options[RandomizeEnemies].Enabled)
             {
                 Twins_Edit_AllLevels = true;
 
@@ -501,6 +501,7 @@ namespace CrateModLoader
                 Twins_Data.allScripts.Sort((x, y) => x.ID.CompareTo(y.ID));
                 Twins_Data.allObjects.Sort((x, y) => x.ID.CompareTo(y.ID));
 
+                /*
                 if (Options[RandomizeEnemies].Enabled)
                 {
                     EnemyReplaceList.Add(Twins_Data.ObjectID.GLOBAL_MONKEY);
@@ -611,6 +612,7 @@ namespace CrateModLoader
                         }
                     }
                 }
+                */
 
             }
 
@@ -729,10 +731,12 @@ namespace CrateModLoader
             {
                 RM_Randomize_Music(RM_Archive);
             }
+            /*
             if (Options[RandomizeEnemies].Enabled)
             {
                 RM_Randomize_Enemies(RM_Archive);
             }
+            */
             if (Options[ModStompKick].Enabled)
             {
                 RM_CharacterObjectMod(RM_Archive);
@@ -770,6 +774,7 @@ namespace CrateModLoader
             RM_LoadScripts(RM_Archive);
             RM_LoadObjects(RM_Archive);
 
+            /*
             if (Options[RandomizeEnemies].Enabled)
             {
                 List<Twins_Data.ObjectID> ExportedObjects = new List<Twins_Data.ObjectID>();
@@ -846,6 +851,7 @@ namespace CrateModLoader
                 }
                 //Twins_Data.ExportGameObject(ref RM_Archive, Twins_Data.ObjectID.SCHOOL_JANITOR, ref ExportedObjects);
             }
+            */
         }
 
         void Recursive_EditLevels(DirectoryInfo di)

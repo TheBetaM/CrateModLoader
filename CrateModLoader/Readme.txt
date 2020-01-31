@@ -1,8 +1,8 @@
 Crate Mod Loader 1.0
-Randomizer and mod loader for PS1, PS2, PSP, XBOX, GC and Wii games.  
+The all-in-one Randomizer and Mod Loader for console games.  
 It detects, extracts, modifies and rebuilds disc image files and directories in an easy to setup way.  
 
-Visit https://github.com/TheBetaM/CrateModLoader/blob/master/GAMES.md for a list of supported games and features.  
+Check the included Games.txt for a list of supported games and features.  
 
 Website: https://github.com/TheBetaM/CrateModLoader/
 
