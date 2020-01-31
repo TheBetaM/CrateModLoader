@@ -29,9 +29,9 @@ Features:
 - Randomize Powerup Effects
 - Randomize Drivers  
 - Randomize Karts  
-- Disable Fadeout Overlay
+- Disable Fadeout/Flash Overlay
 - Disable Unlock Popups
-- Speed Up Mask Hints  
+- Speed Up Mask Hint Appearance  
 - Remove Intro Videos  
 - Version, seed and settings visible in the Credits screen
   
@@ -39,37 +39,26 @@ Crash Twinsanity
 Supported: All PS2 versions (.ISO format) (XBOX not supported yet)  
 API by NeoKesha, Smartkin, ManDude and Marko. (https://github.com/Smartkin/twinsanity-editor)  
 Features:  
-- Randomize Regular Crates 
-- Randomize Gem Locations  
-- Randomize Enemies  
+- Randomize Crate Types  
+- Randomize Individual Crates
+- Randomize Gem Locations   
 - Randomize Level Music  
 - Randomize Character Parameters  
 - Enable Flying Kick for Crash  
 - Enable Stomp Kick for Crash (Flying Kick variation)  
 - Enable Double Jump for Cortex  
 - Enable Double Jump for Nina  
-- Enable Unused Enemies  
+- Enable Some Unused Enemies  
 - Version, seed and settings visible in the Autosave Disabled screen  
   
 Crash Tag Team Racing
 Supported: All PS2 versions (.ISO format), All PSP versions (.ISO format), All XBOX versions (.ISO format) (GC not supported yet)  
 APIs by NeoKesha and BetaM. (based on https://github.com/handsomematt/Pure3D)  
 Features:  
-- Randomize Platforming & Starting Characters
-- Randomize Hub Entrances
+- Randomize Platforming Character
 - Randomize Track Entrances
 - Randomize Minigames
-- Randomize Missions
-- Randomize Car Stats
 - Randomize Race Laps
-- Randomize Crashinator
-- Randomize Run & Gun
-- Randomize Stunt Arena
-- Randomize Surface Parameters
-- Randomize Powerup Distribution
-- Randomize Powerup Effects
-- Randomize Weapons
-- Add Unused Cutscenes
 - Prevent Sequence Breaks
 - Version, seed and settings visible in the Credits screen
   

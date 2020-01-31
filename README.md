@@ -7,7 +7,8 @@ It detects, extracts, modifies and rebuilds disc image files and directories in 
   
 Visit the [Releases](https://github.com/TheBetaM/CrateModLoader/releases) section to find the latest release.  
   
-See [this list](../master/GAMES.md) for supported games and their features.
+See [this list](../master/GAMES.md) for supported games and their features at the moment.  
+For games information in specific releases check their included Games.txt file.  
 
 # Building Prerequisites
 
