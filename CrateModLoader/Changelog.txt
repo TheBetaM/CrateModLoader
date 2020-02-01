@@ -14,5 +14,6 @@ Console ROMs supported:
 -PS1
 -PS2
 -PSP
+-XBOX
 -GC
 -Wii

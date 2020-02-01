@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("CrateModLoader")]
-[assembly: AssemblyDescription("Randomizer and mod loader for Crash games")]
+[assembly: AssemblyDescription("Randomizer and mod loader for console games")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("BetaM")]
 [assembly: AssemblyProduct("CrateModLoader")]
-[assembly: AssemblyCopyright("Copyright © BetaM 2019")]
+[assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
