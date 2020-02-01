@@ -205,8 +205,8 @@ namespace CrateModLoader
                 posList.Add((uint)Twins_Data.ObjectID.AKUAKUCRATE);
                 //posList.Add((uint)Twins_Data.ObjectID.EXTRA_LIFE_CRATE_CORTEX);
                 //posList.Add((uint)Twins_Data.ObjectID.EXTRA_LIFE_CRATE_NINA);
-                posList.Add((uint)Twins_Data.ObjectID.IRONCRATE);
-                posList.Add((uint)Twins_Data.ObjectID.IRONSPRINGCRATE);
+                //posList.Add((uint)Twins_Data.ObjectID.IRONCRATE);
+                //posList.Add((uint)Twins_Data.ObjectID.IRONSPRINGCRATE);
                 posList.Add((uint)Twins_Data.ObjectID.MULTIPLEHITCRATE);
                 posList.Add((uint)Twins_Data.ObjectID.SURPRISECRATE);
 
@@ -271,6 +271,10 @@ namespace CrateModLoader
                     GameObject obj = (GameObject)object_section.Records[i];
                     if (obj.ID == (uint)Twins_Data.ObjectID.AMMOCRATESMALL)
                     {
+                        obj.Scripts[(uint)Twins_Data.GameObjectScriptOrder.OnPhysicsCollision] = 65535;
+                        obj.Scripts[(uint)Twins_Data.GameObjectScriptOrder.OnTouch] = 65535;
+                        obj.Scripts[(uint)Twins_Data.GameObjectScriptOrder.OnDamage] = (ushort)Twins_Data.ScriptID.HEAD_COM_AMMO_CRATE_SMALL_TOUCHED;
+                        obj.Scripts[(uint)Twins_Data.GameObjectScriptOrder.OnLand] = (ushort)Twins_Data.ScriptID.HEAD_COM_BASIC_CRATE_LANDED_ON;
                         import_GObj.Add(obj);
                     }
                 }

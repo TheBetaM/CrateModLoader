@@ -251,7 +251,7 @@
     <Compile Include="ModOption.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PSX2ISO.cs" />
+    <Compile Include="Tools\PSX2ISO.cs" />
     <EmbeddedResource Include="GameSpecific\CNK\ModMenu_CNK.resx">
       <DependentUpon>ModMenu_CNK.cs</DependentUpon>
     </EmbeddedResource>

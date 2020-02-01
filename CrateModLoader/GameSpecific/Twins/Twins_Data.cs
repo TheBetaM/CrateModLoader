@@ -1219,6 +1219,7 @@ namespace CrateModLoader.GameSpecific.Twins
             new TwinsGem(ChunkType.Ice_IceClimb_BergExt,new Vector3(9.324f,-7.060f,-23.887f)),
             new TwinsGem(ChunkType.Ice_IceClimb_BergExt,new Vector3(-27.363f,-9.019f,63.353f)),
             // Slip Slide Icecapades locations
+            /* Disabled for now because of the chance to have to replay the level to get everything
             new TwinsGem(ChunkType.Ice_SlipSlide_L05Grind,new Vector3(-156.018f,112.051f,5.853f)),
             new TwinsGem(ChunkType.Ice_SlipSlide_L05Grind,new Vector3(-159.547f,87.571f,-16.474f)),
             new TwinsGem(ChunkType.Ice_SlipSlide_L05Grind,new Vector3(9.631f,19.168f,-32.480f)),
@@ -1244,6 +1245,7 @@ namespace CrateModLoader.GameSpecific.Twins
             new TwinsGem(ChunkType.Ice_SlipSlide_L05Start,new Vector3(-59.626f,13.651f,78.241f)),
             new TwinsGem(ChunkType.Ice_SlipSlide_L05Start,new Vector3(-57.953f,24.643f,88.966f)),
             new TwinsGem(ChunkType.Ice_SlipSlide_L05Start,new Vector3(102.180f,-129.872f,166.742f)),
+            */
             // Hi Seas locations
             new TwinsGem(ChunkType.Ice_HighSeas_GPA01,new Vector3(-78.763f,-33.564f,56.802f)),
             new TwinsGem(ChunkType.Ice_HighSeas_GPA01,new Vector3(-67.409f,-53.263f,-40.404f)),
@@ -1341,6 +1343,7 @@ namespace CrateModLoader.GameSpecific.Twins
             new TwinsGem(ChunkType.AltEarth_Hub_AltA,new Vector3(-34.652f,15.882f,59.527f)),
             new TwinsGem(ChunkType.AltEarth_Hub_SlipJoin,new Vector3(6.013f,-10.467f,-6.331f)),
             // Rockslide locations
+            /* Disabled for now because of the chance to have to replay the level to get everything
             new TwinsGem(ChunkType.AltEarth_RockSlid_L10Start,new Vector3(-34.337f,47.691f,-33.170f)),
             new TwinsGem(ChunkType.AltEarth_RockSlid_L10Start,new Vector3(-18.123f,21.742f,38.981f)),
             new TwinsGem(ChunkType.AltEarth_RockSlid_L10Start,new Vector3(-25.121f,-115.874f,191.983f)),
@@ -1362,6 +1365,7 @@ namespace CrateModLoader.GameSpecific.Twins
             new TwinsGem(ChunkType.AltEarth_RockSlid_L10ChasB,new Vector3(309.094f,-85.788f,-3.689f)),
             new TwinsGem(ChunkType.AltEarth_RockSlid_L10End,new Vector3(2.451f,3.275f,-92.386f)),
             new TwinsGem(ChunkType.AltEarth_RockSlid_L10End,new Vector3(-1.393f,-72.134f,-12.578f)),
+            */
             // Bandicoot Pursuit locations
             new TwinsGem(ChunkType.AltEarth_Hub_AltDoc,new Vector3(99.569f,1.121f,-135.892f)),
             new TwinsGem(ChunkType.AltEarth_Hub_AltDoc,new Vector3(75.487f,0.921f,-149.332f)),
