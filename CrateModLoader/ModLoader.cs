@@ -264,9 +264,9 @@ namespace CrateModLoader
 
                 string args = "";
                 args += @"--iso=";
-                args += AppDomain.CurrentDomain.BaseDirectory + "/Tools/Game.iso";
-                args += @" --file=";
-                args += extractedPath + "PSP_GAME";
+                args += "\"" + AppDomain.CurrentDomain.BaseDirectory + "/Tools/Game.iso\"";
+                args += " --file=\"";
+                args += extractedPath + "PSP_GAME\"";
                 //args += " --log";
 
                 ISOcreatorProcess = new Process();
@@ -285,7 +285,7 @@ namespace CrateModLoader
                 Directory.Move(extractedPath + @"\P-" + Program.ModProgram.ProductCode.Substring(0, 4) + @"\files\", extractedPath + @"\P-" + Program.ModProgram.ProductCode.Substring(0, 4) + @"\root\");
 
                 string args = "";
-                args += extractedPath + @"\P-" + Program.ModProgram.ProductCode.Substring(0, 4) + " -q -d ";
+                args += "\"" + extractedPath + @"\P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "\" -q -d ";
                 args += "\"" + outputISOpath + "\" ";
 
                 ISOcreatorProcess = new Process();
@@ -305,7 +305,7 @@ namespace CrateModLoader
             {
                 // Use Wiimms ISO Tool
                 string args = "copy ";
-                args += extractedPath + " ";
+                args += "\"" + extractedPath + "\" ";
                 if (isoType == ConsoleMode.GCN)
                 {
                     args += "--ciso ";

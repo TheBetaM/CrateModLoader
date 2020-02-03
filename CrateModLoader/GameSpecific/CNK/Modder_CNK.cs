@@ -12,7 +12,7 @@ namespace CrateModLoader
     {
         // these values can be anything, as long as they're unique, otherwise an argument exception may be thrown when adding options
         // constants get transformed into their respective values at compile time
-        internal const int RandomizeAdvemture             = 0;
+        internal const int RandomizeAdventure             = 0;
         internal const int RandomizeAdventureRequirements = 1;
         internal const int RandomizeCharacterStats        = 2;
         internal const int RandomizeKartStats             = 3;
@@ -87,7 +87,7 @@ namespace CrateModLoader
                 },
             };
 
-            Options.Add(RandomizeAdvemture, new ModOption("Randomize Adventure"));
+            Options.Add(RandomizeAdventure, new ModOption("Randomize Adventure"));
             Options.Add(RandomizeCharacterStats, new ModOption("Randomize Character Stats"));
             Options.Add(RandomizeKartStats, new ModOption("Randomize Kart Stats")); // TODO
             //Options.Add(RandomizeWumpaCrate, new ModOption()); //TODO dda
@@ -297,7 +297,7 @@ namespace CrateModLoader
             {
                 Mod_Randomize_Karts(randState);
             }
-            if (Options[RandomizeAdvemture].Enabled)
+            if (Options[RandomizeAdventure].Enabled)
             {
                 Editing_CSV_WarpPadInfo = true;
                 Editing_CSV_AdventureCup = true;
