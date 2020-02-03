@@ -186,7 +186,6 @@ namespace CrateModLoader.GameSpecific.CNK
 
         public static void CNK_Randomize_BowlingBomb(Random randState)
         {
-            //todo
             BowlingBomb_m_Speed = randState.Next(50,80);
             BowlingBomb_m_Acceleration = randState.Next(70,90);
             BowlingBomb_m_AccelerationJuiced = BowlingBomb_m_Acceleration * 1.125f;
@@ -202,21 +201,20 @@ namespace CrateModLoader.GameSpecific.CNK
             BowlingBomb_m_RangeInFront = 150f;
             BowlingBomb_m_NormalWumpaLoss = randState.Next(1, 5);
             BowlingBomb_m_JuicedWumpaLoss = BowlingBomb_m_NormalWumpaLoss + randState.Next(0, 2);
-            BowlingBomb_m_ExplosionBlastRadius = 5f;
+            BowlingBomb_m_ExplosionBlastRadius = randState.Next(25, 75) / 10f;
             BowlingBomb_m_ExplosionBlastRadiusJuiced = BowlingBomb_m_ExplosionBlastRadius * 1.6f;
             BowlingBomb_m_DragCoef = 0.00125f;
             BowlingBomb_m_EasyLatFriction = 30f;
             BowlingBomb_m_EasyLongFriction = 1f;
             BowlingBomb_m_HardLatFriction = 30f;
             BowlingBomb_m_HardLongFriction = 1f;
-            BowlingBomb_m_BackSpeed = 40f;
+            BowlingBomb_m_BackSpeed = randState.Next(30, 60);
             BowlingBomb_m_ExplScale = (float)randState.NextDouble() + 0.5f;
             BowlingBomb_m_ExplScaleJuiced = BowlingBomb_m_ExplScale * 1.5f;
         }
 
         public static void CNK_Randomize_HomingMissle(Random randState)
         {
-            //todo
             HomingMissle_m_TrackingFrontDistance = 50f;
             HomingMissle_m_MaxSpeed = randState.Next(40,80);
             HomingMissle_m_MaxSpeedJuiced = HomingMissle_m_MaxSpeed * (70f/60f);
@@ -253,7 +251,6 @@ namespace CrateModLoader.GameSpecific.CNK
 
         public static void CNK_Randomize_Tornado(Random randState)
         {
-            //todo
             Tornado_m_TrackingFrontDistance = 35f;
             Tornado_m_MaxSpeed = randState.Next(45,60);
             Tornado_m_MaxSpeedJuiced = Tornado_m_MaxSpeed;
@@ -308,7 +305,7 @@ namespace CrateModLoader.GameSpecific.CNK
             m_AkuDropTS_m_DecHoldTime = 1.2f;
             m_AkuDropTS_m_DecSpeed = 0.4f;
             m_AkuDropTS_m_IncSpeed = 1f;
-            m_AkuDropTS_m_MaxHoldTime = 0.18f;
+            m_AkuDropTS_m_MaxHoldTime = 1f;
             m_AkuDropTS_m_MaxRepressTime = 0.18f;
             m_AkuDropTS_m_Quadratic[0] = 0f;
             m_AkuDropTS_m_Quadratic[1] = 1f;
@@ -459,7 +456,7 @@ namespace CrateModLoader.GameSpecific.CNK
             m_SlideFrictionNorm[1] = 12f;
             m_SlideFrictionNorm[2] = 16f;
             m_SlideMaxAngle = 95f;
-            m_SlideMaxBoostCount = randState.Next(1,9);
+            m_SlideMaxBoostCount = 3; // If you go over 3 boosts it only affects the boost meter, doesn't let you boost more
             m_SlideMinAngle = 45f;
             m_SlideMinimumSpeed = 8f;
             m_SlideStartMinSteer= 0.1f;
@@ -511,87 +508,102 @@ namespace CrateModLoader.GameSpecific.CNK
 
         public static void CNK_Randomize_CharacterStats(Random randState, int targetDriver)
         {
-            //float target_val = 0;
-            //target_val = randState.NextDouble() + 0.5;
-            //todo
-            c_AccelerationGainNormal[targetDriver] = (float)randState.NextDouble() + 0.5f;
-            c_AccelerationGainWumpa[targetDriver] = (float)randState.NextDouble() + 0.5f;
-            c_BoostInfo_eBOOST_AKU_DROP[targetDriver, 0] = (float)randState.NextDouble() + 0.5f;
-            c_BoostInfo_eBOOST_AKU_DROP[targetDriver, 1] = (float)randState.NextDouble() + 0.5f;
-            c_BoostInfo_eBOOST_AKU_DROP[targetDriver, 2] = (float)randState.NextDouble() + 0.5f;
-            c_BoostInfo_eBOOST_JUMP_LARGE[targetDriver, 0] = (float)randState.NextDouble() + 0.5f;
-            c_BoostInfo_eBOOST_JUMP_LARGE[targetDriver, 1] = (float)randState.NextDouble() + 0.5f;
-            c_BoostInfo_eBOOST_JUMP_LARGE[targetDriver, 2] = (float)randState.NextDouble() + 0.5f;
-            c_BoostInfo_eBOOST_JUMP_MEDIUM[targetDriver, 0] = (float)randState.NextDouble() + 0.5f;
-            c_BoostInfo_eBOOST_JUMP_MEDIUM[targetDriver, 1] = (float)randState.NextDouble() + 0.5f;
-            c_BoostInfo_eBOOST_JUMP_MEDIUM[targetDriver, 2] = (float)randState.NextDouble() + 0.5f;
-            c_BoostInfo_eBOOST_JUMP_SMALL[targetDriver, 0] = (float)randState.NextDouble() + 0.5f;
-            c_BoostInfo_eBOOST_JUMP_SMALL[targetDriver, 1] = (float)randState.NextDouble() + 0.5f;
-            c_BoostInfo_eBOOST_JUMP_SMALL[targetDriver, 2] = (float)randState.NextDouble() + 0.5f;
-            c_BoostInfo_eBOOST_PAD[targetDriver, 0] = (float)randState.NextDouble() + 0.5f;
-            c_BoostInfo_eBOOST_PAD[targetDriver, 1] = (float)randState.NextDouble() + 0.5f;
-            c_BoostInfo_eBOOST_PAD[targetDriver, 2] = (float)randState.NextDouble() + 0.5f;
-            c_BoostInfo_eBOOST_SLIDE_1[targetDriver, 0] = (float)randState.NextDouble() + 0.5f;
-            c_BoostInfo_eBOOST_SLIDE_1[targetDriver, 1] = (float)randState.NextDouble() + 0.5f;
-            c_BoostInfo_eBOOST_SLIDE_1[targetDriver, 2] = (float)randState.NextDouble() + 0.5f;
-            c_BoostInfo_eBOOST_SLIDE_2[targetDriver, 0] = (float)randState.NextDouble() + 0.5f;
-            c_BoostInfo_eBOOST_SLIDE_2[targetDriver, 1] = (float)randState.NextDouble() + 0.5f;
-            c_BoostInfo_eBOOST_SLIDE_2[targetDriver, 2] = (float)randState.NextDouble() + 0.5f;
-            c_BoostInfo_eBOOST_SLIDE_3[targetDriver, 0] = (float)randState.NextDouble() + 0.5f;
-            c_BoostInfo_eBOOST_SLIDE_3[targetDriver, 1] = (float)randState.NextDouble() + 0.5f;
-            c_BoostInfo_eBOOST_SLIDE_3[targetDriver, 2] = (float)randState.NextDouble() + 0.5f;
-            c_BoostInfo_eBOOST_START[targetDriver, 0] = (float)randState.NextDouble() + 0.5f;
-            c_BoostInfo_eBOOST_START[targetDriver, 1] = (float)randState.NextDouble() + 0.5f;
-            c_BoostInfo_eBOOST_START[targetDriver, 2] = (float)randState.NextDouble() + 0.5f;
-            c_BoostInfo_eBOOST_SUPER_ENGINE[targetDriver, 0] = (float)randState.NextDouble() + 0.5f;
-            c_BoostInfo_eBOOST_SUPER_ENGINE[targetDriver, 1] = (float)randState.NextDouble() + 0.5f;
-            c_BoostInfo_eBOOST_SUPER_ENGINE[targetDriver, 2] = (float)randState.NextDouble() + 0.5f;
-            c_BoostInfo_eBOOST_TURBOBOOST[targetDriver, 0] = (float)randState.NextDouble() + 0.5f;
-            c_BoostInfo_eBOOST_TURBOBOOST[targetDriver, 1] = (float)randState.NextDouble() + 0.5f;
-            c_BoostInfo_eBOOST_TURBOBOOST[targetDriver, 2] = (float)randState.NextDouble() + 0.5f;
-            c_BoostInfo_eBOOST_TURBOBOOST_JUICED[targetDriver, 0] = (float)randState.NextDouble() + 0.5f;
-            c_BoostInfo_eBOOST_TURBOBOOST_JUICED[targetDriver, 1] = (float)randState.NextDouble() + 0.5f;
-            c_BoostInfo_eBOOST_TURBOBOOST_JUICED[targetDriver, 2] = (float)randState.NextDouble() + 0.5f;
-            c_BoostMaxImpulsePerSecond[targetDriver] = (float)randState.NextDouble() + 0.5f;
-            c_BoostSlidePushAngle[targetDriver] = (float)randState.NextDouble() + 0.5f;
-            c_BoostSlidePushTime[targetDriver] = (float)randState.NextDouble() + 0.5f;
-            c_BrakeForce[targetDriver] = (float)randState.NextDouble() + 0.5f;
-            c_HiTurnFriction[targetDriver, 0] = (float)randState.NextDouble() + 0.5f;
-            c_HiTurnFriction[targetDriver, 1] = (float)randState.NextDouble() + 0.5f;
-            c_HiTurnFriction[targetDriver, 2] = (float)randState.NextDouble() + 0.5f;
-            c_HiTurnStartAngle[targetDriver] = (float)randState.NextDouble() + 0.5f;
-            c_InAirTurnRateNormal[targetDriver] = (float)randState.NextDouble() + 0.5f;
-            c_InAirTurnRateWumpa[targetDriver] = (float)randState.NextDouble() + 0.5f;
-            c_MaxForwardSpeedNormal[targetDriver] = (float)randState.NextDouble() + 0.5f;
-            c_MaxForwardSpeedWumpa[targetDriver] = (float)randState.NextDouble() + 0.5f;
-            c_NormalFriction[targetDriver, 0] = (float)randState.NextDouble() + 0.5f;
-            c_NormalFriction[targetDriver, 1] = (float)randState.NextDouble() + 0.5f;
-            c_NormalFriction[targetDriver, 2] = (float)randState.NextDouble() + 0.5f;
-            c_SlideFrictionHigh[targetDriver, 0] = (float)randState.NextDouble() + 0.5f;
-            c_SlideFrictionHigh[targetDriver, 1] = (float)randState.NextDouble() + 0.5f;
-            c_SlideFrictionHigh[targetDriver, 2] = (float)randState.NextDouble() + 0.5f;
-            c_SlideFrictionLow[targetDriver, 0] = (float)randState.NextDouble() + 0.5f;
-            c_SlideFrictionLow[targetDriver, 1] = (float)randState.NextDouble() + 0.5f;
-            c_SlideFrictionLow[targetDriver, 2] = (float)randState.NextDouble() + 0.5f;
-            c_SlideFrictionNorm[targetDriver, 0] = (float)randState.NextDouble() + 0.5f;
-            c_SlideFrictionNorm[targetDriver, 1] = (float)randState.NextDouble() + 0.5f;
-            c_SlideFrictionNorm[targetDriver, 2] = (float)randState.NextDouble() + 0.5f;
-            c_SlideMaxAngle[targetDriver] = (float)randState.NextDouble() + 0.5f;
-            c_SlideMinAngle[targetDriver] = (float)randState.NextDouble() + 0.5f;
-            c_SlideTurnRateAwayFromSlide[targetDriver] = (float)randState.NextDouble() + 0.5f;
-            c_SlideTurnRateInToSlide[targetDriver] = (float)randState.NextDouble() + 0.5f;
-            c_TurnDecellForce[targetDriver] = (float)randState.NextDouble() + 0.5f;
-            c_TurnDecellForceMax[targetDriver] = (float)randState.NextDouble() + 0.5f;
-            c_TurnDecellSpeed[targetDriver] = (float)randState.NextDouble() + 0.5f;
-            c_TurnRateAccel[targetDriver] = (float)randState.NextDouble() + 0.5f;
-            c_TurnRateBrake[targetDriver] = (float)randState.NextDouble() + 0.5f;
-            c_TurnRateNormal[targetDriver] = (float)randState.NextDouble() + 0.5f;
-            c_TurnRateWumpa[targetDriver] = (float)randState.NextDouble() + 0.5f;
 
+            //Boost sources speed, length
+            c_BoostInfo_eBOOST_AKU_DROP[targetDriver, 0] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_AKU_DROP[targetDriver, 1] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_AKU_DROP[targetDriver, 2] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_JUMP_LARGE[targetDriver, 0] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_JUMP_LARGE[targetDriver, 1] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_JUMP_LARGE[targetDriver, 2] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_JUMP_MEDIUM[targetDriver, 0] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_JUMP_MEDIUM[targetDriver, 1] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_JUMP_MEDIUM[targetDriver, 2] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_JUMP_SMALL[targetDriver, 0] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_JUMP_SMALL[targetDriver, 1] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_JUMP_SMALL[targetDriver, 2] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_PAD[targetDriver, 0] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_PAD[targetDriver, 1] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_PAD[targetDriver, 2] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_SLIDE_1[targetDriver, 0] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_SLIDE_1[targetDriver, 1] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_SLIDE_1[targetDriver, 2] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_SLIDE_2[targetDriver, 0] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_SLIDE_2[targetDriver, 1] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_SLIDE_2[targetDriver, 2] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_SLIDE_3[targetDriver, 0] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_SLIDE_3[targetDriver, 1] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_SLIDE_3[targetDriver, 2] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_START[targetDriver, 0] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_START[targetDriver, 1] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_START[targetDriver, 2] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_SUPER_ENGINE[targetDriver, 0] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_SUPER_ENGINE[targetDriver, 1] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_SUPER_ENGINE[targetDriver, 2] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_TURBOBOOST[targetDriver, 0] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_TURBOBOOST[targetDriver, 1] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_TURBOBOOST[targetDriver, 2] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_TURBOBOOST_JUICED[targetDriver, 0] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_TURBOBOOST_JUICED[targetDriver, 1] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_TURBOBOOST_JUICED[targetDriver, 2] = (float)randState.NextDouble() + 0.75f;
+
+            c_BoostMaxImpulsePerSecond[targetDriver] = randState.Next(1,4);
+            c_BoostSlidePushAngle[targetDriver] = 1;
+            c_BoostSlidePushTime[targetDriver] = 1;
+
+            c_BrakeForce[targetDriver] = 1;
+
+            c_HiTurnFriction[targetDriver, 0] = 1;
+            c_HiTurnFriction[targetDriver, 1] = 1;
+            c_HiTurnFriction[targetDriver, 2] = 1;
+            c_HiTurnStartAngle[targetDriver] = 1;
+
+            c_InAirTurnRateNormal[targetDriver] = (float)randState.NextDouble() + 0.6f;
+            c_InAirTurnRateWumpa[targetDriver] = c_InAirTurnRateNormal[targetDriver] + 0.2f;
+
+            c_NormalFriction[targetDriver, 0] = 1;
+            c_NormalFriction[targetDriver, 1] = 1;
+            c_NormalFriction[targetDriver, 2] = 1;
+
+            c_SlideFrictionHigh[targetDriver, 0] = (float)(randState.NextDouble() / 5f) + 0.75f;
+            c_SlideFrictionHigh[targetDriver, 1] = c_SlideFrictionHigh[targetDriver, 0];
+            c_SlideFrictionHigh[targetDriver, 2] = c_SlideFrictionHigh[targetDriver, 0];
+            c_SlideFrictionLow[targetDriver, 0] = 1;
+            c_SlideFrictionLow[targetDriver, 1] = 1;
+            c_SlideFrictionLow[targetDriver, 2] = 1;
+            c_SlideFrictionNorm[targetDriver, 0] = randState.Next(5,10) / 10f;
+            c_SlideFrictionNorm[targetDriver, 1] = c_SlideFrictionNorm[targetDriver, 0];
+            c_SlideFrictionNorm[targetDriver, 2] = c_SlideFrictionNorm[targetDriver, 0];
+
+            c_SlideMaxAngle[targetDriver] = 1;
+            c_SlideMinAngle[targetDriver] = 1;
+            c_SlideTurnRateAwayFromSlide[targetDriver] = 1;
+            c_SlideTurnRateInToSlide[targetDriver] = 1;
+
+            c_TurnDecellForce[targetDriver] = 1;
+            c_TurnDecellForceMax[targetDriver] = 1;
+            c_TurnDecellSpeed[targetDriver] = 1;
+
+            c_TurnRateAccel[targetDriver] = 1;
+            c_TurnRateBrake[targetDriver] = (float)(randState.NextDouble() / 2f) + 1f;
+
+            //Speed
+            c_MaxForwardSpeedNormal[targetDriver] = (float)randState.NextDouble() + 0.9f;
+            c_MaxForwardSpeedWumpa[targetDriver] = c_MaxForwardSpeedNormal[targetDriver] + 0.01f;
+
+            //Accel
+            c_AccelerationGainNormal[targetDriver] = (float)randState.NextDouble() + 0.75f;
+            c_AccelerationGainWumpa[targetDriver] = c_AccelerationGainNormal[targetDriver] + 0.01f;
+
+            //Turning
+            c_TurnRateNormal[targetDriver] = (float)randState.NextDouble() + 0.6f;
+            c_TurnRateWumpa[targetDriver] = c_TurnRateNormal[targetDriver] + 0.01f;
+
+            //UI Stats
             c_UIStats_MaxValue[targetDriver] = 7;
-            c_UIStats_Speed[targetDriver] = (int)Math.Ceiling((c_MaxForwardSpeedNormal[targetDriver] / 1.5) * c_UIStats_MaxValue[targetDriver]);
-            c_UIStats_Acceleration[targetDriver] = (int)Math.Ceiling((c_AccelerationGainNormal[targetDriver] / 1.5) * c_UIStats_MaxValue[targetDriver]);
-            c_UIStats_Turn[targetDriver] = (int)Math.Ceiling((c_TurnRateNormal[targetDriver] / 1.5) * c_UIStats_MaxValue[targetDriver]);
+            c_UIStats_Speed[targetDriver] = (int)Math.Ceiling((c_MaxForwardSpeedNormal[targetDriver] / 1.9) * c_UIStats_MaxValue[targetDriver]);
+            c_UIStats_Acceleration[targetDriver] = (int)Math.Ceiling((c_AccelerationGainNormal[targetDriver] / 1.75) * c_UIStats_MaxValue[targetDriver]);
+            c_UIStats_Turn[targetDriver] = (int)Math.Ceiling((c_TurnRateNormal[targetDriver] / 1.6) * c_UIStats_MaxValue[targetDriver]);
         }
 
         public static void CNK_Randomize_ReqsRewards(Random randState)
