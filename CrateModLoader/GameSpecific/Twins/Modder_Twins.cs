@@ -191,8 +191,8 @@ namespace CrateModLoader
                 crateList.Add((uint)Twins_Data.ObjectID.AKUAKUCRATE);
                 //crateList.Add((uint)Twins_Data.ObjectID.EXTRA_LIFE_CRATE_CORTEX);
                 //crateList.Add((uint)Twins_Data.ObjectID.EXTRA_LIFE_CRATE_NINA);
-                crateList.Add((uint)Twins_Data.ObjectID.IRONCRATE);
-                crateList.Add((uint)Twins_Data.ObjectID.IRONSPRINGCRATE);
+                //crateList.Add((uint)Twins_Data.ObjectID.IRONCRATE);
+                //crateList.Add((uint)Twins_Data.ObjectID.IRONSPRINGCRATE);
                 crateList.Add((uint)Twins_Data.ObjectID.MULTIPLEHITCRATE);
                 crateList.Add((uint)Twins_Data.ObjectID.SURPRISECRATE);
 
