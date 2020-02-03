@@ -28,8 +28,7 @@ API by DCxDemo. (https://github.com/DCxDemo/CTR-tools)
 Supported: All PS2 versions (.ISO format), All GC versions (.ISO format), All XBOX versions (.ISO format)  
 Tools/API by BetaM, ManDude and eezstreet.  
 ### Features:  
-- Randomize Adventure Hub Warp Pads & Cups
-- Randomize Adventure Requirements & Rewards
+- Randomize Adventure  
 - Randomize Character Stats
 - Randomize Kart Stats
 - Randomize Powerup Effects

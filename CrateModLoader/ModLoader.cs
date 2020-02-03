@@ -65,7 +65,7 @@ namespace CrateModLoader
         public RadioButton button_radio_ToFolder;
         public BackgroundWorker asyncWorker;
         /// <summary> String used to show which version of CML the modded game was built with. </summary>
-        public string releaseVersionString = "v1.0";
+        public string releaseVersionString = "v1.0.0";
         /// <summary> Hexadecimal display of which quick options were selected (automatically adjusts according the amount of quick options) - MSB is first option from the top </summary>
         public string optionsSelectedString
         {
@@ -538,6 +538,7 @@ namespace CrateModLoader
                         cd = new CDReader(isoStream, true);
                     ISO_label = cd.VolumeLabel;
 
+                    /* Sometimes doesn't work?
                     if (isoInfo.Length * 2 > GetTotalFreeSpace(extractedPath.Substring(0, 3)))
                     {
                         cd.Dispose();
@@ -548,6 +549,7 @@ namespace CrateModLoader
                         cd.Dispose();
                         throw new IOException("Extraction error: Not enough hard drive space in the output path!");
                     }
+                    */
 
                     asyncWorker.ReportProgress(25);
                     //fileStream = cd.OpenFile(@"SYSTEM.CNF", FileMode.Open);

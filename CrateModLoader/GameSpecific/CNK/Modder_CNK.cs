@@ -12,7 +12,7 @@ namespace CrateModLoader
     {
         // these values can be anything, as long as they're unique, otherwise an argument exception may be thrown when adding options
         // constants get transformed into their respective values at compile time
-        internal const int RandomizeHubPads               = 0;
+        internal const int RandomizeAdvemture             = 0;
         internal const int RandomizeAdventureRequirements = 1;
         internal const int RandomizeCharacterStats        = 2;
         internal const int RandomizeKartStats             = 3;
@@ -87,16 +87,15 @@ namespace CrateModLoader
                 },
             };
 
-            Options.Add(RandomizeHubPads, new ModOption("Randomize Adventure Warp Pads & Cups"));
-            Options.Add(RandomizeAdventureRequirements, new ModOption("Randomize Adventure Requirements & Rewards")); // TODO
-            Options.Add(RandomizeCharacterStats, new ModOption("Randomize Character Stats")); // TODO
+            Options.Add(RandomizeAdvemture, new ModOption("Randomize Adventure"));
+            Options.Add(RandomizeCharacterStats, new ModOption("Randomize Character Stats"));
             Options.Add(RandomizeKartStats, new ModOption("Randomize Kart Stats")); // TODO
             //Options.Add(RandomizeWumpaCrate, new ModOption()); //TODO dda
             //Options.Add(RandomizeObstacles, new ModOption()); //TODO obstacles
             //Options.Add(RandomizeCupPoints, new ModOption()); // Maybe? gameprogression
             //Options.Add(RandomizeSurfaceParameters, new ModOption("Randomize Surface Parameters")); // TODO: later version
             //Options.Add(RandomizeWeaponPools, new ModOption("Randomize Powerup Distribution")); // TODO: later version
-            Options.Add(RandomizeWeapons, new ModOption("Randomize Powerup Effects")); // TODO
+            Options.Add(RandomizeWeapons, new ModOption("Randomize Powerup Effects"));
             Options.Add(RandomizeCharacters, new ModOption("Randomize Drivers")); //TODO: later version: icon replacement, name replacement, main menu model replacement, adventure character select model
             Options.Add(RandomizeKarts, new ModOption("Randomize Karts"));
             //Options.Add(RandomizeMusic, new ModOption()); //TODO music.csv
@@ -298,17 +297,14 @@ namespace CrateModLoader
             {
                 Mod_Randomize_Karts(randState);
             }
-            if (Options[RandomizeAdventureRequirements].Enabled)
-            {
-                Editing_CSV_AdventureTracksManager = true;
-                Editing_CSV_GoalsToRewardsConverter = true;
-                CNK_Data.CNK_Randomize_ReqsRewards(randState);
-            }
-            if (Options[RandomizeHubPads].Enabled)
+            if (Options[RandomizeAdvemture].Enabled)
             {
                 Editing_CSV_WarpPadInfo = true;
                 Editing_CSV_AdventureCup = true;
+                Editing_CSV_AdventureTracksManager = true;
+                Editing_CSV_GoalsToRewardsConverter = true;
                 CNK_Data.CNK_Randomize_WarpPads(randState);
+                CNK_Data.CNK_Randomize_ReqsRewards(randState);
             }
             if (Options[RandomizeKartStats].Enabled)
             {

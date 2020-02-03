@@ -296,8 +296,12 @@ namespace CrateModLoader.GameSpecific.CNK
             double target_val = 0;
             target_val = randState.NextDouble() + 0.5;
             //todo
-            m_AccelerationGainNormal = 26f;
-            m_AccelerationGainWumpa = 29.5f;
+
+            //Accel
+            m_AccelerationGainNormal = randState.Next(24, 29) + (float)randState.NextDouble(); // 26f;
+            m_AccelerationGainWumpa = m_AccelerationGainNormal + 3.5f;
+
+            //Aku Respawn
             m_AkuDropHeight = 3f;
             m_AkuDropSpeed = 2f;
             m_AkuDropTime = 1f;
@@ -310,7 +314,10 @@ namespace CrateModLoader.GameSpecific.CNK
             m_AkuDropTS_m_Quadratic[0] = 0f;
             m_AkuDropTS_m_Quadratic[1] = 1f;
             m_AkuDropTS_m_Quadratic[2] = 0f;
-            m_BoostInARowTimeTol = 1f;
+
+            m_BoostInARowTimeTol = 0.2f; //Uncapped reserves
+
+            //Boost sources speed, length
             m_BoostInfo_eBOOST_AKU_DROP[0] = 29.09090575f;
             m_BoostInfo_eBOOST_AKU_DROP[1] = 1f;
             m_BoostInfo_eBOOST_AKU_DROP[2] = 0f;
@@ -347,23 +354,31 @@ namespace CrateModLoader.GameSpecific.CNK
             m_BoostInfo_eBOOST_TURBOBOOST_JUICED[0] = 32f;
             m_BoostInfo_eBOOST_TURBOBOOST_JUICED[1] = 3f;
             m_BoostInfo_eBOOST_TURBOBOOST_JUICED[2] = 1.5f;
-            m_BoostMaxImpulsePerSecond = 32f;
-            m_BoostMaxTimeCap = 5f;
+
+            m_BoostMaxImpulsePerSecond = 120f; //Uncapped reserves
+            m_BoostMaxTimeCap = 999f; //Uncapped reserves
+
             m_BoostSlidePushAngle[0] = 45f;
             m_BoostSlidePushAngle[1] = 70f;
             m_BoostSlidePushAngle[2] = 95f;
+
             m_BoostSlidePushTime = 0.3f;
+
             m_BrakeForce = 10f;
+
             m_CollisionRadius = 0.52f;
             m_CollisionSphereOffset[0] = 0f;
             m_CollisionSphereOffset[1] = 0f;
             m_CollisionSphereOffset[2] = 0.6f;
+
             m_CtfFlagMaxForwardSpeed[0] = 0.7f;
             m_CtfFlagMaxForwardSpeed[1] = 0.7f;
             m_CtfFlagMaxForwardSpeed[2] = 1f;
+
             m_CursedMaxForwardSpeed[0] = 0.7f;
             m_CursedMaxForwardSpeed[1] = 1f;
             m_CursedMaxForwardSpeed[2] = 1f;
+
             m_DonutFriction[0] = 5f;
             m_DonutFriction[1] = 0f;
             m_DonutFriction[2] = 0f;
@@ -372,15 +387,20 @@ namespace CrateModLoader.GameSpecific.CNK
             m_DonutTurnRateMax = 720f;
             m_DonutTurnRateMin = 70f;
             m_DonutTurnTotal = 1f;
+
             m_DownforceGround = 2.5f;
             m_DownforceInAirMagLev = 11f;
             m_DownforceMagLev = 4.5f;
             m_DownforceMagLevAirTime = 0.1f;
+
             m_DragMaxStrength = 0f;
             m_DragStrength = 0f;
+
             m_GravityAir = 4.5f;
             m_GravityGround = 2f;
+
             m_HeightForBigAir = 10f;
+
             m_HitByMissileFriction = 3.5f;
             m_HitSlowdownSpeedForce = 7f;
             m_HitSlowdownSpeedForceRev = 0f;
@@ -388,22 +408,27 @@ namespace CrateModLoader.GameSpecific.CNK
             m_HitStopAngle = 45.57f;
             m_HitStopSpeed = 10f;
             m_HitUpSlideTol = 36.87f;
+
             m_HiTurnLatFriction[0] = 60f;
             m_HiTurnLatFriction[1] = 7f;
             m_HiTurnLatFriction[2] = 0f;
             m_HiTurnStartAngle = 15f;
+
             m_HitWallLatFricLoss = 0.75f;
             m_HitWallLatMaxAng = 90f;
             m_HitWallLatMinAng = 35f;
+
             m_InAirFriction[0] = 60f;
             m_InAirFriction[1] = 5f;
             m_InAirFriction[2] = 0f;
             m_InAirMinSpeed = 10f;
             m_InAirTurnRateNormal = 70f;
             m_InAirTurnRateWumpa = 70f;
+
             m_InvincibiliyMaxForwardSpeed[0] = 1.25f;
             m_InvincibiliyMaxForwardSpeed[1] = 1.25f;
             m_InvincibiliyMaxForwardSpeed[2] = 1f;
+
             m_JumpAirTolerance = 0.15f;
             m_JumpBeforeAirTimeTol = 0.2f;
             m_JumpImpulseBase = 7.8f;
@@ -415,23 +440,33 @@ namespace CrateModLoader.GameSpecific.CNK
             m_JumpTimeInAirBoost[0] = 0.8f;
             m_JumpTimeInAirBoost[1] = 1f;
             m_JumpTimeInAirBoost[2] = 1.5f;
+
             m_LowSpeed = 12f;
-            m_MaxForwardSpeedNormal = 24f;
-            m_MaxForwardSpeedWumpa = 27f;
-            m_MaxLinearVelXY = 33f;
-            m_MaxLinearVelZ = 50f;
-            m_MaxReverseSpeed = 10f;
+
+            m_MaxForwardSpeedNormal = randState.Next(23,31) + (float)randState.NextDouble();
+            m_MaxForwardSpeedWumpa = m_MaxForwardSpeedNormal + 3f;
+
+            m_MaxLinearVelXY = 52f; // Extended speed cap, too high causes physics instability
+            m_MaxLinearVelZ = 52f;
+
+            m_MaxReverseSpeed = randState.Next(8, 15) + (float)randState.NextDouble();// 10f;
+
             m_MinHeightForAirNoJump = 1f;
+
             m_NormalFriction[0] = 55f;
             m_NormalFriction[1] = 7f;
             m_NormalFriction[2] = 0f;
+
             m_ResetGravStrength = 2f;
             m_ResetMaxTime = 2f;
             m_ResetWaitBeforeDrop = 0.3f;
+
             m_ReverseGain = 37f;
+
             m_ShockedMaxForwardSpeed[0] = 0.7f;
             m_ShockedMaxForwardSpeed[1] = 0.7f;
             m_ShockedMaxForwardSpeed[2] = 1f;
+
             m_SlideBoostQuadratic[0] = 1f;
             m_SlideBoostQuadratic[1] = 0f;
             m_SlideBoostQuadratic[2] = 0f;
@@ -462,12 +497,15 @@ namespace CrateModLoader.GameSpecific.CNK
             m_SlideStartMinSteer= 0.1f;
             m_SlideTurnRateAwayFromSlide = 135f;
             m_SlideTurnRateInToSlide = 70f;
+
             m_SlopeAccelExtra = 0.5f;
             m_SlopeMaxAngle = 60f;
             m_SlopeMinAngle = 0f;
+
             m_SpikeyFruitMaxForwardSpeed[0] = 0.7f;
             m_SpikeyFruitMaxForwardSpeed[1] = 0.7f;
             m_SpikeyFruitMaxForwardSpeed[2] = 1f;
+
             m_SpinOutFriction[0] = 6f;
             m_SpinOutFriction[1] = 6f;
             m_SpinOutFriction[2] = 0f;
@@ -475,9 +513,11 @@ namespace CrateModLoader.GameSpecific.CNK
             m_SpinOutTotalNormal = 1080f;
             m_SpinOutTurnRateMax = 1080f;
             m_SpinOutTurnRateMin = 360f;
+
             m_SquashedMaxForwardSpeed[0] = 0.7f;
             m_SquashedMaxForwardSpeed[1] = 0.7f;
             m_SquashedMaxForwardSpeed[2] = 1f;
+
             m_StartLineTS_m_CancelMinPercent = 0f;
             m_StartLineTS_m_DecHoldTime = 0.57f;
             m_StartLineTS_m_DecSpeed = 0.36f;
@@ -487,20 +527,26 @@ namespace CrateModLoader.GameSpecific.CNK
             m_StartLineTS_m_Quadratic[0] = 1f;
             m_StartLineTS_m_Quadratic[1] = 0f;
             m_StartLineTS_m_Quadratic[2] = 0f;
+
             m_TimeBubbleMaxForwardSpeed[0] = 0.7f;
             m_TimeBubbleMaxForwardSpeed[1] = 0.7f;
             m_TimeBubbleMaxForwardSpeed[2] = 1f;
+
             m_TropyClocksMaxForwardSpeed[0] = 0.7f;
             m_TropyClocksMaxForwardSpeed[1] = 0.7f;
             m_TropyClocksMaxForwardSpeed[2] = 1f;
+
             m_TurnDecellForce = 3f;
             m_TurnDecellForceMax = 20f;
             m_TurnDecellSpeed = 12f;
+
             m_TurnRateAccel = 10f;
             m_TurnRateBrake = 110f;
-            m_TurnRateNormal = 70f;
-            m_TurnRateWumpa = 70f;
+            m_TurnRateNormal = randState.Next(60, 80);// 70f;
+            m_TurnRateWumpa = m_TurnRateNormal;
+
             m_WaitBeforeBrakeReverses = 0.225f;
+
             m_WheelieMinTime = 0.75f;
             m_WheelieSlideBoostMinPercent = 0.25f;
 
@@ -611,66 +657,66 @@ namespace CrateModLoader.GameSpecific.CNK
             Adv_TracksManager_EntryList.Clear();
             //todo
             Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Earth1, SubModeID.Trophy, RewardID.Trophy, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Earth1, SubModeID.CNK_Challenge, RewardID.Key, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Earth1, SubModeID.Relic, RewardID.Key, 0));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Earth1, SubModeID.CNK_Challenge, RewardID.Key, 1));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Earth1, SubModeID.Relic, RewardID.Key, 1));
             Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Earth2, SubModeID.Trophy, RewardID.Trophy, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Earth2, SubModeID.CNK_Challenge, RewardID.Key, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Earth2, SubModeID.Relic, RewardID.Key, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Earth3, SubModeID.Trophy, RewardID.Trophy, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Earth3, SubModeID.CNK_Challenge, RewardID.Key, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Earth3, SubModeID.Relic, RewardID.Key, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Boss_EarthBoss, SubModeID.Boss, RewardID.Trophy, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Arena_EarthArena, SubModeID.Crystal, RewardID.Key, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Barin1, SubModeID.Trophy, RewardID.Trophy, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Barin1, SubModeID.CNK_Challenge, RewardID.Key, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Barin1, SubModeID.Relic, RewardID.Key, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Barin2, SubModeID.Trophy, RewardID.Trophy, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Barin2, SubModeID.CNK_Challenge, RewardID.Key, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Barin2, SubModeID.Relic, RewardID.Key, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Barin3, SubModeID.Trophy, RewardID.Trophy, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Barin3, SubModeID.CNK_Challenge, RewardID.Key, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Barin3, SubModeID.Relic, RewardID.Key, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Boss_BarinBoss, SubModeID.Boss, RewardID.Trophy, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Arena_BarinArena, SubModeID.Crystal, RewardID.Key, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Fenomena1, SubModeID.Trophy, RewardID.Trophy, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Fenomena1, SubModeID.CNK_Challenge, RewardID.Key, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Fenomena1, SubModeID.Relic, RewardID.Key, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Fenomena2, SubModeID.Trophy, RewardID.Trophy, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Fenomena2, SubModeID.CNK_Challenge, RewardID.Key, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Fenomena2, SubModeID.Relic, RewardID.Key, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Fenomena3, SubModeID.Trophy, RewardID.Trophy, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Fenomena3, SubModeID.CNK_Challenge, RewardID.Key, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Fenomena3, SubModeID.Relic, RewardID.Key, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Boss_FenomenaBoss, SubModeID.Boss, RewardID.Trophy, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Arena_FenomenaArena, SubModeID.Crystal, RewardID.Key, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Teknee1, SubModeID.Trophy, RewardID.Trophy, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Teknee1, SubModeID.CNK_Challenge, RewardID.Key, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Teknee1, SubModeID.Relic, RewardID.Key, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Teknee2, SubModeID.Trophy, RewardID.Trophy, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Teknee2, SubModeID.CNK_Challenge, RewardID.Key, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Teknee2, SubModeID.Relic, RewardID.Key, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Teknee3, SubModeID.Trophy, RewardID.Trophy, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Teknee3, SubModeID.CNK_Challenge, RewardID.Key, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Teknee3, SubModeID.Relic, RewardID.Key, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Boss_TekneeBoss, SubModeID.Boss, RewardID.Trophy, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Arena_TekneeArena, SubModeID.Crystal, RewardID.Key, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Boss_VeloBoss, SubModeID.Boss, RewardID.Key, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Warp_Citadel_To_Barin, SubModeID.Trophy, RewardID.Key, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Warp_Citadel_To_Fenomena, SubModeID.Trophy, RewardID.Key, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Warp_Citadel_To_Teknee, SubModeID.Trophy, RewardID.Key, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Warp_Earth_To_Barin, SubModeID.Trophy, RewardID.Key, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Warp_Fenomena_To_Teknee, SubModeID.Trophy, RewardID.Key, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Warp_Barin_To_Fenomena, SubModeID.Trophy, RewardID.Key, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Warp_Earth_To_Teknee, SubModeID.Trophy, RewardID.Key, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.GemCup_Red, SubModeID.Gem, RewardID.Token_Red, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.GemCup_Blue, SubModeID.Gem, RewardID.Token_Blue, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.GemCup_Green, SubModeID.Gem, RewardID.Token_Green, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.GemCup_Purple, SubModeID.Gem, RewardID.Token_Purple, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Warp_Citadel_To_Vault, SubModeID.Trophy, RewardID.Key, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_VeloRace, SubModeID.Relic, RewardID.Gem_Blue, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_VeloRace, SubModeID.Relic, RewardID.Gem_Red, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_VeloRace, SubModeID.Relic, RewardID.Gem_Green, 0));
-            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_VeloRace, SubModeID.Relic, RewardID.Gem_Purple, 0));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Earth2, SubModeID.CNK_Challenge, RewardID.Key, 1));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Earth2, SubModeID.Relic, RewardID.Key, 1));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Earth3, SubModeID.Trophy, RewardID.Trophy, 2));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Earth3, SubModeID.CNK_Challenge, RewardID.Key, 1));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Earth3, SubModeID.Relic, RewardID.Key, 1));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Boss_EarthBoss, SubModeID.Boss, RewardID.Trophy, 3));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Arena_EarthArena, SubModeID.Crystal, RewardID.Key, 1));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Barin1, SubModeID.Trophy, RewardID.Trophy, 3));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Barin1, SubModeID.CNK_Challenge, RewardID.Key, 2));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Barin1, SubModeID.Relic, RewardID.Key, 2));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Barin2, SubModeID.Trophy, RewardID.Trophy, 3));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Barin2, SubModeID.CNK_Challenge, RewardID.Key, 2));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Barin2, SubModeID.Relic, RewardID.Key, 2));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Barin3, SubModeID.Trophy, RewardID.Trophy, 5));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Barin3, SubModeID.CNK_Challenge, RewardID.Key, 2));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Barin3, SubModeID.Relic, RewardID.Key, 2));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Boss_BarinBoss, SubModeID.Boss, RewardID.Trophy, 6));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Arena_BarinArena, SubModeID.Crystal, RewardID.Key, 2));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Fenomena1, SubModeID.Trophy, RewardID.Trophy, 6));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Fenomena1, SubModeID.CNK_Challenge, RewardID.Key, 3));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Fenomena1, SubModeID.Relic, RewardID.Key, 3));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Fenomena2, SubModeID.Trophy, RewardID.Trophy, 7));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Fenomena2, SubModeID.CNK_Challenge, RewardID.Key, 3));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Fenomena2, SubModeID.Relic, RewardID.Key, 3));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Fenomena3, SubModeID.Trophy, RewardID.Trophy, 8));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Fenomena3, SubModeID.CNK_Challenge, RewardID.Key, 3));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Fenomena3, SubModeID.Relic, RewardID.Key, 3));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Boss_FenomenaBoss, SubModeID.Boss, RewardID.Trophy, 9));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Arena_FenomenaArena, SubModeID.Crystal, RewardID.Key, 3));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Teknee1, SubModeID.Trophy, RewardID.Trophy, 9));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Teknee1, SubModeID.CNK_Challenge, RewardID.Key, 4));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Teknee1, SubModeID.Relic, RewardID.Key, 4));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Teknee2, SubModeID.Trophy, RewardID.Trophy, 10));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Teknee2, SubModeID.CNK_Challenge, RewardID.Key, 4));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Teknee2, SubModeID.Relic, RewardID.Key, 4));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Teknee3, SubModeID.Trophy, RewardID.Trophy, 11));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Teknee3, SubModeID.CNK_Challenge, RewardID.Key, 4));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_Teknee3, SubModeID.Relic, RewardID.Key, 4));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Boss_TekneeBoss, SubModeID.Boss, RewardID.Trophy, 12));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Arena_TekneeArena, SubModeID.Crystal, RewardID.Key, 4));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Boss_VeloBoss, SubModeID.Boss, RewardID.Key, 4));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Warp_Citadel_To_Barin, SubModeID.Trophy, RewardID.Key, 1));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Warp_Citadel_To_Fenomena, SubModeID.Trophy, RewardID.Key, 2));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Warp_Citadel_To_Teknee, SubModeID.Trophy, RewardID.Key, 3));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Warp_Earth_To_Barin, SubModeID.Trophy, RewardID.Key, 1));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Warp_Fenomena_To_Teknee, SubModeID.Trophy, RewardID.Key, 3));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Warp_Barin_To_Fenomena, SubModeID.Trophy, RewardID.Key, 2));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Warp_Earth_To_Teknee, SubModeID.Trophy, RewardID.Key, 3));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.GemCup_Red, SubModeID.Gem, RewardID.Token_Red, 4));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.GemCup_Blue, SubModeID.Gem, RewardID.Token_Blue, 4));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.GemCup_Green, SubModeID.Gem, RewardID.Token_Green, 4));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.GemCup_Purple, SubModeID.Gem, RewardID.Token_Purple, 4));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Warp_Citadel_To_Vault, SubModeID.Trophy, RewardID.Key, 4));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_VeloRace, SubModeID.Relic, RewardID.Gem_Blue, 1));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_VeloRace, SubModeID.Relic, RewardID.Gem_Red, 1));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_VeloRace, SubModeID.Relic, RewardID.Gem_Green, 1));
+            Adv_TracksManager_EntryList.Add(new AdvTracksManagerEntry(PadInfoNameID.Track_VeloRace, SubModeID.Relic, RewardID.Gem_Purple, 1));
 
             Adv_GoalsToRewards_EntryList.Add(new GoalsToRewardsEntry(TrackID.Arena_5, SubModeID.Crystal, RewardID.Token_Purple)); // Adds unused Terra Drome crystal challenge
             for (int i = 0; i < Adv_GoalsToRewards_EntryList.Count; i++)
