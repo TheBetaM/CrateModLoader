@@ -18,7 +18,7 @@ For games information in specific releases check their included Games.txt file.
 # Contributing
 
 In order for a game to be included in a future release it must have at least two of the following:
-- Working randomizer of any kind  
+- Working randomizer of any kind (unless otherwise stated, must be completable without glitches)  
 - Proof of concept mod  
 - Crate Mod Loader metadata edited into easily accessible text ingame
 
