@@ -1,6 +1,13 @@
 1.0.1
 
-TBD.
+General:
+-Changed Unknown ROM message to specify ROM type
+
+Crash Twinsanity:
+-Fixed Ammo Crate not activating from being outlined
+
+Crash Nitro Kart:
+-Randomize Drivers: Removed voice clip changes due to them causing crashes on the Gamecube version
 
 1.0.0 - Initial Release.
 

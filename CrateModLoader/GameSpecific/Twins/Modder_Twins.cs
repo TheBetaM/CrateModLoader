@@ -273,6 +273,7 @@ namespace CrateModLoader
                     {
                         obj.Scripts[(uint)Twins_Data.GameObjectScriptOrder.OnPhysicsCollision] = 65535;
                         obj.Scripts[(uint)Twins_Data.GameObjectScriptOrder.OnTouch] = 65535;
+                        obj.Scripts[(uint)Twins_Data.GameObjectScriptOrder.OnTrigger] = (ushort)Twins_Data.ScriptID.HEAD_COM_GENERIC_CRATE_TRIGGER_NEXT;
                         obj.Scripts[(uint)Twins_Data.GameObjectScriptOrder.OnDamage] = (ushort)Twins_Data.ScriptID.HEAD_COM_AMMO_CRATE_SMALL_TOUCHED;
                         obj.Scripts[(uint)Twins_Data.GameObjectScriptOrder.OnLand] = (ushort)Twins_Data.ScriptID.HEAD_COM_BASIC_CRATE_LANDED_ON;
                         import_GObj.Add(obj);

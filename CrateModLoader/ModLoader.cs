@@ -1027,7 +1027,7 @@ namespace CrateModLoader
                             }
                             else if (!CDReader.Detect(isoStream))
                             {
-                                text_gameType.Text = "Unknown game ROM!";
+                                text_gameType.Text = "Unknown PSX/PS2/PSP game ROM!";
                                 loadedISO = false;
                                 startButton.Enabled = false;
                                 processText.Text = "Waiting for input...";

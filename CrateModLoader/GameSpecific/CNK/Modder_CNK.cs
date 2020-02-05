@@ -1570,6 +1570,8 @@ namespace CrateModLoader
             }
 
             //Replace voices (todo: some drivers have voiceline IDs that others don't)
+            // Caused crashing on the Gamecube version
+            /*
             string[] csv_voices = File.ReadAllLines(path_gob_extracted + "common/audio/voices.csv");
 
             List<string> csv_Voices_LineList = new List<string>();
@@ -1604,6 +1606,7 @@ namespace CrateModLoader
             }
 
             File.WriteAllLines(path_gob_extracted + "common/audio/voices.csv", csv_voices);
+            */
         }
 
         void Mod_Randomize_Karts(Random randState)
