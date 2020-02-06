@@ -90,6 +90,7 @@ namespace CrateModLoader
                     ConsoleMode.XBOX,
                 },
                 API_Credit = "APIs by NeoKesha and BetaM",
+                API_Link = string.Empty,
                 Icon = Properties.Resources.icon_crash,
                 ModMenuEnabled = false,
                 ModCratesSupported = true,

@@ -926,7 +926,7 @@ namespace CrateModLoader.GameSpecific.Twins
             new TwinsLevelChunk(ChunkType.School_Rooftop_Roof05,LevelType.Rooftop,@"school\rooftop\roof05"),
             new TwinsLevelChunk(ChunkType.School_Rooftop_RoofCor1,LevelType.Rooftop,@"school\rooftop\roofcor1"),
             new TwinsLevelChunk(ChunkType.School_Rooftop_RoofCor2,LevelType.Rooftop,@"school\rooftop\roofcor2"),
-            new TwinsLevelChunk(ChunkType.School_Sch_Hub_Boil2Lck,LevelType.Boiler,@"school\sch_hub\boil2lck"), // verify
+            new TwinsLevelChunk(ChunkType.School_Sch_Hub_Boil2Lck,LevelType.Boiler,@"school\sch_hub\boil2lck"),
             new TwinsLevelChunk(ChunkType.School_Sch_Hub_Sch_Hub,LevelType.Hub3,@"school\sch_hub\sch_hub"),
             new TwinsLevelChunk(ChunkType.School_Sch_Hub_SchShip,LevelType.Hub3,@"school\sch_hub\schship"),
             new TwinsLevelChunk(ChunkType.School_Sch_Hub_SLK01,LevelType.Hub3,@"school\sch_hub\slk01"),

@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-//Crash 2 API by chekwob and ManDude
+//Crash 2 API by chekwob and ManDude (https://github.com/cbhacks/CrashEdit)
 
 namespace CrateModLoader
 {
@@ -20,6 +20,7 @@ namespace CrateModLoader
                     ConsoleMode.PS1
                 },
                 API_Credit = "API by chekwob and ManDude",
+                API_Link = "https://github.com/cbhacks/CrashEdit",
                 Icon = null,
                 ModMenuEnabled = false,
                 ModCratesSupported = true,

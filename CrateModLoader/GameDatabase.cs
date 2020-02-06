@@ -9,8 +9,10 @@ namespace CrateModLoader
         public string Name;
         /// <summary> Console types to check for game detection. </summary>
         public List<ConsoleMode> Consoles;
-        /// <summary> Detailed credit of the individual game's support. </summary>
+        /// <summary> Detailed credit of the individual game's support. Leave as String.Empty if not applicable. </summary>
         public string API_Credit;
+        /// <summary> Website link to the most relevant API. Leave as String.Empty if not applicable. </summary>
+        public string API_Link;
         /// <summary> Display an icon or set to null to not display one. </summary>
         public Image Icon;
         /// <summary> Set to true to enable mod menu. </summary>

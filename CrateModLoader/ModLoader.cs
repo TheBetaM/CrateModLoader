@@ -21,13 +21,16 @@ namespace CrateModLoader
     public enum ConsoleMode
     {
         Undefined = -1,
-        PSP = 0,
-        PS2 = 1,
-        XBOX = 2,
-        GCN = 3,
-        PS1 = 4,
-        WII = 5,
-        XBOX360 = 6,
+        PSP = 0, // PlayStation Portable
+        PS2 = 1, // PlayStation 2
+        XBOX = 2, // Xbox
+        GCN = 3, // Gamecube
+        PS1 = 4, // PlayStation
+        WII = 5, // Wii
+        XBOX360 = 6,  // Xbox 360
+        PC = 7, // PC CDROM/DVDROM
+        DC = 8, // Dreamcast
+        PS3 = 9, // PlayStation 3
     }
     public enum RegionType
     {
@@ -48,6 +51,7 @@ namespace CrateModLoader
         public Button startButton;
         public Label text_gameType;
         public Label text_optionsLabel;
+        public LinkLabel text_apiLabel;
         public PictureBox image_gameIcon;
         public CheckedListBox list_modOptions;
         public Form main_form;
@@ -1295,6 +1299,7 @@ namespace CrateModLoader
 
                 text_gameType.Text = "Unsupported game detected.";
                 text_optionsLabel.Text = string.Empty;
+                text_apiLabel.Text = string.Empty;
 
                 image_gameIcon.Visible = false;
             }
@@ -1306,7 +1311,24 @@ namespace CrateModLoader
                 button_modCrateMenu.Enabled = button_modCrateMenu.Visible = Modder.Game.ModCratesSupported;
 
                 text_gameType.Text = string.Format("{0} {1} {2} detected!", Modder.Game.Name, region_mod, cons_mod);
-                text_optionsLabel.Text = string.Format("Quick Options ({1})", Modder.Game.Name, Modder.Game.API_Credit);
+                if (Modder.Game.API_Credit != null && Modder.Game.API_Credit != "" && Modder.Game.API_Credit != string.Empty)
+                {
+                    text_apiLabel.Text = Modder.Game.API_Credit;
+                    if (Modder.Game.API_Link != null && Modder.Game.API_Link != "" && Modder.Game.API_Link != string.Empty)
+                    {
+                        text_apiLabel.Enabled = true;
+                    }
+                    else
+                    {
+                        text_apiLabel.Enabled = false;
+                    }
+                }
+                else
+                {
+                    text_apiLabel.Text = "No API available";
+                    text_apiLabel.Enabled = false;
+                }
+                text_optionsLabel.Text = "Quick Options";
                 if (gameIcon != null)
                 {
                     image_gameIcon.Image = gameIcon;
@@ -1416,6 +1438,15 @@ namespace CrateModLoader
             startButton.Enabled = false;
         }
 
+        public void API_Link_Clicked()
+        {
+            if (Modder != null && Modder.Game.API_Credit != null && Modder.Game.API_Link != null && Modder.Game.API_Link != "" && Modder.Game.API_Link != string.Empty)
+            {
+                text_apiLabel.LinkVisited = true;
+                Process.Start(Modder.Game.API_Link);
+            }
+        }
+
         void ResetGameSpecific(bool ClearGameText = false)
         {
             Modder = null;
@@ -1426,6 +1457,8 @@ namespace CrateModLoader
             button_modCrateMenu.Enabled = button_modCrateMenu.Visible = false;
 
             text_optionsLabel.Text = string.Empty;
+            text_apiLabel.Text = string.Empty;
+            text_apiLabel.LinkVisited = false;
             if (ClearGameText)
             {
                 text_gameType.Text = string.Empty;

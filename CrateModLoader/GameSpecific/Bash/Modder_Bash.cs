@@ -13,7 +13,8 @@ namespace CrateModLoader
                 {
                     ConsoleMode.PS1
                 },
-                API_Credit = "No API available",
+                API_Credit = string.Empty,
+                API_Link = string.Empty,
                 Icon = null,
                 ModMenuEnabled = false,
                 ModCratesSupported = true,

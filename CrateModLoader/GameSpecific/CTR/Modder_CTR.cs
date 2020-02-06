@@ -4,7 +4,7 @@ using System.IO;
 using CTRFramework;
 using CTRFramework.Shared;
 using bigtool;
-//CTR API by DCxDemo
+//CTR API by DCxDemo (https://github.com/DCxDemo/CTR-tools) 
 
 namespace CrateModLoader
 {
@@ -22,6 +22,7 @@ namespace CrateModLoader
                     ConsoleMode.PS1
                 },
                 API_Credit = "API by DCxDemo",
+                API_Link = "https://github.com/DCxDemo/CTR-tools",
                 Icon = null,
                 ModMenuEnabled = false,
                 ModCratesSupported = true,

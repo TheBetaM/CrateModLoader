@@ -33,6 +33,7 @@ namespace CrateModLoader
                     ConsoleMode.XBOX,
                 },
                 API_Credit = "API by NeoKesha, Smartkin, ManDude and Marko",
+                API_Link = "https://github.com/Smartkin/twinsanity-editor",
                 Icon = Properties.Resources.icon_twins,
                 ModMenuEnabled = false,
                 ModCratesSupported = true,

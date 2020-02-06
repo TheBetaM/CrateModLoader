@@ -44,6 +44,7 @@ namespace CrateModLoader
                     ConsoleMode.XBOX
                 },
                 API_Credit = "Tools/API by BetaM, ManDude and eezstreet",
+                API_Link = string.Empty,
                 Icon = Properties.Resources.icon_cnk,
                 ModMenuEnabled = false,
                 ModCratesSupported = true,

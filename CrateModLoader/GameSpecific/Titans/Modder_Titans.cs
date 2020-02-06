@@ -21,6 +21,7 @@ namespace CrateModLoader
                     ConsoleMode.XBOX360,
                 },
                 API_Credit = "API by NeoKesha",
+                API_Link = string.Empty,
                 Icon = Properties.Resources.icon_titans,
                 ModMenuEnabled = false,
                 ModCratesSupported = true,

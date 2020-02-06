@@ -12,6 +12,7 @@ namespace CrateModLoader
             label4.Text = "Crate Mod Loader " + Program.ModProgram.releaseVersionString;
             label5.Text = "";
             label7.Text = "";
+            linkLabel1.Text = "";
             label6.Text = "Waiting for input..";
             button3.Enabled = false;
             Program.ModProgram.processText = label6;
@@ -19,6 +20,7 @@ namespace CrateModLoader
             Program.ModProgram.startButton = button3;
             Program.ModProgram.text_gameType = label7;
             Program.ModProgram.text_optionsLabel = label5;
+            Program.ModProgram.text_apiLabel = linkLabel1;
             Program.ModProgram.list_modOptions = checkedListBox1;
             Program.ModProgram.main_form = this;
             Program.ModProgram.image_gameIcon = pictureBox1;
@@ -210,6 +212,18 @@ namespace CrateModLoader
         private void radioButton_ToFolder_CheckedChanged(object sender, EventArgs e)
         {
             Program.ModProgram.UpdateOutputSetting();
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            try
+            {
+                Program.ModProgram.API_Link_Clicked();
+            }
+            catch
+            {
+                MessageBox.Show("Unable to open link.");
+            }
         }
     }
 }
