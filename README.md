@@ -25,7 +25,6 @@ In order for a game to be included in a future release it must have at least two
 # Contributors
 
 - [BetaM](https://www.youtube.com/channel/UCL-EwV5XqypMUJ5zVHaBjAw) (Creator) <a href='https://ko-fi.com/N4N51DUX0' target='_blank'><img height='24' style='border:0px;height:24px;' src='https://az743702.vo.msecnd.net/cdn/kofi2.png?v=2' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
-- [CDRomatron](https://github.com/CDRomatron)  
 - [ManDude](https://github.com/ManDude)  
 
 # License

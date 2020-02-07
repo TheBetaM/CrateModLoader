@@ -9,7 +9,6 @@ Website: https://github.com/TheBetaM/CrateModLoader/
 Contributors
 
 -BetaM (https://www.youtube.com/channel/UCL-EwV5XqypMUJ5zVHaBjAw) (Creator)
--CDRomatron (https://github.com/CDRomatron)  
 -ManDude (https://github.com/ManDude) 
 
 License Information

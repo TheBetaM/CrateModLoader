@@ -1,6 +1,8 @@
 1.1.0
 
-TBD.
+General:
+-Added API links where available
+-Merged ROM checking into one option to prevent confusion
 
 1.0.1
 
