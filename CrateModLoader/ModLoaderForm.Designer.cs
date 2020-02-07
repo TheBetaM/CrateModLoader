@@ -82,7 +82,7 @@
             "Nothing"});
             this.checkedListBox1.Location = new System.Drawing.Point(10, 275);
             this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(314, 180);
+            this.checkedListBox1.Size = new System.Drawing.Size(311, 0);
             this.checkedListBox1.TabIndex = 0;
             this.checkedListBox1.Visible = false;
             this.checkedListBox1.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged);
@@ -102,13 +102,13 @@
             this.textBox1.Location = new System.Drawing.Point(11, 110);
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(325, 20);
+            this.textBox1.Size = new System.Drawing.Size(322, 20);
             this.textBox1.TabIndex = 1;
             // 
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(342, 110);
+            this.button1.Location = new System.Drawing.Point(339, 110);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(74, 20);
             this.button1.TabIndex = 2;
@@ -132,7 +132,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.progressBar1.Location = new System.Drawing.Point(11, 36);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(405, 23);
+            this.progressBar1.Size = new System.Drawing.Size(402, 23);
             this.progressBar1.TabIndex = 4;
             // 
             // label2
@@ -151,14 +151,14 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox2.Location = new System.Drawing.Point(11, 155);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(325, 20);
+            this.textBox2.Size = new System.Drawing.Size(322, 20);
             this.textBox2.TabIndex = 6;
             this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // button2
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Location = new System.Drawing.Point(342, 155);
+            this.button2.Location = new System.Drawing.Point(339, 155);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(74, 20);
             this.button2.TabIndex = 7;
@@ -190,7 +190,7 @@
             // 
             this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button3.Enabled = false;
-            this.button3.Location = new System.Drawing.Point(342, 7);
+            this.button3.Location = new System.Drawing.Point(339, 7);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(74, 23);
             this.button3.TabIndex = 11;
@@ -209,7 +209,7 @@
             0,
             0});
             this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(226, 20);
+            this.numericUpDown1.Size = new System.Drawing.Size(223, 20);
             this.numericUpDown1.TabIndex = 12;
             this.numericUpDown1.Value = new decimal(new int[] {
             2147483647,
@@ -221,7 +221,7 @@
             // button4
             // 
             this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button4.Location = new System.Drawing.Point(342, 184);
+            this.button4.Location = new System.Drawing.Point(339, 184);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(74, 20);
             this.button4.TabIndex = 13;
@@ -266,7 +266,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox1.Location = new System.Drawing.Point(347, 210);
+            this.pictureBox1.Location = new System.Drawing.Point(344, 210);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(64, 64);
             this.pictureBox1.TabIndex = 16;
@@ -357,7 +357,7 @@
             this.panel1.Controls.Add(this.radioButton_FromFolder);
             this.panel1.Location = new System.Drawing.Point(80, 85);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(256, 19);
+            this.panel1.Size = new System.Drawing.Size(253, 19);
             this.panel1.TabIndex = 26;
             // 
             // panel2
@@ -368,7 +368,7 @@
             this.panel2.Controls.Add(this.radioButton_ToFolder);
             this.panel2.Location = new System.Drawing.Point(80, 132);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(256, 20);
+            this.panel2.Size = new System.Drawing.Size(253, 20);
             this.panel2.TabIndex = 27;
             // 
             // label7
@@ -397,7 +397,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(427, 422);
+            this.ClientSize = new System.Drawing.Size(424, 241);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.panel2);

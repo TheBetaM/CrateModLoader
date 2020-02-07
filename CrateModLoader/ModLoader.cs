@@ -13,10 +13,8 @@ namespace CrateModLoader
 {
     public enum OpenROM_SelectionType
     {
-        PSXPS2PSP = 1,
-        GCNWII = 2,
-        XBOX = 3,
-        Any = 4,
+        PSXPS2PSPGCNWIIXBOX = 1,
+        Any = 2,
     }
     public enum ConsoleMode
     {
@@ -27,10 +25,10 @@ namespace CrateModLoader
         GCN = 3, // Gamecube
         PS1 = 4, // PlayStation
         WII = 5, // Wii
-        XBOX360 = 6,  // Xbox 360
-        PC = 7, // PC CDROM/DVDROM
-        DC = 8, // Dreamcast
-        PS3 = 9, // PlayStation 3
+        XBOX360 = 6,  // Xbox 360, not supported yet
+        PC = 7, // PC CDROM/DVDROM, not supported yet, probably just for reference
+        DC = 8, // Dreamcast, not supported yet
+        PS3 = 9, // PlayStation 3, just for reference
     }
     public enum RegionType
     {
@@ -110,7 +108,7 @@ namespace CrateModLoader
         public bool inputDirectoryMode = false;
         public bool outputDirectoryMode = false;
         private Process ISOcreatorProcess;
-        public OpenROM_SelectionType OpenROM_Selection = OpenROM_SelectionType.PSXPS2PSP;
+        public OpenROM_SelectionType OpenROM_Selection = OpenROM_SelectionType.PSXPS2PSPGCNWIIXBOX;
 
         //ISO settings
         public string ISO_label;
@@ -905,7 +903,7 @@ namespace CrateModLoader
             }
             else
             {
-                if (OpenROM_Selection == OpenROM_SelectionType.GCNWII || OpenROM_Selection == OpenROM_SelectionType.Any)
+                if (OpenROM_Selection == OpenROM_SelectionType.PSXPS2PSPGCNWIIXBOX || OpenROM_Selection == OpenROM_SelectionType.Any)
                 {
                     // Gamecube/Wii ROMs
 
@@ -947,7 +945,7 @@ namespace CrateModLoader
                         }
                     }
                 }
-                if (Modder == null && (OpenROM_Selection == OpenROM_SelectionType.XBOX || OpenROM_Selection == OpenROM_SelectionType.Any))
+                if (Modder == null && (OpenROM_Selection == OpenROM_SelectionType.PSXPS2PSPGCNWIIXBOX || OpenROM_Selection == OpenROM_SelectionType.Any))
                 {
                     // TODO: add free space checks
                     extractedPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"temp\");
@@ -963,11 +961,14 @@ namespace CrateModLoader
                     ISOcreatorProcess.Start();
                     ISOcreatorProcess.WaitForExit();
 
-                    Directory.Move(AppDomain.CurrentDomain.BaseDirectory + @"\" + Path.GetFileNameWithoutExtension(inputISOpath), extractedPath);
+                    if (Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + @"\" + Path.GetFileNameWithoutExtension(inputISOpath)))
+                    {
+                        Directory.Move(AppDomain.CurrentDomain.BaseDirectory + @"\" + Path.GetFileNameWithoutExtension(inputISOpath), extractedPath);
+                    }
 
                     processText.Text = "Reading XISO...";
 
-                    if (File.Exists(extractedPath + @"default.xbe"))
+                    if (Directory.Exists(extractedPath) && File.Exists(extractedPath + @"default.xbe"))
                     {
                         isoType = ConsoleMode.XBOX;
                         //Based on OpenXDK
@@ -1011,7 +1012,7 @@ namespace CrateModLoader
 
                     DeleteTempFiles();
                 }
-                if (Modder == null && (OpenROM_Selection == OpenROM_SelectionType.PSXPS2PSP || OpenROM_Selection == OpenROM_SelectionType.Any))
+                if (Modder == null && (OpenROM_Selection == OpenROM_SelectionType.PSXPS2PSPGCNWIIXBOX || OpenROM_Selection == OpenROM_SelectionType.Any))
                 {
                     try
                     {
@@ -1031,7 +1032,7 @@ namespace CrateModLoader
                             }
                             else if (!CDReader.Detect(isoStream))
                             {
-                                text_gameType.Text = "Unknown PSX/PS2/PSP game ROM!";
+                                text_gameType.Text = "Unknown PSX/PS2/PSP/GCN/WII game ROM!";
                                 loadedISO = false;
                                 startButton.Enabled = false;
                                 processText.Text = "Waiting for input...";
@@ -1142,7 +1143,14 @@ namespace CrateModLoader
 
             if (Modder == null)
             {
-                text_gameType.Text = "Unknown game ROM!";
+                if (OpenROM_Selection == OpenROM_SelectionType.PSXPS2PSPGCNWIIXBOX)
+                {
+                    text_gameType.Text = "Unknown PSX/PS2/PSP/GCN/WII/XBOX game ROM!";
+                }
+                else
+                {
+                    text_gameType.Text = "Unknown game ROM!";
+                }
                 loadedISO = false;
             }
             else

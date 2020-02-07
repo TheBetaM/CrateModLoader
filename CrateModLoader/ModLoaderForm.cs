@@ -68,8 +68,7 @@ namespace CrateModLoader
             }
             else
             {
-                //openFileDialog1.Filter = "PS2/PSP ISO (*.iso)|*.iso|GC ISO (*.iso)|*.iso|PSX BIN (*.bin)|*.bin|WII ISO (*.iso)|*.iso|PSX/PS2 Directory (system.cnf)|*.cnf|PSP Directory (umd_data.bin)|*.bin|GC/WII Directory (opening.bnr)|*.bnr|XBOX Directory (*.xbe)|*.xbe|360 Directory (*.xex)|*.xex|All files (*.*)|*.*";
-                openFileDialog1.Filter = "PSX/PS2/PSP ROM (*.iso; *.bin)|*.iso;*.bin|GC/WII ROM (*.iso; *.wbfs)|*.iso;*.wbfs|XBOX ROM (*.iso)|*.iso|All files (*.*)|*.*";
+                openFileDialog1.Filter = "PSX/PS2/PSP/GCN/WII/XBOX ROM (*.iso; *.bin; *.wbfs)|*.iso;*.bin;*.wbfs|All files (*.*)|*.*";
 
                 if (openFileDialog1.ShowDialog() == DialogResult.OK)
                 {
