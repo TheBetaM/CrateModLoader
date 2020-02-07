@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows.Forms;
+using System.IO;
 
 namespace CrateModLoader
 {
@@ -222,6 +223,58 @@ namespace CrateModLoader
             catch
             {
                 MessageBox.Show("Unable to open link.");
+            }
+        }
+
+        private void ModLoaderForm_DragDrop(object sender, DragEventArgs e)
+        {
+            if (!Program.ModProgram.processActive)
+            {
+                try
+                {
+                    string[] fileList = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+                    if (fileList.Length == 1)
+                    {
+                        if (Directory.Exists(fileList[0]))
+                        {
+                            Program.ModProgram.inputDirectoryMode = true;
+                            radioButton_FromFolder.Checked = true;
+                            radioButton_FromROM.Checked = false;
+                            Program.ModProgram.UpdateInputSetting();
+                            Program.ModProgram.inputISOpath = fileList[0] + @"\";
+                        }
+                        else
+                        {
+                            Program.ModProgram.inputDirectoryMode = false;
+                            radioButton_FromFolder.Checked = false;
+                            radioButton_FromROM.Checked = true;
+                            Program.ModProgram.UpdateInputSetting();
+                            Program.ModProgram.inputISOpath = fileList[0];
+                        }
+                        Program.ModProgram.OpenROM_Selection = OpenROM_SelectionType.Any;
+                        Program.ModProgram.CheckISO();
+                        textBox1.Text = Program.ModProgram.inputISOpath;
+                    }
+                }
+                catch
+                {
+
+                }
+            }
+        }
+
+        private void ModLoaderForm_DragEnter(object sender, DragEventArgs e)
+        {
+            if (!Program.ModProgram.processActive)
+            {
+                if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                {
+                    e.Effect = DragDropEffects.Copy;
+                }
+                else
+                {
+                    e.Effect = DragDropEffects.None;
+                }
             }
         }
     }

@@ -394,6 +394,7 @@
             // 
             // ModLoaderForm
             // 
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
@@ -425,6 +426,8 @@
             this.MinimumSize = new System.Drawing.Size(440, 280);
             this.Name = "ModLoaderForm";
             this.Text = "Crate Mod Loader";
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.ModLoaderForm_DragDrop);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.ModLoaderForm_DragEnter);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel1.ResumeLayout(false);

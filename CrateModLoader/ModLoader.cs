@@ -109,6 +109,7 @@ namespace CrateModLoader
         public bool outputDirectoryMode = false;
         private Process ISOcreatorProcess;
         public OpenROM_SelectionType OpenROM_Selection = OpenROM_SelectionType.PSXPS2PSPGCNWIIXBOX;
+        public bool processActive = false;
 
         //ISO settings
         public string ISO_label;
@@ -1403,6 +1404,7 @@ namespace CrateModLoader
             button_radio_FromROM.Enabled = false;
             button_radio_ToFolder.Enabled = false;
             button_radio_ToROM.Enabled = false;
+            processActive = true;
         }
         public void EnableInteraction()
         {
@@ -1419,6 +1421,7 @@ namespace CrateModLoader
             button_radio_FromROM.Enabled = true;
             button_radio_ToFolder.Enabled = true;
             button_radio_ToROM.Enabled = true;
+            processActive = false;
         }
 
         public void UpdateInputSetting()

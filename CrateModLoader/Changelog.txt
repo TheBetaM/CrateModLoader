@@ -3,6 +3,7 @@
 General:
 -Added API links where available
 -Merged ROM checking into one option to prevent confusion
+-Added drag & drop support (ROMs and folders)
 
 1.0.1
 
