@@ -1,4 +1,16 @@
 # Crate Mod Loader Supported Games & Features
+
+* [Crash Bandicoot](../master/CrateModLoader/GAMES.md#crash-bandicoot)
+* [Crash Bandicoot 2: Cortex Strikes Back](../master/CrateModLoader/GAMES.md#crash-bandicoot-2-cortex-strikes-back)
+* [Crash Bandicoot: Warped](../master/CrateModLoader/GAMES.md#crash-bandicoot-warped)
+* [Crash Team Racing](../master/CrateModLoader/GAMES.md#crash-team-racing)
+* [Crash Nitro Kart](../master/CrateModLoader/GAMES.md#crash-nitro-kart)
+* [Crash Team Racing](../master/CrateModLoader/GAMES.md#crash-team-racing)
+* [Crash Twinsanity](../master/CrateModLoader/GAMES.md#crash-twinsanity)
+* [Crash Tag Team Racing](../master/CrateModLoader/GAMES.md#crash-tag-team-racing)
+* [Crash of the Titans](../master/CrateModLoader/GAMES.md#crash-of-the-titans)
+* [Crash: Mind Over Mutant](../master/CrateModLoader/GAMES.md#crash-mind-over-mutant)
+* [Rayman 3: Hoodlum Havoc](../master/CrateModLoader/GAMES.md#rayman-3-hoodlum-havoc)
   
 ## Crash Bandicoot
 Supported: All PS1 versions (.BIN/.ISO formats)  
@@ -24,7 +36,7 @@ API by DCxDemo. (https://github.com/DCxDemo/CTR-tools)
 ### Features:  
 - TBD  
   
-## Crash Nitro Kart
+## Crash Nitro Kart ![Crash Nitro Kart](../master/CrateModLoader/Resources/icon_cnk.png "Crash Nitro Kart")
 Supported: All PS2 versions (.ISO format), All GC versions (.ISO format), All XBOX versions (.ISO format)  
 Tools/API by BetaM, ManDude and eezstreet.  
 ### Features:  
@@ -40,7 +52,7 @@ Tools/API by BetaM, ManDude and eezstreet.
 - Remove Intro Videos  
 - Version, seed and settings visible in the Credits screen
   
-## Crash Twinsanity
+## Crash Twinsanity ![Crash Twinsanity](../master/CrateModLoader/Resources/icon_twins.png "Crash Twinsanity")
 Supported: All PS2 versions (.ISO format) (XBOX not supported yet)  
 API by NeoKesha, Smartkin, ManDude and Marko. (https://github.com/Smartkin/twinsanity-editor)  
 ### Features:  
@@ -56,7 +68,7 @@ API by NeoKesha, Smartkin, ManDude and Marko. (https://github.com/Smartkin/twins
 - Enable Some Unused Enemies  
 - Version, seed and settings visible in the Autosave Disabled screen  
   
-## Crash Tag Team Racing
+## Crash Tag Team Racing ![Crash Tag Team Racing](../master/CrateModLoader/Resources/icon_crash.png "Crash Tag Team Racing")
 Supported: All PS2 versions (.ISO format), All PSP versions (.ISO format), All XBOX versions (.ISO format) (GC not supported yet)  
 APIs by NeoKesha and BetaM. (based on https://github.com/handsomematt/Pure3D)  
 ### Features:  
@@ -79,7 +91,7 @@ API by NeoKesha.
 ### Features:    
 - Version, seed and settings visible in the Credits screen  
 
-## Rayman 3: Hoodlum Havoc
+## Rayman 3: Hoodlum Havoc ![Rayman 3](../master/CrateModLoader/Resources/icon_ray3.png "Rayman 3")
 Supported: All PS2 versions (.ISO format), All GC versions (.ISO format), All XBOX versions (.ISO format), PC version (Folder mode only)
 ### Features:
 - Randomize Level Order (All Levels or Any amount of Levels)  
