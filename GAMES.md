@@ -1,16 +1,16 @@
 # Crate Mod Loader Supported Games & Features
 
-* [Crash Bandicoot](../master/CrateModLoader/GAMES.md#crash-bandicoot)
-* [Crash Bandicoot 2: Cortex Strikes Back](../master/CrateModLoader/GAMES.md#crash-bandicoot-2-cortex-strikes-back)
-* [Crash Bandicoot: Warped](../master/CrateModLoader/GAMES.md#crash-bandicoot-warped)
-* [Crash Team Racing](../master/CrateModLoader/GAMES.md#crash-team-racing)
-* [Crash Nitro Kart](../master/CrateModLoader/GAMES.md#crash-nitro-kart)
-* [Crash Team Racing](../master/CrateModLoader/GAMES.md#crash-team-racing)
-* [Crash Twinsanity](../master/CrateModLoader/GAMES.md#crash-twinsanity)
-* [Crash Tag Team Racing](../master/CrateModLoader/GAMES.md#crash-tag-team-racing)
-* [Crash of the Titans](../master/CrateModLoader/GAMES.md#crash-of-the-titans)
-* [Crash: Mind Over Mutant](../master/CrateModLoader/GAMES.md#crash-mind-over-mutant)
-* [Rayman 3: Hoodlum Havoc](../master/CrateModLoader/GAMES.md#rayman-3-hoodlum-havoc)
+* [Crash Bandicoot](../master/GAMES.md#crash-bandicoot)
+* [Crash Bandicoot 2: Cortex Strikes Back](../master/GAMES.md#crash-bandicoot-2-cortex-strikes-back)
+* [Crash Bandicoot: Warped](../master/GAMES.md#crash-bandicoot-warped)
+* [Crash Team Racing](../master/GAMES.md#crash-team-racing)
+* [Crash Nitro Kart](../master/GAMES.md#crash-nitro-kart)
+* [Crash Team Racing](../master/GAMES.md#crash-team-racing)
+* [Crash Twinsanity](../master/GAMES.md#crash-twinsanity)
+* [Crash Tag Team Racing](../master/GAMES.md#crash-tag-team-racing)
+* [Crash of the Titans](../master/GAMES.md#crash-of-the-titans)
+* [Crash: Mind Over Mutant](../master/GAMES.md#crash-mind-over-mutant)
+* [Rayman 3: Hoodlum Havoc](../master/GAMES.md#rayman-3-hoodlum-havoc)
   
 ## Crash Bandicoot
 Supported: All PS1 versions (.BIN/.ISO formats)  
