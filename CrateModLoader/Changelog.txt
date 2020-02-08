@@ -5,6 +5,9 @@ General:
 -Merged ROM checking into one option to prevent confusion
 -Added drag & drop support (ROMs and folders)
 
+New games supported:
+-Rayman 3: Hoodlum Havoc
+
 1.0.1
 
 General:

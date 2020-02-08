@@ -921,6 +921,7 @@ namespace CrateModLoader
                     ISOcreatorProcess.Start();
 
                     string outputMessage = ISOcreatorProcess.StandardOutput.ReadToEnd();
+                    //Console.WriteLine(outputMessage);
 
                     ISOcreatorProcess.WaitForExit();
 
@@ -1033,7 +1034,7 @@ namespace CrateModLoader
                             }
                             else if (!CDReader.Detect(isoStream))
                             {
-                                text_gameType.Text = "Unknown PSX/PS2/PSP/GCN/WII game ROM!";
+                                text_gameType.Text = "Unknown PSX/PS2/PSP/GCN/WII/XBOX game ROM!";
                                 loadedISO = false;
                                 startButton.Enabled = false;
                                 processText.Text = "Waiting for input...";
@@ -1278,6 +1279,14 @@ namespace CrateModLoader
             else if (console == ConsoleMode.XBOX360)
             {
                 cons_mod = "360";
+            }
+            else if (console == ConsoleMode.DC)
+            {
+                cons_mod = "DC";
+            }
+            else if (console == ConsoleMode.PC)
+            {
+                cons_mod = "PC";
             }
 
             string region_mod;

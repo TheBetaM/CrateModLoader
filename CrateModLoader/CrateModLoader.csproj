@@ -221,6 +221,7 @@
     <Compile Include="GameSpecific\CTTR\Pure3D\Util.cs" />
     <Compile Include="GameSpecific\CTTR\RCF.cs" />
     <Compile Include="GameSpecific\MoM\Modder_MoM.cs" />
+    <Compile Include="GameSpecific\Rayman3\Modder_Rayman3.cs" />
     <Compile Include="GameSpecific\Titans\Modder_Titans.cs" />
     <Compile Include="GameSpecific\Twins\Modder_Twins.cs" />
     <Compile Include="GameSpecific\CTTR\Modder_CTTR.cs" />
@@ -305,6 +306,7 @@
     </Content>
     <Content Include="Resources\cml_header.png" />
     <Content Include="Resources\cml_icon.png" />
+    <None Include="Resources\icon_ray3.png" />
     <Content Include="Tools\CTR\filenames.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -366,6 +368,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Tools\wit\cygpcre-1.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Tools\wit\cygpng16-16.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Tools\wit\cygpsl-5.dll">
@@ -432,6 +437,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Tools\wit\titles.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Tools\wit\wimgt.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Tools\wit\wit.exe">

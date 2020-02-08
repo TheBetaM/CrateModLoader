@@ -72,3 +72,11 @@ Supported: All PS2 versions (.ISO format), All Wii versions (.ISO/.WBFS formats)
 API by NeoKesha.  
 Features:    
 - Version, seed and settings visible in the Credits screen  
+
+Rayman 3: Hoodlum Havoc
+Supported: All PS2 versions (.ISO format), All GC versions (.ISO format), All XBOX versions (.ISO format), PC version (Folder mode only)
+Features:
+- Randomize Level Order (All Levels or Any amount of Levels)  
+- Randomize Outfit Visuals (GC Only)  
+- New Game Into 2D Nightmare (GC Only)  
+- Remove Intro Videos  
