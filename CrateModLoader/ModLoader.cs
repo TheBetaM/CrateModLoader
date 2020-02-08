@@ -1320,10 +1320,10 @@ namespace CrateModLoader
                 button_modCrateMenu.Enabled = button_modCrateMenu.Visible = Modder.Game.ModCratesSupported;
 
                 text_gameType.Text = string.Format("{0} {1} {2} detected!", Modder.Game.Name, region_mod, cons_mod);
-                if (Modder.Game.API_Credit != null && Modder.Game.API_Credit != "" && Modder.Game.API_Credit != string.Empty)
+                if (!string.IsNullOrWhiteSpace(Modder.Game.API_Credit))
                 {
                     text_apiLabel.Text = Modder.Game.API_Credit;
-                    if (Modder.Game.API_Link != null && Modder.Game.API_Link != "" && Modder.Game.API_Link != string.Empty)
+                    if (!string.IsNullOrWhiteSpace(Modder.Game.API_Link))
                     {
                         text_apiLabel.Enabled = true;
                     }
