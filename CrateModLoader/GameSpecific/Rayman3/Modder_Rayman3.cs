@@ -71,10 +71,10 @@ namespace CrateModLoader.GameSpecific.Rayman3
             };
 
             Options.Add(RandomizeLevelOrder, new ModOption("Randomize Level Order (All Levels)")); // todo
-            Options.Add(RandomizeLevelOrderAlt, new ModOption("Randomize Level Order (Any amount of Levels)")); //todo: fix audio
+            Options.Add(RandomizeLevelOrderAlt, new ModOption("Randomize Level Order (Any amount of Levels)")); //todo: fix lighting on PC
             Options.Add(RandomizeOutfitColors, new ModOption("Randomize Outfit Visuals (GC Only)")); //todo
             Options.Add(NewGameNightmare, new ModOption("New Game Into 2D Nightmare (GC Only)"));
-            Options.Add(RemoveIntroVideos, new ModOption("Remove Intro Video", true)); 
+            Options.Add(RemoveIntroVideos, new ModOption("Remove Intro Video (GC Only)", true)); 
 
         }
 
@@ -204,6 +204,27 @@ namespace CrateModLoader.GameSpecific.Rayman3
                 {
                     Directory.Move(basePath + targetLevel + @"\", basePath + "level" + i + @"\");
                 }
+                if (Program.ModProgram.isoType == ConsoleMode.PS2)
+                {
+                    File.Move(basePath + @"WORLD\SOUND\" + targetLevel + ".BNH;1", basePath + @"WORLD\SOUND\" + "level" + i + ".BNH;1");
+                    File.Move(basePath + @"WORLD\SOUND\" + targetLevel + ".HX2;1", basePath + @"WORLD\SOUND\" + "level" + i + ".HX2;1");
+                    File.Move(basePath + @"WORLD\SOUND\" + targetLevel + ".SMT;1", basePath + @"WORLD\SOUND\" + "level" + i + ".SMT;1");
+                }
+                else if (Program.ModProgram.isoType == ConsoleMode.GCN)
+                {
+                    File.Move(basePath + @"World\Sound\" + targetLevel + ".bnh", basePath + @"World\Sound\" + "level" + i + ".bnh");
+                    File.Move(basePath + @"World\Sound\" + targetLevel + ".hxg", basePath + @"World\Sound\" + "level" + i + ".hxg");
+                }
+                else if (Program.ModProgram.isoType == ConsoleMode.XBOX)
+                {
+                    File.Move(basePath + @"World\Sound\" + targetLevel + ".bnh", basePath + @"World\Sound\" + "level" + i + ".bnh");
+                    File.Move(basePath + @"World\Sound\" + targetLevel + ".hxx", basePath + @"World\Sound\" + "level" + i + ".hxx");
+                }
+                else if (Program.ModProgram.isoType == ConsoleMode.PC)
+                {
+                    File.Move(basePath + @"World\Sound\" + targetLevel + ".bnh", basePath + @"World\Sound\" + "level" + i + ".bnh");
+                    File.Move(basePath + @"World\Sound\" + targetLevel + ".HXC", basePath + @"World\Sound\" + "level" + i + ".HXC");
+                }
             }
             for (int i = minLevel; i <= maxLevel; i++)
             {
@@ -224,18 +245,9 @@ namespace CrateModLoader.GameSpecific.Rayman3
                         File.Move(basePath + targetLevel + @"\" + sourceLevel + ".PTR;1", basePath + targetLevel + @"\" + targetLevel + ".PTR;1");
                         File.Move(basePath + targetLevel + @"\" + sourceLevel + ".TBF;1", basePath + targetLevel + @"\" + targetLevel + ".TBF;1");
 
-                        File.Move(basePath + @"WORLD\SOUND\" + targetLevel + ".BNH;1", basePath + @"WORLD\SOUND\" + targetLevel + "1.BNH;1");
-                        File.Move(basePath + @"WORLD\SOUND\" + targetLevel + ".HX2;1", basePath + @"WORLD\SOUND\" + targetLevel + "1.HX2;1");
-                        File.Move(basePath + @"WORLD\SOUND\" + targetLevel + ".SMT;1", basePath + @"WORLD\SOUND\" + targetLevel + "1.SMT;1");
-                        if (sourceLevel != targetLevel)
-                        {
-                            File.Move(basePath + @"WORLD\SOUND\" + sourceLevel + ".BNH;1", basePath + @"WORLD\SOUND\" + targetLevel + ".BNH;1");
-                            File.Move(basePath + @"WORLD\SOUND\" + sourceLevel + ".HX2;1", basePath + @"WORLD\SOUND\" + targetLevel + ".HX2;1");
-                            File.Move(basePath + @"WORLD\SOUND\" + sourceLevel + ".SMT;1", basePath + @"WORLD\SOUND\" + targetLevel + ".SMT;1");
-                        }
-                        File.Move(basePath + @"WORLD\SOUND\" + targetLevel + "1.BNH;1", basePath + @"WORLD\SOUND\" + sourceLevel + ".BNH;1");
-                        File.Move(basePath + @"WORLD\SOUND\" + targetLevel + "1.HX2;1", basePath + @"WORLD\SOUND\" + sourceLevel + ".HX2;1");
-                        File.Move(basePath + @"WORLD\SOUND\" + targetLevel + "1.SMT;1", basePath + @"WORLD\SOUND\" + sourceLevel + ".SMT;1");
+                        File.Move(basePath + @"WORLD\SOUND\" + "level" + i + ".BNH;1", basePath + @"WORLD\SOUND\" + targetLevel + ".BNH;1");
+                        File.Move(basePath + @"WORLD\SOUND\" + "level" + i + ".HX2;1", basePath + @"WORLD\SOUND\" + targetLevel + ".HX2;1");
+                        File.Move(basePath + @"WORLD\SOUND\" + "level" + i + ".SMT;1", basePath + @"WORLD\SOUND\" + targetLevel + ".SMT;1");
                     }
                     else if (Program.ModProgram.isoType == ConsoleMode.GCN)
                     {
@@ -248,15 +260,8 @@ namespace CrateModLoader.GameSpecific.Rayman3
                         File.Move(basePath + targetLevel + @"\" + sourceLevel + "kf.lvl", basePath + targetLevel + @"\" + targetLevel + "kf.lvl");
                         File.Move(basePath + targetLevel + @"\" + sourceLevel + "kf.ptr", basePath + targetLevel + @"\" + targetLevel + "kf.ptr");
 
-                        File.Move(basePath + @"World\Sound\" + targetLevel + ".bnh", basePath + @"World\Sound\" + targetLevel + "1.bnh");
-                        File.Move(basePath + @"World\Sound\" + targetLevel + ".hxg", basePath + @"World\Sound\" + targetLevel + "1.hxg");
-                        if (sourceLevel != targetLevel)
-                        {
-                            File.Move(basePath + @"World\Sound\" + sourceLevel + ".bnh", basePath + @"World\Sound\" + targetLevel + ".bnh");
-                            File.Move(basePath + @"World\Sound\" + sourceLevel + ".hxg", basePath + @"World\Sound\" + targetLevel + ".hxg");
-                        }
-                        File.Move(basePath + @"World\Sound\" + targetLevel + "1.bnh", basePath + @"World\Sound\" + sourceLevel + ".bnh");
-                        File.Move(basePath + @"World\Sound\" + targetLevel + "1.hxg", basePath + @"World\Sound\" + sourceLevel + ".hxg");
+                        File.Move(basePath + @"World\Sound\" + "level" + i + ".bnh", basePath + @"World\Sound\" + targetLevel + ".bnh");
+                        File.Move(basePath + @"World\Sound\" + "level" + i + ".hxg", basePath + @"World\Sound\" + targetLevel + ".hxg");
                     }
                     else if (Program.ModProgram.isoType == ConsoleMode.XBOX)
                     {
@@ -269,30 +274,16 @@ namespace CrateModLoader.GameSpecific.Rayman3
                         File.Move(basePath + targetLevel + @"\" + sourceLevel + ".ptr", basePath + targetLevel + @"\" + targetLevel + ".ptr");
                         File.Move(basePath + targetLevel + @"\" + sourceLevel + ".spc", basePath + targetLevel + @"\" + targetLevel + ".spc");
 
-                        File.Move(basePath + @"World\Sound\" + targetLevel + ".bnh", basePath + @"World\Sound\" + targetLevel + "1.bnh");
-                        File.Move(basePath + @"World\Sound\" + targetLevel + ".hxx", basePath + @"World\Sound\" + targetLevel + "1.hxx");
-                        if (sourceLevel != targetLevel)
-                        {
-                            File.Move(basePath + @"World\Sound\" + sourceLevel + ".bnh", basePath + @"World\Sound\" + targetLevel + ".bnh");
-                            File.Move(basePath + @"World\Sound\" + sourceLevel + ".hxx", basePath + @"World\Sound\" + targetLevel + ".hxx");
-                        }
-                        File.Move(basePath + @"World\Sound\" + targetLevel + "1.bnh", basePath + @"World\Sound\" + sourceLevel + ".bnh");
-                        File.Move(basePath + @"World\Sound\" + targetLevel + "1.hxx", basePath + @"World\Sound\" + sourceLevel + ".hxx");
+                        File.Move(basePath + @"World\Sound\" + "level" + i + ".bnh", basePath + @"World\Sound\" + targetLevel + ".bnh");
+                        File.Move(basePath + @"World\Sound\" + "level" + i + ".hxx", basePath + @"World\Sound\" + targetLevel + ".hxx");
                     }
                     else if (Program.ModProgram.isoType == ConsoleMode.PC)
                     {
                         File.Move(basePath + targetLevel + @"\" + sourceLevel + ".lvl", basePath + targetLevel + @"\" + targetLevel + ".lvl");
                         File.Move(basePath + targetLevel + @"\" + sourceLevel + ".ptr", basePath + targetLevel + @"\" + targetLevel + ".ptr");
 
-                        File.Move(basePath + @"World\Sound\" + targetLevel + ".bnh", basePath + @"World\Sound\" + targetLevel + "1.bnh");
-                        File.Move(basePath + @"World\Sound\" + targetLevel + ".HXC", basePath + @"World\Sound\" + targetLevel + "1.HXC");
-                        if (sourceLevel != targetLevel)
-                        {
-                            File.Move(basePath + @"World\Sound\" + sourceLevel + ".bnh", basePath + @"World\Sound\" + targetLevel + ".bnh");
-                            File.Move(basePath + @"World\Sound\" + sourceLevel + ".HXC", basePath + @"World\Sound\" + targetLevel + ".HXC");
-                        }
-                        File.Move(basePath + @"World\Sound\" + targetLevel + "1.bnh", basePath + @"World\Sound\" + sourceLevel + ".bnh");
-                        File.Move(basePath + @"World\Sound\" + targetLevel + "1.HXC", basePath + @"World\Sound\" + sourceLevel + ".HXC");
+                        File.Move(basePath + @"World\Sound\" + "level" + i + ".bnh", basePath + @"World\Sound\" + targetLevel + ".bnh");
+                        File.Move(basePath + @"World\Sound\" + "level" + i + ".HXC", basePath + @"World\Sound\" + targetLevel + ".HXC");
                     }
                 }
             }
@@ -378,6 +369,15 @@ namespace CrateModLoader.GameSpecific.Rayman3
                 {
                     File.Delete(basePath + @"videos\trailer.h4m");
                 }
+            }
+            else if (Directory.Exists(Program.ModProgram.extractedPath + @"VIDEOS\"))
+            {
+                /* Crashes on PS2
+                if (File.Exists(Program.ModProgram.extractedPath + @"VIDEOS\TRAILER.PSS"))
+                {
+                    File.Delete(Program.ModProgram.extractedPath + @"VIDEOS\TRAILER.PSS");
+                }
+                */
             }
         }
 
