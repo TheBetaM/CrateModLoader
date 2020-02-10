@@ -33,6 +33,10 @@ namespace CrateModLoader
         public RegionCode[] RegionID_XBOX;
         /// <summary> List of region identifiers for XBOX 360 games. </summary>
         public RegionCode[] RegionID_XBOX360;
+        /// <summary> List of region identifiers for PC games. </summary>
+        public RegionCode[] RegionID_PC;
+        /// <summary> List of region identifiers for DC games. </summary>
+        public RegionCode[] RegionID_DC;
     }
 
     public struct RegionCode

@@ -19,8 +19,8 @@ namespace CrateModLoader.GameSpecific.Rayman3
                     ConsoleMode.XBOX,
                     ConsoleMode.PC,
                 },
-                API_Credit = string.Empty,
-                API_Link = string.Empty,
+                API_Credit = string.Empty, //"API based on Raymap by Droolie and Robin",
+                API_Link = string.Empty,  //"https://github.com/byvar/raymap",
                 Icon = Properties.Resources.icon_ray3,
                 ModMenuEnabled = false,
                 ModCratesSupported = true,
@@ -54,11 +54,25 @@ namespace CrateModLoader.GameSpecific.Rayman3
                     Region = RegionType.PAL,
                     RegionNumber = 4, },
                 },
+                RegionID_PC = new RegionCode[] {
+                    new RegionCode() {
+                    Name = "Rayman3.exe",
+                    Region = RegionType.Global },
+                    new RegionCode() {
+                    Name = "rayman3.exe",
+                    Region = RegionType.Global },
+                     new RegionCode() {
+                    Name = "RAYMAN3.EXE",
+                    Region = RegionType.Global },
+                    new RegionCode() {
+                    Name = "Rayman3.EXE",
+                    Region = RegionType.Global },
+                },
             };
 
             Options.Add(RandomizeLevelOrder, new ModOption("Randomize Level Order (All Levels)")); // todo
             Options.Add(RandomizeLevelOrderAlt, new ModOption("Randomize Level Order (Any amount of Levels)")); //todo: fix audio
-            Options.Add(RandomizeOutfitColors, new ModOption("Randomize Outfit Visuals (GC Only)")); 
+            Options.Add(RandomizeOutfitColors, new ModOption("Randomize Outfit Visuals (GC Only)")); //todo
             Options.Add(NewGameNightmare, new ModOption("New Game Into 2D Nightmare (GC Only)"));
             Options.Add(RemoveIntroVideos, new ModOption("Remove Intro Video", true)); 
 
@@ -80,7 +94,6 @@ namespace CrateModLoader.GameSpecific.Rayman3
             if (Program.ModProgram.isoType == ConsoleMode.PS2)
             {
                 basePath = Program.ModProgram.extractedPath + @"DATABIN\";
-                return; // need to fix paths
             }
             else if (Program.ModProgram.isoType == ConsoleMode.GCN)
             {
@@ -89,12 +102,10 @@ namespace CrateModLoader.GameSpecific.Rayman3
             else if (Program.ModProgram.isoType  == ConsoleMode.XBOX)
             {
                 basePath = Program.ModProgram.extractedPath + @"gamedatabin\";
-                return; // need to fix paths
             }
             else if (Program.ModProgram.isoType == ConsoleMode.PC)
             {
                 basePath = Program.ModProgram.extractedPath + @"Gamedatabin\";
-                return; // need to fix paths
             }
 
             randState = new Random(Program.ModProgram.randoSeed);
@@ -143,6 +154,7 @@ namespace CrateModLoader.GameSpecific.Rayman3
             if (Directory.Exists(basePath + sourceLevel + @"\"))
             {
                 Directory.Move(basePath + sourceLevel + @"\", basePath + targetLevel + @"\");
+
                 File.Move(basePath + targetLevel + @"\" + sourceLevel + ".lvl", basePath + targetLevel + @"\" + targetLevel + ".lvl");
                 File.Move(basePath + targetLevel + @"\" + sourceLevel + ".ptr", basePath + targetLevel + @"\" + targetLevel + ".ptr");
                 File.Move(basePath + targetLevel + @"\" + sourceLevel + "_Lvl.tpl", basePath + targetLevel + @"\" + targetLevel + "_Lvl.tpl");
@@ -205,24 +217,83 @@ namespace CrateModLoader.GameSpecific.Rayman3
                 if (Directory.Exists(basePath + "level" + i + @"\"))
                 {
                     Directory.Move(basePath + "level" + i + @"\", basePath + targetLevel + @"\");
-                    File.Move(basePath + targetLevel + @"\" + sourceLevel + ".lvl", basePath + targetLevel + @"\" + targetLevel + ".lvl");
-                    File.Move(basePath + targetLevel + @"\" + sourceLevel + ".ptr", basePath + targetLevel + @"\" + targetLevel + ".ptr");
-                    File.Move(basePath + targetLevel + @"\" + sourceLevel + "_Lvl.tpl", basePath + targetLevel + @"\" + targetLevel + "_Lvl.tpl");
-                    File.Move(basePath + targetLevel + @"\" + sourceLevel + "_Trans.tpl", basePath + targetLevel + @"\" + targetLevel + "_Trans.tpl");
-                    File.Move(basePath + targetLevel + @"\" + sourceLevel + "_vb.lvl", basePath + targetLevel + @"\" + targetLevel + "_vb.lvl");
-                    File.Move(basePath + targetLevel + @"\" + sourceLevel + "_vb.ptr", basePath + targetLevel + @"\" + targetLevel + "_vb.ptr");
-                    File.Move(basePath + targetLevel + @"\" + sourceLevel + "kf.lvl", basePath + targetLevel + @"\" + targetLevel + "kf.lvl");
-                    File.Move(basePath + targetLevel + @"\" + sourceLevel + "kf.ptr", basePath + targetLevel + @"\" + targetLevel + "kf.ptr");
 
-                    File.Move(basePath + @"World\Sound\" + targetLevel + ".bnh", basePath + @"World\Sound\" + targetLevel + "1.bnh");
-                    File.Move(basePath + @"World\Sound\" + targetLevel + ".hxg", basePath + @"World\Sound\" + targetLevel + "1.hxg");
-                    if (sourceLevel != targetLevel)
+                    if (Program.ModProgram.isoType == ConsoleMode.PS2)
                     {
-                        File.Move(basePath + @"World\Sound\" + sourceLevel + ".bnh", basePath + @"World\Sound\" + targetLevel + ".bnh");
-                        File.Move(basePath + @"World\Sound\" + sourceLevel + ".hxg", basePath + @"World\Sound\" + targetLevel + ".hxg");
+                        File.Move(basePath + targetLevel + @"\" + sourceLevel + ".LVL;1", basePath + targetLevel + @"\" + targetLevel + ".LVL;1");
+                        File.Move(basePath + targetLevel + @"\" + sourceLevel + ".PTR;1", basePath + targetLevel + @"\" + targetLevel + ".PTR;1");
+                        File.Move(basePath + targetLevel + @"\" + sourceLevel + ".TBF;1", basePath + targetLevel + @"\" + targetLevel + ".TBF;1");
+
+                        File.Move(basePath + @"WORLD\SOUND\" + targetLevel + ".BNH;1", basePath + @"WORLD\SOUND\" + targetLevel + "1.BNH;1");
+                        File.Move(basePath + @"WORLD\SOUND\" + targetLevel + ".HX2;1", basePath + @"WORLD\SOUND\" + targetLevel + "1.HX2;1");
+                        File.Move(basePath + @"WORLD\SOUND\" + targetLevel + ".SMT;1", basePath + @"WORLD\SOUND\" + targetLevel + "1.SMT;1");
+                        if (sourceLevel != targetLevel)
+                        {
+                            File.Move(basePath + @"WORLD\SOUND\" + sourceLevel + ".BNH;1", basePath + @"WORLD\SOUND\" + targetLevel + ".BNH;1");
+                            File.Move(basePath + @"WORLD\SOUND\" + sourceLevel + ".HX2;1", basePath + @"WORLD\SOUND\" + targetLevel + ".HX2;1");
+                            File.Move(basePath + @"WORLD\SOUND\" + sourceLevel + ".SMT;1", basePath + @"WORLD\SOUND\" + targetLevel + ".SMT;1");
+                        }
+                        File.Move(basePath + @"WORLD\SOUND\" + targetLevel + "1.BNH;1", basePath + @"WORLD\SOUND\" + sourceLevel + ".BNH;1");
+                        File.Move(basePath + @"WORLD\SOUND\" + targetLevel + "1.HX2;1", basePath + @"WORLD\SOUND\" + sourceLevel + ".HX2;1");
+                        File.Move(basePath + @"WORLD\SOUND\" + targetLevel + "1.SMT;1", basePath + @"WORLD\SOUND\" + sourceLevel + ".SMT;1");
                     }
-                    File.Move(basePath + @"World\Sound\" + targetLevel + "1.bnh", basePath + @"World\Sound\" + sourceLevel + ".bnh");
-                    File.Move(basePath + @"World\Sound\" + targetLevel + "1.hxg", basePath + @"World\Sound\" + sourceLevel + ".hxg");
+                    else if (Program.ModProgram.isoType == ConsoleMode.GCN)
+                    {
+                        File.Move(basePath + targetLevel + @"\" + sourceLevel + ".lvl", basePath + targetLevel + @"\" + targetLevel + ".lvl");
+                        File.Move(basePath + targetLevel + @"\" + sourceLevel + ".ptr", basePath + targetLevel + @"\" + targetLevel + ".ptr");
+                        File.Move(basePath + targetLevel + @"\" + sourceLevel + "_Lvl.tpl", basePath + targetLevel + @"\" + targetLevel + "_Lvl.tpl");
+                        File.Move(basePath + targetLevel + @"\" + sourceLevel + "_Trans.tpl", basePath + targetLevel + @"\" + targetLevel + "_Trans.tpl");
+                        File.Move(basePath + targetLevel + @"\" + sourceLevel + "_vb.lvl", basePath + targetLevel + @"\" + targetLevel + "_vb.lvl");
+                        File.Move(basePath + targetLevel + @"\" + sourceLevel + "_vb.ptr", basePath + targetLevel + @"\" + targetLevel + "_vb.ptr");
+                        File.Move(basePath + targetLevel + @"\" + sourceLevel + "kf.lvl", basePath + targetLevel + @"\" + targetLevel + "kf.lvl");
+                        File.Move(basePath + targetLevel + @"\" + sourceLevel + "kf.ptr", basePath + targetLevel + @"\" + targetLevel + "kf.ptr");
+
+                        File.Move(basePath + @"World\Sound\" + targetLevel + ".bnh", basePath + @"World\Sound\" + targetLevel + "1.bnh");
+                        File.Move(basePath + @"World\Sound\" + targetLevel + ".hxg", basePath + @"World\Sound\" + targetLevel + "1.hxg");
+                        if (sourceLevel != targetLevel)
+                        {
+                            File.Move(basePath + @"World\Sound\" + sourceLevel + ".bnh", basePath + @"World\Sound\" + targetLevel + ".bnh");
+                            File.Move(basePath + @"World\Sound\" + sourceLevel + ".hxg", basePath + @"World\Sound\" + targetLevel + ".hxg");
+                        }
+                        File.Move(basePath + @"World\Sound\" + targetLevel + "1.bnh", basePath + @"World\Sound\" + sourceLevel + ".bnh");
+                        File.Move(basePath + @"World\Sound\" + targetLevel + "1.hxg", basePath + @"World\Sound\" + sourceLevel + ".hxg");
+                    }
+                    else if (Program.ModProgram.isoType == ConsoleMode.XBOX)
+                    {
+                        File.Move(basePath + targetLevel + @"\" + sourceLevel + ".bhf", basePath + targetLevel + @"\" + targetLevel + ".bhf");
+                        File.Move(basePath + targetLevel + @"\" + sourceLevel + ".bif", basePath + targetLevel + @"\" + targetLevel + ".bif");
+                        File.Move(basePath + targetLevel + @"\" + sourceLevel + ".bsf", basePath + targetLevel + @"\" + targetLevel + ".bsf");
+                        File.Move(basePath + targetLevel + @"\" + sourceLevel + ".btf", basePath + targetLevel + @"\" + targetLevel + ".btf");
+                        File.Move(basePath + targetLevel + @"\" + sourceLevel + ".bvf", basePath + targetLevel + @"\" + targetLevel + ".bvf");
+                        File.Move(basePath + targetLevel + @"\" + sourceLevel + ".lvl", basePath + targetLevel + @"\" + targetLevel + ".lvl");
+                        File.Move(basePath + targetLevel + @"\" + sourceLevel + ".ptr", basePath + targetLevel + @"\" + targetLevel + ".ptr");
+                        File.Move(basePath + targetLevel + @"\" + sourceLevel + ".spc", basePath + targetLevel + @"\" + targetLevel + ".spc");
+
+                        File.Move(basePath + @"World\Sound\" + targetLevel + ".bnh", basePath + @"World\Sound\" + targetLevel + "1.bnh");
+                        File.Move(basePath + @"World\Sound\" + targetLevel + ".hxx", basePath + @"World\Sound\" + targetLevel + "1.hxx");
+                        if (sourceLevel != targetLevel)
+                        {
+                            File.Move(basePath + @"World\Sound\" + sourceLevel + ".bnh", basePath + @"World\Sound\" + targetLevel + ".bnh");
+                            File.Move(basePath + @"World\Sound\" + sourceLevel + ".hxx", basePath + @"World\Sound\" + targetLevel + ".hxx");
+                        }
+                        File.Move(basePath + @"World\Sound\" + targetLevel + "1.bnh", basePath + @"World\Sound\" + sourceLevel + ".bnh");
+                        File.Move(basePath + @"World\Sound\" + targetLevel + "1.hxx", basePath + @"World\Sound\" + sourceLevel + ".hxx");
+                    }
+                    else if (Program.ModProgram.isoType == ConsoleMode.PC)
+                    {
+                        File.Move(basePath + targetLevel + @"\" + sourceLevel + ".lvl", basePath + targetLevel + @"\" + targetLevel + ".lvl");
+                        File.Move(basePath + targetLevel + @"\" + sourceLevel + ".ptr", basePath + targetLevel + @"\" + targetLevel + ".ptr");
+
+                        File.Move(basePath + @"World\Sound\" + targetLevel + ".bnh", basePath + @"World\Sound\" + targetLevel + "1.bnh");
+                        File.Move(basePath + @"World\Sound\" + targetLevel + ".HXC", basePath + @"World\Sound\" + targetLevel + "1.HXC");
+                        if (sourceLevel != targetLevel)
+                        {
+                            File.Move(basePath + @"World\Sound\" + sourceLevel + ".bnh", basePath + @"World\Sound\" + targetLevel + ".bnh");
+                            File.Move(basePath + @"World\Sound\" + sourceLevel + ".HXC", basePath + @"World\Sound\" + targetLevel + ".HXC");
+                        }
+                        File.Move(basePath + @"World\Sound\" + targetLevel + "1.bnh", basePath + @"World\Sound\" + sourceLevel + ".bnh");
+                        File.Move(basePath + @"World\Sound\" + targetLevel + "1.HXC", basePath + @"World\Sound\" + sourceLevel + ".HXC");
+                    }
                 }
             }
 

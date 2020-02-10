@@ -222,6 +222,9 @@
     <Compile Include="GameSpecific\CTTR\RCF.cs" />
     <Compile Include="GameSpecific\MoM\Modder_MoM.cs" />
     <Compile Include="GameSpecific\Rayman3\Modder_Rayman3.cs" />
+    <Compile Include="GameSpecific\Rayman3\TBFtool\BitmapHelper.cs" />
+    <Compile Include="GameSpecific\Rayman3\TBFtool\TBFtool.cs" />
+    <Compile Include="GameSpecific\Rayman3\TBFtool\PS2ImageHelper.cs" />
     <Compile Include="GameSpecific\Titans\Modder_Titans.cs" />
     <Compile Include="GameSpecific\Twins\Modder_Twins.cs" />
     <Compile Include="GameSpecific\CTTR\Modder_CTTR.cs" />
@@ -464,6 +467,10 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="GameSpecific\Rayman3\raymap\OpenSpace\FileFormat\RenderWare\" />
+    <Folder Include="GameSpecific\Rayman3\raymap\OpenSpace\FileFormat\Texture\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

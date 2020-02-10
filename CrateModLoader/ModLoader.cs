@@ -26,7 +26,7 @@ namespace CrateModLoader
         PS1 = 4, // PlayStation
         WII = 5, // Wii
         XBOX360 = 6,  // Xbox 360, not supported yet
-        PC = 7, // PC CDROM/DVDROM, not supported yet, probably just for reference
+        PC = 7, // PC CDROM/DVDROM
         DC = 8, // Dreamcast, not supported yet
         PS3 = 9, // PlayStation 3, just for reference
     }
@@ -459,6 +459,13 @@ namespace CrateModLoader
                     throw new Exception("Building GC directories is not supported yet!");
                 }
             }
+            if (isoType == ConsoleMode.PC)
+            {
+                if (!inputDirectoryMode || !outputDirectoryMode)
+                {
+                    throw new Exception("PC games are only supported in Folder mode!");
+                }
+            }
 
             if (inputDirectoryMode)
             {
@@ -888,6 +895,42 @@ namespace CrateModLoader
                         }
 
                     }
+                    else if (Directory.GetFiles(inputISOpath, "*.exe").Length > 0 || Directory.GetFiles(inputISOpath, "*.EXE").Length > 0)
+                    {
+                        isoType = ConsoleMode.PC;
+
+                        string[] ExeFiles;
+                        if (Modder == null && Directory.GetFiles(inputISOpath, "*.exe").Length > 0)
+                        {
+                            ExeFiles = Directory.GetFiles(inputISOpath, "*.exe");
+                            for (int i = 0; i < ExeFiles.Length; i++)
+                            {
+                                if (Modder == null)
+                                {
+                                    SetGameType(ExeFiles[i], ConsoleMode.PC);
+                                    if (Modder != null)
+                                    {
+                                        ProductCode = ExeFiles[i];
+                                    }
+                                }
+                            }
+                        }
+                        else if (Modder == null && Directory.GetFiles(inputISOpath, "*.EXE").Length > 0)
+                        {
+                            ExeFiles = Directory.GetFiles(inputISOpath, "*.EXE");
+                            for (int i = 0; i < ExeFiles.Length; i++)
+                            {
+                                if (Modder == null)
+                                {
+                                    SetGameType(ExeFiles[i], ConsoleMode.PC);
+                                    if (Modder != null)
+                                    {
+                                        ProductCode = ExeFiles[i];
+                                    }
+                                }
+                            }
+                        }
+                    }
                     else
                     {
                         Modder = null;
@@ -1200,6 +1243,7 @@ namespace CrateModLoader
                     : console == ConsoleMode.GCN ? modder.Game.RegionID_GCN
                     : console == ConsoleMode.WII ? modder.Game.RegionID_WII
                     : console == ConsoleMode.XBOX ? modder.Game.RegionID_XBOX
+                    : console == ConsoleMode.PC ? modder.Game.RegionID_PC
                     : null;
                 foreach (var r in codelist)
                 {
