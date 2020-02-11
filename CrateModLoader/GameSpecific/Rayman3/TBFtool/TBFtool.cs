@@ -1,37 +1,26 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.Collections.Generic;
 //TBF Tool by TheGameExplorer
 
 namespace tbftool
 {
     class TBF_Worker
     {
+
+        private static List<string> TBF_Files;
+
         public static void TBF_Extract(string path)
         {
-
-        }
-
-        public static void TBF_Build(string path)
-        {
-
-        }
-
-
-        static void Worker(string[] args)
-        {
-            //args = new string[] { @"C:\Users\TGE\Downloads\TBF files\FIX.TBF" };
+            TBF_Files = new List<string>();
             string dirName;
             string fileName;
-            if (args.Length != 1)
-                return;
-            else
-            {
-                fileName = Path.GetFileNameWithoutExtension(args[0]);
-                dirName = Path.GetDirectoryName(args[0]) + "\\" + fileName;
-                Directory.CreateDirectory(dirName);
-            }
-            using (BinaryReader reader = new BinaryReader(new FileStream(args[0], FileMode.Open)))
+            fileName = Path.GetFileNameWithoutExtension(path);
+            dirName = Path.GetDirectoryName(path);
+            //Directory.CreateDirectory(dirName);
+
+            using (BinaryReader reader = new BinaryReader(new FileStream(path, FileMode.Open)))
             {
                 int index = 0;
                 while (true)
@@ -77,7 +66,21 @@ namespace tbftool
                             throw new InvalidDataException("Unknown type: " + type);
                     }
                     bitmap.Save(dirName + "\\" + string.Format("{0}_{1}.png", fileName, index));
+                    TBF_Files.Add(dirName + "\\" + string.Format("{0}_{1}.png", fileName, index));
                 }
+            }
+        }
+
+        public static void TBF_Build(string path)
+        {
+            string dirName;
+            string fileName;
+            fileName = Path.GetFileNameWithoutExtension(path);
+            dirName = Path.GetDirectoryName(path);
+
+            using (BinaryWriter writer = new BinaryWriter(new FileStream(path, FileMode.Create)))
+            {
+                
             }
         }
     }

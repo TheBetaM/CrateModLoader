@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Diagnostics;
+using tbftool;
 
 namespace CrateModLoader.GameSpecific.Rayman3
 {
@@ -70,9 +71,9 @@ namespace CrateModLoader.GameSpecific.Rayman3
                 },
             };
 
-            Options.Add(RandomizeLevelOrder, new ModOption("Randomize Level Order (All Levels)")); // todo
-            Options.Add(RandomizeLevelOrderAlt, new ModOption("Randomize Level Order (Any amount of Levels)")); //todo: fix lighting on PC
-            Options.Add(RandomizeOutfitColors, new ModOption("Randomize Outfit Visuals (GC Only)")); //todo
+            Options.Add(RandomizeLevelOrder, new ModOption("Randomize Level Order (All Levels)")); 
+            Options.Add(RandomizeLevelOrderAlt, new ModOption("Randomize Level Order (Any amount of Levels)"));
+            Options.Add(RandomizeOutfitColors, new ModOption("Randomize Outfit Visuals (GC Only)")); //todo: PS2/Xbox/PC
             Options.Add(NewGameNightmare, new ModOption("New Game Into 2D Nightmare (GC Only)"));
             Options.Add(RemoveIntroVideos, new ModOption("Remove Intro Video (GC Only)", true)); 
 
@@ -176,21 +177,60 @@ namespace CrateModLoader.GameSpecific.Rayman3
         void Randomize_Level_Order(bool isAlt)
         {
             int minLevel = 0;
-            int maxLevel = 45;
+            int maxLevel = 46;
             int targetPos = 0;
             List<int> ValidLevels = new List<int>();
             List<int> LevelsReplacing = new List<int>();
             string sourceLevel, targetLevel;
 
-            for (int i = minLevel; i <= maxLevel; i++)
+            if (isAlt)
             {
-                ValidLevels.Add(i);
+                for (int i = minLevel; i <= maxLevel; i++)
+                {
+                    ValidLevels.Add(i);
+                }
+                for (int i = minLevel; i <= maxLevel; i++)
+                {
+                    targetPos = randState.Next(0, ValidLevels.Count);
+                    LevelsReplacing.Add(ValidLevels[targetPos]);
+                    ValidLevels.RemoveAt(targetPos);
+                }
             }
-            for (int i = minLevel; i <= maxLevel; i++)
+            else
             {
-                targetPos = randState.Next(0, ValidLevels.Count);
-                LevelsReplacing.Add(ValidLevels[targetPos]);
-                ValidLevels.RemoveAt(targetPos);
+                for (int i = minLevel; i <= maxLevel; i++)
+                {
+                    LevelsReplacing.Add(-1);
+                    if (i < maxLevel)
+                    {
+                        ValidLevels.Add(i);
+                    }
+                }
+                int levelsLeft = 0;
+                int currentPos = 0;
+                while (levelsLeft <= maxLevel)
+                {
+                    if (ValidLevels.Count > 0)
+                    {
+                        targetPos = randState.Next(0, ValidLevels.Count);
+                        LevelsReplacing[currentPos] = ValidLevels[targetPos];
+                        //Console.WriteLine("Level " + levelsLeft + ": " + (LevelID)LevelsReplacing[currentPos]);
+                        currentPos = ValidLevels[targetPos] + 1;
+                        ValidLevels.RemoveAt(targetPos);
+                    }
+                    else
+                    {
+                        LevelsReplacing[currentPos] = maxLevel;
+                    }
+
+                    levelsLeft++;
+                }
+
+                //Console.WriteLine("");
+                //for (int i = minLevel; i <= maxLevel; i++)
+                //{
+                //    Console.WriteLine("Order " + i + ": " + (LevelID)LevelsReplacing[i]);
+                //}
             }
 
             for (int i = minLevel; i <= maxLevel; i++)
@@ -359,6 +399,46 @@ namespace CrateModLoader.GameSpecific.Rayman3
 
                 wimgt.WaitForExit();
             }
+            else if (File.Exists(basePath + @"FIX.TBF"))
+            {
+                //Use TBF Tool
+                /*
+                TBF_Worker.TBF_Extract(basePath + @"FIX.TBF");
+
+                File.Delete(basePath + @"FIX.TBF");
+
+                //Shuffle outfit textures
+                string[] outfitFiles = new string[] { "FIX_8.png", "FIX_9.png", "FIX_10.png", "FIX_11.png", "FIX_12.png" };
+                File.Move(basePath + outfitFiles[0], basePath + "outfit0.png");
+                File.Move(basePath + outfitFiles[1], basePath + "outfit1.png");
+                File.Move(basePath + outfitFiles[2], basePath + "outfit2.png");
+                File.Move(basePath + outfitFiles[3], basePath + "outfit3.png");
+                File.Move(basePath + outfitFiles[4], basePath + "outfit4.png");
+                string[] copterFiles = new string[] { "FIX_16.png", "FIX_19.png", "FIX_17.png", "FIX_20.png", "FIX_18.png" };
+                File.Move(basePath + copterFiles[0], basePath + "copter0.png");
+                File.Move(basePath + copterFiles[1], basePath + "copter1.png");
+                File.Move(basePath + copterFiles[2], basePath + "copter2.png");
+                File.Move(basePath + copterFiles[3], basePath + "copter3.png");
+                File.Move(basePath + copterFiles[4], basePath + "copter4.png");
+
+                List<int> RandList = new List<int>();
+                for (int i = 0; i < 5; i++)
+                {
+                    RandList.Add(i);
+                }
+                int targetpos = 0;
+
+                for (int i = 0; i < 5; i++)
+                {
+                    targetpos = randState.Next(0, RandList.Count);
+                    File.Move(basePath + "outfit" + RandList[targetpos] + ".png", basePath + outfitFiles[i]);
+                    File.Move(basePath + "copter" + RandList[targetpos] + ".png", basePath + copterFiles[i]);
+                    RandList.RemoveAt(targetpos);
+                }
+
+                TBF_Worker.TBF_Build(basePath + @"FIX.TBF");
+                */
+            }
         }
 
         void Remove_Intro_Videos()
@@ -383,53 +463,55 @@ namespace CrateModLoader.GameSpecific.Rayman3
 
         public enum LevelID
         {
+            Invalid = -1,
             Fairy1_Intro_10 = 0,
             Fairy2_Intro_15 = 1,
             Fairy3_Intro_17 = 2,
             Fairy4_Intro_20 = 3,
-            Fairy5_Sk8_00 = 4,
-            Forest1_Wood_11 = 5,
-            Forest2_Wood_10 = 6,
-            Forest3_Wood_19 = 7,
-            Forest4_Wood_50 = 8,
-            Forest5_Menu_10 = 9,
-            Forest6_Sk8_10 = 10,
-            Bog1_Swamp_60 = 11,
-            Bog2_Swamp_82 = 12,
-            Bog3_Swamp_81 = 13,
-            Bog4_Swamp_83 = 14,
-            Bog5_Swamp_50 = 15,
-            Bog6_Swamp_51 = 16,
-            LividDead1_Moor_00 = 17,
-            LividDead2_Moor_30 = 18,
-            LividDead3_Moor_60 = 19,
-            LividDead4_Moor_19 = 20,
-            LividDead5_Menu_20 = 21,
-            LividDead6_Sk8_20 = 22,
-            Desert1_Knaar_10 = 23,
-            Desert2_Knaar_20 = 24,
-            Desert3_Knaar_30 = 25,
-            Desert4_Knaar_45 = 26,
-            Desert5_Knaar_60 = 27,
-            Desert6_Knaar_69 = 28,
-            Desert7_Knaar_80 = 29,
-            Desert8_Menu_30 = 30,
-            Shortcut1_Flash_20 = 31,
-            Shortcut2_Flash_30 = 32,
-            Shortcut3_Flash_10 = 33,
-            Summit1_Sea_10 = 34,
-            Summit2_Mount_50 = 35,
-            Summit3_Mount_4x = 36,
-            Hoodlum1_Fact_40 = 37,
-            Hoodlum2_Fact_50 = 38,
-            Hoodlum3_Fact_55 = 39,
-            Hoodlum4_Fact_34 = 40,
-            Hoodlum5_Fact_22 = 41,
-            Tower1_Tower_10 = 42,
-            Tower2_Tower_20 = 43,
-            Tower3_Tower_30 = 44,
-            Tower4_Tower_40 = 45,
-            Tower5_Lept_15 = 46,
+            Fairy5_Menu_00 = 4,
+            Fairy6_Sk8_00 = 5,
+            Forest1_Wood_11 = 6,
+            Forest2_Wood_10 = 7,
+            Forest3_Wood_19 = 8,
+            Forest4_Wood_50 = 9,
+            Forest5_Menu_10 = 10,
+            Forest6_Sk8_10 = 11,
+            Bog1_Swamp_60 = 12,
+            Bog2_Swamp_82 = 13,
+            Bog3_Swamp_81 = 14,
+            Bog4_Swamp_83 = 15,
+            Bog5_Swamp_50 = 16,
+            Bog6_Swamp_51 = 17,
+            LividDead1_Moor_00 = 18,
+            LividDead2_Moor_30 = 19,
+            LividDead3_Moor_60 = 20,
+            LividDead4_Moor_19 = 21,
+            LividDead5_Menu_20 = 22,
+            LividDead6_Sk8_20 = 23,
+            Desert1_Knaar_10 = 24,
+            Desert2_Knaar_20 = 25,
+            Desert3_Knaar_30 = 26,
+            Desert4_Knaar_45 = 27,
+            Desert5_Knaar_60 = 28,
+            Desert6_Knaar_69 = 29,
+            Desert7_Knaar_70 = 30,
+            Desert8_Menu_30 = 31,
+            Shortcut1_Flash_20 = 32,
+            Shortcut2_Flash_30 = 33,
+            Shortcut3_Flash_10 = 34,
+            Summit1_Sea_10 = 35,
+            Summit2_Mount_50 = 36,
+            Summit3_Mount_4x = 37,
+            Hoodlum1_Fact_40 = 38,
+            Hoodlum2_Fact_50 = 39,
+            Hoodlum3_Fact_55 = 40,
+            Hoodlum4_Fact_34 = 41,
+            Hoodlum5_Fact_22 = 42,
+            Tower1_Tower_10 = 43,
+            Tower2_Tower_20 = 44,
+            Tower3_Tower_30 = 45,
+            Tower4_Tower_40 = 46,
+            Tower5_Lept_15 = 47,
         }
 
         public static string[] LevelNames = new string[]
@@ -438,6 +520,7 @@ namespace CrateModLoader.GameSpecific.Rayman3
             "intro_15",
             "Intro_17",
             "intro_20",
+            "menu_00",
             "sk8_00",
             "wood_11",
             "Wood_10",
