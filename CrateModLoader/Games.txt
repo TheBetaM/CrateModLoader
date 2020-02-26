@@ -22,7 +22,7 @@ Crash Team Racing
 Supported: All PS1 versions (.BIN/.ISO formats)  
 API by DCxDemo. (https://github.com/DCxDemo/CTR-tools)  
 Features:  
-- Version visible in the Loading screen  
+- Version and seed visible in the Loading screen  
   
 Crash Nitro Kart
 Supported: All PS2 versions (.ISO format), All GC versions (.ISO format), All XBOX versions (.ISO format)  

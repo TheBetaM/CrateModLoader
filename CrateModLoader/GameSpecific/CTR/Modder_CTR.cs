@@ -29,17 +29,17 @@ namespace CrateModLoader
                 ModCratesSupported = true,
                 RegionID_PS1 = new RegionCode[] {
                     new RegionCode() {
-                    Name = @"BOOT = cdrom:\SCUS_944.26;1",
+                    Name = @"SCUS_944.26",
                     Region = RegionType.NTSC_U,
                     ExecName = "SCUS_944.26",
                     CodeName = "SCUS_94426", },
                     new RegionCode() {
-                    Name = @"BOOT = cdrom:\SCES_021.05;1",
+                    Name = @"SCES_021.05",
                     Region = RegionType.PAL,
                     ExecName = "SCES_021.05",
                     CodeName = "SCES_02105", },
                     new RegionCode() {
-                    Name = @"BOOT = cdrom:\SCPS_101.18;1",
+                    Name = @"SCPS_101.18",
                     Region = RegionType.NTSC_J,
                     ExecName = "SCPS_101.18",
                     CodeName = "SCPS_10118", },
@@ -83,17 +83,14 @@ namespace CrateModLoader
         {
 
             string path_extr = AppDomain.CurrentDomain.BaseDirectory + @"temp\BIGFILE\";
-
-            // Inserting CML metadata, doesn't work yet
-
             
             LNG lng = new LNG(path_extr + @"lang\en.lng");
             string[] lang_lines = File.ReadAllLines(path_extr + @"lang\en.txt", System.Text.Encoding.Default);
             for (int i = 0; i < lang_lines.Length; i++)
             {
-                if (lang_lines[i] == "LOADING...")
+                if (lang_lines[i].Contains("LOADING..."))
                 {
-                    lang_lines[i] = "CML " + Program.ModProgram.releaseVersionString;
+                    lang_lines[i] = "CML " + Program.ModProgram.releaseVersionString + "|" + "SEED: " + Program.ModProgram.randoSeed;
                 }
             }
             File.WriteAllLines(path_extr + @"lang\en.txt", lang_lines, System.Text.Encoding.Default);
@@ -106,17 +103,15 @@ namespace CrateModLoader
                 string[] lang_lines1 = File.ReadAllLines(path_extr + @"lang\en2.txt", System.Text.Encoding.Default);
                 for (int i = 0; i < lang_lines1.Length; i++)
                 {
-                    if (lang_lines[i] == "LOADING...")
+                    if (lang_lines[i].Contains("LOADING..."))
                     {
-                        lang_lines[i] = "CML " + Program.ModProgram.releaseVersionString;
+                        lang_lines[i] = "CML " + Program.ModProgram.releaseVersionString + "|" + "SEED: " + Program.ModProgram.randoSeed;
                     }
                 }
                 File.WriteAllLines(path_extr + @"lang\en2.txt", lang_lines1, System.Text.Encoding.Default);
                 lng1.ConvertTXT(path_extr + @"lang\en2.txt");
                 File.Delete(path_extr + @"lang\en2.txt");
             }
-            
-            
 
             EndModProcess();
         }
