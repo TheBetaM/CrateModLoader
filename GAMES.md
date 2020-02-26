@@ -33,7 +33,7 @@ API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)
 Supported: All PS1 versions (.BIN/.ISO formats)  
 API by DCxDemo. (https://github.com/DCxDemo/CTR-tools)  
 ### Features:  
-- TBD  
+- Version visible in the Loading screen  
   
 ## Crash Nitro Kart ![Crash Nitro Kart](../master/CrateModLoader/Resources/icon_cnk.png "Crash Nitro Kart")
 Supported: All PS2 versions (.ISO format), All GC versions (.ISO format), All XBOX versions (.ISO format)  

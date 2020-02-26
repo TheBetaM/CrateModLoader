@@ -310,10 +310,16 @@
     <Content Include="Resources\cml_header.png" />
     <Content Include="Resources\cml_icon.png" />
     <None Include="Resources\icon_ray3.png" />
-    <Content Include="Tools\CTR\filenames.txt">
+    <Content Include="Tools\CTR\filenames_alt.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Tools\CTR\filenames_alt.txt">
+    <Content Include="Tools\CTR\filenames_demo.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Tools\CTR\filenames_pal.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Tools\CTR\filenames_usa.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Tools\extract-xiso LICENSE.TXT">

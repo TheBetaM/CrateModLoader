@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using CTRFramework;
+using CTRFramework.Lang;
 using CTRFramework.Shared;
 using bigtool;
 //CTR API by DCxDemo (https://github.com/DCxDemo/CTR-tools) 
@@ -57,8 +58,23 @@ namespace CrateModLoader
 
             basePath = AppDomain.CurrentDomain.BaseDirectory + @"temp\";
 
-            BIG big = new BIG(basePath + path_Bigfile);
-            big.Export();
+            bigtool.BIG big;
+
+            switch (Program.ModProgram.targetRegion)
+            {
+                case RegionType.NTSC_U:
+                    big = new bigtool.BIG(basePath + path_Bigfile, "usa");
+                    big.Export();
+                    break;
+                case RegionType.NTSC_J:
+                    big = new bigtool.BIG(basePath + path_Bigfile, "jap");
+                    big.Export();
+                    break;
+                case RegionType.PAL:
+                    big = new bigtool.BIG(basePath + path_Bigfile, "pal");
+                    big.Export();
+                    break;
+            }
 
             ModProcess();
         }
@@ -70,36 +86,36 @@ namespace CrateModLoader
 
             // Inserting CML metadata, doesn't work yet
 
-            /*
+            
             LNG lng = new LNG(path_extr + @"lang\en.lng");
-            string[] lang_lines = File.ReadAllLines(path_extr + @"lang\en.txt");
+            string[] lang_lines = File.ReadAllLines(path_extr + @"lang\en.txt", System.Text.Encoding.Default);
             for (int i = 0; i < lang_lines.Length; i++)
             {
                 if (lang_lines[i] == "LOADING...")
                 {
-                    lang_lines[i] = "CML " + Program.ModProgram.releaseVersionString + "..";
+                    lang_lines[i] = "CML " + Program.ModProgram.releaseVersionString;
                 }
             }
-            File.WriteAllLines(path_extr + @"lang\en.txt", lang_lines);
+            File.WriteAllLines(path_extr + @"lang\en.txt", lang_lines, System.Text.Encoding.Default);
             lng.ConvertTXT(path_extr + @"lang\en.txt");
             File.Delete(path_extr + @"lang\en.txt");
 
             if (File.Exists(path_extr + @"lang\en2.lng"))
             {
                 LNG lng1 = new LNG(path_extr + @"lang\en2.lng");
-                string[] lang_lines1 = File.ReadAllLines(path_extr + @"lang\en2.txt");
+                string[] lang_lines1 = File.ReadAllLines(path_extr + @"lang\en2.txt", System.Text.Encoding.Default);
                 for (int i = 0; i < lang_lines1.Length; i++)
                 {
                     if (lang_lines[i] == "LOADING...")
                     {
-                        lang_lines[i] = "CML " + Program.ModProgram.releaseVersionString + "..";
+                        lang_lines[i] = "CML " + Program.ModProgram.releaseVersionString;
                     }
                 }
-                File.WriteAllLines(path_extr + @"lang\en2.txt", lang_lines1);
+                File.WriteAllLines(path_extr + @"lang\en2.txt", lang_lines1, System.Text.Encoding.Default);
                 lng1.ConvertTXT(path_extr + @"lang\en2.txt");
                 File.Delete(path_extr + @"lang\en2.txt");
             }
-            */
+            
             
 
             EndModProcess();
@@ -111,7 +127,7 @@ namespace CrateModLoader
 
             File.Move(AppDomain.CurrentDomain.BaseDirectory + path_Bigfile, basePath + path_Bigfile);
 
-            BIG big = new BIG();
+            bigtool.BIG big = new bigtool.BIG();
             big.Build(basePath + path_Bigfile);
 
             // Extraction cleanup

@@ -50,7 +50,7 @@ namespace bigtool
         {
             path = fn;
             basepath = System.AppDomain.CurrentDomain.BaseDirectory;
-            filelist = AppDomain.CurrentDomain.BaseDirectory + @"\Tools\CTR\filenames.txt";
+            filelist = AppDomain.CurrentDomain.BaseDirectory + @"\Tools\CTR\filenames_usa.txt";
             bigname = Path.GetFileNameWithoutExtension(fn);
             bigpath = Path.GetDirectoryName(fn);
             if (bigpath == null || bigpath == "") bigpath = basepath;
@@ -69,17 +69,33 @@ namespace bigtool
         }
 
 
-        public BIG(string fn)
+        public BIG(string fn, string reg)
         {
             Console.WriteLine("Begin: " + fn);
             InitPaths(fn);
 
-            bool listExists = LoadNames(filelist);
-            Console.WriteLine("File list - {0}\r\n", (listExists ? "OK" : "ERROR"));
-
             //Console.WriteLine(p.calc_md5);
 
-            string reg = Meta.DetectBig(fn);
+            //string reg = Meta.Detect(fn, "files"); // This didn't work but not really needed atm
+
+            //so messy
+            switch (reg)
+            {
+                case "usa_demo":
+                case "pal_demo": //check if matches
+                    filelist = AppDomain.CurrentDomain.BaseDirectory + @"\Tools\CTR\filenames_demo.txt"; break;
+
+                case "pal": filelist = AppDomain.CurrentDomain.BaseDirectory + @"\Tools\CTR\filenames_pal.txt"; break;
+
+                case "proto": //no list yet
+                case "usa":
+                case "jap": break; //we're usa by default, jap matches
+
+                default: break;
+            }
+
+            bool listExists = LoadNames(filelist);
+            Console.WriteLine("File list ({0}) - {1}\r\n", filelist, (listExists ? "OK" : "ERROR"));
 
             ms = new MemoryStream(File.ReadAllBytes(fn));
             br = new BinaryReaderEx(ms);
@@ -186,6 +202,7 @@ namespace bigtool
             string path = Path.GetFileNameWithoutExtension(txt);
             string[] files = File.ReadAllLines(txt);
 
+
             Console.WriteLine(path);
 
             for (int i = 0; i < files.Length; i++)
@@ -281,7 +298,6 @@ namespace bigtool
                 }
                 else
                 {
-                    Console.WriteLine("File list doesn't exist! " + path);
                     return false;
                 }
             }

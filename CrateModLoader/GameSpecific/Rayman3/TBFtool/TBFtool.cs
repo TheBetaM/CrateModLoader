@@ -80,7 +80,47 @@ namespace tbftool
 
             using (BinaryWriter writer = new BinaryWriter(new FileStream(path, FileMode.Create)))
             {
-                
+                for (int i = 0; i < TBF_Files.Count; i++)
+                {
+                    Bitmap bFile = new Bitmap(TBF_Files[i]);
+
+                    writer.Write(0x0AB9FC72);
+                    uint type = 0x1;
+                    writer.Write(type);
+                    int width = bFile.Width;
+                    int height = bFile.Height;
+                    writer.Write(width);
+                    writer.Write(height);
+
+                    switch (type)
+                    {
+                        case 0x1:
+                            {
+                                Color[] palette = new Color[1];
+                                PS2ImageHelper.WritePSMCT32(writer, 4, 4, palette);
+                                byte[] indices = new byte[1];
+                                byte[] indices_out;
+                                PS2ImageHelper.Swizzle8(width, height, indices, out indices_out);
+                                PS2ImageHelper.WritePSMT4(writer, width, height, indices);
+                            }
+                            break;
+                        case 0x2:
+                            {
+                                Color[] palette = new Color[1];
+                                Color[] palette_out = new Color[1];
+                                PS2ImageHelper.TilePalette(palette, out palette_out);
+                                PS2ImageHelper.WritePSMCT32(writer, 16, 16, palette_out);
+                                byte[] indices = new byte[1];
+                                byte[] indices_out;
+                                PS2ImageHelper.Swizzle8(width, height, indices, out indices_out);
+                                PS2ImageHelper.WritePSMT8(writer, width, height, indices);
+                                
+                            }
+                            break;
+                        default:
+                            throw new InvalidDataException("Unknown type: " + type);
+                    }
+                }
             }
         }
     }
