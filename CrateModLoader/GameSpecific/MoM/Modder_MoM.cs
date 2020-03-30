@@ -14,6 +14,7 @@ namespace CrateModLoader
             Game = new Game()
             {
                 Name = "Crash Mind Over Mutant",
+                ShortName = "CrashMOM",
                 Consoles = new List<ConsoleMode>
                 {
                     ConsoleMode.PS2,

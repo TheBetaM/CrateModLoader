@@ -9,6 +9,7 @@ namespace CrateModLoader
             Game = new Game()
             {
                 Name = "Crash Bandicoot: The Wrath of Cortex",
+                ShortName = "CrashTWOC",
                 Consoles = new List<ConsoleMode>
                 {
                     ConsoleMode.PS2,

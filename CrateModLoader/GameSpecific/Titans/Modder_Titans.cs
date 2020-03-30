@@ -13,6 +13,7 @@ namespace CrateModLoader
             Game = new Game()
             {
                 Name = "Crash of the Titans",
+                ShortName = "CrashTitans",
                 Consoles = new List<ConsoleMode>
                 {
                     ConsoleMode.PS2,

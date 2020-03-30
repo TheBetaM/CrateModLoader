@@ -18,6 +18,7 @@ namespace CrateModLoader
             Game = new Game()
             {
                 Name = "Crash Team Racing",
+                ShortName = "CrashTR",
                 Consoles = new List<ConsoleMode>
                 {
                     ConsoleMode.PS1

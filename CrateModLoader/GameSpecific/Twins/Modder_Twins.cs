@@ -27,6 +27,7 @@ namespace CrateModLoader
             Game = new Game()
             {
                 Name = "Crash Twinsanity",
+                ShortName = "CrashTS",
                 Consoles = new List<ConsoleMode>
                 {
                     ConsoleMode.PS2,

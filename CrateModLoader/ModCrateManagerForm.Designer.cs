@@ -32,6 +32,8 @@
             this.checkedListBox_mods = new System.Windows.Forms.CheckedListBox();
             this.button_confirm = new System.Windows.Forms.Button();
             this.button_importmod = new System.Windows.Forms.Button();
+            this.label_author = new System.Windows.Forms.Label();
+            this.label_desc = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // checkedListBox_mods
@@ -41,16 +43,20 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.checkedListBox_mods.FormattingEnabled = true;
             this.checkedListBox_mods.Items.AddRange(new object[] {
-            "Example Mod Name (C:/Path_To_Mod/modcrate.zip)"});
+            "Example Mod Name (v1.0)",
+            "Example Mod Name 2 (v1.1)",
+            "Example Mod Name 3 (v1.2)"});
             this.checkedListBox_mods.Location = new System.Drawing.Point(13, 13);
             this.checkedListBox_mods.Name = "checkedListBox_mods";
-            this.checkedListBox_mods.Size = new System.Drawing.Size(377, 259);
+            this.checkedListBox_mods.Size = new System.Drawing.Size(359, 259);
             this.checkedListBox_mods.TabIndex = 0;
+            this.checkedListBox_mods.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBox_mods_ItemCheck);
+            this.checkedListBox_mods.SelectedIndexChanged += new System.EventHandler(this.checkedListBox_mods_SelectedIndexChanged);
             // 
             // button_confirm
             // 
             this.button_confirm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_confirm.Location = new System.Drawing.Point(314, 281);
+            this.button_confirm.Location = new System.Drawing.Point(296, 326);
             this.button_confirm.Name = "button_confirm";
             this.button_confirm.Size = new System.Drawing.Size(75, 23);
             this.button_confirm.TabIndex = 1;
@@ -60,19 +66,44 @@
             // 
             // button_importmod
             // 
-            this.button_importmod.Location = new System.Drawing.Point(13, 280);
+            this.button_importmod.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button_importmod.Enabled = false;
+            this.button_importmod.Location = new System.Drawing.Point(16, 326);
             this.button_importmod.Name = "button_importmod";
             this.button_importmod.Size = new System.Drawing.Size(103, 23);
             this.button_importmod.TabIndex = 2;
             this.button_importmod.Text = "Import Mod Crate";
             this.button_importmod.UseVisualStyleBackColor = true;
+            this.button_importmod.Visible = false;
             this.button_importmod.Click += new System.EventHandler(this.button_importmod_Click);
+            // 
+            // label_author
+            // 
+            this.label_author.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label_author.AutoSize = true;
+            this.label_author.Location = new System.Drawing.Point(13, 284);
+            this.label_author.Name = "label_author";
+            this.label_author.Size = new System.Drawing.Size(62, 13);
+            this.label_author.TabIndex = 3;
+            this.label_author.Text = "Mod Author";
+            // 
+            // label_desc
+            // 
+            this.label_desc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label_desc.AutoSize = true;
+            this.label_desc.Location = new System.Drawing.Point(13, 304);
+            this.label_desc.Name = "label_desc";
+            this.label_desc.Size = new System.Drawing.Size(84, 13);
+            this.label_desc.TabIndex = 4;
+            this.label_desc.Text = "Mod Description";
             // 
             // ModCrateManagerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(402, 316);
+            this.ClientSize = new System.Drawing.Size(384, 361);
+            this.Controls.Add(this.label_desc);
+            this.Controls.Add(this.label_author);
             this.Controls.Add(this.button_importmod);
             this.Controls.Add(this.button_confirm);
             this.Controls.Add(this.checkedListBox_mods);
@@ -85,6 +116,7 @@
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ModCrateManagerForm_FormClosed);
             this.Load += new System.EventHandler(this.ModCrateManagerForm_Load);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -93,5 +125,7 @@
         private System.Windows.Forms.CheckedListBox checkedListBox_mods;
         private System.Windows.Forms.Button button_confirm;
         private System.Windows.Forms.Button button_importmod;
+        private System.Windows.Forms.Label label_author;
+        private System.Windows.Forms.Label label_desc;
     }
 }

@@ -1,0 +1,1 @@
+﻿Place any Mod Crate files with the .zip extensions in this folder.

@@ -15,6 +15,7 @@ namespace CrateModLoader
             Game = new Game()
             {
                 Name = "Crash Bandicoot: Warped",
+                ShortName = "Crash3",
                 Consoles = new List<ConsoleMode>
                 {
                     ConsoleMode.PS1

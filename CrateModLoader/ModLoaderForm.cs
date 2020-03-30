@@ -173,8 +173,8 @@ namespace CrateModLoader
 
         private void button_modCrateMenu_Click(object sender, EventArgs e)
         {
-            //Program.ModProgram.OpenModCrateManager();
-            MessageBox.Show("Coming in a future release!", "Not available yet", MessageBoxButtons.OK);
+            Program.ModProgram.OpenModCrateManager();
+            //MessageBox.Show("Coming in a future release!", "Not available yet", MessageBoxButtons.OK);
         }
 
         private void button_openModMenu_Click(object sender, EventArgs e)

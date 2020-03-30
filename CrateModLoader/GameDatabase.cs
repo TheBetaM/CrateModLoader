@@ -7,6 +7,8 @@ namespace CrateModLoader
     {
         /// <summary> Displayed name of the game. </summary>
         public string Name;
+        /// <summary> Abbreviation for use in Mod Crates. </summary>
+        public string ShortName;
         /// <summary> Console types to check for game detection. </summary>
         public List<ConsoleMode> Consoles;
         /// <summary> Detailed credit of the individual game's support. Leave as String.Empty if not applicable. </summary>

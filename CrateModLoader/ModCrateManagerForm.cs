@@ -15,6 +15,9 @@ namespace CrateModLoader
         public ModCrateManagerForm()
         {
             InitializeComponent();
+            ModCrates.CheckedList_Mods = checkedListBox_mods;
+            label_author.Text = "";
+            label_desc.Text = "";
         }
 
         private void button_confirm_Click(object sender, EventArgs e)
@@ -24,7 +27,7 @@ namespace CrateModLoader
 
         private void button_importmod_Click(object sender, EventArgs e)
         {
-
+            //todo
         }
 
         private void ModCrateManagerForm_Load(object sender, EventArgs e)
@@ -35,6 +38,26 @@ namespace CrateModLoader
         private void ModCrateManagerForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             Owner.Enabled = true;
+        }
+
+        private void checkedListBox_mods_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            int index = e.Index;
+            if (e.NewValue == CheckState.Checked)
+            {
+                ModCrates.UpdateModSelection(index, true);
+            }
+            else
+            {
+                ModCrates.UpdateModSelection(index, false);
+            }
+        }
+
+        private void checkedListBox_mods_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int index = checkedListBox_mods.SelectedIndex;
+            label_author.Text = "Author: " + ModCrates.SupportedMods[index].Author;
+            label_desc.Text = "Description: " + ModCrates.SupportedMods[index].Desc;
         }
     }
 }

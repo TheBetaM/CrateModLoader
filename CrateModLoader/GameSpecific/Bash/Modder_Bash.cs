@@ -9,6 +9,7 @@ namespace CrateModLoader
             Game = new Game()
             {
                 Name = "Crash Bash",
+                ShortName = "CrashBash",
                 Consoles = new List<ConsoleMode>
                 {
                     ConsoleMode.PS1

@@ -15,6 +15,7 @@ namespace CrateModLoader
             Game = new Game()
             {
                 Name = "Crash Bandicoot 2: Cortex Strikes Back",
+                ShortName = "Crash2",
                 Consoles = new List<ConsoleMode>
                 {
                     ConsoleMode.PS1

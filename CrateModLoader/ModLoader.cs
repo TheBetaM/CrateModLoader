@@ -792,6 +792,7 @@ namespace CrateModLoader
         public void CheckISO()
         {
             Modder = null;
+            ModCrates.ClearModLists();
 
             if (inputDirectoryMode)
             {
@@ -934,6 +935,7 @@ namespace CrateModLoader
                     else
                     {
                         Modder = null;
+                        ModCrates.ClearModLists();
                     }
                     ISO_label = ProductCode;
                 }
@@ -1165,6 +1167,7 @@ namespace CrateModLoader
                             else
                             {
                                 Modder = null;
+                                ModCrates.ClearModLists();
                             }
 
                             cd.Dispose();
@@ -1228,6 +1231,7 @@ namespace CrateModLoader
         {
             bool RegionNotSupported = true;
             Modder = null;
+            ModCrates.ClearModLists();
             Assembly assembly = Assembly.GetExecutingAssembly();
             foreach (Type type in assembly.GetTypes())
             {
@@ -1428,7 +1432,18 @@ namespace CrateModLoader
             // Either a checkbox list of .zip files in a mod directory OR
             // A list with a button that lets you manually add .zip files
             // Set availability in the respective modder's Game struct (ModCratesSupported variable) 
+
             ModCrateManagerForm modCrateManagerMenu = new ModCrateManagerForm();
+
+            if (ModCrates.SupportedMods.Count <= 0)
+            {
+                ModCrates.PopulateModList();
+            }
+            else
+            {
+                ModCrates.UpdateModList();
+            }
+
             modCrateManagerMenu.Owner = Program.ModProgramForm;
             modCrateManagerMenu.Show();
         }
@@ -1514,6 +1529,7 @@ namespace CrateModLoader
         void ResetGameSpecific(bool ClearGameText = false)
         {
             Modder = null;
+            ModCrates.ClearModLists();
 
             startButton.Enabled = false;
 

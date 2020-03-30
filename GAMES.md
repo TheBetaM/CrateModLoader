@@ -13,30 +13,35 @@
   
 ## Crash Bandicoot
 Supported: All PS1 versions (.BIN/.ISO formats)  
+Mod abbreviation: Crash1  
 API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)  
 ### Features:  
 - Randomize Sound Effects  
   
 ## Crash Bandicoot 2: Cortex Strikes Back
 Supported: All PS1 versions (.BIN/.ISO formats)  
+Mod abbreviation: Crash2  
 API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)  
 ### Features:  
 - Randomize Sound Effects  
   
 ## Crash Bandicoot: Warped
 Supported: All PS1 versions (.BIN/.ISO formats)  
+Mod abbreviation: Crash3  
 API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)  
 ### Features:  
 - Randomize Sound Effects  
   
 ## Crash Team Racing
 Supported: All PS1 versions (.BIN/.ISO formats)  
+Mod abbreviation: CrashTR  
 API by DCxDemo. (https://github.com/DCxDemo/CTR-tools)  
 ### Features:  
 - Version and seed visible in the Loading screen  
   
 ## Crash Nitro Kart ![Crash Nitro Kart](../master/CrateModLoader/Resources/icon_cnk.png "Crash Nitro Kart")
 Supported: All PS2 versions (.ISO format), All GC versions (.ISO format), All XBOX versions (.ISO format)  
+Mod abbreviation: CrashNK  
 Tools/API by BetaM, ManDude and eezstreet.  
 ### Features:  
 - Randomize Adventure  
@@ -53,6 +58,7 @@ Tools/API by BetaM, ManDude and eezstreet.
   
 ## Crash Twinsanity ![Crash Twinsanity](../master/CrateModLoader/Resources/icon_twins.png "Crash Twinsanity")
 Supported: All PS2 versions (.ISO format) (XBOX not supported yet)  
+Mod abbreviation: CrashTS  
 API by NeoKesha, Smartkin, ManDude and Marko. (https://github.com/Smartkin/twinsanity-editor)  
 ### Features:  
 - Randomize Crate Types  
@@ -69,6 +75,7 @@ API by NeoKesha, Smartkin, ManDude and Marko. (https://github.com/Smartkin/twins
   
 ## Crash Tag Team Racing ![Crash Tag Team Racing](../master/CrateModLoader/Resources/icon_crash.png "Crash Tag Team Racing")
 Supported: All PS2 versions (.ISO format), All PSP versions (.ISO format), All XBOX versions (.ISO format) (GC not supported yet)  
+Mod abbreviation: CrashTTR  
 APIs by NeoKesha and BetaM. (based on https://github.com/handsomematt/Pure3D)  
 ### Features:  
 - Randomize Platforming Character
@@ -80,18 +87,21 @@ APIs by NeoKesha and BetaM. (based on https://github.com/handsomematt/Pure3D)
   
 ## Crash of the Titans
 Supported: All PS2 versions (.ISO format), All Wii versions (.ISO/.WBFS formats), All PSP versions (.ISO format) (XBOX 360 not supported yet)  
+Mod abbreviation: CrashTitans  
 API by NeoKesha.  
 ### Features:   
 - Test mod: Increased camera FOV in Episode 1
   
 ## Crash Mind Over Mutant
 Supported: All PS2 versions (.ISO format), All Wii versions (.ISO/.WBFS formats), All PSP versions (.ISO format) (XBOX 360 not supported yet)  
+Mod abbreviation: CrashMOM  
 API by NeoKesha.  
 ### Features:    
 - Version, seed and settings visible in the Credits screen  
 
 ## Rayman 3: Hoodlum Havoc ![Rayman 3](../master/CrateModLoader/Resources/icon_ray3.png "Rayman 3")
-Supported: All PS2 versions (.ISO format), All GC versions (.ISO format), All XBOX versions (.ISO format), PC version (Folder mode only)
+Supported: All PS2 versions (.ISO format), All GC versions (.ISO format), All XBOX versions (.ISO format), PC version (Folder mode only)  
+Mod abbreviation: Rayman3  
 ### Features:
 - Randomize Level Order (All Levels or Any amount of Levels)  
 - Randomize Outfit Visuals (GC Only)  

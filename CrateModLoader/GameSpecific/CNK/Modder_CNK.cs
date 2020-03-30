@@ -37,6 +37,7 @@ namespace CrateModLoader
             Game = new Game()
             {
                 Name = "Crash Nitro Kart",
+                ShortName = "CrashNK",
                 Consoles = new List<ConsoleMode>
                 {
                     ConsoleMode.PS2,

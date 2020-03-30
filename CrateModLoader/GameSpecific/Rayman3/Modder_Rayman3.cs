@@ -13,6 +13,7 @@ namespace CrateModLoader.GameSpecific.Rayman3
             Game = new Game()
             {
                 Name = "Rayman 3: Hoodlum Havoc",
+                ShortName = "Rayman3",
                 Consoles = new List<ConsoleMode>
                 {
                     ConsoleMode.GCN,

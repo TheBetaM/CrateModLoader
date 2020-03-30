@@ -19,7 +19,7 @@ Features:
 - Randomize Sound Effects  
   
 Crash Team Racing
-Supported: All PS1 versions (.BIN/.ISO formats)  
+Supported: NTSC-U PS1 version (.BIN/.ISO formats)  
 API by DCxDemo. (https://github.com/DCxDemo/CTR-tools)  
 Features:  
 - Version and seed visible in the Loading screen  
