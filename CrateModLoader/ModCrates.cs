@@ -13,7 +13,7 @@ namespace CrateModLoader
         /* Plan for how Mod Crates are supposed to work:
          * They're .zip files:
          * with folders called "layer0", "layer1", "layer2" etc. 
-         * Each layer corresponds to a data archive type that the files inside replace (or add?) (it doesn't just have to correspond to deeper archives, just the different extraction methods)
+         * Each layer corresponds to a data archive type that the files inside replace (or add?)
          * info.txt file with the mod's metadata
          * settings.txt file with the game specfic settings that can't be altered with mods
          * 
@@ -22,9 +22,11 @@ namespace CrateModLoader
 
 
         private const char Separator = '=';
+        private const char CommentSymbol = '!';
         public static List<ModCrate> ModList;
         public static List<ModCrate> SupportedMods;
         public static bool ModsActive = false;
+        public static int ModsActiveAmount = 0;
 
         public static CheckedListBox CheckedList_Mods;
 
@@ -83,10 +85,12 @@ namespace CrateModLoader
             if (value)
             {
                 ModsActive = true;
+                ModsActiveAmount++;
             }
             else
             {
                 ModsActive = false;
+                ModsActiveAmount--;
                 for (int i = 0; i < SupportedMods.Count; i++)
                 {
                     if (SupportedMods[i].IsActivated)
@@ -114,6 +118,7 @@ namespace CrateModLoader
                 return;
             }
 
+            ModsActiveAmount = 0;
             for (int i = 0; i < SupportedMods.Count; i++)
             {
                 string ListName = SupportedMods[i].Name;
@@ -122,6 +127,7 @@ namespace CrateModLoader
                 CheckedList_Mods.Items.Add(ListName);
                 if (SupportedMods[i].IsActivated)
                 {
+                    ModsActiveAmount++;
                     CheckedList_Mods.SetItemCheckState(i, CheckState.Checked);
                 }
                 else
@@ -146,8 +152,11 @@ namespace CrateModLoader
                             string line;
                             while ((line = fileStream.ReadLine()) != null)
                             {
-                                string[] setting = line.Split(Separator);
-                                NewCrate.Meta[setting[0]] = setting[1];
+                                if (line[0] != CommentSymbol) //reserved for comments
+                                {
+                                    string[] setting = line.Split(Separator);
+                                    NewCrate.Meta[setting[0]] = setting[1];
+                                }
                             }
                         }
                         if (NewCrate.Meta.ContainsKey("Name"))
@@ -175,6 +184,8 @@ namespace CrateModLoader
         {
             ModList = new List<ModCrate>();
             SupportedMods = new List<ModCrate>();
+            ModsActive = false;
+            ModsActiveAmount = 0;
         }
 
 
@@ -183,6 +194,7 @@ namespace CrateModLoader
     class ModCrate
     {
         public Dictionary<string, string> Meta = new Dictionary<string, string>();
+        public Dictionary<string, string> Settings = new Dictionary<string, string>();
         public string Path;
         public string Name = "Unnamed Mod";
         public string Desc = "(No Description)";

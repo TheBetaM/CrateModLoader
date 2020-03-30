@@ -254,11 +254,11 @@
             // 
             this.checkBox1.AutoSize = true;
             this.checkBox1.Enabled = false;
-            this.checkBox1.Location = new System.Drawing.Point(199, 231);
+            this.checkBox1.Location = new System.Drawing.Point(171, 1);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(163, 17);
+            this.checkBox1.Size = new System.Drawing.Size(81, 17);
             this.checkBox1.TabIndex = 18;
-            this.checkBox1.Text = "(Advanced) Keep Temp Files";
+            this.checkBox1.Text = "Keep Temp";
             this.checkBox1.UseVisualStyleBackColor = true;
             this.checkBox1.Visible = false;
             this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
@@ -275,10 +275,11 @@
             // 
             // button_openModMenu
             // 
+            this.button_openModMenu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button_openModMenu.Enabled = false;
-            this.button_openModMenu.Location = new System.Drawing.Point(93, 227);
+            this.button_openModMenu.Location = new System.Drawing.Point(178, 227);
             this.button_openModMenu.Name = "button_openModMenu";
-            this.button_openModMenu.Size = new System.Drawing.Size(100, 23);
+            this.button_openModMenu.Size = new System.Drawing.Size(155, 23);
             this.button_openModMenu.TabIndex = 19;
             this.button_openModMenu.Text = "Open Mod Menu";
             this.button_openModMenu.UseVisualStyleBackColor = true;
@@ -287,10 +288,12 @@
             // 
             // button_modCrateMenu
             // 
+            this.button_modCrateMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.button_modCrateMenu.Enabled = false;
             this.button_modCrateMenu.Location = new System.Drawing.Point(12, 227);
             this.button_modCrateMenu.Name = "button_modCrateMenu";
-            this.button_modCrateMenu.Size = new System.Drawing.Size(75, 23);
+            this.button_modCrateMenu.Size = new System.Drawing.Size(160, 23);
             this.button_modCrateMenu.TabIndex = 20;
             this.button_modCrateMenu.Text = "Mod Crates";
             this.button_modCrateMenu.UseVisualStyleBackColor = true;
@@ -355,6 +358,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.Controls.Add(this.radioButton_FromROM);
             this.panel1.Controls.Add(this.radioButton_FromFolder);
+            this.panel1.Controls.Add(this.checkBox1);
             this.panel1.Location = new System.Drawing.Point(80, 85);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(253, 19);
@@ -405,7 +409,6 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.button_modCrateMenu);
             this.Controls.Add(this.button_openModMenu);
-            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);

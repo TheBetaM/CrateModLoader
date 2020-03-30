@@ -38,6 +38,17 @@ namespace CrateModLoader
         private void ModCrateManagerForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             Owner.Enabled = true;
+
+            string CratesActive = "Mod Crates";
+            if (ModCrates.ModsActive)
+            {
+                if (ModCrates.ModsActiveAmount > 0)
+                {
+                    CratesActive += " (" + ModCrates.ModsActiveAmount + " enabled)";
+                }
+            }
+
+            Program.ModProgram.button_modCrateMenu.Text = CratesActive;
         }
 
         private void checkedListBox_mods_ItemCheck(object sender, ItemCheckEventArgs e)

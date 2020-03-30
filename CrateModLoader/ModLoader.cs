@@ -1231,6 +1231,7 @@ namespace CrateModLoader
         {
             bool RegionNotSupported = true;
             Modder = null;
+            button_modCrateMenu.Text = "Mod Crates";
             ModCrates.ClearModLists();
             Assembly assembly = Assembly.GetExecutingAssembly();
             foreach (Type type in assembly.GetTypes())
@@ -1529,6 +1530,7 @@ namespace CrateModLoader
         void ResetGameSpecific(bool ClearGameText = false)
         {
             Modder = null;
+            button_modCrateMenu.Text = "Mod Crates";
             ModCrates.ClearModLists();
 
             startButton.Enabled = false;
