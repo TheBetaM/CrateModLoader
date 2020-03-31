@@ -473,13 +473,20 @@ namespace CrateModLoader
         {
             DirectoryInfo dest = new DirectoryInfo(basePath);
             DirectoryInfo source = new DirectoryInfo(Crate.Path + @"\" + LayerFolderName + layer);
-            //todo: copy files
-            foreach (DirectoryInfo dir in source.EnumerateDirectories())
+            Recursive_CopyFiles(basePath, source, dest, "");
+        }
+        static void Recursive_CopyFiles(string basePath, DirectoryInfo di, DirectoryInfo dest, string buffer)
+        {
+            string mainbuffer = buffer + @"\";
+            foreach (DirectoryInfo dir in di.EnumerateDirectories())
             {
+                buffer = Path.Combine(mainbuffer, dir.Name);
                 foreach (FileInfo file in dir.EnumerateFiles())
                 {
-
+                    string relativePath = Path.Combine(dest.FullName, buffer + @"\" + file.Name);
+                    File.Copy(file.FullName, basePath + relativePath, true);
                 }
+                Recursive_CopyFiles(basePath, dir, dest, buffer);
             }
         }
 
@@ -499,7 +506,7 @@ namespace CrateModLoader
         public bool IsActivated = false;
         public bool HasSettings = false;
         public bool IsFolder = false;
-        public Image Icon = Properties.Resources.cml_icon;
+        public Image Icon = null;
 
         public bool[] LayersModded = new bool[1] { false };
     }

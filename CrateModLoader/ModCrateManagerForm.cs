@@ -62,7 +62,14 @@ namespace CrateModLoader
             {
                 label_author.Text = "Author: " + ModCrates.SupportedMods[index].Author;
                 label_desc.Text = ModCrates.SupportedMods[index].Desc;
-                pictureBox_ModIcon.Image = ModCrates.SupportedMods[index].Icon;
+                if (ModCrates.SupportedMods[index].Icon == null)
+                {
+                    pictureBox_ModIcon.Image = Properties.Resources.cml_icon;
+                }
+                else
+                {
+                    pictureBox_ModIcon.Image = ModCrates.SupportedMods[index].Icon;
+                }
             }
         }
     }
