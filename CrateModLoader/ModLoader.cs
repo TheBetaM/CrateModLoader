@@ -3,10 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Media;
 using System.Reflection;
-using System.Drawing;
 using System.Windows.Forms;
 
 namespace CrateModLoader
@@ -681,7 +681,7 @@ namespace CrateModLoader
 
         public void EditGameContent()
         {
-            if (ModCrates.ModsActive)
+            if (ModCrates.ModsActiveAmount > 0)
             {
                 string basePath = AppDomain.CurrentDomain.BaseDirectory + @"temp\";
                 if (isoType == ConsoleMode.GCN)

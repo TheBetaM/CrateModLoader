@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CrateModLoader
@@ -22,7 +15,7 @@ namespace CrateModLoader
 
         private void button_confirm_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void button_importmod_Click(object sender, EventArgs e)
@@ -40,12 +33,9 @@ namespace CrateModLoader
             Owner.Enabled = true;
 
             string CratesActive = "Mod Crates";
-            if (ModCrates.ModsActive)
+            if (ModCrates.ModsActiveAmount > 0)
             {
-                if (ModCrates.ModsActiveAmount > 0)
-                {
-                    CratesActive += " (" + ModCrates.ModsActiveAmount + " enabled)";
-                }
+                CratesActive += " (" + ModCrates.ModsActiveAmount + " enabled)";
             }
 
             Program.ModProgram.button_modCrateMenu.Text = CratesActive;

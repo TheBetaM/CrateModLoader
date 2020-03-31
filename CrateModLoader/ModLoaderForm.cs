@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Windows.Forms;
 using System.IO;
+using System.Windows.Forms;
 
 namespace CrateModLoader
 {
@@ -149,7 +149,7 @@ namespace CrateModLoader
         {
             Program.ModProgram.DisableInteraction();
 
-            if (checkedListBox1.CheckedItems.Count <= 0 && !ModCrates.ModsActive)
+            if (checkedListBox1.CheckedItems.Count <= 0 && ModCrates.ModsActiveAmount <= 0)
             {
                 if (MessageBox.Show("No options specified - Output ROM will only display version info ingame if available. Proceed?", "No Options Selected", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {

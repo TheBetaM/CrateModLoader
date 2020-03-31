@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Drawing;
 using System.IO;
 using System.IO.Compression;
 using System.Windows.Forms;
-using System.Drawing;
 
 namespace CrateModLoader
 {
@@ -27,11 +26,21 @@ namespace CrateModLoader
         public const string LayerFolderName = "layer";
         public static List<ModCrate> ModList;
         public static List<ModCrate> SupportedMods;
-        public static bool ModsActive = false;
-        public static int ModsActiveAmount = 0;
+        public static int ModsActiveAmount
+        {
+            get
+            {
+                int amount = 0;
+                foreach (var mod in SupportedMods)
+                {
+                    if (mod.IsActivated)
+                        ++amount;
+                }
+                return amount;
+            }
+        }
 
         public static CheckedListBox CheckedList_Mods;
-
 
         public static void PopulateModList()
         {
@@ -95,31 +104,11 @@ namespace CrateModLoader
                 ListName += SupportedMods[i].Version;
                 CheckedList_Mods.Items.Add(ListName);
             }
-
-
         }
 
         public static void UpdateModSelection(int index, bool value)
         {
             SupportedMods[index].IsActivated = value;
-            if (value)
-            {
-                ModsActive = true;
-                ModsActiveAmount++;
-            }
-            else
-            {
-                ModsActive = false;
-                ModsActiveAmount--;
-                for (int i = 0; i < SupportedMods.Count; i++)
-                {
-                    if (SupportedMods[i].IsActivated)
-                    {
-                        ModsActive = true;
-                        break;
-                    }
-                }
-            }
         }
 
         public static void UpdateModList()
@@ -132,7 +121,6 @@ namespace CrateModLoader
                 return;
             }
 
-            ModsActiveAmount = 0;
             for (int i = 0; i < SupportedMods.Count; i++)
             {
                 string ListName = SupportedMods[i].Name;
@@ -141,7 +129,6 @@ namespace CrateModLoader
                 CheckedList_Mods.Items.Add(ListName);
                 if (SupportedMods[i].IsActivated)
                 {
-                    ModsActiveAmount++;
                     CheckedList_Mods.SetItemCheckState(i, CheckState.Checked);
                 }
                 else
@@ -257,14 +244,12 @@ namespace CrateModLoader
         {
             ModList = new List<ModCrate>();
             SupportedMods = new List<ModCrate>();
-            ModsActive = false;
-            ModsActiveAmount = 0;
         }
 
         // Use this to handle settings checks. This will only return the first detected instance of a setting in any enabled mod.
         public static string GetSetting(string property)
         {
-            if (!ModsActive)
+            if (ModsActiveAmount <= 0)
             {
                 return string.Empty;
             }
@@ -282,7 +267,7 @@ namespace CrateModLoader
         }
         public static int GetIntSetting(string property)
         {
-            if (!ModsActive)
+            if (ModsActiveAmount <= 0)
             {
                 return -1;
             }
@@ -300,7 +285,7 @@ namespace CrateModLoader
         }
         public static float GetFloatSetting(string property)
         {
-            if (!ModsActive)
+            if (ModsActiveAmount <= 0)
             {
                 return -1f;
             }
@@ -318,7 +303,7 @@ namespace CrateModLoader
         }
         public static bool HasSetting(string property)
         {
-            if (!ModsActive)
+            if (ModsActiveAmount <= 0)
             {
                 return false;
             }
