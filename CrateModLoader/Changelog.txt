@@ -1,6 +1,7 @@
 1.1.0
 
 General:
+- Added support for Mod Crates (all games can replace base extracted files, supported games have more options and replacement layers)
 - Added API links where available
 - Merged ROM checking into one option to prevent confusion
 - Added drag & drop support (ROMs and folders)
@@ -8,6 +9,10 @@ General:
 New games supported:
 - Rayman 3: Hoodlum Havoc
 - Crash Team Racing
+
+Crash Twinsanity:
+- Randomize Character Parameters: Now also randomizes spawn health (masks).
+- Randomize Level Music: Attempted to fix music tracks repeating.
 
 1.0.1
 

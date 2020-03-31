@@ -8,6 +8,9 @@ using Twinsanity;
 /* Mod settings available:
  * ArchiveName - string - Name of main archive loaded by the game - Default: Crash
  * StartingChunk - string - Path and name of chunk that is loaded when the game boots up (case sensitive, must have a character object in it) - Default: Levels\Earth\Hub\Beach
+ * 
+ * Mod Layers:
+ * 1: Extracted BD/BH archive files (PS2 only)
  */
 
 namespace CrateModLoader
@@ -180,6 +183,11 @@ namespace CrateModLoader
             randState = new Random(Program.ModProgram.randoSeed);
 
             Twins_Settings.PatchEXE();
+
+            if (ModCrates.ModsActive)
+            {
+                ModCrates.InstallLayerMods(bdPath, 1);
+            }
 
             bool Twins_Edit_CodeText = true;
             bool Twins_Edit_AllLevels = false;
@@ -452,7 +460,7 @@ namespace CrateModLoader
                 musicTypes.Add((uint)Twins_Data.MusicID.BossAmberly);
                 musicTypes.Add((uint)Twins_Data.MusicID.BossDingodile);
                 musicTypes.Add((uint)Twins_Data.MusicID.BossNGin);
-                musicTypes.Add((uint)Twins_Data.MusicID.BossTikimon);
+                //musicTypes.Add((uint)Twins_Data.MusicID.BossTikimon); //maybe this track was broken specifically?
                 musicTypes.Add((uint)Twins_Data.MusicID.BossTwins);
                 musicTypes.Add((uint)Twins_Data.MusicID.BossUka);
                 musicTypes.Add((uint)Twins_Data.MusicID.BP);
@@ -479,17 +487,11 @@ namespace CrateModLoader
                 {
                     temp_musicList.Add(musicTypes[i]);
                 }
-                while (musicTypes.Count > 0)
+                while (temp_musicList.Count > 0)
                 {
-                    targetPos = randState.Next(0, musicTypes.Count);
-                    randMusicList.Add(musicTypes[targetPos]);
-                    musicTypes.RemoveAt(targetPos);
-                }
-
-                musicTypes.Clear();
-                for (int i = 0; i < temp_musicList.Count; i++)
-                {
-                    musicTypes.Add(temp_musicList[i]);
+                    targetPos = randState.Next(0, temp_musicList.Count);
+                    randMusicList.Add(temp_musicList[targetPos]);
+                    temp_musicList.RemoveAt(targetPos);
                 }
 
                 Twins_Edit_AllLevels = true;
@@ -1387,6 +1389,7 @@ namespace CrateModLoader
                                 instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Unk30] = Twins_Data.CharFloats_Unk30[(int)Twins_Data.CharacterID.Crash];
                                 instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Unk31] = Twins_Data.CharFloats_Unk31[(int)Twins_Data.CharacterID.Crash];
                                 instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Unk55] = Twins_Data.CharFloats_Unk55[(int)Twins_Data.CharacterID.Crash];
+                                instance.UnkI323[2] = Twins_Data.CharInts_SpawnHealth[(int)Twins_Data.CharacterID.Crash];
                             }
 
                             if (Options[ModFlyingKick].Enabled || Options[ModStompKick].Enabled)
@@ -1461,6 +1464,7 @@ namespace CrateModLoader
                                 instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Unk30] = Twins_Data.CharFloats_Unk30[(int)Twins_Data.CharacterID.Cortex];
                                 instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Unk31] = Twins_Data.CharFloats_Unk31[(int)Twins_Data.CharacterID.Cortex];
                                 instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Unk55] = Twins_Data.CharFloats_Unk55[(int)Twins_Data.CharacterID.Cortex];
+                                instance.UnkI323[2] = Twins_Data.CharInts_SpawnHealth[(int)Twins_Data.CharacterID.Cortex];
                             }
 
                             if (Options[ModDoubleJumpCortex].Enabled)
@@ -1535,6 +1539,7 @@ namespace CrateModLoader
                                 instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Unk30] = Twins_Data.CharFloats_Unk30[(int)Twins_Data.CharacterID.Nina];
                                 instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Unk31] = Twins_Data.CharFloats_Unk31[(int)Twins_Data.CharacterID.Nina];
                                 instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Unk55] = Twins_Data.CharFloats_Unk55[(int)Twins_Data.CharacterID.Nina];
+                                instance.UnkI323[2] = Twins_Data.CharInts_SpawnHealth[(int)Twins_Data.CharacterID.Nina];
                             }
 
                             if (Options[ModDoubleJumpNina].Enabled)
@@ -1609,6 +1614,7 @@ namespace CrateModLoader
                                 instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Unk30] = Twins_Data.CharFloats_Unk30[(int)Twins_Data.CharacterID.Mechabandicoot];
                                 instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Unk31] = Twins_Data.CharFloats_Unk31[(int)Twins_Data.CharacterID.Mechabandicoot];
                                 instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.Unk55] = Twins_Data.CharFloats_Unk55[(int)Twins_Data.CharacterID.Mechabandicoot];
+                                instance.UnkI323[2] = Twins_Data.CharInts_SpawnHealth[(int)Twins_Data.CharacterID.Mechabandicoot];
                             }
 
                             //instance.UnkI322[(int)Twins_Data.CharacterInstanceFloats.StrafingSpeed] = 10;

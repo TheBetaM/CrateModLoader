@@ -655,6 +655,11 @@ namespace CrateModLoader.GameSpecific.Twins
             0, 0.1f, 0, 0, 0.1f, 0
         };
 
+        public static uint[] CharInts_SpawnHealth = new uint[]
+        {
+            1, 1, 1, 1, 1, 1
+        };
+
         public enum GameObjectScriptOrder
         {
             OnSpawn = 0,
@@ -2164,6 +2169,7 @@ namespace CrateModLoader.GameSpecific.Twins
         public static void Twins_Randomize_Character(int charID, ref Random randState)
         {
 
+            CharInts_SpawnHealth[charID] = (uint)randState.Next(1, 4);
             CharFloats_AirGravity[charID] = randState.Next(40, 60);
             CharFloats_WalkSpeed[charID] = randState.Next(20, 60) / 10f;
             CharFloats_RunSpeed[charID] = randState.Next(7, 14);

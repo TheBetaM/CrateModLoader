@@ -12,7 +12,7 @@ namespace CrateModLoader
     {
 
         /* Plan for how Mod Crates are supposed to work:
-         * They're .zip files:
+         * They're .zip files (or unzipped folders):
          * with folders called "layer0", "layer1", "layer2" etc. 
          * Each layer corresponds to a data archive type that the files inside replace (or add?) (game-specific, except for layer0)
          * info.txt file with the mod's metadata
@@ -37,10 +37,15 @@ namespace CrateModLoader
         {
             CheckedList_Mods.Items.Clear();
 
-            if (string.IsNullOrEmpty(Program.ModProgram.Modder.Game.ShortName))
+            bool SupportAll = false;
+            if (Program.ModProgram.Modder == null)
             {
-                Console.WriteLine("Target game is missing short name! Not loading anything.");
-                return;
+                SupportAll = true;
+            }
+            else if (string.IsNullOrEmpty(Program.ModProgram.Modder.Game.ShortName))
+            {
+                Console.WriteLine("Target game is missing short name!");
+                SupportAll = true;
             }
 
             ModList = new List<ModCrate>();
@@ -62,11 +67,24 @@ namespace CrateModLoader
 
             SupportedMods = new List<ModCrate>();
 
-            for (int i = 0; i < ModList.Count; i++)
+            if (SupportAll)
             {
-                if (ModList[i].TargetGame == Program.ModProgram.Modder.Game.ShortName)
+                for (int i = 0; i < ModList.Count; i++)
                 {
-                    SupportedMods.Add(ModList[i]);
+                    if (ModList[i].TargetGame == "NoGame")
+                    {
+                        SupportedMods.Add(ModList[i]);
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < ModList.Count; i++)
+                {
+                    if (ModList[i].TargetGame == Program.ModProgram.Modder.Game.ShortName)
+                    {
+                        SupportedMods.Add(ModList[i]);
+                    }
                 }
             }
 
@@ -107,12 +125,6 @@ namespace CrateModLoader
         public static void UpdateModList()
         {
             CheckedList_Mods.Items.Clear();
-
-            if (string.IsNullOrEmpty(Program.ModProgram.Modder.Game.ShortName))
-            {
-                Console.WriteLine("Target game is missing short name! Not loading anything.");
-                return;
-            }
 
             if (SupportedMods.Count <= 0)
             {
@@ -321,6 +333,31 @@ namespace CrateModLoader
                 }
             }
             return false;
+        }
+
+
+        public static void InstallLayerMods(string basePath, int layer)
+        {
+            for (int i = 0; i < SupportedMods.Count; i++)
+            {
+                if (SupportedMods[i].IsActivated && SupportedMods[i].LayersModded[layer])
+                {
+                    InstallLayerMod(SupportedMods[i], basePath, layer);
+                }
+            }
+        }
+        public static void InstallLayerMod(ModCrate Crate, string basePath, int layer)
+        {
+            using (ZipArchive archive = ZipFile.OpenRead(Crate.Path))
+            {
+                foreach (ZipArchiveEntry entry in archive.Entries)
+                {
+                    if (entry.FullName.Split('/').Length > 1 && entry.FullName[entry.FullName.Length - 1] != '/' && entry.FullName.Split('/')[1].Length > 0 && entry.FullName.Split('/')[0].Substring(0, LayerFolderName.Length + layer.ToString().Length).ToLower() == LayerFolderName + layer)
+                    {
+                        entry.ExtractToFile(basePath + entry.FullName.Substring(LayerFolderName.Length + layer.ToString().Length), true);
+                    }
+                }
+            }
         }
 
     }

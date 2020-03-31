@@ -38,7 +38,7 @@ namespace CrateModLoader.GameSpecific.Twins
 
         public static void PatchEXE(string StartingChunk = @"Levels\Earth\Hub\Beach")
         {
-            string filePath = System.IO.Path.Combine(Program.ModProgram.extractedPath, Program.ModProgram.PS2_executable_name);
+            string filePath = Path.Combine(Program.ModProgram.extractedPath, Program.ModProgram.PS2_executable_name);
 
             if (Program.ModProgram.isoType == ConsoleMode.XBOX)
             {

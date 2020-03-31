@@ -681,6 +681,23 @@ namespace CrateModLoader
 
         public void EditGameContent()
         {
+            if (ModCrates.ModsActive)
+            {
+                string basePath = AppDomain.CurrentDomain.BaseDirectory + @"temp\";
+                if (isoType == ConsoleMode.GCN)
+                {
+                    basePath = AppDomain.CurrentDomain.BaseDirectory + @"temp\P-" + ProductCode.Substring(0, 4) + @"\files\";
+                }
+                else if (isoType == ConsoleMode.WII)
+                {
+                    basePath = AppDomain.CurrentDomain.BaseDirectory + @"temp\DATA\files\";
+                }
+                else if (isoType == ConsoleMode.PSP)
+                {
+                    basePath = AppDomain.CurrentDomain.BaseDirectory + @"temp\PSP_GAME\USRDIR\";
+                }
+                ModCrates.InstallLayerMods(basePath, 0);
+            }
             Modder.StartModProcess();
         }
 
