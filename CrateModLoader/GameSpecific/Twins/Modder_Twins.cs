@@ -5,6 +5,10 @@ using System.IO;
 using Twinsanity;
 //Twinsanity API by NeoKesha, Smartkin, ManDude and Marko (https://github.com/Smartkin/twinsanity-editor)
 //Version number, seed and options are displayed in the Autosave Disabled screen accessible by starting a new game without saving or just disabling autosave.
+/* Mod settings available:
+ * ArchiveName - string - Name of main archive loaded by the game - Default: Crash
+ * StartingChunk - string - Path and name of chunk that is loaded when the game boots up (case sensitive, must have a character object in it) - Default: Levels\Earth\Hub\Beach
+ */
 
 namespace CrateModLoader
 {
@@ -16,6 +20,7 @@ namespace CrateModLoader
         internal const int RandomizeEnemies         = 2;
         internal const int RandomizeMusic           = 3;
         internal const int RandomizeCharParams      = 4;
+        internal const int RandomizeStartingChunk   = 11;
         internal const int ModFlyingKick            = 5;
         internal const int ModStompKick             = 6;
         internal const int ModDoubleJumpCortex      = 7;
@@ -73,6 +78,7 @@ namespace CrateModLoader
             //Options.Add(RandomizeEnemies, new ModOption("Randomize Enemies")); // TODO
             Options.Add(RandomizeMusic, new ModOption("Randomize Level Music"));
             Options.Add(RandomizeCharParams, new ModOption("Randomize Character Parameters"));
+            //Options.Add(RandomizeStartingChunk, new ModOption("Randomize Starting Chunk"));
             Options.Add(ModFlyingKick, new ModOption("Enable Flying Kick for Crash (Jump + Circle)"));
             Options.Add(ModStompKick, new ModOption("Enable Stomp Kick for Crash (Flying Kick variation)"));
             Options.Add(ModDoubleJumpCortex, new ModOption("Enable Double Jump for Cortex"));
@@ -172,6 +178,8 @@ namespace CrateModLoader
         {
             //Start Modding
             randState = new Random(Program.ModProgram.randoSeed);
+
+            Twins_Settings.PatchEXE();
 
             bool Twins_Edit_CodeText = true;
             bool Twins_Edit_AllLevels = false;

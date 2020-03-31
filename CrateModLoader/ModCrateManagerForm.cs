@@ -67,8 +67,11 @@ namespace CrateModLoader
         private void checkedListBox_mods_SelectedIndexChanged(object sender, EventArgs e)
         {
             int index = checkedListBox_mods.SelectedIndex;
-            label_author.Text = "Author: " + ModCrates.SupportedMods[index].Author;
-            label_desc.Text = "Description: " + ModCrates.SupportedMods[index].Desc;
+            if (index >= 0)
+            {
+                label_author.Text = "Author: " + ModCrates.SupportedMods[index].Author;
+                label_desc.Text = "Description: " + ModCrates.SupportedMods[index].Desc;
+            }
         }
     }
 }

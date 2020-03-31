@@ -1261,6 +1261,10 @@ namespace CrateModLoader
                                 targetRegion = r.Region;
                                 RegionNotSupported = false;
                                 Modder = modder;
+                                if (!string.IsNullOrEmpty(r.ExecName))
+                                {
+                                    PS2_executable_name = r.ExecName;
+                                }
                                 break;
                             }
                             else
@@ -1273,6 +1277,10 @@ namespace CrateModLoader
                             targetRegion = r.Region;
                             Modder = modder;
                             RegionNotSupported = false;
+                            if (!string.IsNullOrEmpty(r.ExecName))
+                            {
+                                PS2_executable_name = r.ExecName;
+                            }
                             break;
                         }
                     }
@@ -1286,6 +1294,10 @@ namespace CrateModLoader
                         {
                             targetRegion = RegionType.Undefined;
                             Modder = modder;
+                            if (!string.IsNullOrEmpty(r.ExecName))
+                            {
+                                PS2_executable_name = r.ExecName;
+                            }
                             break;
                         }
                     }
