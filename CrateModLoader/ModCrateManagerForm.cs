@@ -11,6 +11,7 @@ namespace CrateModLoader
             ModCrates.CheckedList_Mods = checkedListBox_mods;
             label_author.Text = "";
             label_desc.Text = "";
+            pictureBox_ModIcon.Image = null;
         }
 
         private void button_confirm_Click(object sender, EventArgs e)
@@ -60,7 +61,8 @@ namespace CrateModLoader
             if (index >= 0)
             {
                 label_author.Text = "Author: " + ModCrates.SupportedMods[index].Author;
-                label_desc.Text = "Description: " + ModCrates.SupportedMods[index].Desc;
+                label_desc.Text = ModCrates.SupportedMods[index].Desc;
+                pictureBox_ModIcon.Image = ModCrates.SupportedMods[index].Icon;
             }
         }
     }

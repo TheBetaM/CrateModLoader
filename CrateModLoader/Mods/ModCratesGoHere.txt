@@ -1,1 +1,2 @@
 ﻿Place any Mod Crate files with the .zip extension in this folder.
+Mods can also be placed here as folders, as long as ModCrateInfo.txt is inside (ex. /CrateModLoader/Mods/ExampleMod/ModCrateInfo.txt).

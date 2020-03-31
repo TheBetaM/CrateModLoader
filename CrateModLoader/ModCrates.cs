@@ -14,8 +14,9 @@ namespace CrateModLoader
          * They're .zip files (or unzipped folders):
          * with folders called "layer0", "layer1", "layer2" etc. 
          * Each layer corresponds to a data archive type that the files inside replace (or add?) (game-specific, except for layer0)
-         * info.txt file with the mod's metadata
-         * settings.txt file with the game specfic settings that can't be altered with mods
+         * modcrateinfo.txt file with the mod's metadata
+         * (optional) modcratesettings.txt file with the game specfic settings that can't be altered with mods
+         * (optional) modcrateicon.png icon of the mod
          * 
          * Layer 0 is where the base extracted files from a ROM are, so every game is supposed to support it
          */
@@ -67,6 +68,13 @@ namespace CrateModLoader
                     LoadMetadata(file);
                 }
             }
+            if (di.GetDirectories().Length > 0)
+            {
+                foreach (DirectoryInfo dir in di.GetDirectories())
+                {
+                    LoadMetadata(dir);
+                }
+            }
 
             if (ModList.Count <= 0)
             {
@@ -90,7 +98,7 @@ namespace CrateModLoader
             {
                 for (int i = 0; i < ModList.Count; i++)
                 {
-                    if (ModList[i].TargetGame == Program.ModProgram.Modder.Game.ShortName)
+                    if (ModList[i].TargetGame == Program.ModProgram.Modder.Game.ShortName || ModList[i].TargetGame == "All")
                     {
                         SupportedMods.Add(ModList[i]);
                     }
@@ -186,6 +194,10 @@ namespace CrateModLoader
                             }
                         }
                     }
+                    else if (entry.Name.ToLower() == "modcrateicon.png")
+                    {
+                        NewCrate.Icon = Image.FromStream(entry.Open());
+                    }
                     if (entry.FullName.Split('/')[0].Substring(0, LayerFolderName.Length).ToLower() == LayerFolderName)
                     {
                         int Layer = int.Parse(entry.FullName.Split('/')[0].Substring(LayerFolderName.Length));
@@ -236,6 +248,112 @@ namespace CrateModLoader
                 NewCrate.TargetGame = NewCrate.Meta["Game"];
 
             NewCrate.Path = file.FullName;
+
+            ModList.Add(NewCrate);
+        }
+        public static void LoadMetadata(DirectoryInfo dir)
+        {
+            ModCrate NewCrate = new ModCrate();
+            bool HasInfo = false;
+            bool HasSettings = false;
+            int MaxLayer = 0;
+            List<int> ModdedLayers = new List<int>();
+
+            foreach (FileInfo file in dir.EnumerateFiles())
+            {
+                if (file.Name.ToLower() == "modcrateinfo.txt")
+                {
+                    using (StreamReader fileStream = new StreamReader(file.Open(FileMode.Open), true))
+                    {
+                        string line;
+                        while ((line = fileStream.ReadLine()) != null)
+                        {
+                            if (line[0] != CommentSymbol) //reserved for comments
+                            {
+                                string[] setting = line.Split(Separator);
+                                NewCrate.Meta[setting[0]] = setting[1];
+                                HasInfo = true;
+                            }
+                        }
+                    }
+                }
+                else if (file.Name.ToLower() == "modcratesettings.txt")
+                {
+                    using (StreamReader fileStream = new StreamReader(file.Open(FileMode.Open), true))
+                    {
+                        string line;
+                        while ((line = fileStream.ReadLine()) != null)
+                        {
+                            if (line[0] != CommentSymbol) //reserved for comments
+                            {
+                                string[] setting = line.Split(Separator);
+                                NewCrate.Settings[setting[0]] = setting[1];
+                                HasSettings = true;
+                            }
+                        }
+                    }
+                }
+                else if (file.Name.ToLower() == "modcrateicon.png")
+                {
+                    NewCrate.Icon = Image.FromFile(file.FullName);
+                }
+            }
+            if (dir.GetDirectories().Length > 0)
+            {
+                foreach (DirectoryInfo di in dir.GetDirectories())
+                {
+                    if (di.Name.Substring(0, LayerFolderName.Length).ToLower() == LayerFolderName)
+                    {
+                        int Layer = int.Parse(di.Name.Substring(LayerFolderName.Length));
+                        if (!ModdedLayers.Contains(Layer))
+                        {
+                            MaxLayer = Math.Max(MaxLayer, Layer);
+                            ModdedLayers.Add(Layer);
+                        }
+                    }
+                }
+            }
+
+            if (!HasInfo)
+            {
+                Console.WriteLine("Mod Crate has no info.txt file!");
+                return;
+            }
+
+            NewCrate.IsFolder = true;
+
+            if (ModdedLayers.Count > 0)
+            {
+                NewCrate.LayersModded = new bool[MaxLayer + 1];
+                for (int i = 0; i < ModdedLayers.Count; i++)
+                {
+                    NewCrate.LayersModded[ModdedLayers[i]] = true;
+                }
+            }
+            else
+            {
+                NewCrate.LayersModded = new bool[1] { false };
+            }
+
+            if (HasSettings)
+            {
+                NewCrate.HasSettings = true;
+            }
+
+            if (NewCrate.Meta.ContainsKey("Name"))
+                NewCrate.Name = NewCrate.Meta["Name"];
+            if (NewCrate.Meta.ContainsKey("Description"))
+                NewCrate.Desc = NewCrate.Meta["Description"];
+            if (NewCrate.Meta.ContainsKey("Author"))
+                NewCrate.Author = NewCrate.Meta["Author"];
+            if (NewCrate.Meta.ContainsKey("Version"))
+                NewCrate.Version = NewCrate.Meta["Version"];
+            if (NewCrate.Meta.ContainsKey("ModLoaderVersion"))
+                NewCrate.CML_Version = NewCrate.Meta["ModLoaderVersion"];
+            if (NewCrate.Meta.ContainsKey("Game"))
+                NewCrate.TargetGame = NewCrate.Meta["Game"];
+
+            NewCrate.Path = dir.FullName;
 
             ModList.Add(NewCrate);
         }
@@ -327,7 +445,14 @@ namespace CrateModLoader
             {
                 if (SupportedMods[i].IsActivated && SupportedMods[i].LayersModded[layer])
                 {
-                    InstallLayerMod(SupportedMods[i], basePath, layer);
+                    if (!SupportedMods[i].IsFolder)
+                    {
+                        InstallLayerMod(SupportedMods[i], basePath, layer);
+                    }
+                    else
+                    {
+                        InstallLayerModFolder(SupportedMods[i], basePath, layer);
+                    }
                 }
             }
         }
@@ -341,6 +466,19 @@ namespace CrateModLoader
                     {
                         entry.ExtractToFile(basePath + entry.FullName.Substring(LayerFolderName.Length + layer.ToString().Length), true);
                     }
+                }
+            }
+        }
+        public static void InstallLayerModFolder(ModCrate Crate, string basePath, int layer)
+        {
+            DirectoryInfo dest = new DirectoryInfo(basePath);
+            DirectoryInfo source = new DirectoryInfo(Crate.Path + @"\" + LayerFolderName + layer);
+            //todo: copy files
+            foreach (DirectoryInfo dir in source.EnumerateDirectories())
+            {
+                foreach (FileInfo file in dir.EnumerateFiles())
+                {
+
                 }
             }
         }
@@ -360,7 +498,8 @@ namespace CrateModLoader
         public string TargetGame = "NoGame";
         public bool IsActivated = false;
         public bool HasSettings = false;
-        public Image Icon = null;
+        public bool IsFolder = false;
+        public Image Icon = Properties.Resources.cml_icon;
 
         public bool[] LayersModded = new bool[1] { false };
     }
