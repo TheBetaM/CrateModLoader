@@ -5,6 +5,9 @@ using System.Diagnostics;
 using System.IO;
 //CNK Tools/API by BetaM, ManDude and eezstreet.
 //Version number, seed and options are displayed in the Credits accessible from the main menu.
+/* Mod Layers:
+ * 1: ASSETS.GOB contents
+ */
 
 namespace CrateModLoader
 {
@@ -162,6 +165,8 @@ namespace CrateModLoader
         protected override void ModProcess()
         {
             randState = new Random(Program.ModProgram.randoSeed);
+
+            ModCrates.InstallLayerMods(path_gob_extracted, 1);
 
             bool Editing_CSV_AdventureTracksManager = false;
             bool Editing_CSV_GoalsToRewardsConverter = false;

@@ -184,10 +184,7 @@ namespace CrateModLoader
 
             Twins_Settings.PatchEXE();
 
-            if (ModCrates.ModsActiveAmount > 0)
-            {
-                ModCrates.InstallLayerMods(bdPath, 1);
-            }
+            ModCrates.InstallLayerMods(bdPath, 1);
 
             bool Twins_Edit_CodeText = true;
             bool Twins_Edit_AllLevels = false;

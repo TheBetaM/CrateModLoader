@@ -6,6 +6,9 @@ using CTRFramework.Lang;
 using CTRFramework.Shared;
 using bigtool;
 //CTR API by DCxDemo (https://github.com/DCxDemo/CTR-tools) 
+/* Mod Layers:
+ * 1: BIGFILE.BIG contents
+ */
 
 namespace CrateModLoader
 {
@@ -84,6 +87,8 @@ namespace CrateModLoader
         {
 
             string path_extr = AppDomain.CurrentDomain.BaseDirectory + @"temp\BIGFILE\";
+
+            ModCrates.InstallLayerMods(path_extr, 1);
             
             LNG lng = new LNG(path_extr + @"lang\en.lng");
             string[] lang_lines = File.ReadAllLines(path_extr + @"lang\en.txt", System.Text.Encoding.Default);
