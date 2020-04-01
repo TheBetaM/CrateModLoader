@@ -468,6 +468,7 @@ namespace CrateModLoader
                 {
                     if (entry.FullName.Split('/').Length > 1 && entry.FullName[entry.FullName.Length - 1] != '/' && entry.FullName.Split('/')[1].Length > 0 && entry.FullName.Split('/')[0].Substring(0, LayerFolderName.Length + layer.ToString().Length).ToLower() == LayerFolderName + layer)
                     {
+                        Directory.CreateDirectory(basePath + entry.FullName.Substring(LayerFolderName.Length + layer.ToString().Length + 1, entry.FullName.Length - entry.Name.Length));
                         entry.ExtractToFile(basePath + entry.FullName.Substring(LayerFolderName.Length + layer.ToString().Length), true);
                     }
                 }
@@ -485,6 +486,11 @@ namespace CrateModLoader
             foreach (DirectoryInfo dir in di.EnumerateDirectories())
             {
                 buffer = Path.Combine(mainbuffer, dir.Name);
+                string tempFolder = dest.FullName + buffer + @"\";
+                if (!Directory.Exists(tempFolder))
+                {
+                    Directory.CreateDirectory(tempFolder);
+                }
                 foreach (FileInfo file in dir.EnumerateFiles())
                 {
                     string relativePath = Path.Combine(dest.FullName, buffer + @"\" + file.Name);

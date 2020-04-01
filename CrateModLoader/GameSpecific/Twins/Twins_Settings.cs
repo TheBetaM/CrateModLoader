@@ -91,16 +91,22 @@ namespace CrateModLoader.GameSpecific.Twins
             }
             string levelName = StartingChunk;
 
-            if (ModCrates.HasSetting("StartingChunk"))
+            int LevelSize = executable.LevelSize;
+            if (ModCrates.HasSetting("UnsafeStartingChunk"))
+            {
+                levelName = ModCrates.GetSetting("UnsafeStartingChunk");
+                LevelSize = 0x2D;
+            }
+            else if (ModCrates.HasSetting("StartingChunk"))
             {
                 levelName = ModCrates.GetSetting("StartingChunk");
             }
 
             writer.BaseStream.Position = executable.LevelOff;
-            while (writer.BaseStream.Position < executable.LevelOff + executable.LevelSize)
+            while (writer.BaseStream.Position < executable.LevelOff + LevelSize)
                 writer.Write((byte)0);
             writer.BaseStream.Position = executable.LevelOff;
-            for (int i = 0; i < executable.LevelSize && writer.BaseStream.Position < executable.LevelOff + executable.LevelSize && i < levelName.Length; ++i)
+            for (int i = 0; i < LevelSize && writer.BaseStream.Position < executable.LevelOff + LevelSize && i < levelName.Length; ++i)
             {
                 writer.Write(levelName[i]);
             }
