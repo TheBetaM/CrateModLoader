@@ -35,38 +35,28 @@
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.label2 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.button4 = new System.Windows.Forms.Button();
-            this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.button_openModMenu = new System.Windows.Forms.Button();
             this.button_modCrateMenu = new System.Windows.Forms.Button();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.radioButton_FromROM = new System.Windows.Forms.RadioButton();
-            this.radioButton_FromFolder = new System.Windows.Forms.RadioButton();
-            this.radioButton_ToROM = new System.Windows.Forms.RadioButton();
-            this.radioButton_ToFolder = new System.Windows.Forms.RadioButton();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.label7 = new System.Windows.Forms.Label();
             this.folderBrowserDialog2 = new System.Windows.Forms.FolderBrowserDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.linkLabel2 = new System.Windows.Forms.LinkLabel();
+            this.checkBox_loadFromFolder = new System.Windows.Forms.CheckBox();
+            this.checkBox_saveToFolder = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // checkedListBox1
@@ -80,9 +70,9 @@
             this.checkedListBox1.FormattingEnabled = true;
             this.checkedListBox1.Items.AddRange(new object[] {
             "Nothing"});
-            this.checkedListBox1.Location = new System.Drawing.Point(10, 275);
+            this.checkedListBox1.Location = new System.Drawing.Point(10, 257);
             this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(311, 0);
+            this.checkedListBox1.Size = new System.Drawing.Size(398, 0);
             this.checkedListBox1.TabIndex = 0;
             this.checkedListBox1.Visible = false;
             this.checkedListBox1.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged);
@@ -99,32 +89,23 @@
             // 
             this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Location = new System.Drawing.Point(11, 110);
+            this.textBox1.Location = new System.Drawing.Point(114, 90);
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(322, 20);
+            this.textBox1.Size = new System.Drawing.Size(219, 20);
             this.textBox1.TabIndex = 1;
+            this.textBox1.Text = "1. Click \"Browse\" to select the ROM.";
             // 
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(339, 110);
+            this.button1.Location = new System.Drawing.Point(339, 89);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(74, 20);
+            this.button1.Size = new System.Drawing.Size(74, 22);
             this.button1.TabIndex = 2;
-            this.button1.Text = "Browse...";
+            this.button1.Text = "(1) Browse...";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(10, 88);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(60, 13);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Game Path";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // progressBar1
             // 
@@ -135,56 +116,27 @@
             this.progressBar1.Size = new System.Drawing.Size(402, 23);
             this.progressBar1.TabIndex = 4;
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(10, 136);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(64, 13);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "Output Path";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // textBox2
             // 
             this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox2.Location = new System.Drawing.Point(11, 155);
+            this.textBox2.Location = new System.Drawing.Point(114, 118);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(322, 20);
+            this.textBox2.Size = new System.Drawing.Size(219, 20);
             this.textBox2.TabIndex = 6;
+            this.textBox2.Text = "2. Click \"Browse\" to choose the output path.";
             this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // button2
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Location = new System.Drawing.Point(339, 155);
+            this.button2.Location = new System.Drawing.Point(339, 117);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(74, 20);
+            this.button2.Size = new System.Drawing.Size(74, 22);
             this.button2.TabIndex = 7;
-            this.button2.Text = "Browse...";
+            this.button2.Text = "(2) Browse...";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(10, 187);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(91, 13);
-            this.label3.TabIndex = 8;
-            this.label3.Text = "Randomizer Seed";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(10, 12);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(92, 13);
-            this.label4.TabIndex = 10;
-            this.label4.Text = "Crate Mod Loader";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // button3
             // 
@@ -202,48 +154,43 @@
             // 
             this.numericUpDown1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.numericUpDown1.Location = new System.Drawing.Point(110, 184);
+            this.numericUpDown1.Enabled = false;
+            this.numericUpDown1.Location = new System.Drawing.Point(215, 226);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             2147483647,
             0,
             0,
             0});
             this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(223, 20);
+            this.numericUpDown1.Size = new System.Drawing.Size(198, 20);
             this.numericUpDown1.TabIndex = 12;
+            this.toolTip1.SetToolTip(this.numericUpDown1, "The seed of all randomizers for this game.");
             this.numericUpDown1.Value = new decimal(new int[] {
             2147483647,
             0,
             0,
             0});
+            this.numericUpDown1.Visible = false;
             this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
             // 
             // button4
             // 
-            this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button4.Location = new System.Drawing.Point(339, 184);
+            this.button4.Enabled = false;
+            this.button4.Location = new System.Drawing.Point(10, 224);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(74, 20);
+            this.button4.Size = new System.Drawing.Size(198, 23);
             this.button4.TabIndex = 13;
-            this.button4.Text = "Randomize";
+            this.button4.Text = "Randomize Seed";
+            this.toolTip1.SetToolTip(this.button4, "Randomize the seed to the right of this button.");
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Visible = false;
             this.button4.Click += new System.EventHandler(this.button4_Click);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(10, 256);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(74, 13);
-            this.label5.TabIndex = 14;
-            this.label5.Text = "Quick Options";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.label6.Location = new System.Drawing.Point(10, 66);
+            this.label6.Location = new System.Drawing.Point(10, 68);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(66, 13);
             this.label6.TabIndex = 15;
@@ -254,11 +201,11 @@
             // 
             this.checkBox1.AutoSize = true;
             this.checkBox1.Enabled = false;
-            this.checkBox1.Location = new System.Drawing.Point(171, 1);
+            this.checkBox1.Location = new System.Drawing.Point(94, 67);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(81, 17);
+            this.checkBox1.Size = new System.Drawing.Size(105, 17);
             this.checkBox1.TabIndex = 18;
-            this.checkBox1.Text = "Keep Temp";
+            this.checkBox1.Text = "Keep Temp Files";
             this.checkBox1.UseVisualStyleBackColor = true;
             this.checkBox1.Visible = false;
             this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
@@ -266,7 +213,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox1.Location = new System.Drawing.Point(344, 210);
+            this.pictureBox1.Location = new System.Drawing.Point(349, 257);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(64, 64);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -278,11 +225,12 @@
             // 
             this.button_openModMenu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button_openModMenu.Enabled = false;
-            this.button_openModMenu.Location = new System.Drawing.Point(178, 227);
+            this.button_openModMenu.Location = new System.Drawing.Point(215, 194);
             this.button_openModMenu.Name = "button_openModMenu";
-            this.button_openModMenu.Size = new System.Drawing.Size(155, 23);
+            this.button_openModMenu.Size = new System.Drawing.Size(198, 23);
             this.button_openModMenu.TabIndex = 19;
             this.button_openModMenu.Text = "Open Mod Menu";
+            this.toolTip1.SetToolTip(this.button_openModMenu, "Open the Mod Menu of this specific game.");
             this.button_openModMenu.UseVisualStyleBackColor = true;
             this.button_openModMenu.Visible = false;
             this.button_openModMenu.Click += new System.EventHandler(this.button_openModMenu_Click);
@@ -292,11 +240,13 @@
             this.button_modCrateMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.button_modCrateMenu.Enabled = false;
-            this.button_modCrateMenu.Location = new System.Drawing.Point(12, 227);
+            this.button_modCrateMenu.Location = new System.Drawing.Point(10, 194);
             this.button_modCrateMenu.Name = "button_modCrateMenu";
-            this.button_modCrateMenu.Size = new System.Drawing.Size(160, 23);
+            this.button_modCrateMenu.Size = new System.Drawing.Size(198, 23);
             this.button_modCrateMenu.TabIndex = 20;
             this.button_modCrateMenu.Text = "Mod Crates";
+            this.toolTip1.SetToolTip(this.button_modCrateMenu, "Manage Mod Crates compatible with this game. They must be in the \"Mods\" folder ne" +
+        "ar this application.");
             this.button_modCrateMenu.UseVisualStyleBackColor = true;
             this.button_modCrateMenu.Visible = false;
             this.button_modCrateMenu.Click += new System.EventHandler(this.button_modCrateMenu_Click);
@@ -305,97 +255,68 @@
             // 
             this.backgroundWorker1.WorkerReportsProgress = true;
             // 
-            // radioButton_FromROM
-            // 
-            this.radioButton_FromROM.AutoSize = true;
-            this.radioButton_FromROM.Location = new System.Drawing.Point(3, 1);
-            this.radioButton_FromROM.Name = "radioButton_FromROM";
-            this.radioButton_FromROM.Size = new System.Drawing.Size(76, 17);
-            this.radioButton_FromROM.TabIndex = 21;
-            this.radioButton_FromROM.TabStop = true;
-            this.radioButton_FromROM.Text = "From ROM";
-            this.radioButton_FromROM.UseVisualStyleBackColor = true;
-            this.radioButton_FromROM.CheckedChanged += new System.EventHandler(this.radioButton_FromROM_CheckedChanged);
-            // 
-            // radioButton_FromFolder
-            // 
-            this.radioButton_FromFolder.AutoSize = true;
-            this.radioButton_FromFolder.Location = new System.Drawing.Point(85, 1);
-            this.radioButton_FromFolder.Name = "radioButton_FromFolder";
-            this.radioButton_FromFolder.Size = new System.Drawing.Size(80, 17);
-            this.radioButton_FromFolder.TabIndex = 22;
-            this.radioButton_FromFolder.TabStop = true;
-            this.radioButton_FromFolder.Text = "From Folder";
-            this.radioButton_FromFolder.UseVisualStyleBackColor = true;
-            this.radioButton_FromFolder.CheckedChanged += new System.EventHandler(this.radioButton_FromFolder_CheckedChanged);
-            // 
-            // radioButton_ToROM
-            // 
-            this.radioButton_ToROM.AutoSize = true;
-            this.radioButton_ToROM.Location = new System.Drawing.Point(3, 2);
-            this.radioButton_ToROM.Name = "radioButton_ToROM";
-            this.radioButton_ToROM.Size = new System.Drawing.Size(66, 17);
-            this.radioButton_ToROM.TabIndex = 24;
-            this.radioButton_ToROM.TabStop = true;
-            this.radioButton_ToROM.Text = "To ROM";
-            this.radioButton_ToROM.UseVisualStyleBackColor = true;
-            this.radioButton_ToROM.CheckedChanged += new System.EventHandler(this.radioButton_ToROM_CheckedChanged);
-            // 
-            // radioButton_ToFolder
-            // 
-            this.radioButton_ToFolder.AutoSize = true;
-            this.radioButton_ToFolder.Location = new System.Drawing.Point(85, 2);
-            this.radioButton_ToFolder.Name = "radioButton_ToFolder";
-            this.radioButton_ToFolder.Size = new System.Drawing.Size(70, 17);
-            this.radioButton_ToFolder.TabIndex = 25;
-            this.radioButton_ToFolder.TabStop = true;
-            this.radioButton_ToFolder.Text = "To Folder";
-            this.radioButton_ToFolder.UseVisualStyleBackColor = true;
-            this.radioButton_ToFolder.CheckedChanged += new System.EventHandler(this.radioButton_ToFolder_CheckedChanged);
-            // 
-            // panel1
-            // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.Controls.Add(this.radioButton_FromROM);
-            this.panel1.Controls.Add(this.radioButton_FromFolder);
-            this.panel1.Controls.Add(this.checkBox1);
-            this.panel1.Location = new System.Drawing.Point(80, 85);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(253, 19);
-            this.panel1.TabIndex = 26;
-            // 
-            // panel2
-            // 
-            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel2.Controls.Add(this.radioButton_ToROM);
-            this.panel2.Controls.Add(this.radioButton_ToFolder);
-            this.panel2.Location = new System.Drawing.Point(80, 132);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(253, 20);
-            this.panel2.TabIndex = 27;
-            // 
             // label7
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(10, 210);
+            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label7.Location = new System.Drawing.Point(10, 148);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(215, 13);
+            this.label7.Size = new System.Drawing.Size(398, 20);
             this.label7.TabIndex = 28;
             this.label7.Text = "Game A of Region B of Console C detected!";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // linkLabel1
             // 
-            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.linkLabel1.Enabled = false;
-            this.linkLabel1.Location = new System.Drawing.Point(90, 256);
+            this.linkLabel1.Location = new System.Drawing.Point(10, 169);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(208, 13);
+            this.linkLabel1.Size = new System.Drawing.Size(403, 18);
             this.linkLabel1.TabIndex = 29;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "API Credit Text which is very long probably";
+            this.linkLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.toolTip1.SetToolTip(this.linkLabel1, "Click this to visit the relevant website of this game\'s mod support.");
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
+            // linkLabel2
+            // 
+            this.linkLabel2.AutoSize = true;
+            this.linkLabel2.Location = new System.Drawing.Point(10, 12);
+            this.linkLabel2.Name = "linkLabel2";
+            this.linkLabel2.Size = new System.Drawing.Size(125, 13);
+            this.linkLabel2.TabIndex = 30;
+            this.linkLabel2.TabStop = true;
+            this.linkLabel2.Text = "Crate Mod Loader v1.0.0";
+            this.toolTip1.SetToolTip(this.linkLabel2, "Click this to visit the website of this tool.");
+            this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
+            // 
+            // checkBox_loadFromFolder
+            // 
+            this.checkBox_loadFromFolder.AutoSize = true;
+            this.checkBox_loadFromFolder.Location = new System.Drawing.Point(11, 92);
+            this.checkBox_loadFromFolder.Name = "checkBox_loadFromFolder";
+            this.checkBox_loadFromFolder.Size = new System.Drawing.Size(97, 17);
+            this.checkBox_loadFromFolder.TabIndex = 31;
+            this.checkBox_loadFromFolder.Text = "Load As Folder";
+            this.toolTip1.SetToolTip(this.checkBox_loadFromFolder, "Load the game files from a folder instead of a ROM.");
+            this.checkBox_loadFromFolder.UseVisualStyleBackColor = true;
+            this.checkBox_loadFromFolder.CheckedChanged += new System.EventHandler(this.checkBox_loadFromFolder_CheckedChanged);
+            // 
+            // checkBox_saveToFolder
+            // 
+            this.checkBox_saveToFolder.AutoSize = true;
+            this.checkBox_saveToFolder.Location = new System.Drawing.Point(11, 120);
+            this.checkBox_saveToFolder.Name = "checkBox_saveToFolder";
+            this.checkBox_saveToFolder.Size = new System.Drawing.Size(99, 17);
+            this.checkBox_saveToFolder.TabIndex = 32;
+            this.checkBox_saveToFolder.Text = "Save To Folder";
+            this.toolTip1.SetToolTip(this.checkBox_saveToFolder, "Copy resulting modded files to a folder. Not supported by PS1/PS2 emulators.");
+            this.checkBox_saveToFolder.UseVisualStyleBackColor = true;
+            this.checkBox_saveToFolder.CheckedChanged += new System.EventHandler(this.checkBox_saveToFolder_CheckedChanged);
             // 
             // ModLoaderForm
             // 
@@ -403,41 +324,34 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(424, 241);
+            this.ClientSize = new System.Drawing.Size(424, 149);
+            this.Controls.Add(this.checkBox_saveToFolder);
+            this.Controls.Add(this.checkBox_loadFromFolder);
+            this.Controls.Add(this.linkLabel2);
             this.Controls.Add(this.linkLabel1);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.panel2);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.button_modCrateMenu);
             this.Controls.Add(this.button_openModMenu);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.label5);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.button3);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.progressBar1);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.checkedListBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(440, 280);
+            this.MinimumSize = new System.Drawing.Size(440, 188);
             this.Name = "ModLoaderForm";
             this.Text = "Crate Mod Loader";
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.ModLoaderForm_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.ModLoaderForm_DragEnter);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -450,34 +364,26 @@
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ProgressBar progressBar1;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Button button_openModMenu;
         private System.Windows.Forms.Button button_modCrateMenu;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private System.Windows.Forms.RadioButton radioButton_FromROM;
-        private System.Windows.Forms.RadioButton radioButton_FromFolder;
-        private System.Windows.Forms.RadioButton radioButton_ToROM;
-        private System.Windows.Forms.RadioButton radioButton_ToFolder;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog2;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.LinkLabel linkLabel2;
+        private System.Windows.Forms.CheckBox checkBox_loadFromFolder;
+        private System.Windows.Forms.CheckBox checkBox_saveToFolder;
     }
 }
 

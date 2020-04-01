@@ -48,7 +48,7 @@ namespace CrateModLoader
         public ProgressBar progressBar;
         public Button startButton;
         public Label text_gameType;
-        public Label text_optionsLabel;
+        public LinkLabel text_titleLabel;
         public LinkLabel text_apiLabel;
         public PictureBox image_gameIcon;
         public CheckedListBox list_modOptions;
@@ -61,10 +61,12 @@ namespace CrateModLoader
         public NumericUpDown textbox_rando_seed;
         public Button button_modMenu;
         public Button button_modCrateMenu;
-        public RadioButton button_radio_FromROM;
-        public RadioButton button_radio_FromFolder;
-        public RadioButton button_radio_ToROM;
-        public RadioButton button_radio_ToFolder;
+        public CheckBox checkbox_fromFolder;
+        public CheckBox checkbox_toFolder;
+        //public RadioButton button_radio_FromROM;
+        //public RadioButton button_radio_FromFolder;
+        //public RadioButton button_radio_ToROM;
+        //public RadioButton button_radio_ToFolder;
         public BackgroundWorker asyncWorker;
         /// <summary> String used to show which version of CML the modded game was built with. </summary>
         public string releaseVersionString = "v1.1.0";
@@ -1071,7 +1073,7 @@ namespace CrateModLoader
                     }
                     else
                     {
-                        processText.Text = "Waiting for input...";
+                        processText.Text = "Waiting for input (1) ...";
                     }
 
                     DeleteTempFiles();
@@ -1099,7 +1101,7 @@ namespace CrateModLoader
                                 text_gameType.Text = "Unknown PSX/PS2/PSP/GCN/WII/XBOX game ROM!";
                                 loadedISO = false;
                                 startButton.Enabled = false;
-                                processText.Text = "Waiting for input...";
+                                processText.Text = "Waiting for input (1) ...";
                                 ResetGameSpecific();
 
                                 return;
@@ -1233,11 +1235,11 @@ namespace CrateModLoader
 
                 if (loadedISO)
                 {
-                    processText.Text = "Waiting for output path...";
+                    processText.Text = "Waiting for output path (2) ...";
                 }
                 else
                 {
-                    processText.Text = "Waiting for input...";
+                    processText.Text = "Waiting for input (1) ...";
 
                     ResetGameSpecific();
                 }
@@ -1392,9 +1394,10 @@ namespace CrateModLoader
             {
                 button_modMenu.Enabled = button_modMenu.Visible = false;
                 button_modCrateMenu.Enabled = button_modCrateMenu.Visible = false;
+                button_randomize.Enabled = button_randomize.Visible = false;
+                textbox_rando_seed.Enabled = textbox_rando_seed.Visible = false;
 
                 text_gameType.Text = "Unsupported game detected.";
-                text_optionsLabel.Text = string.Empty;
                 text_apiLabel.Text = string.Empty;
 
                 image_gameIcon.Visible = false;
@@ -1403,8 +1406,12 @@ namespace CrateModLoader
             {
                 Image gameIcon = Modder.Game.Icon;
 
-                button_modMenu.Enabled = button_modMenu.Visible = Modder.Game.ModMenuEnabled;
+                //button_modMenu.Enabled = button_modMenu.Visible = Modder.Game.ModMenuEnabled;
+                button_modMenu.Visible = true;
+                button_modMenu.Enabled = Modder.Game.ModMenuEnabled;
                 button_modCrateMenu.Enabled = button_modCrateMenu.Visible = Modder.Game.ModCratesSupported;
+                button_randomize.Enabled = button_randomize.Visible = true;
+                textbox_rando_seed.Enabled = textbox_rando_seed.Visible = true;
 
                 text_gameType.Text = string.Format("{0} {1} {2} detected!", Modder.Game.Name, region_mod, cons_mod);
                 if (!string.IsNullOrWhiteSpace(Modder.Game.API_Credit))
@@ -1424,7 +1431,7 @@ namespace CrateModLoader
                     text_apiLabel.Text = "No API available";
                     text_apiLabel.Enabled = false;
                 }
-                text_optionsLabel.Text = "Quick Options";
+
                 if (gameIcon != null)
                 {
                     image_gameIcon.Image = gameIcon;
@@ -1447,7 +1454,7 @@ namespace CrateModLoader
                     list_modOptions.Items.Add("No options available", false);
                 }
             }
-            int height = 320 + (list_modOptions.Items.Count * 15);
+            int height = 306 + (list_modOptions.Items.Count * 15);
             list_modOptions.Visible = list_modOptions.Enabled = list_modOptions.Items.Count > 0;
             if (main_form.Size.Height < height)
             {
@@ -1498,10 +1505,10 @@ namespace CrateModLoader
             textbox_rando_seed.ReadOnly = true;
             button_modMenu.Enabled = false;
             button_modCrateMenu.Enabled = false;
-            button_radio_FromFolder.Enabled = false;
-            button_radio_FromROM.Enabled = false;
-            button_radio_ToFolder.Enabled = false;
-            button_radio_ToROM.Enabled = false;
+            checkbox_fromFolder.Enabled = false;
+            checkbox_toFolder.Enabled = false;
+            text_apiLabel.Enabled = false;
+            text_titleLabel.Enabled = false;
             processActive = true;
         }
         public void EnableInteraction()
@@ -1515,18 +1522,21 @@ namespace CrateModLoader
             textbox_rando_seed.ReadOnly = false;
             button_modMenu.Enabled = true;
             button_modCrateMenu.Enabled = true;
-            button_radio_FromFolder.Enabled = true;
-            button_radio_FromROM.Enabled = true;
-            button_radio_ToFolder.Enabled = true;
-            button_radio_ToROM.Enabled = true;
+            checkbox_fromFolder.Enabled = true;
+            checkbox_toFolder.Enabled = true;
+            if (Modder != null && !string.IsNullOrWhiteSpace(Modder.Game.API_Link))
+            {
+                text_apiLabel.Enabled = true;
+            }
+            text_titleLabel.Enabled = true;
             processActive = false;
         }
 
         public void UpdateInputSetting()
         {
-            inputDirectoryMode = button_radio_FromFolder.Checked;
+            inputDirectoryMode = checkbox_fromFolder.Checked;
 
-            processText.Text = "Waiting for input...";
+            processText.Text = "Waiting for input (1) ...";
             textbox_input_path.Text = "";
             inputISOpath = "";
 
@@ -1534,14 +1544,14 @@ namespace CrateModLoader
         }
         public void UpdateOutputSetting()
         {
-            outputDirectoryMode = button_radio_ToFolder.Checked;
+            outputDirectoryMode = checkbox_toFolder.Checked;
 
             textbox_output_path.Text = "";
             outputISOpath = "";
 
             if (loadedISO)
             {
-                processText.Text = "Waiting for output path...";
+                processText.Text = "Waiting for output path (2) ...";
             }
 
             startButton.Enabled = false;
@@ -1561,13 +1571,15 @@ namespace CrateModLoader
             Modder = null;
             button_modCrateMenu.Text = "Mod Crates";
             ModCrates.ClearModLists();
+            loadedISO = false;
 
             startButton.Enabled = false;
 
             button_modMenu.Enabled = button_modMenu.Visible = false;
             button_modCrateMenu.Enabled = button_modCrateMenu.Visible = false;
+            button_randomize.Enabled = button_randomize.Visible = false;
+            textbox_rando_seed.Enabled = textbox_rando_seed.Visible = false;
 
-            text_optionsLabel.Text = string.Empty;
             text_apiLabel.Text = string.Empty;
             text_apiLabel.LinkVisited = false;
             if (ClearGameText)
@@ -1578,11 +1590,11 @@ namespace CrateModLoader
             image_gameIcon.Visible = false;
 
             list_modOptions.Visible = list_modOptions.Enabled = false;
-            if (main_form.Size.Height > 280)
+            if (main_form.Size.Height > 188)
             {
-                main_form.Size = new Size(main_form.Size.Width, 280);
+                main_form.Size = new Size(main_form.Size.Width, 188);
             }
-            main_form.MinimumSize = new Size(main_form.MinimumSize.Width, 280);
+            main_form.MinimumSize = new Size(main_form.MinimumSize.Width, 188);
         }
     }
 }

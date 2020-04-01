@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.IO;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace CrateModLoader
 {
@@ -10,17 +11,16 @@ namespace CrateModLoader
         public ModLoaderForm()
         {
             InitializeComponent();
-            label4.Text = "Crate Mod Loader " + Program.ModProgram.releaseVersionString;
-            label5.Text = "";
+            linkLabel2.Text = "Crate Mod Loader " + Program.ModProgram.releaseVersionString;
             label7.Text = "";
             linkLabel1.Text = "";
-            label6.Text = "Waiting for input..";
+            label6.Text = "Waiting for input (1) ...";
             button3.Enabled = false;
             Program.ModProgram.processText = label6;
             Program.ModProgram.progressBar = progressBar1;
             Program.ModProgram.startButton = button3;
             Program.ModProgram.text_gameType = label7;
-            Program.ModProgram.text_optionsLabel = label5;
+            Program.ModProgram.text_titleLabel = linkLabel2;
             Program.ModProgram.text_apiLabel = linkLabel1;
             Program.ModProgram.list_modOptions = checkedListBox1;
             Program.ModProgram.main_form = this;
@@ -33,15 +33,9 @@ namespace CrateModLoader
             Program.ModProgram.textbox_rando_seed = numericUpDown1;
             Program.ModProgram.button_modMenu = button_openModMenu;
             Program.ModProgram.button_modCrateMenu = button_modCrateMenu;
-            Program.ModProgram.button_radio_FromFolder = radioButton_FromFolder;
-            Program.ModProgram.button_radio_FromROM = radioButton_FromROM;
-            Program.ModProgram.button_radio_ToFolder = radioButton_ToFolder;
-            Program.ModProgram.button_radio_ToROM = radioButton_ToROM;
+            Program.ModProgram.checkbox_fromFolder = checkBox_loadFromFolder;
+            Program.ModProgram.checkbox_toFolder = checkBox_saveToFolder;
             Program.ModProgram.asyncWorker = backgroundWorker1;
-            radioButton_FromROM.Checked = true;
-            radioButton_ToROM.Checked = true;
-
-            toolTip1.SetToolTip(radioButton_ToFolder, "Not supported by PS1/PS2 software");
 
             progressBar1.Minimum = 0;
             progressBar1.Maximum = 100;
@@ -194,26 +188,6 @@ namespace CrateModLoader
             }
         }
 
-        private void radioButton_FromROM_CheckedChanged(object sender, EventArgs e)
-        {
-            Program.ModProgram.UpdateInputSetting();
-        }
-
-        private void radioButton_FromFolder_CheckedChanged(object sender, EventArgs e)
-        {
-            Program.ModProgram.UpdateInputSetting();
-        }
-
-        private void radioButton_ToROM_CheckedChanged(object sender, EventArgs e)
-        {
-            Program.ModProgram.UpdateOutputSetting();
-        }
-
-        private void radioButton_ToFolder_CheckedChanged(object sender, EventArgs e)
-        {
-            Program.ModProgram.UpdateOutputSetting();
-        }
-
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             try
@@ -238,16 +212,14 @@ namespace CrateModLoader
                         if (Directory.Exists(fileList[0]))
                         {
                             Program.ModProgram.inputDirectoryMode = true;
-                            radioButton_FromFolder.Checked = true;
-                            radioButton_FromROM.Checked = false;
+                            checkBox_loadFromFolder.Checked = true;
                             Program.ModProgram.UpdateInputSetting();
                             Program.ModProgram.inputISOpath = fileList[0] + @"\";
                         }
                         else
                         {
                             Program.ModProgram.inputDirectoryMode = false;
-                            radioButton_FromFolder.Checked = false;
-                            radioButton_FromROM.Checked = true;
+                            checkBox_loadFromFolder.Checked = false;
                             Program.ModProgram.UpdateInputSetting();
                             Program.ModProgram.inputISOpath = fileList[0];
                         }
@@ -276,6 +248,22 @@ namespace CrateModLoader
                     e.Effect = DragDropEffects.None;
                 }
             }
+        }
+
+        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            linkLabel2.LinkVisited = true;
+            Process.Start("https://github.com/TheBetaM/CrateModLoader");
+        }
+
+        private void checkBox_loadFromFolder_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.ModProgram.UpdateInputSetting();
+        }
+
+        private void checkBox_saveToFolder_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.ModProgram.UpdateOutputSetting();
         }
     }
 }
