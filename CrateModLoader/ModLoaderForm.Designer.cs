@@ -94,7 +94,7 @@
             this.textBox1.ReadOnly = true;
             this.textBox1.Size = new System.Drawing.Size(219, 20);
             this.textBox1.TabIndex = 1;
-            this.textBox1.Text = "1. Click \"Browse\" to select the ROM.";
+            this.textBox1.Text = "1. Click \"Browse\" to select the game ROM.";
             // 
             // button1
             // 

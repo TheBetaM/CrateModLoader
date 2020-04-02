@@ -812,6 +812,7 @@ namespace CrateModLoader
         {
             Modder = null;
             ModCrates.ClearModLists();
+            bool ConsoleDetected = false;
 
             if (inputDirectoryMode)
             {
@@ -824,12 +825,15 @@ namespace CrateModLoader
                         using (StreamReader sr = new StreamReader(inputISOpath + @"SYSTEM.CNF"))
                         {
                             string titleID = sr.ReadLine();
-                            SetGameType(titleID, ConsoleMode.PS2);
-                            if (Modder != null)
+                            if (titleID.Substring(0,5) == "BOOT2")
                             {
-                                foreach (var rc in Modder.Game.RegionID_PS2)
-                                    if (rc.Region == targetRegion)
-                                        ProductCode = rc.CodeName;
+                                SetGameType(titleID, ConsoleMode.PS2);
+                                if (Modder != null)
+                                {
+                                    foreach (var rc in Modder.Game.RegionID_PS2)
+                                        if (rc.Region == targetRegion)
+                                            ProductCode = rc.CodeName;
+                                }
                             }
                             else
                             {
@@ -841,6 +845,7 @@ namespace CrateModLoader
                                             ProductCode = rc.CodeName;
                                 }
                             }
+                            ConsoleDetected = true;
                         }
                     }
                     else if (File.Exists(inputISOpath + @"UMD_DATA.BIN"))
@@ -853,6 +858,7 @@ namespace CrateModLoader
                             {
                                 ProductCode = titleID;
                             }
+                            ConsoleDetected = true;
                         }
                     }
                     else if (File.Exists(inputISOpath + @"default.xbe"))
@@ -890,6 +896,7 @@ namespace CrateModLoader
                             */
 
                             SetGameType(TitleName, ConsoleMode.XBOX, CertRegion);
+                            ConsoleDetected = true;
                         }
                     }
                     else if (File.Exists(inputISOpath + @"sys/main.dol") && File.Exists(inputISOpath + @"sys/boot.bin"))
@@ -912,8 +919,8 @@ namespace CrateModLoader
                                     ProductCode = titleID;
                                 }
                             }
+                            ConsoleDetected = true;
                         }
-
                     }
                     else if (Directory.GetFiles(inputISOpath, "*.exe").Length > 0 || Directory.GetFiles(inputISOpath, "*.EXE").Length > 0)
                     {
@@ -932,6 +939,7 @@ namespace CrateModLoader
                                     {
                                         ProductCode = ExeFiles[i];
                                     }
+                                    ConsoleDetected = true;
                                 }
                             }
                         }
@@ -947,6 +955,7 @@ namespace CrateModLoader
                                     {
                                         ProductCode = ExeFiles[i];
                                     }
+                                    ConsoleDetected = true;
                                 }
                             }
                         }
@@ -962,7 +971,7 @@ namespace CrateModLoader
                 {
                     text_gameType.Text = "Could not open the game directory!";
                     loadedISO = false;
-                    ResetGameSpecific();
+                    ResetGameSpecific(false, true);
                     return;
                 }
             }
@@ -1008,6 +1017,7 @@ namespace CrateModLoader
                                     ProductCode = titleID;
                                 }
                             }
+                            ConsoleDetected = true;
                         }
                     }
                 }
@@ -1069,6 +1079,7 @@ namespace CrateModLoader
                             */
 
                             SetGameType(TitleName, ConsoleMode.XBOX, CertRegion);
+                            ConsoleDetected = true;
                         }
                     }
                     else
@@ -1102,7 +1113,7 @@ namespace CrateModLoader
                                 loadedISO = false;
                                 startButton.Enabled = false;
                                 processText.Text = "Waiting for input (1) ...";
-                                ResetGameSpecific();
+                                ResetGameSpecific(false, true);
 
                                 return;
                             }
@@ -1115,12 +1126,15 @@ namespace CrateModLoader
                                 using (StreamReader sr = new StreamReader(cd.OpenFile(@"SYSTEM.CNF", FileMode.Open)))
                                 {
                                     string titleID = sr.ReadLine();
-                                    SetGameType(titleID, ConsoleMode.PS2);
-                                    if (Modder != null)
+                                    if (titleID.Substring(0, 5) == "BOOT2")
                                     {
-                                        foreach (var rc in Modder.Game.RegionID_PS2)
-                                            if (rc.Region == targetRegion)
-                                                ProductCode = rc.CodeName;
+                                        SetGameType(titleID, ConsoleMode.PS2);
+                                        if (Modder != null)
+                                        {
+                                            foreach (var rc in Modder.Game.RegionID_PS2)
+                                                if (rc.Region == targetRegion)
+                                                    ProductCode = rc.CodeName;
+                                        }
                                     }
                                     else
                                     {
@@ -1132,6 +1146,7 @@ namespace CrateModLoader
                                                     ProductCode = rc.CodeName;
                                         }
                                     }
+                                    ConsoleDetected = true;
                                 }
                             }
                             else if (cd.FileExists(@"UMD_DATA.BIN"))
@@ -1144,6 +1159,7 @@ namespace CrateModLoader
                                     {
                                         ProductCode = titleID;
                                     }
+                                    ConsoleDetected = true;
                                 }
                             }
                             else if (cd.FileExists(@"default.xbe"))
@@ -1181,6 +1197,7 @@ namespace CrateModLoader
                                     */
 
                                     SetGameType(TitleName, ConsoleMode.XBOX, CertRegion);
+                                    ConsoleDetected = true;
                                 }
                             }
                             else
@@ -1202,13 +1219,13 @@ namespace CrateModLoader
                     {
                         text_gameType.Text = "Could not open the game ROM!";
                         loadedISO = false;
-                        ResetGameSpecific();
+                        ResetGameSpecific(false, true);
                         return;
                     }
                 }
             }
 
-            if (Modder == null)
+            if (!ConsoleDetected)
             {
                 if (OpenROM_Selection == OpenROM_SelectionType.PSXPS2PSPGCNWIIXBOX)
                 {
@@ -1224,6 +1241,7 @@ namespace CrateModLoader
             {
                 loadedISO = true;
             }
+
             if (loadedISO && outputPathSet)
             {
                 startButton.Enabled = true;
@@ -1241,7 +1259,7 @@ namespace CrateModLoader
                 {
                     processText.Text = "Waiting for input (1) ...";
 
-                    ResetGameSpecific();
+                    ResetGameSpecific(false, true);
                 }
             }
         }
@@ -1252,6 +1270,7 @@ namespace CrateModLoader
             Modder = null;
             button_modCrateMenu.Text = "Mod Crates";
             ModCrates.ClearModLists();
+
             Assembly assembly = Assembly.GetExecutingAssembly();
             foreach (Type type in assembly.GetTypes())
             {
@@ -1392,12 +1411,13 @@ namespace CrateModLoader
             list_modOptions.Items.Clear();
             if (Modder == null)
             {
-                button_modMenu.Enabled = button_modMenu.Visible = false;
-                button_modCrateMenu.Enabled = button_modCrateMenu.Visible = false;
+                button_modMenu.Visible = true;
+                button_modMenu.Enabled = false;
+                button_modCrateMenu.Enabled = button_modCrateMenu.Visible = true;
                 button_randomize.Enabled = button_randomize.Visible = false;
                 textbox_rando_seed.Enabled = textbox_rando_seed.Visible = false;
 
-                text_gameType.Text = "Unsupported game detected.";
+                text_gameType.Text = "Unsupported " + cons_mod + " game detected.";
                 text_apiLabel.Text = string.Empty;
 
                 image_gameIcon.Visible = false;
@@ -1540,7 +1560,7 @@ namespace CrateModLoader
             textbox_input_path.Text = "";
             inputISOpath = "";
 
-            ResetGameSpecific(true);
+            ResetGameSpecific(true, false);
         }
         public void UpdateOutputSetting()
         {
@@ -1566,7 +1586,7 @@ namespace CrateModLoader
             }
         }
 
-        void ResetGameSpecific(bool ClearGameText = false)
+        void ResetGameSpecific(bool ClearGameText = false, bool ExtendedWindow = false)
         {
             Modder = null;
             button_modCrateMenu.Text = "Mod Crates";
@@ -1590,11 +1610,18 @@ namespace CrateModLoader
             image_gameIcon.Visible = false;
 
             list_modOptions.Visible = list_modOptions.Enabled = false;
-            if (main_form.Size.Height > 188)
+
+            int Height = 188;
+            if (ExtendedWindow)
             {
-                main_form.Size = new Size(main_form.Size.Width, 188);
+                Height = 220;
             }
-            main_form.MinimumSize = new Size(main_form.MinimumSize.Width, 188);
+
+            if (main_form.Size.Height > Height)
+            {
+                main_form.Size = new Size(main_form.Size.Width, Height);
+            }
+            main_form.MinimumSize = new Size(main_form.MinimumSize.Width, Height);
         }
     }
 }

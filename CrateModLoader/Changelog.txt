@@ -5,6 +5,7 @@ General:
 - Added API links where available
 - Merged ROM checking into one option to prevent confusion
 - Added drag & drop support (ROMs and folders)
+- Unsupported games now display a different message than unknown ROMs.
 
 New games supported:
 - Rayman 3: Hoodlum Havoc
