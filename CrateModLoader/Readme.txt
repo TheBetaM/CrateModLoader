@@ -1,10 +1,21 @@
-Crate Mod Loader 1.1.0
+Crate Mod Loader v1.1.0
 The all-in-one Randomizer and Mod Loader for console games.  
 It detects, extracts, modifies and rebuilds disc image files and directories in an easy to setup way.  
 
+Website: https://github.com/TheBetaM/CrateModLoader/
+
 Check the included Games.txt for a list of supported games and features.  
 
-Website: https://github.com/TheBetaM/CrateModLoader/
+Creating Mod Crates
+
+Place Mod Crates in the "Mods" folder for them to appear in the list.
+An example mod can be found in the "Mods" folder.
+Mod Crates can be folders or standard .zip files with these contents: (only ModCrateInfo.txt is mandatory for them to function, the rest is optional)
+- ModCrateInfo.txt with the details of the mod
+- ModCrateSettings.txt game-specific settings that can't be changed with modded files
+- ModCrateIcon.png icon of the mod displayed in the program
+- "layer0" folder - any files and folders inside will replace or add to the base extracted contents of the game ROM
+- "layer1" "layer2" etc. folders - supported games allow for replacement and/or addition of files in different game archives (check compatibility in Games.txt)
 
 Contributors
 
