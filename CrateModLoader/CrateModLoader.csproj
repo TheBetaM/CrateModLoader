@@ -222,6 +222,7 @@
     <Compile Include="GameSpecific\CTTR\Pure3D\Types.cs" />
     <Compile Include="GameSpecific\CTTR\Pure3D\Util.cs" />
     <Compile Include="GameSpecific\CTTR\RCF.cs" />
+    <Compile Include="GameSpecific\CTTR\RCF_Manager.cs" />
     <Compile Include="GameSpecific\MoM\Modder_MoM.cs" />
     <Compile Include="GameSpecific\Rayman3\Modder_Rayman3.cs" />
     <Compile Include="GameSpecific\Rayman3\TBFtool\BitmapHelper.cs" />

@@ -25,7 +25,9 @@ namespace CrateModLoader.GameSpecific.Twins
             PAL,
             NTSCU,
             NTSCU2,
-            NTSCJ
+            NTSCJ,
+            XBOX_NTSC,
+            XBOX_PAL
         }
 
         private static readonly ExecutablePatchInfo[] executables = new ExecutablePatchInfo[]
@@ -33,51 +35,66 @@ namespace CrateModLoader.GameSpecific.Twins
             new ExecutablePatchInfo() { LevelOff = 0x1F6708, LevelSize = 0x17, ArchiveOff = 0x1ED410, ArchiveSize = 0x7 },
             new ExecutablePatchInfo() { LevelOff = 0x1F5E28, LevelSize = 0x17, ArchiveOff = 0x1ECB10, ArchiveSize = 0x7 },
             new ExecutablePatchInfo() { LevelOff = 0x1F63A8, LevelSize = 0x17, ArchiveOff = 0x1ED090, ArchiveSize = 0x7 },
-            new ExecutablePatchInfo() { LevelOff = 0x1F6648, LevelSize = 0x17, ArchiveOff = 0x1ED310, ArchiveSize = 0x7 }
+            new ExecutablePatchInfo() { LevelOff = 0x1F6648, LevelSize = 0x17, ArchiveOff = 0x1ED310, ArchiveSize = 0x7 },
+            new ExecutablePatchInfo() { LevelOff = 0x368870, LevelSize = 0x17, ArchiveOff = 0x1ED310, ArchiveSize = 0x7 },
+            new ExecutablePatchInfo() { LevelOff = 0x368858, LevelSize = 0x17, ArchiveOff = 0x1ED310, ArchiveSize = 0x7 },
         };
 
         public static void PatchEXE(string StartingChunk = @"Levels\Earth\Hub\Beach")
         {
             string filePath = Path.Combine(Program.ModProgram.extractedPath, Program.ModProgram.PS2_executable_name);
 
+            ExecutablePatchInfo executable;
             if (Program.ModProgram.isoType == ConsoleMode.XBOX)
             {
-                return;
-            }
-            ExecutablePatchInfo executable;
-
-            if (Program.ModProgram.targetRegion == RegionType.NTSC_U)
-            {
-                using (BinaryReader reader = new BinaryReader(new FileStream(filePath, FileMode.Open, FileAccess.Read)))
+                if (Program.ModProgram.targetRegion == RegionType.PAL)
                 {
-                    reader.BaseStream.Position = executables[(int)ExecutableIndex.NTSCU].ArchiveOff;
-                    char ch = reader.ReadChar();
-
-                    if (ch == 'C')
-                    {
-                        executable = executables[(int)ExecutableIndex.NTSCU];
-                    }
-                    else
-                    {
-                        executable = executables[(int)ExecutableIndex.NTSCU2];
-                    }
+                    executable = executables[(int)ExecutableIndex.XBOX_PAL];
                 }
-            }
-            else if (Program.ModProgram.targetRegion == RegionType.PAL)
-            {
-                executable = executables[(int)ExecutableIndex.PAL];
-            }
-            else if (Program.ModProgram.targetRegion == RegionType.NTSC_J)
-            {
-                executable = executables[(int)ExecutableIndex.NTSCJ];
+                else if (Program.ModProgram.targetRegion == RegionType.NTSC_U)
+                {
+                    executable = executables[(int)ExecutableIndex.XBOX_NTSC];
+                }
+                else
+                {
+                    return;
+                }
             }
             else
             {
-                return;
+                if (Program.ModProgram.targetRegion == RegionType.NTSC_U)
+                {
+                    using (BinaryReader reader = new BinaryReader(new FileStream(filePath, FileMode.Open, FileAccess.Read)))
+                    {
+                        reader.BaseStream.Position = executables[(int)ExecutableIndex.NTSCU].ArchiveOff;
+                        char ch = reader.ReadChar();
+
+                        if (ch == 'C')
+                        {
+                            executable = executables[(int)ExecutableIndex.NTSCU];
+                        }
+                        else
+                        {
+                            executable = executables[(int)ExecutableIndex.NTSCU2];
+                        }
+                    }
+                }
+                else if (Program.ModProgram.targetRegion == RegionType.PAL)
+                {
+                    executable = executables[(int)ExecutableIndex.PAL];
+                }
+                else if (Program.ModProgram.targetRegion == RegionType.NTSC_J)
+                {
+                    executable = executables[(int)ExecutableIndex.NTSCJ];
+                }
+                else
+                {
+                    return;
+                }
             }
 
             BinaryWriter writer = new BinaryWriter(new FileStream(filePath, FileMode.Open, FileAccess.Write));
-            if (ModCrates.HasSetting("ArchiveName"))
+            if (ModCrates.HasSetting("ArchiveName") && Program.ModProgram.isoType != ConsoleMode.XBOX)
             {
                 string archiveName = ModCrates.GetSetting("ArchiveName");
                 writer.BaseStream.Position = executable.ArchiveOff;

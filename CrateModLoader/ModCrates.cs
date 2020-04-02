@@ -439,6 +439,9 @@ namespace CrateModLoader
         }
 
 
+        /// <summary>
+        /// Installs all active mods of the specified layer in the specified path
+        /// </summary>
         public static void InstallLayerMods(string basePath, int layer)
         {
             if (ModsActiveAmount <= 0)
@@ -498,6 +501,25 @@ namespace CrateModLoader
                 }
                 Recursive_CopyFiles(basePath, dir, dest, buffer);
             }
+        }
+
+        /// <summary>
+        /// For checking if a layer is modded
+        /// </summary>
+        public static bool HasLayerModsActive(int layer)
+        {
+            if (ModsActiveAmount <= 0)
+            {
+                return false;
+            }
+            for (int i = 0; i < SupportedMods.Count; i++)
+            {
+                if (SupportedMods[i].IsActivated && SupportedMods[i].LayersModded[layer])
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
     }

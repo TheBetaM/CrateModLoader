@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using RadcoreCementFile;
 using Pure3D;
 using Pure3D.Chunks;
 using CrateModLoader.GameSpecific.CTTR;
 //RCF API by NeoKesha
 //Pure3D API by BetaM (based on https://github.com/handsomematt/Pure3D)
 //Version number, seed and options are displayed in the Credits accessible from the main menu.
+/* Mod Layers:
+ * 1: All .RCF file contents (only replace files)
+ */
 
 namespace CrateModLoader
 {
@@ -384,6 +386,8 @@ namespace CrateModLoader
                 basePath = AppDomain.CurrentDomain.BaseDirectory + @"temp\P-" + Program.ModProgram.ProductCode.Substring(0, 4) + @"\";
             }
 
+            RCF_Manager.cachedRCF = null;
+
             randState = new Random(Program.ModProgram.randoSeed);
 
 
@@ -574,70 +578,48 @@ namespace CrateModLoader
 
         void Modify_RCF(string path)
         {
-            RCF rcf_default = new RCF();
-            rcf_default.OpenRCF(basePath + path);
             string path_extr = basePath + @"cml_extr\";
-            Directory.CreateDirectory(path_extr);
-            rcf_default.ExtractRCF(path_extr);
+            RCF_Manager.Extract(basePath + path);
+
+            ModCrates.InstallLayerMods(path_extr, 1);
 
             if (Options[RandomizeCharacters].Enabled)
             {
-                Randomize_Characters(path_extr, rcf_default, randChars);
+                Randomize_Characters(path_extr, randChars);
             }
             /*
             if (Options[RandomizeHubs].Enabled)
             {
-                Randomize_Hubs(path_extr, rcf_default, randHubs, randGems);
+                Randomize_Hubs(path_extr, randHubs, randGems);
             }
             */
             if (Options[RandomizeTracks].Enabled)
             {
-                Randomize_Tracks(path_extr, rcf_default, randTracks);
+                Randomize_Tracks(path_extr, randTracks);
             }
             if (Options[RandomizeMinigames].Enabled)
             {
-                Randomize_Minigames(path_extr, rcf_default, randMinigames);
+                Randomize_Minigames(path_extr, randMinigames);
             }
             if (Options[RandomizeRaceLaps].Enabled)
             {
-                Randomize_Race_Laps(path_extr, rcf_default, randLaps);
+                Randomize_Race_Laps(path_extr, randLaps);
             }
             /*
             if (Options[RandomizeBattleKOs].Enabled)
             {
-                Randomize_Battle_KOs(path_extr, rcf_default, randKOs);
+                Randomize_Battle_KOs(path_extr, randKOs);
             }
             */
             if (Options[PreventSequenceBreaks].Enabled)
             {
-                Mod_PreventSequenceBreaks(path_extr, rcf_default);
+                Mod_PreventSequenceBreaks(path_extr);
             }
 
-            rcf_default.Recalculate();
-            rcf_default.Pack(basePath + path + "1");
-
-
-            // Extraction cleanup
-            System.IO.File.Delete(basePath + path);
-            System.IO.File.Move(basePath + path + "1", basePath + path);
-            if (Directory.Exists(path_extr))
-            {
-                DirectoryInfo di = new DirectoryInfo(path_extr);
-
-                foreach (FileInfo file in di.EnumerateFiles())
-                {
-                    file.Delete();
-                }
-                foreach (DirectoryInfo dir in di.EnumerateDirectories())
-                {
-                    dir.Delete(true);
-                }
-
-                Directory.Delete(path_extr);
-            }
+            RCF_Manager.Pack(basePath + path);
         }
 
-        void Randomize_Characters(string path_extr, RCF rcf_file, List<int> randChars)
+        void Randomize_Characters(string path_extr, List<int> randChars)
         {
             /* TODO later, because it requires mission logic to unlock Crash/Cortex
             if (System.IO.File.Exists(path_extr + @"design\permanent\genericobjectives.god"))
@@ -671,14 +653,6 @@ namespace CrateModLoader
 
                 System.IO.File.WriteAllLines(path_extr + @"design\permanent\genericobjectives.god", startup_lines);
 
-                for (int i = 0; i < rcf_file.Header.T2File.Length; i++)
-                {
-                    if (rcf_file.Header.T2File[i].Name == @"design\permanent\genericobjectives.god")
-                    {
-                        rcf_file.Header.T2File[i].External = path_extr + @"design\permanent\genericobjectives.god";
-                        break;
-                    }
-                }
             }
             */
             if (randChars[0] != (int)CTTR_Data.DriverID.Crash && System.IO.File.Exists(path_extr + @"design\permanent\skins.god"))
@@ -717,14 +691,6 @@ namespace CrateModLoader
 
                 System.IO.File.WriteAllLines(path_extr + @"design\permanent\skins.god", skins_lines);
 
-                for (int i = 0; i < rcf_file.Header.T2File.Length; i++)
-                {
-                    if (rcf_file.Header.T2File[i].Name == @"design\permanent\skins.god")
-                    {
-                        rcf_file.Header.T2File[i].External = path_extr + @"design\permanent\skins.god";
-                        break;
-                    }
-                }
             }
             
             // Swapping idle animation for platforming character
@@ -776,14 +742,6 @@ namespace CrateModLoader
                     System.IO.File.Delete(path_extr + @"art\animation\crash_onfoot_animations.p3d");
                     System.IO.File.Move(path_extr + @"art\animation\crash_onfoot_animations1.p3d", path_extr + @"art\animation\crash_onfoot_animations.p3d");
 
-                    for (int i = 0; i < rcf_file.Header.T2File.Length; i++)
-                    {
-                        if (rcf_file.Header.T2File[i].Name == @"art\animation\crash_onfoot_animations.p3d")
-                        {
-                            rcf_file.Header.T2File[i].External = path_extr + @"art\animation\crash_onfoot_animations.p3d";
-                            break;
-                        }
-                    }
                 }
                 if (System.IO.File.Exists(path_extr + @"art\animation\crash_onfoot_midway_animations.p3d"))
                 {
@@ -800,19 +758,11 @@ namespace CrateModLoader
                     System.IO.File.Delete(path_extr + @"art\animation\crash_onfoot_midway_animations.p3d");
                     System.IO.File.Move(path_extr + @"art\animation\crash_onfoot_midway_animations1.p3d", path_extr + @"art\animation\crash_onfoot_midway_animations.p3d");
 
-                    for (int i = 0; i < rcf_file.Header.T2File.Length; i++)
-                    {
-                        if (rcf_file.Header.T2File[i].Name == @"art\animation\crash_onfoot_midway_animations.p3d")
-                        {
-                            rcf_file.Header.T2File[i].External = path_extr + @"art\animation\crash_onfoot_midway_animations.p3d";
-                            break;
-                        }
-                    }
                 }
             }
 
         }
-        void Randomize_Hubs(string path_extr, RCF rcf_file, List<int> randHubs, List<int> randGems)
+        void Randomize_Hubs(string path_extr, List<int> randHubs, List<int> randGems)
         {
             if (System.IO.File.Exists(path_extr + @"design\permanent\genericobjectives.god"))
             {
@@ -851,14 +801,6 @@ namespace CrateModLoader
 
                 System.IO.File.WriteAllLines(path_extr + @"design\permanent\genericobjectives.god", objective_lines);
 
-                for (int i = 0; i < rcf_file.Header.T2File.Length; i++)
-                {
-                    if (rcf_file.Header.T2File[i].Name == @"design\permanent\genericobjectives.god")
-                    {
-                        rcf_file.Header.T2File[i].External = path_extr + @"design\permanent\genericobjectives.god";
-                        break;
-                    }
-                }
             }
             /* TODO: Gem Key randomization?
             for (int obj = 0; obj < CTTR_Data.MissionObjectiveTypes.Length; obj++)
@@ -927,19 +869,11 @@ namespace CrateModLoader
 
                     System.IO.File.WriteAllLines(path_extr + @"design\permanent\missionobjectives_" + CTTR_Data.MissionObjectiveTypes[obj] + ".god", objective_lines);
 
-                    for (int i = 0; i < rcf_file.Header.T2File.Length; i++)
-                    {
-                        if (rcf_file.Header.T2File[i].Name == @"design\permanent\missionobjectives_" + CTTR_Data.MissionObjectiveTypes[obj] + ".god")
-                        {
-                            rcf_file.Header.T2File[i].External = path_extr + @"design\permanent\missionobjectives_" + CTTR_Data.MissionObjectiveTypes[obj] + ".god";
-                            break;
-                        }
-                    }
                 }
             }
             */
         }
-        void Randomize_Tracks(string path_extr, RCF rcf_file, List<int> randTracks)
+        void Randomize_Tracks(string path_extr, List<int> randTracks)
         {
             if (System.IO.File.Exists(path_extr + @"design\permanent\genericobjectives.god"))
             {
@@ -990,14 +924,6 @@ namespace CrateModLoader
 
                 System.IO.File.WriteAllLines(path_extr + @"design\permanent\genericobjectives.god", objective_lines);
 
-                for (int i = 0; i < rcf_file.Header.T2File.Length; i++)
-                {
-                    if (rcf_file.Header.T2File[i].Name == @"design\permanent\genericobjectives.god")
-                    {
-                        rcf_file.Header.T2File[i].External = path_extr + @"design\permanent\genericobjectives.god";
-                        break;
-                    }
-                }
             }
             for (int obj = 0; obj < CTTR_Data.MissionObjectiveTypes.Length; obj++)
             {
@@ -1032,18 +958,10 @@ namespace CrateModLoader
 
                     System.IO.File.WriteAllLines(path_extr + @"design\permanent\missionobjectives_" + CTTR_Data.MissionObjectiveTypes[obj] + ".god", objective_lines);
 
-                    for (int i = 0; i < rcf_file.Header.T2File.Length; i++)
-                    {
-                        if (rcf_file.Header.T2File[i].Name == @"design\permanent\missionobjectives_" + CTTR_Data.MissionObjectiveTypes[obj] + ".god")
-                        {
-                            rcf_file.Header.T2File[i].External = path_extr + @"design\permanent\missionobjectives_" + CTTR_Data.MissionObjectiveTypes[obj] + ".god";
-                            break;
-                        }
-                    }
                 }
             }
         }
-        void Randomize_Minigames(string path_extr, RCF rcf_file, List<int> randMinigames)
+        void Randomize_Minigames(string path_extr, List<int> randMinigames)
         {
             if (System.IO.File.Exists(path_extr + @"design\permanent\genericobjectives.god"))
             {
@@ -1075,17 +993,9 @@ namespace CrateModLoader
 
                 System.IO.File.WriteAllLines(path_extr + @"design\permanent\genericobjectives.god", objective_lines);
 
-                for (int i = 0; i < rcf_file.Header.T2File.Length; i++)
-                {
-                    if (rcf_file.Header.T2File[i].Name == @"design\permanent\genericobjectives.god")
-                    {
-                        rcf_file.Header.T2File[i].External = path_extr + @"design\permanent\genericobjectives.god";
-                        break;
-                    }
-                }
             }
         }
-        void Randomize_Race_Laps(string path_extr, RCF rcf_file, List<int> randLaps)
+        void Randomize_Race_Laps(string path_extr, List<int> randLaps)
         {
             if (System.IO.File.Exists(path_extr + @"design\startup.god"))
             {
@@ -1129,17 +1039,9 @@ namespace CrateModLoader
 
                 System.IO.File.WriteAllLines(path_extr + @"design\startup.god", startup_lines);
 
-                for (int i = 0; i < rcf_file.Header.T2File.Length; i++)
-                {
-                    if (rcf_file.Header.T2File[i].Name == @"design\startup.god")
-                    {
-                        rcf_file.Header.T2File[i].External = path_extr + @"design\startup.god";
-                        break;
-                    }
-                }
             }
         }
-        void Randomize_Battle_KOs(string path_extr, RCF rcf_file, List<int> randKOs)
+        void Randomize_Battle_KOs(string path_extr, List<int> randKOs)
         {
             if (System.IO.File.Exists(path_extr + @"design\startup.god"))
             {
@@ -1172,18 +1074,10 @@ namespace CrateModLoader
 
                 System.IO.File.WriteAllLines(path_extr + @"design\startup.god", startup_lines);
 
-                for (int i = 0; i < rcf_file.Header.T2File.Length; i++)
-                {
-                    if (rcf_file.Header.T2File[i].Name == @"design\startup.god")
-                    {
-                        rcf_file.Header.T2File[i].External = path_extr + @"design\startup.god";
-                        break;
-                    }
-                }
             }
         }
 
-        void Mod_PreventSequenceBreaks(string path_extr, RCF rcf_file)
+        void Mod_PreventSequenceBreaks(string path_extr)
         {
             if (System.IO.File.Exists(path_extr + @"design\permanent\genericobjectives.god"))
             {
@@ -1230,14 +1124,6 @@ namespace CrateModLoader
 
                 System.IO.File.WriteAllLines(path_extr + @"design\permanent\genericobjectives.god", objective_lines);
 
-                for (int i = 0; i < rcf_file.Header.T2File.Length; i++)
-                {
-                    if (rcf_file.Header.T2File[i].Name == @"design\permanent\genericobjectives.god")
-                    {
-                        rcf_file.Header.T2File[i].External = path_extr + @"design\permanent\genericobjectives.god";
-                        break;
-                    }
-                }
             }
             if (System.IO.File.Exists(path_extr + @"design\permanent\missionobjectives_fairy.god"))
             {
@@ -1269,25 +1155,15 @@ namespace CrateModLoader
 
                 System.IO.File.WriteAllLines(path_extr + @"design\permanent\missionobjectives_fairy.god", objective_lines);
 
-                for (int i = 0; i < rcf_file.Header.T2File.Length; i++)
-                {
-                    if (rcf_file.Header.T2File[i].Name == @"design\permanent\missionobjectives_fairy.god")
-                    {
-                        rcf_file.Header.T2File[i].External = path_extr + @"design\permanent\missionobjectives_fairy.god";
-                        break;
-                    }
-                }
             }
         }
 
         void Mod_EditCredits()
         {
-            RCF rcf_frontend = new RCF();
-            rcf_frontend.OpenRCF(basePath + path_RCF_frontend);
-            //Warning: The RCF API only likes paths with \ backslashes
             string path_extr = basePath + @"cml_extr\";
-            Directory.CreateDirectory(path_extr);
-            rcf_frontend.ExtractRCF(path_extr);
+            RCF_Manager.Extract(basePath + path_RCF_frontend);
+
+            ModCrates.InstallLayerMods(path_extr, 1);
 
             string[] frontend_lines = System.IO.File.ReadAllLines(path_extr + @"design\levels\common\frontend.god");
 
@@ -1306,38 +1182,7 @@ namespace CrateModLoader
 
             System.IO.File.WriteAllLines(path_extr + @"design\levels\common\frontend.god", frontend_lines);
 
-            for (int i = 0; i < rcf_frontend.Header.T2File.Length; i++)
-            {
-                if (rcf_frontend.Header.T2File[i].Name == @"design\levels\common\frontend.god")
-                {
-                    rcf_frontend.Header.T2File[i].External = path_extr + @"design\levels\common\frontend.god";
-                    //Console.WriteLine("external " + rcf_frontend.Header.T2File[i].External);
-                    break;
-                }
-            }
-
-            rcf_frontend.Recalculate();
-            rcf_frontend.Pack(basePath + path_RCF_frontend + "1");
-
-
-            // Extraction cleanup
-            System.IO.File.Delete(basePath + path_RCF_frontend);
-            System.IO.File.Move(basePath + path_RCF_frontend + "1", basePath + path_RCF_frontend);
-            if (Directory.Exists(path_extr))
-            {
-                DirectoryInfo di = new DirectoryInfo(path_extr);
-
-                foreach (FileInfo file in di.EnumerateFiles())
-                {
-                    file.Delete();
-                }
-                foreach (DirectoryInfo dir in di.EnumerateDirectories())
-                {
-                    dir.Delete(true);
-                }
-
-                Directory.Delete(path_extr);
-            }
+            RCF_Manager.Pack(basePath + path_RCF_frontend);
         }
 
         public override void OpenModMenu()
@@ -1348,17 +1193,12 @@ namespace CrateModLoader
             //Pure3D.Chunk targetIdleAnim = targetCharAnim.RootChunk.Children[0];
 
             /*
-            string path_extr = "";
             basePath = AppDomain.CurrentDomain.BaseDirectory + @"\Tools\";
-            RCF rcf_frontend = new RCF();
-            rcf_frontend.OpenRCF(basePath + @"default.rcf");
-            path_extr = basePath + @"cml_extr\";
-            Directory.CreateDirectory(path_extr);
-            rcf_frontend.ExtractRCF(path_extr);
+            RCF_Manager.Extract(basePath + @"default.rcf");
 
-            rcf_frontend.Recalculate();
-            rcf_frontend.Pack(basePath + @"default.rcf1");
+            RCF_Manager.Pack(basePath + @"default.rcf1");
             */
+            
 
             /*
             Pure3D.File CrashOnfootAnim1 = new Pure3D.File();

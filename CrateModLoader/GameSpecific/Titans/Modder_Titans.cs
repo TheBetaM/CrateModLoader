@@ -2,7 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using CrateModLoader.GameSpecific.CTTR;
 //RCF API by NeoKesha
+/* Mod Layers:
+ * 1: Default.RCF contents (only replace files)
+ */
 
 namespace CrateModLoader
 {
@@ -70,6 +74,7 @@ namespace CrateModLoader
         {
             string path_RCF_frontend = "DEFAULT.RCF";
             basePath = AppDomain.CurrentDomain.BaseDirectory + @"temp\";
+            RCF_Manager.cachedRCF = null;
 
             if (Program.ModProgram.isoType == ConsoleMode.WII)
             {
@@ -87,13 +92,11 @@ namespace CrateModLoader
                 basePath = AppDomain.CurrentDomain.BaseDirectory + @"temp\";
             }
 
-            //Warning: The RCF API only likes paths with \ backslashes
-            string path_extr = "";
-            RCF rcf_frontend = new RCF();
-            rcf_frontend.OpenRCF(basePath + path_RCF_frontend);
-            path_extr = AppDomain.CurrentDomain.BaseDirectory + @"temp\cml_extr\";
-            Directory.CreateDirectory(path_extr);
-            rcf_frontend.ExtractRCF(path_extr);
+            string path_extr = AppDomain.CurrentDomain.BaseDirectory + @"temp\cml_extr\";
+            
+            RCF_Manager.Extract(basePath + path_RCF_frontend);
+
+            ModCrates.InstallLayerMods(path_extr, 1);
 
             if (Options[TestMod].Enabled)
             {
@@ -116,39 +119,9 @@ namespace CrateModLoader
                 frontend_lines[94] = "cameraManager:SetCameraVolumeFOV( 89, 90.000000 )";
                 frontend_lines[97] = "cameraManager:SetCameraVolumeFOV( 90, 90.000000 )";
                 File.WriteAllLines(path_extr + @"levels\L1_E1\cameraoverrides.blua", frontend_lines);
-
-                for (int i = 0; i < rcf_frontend.Header.T2File.Length; i++)
-                {
-                    if (rcf_frontend.Header.T2File[i].Name == @"levels\L1_E1\cameraoverrides.blua")
-                    {
-                        rcf_frontend.Header.T2File[i].External = path_extr + @"levels\L1_E1\cameraoverrides.blua";
-                        //Console.WriteLine("external " + rcf_frontend.Header.T2File[i].External);
-                        break;
-                    }
-                }
             }
 
-            rcf_frontend.Recalculate();
-            rcf_frontend.Pack(basePath + path_RCF_frontend + "1");
-
-            // Extraction cleanup
-            File.Delete(basePath + path_RCF_frontend);
-            File.Move(basePath + path_RCF_frontend + "1", basePath + path_RCF_frontend);
-            if (Directory.Exists(path_extr))
-            {
-                DirectoryInfo di = new DirectoryInfo(path_extr);
-
-                foreach (FileInfo file in di.EnumerateFiles())
-                {
-                    file.Delete();
-                }
-                foreach (DirectoryInfo dir in di.EnumerateDirectories())
-                {
-                    dir.Delete(true);
-                }
-
-                Directory.Delete(path_extr);
-            }
+            RCF_Manager.Pack(basePath + path_RCF_frontend);
         }
     }
 }

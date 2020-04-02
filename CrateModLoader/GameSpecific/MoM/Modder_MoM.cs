@@ -2,8 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using CrateModLoader.GameSpecific.CTTR;
 //RCF API by NeoKesha
 //Version number, seed and options are displayed in the Credits accessible from the main menu.
+/* Mod Layers:
+ * 1: Default.RCF contents (only replace files)
+ */
 
 namespace CrateModLoader
 {
@@ -67,6 +71,7 @@ namespace CrateModLoader
         {
             string path_RCF_frontend = "DEFAULT.RCF";
             basePath = AppDomain.CurrentDomain.BaseDirectory + @"temp\";
+            RCF_Manager.cachedRCF = null;
 
             if (Program.ModProgram.isoType == ConsoleMode.WII)
             {
@@ -84,13 +89,8 @@ namespace CrateModLoader
                 basePath = AppDomain.CurrentDomain.BaseDirectory + @"temp\";
             }
 
-            RCF rcf_frontend = new RCF();
-            rcf_frontend.OpenRCF(basePath + path_RCF_frontend);
-
-            //Warning: The RCF API only likes paths with \ backslashes
             string path_extr = AppDomain.CurrentDomain.BaseDirectory + @"temp\cml_extr\";
-            Directory.CreateDirectory(path_extr);
-            rcf_frontend.ExtractRCF(path_extr);
+            RCF_Manager.Extract(basePath + path_RCF_frontend);
 
             // Proof of concept mod replacing credits text
             string[] credits_lines = File.ReadAllLines(path_extr + @"script\CreditsList.txt");
@@ -117,37 +117,7 @@ namespace CrateModLoader
 
             File.WriteAllLines(path_extr + @"script\CreditsList.txt", credits_lines);
 
-            for (int i = 0; i < rcf_frontend.Header.T2File.Length; i++)
-            {
-                if (rcf_frontend.Header.T2File[i].Name == @"script\CreditsList.txt")
-                {
-                    rcf_frontend.Header.T2File[i].External = path_extr + @"script\CreditsList.txt";
-                    //Console.WriteLine("external " + rcf_frontend.Header.T2File[i].External);
-                    break;
-                }
-            }
-
-            rcf_frontend.Recalculate();
-            rcf_frontend.Pack(basePath + path_RCF_frontend + "1");
-
-            // Extraction cleanup
-            File.Delete(basePath + path_RCF_frontend);
-            File.Move(basePath + path_RCF_frontend + "1", basePath + path_RCF_frontend);
-            if (Directory.Exists(path_extr))
-            {
-                DirectoryInfo di = new DirectoryInfo(path_extr);
-
-                foreach (FileInfo file in di.EnumerateFiles())
-                {
-                    file.Delete();
-                }
-                foreach (DirectoryInfo dir in di.EnumerateDirectories())
-                {
-                    dir.Delete(true);
-                }
-
-                Directory.Delete(path_extr);
-            }
+            RCF_Manager.Pack(basePath + path_RCF_frontend);
 
         }
     }

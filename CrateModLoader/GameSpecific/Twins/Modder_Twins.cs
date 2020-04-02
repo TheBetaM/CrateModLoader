@@ -68,11 +68,13 @@ namespace CrateModLoader
                     new RegionCode() {
                     Name = "Crash Twinsanity",
                     Region = RegionType.NTSC_U,
-                    RegionNumber = 7, },
+                    RegionNumber = 7,
+                    ExecName = "default.xbe" },
                     new RegionCode() {
                     Name = "Crash Twinsanity",
                     Region = RegionType.PAL,
-                    RegionNumber = 4, },
+                    RegionNumber = 4,
+                    ExecName = "default.xbe" },
                 },
             };
 
@@ -82,7 +84,7 @@ namespace CrateModLoader
             //Options.Add(RandomizeEnemies, new ModOption("Randomize Enemies")); // TODO
             Options.Add(RandomizeMusic, new ModOption("Randomize Level Music"));
             Options.Add(RandomizeCharParams, new ModOption("Randomize Character Parameters"));
-            //Options.Add(RandomizeStartingChunk, new ModOption("Randomize Starting Chunk"));
+            //Options.Add(RandomizeStartingChunk, new ModOption("Randomize Starting Chunk")); // TODO
             Options.Add(ModFlyingKick, new ModOption("Enable Flying Kick for Crash (Jump + Circle)"));
             Options.Add(ModStompKick, new ModOption("Enable Stomp Kick for Crash (Flying Kick variation)"));
             Options.Add(ModDoubleJumpCortex, new ModOption("Enable Double Jump for Cortex"));
@@ -91,6 +93,9 @@ namespace CrateModLoader
         }
 
         internal string bdPath = "";
+        internal string extensionMod = "2";
+        internal TwinsFile.FileType rmType = TwinsFile.FileType.RM2;
+        internal TwinsFile.FileType smType = TwinsFile.FileType.SM2;
         internal Random randState = new Random();
         internal List<uint> CrateReplaceList = new List<uint>();
         internal List<uint> randCrateList = new List<uint>();
@@ -101,7 +106,7 @@ namespace CrateModLoader
         internal List<Twins_Data.ObjectID> EnemyInsertList = new List<Twins_Data.ObjectID>();
         internal bool[] levelEdited;
 
-        private enum RM2_Sections
+        private enum RM_Sections
         {
             Graphics = 11,
             Code = 10,
@@ -116,7 +121,7 @@ namespace CrateModLoader
             Instances7 = 6,
             Instances8 = 7,
         }
-        public enum RM2_Graphics_Sections
+        public enum RM_Graphics_Sections
         {
             Textures = 0,
             Materials = 1,
@@ -128,7 +133,7 @@ namespace CrateModLoader
             Terrains = 7,
             Skydome = 8,
         }
-        public enum RM2_Code_Sections
+        public enum RM_Code_Sections
         {
             Object = 0,
             Script = 1,
@@ -145,7 +150,7 @@ namespace CrateModLoader
             SE_Ita = 11,
             SE_Unused = 12,
         }
-        public enum RM2_Instance_Sections
+        public enum RM_Instance_Sections
         {
             UnknownInstance = 0,
             AIPosition = 1,
@@ -167,13 +172,26 @@ namespace CrateModLoader
             }
 
             // Extract BD
-            bdPath = System.IO.Path.Combine(Program.ModProgram.extractedPath, "cml_extr/");
-            Directory.CreateDirectory(bdPath);
+            if (Program.ModProgram.isoType == ConsoleMode.PS2)
+            {
+                bdPath = System.IO.Path.Combine(Program.ModProgram.extractedPath, "cml_extr/");
+                Directory.CreateDirectory(bdPath);
 
-            BDArchive.ExtractAll(System.IO.Path.Combine(Program.ModProgram.extractedPath, "CRASH6/CRASH"), bdPath);
+                BDArchive.ExtractAll(System.IO.Path.Combine(Program.ModProgram.extractedPath, "CRASH6/CRASH"), bdPath);
 
-            File.Delete(System.IO.Path.Combine(Program.ModProgram.extractedPath, "CRASH6/CRASH.BD"));
-            File.Delete(System.IO.Path.Combine(Program.ModProgram.extractedPath, "CRASH6/CRASH.BH"));
+                File.Delete(System.IO.Path.Combine(Program.ModProgram.extractedPath, "CRASH6/CRASH.BD"));
+                File.Delete(System.IO.Path.Combine(Program.ModProgram.extractedPath, "CRASH6/CRASH.BH"));
+                extensionMod = "2";
+                rmType = TwinsFile.FileType.RM2;
+                smType = TwinsFile.FileType.SM2;
+            }
+            else
+            {
+                bdPath = Program.ModProgram.extractedPath;
+                extensionMod = "x";
+                rmType = TwinsFile.FileType.RMX;
+                smType = TwinsFile.FileType.SMX;
+            }
 
             ModProcess();
         }
@@ -182,7 +200,7 @@ namespace CrateModLoader
         {
             //Start Modding
             randState = new Random(Program.ModProgram.randoSeed);
-
+            
             Twins_Settings.PatchEXE();
 
             ModCrates.InstallLayerMods(bdPath, 1);
@@ -193,7 +211,7 @@ namespace CrateModLoader
             if (Options[RandomizeCrateTypes].Enabled)
             {
                 TwinsFile mainArchive = new TwinsFile();
-                mainArchive.LoadFile(bdPath + @"Startup\Default.rm2", TwinsFile.FileType.RM2);
+                mainArchive.LoadFile(bdPath + @"Startup\Default.rm" + extensionMod, TwinsFile.FileType.RM2);
 
                 List<uint> crateList = new List<uint>();
                 List<uint> posList = new List<uint>();
@@ -231,7 +249,7 @@ namespace CrateModLoader
                 while (posList.Count > 0)
                 {
                     target_item = randState.Next(0, crateList.Count);
-                    TwinsSection objectdata = mainArchive.GetItem<TwinsSection>((uint)RM2_Sections.Code).GetItem<TwinsSection>((uint)RM2_Code_Sections.Object);
+                    TwinsSection objectdata = mainArchive.GetItem<TwinsSection>((uint)RM_Sections.Code).GetItem<TwinsSection>((uint)RM_Code_Sections.Object);
                     if (objectdata.ContainsItem(posList[0]))
                         objectdata.GetItem<TwinsItem>(posList[0]).ID = crateList[target_item];
                     posList.RemoveAt(0);
@@ -240,13 +258,13 @@ namespace CrateModLoader
                 posList.Clear();
                 crateList.Clear();
 
-                mainArchive.SaveFile(bdPath + "/Startup/Default.rm2");
+                mainArchive.SaveFile(bdPath + "/Startup/Default.rm" + extensionMod);
             }
             if (Options[RandomizeAllCrates].Enabled)
             {
                 //Importing ammo crate
                 TwinsFile cortexlevelArchive = new TwinsFile();
-                cortexlevelArchive.LoadFile(bdPath + @"Levels\school\Cortex\cogpa01.rm2", TwinsFile.FileType.RM2);
+                cortexlevelArchive.LoadFile(bdPath + @"Levels\school\Cortex\cogpa01.rm" + extensionMod, rmType);
 
                 // when exporting is done
                 //List<Twins_Data.ObjectID> exportList = new List<Twins_Data.ObjectID>();
@@ -261,15 +279,15 @@ namespace CrateModLoader
                 List<Script> import_Scr = new List<Script>();
                 List<TwinsItem> import_OGI = new List<TwinsItem>();
 
-                TwinsSection gfx_section = cortexlevelArchive.GetItem<TwinsSection>((uint)RM2_Sections.Graphics);
-                TwinsSection code_section = cortexlevelArchive.GetItem<TwinsSection>((uint)RM2_Sections.Code);
-                TwinsSection object_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.Object);
-                TwinsSection script_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.Script);
-                TwinsSection ogi_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.OGI);
-                TwinsSection tex_section = gfx_section.GetItem<TwinsSection>((uint)RM2_Graphics_Sections.Textures);
-                TwinsSection mat_section = gfx_section.GetItem<TwinsSection>((uint)RM2_Graphics_Sections.Materials);
-                TwinsSection mesh_section = gfx_section.GetItem<TwinsSection>((uint)RM2_Graphics_Sections.Meshes);
-                TwinsSection mdl_section = gfx_section.GetItem<TwinsSection>((uint)RM2_Graphics_Sections.Models);
+                TwinsSection gfx_section = cortexlevelArchive.GetItem<TwinsSection>((uint)RM_Sections.Graphics);
+                TwinsSection code_section = cortexlevelArchive.GetItem<TwinsSection>((uint)RM_Sections.Code);
+                TwinsSection object_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.Object);
+                TwinsSection script_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.Script);
+                TwinsSection ogi_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.OGI);
+                TwinsSection tex_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.Textures);
+                TwinsSection mat_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.Materials);
+                TwinsSection mesh_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.Meshes);
+                TwinsSection mdl_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.Models);
                 for (int i = 0; i < script_section.Records.Count; ++i)
                 {
                     Script scr = (Script)script_section.Records[i];
@@ -345,21 +363,21 @@ namespace CrateModLoader
                 }
 
                 TwinsFile mainArchive = new TwinsFile();
-                mainArchive.LoadFile(bdPath + @"Startup\Default.rm2", TwinsFile.FileType.RM2);
+                mainArchive.LoadFile(bdPath + @"Startup\Default.rm" + extensionMod, rmType);
 
                 // when importing is done
                 //Twins_Data.ImportGameObject(ref mainArchive, Twins_Data.ObjectID.AMMOCRATESMALL,ref exportList);
                 //exportList.Clear();
 
-                gfx_section = mainArchive.GetItem<TwinsSection>((uint)RM2_Sections.Graphics);
-                code_section = mainArchive.GetItem<TwinsSection>((uint)RM2_Sections.Code);
-                object_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.Object);
-                script_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.Script);
-                ogi_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.OGI);
-                tex_section = gfx_section.GetItem<TwinsSection>((uint)RM2_Graphics_Sections.Textures);
-                mat_section = gfx_section.GetItem<TwinsSection>((uint)RM2_Graphics_Sections.Materials);
-                mesh_section = gfx_section.GetItem<TwinsSection>((uint)RM2_Graphics_Sections.Meshes);
-                mdl_section = gfx_section.GetItem<TwinsSection>((uint)RM2_Graphics_Sections.Models);
+                gfx_section = mainArchive.GetItem<TwinsSection>((uint)RM_Sections.Graphics);
+                code_section = mainArchive.GetItem<TwinsSection>((uint)RM_Sections.Code);
+                object_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.Object);
+                script_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.Script);
+                ogi_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.OGI);
+                tex_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.Textures);
+                mat_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.Materials);
+                mesh_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.Meshes);
+                mdl_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.Models);
 
                 for (int i = 0; i < import_GObj.Count; i++)
                 {
@@ -390,7 +408,7 @@ namespace CrateModLoader
                     ogi_section.Records.Add(import_OGI[i]);
                 }
 
-                mainArchive.SaveFile(bdPath + "/Startup/Default.rm2");
+                mainArchive.SaveFile(bdPath + "/Startup/Default.rm" + extensionMod);
             }
 
             if (Options[RandomizeAllCrates].Enabled)
@@ -508,7 +526,7 @@ namespace CrateModLoader
                 }
 
                 TwinsFile mainArchiveLoad = new TwinsFile();
-                mainArchiveLoad.LoadFile(bdPath + @"Startup\Default.rm2", TwinsFile.FileType.RM2);
+                mainArchiveLoad.LoadFile(bdPath + @"Startup\Default.rm" + extensionMod, rmType);
 
                 RM_LoadScripts(mainArchiveLoad);
                 RM_LoadObjects(mainArchiveLoad);
@@ -740,7 +758,7 @@ namespace CrateModLoader
             }
 
             TwinsFile RM_Archive = new TwinsFile();
-            RM_Archive.LoadFile(path, TwinsFile.FileType.RM2);
+            RM_Archive.LoadFile(path, rmType);
 
             if (Options[RandomizeAllCrates].Enabled)
             {
@@ -792,7 +810,7 @@ namespace CrateModLoader
             }
 
             TwinsFile RM_Archive = new TwinsFile();
-            RM_Archive.LoadFile(path, TwinsFile.FileType.RM2);
+            RM_Archive.LoadFile(path, rmType);
 
             RM_LoadScripts(RM_Archive);
             RM_LoadObjects(RM_Archive);
@@ -883,7 +901,7 @@ namespace CrateModLoader
             {
                 foreach (FileInfo file in dir.EnumerateFiles())
                 {
-                    if (file.Extension == ".rm2" || file.Extension == ".RM2")
+                    if (file.Extension.ToLower() == ".rm2" || file.Extension.ToLower() == ".rmx")
                     {
                         RM_EditLevel(file.FullName);
                     }
@@ -897,7 +915,7 @@ namespace CrateModLoader
             {
                 foreach (FileInfo file in dir.EnumerateFiles())
                 {
-                    if (file.Extension == ".rm2" || file.Extension == ".RM2")
+                    if (file.Extension.ToLower() == ".rm2" || file.Extension.ToLower() == ".rmx")
                     {
                         RM_LoadLevel(file.FullName);
                     }
@@ -915,28 +933,27 @@ namespace CrateModLoader
             randMusicList.Clear();
 
             // Build BD
-            BDArchive.CompileAll(System.IO.Path.Combine(Program.ModProgram.extractedPath, "CRASH6/CRASH"), bdPath);
-
-            // Get rid of extracted files
-            if (Directory.Exists(bdPath))
+            if (Program.ModProgram.isoType == ConsoleMode.PS2)
             {
-                DirectoryInfo di = new DirectoryInfo(bdPath);
+                BDArchive.CompileAll(System.IO.Path.Combine(Program.ModProgram.extractedPath, "CRASH6/CRASH"), bdPath);
 
-                foreach (FileInfo file in di.EnumerateFiles())
+                // Get rid of extracted files
+                if (Directory.Exists(bdPath))
                 {
-                    file.Delete();
-                }
-                foreach (DirectoryInfo dir in di.EnumerateDirectories())
-                {
-                    dir.Delete(true);
-                }
+                    DirectoryInfo di = new DirectoryInfo(bdPath);
 
-                Directory.Delete(bdPath);
+                    foreach (FileInfo file in di.EnumerateFiles())
+                    {
+                        file.Delete();
+                    }
+                    foreach (DirectoryInfo dir in di.EnumerateDirectories())
+                    {
+                        dir.Delete(true);
+                    }
+
+                    Directory.Delete(bdPath);
+                }
             }
-
-            // Fixes names for PS2
-            //File.Move(Program.ModProgram.extractedPath + "/CRASH6/CRASH.BD", Program.ModProgram.extractedPath + "/CRASH6/CRASH.BD;1");
-            //File.Move(Program.ModProgram.extractedPath + "/CRASH6/CRASH.BH", Program.ModProgram.extractedPath + "/CRASH6/CRASH.BH;1");
         }
 
 
@@ -949,14 +966,14 @@ namespace CrateModLoader
                 (uint)Twins_Data.ObjectID.EXTRALIFECRATECORTEX,
                 (uint)Twins_Data.ObjectID.EXTRALIFECRATENINA
             };
-            for (uint section_id = (uint)RM2_Sections.Instances1; section_id <= (uint)RM2_Sections.Instances8; section_id++)
+            for (uint section_id = (uint)RM_Sections.Instances1; section_id <= (uint)RM_Sections.Instances8; section_id++)
             {
                 if (!RM_Archive.ContainsItem(section_id)) continue;
                 TwinsSection section = RM_Archive.GetItem<TwinsSection>(section_id);
                 if (section.Records.Count > 0)
                 {
-                    if (!section.ContainsItem((uint)RM2_Instance_Sections.ObjectInstance)) continue;
-                    TwinsSection instances = section.GetItem<TwinsSection>((uint)RM2_Instance_Sections.ObjectInstance);
+                    if (!section.ContainsItem((uint)RM_Instance_Sections.ObjectInstance)) continue;
+                    TwinsSection instances = section.GetItem<TwinsSection>((uint)RM_Instance_Sections.ObjectInstance);
                     for (int i = 0; i < instances.Records.Count; ++i)
                     {
                         Instance instance = (Instance)instances.Records[i];
@@ -1045,14 +1062,14 @@ namespace CrateModLoader
 
             // Part 1: Remove existing gems
 
-            for (uint section_id = (uint)RM2_Sections.Instances1; section_id <= (uint)RM2_Sections.Instances8; section_id++)
+            for (uint section_id = (uint)RM_Sections.Instances1; section_id <= (uint)RM_Sections.Instances8; section_id++)
             {
                 if (!RM_Archive.ContainsItem(section_id)) continue;
                 TwinsSection section = RM_Archive.GetItem<TwinsSection>(section_id);
                 if (section.Records.Count > 0)
                 {
-                    if (!section.ContainsItem((uint)RM2_Instance_Sections.ObjectInstance)) continue;
-                    TwinsSection instances = section.GetItem<TwinsSection>((uint)RM2_Instance_Sections.ObjectInstance);
+                    if (!section.ContainsItem((uint)RM_Instance_Sections.ObjectInstance)) continue;
+                    TwinsSection instances = section.GetItem<TwinsSection>((uint)RM_Instance_Sections.ObjectInstance);
                     for (int i = 0; i < instances.Records.Count; ++i)
                     {
                         Instance instance = (Instance)instances.Records[i];
@@ -1078,14 +1095,14 @@ namespace CrateModLoader
             }
 
             // Part 2: Add new gems
-            uint gem_section_id = (uint)RM2_Sections.Instances1;
+            uint gem_section_id = (uint)RM_Sections.Instances1;
             if (!RM_Archive.ContainsItem(gem_section_id)) return;
             TwinsSection instances_group = RM_Archive.GetItem<TwinsSection>(gem_section_id);
             TwinsSection instances_section;
             if (instances_group.Records.Count > 0)
             {
-                if (!instances_group.ContainsItem((uint)RM2_Instance_Sections.ObjectInstance)) return;
-                instances_section = instances_group.GetItem<TwinsSection>((uint)RM2_Instance_Sections.ObjectInstance);
+                if (!instances_group.ContainsItem((uint)RM_Instance_Sections.ObjectInstance)) return;
+                instances_section = instances_group.GetItem<TwinsSection>((uint)RM_Instance_Sections.ObjectInstance);
             }
             else
             {
@@ -1139,14 +1156,14 @@ namespace CrateModLoader
 
         void RM_Randomize_Music(TwinsFile RM_Archive)
         {
-            for (uint section_id = (uint)RM2_Sections.Instances1; section_id <= (uint)RM2_Sections.Instances8; section_id++)
+            for (uint section_id = (uint)RM_Sections.Instances1; section_id <= (uint)RM_Sections.Instances8; section_id++)
             {
                 if (!RM_Archive.ContainsItem(section_id)) continue;
                 TwinsSection section = RM_Archive.GetItem<TwinsSection>(section_id);
                 if (section.Records.Count > 0)
                 {
-                    if (!section.ContainsItem((uint)RM2_Instance_Sections.ObjectInstance)) continue;
-                    TwinsSection instances = section.GetItem<TwinsSection>((uint)RM2_Instance_Sections.ObjectInstance);
+                    if (!section.ContainsItem((uint)RM_Instance_Sections.ObjectInstance)) continue;
+                    TwinsSection instances = section.GetItem<TwinsSection>((uint)RM_Instance_Sections.ObjectInstance);
                     for (int i = 0; i < instances.Records.Count; ++i)
                     {
                         Instance instance = (Instance)instances.Records[i];
@@ -1172,12 +1189,12 @@ namespace CrateModLoader
 
         void RM_LoadScripts(TwinsFile RM_Archive)
         {
-            if (RM_Archive.ContainsItem((uint)RM2_Sections.Code))
+            if (RM_Archive.ContainsItem((uint)RM_Sections.Code))
             {
-                TwinsSection code_section = RM_Archive.GetItem<TwinsSection>((uint)RM2_Sections.Code);
-                if (code_section.ContainsItem((uint)RM2_Code_Sections.Script))
+                TwinsSection code_section = RM_Archive.GetItem<TwinsSection>((uint)RM_Sections.Code);
+                if (code_section.ContainsItem((uint)RM_Code_Sections.Script))
                 {
-                    TwinsSection script_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.Script);
+                    TwinsSection script_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.Script);
                     if (script_section.Records.Count > 0)
                     {
                         for (int i = 0; i < script_section.Records.Count; ++i)
@@ -1210,12 +1227,12 @@ namespace CrateModLoader
         
         void RM_LoadObjects(TwinsFile RM_Archive)
         {
-            if (RM_Archive.ContainsItem((uint)RM2_Sections.Code))
+            if (RM_Archive.ContainsItem((uint)RM_Sections.Code))
             {
-                TwinsSection code_section = RM_Archive.GetItem<TwinsSection>((uint)RM2_Sections.Code);
-                if (code_section.ContainsItem((uint)RM2_Code_Sections.Object))
+                TwinsSection code_section = RM_Archive.GetItem<TwinsSection>((uint)RM_Sections.Code);
+                if (code_section.ContainsItem((uint)RM_Code_Sections.Object))
                 {
-                    TwinsSection object_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.Object);
+                    TwinsSection object_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.Object);
                     if (object_section.Records.Count > 0)
                     {
                         for (int i = 0; i < object_section.Records.Count; ++i)
@@ -1251,13 +1268,13 @@ namespace CrateModLoader
 
         void RM_CharacterObjectMod(TwinsFile RM_Archive)
         {
-            if (RM_Archive.ContainsItem((uint)RM2_Sections.Code))
+            if (RM_Archive.ContainsItem((uint)RM_Sections.Code))
             {
-                TwinsSection code_section = RM_Archive.GetItem<TwinsSection>((uint)RM2_Sections.Code);
+                TwinsSection code_section = RM_Archive.GetItem<TwinsSection>((uint)RM_Sections.Code);
                 /*
-                if (code_section.ContainsItem((uint)RM2_Code_Sections.Script))
+                if (code_section.ContainsItem((uint)RM_Code_Sections.Script))
                 {
-                    TwinsSection script_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.Script);
+                    TwinsSection script_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.Script);
                     if (script_section.Records.Count > 0)
                     {
                         script_section.Records.Add(Twins_Data.GetScriptByID(Twins_Data.ScriptID.HEAD_COM_GENERIC_CHARACTER_STRAFE_LEFT));
@@ -1267,9 +1284,9 @@ namespace CrateModLoader
                     }
                 }
                 */
-                if (code_section.ContainsItem((uint)RM2_Code_Sections.Object))
+                if (code_section.ContainsItem((uint)RM_Code_Sections.Object))
                 {
-                    TwinsSection obj_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.Object);
+                    TwinsSection obj_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.Object);
                     if (obj_section.Records.Count > 0)
                     {
                         for (int obj = 0; obj < obj_section.Records.Count; obj++)
@@ -1314,14 +1331,14 @@ namespace CrateModLoader
 
         void RM_CharacterMod(TwinsFile RM_Archive)
         {
-            for (uint section_id = (uint)RM2_Sections.Instances1; section_id <= (uint)RM2_Sections.Instances8; section_id++)
+            for (uint section_id = (uint)RM_Sections.Instances1; section_id <= (uint)RM_Sections.Instances8; section_id++)
             {
                 if (!RM_Archive.ContainsItem(section_id)) continue;
                 TwinsSection section = RM_Archive.GetItem<TwinsSection>(section_id);
                 if (section.Records.Count > 0)
                 {
-                    if (!section.ContainsItem((uint)RM2_Instance_Sections.ObjectInstance)) continue;
-                    TwinsSection instances = section.GetItem<TwinsSection>((uint)RM2_Instance_Sections.ObjectInstance);
+                    if (!section.ContainsItem((uint)RM_Instance_Sections.ObjectInstance)) continue;
+                    TwinsSection instances = section.GetItem<TwinsSection>((uint)RM_Instance_Sections.ObjectInstance);
                     for (int i = 0; i < instances.Records.Count; ++i)
                     {
                         Instance instance = (Instance)instances.Records[i];
@@ -1625,14 +1642,14 @@ namespace CrateModLoader
 
         void RM_EnableUnusedEnemies(TwinsFile RM_Archive)
         {
-            for (uint section_id = (uint)RM2_Sections.Instances1; section_id <= (uint)RM2_Sections.Instances8; section_id++)
+            for (uint section_id = (uint)RM_Sections.Instances1; section_id <= (uint)RM_Sections.Instances8; section_id++)
             {
                 if (!RM_Archive.ContainsItem(section_id)) continue;
                 TwinsSection section = RM_Archive.GetItem<TwinsSection>(section_id);
                 if (section.Records.Count > 0)
                 {
-                    if (!section.ContainsItem((uint)RM2_Instance_Sections.ObjectInstance)) continue;
-                    TwinsSection instances = section.GetItem<TwinsSection>((uint)RM2_Instance_Sections.ObjectInstance);
+                    if (!section.ContainsItem((uint)RM_Instance_Sections.ObjectInstance)) continue;
+                    TwinsSection instances = section.GetItem<TwinsSection>((uint)RM_Instance_Sections.ObjectInstance);
                     for (int i = 0; i < instances.Records.Count; ++i)
                     {
                         Instance instance = (Instance)instances.Records[i];
@@ -1654,14 +1671,14 @@ namespace CrateModLoader
         {
             List<Twins_Data.ObjectID> importedObjects = new List<Twins_Data.ObjectID>();
             bool EnemyFound = false;
-            for (uint section_id = (uint)RM2_Sections.Instances1; section_id <= (uint)RM2_Sections.Instances8; section_id++)
+            for (uint section_id = (uint)RM_Sections.Instances1; section_id <= (uint)RM_Sections.Instances8; section_id++)
             {
                 if (!RM_Archive.ContainsItem(section_id)) continue;
                 TwinsSection section = RM_Archive.GetItem<TwinsSection>(section_id);
                 if (section.Records.Count > 0)
                 {
-                    if (!section.ContainsItem((uint)RM2_Instance_Sections.ObjectInstance)) continue;
-                    TwinsSection instances = section.GetItem<TwinsSection>((uint)RM2_Instance_Sections.ObjectInstance);
+                    if (!section.ContainsItem((uint)RM_Instance_Sections.ObjectInstance)) continue;
+                    TwinsSection instances = section.GetItem<TwinsSection>((uint)RM_Instance_Sections.ObjectInstance);
                     for (int i = 0; i < instances.Records.Count; ++i)
                     {
                         Instance instance = (Instance)instances.Records[i];

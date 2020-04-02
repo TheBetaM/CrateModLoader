@@ -11,6 +11,14 @@ New games supported:
 - Rayman 3: Hoodlum Havoc
 - Crash Team Racing
 
+New mod layers:
+- Crash Team Racing: BIGFILE.BIG contents
+- Crash Nitro Kart: ASSETS.GOB contents
+- Crash Twinsanity: CRASH.BD contents
+- Crash Tag Team Racing: All .RCF file contents
+- Crash of the Titans: Default.RCF contents
+- Crash Mind Over Mutant: Default.RCF contents
+
 Crash Twinsanity:
 - Randomize Character Parameters: Now also randomizes spawn health (masks).
 - Randomize Level Music: Attempted to fix music tracks repeating.
