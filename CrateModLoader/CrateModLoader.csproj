@@ -109,6 +109,8 @@
     <Compile Include="GameSpecific\CTTR\collada_schema_1_4.cs" />
     <Compile Include="GameSpecific\CTTR\CTTR_Data.cs" />
     <Compile Include="GameSpecific\CTTR\CTTR_Data_Text.cs" />
+    <Compile Include="GameSpecific\CTTR\CTTR_Mods.cs" />
+    <Compile Include="GameSpecific\CTTR\CTTR_Randomizers.cs" />
     <Compile Include="GameSpecific\CTTR\Pure3D\Chunk.cs" />
     <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\Animation.cs" />
     <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\AnimationChannelCount.cs" />

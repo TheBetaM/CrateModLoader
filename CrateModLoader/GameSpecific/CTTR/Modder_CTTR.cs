@@ -173,10 +173,7 @@ namespace CrateModLoader
             //Options.Add(RandomizePowerupEffects, new ModOption("Randomize Powerup Effects")); //todo: driving_objects
             //Options.Add(RandomizeWeapons, new ModOption("Randomize Weapons")); // todo: turretmotifs
             //Options.Add(RandomizeNPCs, new ModOption("Randomize NPC Locations")); // todo: NPC - locator list
-            //Options.Add(AddUnusedCutscenes, new ModOption("Add Unused Cutscenes")); // todo, NIS + an objective?
-            //Options.Add(AddPowerupsTimeTrial, new ModOption("Add Powerups in Time Trial")); // todo: timetrial/props, see: bonus11
             Options.Add(PreventSequenceBreaks, new ModOption("Prevent Sequence Breaks"));
-            //Options.Add(ReplaceCrashinatorConeAttack, new ModOption("Replace Crashinator with Cone Attack")); // todo
         }
 
         public Random randState = new Random();
@@ -416,7 +413,7 @@ namespace CrateModLoader
 
             if (Editing_Credits)
             {
-                Mod_EditCredits();
+                CTTR_Mods.Mod_EditCredits(basePath, path_RCF_frontend);
             }
 
         }
@@ -529,49 +526,55 @@ namespace CrateModLoader
             }
             */
 
-            if (path_RCF_default != "")
+            string[] all_RCF = new string[] {
+                path_RCF_default,
+                path_RCF_common,
+                path_RCF_frontend,
+                path_RCF_onfoot0,
+                path_RCF_onfoot1,
+                path_RCF_onfoot2,
+                path_RCF_onfoot3,
+                path_RCF_onfoot4,
+                path_RCF_onfoot5,
+                path_RCF_onfoot6,
+                path_RCF_onfoot7,
+                path_RCF_advent1,
+                path_RCF_advent2,
+                path_RCF_advent3,
+                path_RCF_adventa,
+                path_RCF_dino1,
+                path_RCF_dino2,
+                path_RCF_dino3,
+                path_RCF_dinoa,
+                path_RCF_egypt1,
+                path_RCF_egypt2,
+                path_RCF_egypt3,
+                path_RCF_egypta,
+                path_RCF_fairy1,
+                path_RCF_fairy2,
+                path_RCF_fairy3,
+                path_RCF_fairys,
+                path_RCF_solar1,
+                path_RCF_solar2,
+                path_RCF_solar3,
+                path_RCF_solars,
+                path_RCF_0,
+                path_RCF_1,
+                path_RCF_2,
+                path_RCF_3,
+                path_RCF_4,
+                path_RCF_5,
+                path_RCF_6,
+                //path_RCF_sound,
+                //path_RCF_english,
+            };
+
+            for (int i = 0; i < all_RCF.Length; i++)
             {
-                Modify_RCF(path_RCF_default);
-            }
-            if (path_RCF_common != "")
-            {
-                Modify_RCF(path_RCF_common);
-            }
-            if (path_RCF_frontend != "")
-            {
-                Modify_RCF(path_RCF_frontend);
-            }
-            if (path_RCF_onfoot0 != "")
-            {
-                Modify_RCF(path_RCF_onfoot0);
-            }
-            if (path_RCF_onfoot1 != "")
-            {
-                Modify_RCF(path_RCF_onfoot1);
-            }
-            if (path_RCF_onfoot2 != "")
-            {
-                Modify_RCF(path_RCF_onfoot2);
-            }
-            if (path_RCF_onfoot3 != "")
-            {
-                Modify_RCF(path_RCF_onfoot3);
-            }
-            if (path_RCF_onfoot4 != "")
-            {
-                Modify_RCF(path_RCF_onfoot4);
-            }
-            if (path_RCF_onfoot5 != "")
-            {
-                Modify_RCF(path_RCF_onfoot5);
-            }
-            if (path_RCF_onfoot6 != "")
-            {
-                Modify_RCF(path_RCF_onfoot6);
-            }
-            if (path_RCF_onfoot7 != "")
-            {
-                Modify_RCF(path_RCF_onfoot7);
+                if (all_RCF[i] != "")
+                {
+                    Modify_RCF(all_RCF[i]);
+                }
             }
 
         }
@@ -585,612 +588,42 @@ namespace CrateModLoader
 
             if (Options[RandomizeCharacters].Enabled)
             {
-                Randomize_Characters(path_extr, randChars);
+                CTTR_Randomizers.Randomize_Characters(path_extr, randChars);
             }
             /*
             if (Options[RandomizeHubs].Enabled)
             {
-                Randomize_Hubs(path_extr, randHubs, randGems);
+                CTTR_Randomizers.Randomize_Hubs(path_extr, randHubs, randGems);
             }
             */
             if (Options[RandomizeTracks].Enabled)
             {
-                Randomize_Tracks(path_extr, randTracks);
+                CTTR_Randomizers.Randomize_Tracks(path_extr, randTracks);
             }
             if (Options[RandomizeMinigames].Enabled)
             {
-                Randomize_Minigames(path_extr, randMinigames);
+                CTTR_Randomizers.Randomize_Minigames(path_extr, randMinigames);
             }
             if (Options[RandomizeRaceLaps].Enabled)
             {
-                Randomize_Race_Laps(path_extr, randLaps);
+                CTTR_Randomizers.Randomize_Race_Laps(path_extr, randLaps);
             }
             /*
             if (Options[RandomizeBattleKOs].Enabled)
             {
-                Randomize_Battle_KOs(path_extr, randKOs);
+                CTTR_Randomizers.Randomize_Battle_KOs(path_extr, randKOs);
             }
             */
             if (Options[PreventSequenceBreaks].Enabled)
             {
-                Mod_PreventSequenceBreaks(path_extr);
+                CTTR_Mods.Mod_PreventSequenceBreaks(path_extr);
             }
 
             RCF_Manager.Pack(basePath + path);
         }
 
-        void Randomize_Characters(string path_extr, List<int> randChars)
-        {
-            /* TODO later, because it requires mission logic to unlock Crash/Cortex
-            if (System.IO.File.Exists(path_extr + @"design\permanent\genericobjectives.god"))
-            {
-                string[] startup_lines = System.IO.File.ReadAllLines(path_extr + @"design\permanent\genericobjectives.god");
-                List<string> LineList = new List<string>();
-                for (int i = 0; i < startup_lines.Length; i++)
-                {
-                    LineList.Add(startup_lines[i]);
-                }
-
-                int characterList_Start = 0;
-                int characterList_End = 0;
-                List<string> DefaultUnlocks = new List<string>();
-                if (CTTR_Data.LUA_LoadObject(LineList, "Objective", "UnlockDefaults", ref characterList_Start, ref characterList_End, DefaultUnlocks))
-                {
-                    DefaultUnlocks.Clear();
-                    DefaultUnlocks.Add("this.SetName(\"UnlockDefaults\")");
-                    for (int i = 0; i < randChars.Count; i++)
-                    {
-                        DefaultUnlocks.Add("this.AddAction_UnlockCar(\"" + CTTR_Data.DriverNames[randChars[i]] + "\",1)");
-                    }
-                }
-                CTTR_Data.LUA_SaveObject(LineList, "Objective", "UnlockDefaults", DefaultUnlocks);
-
-                startup_lines = new string[LineList.Count];
-                for (int i = 0; i < LineList.Count; i++)
-                {
-                    startup_lines[i] = LineList[i];
-                }
-
-                System.IO.File.WriteAllLines(path_extr + @"design\permanent\genericobjectives.god", startup_lines);
-
-            }
-            */
-            if (randChars[0] != (int)CTTR_Data.DriverID.Crash && System.IO.File.Exists(path_extr + @"design\permanent\skins.god"))
-            {
-                string[] skins_lines = System.IO.File.ReadAllLines(path_extr + @"design\permanent\skins.god");
-                List<string> LineList = new List<string>();
-                for (int i = 0; i < skins_lines.Length; i++)
-                {
-                    LineList.Add(skins_lines[i]);
-                }
-
-                int skin_Start = 0;
-                int skin_End = 0;
-                List<string> SkinObj = new List<string>();
-                if (CTTR_Data.LUA_LoadObject(LineList, "Skin", "CrashDefault", ref skin_Start, ref skin_End, SkinObj))
-                {
-                    for (int i = 0; i < SkinObj.Count; i++)
-                    {
-                        if (SkinObj[i] == "this.SetOnfootSkinFilename(\"crash_onfoot_model\")")
-                        {
-                            SkinObj[i] = "this.SetOnfootSkinFilename(\"" + CTTR_Data.DriverNames[randChars[0]] + "_onfoot_model\")";
-                        }
-                        else if (SkinObj[i] == "this.SetSpinSkinFilename(\"crash_spin_model\")")
-                        {
-                            SkinObj[i] = "this.SetSpinSkinFilename(\"" + CTTR_Data.DriverNames[randChars[0]] + "_onfoot_model\")";
-                        }
-                    }
-                }
-                CTTR_Data.LUA_SaveObject(LineList, "Skin", "CrashDefault", SkinObj);
-
-                skins_lines = new string[LineList.Count];
-                for (int i = 0; i < LineList.Count; i++)
-                {
-                    skins_lines[i] = LineList[i];
-                }
-
-                System.IO.File.WriteAllLines(path_extr + @"design\permanent\skins.god", skins_lines);
-
-            }
-            
-            // Swapping idle animation for platforming character
-            if (randChars[0] != (int)CTTR_Data.DriverID.Crash)
-            {
-                Pure3D.File targetCharAnim = new Pure3D.File();
-                if (System.IO.File.Exists(path_extr + @"art\animation\" + CTTR_Data.DriverNames[randChars[0]] + "_onfoot_animations.p3d"))
-                {
-                    targetCharAnim.Load(path_extr + @"art\animation\\" + CTTR_Data.DriverNames[randChars[0]] + "_onfoot_animations.p3d");
-                }
-                else if (System.IO.File.Exists(path_extr + @"art\animation\" + CTTR_Data.DriverNames[randChars[0]] + "_onfoot_midway_animations.p3d"))
-                {
-                    targetCharAnim.Load(path_extr + @"art\animation\\" + CTTR_Data.DriverNames[randChars[0]] + "_onfoot_midway_animations.p3d");
-                }
-                else
-                {
-                    return;
-                }
-
-                Pure3D.Chunk targetIdleAnim;
-                if (targetCharAnim.RootChunk.GetChildByName<Animation>("onfoot_idle") != null)
-                {
-                    targetIdleAnim = targetCharAnim.RootChunk.GetChildByName<Animation>("onfoot_idle");
-                }
-                else if (targetCharAnim.RootChunk.GetChildByName<Animation>("onfoot_talk_bored") != null) // Nina doesn't have an idle animation
-                {
-                    Animation targetIdleAnimAnim;
-                    targetIdleAnimAnim = targetCharAnim.RootChunk.GetChildByName<Animation>("onfoot_talk_bored");
-                    targetIdleAnimAnim.Name = "onfoot_idle";
-                    targetIdleAnim = (Pure3D.Chunk)targetIdleAnimAnim;
-                }
-                else
-                {
-                    return;
-                }
-
-                if (System.IO.File.Exists(path_extr + @"art\animation\crash_onfoot_animations.p3d"))
-                {
-                    Pure3D.File CrashOnfootAnim = new Pure3D.File();
-                    CrashOnfootAnim.Load(path_extr + @"art\animation\crash_onfoot_animations.p3d");
-
-                    if (CrashOnfootAnim.RootChunk.GetChildByName<Animation>("onfoot_idle") != null)
-                    {
-                        int animIndex = CrashOnfootAnim.RootChunk.GetChildByName<Animation>("onfoot_idle").Parent.GetChildIndexByName<Animation>("onfoot_idle");
-                        CrashOnfootAnim.RootChunk.GetChildByName<Animation>("onfoot_idle").Parent.Children[animIndex] = targetIdleAnim;
-                    }
-
-                    CrashOnfootAnim.Save(path_extr + @"art\animation\crash_onfoot_animations1.p3d");
-                    System.IO.File.Delete(path_extr + @"art\animation\crash_onfoot_animations.p3d");
-                    System.IO.File.Move(path_extr + @"art\animation\crash_onfoot_animations1.p3d", path_extr + @"art\animation\crash_onfoot_animations.p3d");
-
-                }
-                if (System.IO.File.Exists(path_extr + @"art\animation\crash_onfoot_midway_animations.p3d"))
-                {
-                    Pure3D.File CrashOnfootMidwayAnim = new Pure3D.File();
-                    CrashOnfootMidwayAnim.Load(path_extr + @"art\animation\crash_onfoot_midway_animations.p3d");
-
-                    if (CrashOnfootMidwayAnim.RootChunk.GetChildByName<Animation>("onfoot_idle") != null)
-                    {
-                        int animIndex = CrashOnfootMidwayAnim.RootChunk.GetChildByName<Animation>("onfoot_idle").Parent.GetChildIndexByName<Animation>("onfoot_idle");
-                        CrashOnfootMidwayAnim.RootChunk.GetChildByName<Animation>("onfoot_idle").Parent.Children[animIndex] = targetIdleAnim;
-                    }
-
-                    CrashOnfootMidwayAnim.Save(path_extr + @"art\animation\crash_onfoot_midway_animations1.p3d");
-                    System.IO.File.Delete(path_extr + @"art\animation\crash_onfoot_midway_animations.p3d");
-                    System.IO.File.Move(path_extr + @"art\animation\crash_onfoot_midway_animations1.p3d", path_extr + @"art\animation\crash_onfoot_midway_animations.p3d");
-
-                }
-            }
-
-        }
-        void Randomize_Hubs(string path_extr, List<int> randHubs, List<int> randGems)
-        {
-            if (System.IO.File.Exists(path_extr + @"design\permanent\genericobjectives.god"))
-            {
-                string[] objective_lines = System.IO.File.ReadAllLines(path_extr + @"design\permanent\genericobjectives.god");
-                List<string> LineList = new List<string>();
-                for (int i = 0; i < objective_lines.Length; i++)
-                {
-                    LineList.Add(objective_lines[i]);
-                }
-
-                int List_Start = 0;
-                int List_End = 0;
-                List<string> ChangeHubObjective = new List<string>();
-                for (int i = 0; i < 5; i++)
-                {
-                    string targetHub = CTTR_Data.HubNamesSimple[i + 1];
-                    if (CTTR_Data.LUA_LoadObject(LineList, "Objective", "ChangeLevelMidwayTo" + targetHub, ref List_Start, ref List_End, ChangeHubObjective))
-                    {
-                        ChangeHubObjective[ChangeHubObjective.Count - 3] = "this.AddAction_ChangeLevel(\"" + CTTR_Data.HubNames[randHubs[i]] + "\",\"StartLocationFromMidway\")";
-                        CTTR_Data.LUA_SaveObject(LineList, "Objective", "ChangeLevelMidwayTo" + targetHub, ChangeHubObjective);
-                    }
-                    ChangeHubObjective.Clear();
-                    if (CTTR_Data.LUA_LoadObject(LineList, "Objective", "ChangeLevel" + CTTR_Data.HubNamesSimple[randHubs[i]] + "ToMidway", ref List_Start, ref List_End, ChangeHubObjective))
-                    {
-                        ChangeHubObjective[ChangeHubObjective.Count - 3] = "this.AddAction_ChangeLevel(\"onfoot_midway\",\"StartLocationFrom" + targetHub + "\")";
-                        CTTR_Data.LUA_SaveObject(LineList, "Objective", "ChangeLevel" + CTTR_Data.HubNamesSimple[randHubs[i]] + "ToMidway", ChangeHubObjective);
-                    }
-                    ChangeHubObjective.Clear();
-                }
-
-                objective_lines = new string[LineList.Count];
-                for (int i = 0; i < LineList.Count; i++)
-                {
-                    objective_lines[i] = LineList[i];
-                }
-
-                System.IO.File.WriteAllLines(path_extr + @"design\permanent\genericobjectives.god", objective_lines);
-
-            }
-            /* TODO: Gem Key randomization?
-            for (int obj = 0; obj < CTTR_Data.MissionObjectiveTypes.Length; obj++)
-            {
-                if (System.IO.File.Exists(path_extr + @"design\permanent\missionobjectives_" + CTTR_Data.MissionObjectiveTypes[obj] + ".god"))
-                {
-                    string[] objective_lines = System.IO.File.ReadAllLines(path_extr + @"design\permanent\missionobjectives_" + CTTR_Data.MissionObjectiveTypes[obj] + ".god");
-                    List<string> LineList = new List<string>();
-                    for (int i = 0; i < objective_lines.Length; i++)
-                    {
-                        LineList.Add(objective_lines[i]);
-                    }
-
-                    int List_Start = 0;
-                    int List_End = 0;
-                    List<string> ChangeHubObjective = new List<string>();
-                    for (int i = 0; i < CTTR_Data.MissionObjectiveTypes.Length; i++)
-                    {
-                        if (CTTR_Data.LUA_LoadObject(LineList, "Objective", CTTR_Data.MissionObjectiveHubNamesSimple[i] + "KeyCollection", ref List_Start, ref List_End, ChangeHubObjective))
-                        {
-                            for (int a = 0; a < ChangeHubObjective.Count; a++)
-                            {
-                                if (ChangeHubObjective[a] == "this.AddAction_SetNamedFlag(\"KeyAcquired_" + CTTR_Data.MissionObjectiveTypes[i] + "\",true)")
-                                {
-                                    ChangeHubObjective[a] = "this.AddAction_SetNamedFlag(\"KeyAcquired_" + CTTR_Data.MissionObjectiveTypes[randGems[i]] + "\",true)";
-                                }
-                                else if (ChangeHubObjective[a] == "this.AddAction_SetRadarNavPoint(\"Nav" + CTTR_Data.MissionObjectiveHubNamesSimple[i] + "Gate\")")
-                                {
-                                    ChangeHubObjective[a] = "this.AddAction_SetRadarNavPoint(\"Nav" + CTTR_Data.MissionObjectiveHubNamesSimple[randGems[i]] + "Gate\")";
-                                }
-                                else if (ChangeHubObjective[a] == "this.AddRequirement_ObjectiveComplete(\"Unlock" + CTTR_Data.MissionObjectiveHubNamesSimple[i] + "Gate\")")
-                                {
-                                    ChangeHubObjective[a] = "this.AddRequirement_ObjectiveComplete(\"Unlock" + CTTR_Data.MissionObjectiveHubNamesSimple[randGems[i]] + "Gate\")";
-                                }
-                            }
-                            CTTR_Data.LUA_SaveObject(LineList, "Objective", CTTR_Data.MissionObjectiveHubNamesSimple[i] + "KeyCollection", ChangeHubObjective);
-                        }
-                        ChangeHubObjective.Clear();
-                        if (CTTR_Data.LUA_LoadObject(LineList, "Objective", "Unlock" + CTTR_Data.MissionObjectiveHubNamesSimple[i] + "Gate", ref List_Start, ref List_End, ChangeHubObjective))
-                        {
-                            for (int a = 0; a < ChangeHubObjective.Count; a++)
-                            {
-                                if (ChangeHubObjective[a] == "this.AddRequirement_CheckNamedFlag(\"KeyAcquired_" + CTTR_Data.MissionObjectiveTypes[i] + "\",true)")
-                                {
-                                    ChangeHubObjective[a] = "this.AddRequirement_CheckNamedFlag(\"KeyAcquired_" + CTTR_Data.MissionObjectiveTypes[randGems[i]] + "\",true)";
-                                }
-                                else if (ChangeHubObjective[a] == "this.AddAction_SetNamedFlag(\"GateUnlocked_" + CTTR_Data.MissionObjectiveTypes[i] + "\",true)")
-                                {
-                                    ChangeHubObjective[a] = "this.AddAction_SetNamedFlag(\"GateUnlocked_" + CTTR_Data.MissionObjectiveTypes[randGems[i]] + "\",true)";
-                                }
-                                else if (ChangeHubObjective[a] == "this.AddAction_SetRadarNavPoint(\"Nav" + CTTR_Data.MissionObjectiveHubNamesSimple[i] + "Weenie\")")
-                                {
-                                    ChangeHubObjective[a] = "this.AddAction_SetRadarNavPoint(\"Nav" + CTTR_Data.MissionObjectiveHubNamesSimple[randGems[i]] + "Weenie\")";
-                                }
-                            }
-                            CTTR_Data.LUA_SaveObject(LineList, "Objective", "Unlock" + CTTR_Data.MissionObjectiveHubNamesSimple[i] + "Gate", ChangeHubObjective);
-                        }
-                        ChangeHubObjective.Clear();
-                    }
-
-                    objective_lines = new string[LineList.Count];
-                    for (int i = 0; i < LineList.Count; i++)
-                    {
-                        objective_lines[i] = LineList[i];
-                    }
-
-                    System.IO.File.WriteAllLines(path_extr + @"design\permanent\missionobjectives_" + CTTR_Data.MissionObjectiveTypes[obj] + ".god", objective_lines);
-
-                }
-            }
-            */
-        }
-        void Randomize_Tracks(string path_extr, List<int> randTracks)
-        {
-            if (System.IO.File.Exists(path_extr + @"design\permanent\genericobjectives.god"))
-            {
-                string[] objective_lines = System.IO.File.ReadAllLines(path_extr + @"design\permanent\genericobjectives.god");
-                List<string> LineList = new List<string>();
-                for (int i = 0; i < objective_lines.Length; i++)
-                {
-                    LineList.Add(objective_lines[i]);
-                }
-
-                int List_Start = 0;
-                int List_End = 0;
-                List<string> ChangeHubObjective = new List<string>();
-                for (int i = 0; i < 15; i++)
-                {
-                    if (CTTR_Data.LUA_LoadObject(LineList, "Objective", "StartRace" + CTTR_Data.TrackNamesSimple[i], ref List_Start, ref List_End, ChangeHubObjective))
-                    {
-                        ChangeHubObjective[ChangeHubObjective.Count - 3] = "this.AddAction_UnlockRace(\"" + CTTR_Data.TrackNames[randTracks[i]] + "\")";
-                        ChangeHubObjective[ChangeHubObjective.Count - 2] = "this.AddAction_StartRace(\"" + CTTR_Data.TrackNames[randTracks[i]] + "\",\"ReturnFromRace" + CTTR_Data.TrackNamesSimple[i] + "\")";
-                        CTTR_Data.LUA_SaveObject(LineList, "Objective", "StartRace" + CTTR_Data.TrackNamesSimple[i], ChangeHubObjective);
-                    }
-                    ChangeHubObjective.Clear();
-                }
-                if (CTTR_Data.LUA_LoadObject(LineList, "Objective", "StartRaceFromMidway2", ref List_Start, ref List_End, ChangeHubObjective))
-                {
-                    ChangeHubObjective[ChangeHubObjective.Count - 2] = "this.AddAction_StartRace(\"" + CTTR_Data.TrackNames[randTracks[0]] + "\",\"ReturnFromMidwayRaces\")";
-                    CTTR_Data.LUA_SaveObject(LineList, "Objective", "StartRaceFromMidway2", ChangeHubObjective);
-                }
-                ChangeHubObjective.Clear();
-                if (CTTR_Data.LUA_LoadObject(LineList, "Objective", "StartRaceFromMidway3", ref List_Start, ref List_End, ChangeHubObjective))
-                {
-                    ChangeHubObjective[ChangeHubObjective.Count - 2] = "this.AddAction_StartRace(\"" + CTTR_Data.TrackNames[randTracks[0]] + "\",\"ReturnFromMidwayRaces2\")";
-                    CTTR_Data.LUA_SaveObject(LineList, "Objective", "StartRaceFromMidway3", ChangeHubObjective);
-                }
-                ChangeHubObjective.Clear();
-                if (CTTR_Data.LUA_LoadObject(LineList, "Objective", "BuyRaceTicketWithTrack", ref List_Start, ref List_End, ChangeHubObjective))
-                {
-                    ChangeHubObjective[ChangeHubObjective.Count - 2] = "this.AddAction_UnlockRace(\"" + CTTR_Data.TrackNames[randTracks[0]] + "\")";
-                    CTTR_Data.LUA_SaveObject(LineList, "Objective", "BuyRaceTicketWithTrack", ChangeHubObjective);
-                }
-                ChangeHubObjective.Clear();
-
-                objective_lines = new string[LineList.Count];
-                for (int i = 0; i < LineList.Count; i++)
-                {
-                    objective_lines[i] = LineList[i];
-                }
-
-                System.IO.File.WriteAllLines(path_extr + @"design\permanent\genericobjectives.god", objective_lines);
-
-            }
-            for (int obj = 0; obj < CTTR_Data.MissionObjectiveTypes.Length; obj++)
-            {
-                if (System.IO.File.Exists(path_extr + @"design\permanent\missionobjectives_" + CTTR_Data.MissionObjectiveTypes[obj] + ".god"))
-                {
-                    string[] objective_lines = System.IO.File.ReadAllLines(path_extr + @"design\permanent\missionobjectives_" + CTTR_Data.MissionObjectiveTypes[obj] + ".god");
-                    List<string> LineList = new List<string>();
-                    for (int i = 0; i < objective_lines.Length; i++)
-                    {
-                        LineList.Add(objective_lines[i]);
-                    }
-
-                    int List_Start = 0;
-                    int List_End = 0;
-                    List<string> ChangeHubObjective = new List<string>();
-                    for (int i = 0; i < 15; i++)
-                    {
-                        if (CTTR_Data.LUA_LoadObject(LineList, "Objective", "UnlockRace" + CTTR_Data.TrackNamesSimple[i], ref List_Start, ref List_End, ChangeHubObjective))
-                        {
-                            ChangeHubObjective[ChangeHubObjective.Count - 2] = "this.AddAction_UnlockRace(\"" + CTTR_Data.TrackNames[randTracks[i]] + "\")";
-                            ChangeHubObjective[ChangeHubObjective.Count - 1] = "this.AddAction_DisplayMessage(\"" + CTTR_Data.TrackGateNames[randTracks[i]] +"\",1.0,6.0)";
-                            CTTR_Data.LUA_SaveObject(LineList, "Objective", "UnlockRace" + CTTR_Data.TrackNamesSimple[i], ChangeHubObjective);
-                        }
-                        ChangeHubObjective.Clear();
-                    }
-
-                    objective_lines = new string[LineList.Count];
-                    for (int i = 0; i < LineList.Count; i++)
-                    {
-                        objective_lines[i] = LineList[i];
-                    }
-
-                    System.IO.File.WriteAllLines(path_extr + @"design\permanent\missionobjectives_" + CTTR_Data.MissionObjectiveTypes[obj] + ".god", objective_lines);
-
-                }
-            }
-        }
-        void Randomize_Minigames(string path_extr, List<int> randMinigames)
-        {
-            if (System.IO.File.Exists(path_extr + @"design\permanent\genericobjectives.god"))
-            {
-                string[] objective_lines = System.IO.File.ReadAllLines(path_extr + @"design\permanent\genericobjectives.god");
-                List<string> LineList = new List<string>();
-                for (int i = 0; i < objective_lines.Length; i++)
-                {
-                    LineList.Add(objective_lines[i]);
-                }
-
-                int List_Start = 0;
-                int List_End = 0;
-                List<string> ChangeHubObjective = new List<string>();
-                for (int i = 0; i < 8; i++)
-                {
-                    if (CTTR_Data.LUA_LoadObject(LineList, "Objective", CTTR_Data.MinigameObjectiveTypes[i], ref List_Start, ref List_End, ChangeHubObjective))
-                    {
-                        ChangeHubObjective[ChangeHubObjective.Count - 3] = "this.AddAction_UnlockMiniGame(\"OFMiniGames/" + CTTR_Data.MinigameTypeNames[randMinigames[i]] + "\")";
-                        CTTR_Data.LUA_SaveObject(LineList, "Objective", CTTR_Data.MinigameObjectiveTypes[i], ChangeHubObjective);
-                    }
-                    ChangeHubObjective.Clear();
-                }
-
-                objective_lines = new string[LineList.Count];
-                for (int i = 0; i < LineList.Count; i++)
-                {
-                    objective_lines[i] = LineList[i];
-                }
-
-                System.IO.File.WriteAllLines(path_extr + @"design\permanent\genericobjectives.god", objective_lines);
-
-            }
-        }
-        void Randomize_Race_Laps(string path_extr, List<int> randLaps)
-        {
-            if (System.IO.File.Exists(path_extr + @"design\startup.god"))
-            {
-                string[] startup_lines = System.IO.File.ReadAllLines(path_extr + @"design\startup.god");
-                List<string> LineList = new List<string>();
-                for (int i = 0; i < startup_lines.Length; i++)
-                {
-                    LineList.Add(startup_lines[i]);
-                }
-
-                int LevelListStart = 0;
-                for (int i = 0; i < LineList.Count; i++)
-                {
-                    if (LineList[i] == "function GetLevelList()")
-                    {
-                        LevelListStart = i + 2;
-                        break;
-                    }
-                }
-                LineList[LevelListStart] = "{\"adventure1\",ThemeAdventure,TypeRace," + randLaps[0] + ",true},";
-                LineList[LevelListStart + 1] = "{\"adventure2\",ThemeAdventure,TypeRace," + randLaps[1] + ",true},";
-                LineList[LevelListStart + 2] = "{\"adventure3\",ThemeAdventure,TypeRace," + randLaps[2] + ",true},";
-                LineList[LevelListStart + 4] = "{\"fairy1\",ThemeFairy,TypeRace," + randLaps[3] + ",true},";
-                LineList[LevelListStart + 5] = "{\"fairy2\",ThemeFairy,TypeRace," + randLaps[4] + ",true},";
-                LineList[LevelListStart + 6] = "{\"fairy3\",ThemeFairy,TypeRace," + randLaps[5] + ",true},";
-                LineList[LevelListStart + 9] = "{\"dino1\",ThemeDino,TypeRace," + randLaps[6] + ",true},";
-                LineList[LevelListStart + 10] = "{\"dino2\",ThemeDino,TypeRace," + randLaps[7] + ",true},";
-                LineList[LevelListStart + 11] = "{\"dino3\",ThemeDino,TypeRace," + randLaps[8] + ",true},";
-                LineList[LevelListStart + 13] = "{\"egypt1\",ThemeEgypt,TypeRace," + randLaps[9] + ",true},";
-                LineList[LevelListStart + 14] = "{\"egypt2\",ThemeEgypt,TypeRace," + randLaps[10] + ",true},";
-                LineList[LevelListStart + 15] = "{\"egypt3\",ThemeEgypt,TypeRace," + randLaps[11] + ",true},";
-                LineList[LevelListStart + 17] = "{\"solar1\",ThemeSolar,TypeRace," + randLaps[12] + ",true},";
-                LineList[LevelListStart + 18] = "{\"solar2\",ThemeSolar,TypeRace," + randLaps[13] + ",true},";
-                LineList[LevelListStart + 19] = "{\"solar3\",ThemeSolar,TypeRace," + randLaps[14] + ",true},";
-
-                startup_lines = new string[LineList.Count];
-                for (int i = 0; i < LineList.Count; i++)
-                {
-                    startup_lines[i] = LineList[i];
-                }
-
-                System.IO.File.WriteAllLines(path_extr + @"design\startup.god", startup_lines);
-
-            }
-        }
-        void Randomize_Battle_KOs(string path_extr, List<int> randKOs)
-        {
-            if (System.IO.File.Exists(path_extr + @"design\startup.god"))
-            {
-                string[] startup_lines = System.IO.File.ReadAllLines(path_extr + @"design\startup.god");
-                List<string> LineList = new List<string>();
-                for (int i = 0; i < startup_lines.Length; i++)
-                {
-                    LineList.Add(startup_lines[i]);
-                }
-
-                int LevelListStart = 0;
-                for (int i = 0; i < LineList.Count; i++)
-                {
-                    if (LineList[i] == "function GetLevelList()")
-                    {
-                        LevelListStart = i + 2;
-                        break;
-                    }
-                }
-                LineList[LevelListStart + 3] = "{\"adventure_arena\",ThemeAdventure,TypeBattle," + randKOs[0] + ",true},";
-                LineList[LevelListStart + 8] = "{\"bonus1_arena\",ThemeFairy,TypeBattle," + randKOs[1] + ",true},";
-                LineList[LevelListStart + 12] = "{\"dino_arena\",ThemeDino,TypeBattle," + randKOs[2] + ",true},";
-                LineList[LevelListStart + 16] = "{\"egypt_arena\",ThemeEgypt,TypeBattle," + randKOs[3] + ",true},";
-
-                startup_lines = new string[LineList.Count];
-                for (int i = 0; i < LineList.Count; i++)
-                {
-                    startup_lines[i] = LineList[i];
-                }
-
-                System.IO.File.WriteAllLines(path_extr + @"design\startup.god", startup_lines);
-
-            }
-        }
-
-        void Mod_PreventSequenceBreaks(string path_extr)
-        {
-            if (System.IO.File.Exists(path_extr + @"design\permanent\genericobjectives.god"))
-            {
-                string[] objective_lines = System.IO.File.ReadAllLines(path_extr + @"design\permanent\genericobjectives.god");
-                List<string> LineList = new List<string>();
-                for (int i = 0; i < objective_lines.Length; i++)
-                {
-                    LineList.Add(objective_lines[i]);
-                }
-
-                int List_Start = 0;
-                int List_End = 0;
-                List<string> ChangeHubObjective = new List<string>();
-                for (int i = 0; i < 8; i++)
-                {
-                    if (CTTR_Data.LUA_LoadObject(LineList, "Objective", "ChangeLevelMidwayToFairy", ref List_Start, ref List_End, ChangeHubObjective))
-                    {
-                        ChangeHubObjective.Insert(2, "this.AddRequirement_CheckNamedFlag(\"GateUnlocked_fairy\",true)");
-                        CTTR_Data.LUA_SaveObject(LineList, "Objective", "ChangeLevelMidwayToFairy", ChangeHubObjective);
-                    }
-                    if (CTTR_Data.LUA_LoadObject(LineList, "Objective", "ChangeLevelMidwayToDino", ref List_Start, ref List_End, ChangeHubObjective))
-                    {
-                        ChangeHubObjective.Insert(2, "this.AddRequirement_CheckNamedFlag(\"GateUnlocked_dino\",true)");
-                        CTTR_Data.LUA_SaveObject(LineList, "Objective", "ChangeLevelMidwayToDino", ChangeHubObjective);
-                    }
-                    if (CTTR_Data.LUA_LoadObject(LineList, "Objective", "ChangeLevelMidwayToEgypt", ref List_Start, ref List_End, ChangeHubObjective))
-                    {
-                        ChangeHubObjective.Insert(2, "this.AddRequirement_CheckNamedFlag(\"GateUnlocked_egypt\",true)");
-                        CTTR_Data.LUA_SaveObject(LineList, "Objective", "ChangeLevelMidwayToEgypt", ChangeHubObjective);
-                    }
-                    if (CTTR_Data.LUA_LoadObject(LineList, "Objective", "ChangeLevelMidwayToSolar", ref List_Start, ref List_End, ChangeHubObjective))
-                    {
-                        ChangeHubObjective.Insert(2, "this.AddRequirement_CheckNamedFlag(\"GateUnlocked_solar\",true)");
-                        CTTR_Data.LUA_SaveObject(LineList, "Objective", "ChangeLevelMidwayToSolar", ChangeHubObjective);
-                    }
-                    ChangeHubObjective.Clear();
-                }
-
-                objective_lines = new string[LineList.Count];
-                for (int i = 0; i < LineList.Count; i++)
-                {
-                    objective_lines[i] = LineList[i];
-                }
-
-                System.IO.File.WriteAllLines(path_extr + @"design\permanent\genericobjectives.god", objective_lines);
-
-            }
-            if (System.IO.File.Exists(path_extr + @"design\permanent\missionobjectives_fairy.god"))
-            {
-                string[] objective_lines = System.IO.File.ReadAllLines(path_extr + @"design\permanent\missionobjectives_fairy.god");
-                List<string> LineList = new List<string>();
-                for (int i = 0; i < objective_lines.Length; i++)
-                {
-                    LineList.Add(objective_lines[i]);
-                }
-
-                int List_Start = 0;
-                int List_End = 0;
-                List<string> ChangeHubObjective = new List<string>();
-                for (int i = 0; i < 8; i++)
-                {
-                    if (CTTR_Data.LUA_LoadObject(LineList, "Objective", "DinoKeyCollection", ref List_Start, ref List_End, ChangeHubObjective))
-                    {
-                        ChangeHubObjective.Insert(2, "this.AddRequirement_CheckNamedFlag(\"WeenieUnlocked_fairy\",true)");
-                        CTTR_Data.LUA_SaveObject(LineList, "Objective", "DinoKeyCollection", ChangeHubObjective);
-                    }
-                    ChangeHubObjective.Clear();
-                }
-
-                objective_lines = new string[LineList.Count];
-                for (int i = 0; i < LineList.Count; i++)
-                {
-                    objective_lines[i] = LineList[i];
-                }
-
-                System.IO.File.WriteAllLines(path_extr + @"design\permanent\missionobjectives_fairy.god", objective_lines);
-
-            }
-        }
-
-        void Mod_EditCredits()
-        {
-            string path_extr = basePath + @"cml_extr\";
-            RCF_Manager.Extract(basePath + path_RCF_frontend);
-
-            ModCrates.InstallLayerMods(path_extr, 1);
-
-            string[] frontend_lines = System.IO.File.ReadAllLines(path_extr + @"design\levels\common\frontend.god");
-
-            // Editing credits to add CML metadata
-            for (int i = 0; i < frontend_lines.Length; i++)
-            {
-                if (frontend_lines[i] == "screen.AddLine(\"\",0,\"\")")
-                {
-                    frontend_lines[i + 1] = "screen.AddLine(\"Crate Mod Loader " + Program.ModProgram.releaseVersionString + "\",0,\"\")";
-                    frontend_lines[i + 2] = "screen.AddLine(\"Seed: " + Program.ModProgram.randoSeed + "\",0,\"\")";
-                    frontend_lines[i + 3] = "screen.AddLine(\"Options: " + Program.ModProgram.optionsSelectedString + "\",0,\"\")";
-                    frontend_lines[i + 4] = "screen.AddLineSpecial(\"creditscttr\",0,104,104,255,1.2,true)";
-                    break;
-                }
-            }
-
-            System.IO.File.WriteAllLines(path_extr + @"design\levels\common\frontend.god", frontend_lines);
-
-            RCF_Manager.Pack(basePath + path_RCF_frontend);
-        }
-
         public override void OpenModMenu()
         {
-
-            //Pure3D.File targetCharAnim = new Pure3D.File();
-            //targetCharAnim.Load(AppDomain.CurrentDomain.BaseDirectory + "/Tools/ngin_onfoot_animations.p3d");
-            //Pure3D.Chunk targetIdleAnim = targetCharAnim.RootChunk.Children[0];
 
             /*
             basePath = AppDomain.CurrentDomain.BaseDirectory + @"\Tools\";
@@ -1198,7 +631,6 @@ namespace CrateModLoader
 
             RCF_Manager.Pack(basePath + @"default.rcf1");
             */
-            
 
             /*
             Pure3D.File CrashOnfootAnim1 = new Pure3D.File();
@@ -1210,26 +642,6 @@ namespace CrateModLoader
 
             Console.WriteLine("\nNow saving...\n");
             CrashOnfootAnim1.Save(AppDomain.CurrentDomain.BaseDirectory + "/Tools/file1.p3d");
-            */
-
-            /*
-            Pure3D.File CrashOnfootAnim = new Pure3D.File();
-            CrashOnfootAnim.Load(AppDomain.CurrentDomain.BaseDirectory + "/Tools/crash_onfoot_animations.p3d");
-
-            CrashOnfootAnim.RootChunk.Children[0] = targetIdleAnim;
-
-            CrashOnfootAnim.Save(AppDomain.CurrentDomain.BaseDirectory + "/Tools/crash_onfoot_animations1.p3d");
-
-            Pure3D.File CrashOnfootMidwayAnim1 = new Pure3D.File();
-            CrashOnfootMidwayAnim1.Load(AppDomain.CurrentDomain.BaseDirectory + "/Tools/crash_onfoot_midway_animations.p3d");
-            CrashOnfootMidwayAnim1.Save(AppDomain.CurrentDomain.BaseDirectory + "/Tools/crash_onfoot_midway_animations_norm.p3d");
-
-            Pure3D.File CrashOnfootMidwayAnim = new Pure3D.File();
-            CrashOnfootMidwayAnim.Load(AppDomain.CurrentDomain.BaseDirectory + "/Tools/crash_onfoot_midway_animations.p3d");
-
-            CrashOnfootMidwayAnim.RootChunk.Children[0] = targetIdleAnim;
-
-            CrashOnfootMidwayAnim.Save(AppDomain.CurrentDomain.BaseDirectory + "/Tools/crash_onfoot_midway_animations1.p3d");
             */
 
         }

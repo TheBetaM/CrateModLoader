@@ -1420,7 +1420,7 @@ namespace CrateModLoader
                 button_randomize.Enabled = button_randomize.Visible = false;
                 textbox_rando_seed.Enabled = textbox_rando_seed.Visible = false;
 
-                text_gameType.Text = "Unsupported " + cons_mod + " game detected.";
+                text_gameType.Text = "Unsupported " + cons_mod + " Game";
                 text_apiLabel.Text = string.Empty;
 
                 image_gameIcon.Visible = false;
@@ -1436,7 +1436,7 @@ namespace CrateModLoader
                 button_randomize.Enabled = button_randomize.Visible = true;
                 textbox_rando_seed.Enabled = textbox_rando_seed.Visible = true;
 
-                text_gameType.Text = string.Format("{0} {1} {2} detected!", Modder.Game.Name, region_mod, cons_mod);
+                text_gameType.Text = string.Format("{0} ({1} {2})", Modder.Game.Name, region_mod, cons_mod);
                 if (!string.IsNullOrWhiteSpace(Modder.Game.API_Credit))
                 {
                     text_apiLabel.Text = Modder.Game.API_Credit;
