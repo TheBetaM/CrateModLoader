@@ -700,7 +700,10 @@ namespace CrateModLoader
                 }
                 ModCrates.InstallLayerMods(basePath, 0);
             }
-            Modder.StartModProcess();
+            if (Modder != null)
+            {
+                Modder.StartModProcess();
+            }
         }
 
         public void FinishISO()
