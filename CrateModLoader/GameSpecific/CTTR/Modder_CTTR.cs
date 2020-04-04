@@ -157,7 +157,7 @@ namespace CrateModLoader
                 },
             };
 
-            Options.Add(RandomizeCharacters, new ModOption("Randomize Platforming Character")); // todo: change missions to unlock crash and cortex if they're not in the starting pool
+            Options.Add(RandomizeCharacters, new ModOption("Randomize Platforming Character (Unstable)")); // todo: change missions to unlock crash and cortex if they're not in the starting pool
             //Options.Add(RandomizeHubs, new ModOption("Randomize Hub Entrances")); // todo: gem keys in missionobjectives_x and platforming_objects, unlock failure message, key missions
             Options.Add(RandomizeTracks, new ModOption("Randomize Track Entrances")); // todo: arenas
             Options.Add(RandomizeMinigames, new ModOption("Randomize Minigames")); // todo: minigame challenges aswell
@@ -387,8 +387,6 @@ namespace CrateModLoader
 
             randState = new Random(Program.ModProgram.randoSeed);
 
-
-            bool Editing_Credits = true;
             bool Editing_DefaultCommon = false;
 
             if (Options[RandomizeCharacters].Enabled ||
@@ -411,10 +409,8 @@ namespace CrateModLoader
                 EditDefaultAndCommon();
             }
 
-            if (Editing_Credits)
-            {
-                CTTR_Mods.Mod_EditCredits(basePath, path_RCF_frontend);
-            }
+            CTTR_Randomizers.targetCharAnim = null;
+            CTTR_Randomizers.targetIdleAnim = null;
 
         }
 
@@ -565,8 +561,8 @@ namespace CrateModLoader
                 path_RCF_4,
                 path_RCF_5,
                 path_RCF_6,
-                //path_RCF_sound,
-                //path_RCF_english,
+                path_RCF_sound,
+                path_RCF_english,
             };
 
             for (int i = 0; i < all_RCF.Length; i++)
@@ -618,6 +614,7 @@ namespace CrateModLoader
             {
                 CTTR_Mods.Mod_PreventSequenceBreaks(path_extr);
             }
+            CTTR_Mods.Mod_EditCredits(basePath);
 
             RCF_Manager.Pack(basePath + path);
         }

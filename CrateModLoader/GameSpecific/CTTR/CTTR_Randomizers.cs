@@ -8,6 +8,10 @@ namespace CrateModLoader.GameSpecific.CTTR
 {
     public static class CTTR_Randomizers
     {
+
+        public static Pure3D.File targetCharAnim = null;
+        public static Pure3D.Chunk targetIdleAnim = null;
+
         public static void Randomize_Characters(string path_extr, List<int> randChars)
         {
             /* TODO later, because it requires mission logic to unlock Crash/Cortex
@@ -85,68 +89,73 @@ namespace CrateModLoader.GameSpecific.CTTR
             // Swapping idle animation for platforming character
             if (randChars[0] != (int)CTTR_Data.DriverID.Crash)
             {
-                Pure3D.File targetCharAnim = new Pure3D.File();
-                if (System.IO.File.Exists(path_extr + @"art\animation\" + CTTR_Data.DriverNames[randChars[0]] + "_onfoot_animations.p3d"))
+                if (targetCharAnim == null || targetIdleAnim == null)
                 {
-                    targetCharAnim.Load(path_extr + @"art\animation\\" + CTTR_Data.DriverNames[randChars[0]] + "_onfoot_animations.p3d");
-                }
-                else if (System.IO.File.Exists(path_extr + @"art\animation\" + CTTR_Data.DriverNames[randChars[0]] + "_onfoot_midway_animations.p3d"))
-                {
-                    targetCharAnim.Load(path_extr + @"art\animation\\" + CTTR_Data.DriverNames[randChars[0]] + "_onfoot_midway_animations.p3d");
-                }
-                else
-                {
-                    return;
-                }
-
-                Pure3D.Chunk targetIdleAnim;
-                if (targetCharAnim.RootChunk.GetChildByName<Animation>("onfoot_idle") != null)
-                {
-                    targetIdleAnim = targetCharAnim.RootChunk.GetChildByName<Animation>("onfoot_idle");
-                }
-                else if (targetCharAnim.RootChunk.GetChildByName<Animation>("onfoot_talk_bored") != null) // Nina doesn't have an idle animation
-                {
-                    Animation targetIdleAnimAnim;
-                    targetIdleAnimAnim = targetCharAnim.RootChunk.GetChildByName<Animation>("onfoot_talk_bored");
-                    targetIdleAnimAnim.Name = "onfoot_idle";
-                    targetIdleAnim = (Pure3D.Chunk)targetIdleAnimAnim;
-                }
-                else
-                {
-                    return;
-                }
-
-                if (System.IO.File.Exists(path_extr + @"art\animation\crash_onfoot_animations.p3d"))
-                {
-                    Pure3D.File CrashOnfootAnim = new Pure3D.File();
-                    CrashOnfootAnim.Load(path_extr + @"art\animation\crash_onfoot_animations.p3d");
-
-                    if (CrashOnfootAnim.RootChunk.GetChildByName<Animation>("onfoot_idle") != null)
+                    targetCharAnim = new Pure3D.File();
+                    if (System.IO.File.Exists(path_extr + @"art\animation\" + CTTR_Data.DriverNames[randChars[0]] + "_onfoot_animations.p3d"))
                     {
-                        int animIndex = CrashOnfootAnim.RootChunk.GetChildByName<Animation>("onfoot_idle").Parent.GetChildIndexByName<Animation>("onfoot_idle");
-                        CrashOnfootAnim.RootChunk.GetChildByName<Animation>("onfoot_idle").Parent.Children[animIndex] = targetIdleAnim;
+                        targetCharAnim.Load(path_extr + @"art\animation\\" + CTTR_Data.DriverNames[randChars[0]] + "_onfoot_animations.p3d");
+                    }
+                    else if (System.IO.File.Exists(path_extr + @"art\animation\" + CTTR_Data.DriverNames[randChars[0]] + "_onfoot_midway_animations.p3d"))
+                    {
+                        targetCharAnim.Load(path_extr + @"art\animation\\" + CTTR_Data.DriverNames[randChars[0]] + "_onfoot_midway_animations.p3d");
+                    }
+                    else
+                    {
+                        return;
                     }
 
-                    CrashOnfootAnim.Save(path_extr + @"art\animation\crash_onfoot_animations1.p3d");
-                    System.IO.File.Delete(path_extr + @"art\animation\crash_onfoot_animations.p3d");
-                    System.IO.File.Move(path_extr + @"art\animation\crash_onfoot_animations1.p3d", path_extr + @"art\animation\crash_onfoot_animations.p3d");
-
-                }
-                if (System.IO.File.Exists(path_extr + @"art\animation\crash_onfoot_midway_animations.p3d"))
-                {
-                    Pure3D.File CrashOnfootMidwayAnim = new Pure3D.File();
-                    CrashOnfootMidwayAnim.Load(path_extr + @"art\animation\crash_onfoot_midway_animations.p3d");
-
-                    if (CrashOnfootMidwayAnim.RootChunk.GetChildByName<Animation>("onfoot_idle") != null)
+                    if (targetCharAnim.RootChunk.GetChildByName<Animation>("onfoot_idle") != null)
                     {
-                        int animIndex = CrashOnfootMidwayAnim.RootChunk.GetChildByName<Animation>("onfoot_idle").Parent.GetChildIndexByName<Animation>("onfoot_idle");
-                        CrashOnfootMidwayAnim.RootChunk.GetChildByName<Animation>("onfoot_idle").Parent.Children[animIndex] = targetIdleAnim;
+                        targetIdleAnim = targetCharAnim.RootChunk.GetChildByName<Animation>("onfoot_idle");
                     }
+                    else if (targetCharAnim.RootChunk.GetChildByName<Animation>("onfoot_talk_bored") != null) // Nina doesn't have an idle animation
+                    {
+                        Animation targetIdleAnimAnim;
+                        targetIdleAnimAnim = targetCharAnim.RootChunk.GetChildByName<Animation>("onfoot_talk_bored");
+                        targetIdleAnimAnim.Name = "onfoot_idle";
+                        targetIdleAnim = (Pure3D.Chunk)targetIdleAnimAnim;
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
 
-                    CrashOnfootMidwayAnim.Save(path_extr + @"art\animation\crash_onfoot_midway_animations1.p3d");
-                    System.IO.File.Delete(path_extr + @"art\animation\crash_onfoot_midway_animations.p3d");
-                    System.IO.File.Move(path_extr + @"art\animation\crash_onfoot_midway_animations1.p3d", path_extr + @"art\animation\crash_onfoot_midway_animations.p3d");
+                if (targetCharAnim != null && targetIdleAnim != null)
+                {
+                    if (System.IO.File.Exists(path_extr + @"art\animation\crash_onfoot_animations.p3d"))
+                    {
+                        Pure3D.File CrashOnfootAnim = new Pure3D.File();
+                        CrashOnfootAnim.Load(path_extr + @"art\animation\crash_onfoot_animations.p3d");
 
+                        if (CrashOnfootAnim.RootChunk.GetChildByName<Animation>("onfoot_idle") != null)
+                        {
+                            int animIndex = CrashOnfootAnim.RootChunk.GetChildByName<Animation>("onfoot_idle").Parent.GetChildIndexByName<Animation>("onfoot_idle");
+                            CrashOnfootAnim.RootChunk.GetChildByName<Animation>("onfoot_idle").Parent.Children[animIndex] = targetIdleAnim;
+                        }
+
+                        CrashOnfootAnim.Save(path_extr + @"art\animation\crash_onfoot_animations1.p3d");
+                        System.IO.File.Delete(path_extr + @"art\animation\crash_onfoot_animations.p3d");
+                        System.IO.File.Move(path_extr + @"art\animation\crash_onfoot_animations1.p3d", path_extr + @"art\animation\crash_onfoot_animations.p3d");
+
+                    }
+                    if (System.IO.File.Exists(path_extr + @"art\animation\crash_onfoot_midway_animations.p3d"))
+                    {
+                        Pure3D.File CrashOnfootMidwayAnim = new Pure3D.File();
+                        CrashOnfootMidwayAnim.Load(path_extr + @"art\animation\crash_onfoot_midway_animations.p3d");
+
+                        if (CrashOnfootMidwayAnim.RootChunk.GetChildByName<Animation>("onfoot_idle") != null)
+                        {
+                            int animIndex = CrashOnfootMidwayAnim.RootChunk.GetChildByName<Animation>("onfoot_idle").Parent.GetChildIndexByName<Animation>("onfoot_idle");
+                            CrashOnfootMidwayAnim.RootChunk.GetChildByName<Animation>("onfoot_idle").Parent.Children[animIndex] = targetIdleAnim;
+                        }
+
+                        CrashOnfootMidwayAnim.Save(path_extr + @"art\animation\crash_onfoot_midway_animations1.p3d");
+                        System.IO.File.Delete(path_extr + @"art\animation\crash_onfoot_midway_animations.p3d");
+                        System.IO.File.Move(path_extr + @"art\animation\crash_onfoot_midway_animations1.p3d", path_extr + @"art\animation\crash_onfoot_midway_animations.p3d");
+
+                    }
                 }
             }
 

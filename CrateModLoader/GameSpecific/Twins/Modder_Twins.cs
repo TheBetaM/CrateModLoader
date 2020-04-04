@@ -11,7 +11,7 @@ using Twinsanity;
  * UnsafeStartingChunk - string - Starting chunk that allows for a longer name (game will softlock after credits because it overwrites the post-credits chunk name) (name size limit: 0x2D)
  * 
  * Mod Layers:
- * 1: Extracted BD/BH archive files (PS2 only)
+ * 1: Extracted BD/BH archive files (PS2 only, same as layer 0 on XBOX)
  */
 
 namespace CrateModLoader
@@ -165,13 +165,8 @@ namespace CrateModLoader
 
         public override void StartModProcess()
         {
-            if (Program.ModProgram.isoType == ConsoleMode.XBOX)
-            {
-                // No need to extract BD/BH on Xbox, but RMX/SMX level files are not working in the API at the moment
-                return;
-            }
 
-            // Extract BD
+            // Extract BD (PS2 only)
             if (Program.ModProgram.isoType == ConsoleMode.PS2)
             {
                 bdPath = System.IO.Path.Combine(Program.ModProgram.extractedPath, "cml_extr/");
@@ -211,7 +206,7 @@ namespace CrateModLoader
             if (Options[RandomizeCrateTypes].Enabled)
             {
                 TwinsFile mainArchive = new TwinsFile();
-                mainArchive.LoadFile(bdPath + @"Startup\Default.rm" + extensionMod, TwinsFile.FileType.RM2);
+                mainArchive.LoadFile(bdPath + @"Startup\Default.rm" + extensionMod, rmType);
 
                 List<uint> crateList = new List<uint>();
                 List<uint> posList = new List<uint>();
@@ -272,10 +267,10 @@ namespace CrateModLoader
                 //exportList.Clear();
 
                 List<GameObject> import_GObj = new List<GameObject>();
-                List<Texture> import_Tex = new List<Texture>();
-                List<Material> import_Mat = new List<Material>();
-                List<Mesh> import_Mesh = new List<Mesh>();
-                List<Model> import_Mdl = new List<Model>();
+                List<TwinsItem> import_Tex = new List<TwinsItem>();
+                List<TwinsItem> import_Mat = new List<TwinsItem>();
+                List<TwinsItem> import_Mesh = new List<TwinsItem>();
+                List<TwinsItem> import_Mdl = new List<TwinsItem> ();
                 List<Script> import_Scr = new List<Script>();
                 List<TwinsItem> import_OGI = new List<TwinsItem>();
 
@@ -323,7 +318,7 @@ namespace CrateModLoader
                 }
                 for (int i = 0; i < tex_section.Records.Count; ++i)
                 {
-                    Texture obj = (Texture)tex_section.Records[i];
+                    TwinsItem obj = (TwinsItem)tex_section.Records[i];
                     if (obj.ID == 579096643 || obj.ID == 1337357917)
                     {
                         import_Tex.Add(obj);
@@ -331,7 +326,7 @@ namespace CrateModLoader
                 }
                 for (int i = 0; i < mat_section.Records.Count; ++i)
                 {
-                    Material obj = (Material)mat_section.Records[i];
+                    TwinsItem obj = (TwinsItem)mat_section.Records[i];
                     if (obj.ID == 3145594139 || obj.ID == 2974101469 || obj.ID == 755441073 || obj.ID == 2631436731)
                     {
                         import_Mat.Add(obj);
@@ -339,7 +334,7 @@ namespace CrateModLoader
                 }
                 for (int i = 0; i < mesh_section.Records.Count; ++i)
                 {
-                    Mesh obj = (Mesh)mesh_section.Records[i];
+                    TwinsItem obj = (TwinsItem)mesh_section.Records[i];
                     if (obj.ID == 4014807021 || obj.ID == 847180949 || obj.ID == 1222385729 || obj.ID == 1597590509 || obj.ID == 1972795289 || obj.ID == 2348000069)
                     {
                         import_Mesh.Add(obj);
@@ -351,7 +346,7 @@ namespace CrateModLoader
                 }
                 for (int i = 0; i < mdl_section.Records.Count; ++i)
                 {
-                    Model obj = (Model)mdl_section.Records[i];
+                    TwinsItem obj = (TwinsItem)mdl_section.Records[i];
                     if (obj.ID == 2727310987 || obj.ID == 991942702 || obj.ID == 1367147482 || obj.ID == 1742352262 || obj.ID == 2117557042 || obj.ID == 2492761822)
                     {
                         import_Mdl.Add(obj);
@@ -744,7 +739,12 @@ namespace CrateModLoader
 
         void RM_EditLevel(string path)
         {
-            Twins_Data.ChunkType chunkType = Twins_Data.ChunkPathToType(path, System.IO.Path.Combine(Program.ModProgram.extractedPath, @"cml_extr\"));
+            string mainPath = System.IO.Path.Combine(Program.ModProgram.extractedPath, @"cml_extr\");
+            if (Program.ModProgram.isoType == ConsoleMode.XBOX)
+            {
+                mainPath = Program.ModProgram.extractedPath;
+            }
+            Twins_Data.ChunkType chunkType = Twins_Data.ChunkPathToType(path, mainPath, extensionMod);
             if (chunkType != Twins_Data.ChunkType.Invalid)
             {
                 if (levelEdited[(int)chunkType])
@@ -796,7 +796,12 @@ namespace CrateModLoader
         
         void RM_LoadLevel(string path)
         {
-            Twins_Data.ChunkType chunkType = Twins_Data.ChunkPathToType(path, System.IO.Path.Combine(Program.ModProgram.extractedPath, @"cml_extr\"));
+            string mainPath = System.IO.Path.Combine(Program.ModProgram.extractedPath, @"cml_extr\");
+            if (Program.ModProgram.isoType == ConsoleMode.XBOX)
+            {
+                mainPath = Program.ModProgram.extractedPath;
+            }
+            Twins_Data.ChunkType chunkType = Twins_Data.ChunkPathToType(path, mainPath, extensionMod);
             if (chunkType != Twins_Data.ChunkType.Invalid)
             {
                 if (levelEdited[(int)chunkType])

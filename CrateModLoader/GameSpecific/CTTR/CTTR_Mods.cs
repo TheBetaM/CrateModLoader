@@ -87,31 +87,29 @@ namespace CrateModLoader.GameSpecific.CTTR
             }
         }
 
-        public static void Mod_EditCredits(string basePath, string path_RCF_frontend)
+        public static void Mod_EditCredits(string basePath)
         {
             string path_extr = basePath + @"cml_extr\";
-            RCF_Manager.Extract(basePath + path_RCF_frontend);
-
-            ModCrates.InstallLayerMods(path_extr, 1);
-
-            string[] frontend_lines = System.IO.File.ReadAllLines(path_extr + @"design\levels\common\frontend.god");
-
-            // Editing credits to add CML metadata
-            for (int i = 0; i < frontend_lines.Length; i++)
+            if (System.IO.File.Exists(path_extr + @"design\levels\common\frontend.god"))
             {
-                if (frontend_lines[i] == "screen.AddLine(\"\",0,\"\")")
+
+                string[] frontend_lines = System.IO.File.ReadAllLines(path_extr + @"design\levels\common\frontend.god");
+
+                // Editing credits to add CML metadata
+                for (int i = 0; i < frontend_lines.Length; i++)
                 {
-                    frontend_lines[i + 1] = "screen.AddLine(\"Crate Mod Loader " + Program.ModProgram.releaseVersionString + "\",0,\"\")";
-                    frontend_lines[i + 2] = "screen.AddLine(\"Seed: " + Program.ModProgram.randoSeed + "\",0,\"\")";
-                    frontend_lines[i + 3] = "screen.AddLine(\"Options: " + Program.ModProgram.optionsSelectedString + "\",0,\"\")";
-                    frontend_lines[i + 4] = "screen.AddLineSpecial(\"creditscttr\",0,104,104,255,1.2,true)";
-                    break;
+                    if (frontend_lines[i] == "screen.AddLine(\"\",0,\"\")")
+                    {
+                        frontend_lines[i + 1] = "screen.AddLine(\"Crate Mod Loader " + Program.ModProgram.releaseVersionString + "\",0,\"\")";
+                        frontend_lines[i + 2] = "screen.AddLine(\"Seed: " + Program.ModProgram.randoSeed + "\",0,\"\")";
+                        frontend_lines[i + 3] = "screen.AddLine(\"Options: " + Program.ModProgram.optionsSelectedString + "\",0,\"\")";
+                        frontend_lines[i + 4] = "screen.AddLineSpecial(\"creditscttr\",0,104,104,255,1.2,true)";
+                        break;
+                    }
                 }
+
+                System.IO.File.WriteAllLines(path_extr + @"design\levels\common\frontend.god", frontend_lines);
             }
-
-            System.IO.File.WriteAllLines(path_extr + @"design\levels\common\frontend.god", frontend_lines);
-
-            RCF_Manager.Pack(basePath + path_RCF_frontend);
         }
     }
 }

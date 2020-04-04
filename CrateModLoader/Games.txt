@@ -48,9 +48,9 @@ Features:
 - Version, seed and settings visible in the Credits screen
   
 Crash Twinsanity
-Supported: All PS2 versions (.ISO format) (XBOX not supported yet)  
+Supported: All PS2 versions (.ISO format), All XBOX versions (.ISO format)
 Mod abbreviation: CrashTS  
-Mod layers: 1 - CRASH.BD contents
+Mod layers: 1 - CRASH.BD contents (Same as Layer 0 on XBOX)
 API by NeoKesha, Smartkin, ManDude and Marko. (https://github.com/Smartkin/twinsanity-editor)  
 Features:  
 - Randomize Crate Types  

@@ -237,7 +237,7 @@ namespace CrateModLoader.GameSpecific.Twins
             BoilerUnused = 136,
         }
 
-        private enum RM2_Sections
+        private enum RM_Sections
         {
             Graphics = 11,
             Code = 10,
@@ -252,7 +252,7 @@ namespace CrateModLoader.GameSpecific.Twins
             Instances7 = 6,
             Instances8 = 7,
         }
-        public enum RM2_Graphics_Sections
+        public enum RM_Graphics_Sections
         {
             Textures = 0,
             Materials = 1,
@@ -264,7 +264,7 @@ namespace CrateModLoader.GameSpecific.Twins
             Terrains = 7,
             Skydome = 8,
         }
-        public enum RM2_Code_Sections
+        public enum RM_Code_Sections
         {
             Object = 0,
             Script = 1,
@@ -281,7 +281,7 @@ namespace CrateModLoader.GameSpecific.Twins
             SE_Ita = 11,
             SE_Unused = 12,
         }
-        public enum RM2_Instance_Sections
+        public enum RM_Instance_Sections
         {
             UnknownInstance = 0,
             AIPosition = 1,
@@ -1454,13 +1454,13 @@ namespace CrateModLoader.GameSpecific.Twins
             }
         }
 
-        public static ChunkType ChunkPathToType(string path,string bdpath)
+        public static ChunkType ChunkPathToType(string path,string bdpath, string extension)
         {
             ChunkType type = ChunkType.Invalid;
 
             for (int i = 0; i < All_Chunks.Count; i++)
             {
-                string comparePath = bdpath.ToLower() + @"levels\" + All_Chunks[i].Path.ToLower() + ".rm2";
+                string comparePath = bdpath.ToLower() + @"levels\" + All_Chunks[i].Path.ToLower() + ".rm" + extension;
                 if (comparePath == path.ToLower())
                 {
                     type = All_Chunks[i].Chunk;
@@ -1470,7 +1470,7 @@ namespace CrateModLoader.GameSpecific.Twins
 
             if (type == ChunkType.Invalid)
             {
-                string comparePath1 = bdpath.ToLower() + All_Chunks[0].Path.ToLower();
+                string comparePath1 = bdpath.ToLower() + @"levels\" + All_Chunks[0].Path.ToLower() + ".rm" + extension;
                 Console.WriteLine("invalid Chunk");
                 Console.WriteLine("bd path: " + bdpath.ToLower());
                 Console.WriteLine("any chunk path: " + All_Chunks[0].Path.ToLower());
@@ -1502,27 +1502,27 @@ namespace CrateModLoader.GameSpecific.Twins
 
             CachedGameObject gameObject = new CachedGameObject();
 
-            TwinsSection gfx_section = RM_Archive.GetItem<TwinsSection>((uint)RM2_Sections.Graphics);
-            TwinsSection tex_section = gfx_section.GetItem<TwinsSection>((uint)RM2_Graphics_Sections.Textures);
-            TwinsSection mat_section = gfx_section.GetItem<TwinsSection>((uint)RM2_Graphics_Sections.Materials);
-            TwinsSection mesh_section = gfx_section.GetItem<TwinsSection>((uint)RM2_Graphics_Sections.Meshes);
-            TwinsSection mdl_section = gfx_section.GetItem<TwinsSection>((uint)RM2_Graphics_Sections.Models);
-            TwinsSection armdl_section = gfx_section.GetItem<TwinsSection>((uint)RM2_Graphics_Sections.ArmatureModel);
-            TwinsSection acmdl_section = gfx_section.GetItem<TwinsSection>((uint)RM2_Graphics_Sections.ActorModel);
+            TwinsSection gfx_section = RM_Archive.GetItem<TwinsSection>((uint)RM_Sections.Graphics);
+            TwinsSection tex_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.Textures);
+            TwinsSection mat_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.Materials);
+            TwinsSection mesh_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.Meshes);
+            TwinsSection mdl_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.Models);
+            TwinsSection armdl_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.ArmatureModel);
+            TwinsSection acmdl_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.ActorModel);
 
-            TwinsSection code_section = RM_Archive.GetItem<TwinsSection>((uint)RM2_Sections.Code);
-            TwinsSection anim_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.Animation);
-            TwinsSection object_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.Object);
-            TwinsSection script_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.Script);
-            TwinsSection ogi_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.OGI);
-            TwinsSection comdl_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.CodeModel);
-            TwinsSection sfx_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.SE);
-            TwinsSection sfx_eng_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.SE_Eng);
-            TwinsSection sfx_fre_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.SE_Fre);
-            TwinsSection sfx_ger_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.SE_Ger);
-            TwinsSection sfx_ita_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.SE_Ita);
-            TwinsSection sfx_spa_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.SE_Spa);
-            TwinsSection sfx_unu_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.SE_Unused);
+            TwinsSection code_section = RM_Archive.GetItem<TwinsSection>((uint)RM_Sections.Code);
+            TwinsSection anim_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.Animation);
+            TwinsSection object_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.Object);
+            TwinsSection script_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.Script);
+            TwinsSection ogi_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.OGI);
+            TwinsSection comdl_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.CodeModel);
+            TwinsSection sfx_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.SE);
+            TwinsSection sfx_eng_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.SE_Eng);
+            TwinsSection sfx_fre_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.SE_Fre);
+            TwinsSection sfx_ger_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.SE_Ger);
+            TwinsSection sfx_ita_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.SE_Ita);
+            TwinsSection sfx_spa_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.SE_Spa);
+            TwinsSection sfx_unu_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.SE_Unused);
 
             // may need a check to see if the section exists?
 
@@ -1802,14 +1802,14 @@ namespace CrateModLoader.GameSpecific.Twins
             }
 
             bool loadedTemplate = false;
-            for (uint section_id = (uint)RM2_Sections.Instances1; section_id <= (uint)RM2_Sections.Instances8; section_id++)
+            for (uint section_id = (uint)RM_Sections.Instances1; section_id <= (uint)RM_Sections.Instances8; section_id++)
             {
                 if (!RM_Archive.ContainsItem(section_id)) continue;
                 TwinsSection section = RM_Archive.GetItem<TwinsSection>(section_id);
                 if (section.Records.Count > 0)
                 {
-                    if (!section.ContainsItem((uint)RM2_Instance_Sections.ObjectInstance)) continue;
-                    TwinsSection instances = section.GetItem<TwinsSection>((uint)RM2_Instance_Sections.ObjectInstance);
+                    if (!section.ContainsItem((uint)RM_Instance_Sections.ObjectInstance)) continue;
+                    TwinsSection instances = section.GetItem<TwinsSection>((uint)RM_Instance_Sections.ObjectInstance);
                     for (int i = 0; i < instances.Records.Count; ++i)
                     {
                         Instance instance = (Instance)instances.Records[i];
@@ -1849,14 +1849,14 @@ namespace CrateModLoader.GameSpecific.Twins
             }
             if (!loadedTemplate)
             {
-                for (uint section_id = (uint)RM2_Sections.Instances1; section_id <= (uint)RM2_Sections.Instances8; section_id++)
+                for (uint section_id = (uint)RM_Sections.Instances1; section_id <= (uint)RM_Sections.Instances8; section_id++)
                 {
                     if (!RM_Archive.ContainsItem(section_id)) continue;
                     TwinsSection section = RM_Archive.GetItem<TwinsSection>(section_id);
                     if (section.Records.Count > 0)
                     {
-                        if (!section.ContainsItem((uint)RM2_Instance_Sections.ObjectInstance)) continue;
-                        TwinsSection instances = section.GetItem<TwinsSection>((uint)RM2_Instance_Sections.ObjectInstance);
+                        if (!section.ContainsItem((uint)RM_Instance_Sections.ObjectInstance)) continue;
+                        TwinsSection instances = section.GetItem<TwinsSection>((uint)RM_Instance_Sections.ObjectInstance);
                         for (int i = 0; i < instances.Records.Count; ++i)
                         {
                             Instance instance = (Instance)instances.Records[i];
@@ -1943,27 +1943,27 @@ namespace CrateModLoader.GameSpecific.Twins
                 }
             }
 
-            TwinsSection gfx_section = RM_Archive.GetItem<TwinsSection>((uint)RM2_Sections.Graphics);
-            TwinsSection tex_section = gfx_section.GetItem<TwinsSection>((uint)RM2_Graphics_Sections.Textures);
-            TwinsSection mat_section = gfx_section.GetItem<TwinsSection>((uint)RM2_Graphics_Sections.Materials);
-            TwinsSection mesh_section = gfx_section.GetItem<TwinsSection>((uint)RM2_Graphics_Sections.Meshes);
-            TwinsSection mdl_section = gfx_section.GetItem<TwinsSection>((uint)RM2_Graphics_Sections.Models);
-            TwinsSection armdl_section = gfx_section.GetItem<TwinsSection>((uint)RM2_Graphics_Sections.ArmatureModel);
-            TwinsSection acmdl_section = gfx_section.GetItem<TwinsSection>((uint)RM2_Graphics_Sections.ActorModel);
+            TwinsSection gfx_section = RM_Archive.GetItem<TwinsSection>((uint)RM_Sections.Graphics);
+            TwinsSection tex_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.Textures);
+            TwinsSection mat_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.Materials);
+            TwinsSection mesh_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.Meshes);
+            TwinsSection mdl_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.Models);
+            TwinsSection armdl_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.ArmatureModel);
+            TwinsSection acmdl_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.ActorModel);
 
-            TwinsSection code_section = RM_Archive.GetItem<TwinsSection>((uint)RM2_Sections.Code);
-            TwinsSection anim_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.Animation);
-            TwinsSection object_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.Object);
-            TwinsSection script_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.Script);
-            TwinsSection ogi_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.OGI);
-            TwinsSection comdl_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.CodeModel);
-            TwinsSection sfx_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.SE);
-            TwinsSection sfx_eng_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.SE_Eng);
-            TwinsSection sfx_fre_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.SE_Fre);
-            TwinsSection sfx_ger_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.SE_Ger);
-            TwinsSection sfx_ita_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.SE_Ita);
-            TwinsSection sfx_spa_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.SE_Spa);
-            TwinsSection sfx_unu_section = code_section.GetItem<TwinsSection>((uint)RM2_Code_Sections.SE_Unused);
+            TwinsSection code_section = RM_Archive.GetItem<TwinsSection>((uint)RM_Sections.Code);
+            TwinsSection anim_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.Animation);
+            TwinsSection object_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.Object);
+            TwinsSection script_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.Script);
+            TwinsSection ogi_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.OGI);
+            TwinsSection comdl_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.CodeModel);
+            TwinsSection sfx_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.SE);
+            TwinsSection sfx_eng_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.SE_Eng);
+            TwinsSection sfx_fre_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.SE_Fre);
+            TwinsSection sfx_ger_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.SE_Ger);
+            TwinsSection sfx_ita_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.SE_Ita);
+            TwinsSection sfx_spa_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.SE_Spa);
+            TwinsSection sfx_unu_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.SE_Unused);
 
             // may need a check to see if the section exists?
 

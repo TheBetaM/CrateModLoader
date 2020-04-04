@@ -57,7 +57,7 @@ Tools/API by BetaM, ManDude and eezstreet.
 - Version, seed and settings visible in the Credits screen
   
 ## Crash Twinsanity ![Crash Twinsanity](../master/CrateModLoader/Resources/icon_twins.png "Crash Twinsanity")
-Supported: All PS2 versions (.ISO format) (XBOX not supported yet)  
+Supported: All PS2 versions (.ISO format), All XBOX versions (.ISO format)    
 Mod abbreviation: CrashTS  
 API by NeoKesha, Smartkin, ManDude and Marko. (https://github.com/Smartkin/twinsanity-editor)  
 ### Features:  
@@ -100,7 +100,7 @@ API by NeoKesha.
 - Version, seed and settings visible in the Credits screen  
 
 ## Rayman 3: Hoodlum Havoc ![Rayman 3](../master/CrateModLoader/Resources/icon_ray3.png "Rayman 3")
-Supported: All PS2 versions (.ISO format), All GC versions (.ISO format), All XBOX versions (.ISO format), PC version (Folder mode only)  
+Supported: All PS2 versions (.ISO format), All GC versions (.ISO format), All XBOX versions (.ISO format)  
 Mod abbreviation: Rayman3  
 ### Features:
 - Randomize Level Order (All Levels or Any amount of Levels)  

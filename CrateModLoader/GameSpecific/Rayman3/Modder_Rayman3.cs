@@ -19,7 +19,7 @@ namespace CrateModLoader.GameSpecific.Rayman3
                     ConsoleMode.GCN,
                     ConsoleMode.PS2,
                     ConsoleMode.XBOX,
-                    ConsoleMode.PC,
+                    //ConsoleMode.PC,
                 },
                 API_Credit = string.Empty, //"API based on Raymap by Droolie and Robin",
                 API_Link = string.Empty,  //"https://github.com/byvar/raymap",
@@ -56,6 +56,7 @@ namespace CrateModLoader.GameSpecific.Rayman3
                     Region = RegionType.PAL,
                     RegionNumber = 4, },
                 },
+                /*
                 RegionID_PC = new RegionCode[] {
                     new RegionCode() {
                     Name = "Rayman3.exe",
@@ -70,6 +71,7 @@ namespace CrateModLoader.GameSpecific.Rayman3
                     Name = "Rayman3.EXE",
                     Region = RegionType.Global },
                 },
+                */
             };
 
             Options.Add(RandomizeLevelOrder, new ModOption("Randomize Level Order (All Levels)")); 
