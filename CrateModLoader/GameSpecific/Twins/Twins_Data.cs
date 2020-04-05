@@ -1524,8 +1524,6 @@ namespace CrateModLoader.GameSpecific.Twins
             TwinsSection sfx_spa_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.SE_Spa);
             TwinsSection sfx_unu_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.SE_Unused);
 
-            // may need a check to see if the section exists?
-
             GameObject targetObject = null;
             for (int i = 0; i < object_section.Records.Count; i++)
             {
@@ -1540,7 +1538,7 @@ namespace CrateModLoader.GameSpecific.Twins
             }
             objectsExported.Add(objectID);
 
-            ushort[] animList = targetObject.Anims;
+            ushort[] animList = targetObject.cAnims;
             List<ushort> export_anim = GetValidIDs(ref animList);
 
             for (int i = 0; i < anim_section.Records.Count; i++)
@@ -1555,7 +1553,7 @@ namespace CrateModLoader.GameSpecific.Twins
                 }
             }
 
-            ushort[] objList = targetObject.Objects;
+            ushort[] objList = targetObject.cObjects;
             List<ushort> export_objects = GetValidIDs(ref objList);
             for (int i = 0; i < object_section.Records.Count; i++)
             {
@@ -1577,7 +1575,7 @@ namespace CrateModLoader.GameSpecific.Twins
                 }
             }
 
-            ushort[] ogiList = targetObject.OGIs;
+            ushort[] ogiList = targetObject.cOGIs;
             List<ushort> export_ogi = GetValidIDs(ref ogiList);
 
             for (int i = 0; i < ogi_section.Records.Count; i++)
@@ -1586,13 +1584,13 @@ namespace CrateModLoader.GameSpecific.Twins
                 {
                     if (gameObject.list_ogi == null)
                     {
-                        gameObject.list_ogi = new List<TwinsItem>();
+                        gameObject.list_ogi = new List<GraphicsInfo>();
                     }
-                    gameObject.list_ogi.Add(ogi_section.Records[i]);
+                    gameObject.list_ogi.Add((GraphicsInfo)ogi_section.Records[i]);
                 }
             }
 
-            ushort[] scriptList = targetObject.Scripts;
+            ushort[] scriptList = targetObject.cScripts;
             List<ushort> export_script = GetValidIDs(ref scriptList);
 
             for (int i = 0; i < script_section.Records.Count; i++)
@@ -1607,7 +1605,6 @@ namespace CrateModLoader.GameSpecific.Twins
                 }
             }
 
-            // gameobject -> codemodel
             ushort[] codemodelList = targetObject.cCM;
             List<ushort> export_comdl = GetValidIDs(ref codemodelList);
 
@@ -1623,7 +1620,7 @@ namespace CrateModLoader.GameSpecific.Twins
                 }
             }
 
-            ushort[] soundList = targetObject.Sounds;
+            ushort[] soundList = targetObject.cSounds;
             List<ushort> export_sounds = GetValidIDs(ref soundList);
 
             for (int i = 0; i < sfx_section.Records.Count; i++)
@@ -1704,100 +1701,145 @@ namespace CrateModLoader.GameSpecific.Twins
                 }
             }
 
-            // todo: ogi -> model, armaturemodel, actormodel
             List<uint> export_mdl = new List<uint>();
             List<uint> export_armdl = new List<uint>();
             List<uint> export_acmdl = new List<uint>();
-            for (int ogi = 0; ogi < gameObject.list_ogi.Count; ogi++)
+            if (gameObject.list_ogi != null)
             {
-                //export_armdl.Add(gameObject.list_ogi[ogi].ArmatureModelID);
-                //export_acmdl.Add(gameObject.list_ogi[ogi].ActorModelID);
-                //for (int i = 0; i < gameObject.list_ogi[ogi].ModelIDs.Length; i++)
-                //{
-                //    export_mdl.Add(gameObject.list_ogi[ogi].ModelIDs[i]);
-                //}
-            }
-            for (int i = 0; i < mdl_section.Records.Count; i++)
-            {
-                if (export_mdl.Contains(mdl_section.Records[i].ID))
+                for (int ogi = 0; ogi < gameObject.list_ogi.Count; ogi++)
                 {
-                    if (gameObject.list_models == null)
+                    if (gameObject.list_ogi[ogi].ArmatureModelID != 0)
                     {
-                        gameObject.list_models = new List<Model>();
+                        export_armdl.Add(gameObject.list_ogi[ogi].ArmatureModelID);
                     }
-                    gameObject.list_models.Add((Model)mdl_section.Records[i]);
+                    if (gameObject.list_ogi[ogi].ActorModelID != 0)
+                    {
+                        export_acmdl.Add(gameObject.list_ogi[ogi].ActorModelID);
+                    }
+                    if (gameObject.list_ogi[ogi].ModelIDs.Length > 0)
+                    {
+                        for (int i = 0; i < gameObject.list_ogi[ogi].ModelIDs.Length; i++)
+                        {
+                            export_mdl.Add(gameObject.list_ogi[ogi].ModelIDs[i].ModelID);
+                        }
+                    }
                 }
             }
-            for (int i = 0; i < armdl_section.Records.Count; i++)
+            if (export_mdl.Count > 0)
             {
-                if (export_armdl.Contains(armdl_section.Records[i].ID))
+                for (int i = 0; i < mdl_section.Records.Count; i++)
                 {
-                    if (gameObject.list_armaturemodels == null)
+                    if (export_mdl.Contains(mdl_section.Records[i].ID))
                     {
-                        gameObject.list_armaturemodels = new List<TwinsItem>();
+                        if (gameObject.list_models == null)
+                        {
+                            gameObject.list_models = new List<Model>();
+                        }
+                        gameObject.list_models.Add((Model)mdl_section.Records[i]);
                     }
-                    gameObject.list_armaturemodels.Add(armdl_section.Records[i]);
                 }
             }
-            for (int i = 0; i < acmdl_section.Records.Count; i++)
+            if (export_armdl.Count > 0)
             {
-                if (export_acmdl.Contains(acmdl_section.Records[i].ID))
+                for (int i = 0; i < armdl_section.Records.Count; i++)
                 {
-                    if (gameObject.list_actormodels == null)
+                    if (export_armdl.Contains(armdl_section.Records[i].ID))
                     {
-                        gameObject.list_actormodels = new List<TwinsItem>();
+                        if (gameObject.list_armaturemodels == null)
+                        {
+                            gameObject.list_armaturemodels = new List<ArmatureModel>();
+                        }
+                        gameObject.list_armaturemodels.Add((ArmatureModel)armdl_section.Records[i]);
                     }
-                    gameObject.list_actormodels.Add(acmdl_section.Records[i]);
+                }
+            }
+            if (export_acmdl.Count > 0)
+            {
+                for (int i = 0; i < acmdl_section.Records.Count; i++)
+                {
+                    if (export_acmdl.Contains(acmdl_section.Records[i].ID))
+                    {
+                        if (gameObject.list_actormodels == null)
+                        {
+                            gameObject.list_actormodels = new List<TwinsItem>();
+                        }
+                        gameObject.list_actormodels.Add(acmdl_section.Records[i]);
+                    }
                 }
             }
 
             List<uint> export_mat = new List<uint>();
             List<uint> export_mesh = new List<uint>();
-            for (int mdl = 0; mdl < gameObject.list_models.Count; mdl++)
+            if (gameObject.list_models != null)
             {
-                export_mesh.Add(gameObject.list_models[mdl].MeshID);
-                for (int i = 0; i < gameObject.list_models[mdl].MaterialIDs.Length; i++)
+                for (int mdl = 0; mdl < gameObject.list_models.Count; mdl++)
                 {
-                    export_mat.Add(gameObject.list_models[mdl].MaterialIDs[i]);
+                    export_mesh.Add(gameObject.list_models[mdl].MeshID);
+                    for (int i = 0; i < gameObject.list_models[mdl].MaterialIDs.Length; i++)
+                    {
+                        export_mat.Add(gameObject.list_models[mdl].MaterialIDs[i]);
+                    }
                 }
             }
-            for (int i = 0; i < mesh_section.Records.Count; i++)
+            if (gameObject.list_armaturemodels != null)
             {
-                if (export_mesh.Contains(mesh_section.Records[i].ID))
+                for (int mdl = 0; mdl < gameObject.list_armaturemodels.Count; mdl++)
                 {
-                    if (gameObject.list_meshes == null)
+                    for (int i = 0; i < gameObject.list_armaturemodels[mdl].MaterialIDs.Length; i++)
                     {
-                        gameObject.list_meshes = new List<Mesh>();
+                        export_mat.Add(gameObject.list_armaturemodels[mdl].MaterialIDs[i]);
                     }
-                    gameObject.list_meshes.Add((Mesh)mesh_section.Records[i]);
                 }
             }
-            for (int i = 0; i < mat_section.Records.Count; i++)
+            if (export_mesh.Count > 0)
             {
-                if (export_mat.Contains(mat_section.Records[i].ID))
+                for (int i = 0; i < mesh_section.Records.Count; i++)
                 {
-                    if (gameObject.list_materials == null)
+                    if (export_mesh.Contains(mesh_section.Records[i].ID))
                     {
-                        gameObject.list_materials = new List<Material>();
+                        if (gameObject.list_meshes == null)
+                        {
+                            gameObject.list_meshes = new List<Mesh>();
+                        }
+                        gameObject.list_meshes.Add((Mesh)mesh_section.Records[i]);
                     }
-                    gameObject.list_materials.Add((Material)mat_section.Records[i]);
+                }
+            }
+            if (export_mat.Count > 0)
+            {
+                for (int i = 0; i < mat_section.Records.Count; i++)
+                {
+                    if (export_mat.Contains(mat_section.Records[i].ID))
+                    {
+                        if (gameObject.list_materials == null)
+                        {
+                            gameObject.list_materials = new List<Material>();
+                        }
+                        gameObject.list_materials.Add((Material)mat_section.Records[i]);
+                    }
                 }
             }
 
             List<uint> export_tex = new List<uint>();
-            for (int mat = 0; mat < gameObject.list_materials.Count; mat++)
+            if (export_mat.Count > 0)
             {
-                export_tex.Add(gameObject.list_materials[mat].Tex);
-            }
-            for (int i = 0; i < tex_section.Records.Count; i++)
-            {
-                if (export_tex.Contains(tex_section.Records[i].ID))
+                for (int mat = 0; mat < gameObject.list_materials.Count; mat++)
                 {
-                    if (gameObject.list_textures == null)
+                    export_tex.Add(gameObject.list_materials[mat].Tex);
+                }
+            }
+            if (export_tex.Count > 0)
+            {
+                for (int i = 0; i < tex_section.Records.Count; i++)
+                {
+                    if (export_tex.Contains(tex_section.Records[i].ID))
                     {
-                        gameObject.list_textures = new List<Texture>();
+                        if (gameObject.list_textures == null)
+                        {
+                            gameObject.list_textures = new List<Texture>();
+                        }
+                        gameObject.list_textures.Add((Texture)tex_section.Records[i]);
                     }
-                    gameObject.list_textures.Add((Texture)tex_section.Records[i]);
                 }
             }
 
@@ -1935,7 +1977,7 @@ namespace CrateModLoader.GameSpecific.Twins
             }
             importedObjects.Add(objectID);
 
-            if (cachedGameObjects[targetObject].list_subobjects != null & cachedGameObjects[targetObject].list_subobjects.Count > 0)
+            if (cachedGameObjects[targetObject].list_subobjects != null && cachedGameObjects[targetObject].list_subobjects.Count > 0)
             {
                 for (int i = 0; i < cachedGameObjects[targetObject].list_subobjects.Count; i++)
                 {
@@ -1964,8 +2006,6 @@ namespace CrateModLoader.GameSpecific.Twins
             TwinsSection sfx_ita_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.SE_Ita);
             TwinsSection sfx_spa_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.SE_Spa);
             TwinsSection sfx_unu_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.SE_Unused);
-
-            // may need a check to see if the section exists?
 
             if (cachedGameObjects[targetObject].list_textures != null && cachedGameObjects[targetObject].list_textures.Count > 0)
             {
@@ -2250,12 +2290,12 @@ namespace CrateModLoader.GameSpecific.Twins
         public GameObject mainObject;
         public List<TwinsItem> list_anims;
         public List<Model> list_models;
-        public List<TwinsItem> list_armaturemodels;
+        public List<ArmatureModel> list_armaturemodels;
         public List<TwinsItem> list_codemodels;
         public List<TwinsItem> list_actormodels;
         public List<Material> list_materials;
         public List<Mesh> list_meshes;
-        public List<TwinsItem> list_ogi;
+        public List<GraphicsInfo> list_ogi;
         public List<Script> list_scripts;
         public List<SoundEffect> list_sounds;
         public List<SoundEffect> list_sounds_english;

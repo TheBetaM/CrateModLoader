@@ -81,7 +81,7 @@ namespace CrateModLoader
             Options.Add(RandomizeCrateTypes, new ModOption("Randomize Crate Types")); // TODO: Make this a toggle between CrateTypes/AllCrates in the mod menu?
             Options.Add(RandomizeAllCrates, new ModOption("Randomize Individual Crates"));
             Options.Add(RandomizeGemLocations, new ModOption("Randomize Gem Locations"));
-            //Options.Add(RandomizeEnemies, new ModOption("Randomize Enemies")); // TODO
+            Options.Add(RandomizeEnemies, new ModOption("Randomize Enemies (Unstable)"));
             Options.Add(RandomizeMusic, new ModOption("Randomize Level Music"));
             Options.Add(RandomizeCharParams, new ModOption("Randomize Character Parameters"));
             //Options.Add(RandomizeStartingChunk, new ModOption("Randomize Starting Chunk")); // TODO
@@ -261,11 +261,18 @@ namespace CrateModLoader
                 TwinsFile cortexlevelArchive = new TwinsFile();
                 cortexlevelArchive.LoadFile(bdPath + @"Levels\school\Cortex\cogpa01.rm" + extensionMod, rmType);
 
-                // when exporting is done
-                //List<Twins_Data.ObjectID> exportList = new List<Twins_Data.ObjectID>();
-                //Twins_Data.ExportGameObject(ref cortexlevelArchive, Twins_Data.ObjectID.AMMOCRATESMALL,ref exportList);
-                //exportList.Clear();
+                List<Twins_Data.ObjectID> exportList = new List<Twins_Data.ObjectID>();
+                Twins_Data.ExportGameObject(ref cortexlevelArchive, Twins_Data.ObjectID.AMMOCRATESMALL,ref exportList);
+                exportList.Clear();
 
+                Twins_Data.cachedGameObjects[0].mainObject.Scripts[(uint)Twins_Data.GameObjectScriptOrder.OnPhysicsCollision] = 65535;
+                Twins_Data.cachedGameObjects[0].mainObject.Scripts[(uint)Twins_Data.GameObjectScriptOrder.OnTouch] = 65535;
+                Twins_Data.cachedGameObjects[0].mainObject.Scripts[(uint)Twins_Data.GameObjectScriptOrder.OnTrigger] = (ushort)Twins_Data.ScriptID.HEAD_COM_GENERIC_CRATE_TRIGGER_NEXT;
+                Twins_Data.cachedGameObjects[0].mainObject.Scripts[(uint)Twins_Data.GameObjectScriptOrder.OnDamage] = (ushort)Twins_Data.ScriptID.HEAD_COM_AMMO_CRATE_SMALL_TOUCHED;
+                Twins_Data.cachedGameObjects[0].mainObject.Scripts[(uint)Twins_Data.GameObjectScriptOrder.OnLand] = (ushort)Twins_Data.ScriptID.HEAD_COM_BASIC_CRATE_LANDED_ON;
+
+
+                /*
                 List<GameObject> import_GObj = new List<GameObject>();
                 List<TwinsItem> import_Tex = new List<TwinsItem>();
                 List<TwinsItem> import_Mat = new List<TwinsItem>();
@@ -356,14 +363,15 @@ namespace CrateModLoader
                         import_Mdl.Add(obj);
                     }
                 }
+                */
 
                 TwinsFile mainArchive = new TwinsFile();
                 mainArchive.LoadFile(bdPath + @"Startup\Default.rm" + extensionMod, rmType);
 
-                // when importing is done
-                //Twins_Data.ImportGameObject(ref mainArchive, Twins_Data.ObjectID.AMMOCRATESMALL,ref exportList);
-                //exportList.Clear();
+                Twins_Data.ImportGameObject(ref mainArchive, Twins_Data.ObjectID.AMMOCRATESMALL,ref exportList);
+                exportList.Clear();
 
+                /*
                 gfx_section = mainArchive.GetItem<TwinsSection>((uint)RM_Sections.Graphics);
                 code_section = mainArchive.GetItem<TwinsSection>((uint)RM_Sections.Code);
                 object_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.Object);
@@ -402,6 +410,7 @@ namespace CrateModLoader
                 {
                     ogi_section.Records.Add(import_OGI[i]);
                 }
+                */
 
                 mainArchive.SaveFile(bdPath + "/Startup/Default.rm" + extensionMod);
             }
@@ -508,7 +517,7 @@ namespace CrateModLoader
                 Twins_Edit_AllLevels = true;
             }
 
-            if (Options[ModFlyingKick].Enabled || Options[ModStompKick].Enabled || Options[ModDoubleJumpCortex].Enabled || Options[ModDoubleJumpNina].Enabled) // || Options[RandomizeEnemies].Enabled)
+            if (Options[ModFlyingKick].Enabled || Options[ModStompKick].Enabled || Options[ModDoubleJumpCortex].Enabled || Options[ModDoubleJumpNina].Enabled || Options[RandomizeEnemies].Enabled)
             {
                 Twins_Edit_AllLevels = true;
 
@@ -529,7 +538,7 @@ namespace CrateModLoader
                 Twins_Data.allScripts.Sort((x, y) => x.ID.CompareTo(y.ID));
                 Twins_Data.allObjects.Sort((x, y) => x.ID.CompareTo(y.ID));
 
-                /*
+                
                 if (Options[RandomizeEnemies].Enabled)
                 {
                     EnemyReplaceList.Add(Twins_Data.ObjectID.GLOBAL_MONKEY);
@@ -566,24 +575,24 @@ namespace CrateModLoader
                     EnemyReplaceList.Add(Twins_Data.ObjectID.DRONE_SOLDIER);
                     EnemyReplaceList.Add(Twins_Data.ObjectID.DRONE_BERSERKER);
 
-                    EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_MONKEY);
-                    EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_CHICKEN);
-                    EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_CRAB);
+                    EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_MONKEY); // works
+                    EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_CHICKEN); // works
+                    //EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_CRAB); // works with errors, they only spawn on AIpaths for some reason
                     //EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_SKUNK); // todo: skunk requires 2 positions? training skunk 1 position
-                    EnemyInsertList.Add(Twins_Data.ObjectID.EARTH_TRIBESMAN_SHIELDBEARER);
-                    EnemyInsertList.Add(Twins_Data.ObjectID.EARTH_TRIBESMAN);
-                    EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_BAT_DARKPURPLE);
-                    EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_BAT_ICE);
-                    EnemyInsertList.Add(Twins_Data.ObjectID.PIRANHAPLANT);
-                    EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_PIG_WILDBOAR);
-                    EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_RAT_INTERMEDIATE);
+                    EnemyInsertList.Add(Twins_Data.ObjectID.EARTH_TRIBESMAN_SHIELDBEARER); // works (but has 1 HP)
+                    EnemyInsertList.Add(Twins_Data.ObjectID.EARTH_TRIBESMAN); // works
+                    //EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_BAT_DARKPURPLE);
+                    EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_BAT_ICE); //
+                    EnemyInsertList.Add(Twins_Data.ObjectID.PIRANHAPLANT); // 
+                    EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_PIG_WILDBOAR); //
+                    EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_RAT_INTERMEDIATE); //
                     //EnemyInsertList.Add(Twins_Data.ObjectID.MINI_MON); //todo: missing instance values for a generic one
                     EnemyInsertList.Add(Twins_Data.ObjectID.PENGUIN);
-                    EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_CORTEX_CAMERABOT);
+                    EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_CORTEX_CAMERABOT); // works
                     //EnemyInsertList.Add(Twins_Data.ObjectID.RHINO_PIRATE); //todo: missing instance values for a generic one
                     EnemyInsertList.Add(Twins_Data.ObjectID.SCHOOL_DOG);
                     EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_COCKROACH);
-                    //EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_BEETLE_DARKPURPLE);
+                    //EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_BEETLE_DARKPURPLE); // todo: export
                     EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_BEETLE_PROJECTILE);
                     //EnemyInsertList.Add(Twins_Data.ObjectID.SCHOOL_FROGENSTEIN); // todo: enable frogensteins
                     EnemyInsertList.Add(Twins_Data.ObjectID.SCHOOL_ZOMBOT);
@@ -640,7 +649,7 @@ namespace CrateModLoader
                         }
                     }
                 }
-                */
+                
 
             }
 
@@ -772,12 +781,12 @@ namespace CrateModLoader
             {
                 RM_Randomize_Music(RM_Archive);
             }
-            /*
+            
             if (Options[RandomizeEnemies].Enabled)
             {
                 RM_Randomize_Enemies(RM_Archive);
             }
-            */
+            
             if (Options[ModStompKick].Enabled)
             {
                 RM_CharacterObjectMod(RM_Archive);
@@ -820,7 +829,7 @@ namespace CrateModLoader
             RM_LoadScripts(RM_Archive);
             RM_LoadObjects(RM_Archive);
 
-            /*
+            
             if (Options[RandomizeEnemies].Enabled)
             {
                 List<Twins_Data.ObjectID> ExportedObjects = new List<Twins_Data.ObjectID>();
@@ -897,7 +906,7 @@ namespace CrateModLoader
                 }
                 //Twins_Data.ExportGameObject(ref RM_Archive, Twins_Data.ObjectID.SCHOOL_JANITOR, ref ExportedObjects);
             }
-            */
+            
         }
 
         void Recursive_EditLevels(DirectoryInfo di)

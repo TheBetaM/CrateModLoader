@@ -95,7 +95,7 @@ Features:
 - Version, seed and settings visible in the Credits screen  
 
 Rayman 3: Hoodlum Havoc
-Supported: All PS2 versions (.ISO format), All GC versions (.ISO format), All XBOX versions (.ISO format), PC version (Folder mode only)
+Supported: All PS2 versions (.ISO format), All GC versions (.ISO format), All XBOX versions (.ISO format)
 Mod abbreviation: Rayman3  
 Features:
 - Randomize Level Order (All Levels or Any amount of Levels)  
