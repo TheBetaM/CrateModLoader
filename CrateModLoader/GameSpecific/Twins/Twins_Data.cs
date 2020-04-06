@@ -1629,9 +1629,9 @@ namespace CrateModLoader.GameSpecific.Twins
                 {
                     if (gameObject.list_sounds == null)
                     {
-                        gameObject.list_sounds = new List<SoundEffect>();
+                        gameObject.list_sounds = new List<TwinsItem>();
                     }
-                    gameObject.list_sounds.Add((SoundEffect)sfx_section.Records[i]);
+                    gameObject.list_sounds.Add(sfx_section.Records[i]);
                 }
             }
             for (int i = 0; i < sfx_eng_section.Records.Count; i++)
@@ -1640,9 +1640,9 @@ namespace CrateModLoader.GameSpecific.Twins
                 {
                     if (gameObject.list_sounds_english == null)
                     {
-                        gameObject.list_sounds_english = new List<SoundEffect>();
+                        gameObject.list_sounds_english = new List<TwinsItem>();
                     }
-                    gameObject.list_sounds_english.Add((SoundEffect)sfx_eng_section.Records[i]);
+                    gameObject.list_sounds_english.Add(sfx_eng_section.Records[i]);
                 }
             }
             for (int i = 0; i < sfx_ger_section.Records.Count; i++)
@@ -1651,9 +1651,9 @@ namespace CrateModLoader.GameSpecific.Twins
                 {
                     if (gameObject.list_sounds_german == null)
                     {
-                        gameObject.list_sounds_german = new List<SoundEffect>();
+                        gameObject.list_sounds_german = new List<TwinsItem>();
                     }
-                    gameObject.list_sounds_german.Add((SoundEffect)sfx_ger_section.Records[i]);
+                    gameObject.list_sounds_german.Add(sfx_ger_section.Records[i]);
                 }
             }
             for (int i = 0; i < sfx_fre_section.Records.Count; i++)
@@ -1662,9 +1662,9 @@ namespace CrateModLoader.GameSpecific.Twins
                 {
                     if (gameObject.list_sounds_french == null)
                     {
-                        gameObject.list_sounds_french = new List<SoundEffect>();
+                        gameObject.list_sounds_french = new List<TwinsItem>();
                     }
-                    gameObject.list_sounds_french.Add((SoundEffect)sfx_fre_section.Records[i]);
+                    gameObject.list_sounds_french.Add(sfx_fre_section.Records[i]);
                 }
             }
             for (int i = 0; i < sfx_ita_section.Records.Count; i++)
@@ -1673,9 +1673,9 @@ namespace CrateModLoader.GameSpecific.Twins
                 {
                     if (gameObject.list_sounds_italian == null)
                     {
-                        gameObject.list_sounds_italian = new List<SoundEffect>();
+                        gameObject.list_sounds_italian = new List<TwinsItem>();
                     }
-                    gameObject.list_sounds_italian.Add((SoundEffect)sfx_ita_section.Records[i]);
+                    gameObject.list_sounds_italian.Add(sfx_ita_section.Records[i]);
                 }
             }
             for (int i = 0; i < sfx_spa_section.Records.Count; i++)
@@ -1684,9 +1684,9 @@ namespace CrateModLoader.GameSpecific.Twins
                 {
                     if (gameObject.list_sounds_spanish == null)
                     {
-                        gameObject.list_sounds_spanish = new List<SoundEffect>();
+                        gameObject.list_sounds_spanish = new List<TwinsItem>();
                     }
-                    gameObject.list_sounds_spanish.Add((SoundEffect)sfx_spa_section.Records[i]);
+                    gameObject.list_sounds_spanish.Add(sfx_spa_section.Records[i]);
                 }
             }
             for (int i = 0; i < sfx_unu_section.Records.Count; i++)
@@ -1695,9 +1695,9 @@ namespace CrateModLoader.GameSpecific.Twins
                 {
                     if (gameObject.list_sounds_unused == null)
                     {
-                        gameObject.list_sounds_unused = new List<SoundEffect>();
+                        gameObject.list_sounds_unused = new List<TwinsItem>();
                     }
-                    gameObject.list_sounds_unused.Add((SoundEffect)sfx_unu_section.Records[i]);
+                    gameObject.list_sounds_unused.Add(sfx_unu_section.Records[i]);
                 }
             }
 
@@ -1799,9 +1799,9 @@ namespace CrateModLoader.GameSpecific.Twins
                     {
                         if (gameObject.list_meshes == null)
                         {
-                            gameObject.list_meshes = new List<Mesh>();
+                            gameObject.list_meshes = new List<TwinsItem>();
                         }
-                        gameObject.list_meshes.Add((Mesh)mesh_section.Records[i]);
+                        gameObject.list_meshes.Add(mesh_section.Records[i]);
                     }
                 }
             }
@@ -1836,9 +1836,9 @@ namespace CrateModLoader.GameSpecific.Twins
                     {
                         if (gameObject.list_textures == null)
                         {
-                            gameObject.list_textures = new List<Texture>();
+                            gameObject.list_textures = new List<TwinsItem>();
                         }
-                        gameObject.list_textures.Add((Texture)tex_section.Records[i]);
+                        gameObject.list_textures.Add(tex_section.Records[i]);
                     }
                 }
             }
@@ -2203,7 +2203,7 @@ namespace CrateModLoader.GameSpecific.Twins
                     return cachedGameObjects[i].instanceTemplate;
                 }
             }
-            return new InstanceTemplate();
+            return new InstanceTemplate() { ObjectID = 0, Properties = 0 };
         }
 
         public static void Twins_Randomize_Character(int charID, ref Random randState)
@@ -2294,17 +2294,17 @@ namespace CrateModLoader.GameSpecific.Twins
         public List<TwinsItem> list_codemodels;
         public List<TwinsItem> list_actormodels;
         public List<Material> list_materials;
-        public List<Mesh> list_meshes;
+        public List<TwinsItem> list_meshes;
         public List<GraphicsInfo> list_ogi;
         public List<Script> list_scripts;
-        public List<SoundEffect> list_sounds;
-        public List<SoundEffect> list_sounds_english;
-        public List<SoundEffect> list_sounds_french;
-        public List<SoundEffect> list_sounds_german;
-        public List<SoundEffect> list_sounds_italian;
-        public List<SoundEffect> list_sounds_spanish;
-        public List<SoundEffect> list_sounds_unused;
-        public List<Texture> list_textures;
+        public List<TwinsItem> list_sounds;
+        public List<TwinsItem> list_sounds_english;
+        public List<TwinsItem> list_sounds_french;
+        public List<TwinsItem> list_sounds_german;
+        public List<TwinsItem> list_sounds_italian;
+        public List<TwinsItem> list_sounds_spanish;
+        public List<TwinsItem> list_sounds_unused;
+        public List<TwinsItem> list_textures;
         public List<Twins_Data.ObjectID> list_subobjects;
         public InstanceTemplate instanceTemplate;
     }

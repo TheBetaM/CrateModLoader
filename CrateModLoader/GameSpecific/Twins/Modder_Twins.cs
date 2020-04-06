@@ -81,7 +81,7 @@ namespace CrateModLoader
             Options.Add(RandomizeCrateTypes, new ModOption("Randomize Crate Types")); // TODO: Make this a toggle between CrateTypes/AllCrates in the mod menu?
             Options.Add(RandomizeAllCrates, new ModOption("Randomize Individual Crates"));
             Options.Add(RandomizeGemLocations, new ModOption("Randomize Gem Locations"));
-            Options.Add(RandomizeEnemies, new ModOption("Randomize Enemies (Unstable)"));
+            Options.Add(RandomizeEnemies, new ModOption("Randomize Enemies"));
             Options.Add(RandomizeMusic, new ModOption("Randomize Level Music"));
             Options.Add(RandomizeCharParams, new ModOption("Randomize Character Parameters"));
             //Options.Add(RandomizeStartingChunk, new ModOption("Randomize Starting Chunk")); // TODO
@@ -271,146 +271,11 @@ namespace CrateModLoader
                 Twins_Data.cachedGameObjects[0].mainObject.Scripts[(uint)Twins_Data.GameObjectScriptOrder.OnDamage] = (ushort)Twins_Data.ScriptID.HEAD_COM_AMMO_CRATE_SMALL_TOUCHED;
                 Twins_Data.cachedGameObjects[0].mainObject.Scripts[(uint)Twins_Data.GameObjectScriptOrder.OnLand] = (ushort)Twins_Data.ScriptID.HEAD_COM_BASIC_CRATE_LANDED_ON;
 
-
-                /*
-                List<GameObject> import_GObj = new List<GameObject>();
-                List<TwinsItem> import_Tex = new List<TwinsItem>();
-                List<TwinsItem> import_Mat = new List<TwinsItem>();
-                List<TwinsItem> import_Mesh = new List<TwinsItem>();
-                List<TwinsItem> import_Mdl = new List<TwinsItem> ();
-                List<Script> import_Scr = new List<Script>();
-                List<TwinsItem> import_OGI = new List<TwinsItem>();
-
-                TwinsSection gfx_section = cortexlevelArchive.GetItem<TwinsSection>((uint)RM_Sections.Graphics);
-                TwinsSection code_section = cortexlevelArchive.GetItem<TwinsSection>((uint)RM_Sections.Code);
-                TwinsSection object_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.Object);
-                TwinsSection script_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.Script);
-                TwinsSection ogi_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.OGI);
-                TwinsSection tex_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.Textures);
-                TwinsSection mat_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.Materials);
-                TwinsSection mesh_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.Meshes);
-                TwinsSection mdl_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.Models);
-                for (int i = 0; i < script_section.Records.Count; ++i)
-                {
-                    Script scr = (Script)script_section.Records[i];
-                    if (scr.ID == (uint)Twins_Data.ScriptID.HEAD_COM_AMMO_CRATE_SMALL_TOUCHED)
-                    {
-                        import_Scr.Add(scr);
-                    }
-                    else if (scr.ID == (uint)Twins_Data.ScriptID.COM_AMMO_CRATE_SMALL_TOUCHED)
-                    {
-                        import_Scr.Add(scr);
-                    }
-                }
-                for (int i = 0; i < object_section.Records.Count; ++i)
-                {
-                    GameObject obj = (GameObject)object_section.Records[i];
-                    if (obj.ID == (uint)Twins_Data.ObjectID.AMMOCRATESMALL)
-                    {
-                        obj.Scripts[(uint)Twins_Data.GameObjectScriptOrder.OnPhysicsCollision] = 65535;
-                        obj.Scripts[(uint)Twins_Data.GameObjectScriptOrder.OnTouch] = 65535;
-                        obj.Scripts[(uint)Twins_Data.GameObjectScriptOrder.OnTrigger] = (ushort)Twins_Data.ScriptID.HEAD_COM_GENERIC_CRATE_TRIGGER_NEXT;
-                        obj.Scripts[(uint)Twins_Data.GameObjectScriptOrder.OnDamage] = (ushort)Twins_Data.ScriptID.HEAD_COM_AMMO_CRATE_SMALL_TOUCHED;
-                        obj.Scripts[(uint)Twins_Data.GameObjectScriptOrder.OnLand] = (ushort)Twins_Data.ScriptID.HEAD_COM_BASIC_CRATE_LANDED_ON;
-                        import_GObj.Add(obj);
-                    }
-                }
-                for (int i = 0; i < ogi_section.Records.Count; ++i)
-                {
-                    TwinsItem obj = (TwinsItem)ogi_section.Records[i];
-                    if (obj.ID == 1012 || obj.ID == 1013)
-                    {
-                        import_OGI.Add(obj);
-                    }
-                }
-                for (int i = 0; i < tex_section.Records.Count; ++i)
-                {
-                    TwinsItem obj = (TwinsItem)tex_section.Records[i];
-                    if (obj.ID == 579096643 || obj.ID == 1337357917)
-                    {
-                        import_Tex.Add(obj);
-                    }
-                }
-                for (int i = 0; i < mat_section.Records.Count; ++i)
-                {
-                    TwinsItem obj = (TwinsItem)mat_section.Records[i];
-                    if (obj.ID == 3145594139 || obj.ID == 2974101469 || obj.ID == 755441073 || obj.ID == 2631436731)
-                    {
-                        import_Mat.Add(obj);
-                    }
-                }
-                for (int i = 0; i < mesh_section.Records.Count; ++i)
-                {
-                    TwinsItem obj = (TwinsItem)mesh_section.Records[i];
-                    if (obj.ID == 4014807021 || obj.ID == 847180949 || obj.ID == 1222385729 || obj.ID == 1597590509 || obj.ID == 1972795289 || obj.ID == 2348000069)
-                    {
-                        import_Mesh.Add(obj);
-                    }
-                    else if (obj.ID == 2723204849 || obj.ID == 3098409629 || obj.ID == 3473614409 || obj.ID == 3848819189 || obj.ID == 4224023969)
-                    {
-                        import_Mesh.Add(obj);
-                    }
-                }
-                for (int i = 0; i < mdl_section.Records.Count; ++i)
-                {
-                    TwinsItem obj = (TwinsItem)mdl_section.Records[i];
-                    if (obj.ID == 2727310987 || obj.ID == 991942702 || obj.ID == 1367147482 || obj.ID == 1742352262 || obj.ID == 2117557042 || obj.ID == 2492761822)
-                    {
-                        import_Mdl.Add(obj);
-                    }
-                    else if (obj.ID == 2867966602 || obj.ID == 3243171382 || obj.ID == 3618376162 || obj.ID == 3993580942 || obj.ID == 73818426)
-                    {
-                        import_Mdl.Add(obj);
-                    }
-                }
-                */
-
                 TwinsFile mainArchive = new TwinsFile();
                 mainArchive.LoadFile(bdPath + @"Startup\Default.rm" + extensionMod, rmType);
 
                 Twins_Data.ImportGameObject(ref mainArchive, Twins_Data.ObjectID.AMMOCRATESMALL,ref exportList);
                 exportList.Clear();
-
-                /*
-                gfx_section = mainArchive.GetItem<TwinsSection>((uint)RM_Sections.Graphics);
-                code_section = mainArchive.GetItem<TwinsSection>((uint)RM_Sections.Code);
-                object_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.Object);
-                script_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.Script);
-                ogi_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.OGI);
-                tex_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.Textures);
-                mat_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.Materials);
-                mesh_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.Meshes);
-                mdl_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.Models);
-
-                for (int i = 0; i < import_GObj.Count; i++)
-                {
-                    object_section.Records.Add(import_GObj[i]);
-                }
-                for (int i = 0; i < import_Mat.Count; i++)
-                {
-                    mat_section.Records.Add(import_Mat[i]);
-                }
-                for (int i = 0; i < import_Mdl.Count; i++)
-                {
-                    mdl_section.Records.Add(import_Mdl[i]);
-                }
-                for (int i = 0; i < import_Mesh.Count; i++)
-                {
-                    mesh_section.Records.Add(import_Mesh[i]);
-                }
-                for (int i = 0; i < import_Scr.Count; i++)
-                {
-                    script_section.Records.Add(import_Scr[i]);
-                }
-                for (int i = 0; i < import_Tex.Count; i++)
-                {
-                    tex_section.Records.Add(import_Tex[i]);
-                }
-                for (int i = 0; i < import_OGI.Count; i++)
-                {
-                    ogi_section.Records.Add(import_OGI[i]);
-                }
-                */
 
                 mainArchive.SaveFile(bdPath + "/Startup/Default.rm" + extensionMod);
             }
@@ -575,77 +440,79 @@ namespace CrateModLoader
                     EnemyReplaceList.Add(Twins_Data.ObjectID.DRONE_SOLDIER);
                     EnemyReplaceList.Add(Twins_Data.ObjectID.DRONE_BERSERKER);
 
+                    /*
                     EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_MONKEY); // works
-                    EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_CHICKEN); // works
-                    //EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_CRAB); // works with errors, they only spawn on AIpaths for some reason
-                    //EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_SKUNK); // todo: skunk requires 2 positions? training skunk 1 position
+                    EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_SKUNK); // works
                     EnemyInsertList.Add(Twins_Data.ObjectID.EARTH_TRIBESMAN_SHIELDBEARER); // works (but has 1 HP)
                     EnemyInsertList.Add(Twins_Data.ObjectID.EARTH_TRIBESMAN); // works
-                    //EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_BAT_DARKPURPLE);
-                    EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_BAT_ICE); //
-                    EnemyInsertList.Add(Twins_Data.ObjectID.PIRANHAPLANT); // 
-                    EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_PIG_WILDBOAR); //
-                    EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_RAT_INTERMEDIATE); //
-                    //EnemyInsertList.Add(Twins_Data.ObjectID.MINI_MON); //todo: missing instance values for a generic one
-                    EnemyInsertList.Add(Twins_Data.ObjectID.PENGUIN);
+                    EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_BAT_DARKPURPLE); // works
+                    EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_BAT_ICE); // works
+                    EnemyInsertList.Add(Twins_Data.ObjectID.PIRANHAPLANT); // works
+                    EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_RAT_INTERMEDIATE); // works
+                    EnemyInsertList.Add(Twins_Data.ObjectID.PENGUIN); // works
                     EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_CORTEX_CAMERABOT); // works
-                    //EnemyInsertList.Add(Twins_Data.ObjectID.RHINO_PIRATE); //todo: missing instance values for a generic one
-                    EnemyInsertList.Add(Twins_Data.ObjectID.SCHOOL_DOG);
-                    EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_COCKROACH);
-                    //EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_BEETLE_DARKPURPLE); // todo: export
-                    EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_BEETLE_PROJECTILE);
-                    //EnemyInsertList.Add(Twins_Data.ObjectID.SCHOOL_FROGENSTEIN); // todo: enable frogensteins
-                    EnemyInsertList.Add(Twins_Data.ObjectID.SCHOOL_ZOMBOT);
-                    EnemyInsertList.Add(Twins_Data.ObjectID.DRONE_BASIC);
-                    EnemyInsertList.Add(Twins_Data.ObjectID.DRONE_DRILLER);
-                    EnemyInsertList.Add(Twins_Data.ObjectID.DRONE_FLAMER);
-                    EnemyInsertList.Add(Twins_Data.ObjectID.DRONE_FLYER);
-                    EnemyInsertList.Add(Twins_Data.ObjectID.DRONE_SOLDIER);
-                    EnemyInsertList.Add(Twins_Data.ObjectID.DRONE_BERSERKER);
+                    EnemyInsertList.Add(Twins_Data.ObjectID.SCHOOL_DOG); // works
+                    EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_COCKROACH); // works
+                    EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_BEETLE_PROJECTILE); // works
+                    EnemyInsertList.Add(Twins_Data.ObjectID.SCHOOL_ZOMBOT); // works
+                    EnemyInsertList.Add(Twins_Data.ObjectID.SCHOOL_FROGENSTEIN); // works
+                    EnemyInsertList.Add(Twins_Data.ObjectID.DRONE_BASIC); // works, but only spawns when triggered
+                    EnemyInsertList.Add(Twins_Data.ObjectID.DRONE_FLAMER); // works
+                    EnemyInsertList.Add(Twins_Data.ObjectID.DRONE_BERSERKER); // works
+                    EnemyInsertList.Add(Twins_Data.ObjectID.DRONE_FLYER); // works
+                    */
+                    EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_CHICKEN); // works
+
+                    //EnemyInsertList.Add(Twins_Data.ObjectID.DRONE_SOLDIER); // doesn't work (crashed on spawn)
+                    //EnemyInsertList.Add(Twins_Data.ObjectID.DRONE_DRILLER); // doesn't work (crashed on spawn)
+                    //EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_PIG_WILDBOAR); // doesn't work (minor errors, crashed when switching chunk)
+
+                    //EnemyInsertList.Add(Twins_Data.ObjectID.SCHOOL_JANITOR); // works, but lags the game and can't be defeated
+                    //EnemyInsertList.Add(Twins_Data.ObjectID.RHINO_PIRATE); // works, but stands in place throwing barrels to the same spot
+                    //EnemyInsertList.Add(Twins_Data.ObjectID.MINI_MON); // works with errors, just rushes you
+                    //EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_CRAB); // works with errors, only spawns near AIpositions?
+                    //EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_BEETLE_DARKPURPLE); // works, pretty much the same as GLOBAL_BEETLE_PROJECTILE?
 
                     for (int i = 0; i < Twins_Data.cachedGameObjects.Count; i++)
                     {
-                        if (Twins_Data.cachedGameObjects[i].mainObject.ID == (uint)Twins_Data.ObjectID.GLOBAL_BAT_DARKPURPLE)
+                        if (Twins_Data.cachedGameObjects[i].mainObject.ID == (uint)Twins_Data.ObjectID.GLOBAL_BAT_DARKPURPLE || Twins_Data.cachedGameObjects[i].mainObject.ID == (uint)Twins_Data.ObjectID.SCHOOL_FROGENSTEIN || Twins_Data.cachedGameObjects[i].mainObject.ID == (uint)Twins_Data.ObjectID.GLOBAL_SKUNK || Twins_Data.cachedGameObjects[i].mainObject.ID == (uint)Twins_Data.ObjectID.SCHOOL_JANITOR)
                         {
-                            if (Twins_Data.cachedGameObjects[i].instanceTemplate.Properties > (uint)Twins_Data.PropertyFlags.DisableObject)
+                            Twins_Data.cachedGameObjects[i] = new CachedGameObject()
                             {
-                                Twins_Data.cachedGameObjects[i] = new CachedGameObject()
+                                mainObject = Twins_Data.cachedGameObjects[i].mainObject,
+                                instanceTemplate = new InstanceTemplate()
                                 {
-                                    mainObject = Twins_Data.cachedGameObjects[i].mainObject,
-                                    instanceTemplate = new InstanceTemplate()
-                                    {
-                                        Properties = Twins_Data.cachedGameObjects[i].instanceTemplate.Properties - (uint)Twins_Data.PropertyFlags.DisableObject,
-                                        Flags = Twins_Data.cachedGameObjects[i].instanceTemplate.Flags,
-                                        FloatVars = Twins_Data.cachedGameObjects[i].instanceTemplate.FloatVars,
-                                        InstanceIDs = Twins_Data.cachedGameObjects[i].instanceTemplate.InstanceIDs,
-                                        InstancesNum = Twins_Data.cachedGameObjects[i].instanceTemplate.InstancesNum,
-                                        IntVars = Twins_Data.cachedGameObjects[i].instanceTemplate.IntVars,
-                                        ObjectID = Twins_Data.cachedGameObjects[i].instanceTemplate.ObjectID,
-                                        PathIDs = Twins_Data.cachedGameObjects[i].instanceTemplate.PathIDs,
-                                        PathsNum = Twins_Data.cachedGameObjects[i].instanceTemplate.PathsNum,
-                                        PositionIDs = Twins_Data.cachedGameObjects[i].instanceTemplate.PositionIDs,
-                                        PositionsNum = Twins_Data.cachedGameObjects[i].instanceTemplate.PositionsNum
-                                    },
-                                    list_actormodels = Twins_Data.cachedGameObjects[i].list_actormodels,
-                                    list_anims = Twins_Data.cachedGameObjects[i].list_anims,
-                                    list_armaturemodels = Twins_Data.cachedGameObjects[i].list_armaturemodels,
-                                    list_codemodels = Twins_Data.cachedGameObjects[i].list_codemodels,
-                                    list_materials = Twins_Data.cachedGameObjects[i].list_materials,
-                                    list_meshes = Twins_Data.cachedGameObjects[i].list_meshes,
-                                    list_models = Twins_Data.cachedGameObjects[i].list_models,
-                                    list_ogi = Twins_Data.cachedGameObjects[i].list_ogi,
-                                    list_scripts = Twins_Data.cachedGameObjects[i].list_scripts,
-                                    list_sounds = Twins_Data.cachedGameObjects[i].list_sounds,
-                                    list_sounds_english = Twins_Data.cachedGameObjects[i].list_sounds_english,
-                                    list_sounds_french = Twins_Data.cachedGameObjects[i].list_sounds_french,
-                                    list_sounds_german = Twins_Data.cachedGameObjects[i].list_sounds_german,
-                                    list_sounds_italian = Twins_Data.cachedGameObjects[i].list_sounds_italian,
-                                    list_sounds_spanish = Twins_Data.cachedGameObjects[i].list_sounds_spanish,
-                                    list_sounds_unused = Twins_Data.cachedGameObjects[i].list_sounds_unused,
-                                    list_subobjects = Twins_Data.cachedGameObjects[i].list_subobjects,
-                                    list_textures = Twins_Data.cachedGameObjects[i].list_textures
-                                };
-                            }
+                                    Properties = 0x188B2E, //Twins_Data.cachedGameObjects[i].instanceTemplate.Properties - (uint)Twins_Data.PropertyFlags.DisableObject,
+                                    Flags = Twins_Data.cachedGameObjects[i].instanceTemplate.Flags,
+                                    FloatVars = Twins_Data.cachedGameObjects[i].instanceTemplate.FloatVars,
+                                    InstanceIDs = Twins_Data.cachedGameObjects[i].instanceTemplate.InstanceIDs,
+                                    InstancesNum = Twins_Data.cachedGameObjects[i].instanceTemplate.InstancesNum,
+                                    IntVars = Twins_Data.cachedGameObjects[i].instanceTemplate.IntVars,
+                                    ObjectID = Twins_Data.cachedGameObjects[i].instanceTemplate.ObjectID,
+                                    PathIDs = Twins_Data.cachedGameObjects[i].instanceTemplate.PathIDs,
+                                    PathsNum = Twins_Data.cachedGameObjects[i].instanceTemplate.PathsNum,
+                                    PositionIDs = new List<ushort>(), //Twins_Data.cachedGameObjects[i].instanceTemplate.PositionIDs,
+                                    PositionsNum = Twins_Data.cachedGameObjects[i].instanceTemplate.PositionsNum
+                                },
+                                list_actormodels = Twins_Data.cachedGameObjects[i].list_actormodels,
+                                list_anims = Twins_Data.cachedGameObjects[i].list_anims,
+                                list_armaturemodels = Twins_Data.cachedGameObjects[i].list_armaturemodels,
+                                list_codemodels = Twins_Data.cachedGameObjects[i].list_codemodels,
+                                list_materials = Twins_Data.cachedGameObjects[i].list_materials,
+                                list_meshes = Twins_Data.cachedGameObjects[i].list_meshes,
+                                list_models = Twins_Data.cachedGameObjects[i].list_models,
+                                list_ogi = Twins_Data.cachedGameObjects[i].list_ogi,
+                                list_scripts = Twins_Data.cachedGameObjects[i].list_scripts,
+                                list_sounds = Twins_Data.cachedGameObjects[i].list_sounds,
+                                list_sounds_english = Twins_Data.cachedGameObjects[i].list_sounds_english,
+                                list_sounds_french = Twins_Data.cachedGameObjects[i].list_sounds_french,
+                                list_sounds_german = Twins_Data.cachedGameObjects[i].list_sounds_german,
+                                list_sounds_italian = Twins_Data.cachedGameObjects[i].list_sounds_italian,
+                                list_sounds_spanish = Twins_Data.cachedGameObjects[i].list_sounds_spanish,
+                                list_sounds_unused = Twins_Data.cachedGameObjects[i].list_sounds_unused,
+                                list_subobjects = Twins_Data.cachedGameObjects[i].list_subobjects,
+                                list_textures = Twins_Data.cachedGameObjects[i].list_textures
+                            };
                         }
                     }
                 }
@@ -904,7 +771,18 @@ namespace CrateModLoader
                 {
                     Twins_Data.ExportGameObject(ref RM_Archive, Twins_Data.ObjectID.DRONE_BASIC, ref ExportedObjects);
                 }
-                //Twins_Data.ExportGameObject(ref RM_Archive, Twins_Data.ObjectID.SCHOOL_JANITOR, ref ExportedObjects);
+                /*
+                else if (chunkType == Twins_Data.ChunkType.School_Cortex_CoGPA03)
+                {
+                    Twins_Data.ExportGameObject(ref RM_Archive, Twins_Data.ObjectID.SCHOOL_JANITOR, ref ExportedObjects);
+                }
+                */
+                /*
+                else if (chunkType == Twins_Data.ChunkType.School_Boiler_Boiler_2)
+                {
+                    Twins_Data.ExportGameObject(ref RM_Archive, Twins_Data.ObjectID.GLOBAL_BEETLE_DARKPURPLE, ref ExportedObjects);
+                }
+                */
             }
             
         }
@@ -1709,7 +1587,7 @@ namespace CrateModLoader
                             Twins_Data.ObjectID targetObjectID = EnemyInsertList[targetPos];
                             Twins_Data.ImportGameObject(ref RM_Archive, targetObjectID, ref importedObjects);
                             InstanceTemplate template = Twins_Data.GetInstanceTemplateByObjectID(targetObjectID);
-                            if (template.ObjectID == 0 && instance.SomeNum1 == 0)
+                            if (template.ObjectID == 0 && template.Properties == 0) //&& instance.SomeNum1 == 0)
                             {
                                 // For objects that are placed at runtime
                                 template = new InstanceTemplate()
@@ -1718,7 +1596,7 @@ namespace CrateModLoader
                                     InstancesNum = 10,
                                     PathsNum = 10,
                                     PositionsNum = 10,
-                                    Properties = 0x8B2E,
+                                    Properties = 0x188B2E,
                                     Flags = new List<uint>() { 10000 },
                                     FloatVars = new List<float>() { 1, 25, 1.4f, 15, 100, 0, 6, 6 },
                                     IntVars = new List<uint>() { 0, 0, 1 },
@@ -1737,6 +1615,7 @@ namespace CrateModLoader
                             instance.UnkI323 = template.IntVars;
                             // todo: figure out if these are needed and how to avoid them (procedurally generate?)
                             instance.InstanceIDs = new List<ushort>();
+                            /*
                             if (template.InstanceIDs.Count > 0)
                             {
                                 for (int a = 0; a < template.InstanceIDs.Count; a++)
@@ -1744,7 +1623,9 @@ namespace CrateModLoader
                                     instance.InstanceIDs.Add(0);
                                 }
                             }
+                            */
                             instance.PathIDs = new List<ushort>();
+                            /*
                             if (template.PathIDs.Count > 0)
                             {
                                 for (int a = 0; a < template.PathIDs.Count; a++)
@@ -1752,7 +1633,9 @@ namespace CrateModLoader
                                     instance.PathIDs.Add(0);
                                 }
                             }
+                            */
                             instance.PositionIDs = new List<ushort>();
+                            /*
                             if (template.PositionIDs.Count > 0)
                             {
                                 for (int a = 0; a < template.PositionIDs.Count; a++)
@@ -1760,6 +1643,7 @@ namespace CrateModLoader
                                     instance.PositionIDs.Add(0);
                                 }
                             }
+                            */
                         }
                         instances.Records[i] = instance;
                         EnemyFound = false;
