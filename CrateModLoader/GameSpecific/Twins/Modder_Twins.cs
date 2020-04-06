@@ -440,7 +440,7 @@ namespace CrateModLoader
                     EnemyReplaceList.Add(Twins_Data.ObjectID.DRONE_SOLDIER);
                     EnemyReplaceList.Add(Twins_Data.ObjectID.DRONE_BERSERKER);
 
-                    /*
+                    EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_CHICKEN); // works
                     EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_MONKEY); // works
                     EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_SKUNK); // works
                     EnemyInsertList.Add(Twins_Data.ObjectID.EARTH_TRIBESMAN_SHIELDBEARER); // works (but has 1 HP)
@@ -460,8 +460,6 @@ namespace CrateModLoader
                     EnemyInsertList.Add(Twins_Data.ObjectID.DRONE_FLAMER); // works
                     EnemyInsertList.Add(Twins_Data.ObjectID.DRONE_BERSERKER); // works
                     EnemyInsertList.Add(Twins_Data.ObjectID.DRONE_FLYER); // works
-                    */
-                    EnemyInsertList.Add(Twins_Data.ObjectID.GLOBAL_CHICKEN); // works
 
                     //EnemyInsertList.Add(Twins_Data.ObjectID.DRONE_SOLDIER); // doesn't work (crashed on spawn)
                     //EnemyInsertList.Add(Twins_Data.ObjectID.DRONE_DRILLER); // doesn't work (crashed on spawn)
@@ -475,6 +473,18 @@ namespace CrateModLoader
 
                     for (int i = 0; i < Twins_Data.cachedGameObjects.Count; i++)
                     {
+                        //soundless objects - temporary workaround because sound import/export is broken
+                        if (Twins_Data.cachedGameObjects[i].mainObject.cSounds.Length > 0)
+                        {
+                            Twins_Data.cachedGameObjects[i].mainObject.cSounds = new ushort[1] { 20 };
+                        }
+                        if (Twins_Data.cachedGameObjects[i].mainObject.Sounds.Length > 0)
+                        {
+                            for (int s = 0; s < Twins_Data.cachedGameObjects[i].mainObject.Sounds.Length; s++)
+                            {
+                                Twins_Data.cachedGameObjects[i].mainObject.Sounds[s] = 65535;
+                            }
+                        }
                         if (Twins_Data.cachedGameObjects[i].mainObject.ID == (uint)Twins_Data.ObjectID.GLOBAL_BAT_DARKPURPLE || Twins_Data.cachedGameObjects[i].mainObject.ID == (uint)Twins_Data.ObjectID.SCHOOL_FROGENSTEIN || Twins_Data.cachedGameObjects[i].mainObject.ID == (uint)Twins_Data.ObjectID.GLOBAL_SKUNK || Twins_Data.cachedGameObjects[i].mainObject.ID == (uint)Twins_Data.ObjectID.SCHOOL_JANITOR)
                         {
                             Twins_Data.cachedGameObjects[i] = new CachedGameObject()
