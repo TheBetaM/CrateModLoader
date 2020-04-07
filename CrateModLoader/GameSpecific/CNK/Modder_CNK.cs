@@ -5,7 +5,10 @@ using System.Diagnostics;
 using System.IO;
 //CNK Tools/API by BetaM, ManDude and eezstreet.
 //Version number, seed and options are displayed in the Credits accessible from the main menu.
-/* Mod Layers:
+/* Mod settings available:
+ * kart_AccelerationGainNormal - float - m_AccelerationGainNormal variable (example setting)
+ * 
+ * Mod Layers:
  * 1: ASSETS.GOB contents
  */
 
@@ -167,6 +170,8 @@ namespace CrateModLoader
             randState = new Random(Program.ModProgram.randoSeed);
 
             ModCrates.InstallLayerMods(path_gob_extracted, 1);
+
+            CNK_Settings.ParseSettings(path_gob_extracted);
 
             bool Editing_CSV_AdventureTracksManager = false;
             bool Editing_CSV_GoalsToRewardsConverter = false;
@@ -1699,14 +1704,14 @@ namespace CrateModLoader
             
         }
 
-        string Float_To_CSV_Line(float targetfloat)
+        public static string Float_To_CSV_Line(float targetfloat)
         {
             string cur_line = String.Format("{0:0.#########}", targetfloat);
             cur_line = cur_line.Replace(',', '.'); // For some reason String.Format is still not enough
             cur_line += ",";
             return cur_line;
         }
-        string FloatArray_To_CSV_Line(float[] targetfloat)
+        public static string FloatArray_To_CSV_Line(float[] targetfloat)
         {
             string cur_line = "";
             string[] line_vars = new string[targetfloat.Length];
@@ -1723,7 +1728,7 @@ namespace CrateModLoader
             cur_line += ",";
             return cur_line;
         }
-        string FloatArray2_To_CSV_Line(float[,] targetfloat, int targetCharacter)
+        public static string FloatArray2_To_CSV_Line(float[,] targetfloat, int targetCharacter)
         {
             string cur_line = "";
             string[] line_vars = new string[targetfloat.GetLength(1)];
@@ -1740,13 +1745,13 @@ namespace CrateModLoader
             cur_line += ",";
             return cur_line;
         }
-        string Int_To_CSV_Line(int targetInt)
+        public static string Int_To_CSV_Line(int targetInt)
         {
             string cur_line = targetInt.ToString();
             cur_line += ",";
             return cur_line;
         }
-        string CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows RowID, float[] RowTable)
+        static string CSV_WeaponSelection_RowID_To_RowText(CNK_Data.WeaponSelectionRows RowID, float[] RowTable)
         {
             string row_text = "";
             row_text += ",,";

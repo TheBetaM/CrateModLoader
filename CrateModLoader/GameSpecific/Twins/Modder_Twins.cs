@@ -1623,7 +1623,6 @@ namespace CrateModLoader
                             instance.UnkI321 = template.Flags;
                             instance.UnkI322 = template.FloatVars;
                             instance.UnkI323 = template.IntVars;
-                            // todo: figure out if these are needed and how to avoid them (procedurally generate?)
                             instance.InstanceIDs = new List<ushort>();
                             /*
                             if (template.InstanceIDs.Count > 0)

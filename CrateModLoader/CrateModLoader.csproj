@@ -99,6 +99,7 @@
     <Compile Include="GameSpecific\CNK\CNK_Data_Adventure.cs" />
     <Compile Include="GameSpecific\CNK\CNK_Data_KartStats.cs" />
     <Compile Include="GameSpecific\CNK\CNK_Data_Powerups.cs" />
+    <Compile Include="GameSpecific\CNK\CNK_Settings.cs" />
     <Compile Include="GameSpecific\CNK\Modder_CNK.cs" />
     <Compile Include="GameSpecific\Crash1\Modder_Crash1.cs" />
     <Compile Include="GameSpecific\Crash2\Modder_Crash2.cs" />
@@ -111,6 +112,7 @@
     <Compile Include="GameSpecific\CTTR\CTTR_Data_Text.cs" />
     <Compile Include="GameSpecific\CTTR\CTTR_Mods.cs" />
     <Compile Include="GameSpecific\CTTR\CTTR_Randomizers.cs" />
+    <Compile Include="GameSpecific\CTTR\CTTR_Settings.cs" />
     <Compile Include="GameSpecific\CTTR\Pure3D\Chunk.cs" />
     <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\Animation.cs" />
     <Compile Include="GameSpecific\CTTR\Pure3D\Chunks\AnimationChannelCount.cs" />

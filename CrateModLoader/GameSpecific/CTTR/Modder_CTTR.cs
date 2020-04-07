@@ -7,7 +7,10 @@ using CrateModLoader.GameSpecific.CTTR;
 //RCF API by NeoKesha
 //Pure3D API by BetaM (based on https://github.com/handsomematt/Pure3D)
 //Version number, seed and options are displayed in the Credits accessible from the main menu.
-/* Mod Layers:
+/* Mod settings available:
+ * RaceLaps - integer - Set the amount of laps in all races (example setting)
+ * 
+ * Mod Layers:
  * 1: All .RCF file contents (only replace files)
  */
 
@@ -581,6 +584,8 @@ namespace CrateModLoader
             RCF_Manager.Extract(basePath + path);
 
             ModCrates.InstallLayerMods(path_extr, 1);
+
+            CTTR_Settings.ParseSettings(path_extr);
 
             if (Options[RandomizeCharacters].Enabled)
             {

@@ -2007,6 +2007,11 @@ namespace CrateModLoader.GameSpecific.Twins
             TwinsSection sfx_spa_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.SE_Spa);
             TwinsSection sfx_unu_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.SE_Unused);
 
+            //if (SectionContainsItemID(ref object_section.Records, (uint)objectID))
+            //{
+            //   return;
+            //}
+
             if (cachedGameObjects[targetObject].list_textures != null && cachedGameObjects[targetObject].list_textures.Count > 0)
             {
                 for (int i = 0; i < cachedGameObjects[targetObject].list_textures.Count; i++)

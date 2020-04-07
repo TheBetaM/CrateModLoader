@@ -74,7 +74,7 @@ namespace CrateModLoader.GameSpecific.Rayman3
                 */
             };
 
-            Options.Add(RandomizeLevelOrder, new ModOption("Randomize Level Order (All Levels)")); 
+            //Options.Add(RandomizeLevelOrder, new ModOption("Randomize Level Order (All Levels)")); 
             Options.Add(RandomizeLevelOrderAlt, new ModOption("Randomize Level Order (Any amount of Levels)"));
             Options.Add(RandomizeOutfitColors, new ModOption("Randomize Outfit Visuals (GC Only)")); //todo: PS2/Xbox/PC
             Options.Add(NewGameNightmare, new ModOption("New Game Into 2D Nightmare (GC Only)"));
@@ -82,7 +82,7 @@ namespace CrateModLoader.GameSpecific.Rayman3
 
         }
 
-        internal const int RandomizeLevelOrder = 0;
+        //internal const int RandomizeLevelOrder = 0;
         internal const int RandomizeLevelOrderAlt = 1;
         internal const int RandomizeOutfitColors = 2;
         internal const int NewGameNightmare = 3;
@@ -114,11 +114,13 @@ namespace CrateModLoader.GameSpecific.Rayman3
 
             randState = new Random(Program.ModProgram.randoSeed);
 
+            /*
             if (Options[RandomizeLevelOrder].Enabled)
             {
                 Randomize_Level_Order(false);
             }
-            else if (Options [RandomizeLevelOrderAlt].Enabled)
+            */
+            if (Options [RandomizeLevelOrderAlt].Enabled)
             {
                 Randomize_Level_Order(true);
             }
