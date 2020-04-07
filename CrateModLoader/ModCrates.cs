@@ -450,7 +450,7 @@ namespace CrateModLoader
             }
             for (int i = 0; i < SupportedMods.Count; i++)
             {
-                if (SupportedMods[i].IsActivated && SupportedMods[i].LayersModded[layer])
+                if (SupportedMods[i].IsActivated && SupportedMods[i].LayersModded.Length > layer && SupportedMods[i].LayersModded[layer])
                 {
                     if (!SupportedMods[i].IsFolder)
                     {
@@ -494,12 +494,12 @@ namespace CrateModLoader
                 {
                     Directory.CreateDirectory(tempFolder);
                 }
-                foreach (FileInfo file in dir.EnumerateFiles())
-                {
-                    string relativePath = Path.Combine(dest.FullName, buffer + @"\" + file.Name);
-                    File.Copy(file.FullName, basePath + relativePath, true);
-                }
                 Recursive_CopyFiles(basePath, dir, dest, buffer);
+            }
+            foreach (FileInfo file in di.EnumerateFiles())
+            {
+                string relativePath = Path.Combine(dest.FullName, mainbuffer + @"\" + file.Name);
+                File.Copy(file.FullName, basePath + relativePath, true);
             }
         }
 
