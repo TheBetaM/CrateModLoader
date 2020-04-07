@@ -25,6 +25,11 @@ namespace CrateModLoader
         public const char Separator = '=';
         public const char CommentSymbol = '!';
         public const string LayerFolderName = "layer";
+        public const string InfoFileName = "modcrateinfo.txt";
+        public const string SettingsFileName = "modcratesettings.txt";
+        public const string IconFileName = "modcrateicon.png";
+        public const string UnsupportedGameShortName = "NoGame";
+        public const string AllGamesShortName = "All";
         public static List<ModCrate> ModList;
         public static List<ModCrate> SupportedMods;
         public static int ModsActiveAmount
@@ -88,7 +93,7 @@ namespace CrateModLoader
             {
                 for (int i = 0; i < ModList.Count; i++)
                 {
-                    if (ModList[i].TargetGame == "NoGame")
+                    if (ModList[i].TargetGame == UnsupportedGameShortName)
                     {
                         SupportedMods.Add(ModList[i]);
                     }
@@ -98,7 +103,7 @@ namespace CrateModLoader
             {
                 for (int i = 0; i < ModList.Count; i++)
                 {
-                    if (ModList[i].TargetGame == Program.ModProgram.Modder.Game.ShortName || ModList[i].TargetGame == "All")
+                    if (ModList[i].TargetGame == Program.ModProgram.Modder.Game.ShortName || ModList[i].TargetGame == AllGamesShortName)
                     {
                         SupportedMods.Add(ModList[i]);
                     }
@@ -161,7 +166,7 @@ namespace CrateModLoader
                 {
                     if (entry.FullName.EndsWith(".txt", StringComparison.OrdinalIgnoreCase))
                     {
-                        if (entry.Name.ToLower() == "modcrateinfo.txt")
+                        if (entry.Name.ToLower() == InfoFileName)
                         {
                             using (StreamReader fileStream = new StreamReader(entry.Open(), true))
                             {
@@ -177,7 +182,7 @@ namespace CrateModLoader
                                 }
                             }
                         }
-                        else if (entry.Name.ToLower() == "modcratesettings.txt")
+                        else if (entry.Name.ToLower() == SettingsFileName)
                         {
                             using (StreamReader fileStream = new StreamReader(entry.Open(), true))
                             {
@@ -194,7 +199,7 @@ namespace CrateModLoader
                             }
                         }
                     }
-                    else if (entry.Name.ToLower() == "modcrateicon.png")
+                    else if (entry.Name.ToLower() == IconFileName)
                     {
                         NewCrate.Icon = Image.FromStream(entry.Open());
                     }
@@ -261,7 +266,7 @@ namespace CrateModLoader
 
             foreach (FileInfo file in dir.EnumerateFiles())
             {
-                if (file.Name.ToLower() == "modcrateinfo.txt")
+                if (file.Name.ToLower() == InfoFileName)
                 {
                     using (StreamReader fileStream = new StreamReader(file.Open(FileMode.Open), true))
                     {
@@ -277,7 +282,7 @@ namespace CrateModLoader
                         }
                     }
                 }
-                else if (file.Name.ToLower() == "modcratesettings.txt")
+                else if (file.Name.ToLower() == SettingsFileName)
                 {
                     using (StreamReader fileStream = new StreamReader(file.Open(FileMode.Open), true))
                     {
@@ -293,7 +298,7 @@ namespace CrateModLoader
                         }
                     }
                 }
-                else if (file.Name.ToLower() == "modcrateicon.png")
+                else if (file.Name.ToLower() == IconFileName)
                 {
                     NewCrate.Icon = Image.FromFile(file.FullName);
                 }
@@ -514,7 +519,7 @@ namespace CrateModLoader
             }
             for (int i = 0; i < SupportedMods.Count; i++)
             {
-                if (SupportedMods[i].IsActivated && SupportedMods[i].LayersModded[layer])
+                if (SupportedMods[i].IsActivated && SupportedMods[i].LayersModded.Length > layer && SupportedMods[i].LayersModded[layer])
                 {
                     return true;
                 }
@@ -534,12 +539,13 @@ namespace CrateModLoader
         public string Author = "(Not credited)";
         public string Version = "v1.0";
         public string CML_Version = Program.ModProgram.releaseVersionString;
-        public string TargetGame = "NoGame";
+        public string TargetGame = ModCrates.AllGamesShortName;
         public bool IsActivated = false;
         public bool HasSettings = false;
         public bool IsFolder = false;
         public Image Icon = null;
 
         public bool[] LayersModded = new bool[1] { false };
+        //public string[] LayerPaths = new string[1] { "" };
     }
 }
