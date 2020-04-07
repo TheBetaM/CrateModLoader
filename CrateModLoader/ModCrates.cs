@@ -93,7 +93,7 @@ namespace CrateModLoader
             {
                 for (int i = 0; i < ModList.Count; i++)
                 {
-                    if (ModList[i].TargetGame == UnsupportedGameShortName)
+                    if (ModList[i].TargetGame == UnsupportedGameShortName || ModList[i].TargetGame == AllGamesShortName)
                     {
                         SupportedMods.Add(ModList[i]);
                     }
