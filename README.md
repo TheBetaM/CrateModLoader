@@ -16,7 +16,8 @@ See [this list](../master/GAMES.md) for supported games and their features in th
 
 Place Mod Crates in the "Mods" folder for them to appear in the list.  
 An example mod can be found in the "Mods" folder.  
-Mod Crates can be folders or standard .zip files with these contents: (only ModCrateInfo.txt is mandatory for them to function, the rest is optional)  
+Mod Crates can be folders or standard .zip files with these contents:  
+(only ModCrateInfo.txt is mandatory for them to function, the rest is optional)  
 - ModCrateInfo.txt with the details of the mod  
 - ModCrateSettings.txt game-specific settings that can't be changed with modded files  
 - ModCrateIcon.png icon of the mod displayed in the program  
