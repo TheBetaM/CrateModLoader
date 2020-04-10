@@ -49,7 +49,7 @@ namespace bigtool
         public void InitPaths(string fn)
         {
             path = fn;
-            basepath = System.AppDomain.CurrentDomain.BaseDirectory;
+            basepath = System.AppDomain.CurrentDomain.BaseDirectory + @"\Tools\CTR\";
             filelist = AppDomain.CurrentDomain.BaseDirectory + @"\Tools\CTR\filenames_usa.txt";
             bigname = Path.GetFileNameWithoutExtension(fn);
             bigpath = Path.GetDirectoryName(fn);
@@ -76,18 +76,20 @@ namespace bigtool
 
             //Console.WriteLine(p.calc_md5);
 
-            //string reg = Meta.Detect(fn, "files"); // This didn't work but not really needed atm
+            //string reg = Meta.Detect(fn, "files");
 
             //so messy
             switch (reg)
             {
                 case "usa_demo":
                 case "pal_demo": //check if matches
-                    filelist = AppDomain.CurrentDomain.BaseDirectory + @"\Tools\CTR\filenames_demo.txt"; break;
+                    filelist = Path.Combine(basepath, "filenames_demo.txt"); break;
 
-                case "pal": filelist = AppDomain.CurrentDomain.BaseDirectory + @"\Tools\CTR\filenames_pal.txt"; break;
+                case "pal": filelist = Path.Combine(basepath, "filenames_pal.txt"); break;
 
-                case "proto": //no list yet
+                case "usa_beta_aug": filelist = Path.Combine(basepath, "filenames_beta.txt"); break;
+
+                case "usa_beta_sep": //no list yet
                 case "usa":
                 case "jap": break; //we're usa by default, jap matches
 
@@ -247,6 +249,7 @@ namespace bigtool
 
             //Console.WriteLine(p.disk_dump);
 
+            //File.WriteAllBytes(path + ".BIG", final_big);
             File.WriteAllBytes(AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path + ".BIG", final_big);
 
             //Console.WriteLine(p.big_created);
@@ -286,7 +289,7 @@ namespace bigtool
 
                             if (x == -1)
                             {
-                                Console.WriteLine("List parsing error at: {0}", bb);
+                                Console.WriteLine("List parsing error at: {0}", b);
                                 continue;
                             }
 
@@ -308,4 +311,5 @@ namespace bigtool
             }
         }
     }
+    
 }
