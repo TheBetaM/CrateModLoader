@@ -21,7 +21,7 @@ namespace CrateModLoader
         internal const int RandomizeAllCrates       = 0;
         internal const int RandomizeCrateTypes      = 10;
         internal const int RandomizeGemLocations    = 1;
-        internal const int RandomizeEnemies         = 2;
+        //internal const int RandomizeEnemies         = 2;
         internal const int RandomizeMusic           = 3;
         internal const int RandomizeCharParams      = 4;
         internal const int RandomizeStartingChunk   = 11;
@@ -81,7 +81,7 @@ namespace CrateModLoader
             Options.Add(RandomizeCrateTypes, new ModOption("Randomize Crate Types")); // TODO: Make this a toggle between CrateTypes/AllCrates in the mod menu?
             Options.Add(RandomizeAllCrates, new ModOption("Randomize Individual Crates"));
             Options.Add(RandomizeGemLocations, new ModOption("Randomize Gem Locations"));
-            Options.Add(RandomizeEnemies, new ModOption("Randomize Enemies"));
+            //Options.Add(RandomizeEnemies, new ModOption("Randomize Enemies (Soundless)"));
             Options.Add(RandomizeMusic, new ModOption("Randomize Level Music"));
             Options.Add(RandomizeCharParams, new ModOption("Randomize Character Parameters"));
             //Options.Add(RandomizeStartingChunk, new ModOption("Randomize Starting Chunk")); // TODO
@@ -382,7 +382,7 @@ namespace CrateModLoader
                 Twins_Edit_AllLevels = true;
             }
 
-            if (Options[ModFlyingKick].Enabled || Options[ModStompKick].Enabled || Options[ModDoubleJumpCortex].Enabled || Options[ModDoubleJumpNina].Enabled || Options[RandomizeEnemies].Enabled)
+            if (Options[ModFlyingKick].Enabled || Options[ModStompKick].Enabled || Options[ModDoubleJumpCortex].Enabled || Options[ModDoubleJumpNina].Enabled)// || Options[RandomizeEnemies].Enabled)
             {
                 Twins_Edit_AllLevels = true;
 
@@ -404,15 +404,16 @@ namespace CrateModLoader
                 Twins_Data.allObjects.Sort((x, y) => x.ID.CompareTo(y.ID));
 
                 
+                /*
                 if (Options[RandomizeEnemies].Enabled)
                 {
                     EnemyReplaceList.Add(Twins_Data.ObjectID.GLOBAL_MONKEY);
                     EnemyReplaceList.Add(Twins_Data.ObjectID.GLOBAL_CHICKEN);
                     EnemyReplaceList.Add(Twins_Data.ObjectID.GLOBAL_CRAB);
                     EnemyReplaceList.Add(Twins_Data.ObjectID.GLOBAL_SKUNK);
-                    EnemyReplaceList.Add(Twins_Data.ObjectID.EARTH_TRIBESMAN_SHIELDBEARER);
+                    //EnemyReplaceList.Add(Twins_Data.ObjectID.EARTH_TRIBESMAN_SHIELDBEARER); // because it may softlock in JB
                     EnemyReplaceList.Add(Twins_Data.ObjectID.EARTH_TRIBESMAN);
-                    EnemyReplaceList.Add(Twins_Data.ObjectID.GLOBAL_BAT_DARKPURPLE);
+                    //EnemyReplaceList.Add(Twins_Data.ObjectID.GLOBAL_BAT_DARKPURPLE); // because it may crash in JB
                     EnemyReplaceList.Add(Twins_Data.ObjectID.GLOBAL_BAT_ICE);
                     EnemyReplaceList.Add(Twins_Data.ObjectID.PIRANHAPLANT);
                     EnemyReplaceList.Add(Twins_Data.ObjectID.GLOBAL_PIG_WILDBOAR);
@@ -426,10 +427,10 @@ namespace CrateModLoader
                     EnemyReplaceList.Add(Twins_Data.ObjectID.GLOBAL_RAT_WHITE);
                     EnemyReplaceList.Add(Twins_Data.ObjectID.PENGUIN);
                     EnemyReplaceList.Add(Twins_Data.ObjectID.GLOBAL_CORTEX_CAMERABOT);
-                    //EnemyReplaceList.Add(Twins_Data.ObjectID.RHINO_PIRATE);
+                    //EnemyReplaceList.Add(Twins_Data.ObjectID.RHINO_PIRATE); // maybe once the melee variation is figured out
                     EnemyReplaceList.Add(Twins_Data.ObjectID.SCHOOL_DOG);
                     EnemyReplaceList.Add(Twins_Data.ObjectID.GLOBAL_COCKROACH);
-                    //EnemyReplaceList.Add(Twins_Data.ObjectID.GLOBAL_BEETLE_DARKPURPLE);
+                    EnemyReplaceList.Add(Twins_Data.ObjectID.GLOBAL_BEETLE_DARKPURPLE);
                     EnemyReplaceList.Add(Twins_Data.ObjectID.GLOBAL_BEETLE_PROJECTILE);
                     EnemyReplaceList.Add(Twins_Data.ObjectID.SCHOOL_FROGENSTEIN);
                     EnemyReplaceList.Add(Twins_Data.ObjectID.SCHOOL_ZOMBOT);
@@ -476,7 +477,10 @@ namespace CrateModLoader
                         //soundless objects - temporary workaround because sound import/export is broken
                         if (Twins_Data.cachedGameObjects[i].mainObject.cSounds.Length > 0)
                         {
-                            Twins_Data.cachedGameObjects[i].mainObject.cSounds = new ushort[1] { 20 };
+                            for (int a = 0; a < Twins_Data.cachedGameObjects[i].mainObject.cSounds.Length; a++)
+                            {
+                                Twins_Data.cachedGameObjects[i].mainObject.cSounds[a] = 20 ;
+                            }
                         }
                         if (Twins_Data.cachedGameObjects[i].mainObject.Sounds.Length > 0)
                         {
@@ -526,9 +530,9 @@ namespace CrateModLoader
                         }
                     }
                 }
-                
-
+                */
             }
+            
 
             if (Options[ModEnableUnusedEnemies].Enabled)
             {
@@ -659,10 +663,12 @@ namespace CrateModLoader
                 RM_Randomize_Music(RM_Archive);
             }
             
+            /*
             if (Options[RandomizeEnemies].Enabled)
             {
-                RM_Randomize_Enemies(RM_Archive);
+                RM_Randomize_Enemies(RM_Archive, chunkType);
             }
+            */
             
             if (Options[ModStompKick].Enabled)
             {
@@ -707,6 +713,7 @@ namespace CrateModLoader
             RM_LoadObjects(RM_Archive);
 
             
+            /*
             if (Options[RandomizeEnemies].Enabled)
             {
                 List<Twins_Data.ObjectID> ExportedObjects = new List<Twins_Data.ObjectID>();
@@ -781,19 +788,16 @@ namespace CrateModLoader
                 {
                     Twins_Data.ExportGameObject(ref RM_Archive, Twins_Data.ObjectID.DRONE_BASIC, ref ExportedObjects);
                 }
-                /*
-                else if (chunkType == Twins_Data.ChunkType.School_Cortex_CoGPA03)
-                {
-                    Twins_Data.ExportGameObject(ref RM_Archive, Twins_Data.ObjectID.SCHOOL_JANITOR, ref ExportedObjects);
-                }
-                */
-                /*
-                else if (chunkType == Twins_Data.ChunkType.School_Boiler_Boiler_2)
-                {
-                    Twins_Data.ExportGameObject(ref RM_Archive, Twins_Data.ObjectID.GLOBAL_BEETLE_DARKPURPLE, ref ExportedObjects);
-                }
-                */
+                //else if (chunkType == Twins_Data.ChunkType.School_Cortex_CoGPA03)
+                //{
+                    //Twins_Data.ExportGameObject(ref RM_Archive, Twins_Data.ObjectID.SCHOOL_JANITOR, ref ExportedObjects);
+                //}
+                //else if (chunkType == Twins_Data.ChunkType.School_Boiler_Boiler_2)
+                //{
+                    //Twins_Data.ExportGameObject(ref RM_Archive, Twins_Data.ObjectID.GLOBAL_BEETLE_DARKPURPLE, ref ExportedObjects);
+                //}
             }
+            */
             
         }
 
@@ -1569,7 +1573,7 @@ namespace CrateModLoader
             }
         }
 
-        void RM_Randomize_Enemies(TwinsFile RM_Archive)
+        void RM_Randomize_Enemies(TwinsFile RM_Archive, Twins_Data.ChunkType chunkType)
         {
             List<Twins_Data.ObjectID> importedObjects = new List<Twins_Data.ObjectID>();
             bool EnemyFound = false;

@@ -168,6 +168,10 @@ namespace CrateModLoader
                     {
                         if (entry.Name.ToLower() == InfoFileName)
                         {
+                            if (entry.Name != entry.FullName)
+                            {
+                                NewCrate.NestedPath = entry.FullName.Substring(0, entry.FullName.Length - entry.Name.Length);
+                            }
                             using (StreamReader fileStream = new StreamReader(entry.Open(), true))
                             {
                                 string line;
@@ -203,13 +207,35 @@ namespace CrateModLoader
                     {
                         NewCrate.Icon = Image.FromStream(entry.Open());
                     }
-                    if (entry.FullName.Split('/')[0].Substring(0, LayerFolderName.Length).ToLower() == LayerFolderName)
+                }
+                if (HasInfo)
+                {
+                    foreach (ZipArchiveEntry entry in archive.Entries)
                     {
-                        int Layer = int.Parse(entry.FullName.Split('/')[0].Substring(LayerFolderName.Length));
-                        if (!ModdedLayers.Contains(Layer))
+                        if (NewCrate.NestedPath != "")
                         {
-                            MaxLayer = Math.Max(MaxLayer, Layer);
-                            ModdedLayers.Add(Layer);
+                            if (entry.FullName.Length > NewCrate.NestedPath.Length && entry.FullName.Substring(NewCrate.NestedPath.Length, LayerFolderName.Length).ToLower() == LayerFolderName)
+                            {
+                                string NestedNumber = entry.FullName.Substring(NewCrate.NestedPath.Length + LayerFolderName.Length);
+                                int Layer = int.Parse(NestedNumber.Split('/')[0]);
+                                if (!ModdedLayers.Contains(Layer))
+                                {
+                                    MaxLayer = Math.Max(MaxLayer, Layer);
+                                    ModdedLayers.Add(Layer);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (entry.FullName.Split('/')[0].Substring(0, LayerFolderName.Length).ToLower() == LayerFolderName)
+                            {
+                                int Layer = int.Parse(entry.FullName.Split('/')[0].Substring(LayerFolderName.Length));
+                                if (!ModdedLayers.Contains(Layer))
+                                {
+                                    MaxLayer = Math.Max(MaxLayer, Layer);
+                                    ModdedLayers.Add(Layer);
+                                }
+                            }
                         }
                     }
                 }
@@ -474,10 +500,20 @@ namespace CrateModLoader
             {
                 foreach (ZipArchiveEntry entry in archive.Entries)
                 {
-                    if (entry.FullName.Split('/').Length > 1 && entry.FullName[entry.FullName.Length - 1] != '/' && entry.FullName.Split('/')[1].Length > 0 && entry.FullName.Split('/')[0].Substring(0, LayerFolderName.Length + layer.ToString().Length).ToLower() == LayerFolderName + layer)
+                    if (entry.FullName.Length > Crate.NestedPath.Length + LayerFolderName.Length + layer.ToString().Length + 1 && entry.FullName[entry.FullName.Length - 1] != '/')
                     {
-                        Directory.CreateDirectory(basePath + entry.FullName.Substring(LayerFolderName.Length + layer.ToString().Length + 1, entry.FullName.Length - entry.Name.Length));
-                        entry.ExtractToFile(basePath + entry.FullName.Substring(LayerFolderName.Length + layer.ToString().Length), true);
+                        string AdjustedName = entry.FullName.Substring(Crate.NestedPath.Length);
+                        if (AdjustedName.Split('/').Length > 1 && AdjustedName.Split('/')[1].Length > 0)
+                        {
+                            if (AdjustedName.Split('/')[0].Substring(0, LayerFolderName.Length + layer.ToString().Length).ToLower() == LayerFolderName + layer)
+                            {
+                                int PathLen = Crate.NestedPath.Length + LayerFolderName.Length + layer.ToString().Length + 1;
+                                string NewDir = entry.FullName.Substring(PathLen, entry.FullName.Length - PathLen - entry.Name.Length);
+                                string extrPath = entry.FullName.Substring(Crate.NestedPath.Length + LayerFolderName.Length + layer.ToString().Length);
+                                Directory.CreateDirectory(basePath + NewDir);
+                                entry.ExtractToFile(basePath + extrPath, true);
+                            }
+                        }
                     }
                 }
             }
@@ -544,8 +580,9 @@ namespace CrateModLoader
         public bool HasSettings = false;
         public bool IsFolder = false;
         public Image Icon = null;
+        // A workaround for nested folders
+        public string NestedPath = "";
 
         public bool[] LayersModded = new bool[1] { false };
-        //public string[] LayerPaths = new string[1] { "" };
     }
 }

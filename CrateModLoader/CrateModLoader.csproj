@@ -489,10 +489,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="GameSpecific\Rayman3\raymap\OpenSpace\FileFormat\RenderWare\" />
-    <Folder Include="GameSpecific\Rayman3\raymap\OpenSpace\FileFormat\Texture\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>ROBOCOPY "$(TargetDir) " "$(TargetDir)Tools\ " /XF *.exe *.config *.manifest *.txt *.ini /XD Tools tools /IS /MOV

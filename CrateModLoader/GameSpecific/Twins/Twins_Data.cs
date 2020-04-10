@@ -1620,9 +1620,11 @@ namespace CrateModLoader.GameSpecific.Twins
                 }
             }
 
+            /* exporting/importing sound data is broken right now
+            
             ushort[] soundList = targetObject.cSounds;
             List<ushort> export_sounds = GetValidIDs(ref soundList);
-
+            
             for (int i = 0; i < sfx_section.Records.Count; i++)
             {
                 if (export_sounds.Contains((ushort)sfx_section.Records[i].ID))
@@ -1700,6 +1702,7 @@ namespace CrateModLoader.GameSpecific.Twins
                     gameObject.list_sounds_unused.Add(sfx_unu_section.Records[i]);
                 }
             }
+            */
 
             List<uint> export_mdl = new List<uint>();
             List<uint> export_armdl = new List<uint>();
@@ -2007,10 +2010,10 @@ namespace CrateModLoader.GameSpecific.Twins
             TwinsSection sfx_spa_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.SE_Spa);
             TwinsSection sfx_unu_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.SE_Unused);
 
-            //if (SectionContainsItemID(ref object_section.Records, (uint)objectID))
-            //{
-            //   return;
-            //}
+            if (SectionContainsItemID(ref object_section.Records, (uint)objectID))
+            {
+               return;
+            }
 
             if (cachedGameObjects[targetObject].list_textures != null && cachedGameObjects[targetObject].list_textures.Count > 0)
             {

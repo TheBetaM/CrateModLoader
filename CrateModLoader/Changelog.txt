@@ -21,8 +21,7 @@ New mod layers:
 
 Crash Twinsanity:
 - Added support for the XBOX version
-- Added "Randomize Enemies"
-- Randomize Character Parameters: Now also randomizes spawn health (masks).
+- Randomize Character Parameters: Now also randomizes health (masks) on spawn.
 - Randomize Level Music: Attempted to fix music tracks repeating.
 
 Crash Tag Team Racing:

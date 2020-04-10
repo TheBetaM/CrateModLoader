@@ -64,7 +64,6 @@ API by NeoKesha, Smartkin, ManDude and Marko. (https://github.com/Smartkin/twins
 - Randomize Crate Types  
 - Randomize Individual Crates
 - Randomize Gem Locations   
-- Randomize Enemies  
 - Randomize Level Music  
 - Randomize Character Parameters  
 - Enable Flying Kick for Crash  
@@ -107,4 +106,4 @@ Mod abbreviation: Rayman3
 - Randomize Level Order (All Levels or Any amount of Levels)  
 - Randomize Outfit Visuals (GC Only)  
 - New Game Into 2D Nightmare (GC Only)  
-- Remove Intro Videos  
+- Remove Intro Videos (GC Only)  
