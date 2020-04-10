@@ -1,5 +1,31 @@
 # Crate Mod Loader Changelog  
   
+## 1.1.0  
+  
+General:  
+- Added support for Mod Crates (all games can replace base extracted files, supported games have more options and replacement layers), an example mod for Crash Twinsanity is included in the "Mods" folder.  
+- Added API links where available  
+- Merged ROM checking into one option to prevent confusion  
+- Added drag & drop support (ROMs and folders)  
+- Unsupported games now display differently than unknown ROMs.  
+  
+New games supported:  
+- Rayman 3: Hoodlum Havoc  
+- Crash Team Racing  
+  
+New mod layers:  
+- Crash Team Racing: BIGFILE.BIG contents  
+- Crash Nitro Kart: ASSETS.GOB contents  
+- Crash Twinsanity: CRASH.BD contents  
+- Crash Tag Team Racing: All .RCF file contents  
+- Crash of the Titans: Default.RCF contents  
+- Crash Mind Over Mutant: Default.RCF contents  
+  
+Crash Twinsanity:  
+- Added support for the XBOX version  
+- Randomize Character Parameters: Now also randomizes health (masks) on spawn.  
+- Randomize Level Music: Attempted to fix music tracks repeating.  
+  
 ## 1.0.1  
   
 General:  

@@ -6,6 +6,7 @@ using CTRFramework.Lang;
 using CTRFramework.Shared;
 using bigtool;
 //CTR API by DCxDemo (https://github.com/DCxDemo/CTR-tools) 
+//Version number and seed are displayed in the loading screen.
 /* Mod Layers:
  * 1: BIGFILE.BIG contents
  */

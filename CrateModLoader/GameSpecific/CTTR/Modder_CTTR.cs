@@ -102,17 +102,17 @@ namespace CrateModLoader
                 ModCratesSupported = true,
                 RegionID_PS2 = new RegionCode[] {
                     new RegionCode() {
-                    Name = @"BOOT2 = cdrom0:\SLUS_211.91;1",
+                    Name = @"SLUS_211.91",
                     Region = RegionType.NTSC_U,
                     ExecName = "SLUS_211.91",
                     CodeName = "SLUS_21191", },
                     new RegionCode() {
-                    Name = @"BOOT2 = cdrom0:\SLES_534.39;1",
+                    Name = @"SLES_534.39",
                     Region = RegionType.PAL,
                     ExecName = "SLES_534.39",
                     CodeName = "SLES_53439", },
                     new RegionCode() {
-                    Name = @"BOOT2 = cdrom0:\SLPM_660.90;1",
+                    Name = @"SLPM_660.90",
                     Region = RegionType.NTSC_J,
                     ExecName = "SLPM_660.90",
                     CodeName = "SLPM_66090", },

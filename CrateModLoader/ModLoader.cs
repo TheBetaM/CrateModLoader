@@ -828,7 +828,7 @@ namespace CrateModLoader
                         using (StreamReader sr = new StreamReader(inputISOpath + @"SYSTEM.CNF"))
                         {
                             string titleID = sr.ReadLine();
-                            if (titleID.Substring(0,5) == "BOOT2")
+                            if (titleID.Contains("BOOT2"))
                             {
                                 SetGameType(titleID, ConsoleMode.PS2);
                                 if (Modder != null)
@@ -1129,7 +1129,7 @@ namespace CrateModLoader
                                 using (StreamReader sr = new StreamReader(cd.OpenFile(@"SYSTEM.CNF", FileMode.Open)))
                                 {
                                     string titleID = sr.ReadLine();
-                                    if (titleID.Substring(0, 5) == "BOOT2")
+                                    if (titleID.Contains("BOOT2"))
                                     {
                                         SetGameType(titleID, ConsoleMode.PS2);
                                         if (Modder != null)

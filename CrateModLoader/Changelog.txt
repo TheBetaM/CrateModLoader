@@ -5,7 +5,7 @@ General:
 - Added API links where available
 - Merged ROM checking into one option to prevent confusion
 - Added drag & drop support (ROMs and folders)
-- Unsupported games now display a different message than unknown ROMs.
+- Unsupported games now display differently than unknown ROMs.
 
 New games supported:
 - Rayman 3: Hoodlum Havoc
@@ -23,9 +23,6 @@ Crash Twinsanity:
 - Added support for the XBOX version
 - Randomize Character Parameters: Now also randomizes health (masks) on spawn.
 - Randomize Level Music: Attempted to fix music tracks repeating.
-
-Crash Tag Team Racing:
-- Stability improvements for some settings
 
 1.0.1
 

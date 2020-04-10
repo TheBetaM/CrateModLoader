@@ -27,17 +27,17 @@ namespace CrateModLoader
                 ModCratesSupported = true,
                 RegionID_PS1 = new RegionCode[] {
                     new RegionCode() {
-                    Name = @"BOOT = cdrom:\SCUS_942.44;1",
+                    Name = @"SCUS_942.44",
                     Region = RegionType.NTSC_U,
                     ExecName = "SCUS_942.44",
                     CodeName = "SCUS_94244", },
                     new RegionCode() {
-                    Name = @"BOOT = cdrom:\SCES_014.20;1",
+                    Name = @"SCES_014.20",
                     Region = RegionType.PAL,
                     ExecName = "SCES_014.20",
                     CodeName = "SCES_01420", },
                     new RegionCode() {
-                    Name = @"BOOT = cdrom:\SCPS_100.73;1",
+                    Name = @"SCPS_100.73",
                     Region = RegionType.NTSC_J,
                     ExecName = "SCPS_100.73",
                     CodeName = "SCPS_10073", },

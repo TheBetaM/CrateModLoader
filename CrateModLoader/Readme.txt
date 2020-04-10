@@ -6,7 +6,7 @@ Website: https://github.com/TheBetaM/CrateModLoader/
 
 Check the included Games.txt for a list of supported games and features.  
 
-Creating Mod Crates
+Mod Crates
 
 Place Mod Crates in the "Mods" folder for them to appear in the list.
 An example mod can be found in the "Mods" folder.
