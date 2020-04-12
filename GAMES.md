@@ -74,7 +74,7 @@ API by NeoKesha, Smartkin, ManDude and Marko. (https://github.com/Smartkin/twins
 - Version, seed and settings visible in the Autosave Disabled screen  
   
 ## Crash Tag Team Racing ![Crash Tag Team Racing](../master/CrateModLoader/Resources/icon_crash.png "Crash Tag Team Racing")
-Supported: All PS2 versions (.ISO format), All PSP versions (.ISO format), All XBOX versions (.ISO format) (GC not supported yet)  
+Supported: All PS2 versions (.ISO format), All GC versions (.ISO format), All PSP versions (.ISO format), All XBOX versions (.ISO format)  
 Mod abbreviation: CrashTTR  
 APIs by NeoKesha and BetaM. (based on https://github.com/handsomematt/Pure3D)  
 ### Features:  

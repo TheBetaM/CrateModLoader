@@ -66,7 +66,7 @@ Features:
 - Version, seed and settings visible in the Autosave Disabled screen  
   
 Crash Tag Team Racing
-Supported: All PS2 versions (.ISO format), All PSP versions (.ISO format), All XBOX versions (.ISO format) (GC not supported yet)  
+Supported: All PS2 versions (.ISO format), All GC versions (.ISO format), All PSP versions (.ISO format), All XBOX versions (.ISO format)  
 Mod abbreviation: CrashTTR  
 Mod layers: 1 - All .RCF file contents (only replace files)
 APIs by NeoKesha and BetaM. (based on https://github.com/handsomematt/Pure3D)  

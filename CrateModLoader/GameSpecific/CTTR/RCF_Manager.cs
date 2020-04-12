@@ -11,18 +11,16 @@ namespace CrateModLoader.GameSpecific.CTTR
         // To prevent high memory usage, either clear cachedRCF or Pack after being done
         public static RCF cachedRCF;
 
-        public static void Extract(string path)
+        public static void Extract(string path, string dest)
         {
             cachedRCF = new RCF();
             cachedRCF.OpenRCF(path);
-            string path_extr = AppDomain.CurrentDomain.BaseDirectory + @"temp\cml_extr\";
-            Directory.CreateDirectory(path_extr);
-            cachedRCF.ExtractRCF(path_extr);
+            Directory.CreateDirectory(dest);
+            cachedRCF.ExtractRCF(dest);
         }
 
-        public static void Pack(string path)
+        public static void Pack(string path, string path_extr)
         {
-            string path_extr = AppDomain.CurrentDomain.BaseDirectory + @"temp\cml_extr\";
 
             // set externals
             DirectoryInfo source = new DirectoryInfo(path_extr);
@@ -37,16 +35,22 @@ namespace CrateModLoader.GameSpecific.CTTR
             {
                 DirectoryInfo di = new DirectoryInfo(path_extr);
 
-                foreach (FileInfo file in di.EnumerateFiles())
+                try
                 {
-                    file.Delete();
+                    foreach (FileInfo file in di.EnumerateFiles())
+                    {
+                        file.Delete();
+                    }
+                    foreach (DirectoryInfo dir in di.EnumerateDirectories())
+                    {
+                        dir.Delete(true);
+                    }
+                    Directory.Delete(path_extr);
                 }
-                foreach (DirectoryInfo dir in di.EnumerateDirectories())
+                catch (IOException)
                 {
-                    dir.Delete(true);
+                    Console.WriteLine("IO: couldn't remove folder + " + di.FullName);
                 }
-
-                Directory.Delete(path_extr);
             }
 
             cachedRCF = null;

@@ -94,7 +94,7 @@ namespace CrateModLoader
 
             string path_extr = AppDomain.CurrentDomain.BaseDirectory + @"temp\cml_extr\";
             
-            RCF_Manager.Extract(basePath + path_RCF_frontend);
+            RCF_Manager.Extract(basePath + path_RCF_frontend, path_extr);
 
             ModCrates.InstallLayerMods(path_extr, 1);
 
@@ -121,7 +121,7 @@ namespace CrateModLoader
                 File.WriteAllLines(path_extr + @"levels\L1_E1\cameraoverrides.blua", frontend_lines);
             }
 
-            RCF_Manager.Pack(basePath + path_RCF_frontend);
+            RCF_Manager.Pack(basePath + path_RCF_frontend, path_extr);
         }
     }
 }

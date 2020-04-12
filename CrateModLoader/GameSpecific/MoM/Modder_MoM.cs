@@ -90,7 +90,7 @@ namespace CrateModLoader
             }
 
             string path_extr = AppDomain.CurrentDomain.BaseDirectory + @"temp\cml_extr\";
-            RCF_Manager.Extract(basePath + path_RCF_frontend);
+            RCF_Manager.Extract(basePath + path_RCF_frontend, path_extr);
 
             // Proof of concept mod replacing credits text
             string[] credits_lines = File.ReadAllLines(path_extr + @"script\CreditsList.txt");
@@ -117,7 +117,7 @@ namespace CrateModLoader
 
             File.WriteAllLines(path_extr + @"script\CreditsList.txt", credits_lines);
 
-            RCF_Manager.Pack(basePath + path_RCF_frontend);
+            RCF_Manager.Pack(basePath + path_RCF_frontend, path_extr);
 
         }
     }

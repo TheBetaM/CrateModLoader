@@ -26,6 +26,9 @@ Crash Twinsanity:
 - Randomize Character Parameters: Now also randomizes health (masks) on spawn.  
 - Randomize Level Music: Attempted to fix music tracks repeating.  
   
+Crash Tag Team Racing:  
+- Added support for the GameCube version  
+  
 ## 1.0.1  
   
 General:  

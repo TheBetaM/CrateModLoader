@@ -92,7 +92,9 @@ namespace RadcoreCementFile
             public UInt32 ID;
             public UInt32 Offset;
             public UInt32 Size;
+            public UInt32 CompressedSize;
             public UInt32 Pos;
+            public UInt32 CompressionFlag; // 0 - No Compression, 1 - Compressed
         }
         public struct RCF_TABLE2
         {
@@ -148,6 +150,8 @@ namespace RadcoreCementFile
                     Header.T1File[i].ID = RCFReader.ReadUInt32();
                     Header.T1File[i].Offset = RCFReader.ReadUInt32();
                     Header.T1File[i].Size = RCFReader.ReadUInt32();
+                    Header.T1File[i].CompressedSize = Header.T1File[i].Size;
+                    Header.T1File[i].CompressionFlag = 0;
                 }
             }
             else
@@ -168,16 +172,20 @@ namespace RadcoreCementFile
                         Header.T1File[i].ID = RCFReader2.ReadUInt32();
                         Header.T1File[i].Offset = RCFReader2.ReadUInt32();
                         Header.T1File[i].Size = RCFReader2.ReadUInt32();
+                        Header.T1File[i].CompressedSize = Header.T1File[i].Size;
+                        Header.T1File[i].CompressionFlag = 0;
                     }
                 }
                 else
                 {
-                    // Doesn't work - CTTR GC frontend.rcf
+                    // CTTR GC frontend.rcf - compression handling not yet implemented
                     for (Int32 i = 0; i <= Header.Files - 1; i++)
                     {
                         Header.T1File[i].ID = RCFReader2.ReadUInt32();
                         Header.T1File[i].Offset = RCFReader2.ReadUInt32();
+                        Header.T1File[i].CompressedSize = RCFReader2.ReadUInt32();
                         Header.T1File[i].Size = RCFReader2.ReadUInt32();
+                        Header.T1File[i].CompressionFlag = RCFReader2.ReadUInt32();
                     }
                 }
             }
@@ -379,12 +387,14 @@ namespace RadcoreCementFile
                 }
                 else
                 {
-                    // Doesn't work - CTTR GC frontend.rcf
+                    // CTTR GC frontend.rcf - compression handling not yet implemented
                     for (Int32 i = 0; i <= Header.Files - 1; i++)
                     {
                         NRCFWriter2.WriteBigEndian(Header.T1File[i].ID);
                         NRCFWriter2.WriteBigEndian(Header.T1File[i].Offset);
+                        NRCFWriter2.WriteBigEndian(Header.T1File[i].CompressedSize);
                         NRCFWriter2.WriteBigEndian(Header.T1File[i].Size);
+                        NRCFWriter2.WriteBigEndian(Header.T1File[i].CompressionFlag);
                     }
                 }
             }
@@ -422,7 +432,14 @@ namespace RadcoreCementFile
         {
             Header.NamesAligment = Alignment;
             Header.T1Offset = 60;
-            Header.T1Size = Header.Files * 12;
+            if (Header.Flag2)
+            {
+                Header.T1Size = Header.Files * 12;
+            }
+            else
+            {
+                Header.T1Size = Header.Files * 20;
+            }
             Header.T2Offset = ((Header.T1Offset + Header.T1Size - 1) / Alignment + 1) * Alignment;
             Header.T2Size = 8 + Header.Files * 20;
             for (Int32 i = 0; i <= Header.Files - 1; i++)
@@ -437,9 +454,17 @@ namespace RadcoreCementFile
                 {
                     FileInfo FI = new FileInfo(Header.T2File[i].External);
                     Header.T1File[ind].Size = (uint)FI.Length;
+                    if (Header.T1File[ind].CompressionFlag != 1)
+                    {
+                        Header.T1File[ind].CompressedSize = Header.T1File[ind].Size;
+                    }
+                    else
+                    {
+                        // todo: compressed size and setting the compression flag to 0 when external is not compressed
+                    }
                 }
                 offset = Header.T1File[ind].Offset;
-                size = Header.T1File[ind].Size;
+                size = Header.T1File[ind].CompressedSize;
             }
             return;
         }

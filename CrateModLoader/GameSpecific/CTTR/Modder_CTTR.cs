@@ -581,7 +581,7 @@ namespace CrateModLoader
         void Modify_RCF(string path)
         {
             string path_extr = basePath + @"cml_extr\";
-            RCF_Manager.Extract(basePath + path);
+            RCF_Manager.Extract(basePath + path, path_extr);
 
             ModCrates.InstallLayerMods(path_extr, 1);
 
@@ -621,7 +621,7 @@ namespace CrateModLoader
             }
             CTTR_Mods.Mod_EditCredits(basePath);
 
-            RCF_Manager.Pack(basePath + path);
+            RCF_Manager.Pack(basePath + path, path_extr);
         }
 
         public override void OpenModMenu()
@@ -629,10 +629,11 @@ namespace CrateModLoader
 
             /*
             basePath = AppDomain.CurrentDomain.BaseDirectory + @"\Tools\";
-            RCF_Manager.Extract(basePath + @"default.rcf");
+            RCF_Manager.Extract(basePath + @"frontend.rcf", basePath + @"temp\");
 
-            RCF_Manager.Pack(basePath + @"default.rcf1");
+            RCF_Manager.Pack(basePath + @"exfrontend.rcf", basePath + @"temp\");
             */
+            
 
             /*
             Pure3D.File CrashOnfootAnim1 = new Pure3D.File();
