@@ -4,9 +4,9 @@
   
 General:  
 - Added support for Mod Crates (all games can replace base extracted files, supported games have more options and replacement layers), an example mod for Crash Twinsanity is included in the "Mods" folder.  
-- Added API links where available  
-- Merged ROM checking into one option to prevent confusion  
-- Added drag & drop support (ROMs and folders)  
+- Added API links where available.  
+- Merged ROM checking into one option to prevent confusion.  
+- Added drag & drop support (ROMs and folders).  
 - Unsupported games now display differently than unknown ROMs.  
   
 New games supported:  
@@ -22,9 +22,11 @@ New mod layers:
 - Crash Mind Over Mutant: Default.RCF contents  
   
 Crash Twinsanity:  
-- Added support for the XBOX version  
+- Added support for the XBOX version.  
 - Randomize Character Parameters: Now also randomizes health (masks) on spawn.  
 - Randomize Level Music: Attempted to fix music tracks repeating.  
+- Enable Unused Enemies: Added Frog N. Stein's in Classroom Chaos.  
+- Fixed some symbols missing in the pause menu.  
   
 Crash Tag Team Racing:  
 - Added support for the GameCube version  
