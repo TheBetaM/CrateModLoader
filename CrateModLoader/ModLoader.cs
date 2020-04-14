@@ -69,7 +69,7 @@ namespace CrateModLoader
         //public RadioButton button_radio_ToFolder;
         public BackgroundWorker asyncWorker;
         /// <summary> String used to show which version of CML the modded game was built with. </summary>
-        public string releaseVersionString = "v1.1.0";
+        public string releaseVersionString = "v1.1.1";
         /// <summary> Hexadecimal display of which quick options were selected (automatically adjusts according the amount of quick options) - MSB is first option from the top </summary>
         public string optionsSelectedString
         {
