@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using CrateModLoader.GameSpecific.Crash2;
+using CrateModLoader.GameSpecific;
 //Crash 2 API by chekwob and ManDude (https://github.com/cbhacks/CrashEdit)
 
 namespace CrateModLoader
@@ -62,7 +62,7 @@ namespace CrateModLoader
         {
             Random rand = new Random(Program.ModProgram.randoSeed);
 
-            CrateSettings.VerifyModCrates();
+            CrateSettings_CrashTri.VerifyModCrates();
             ModCrates.InstallLayerMods(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"temp\"), 0);
 
             List<FileInfo> nsfs = new List<FileInfo>();

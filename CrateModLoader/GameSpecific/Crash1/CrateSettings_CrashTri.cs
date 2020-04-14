@@ -1,6 +1,6 @@
-﻿namespace CrateModLoader.GameSpecific.Crash2
+﻿namespace CrateModLoader.GameSpecific
 {
-    static class CrateSettings
+    static class CrateSettings_CrashTri
     {
         public static void VerifyModCrates()
         {
