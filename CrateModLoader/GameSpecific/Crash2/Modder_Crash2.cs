@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using CrateModLoader.GameSpecific.Crash2;
 //Crash 2 API by chekwob and ManDude (https://github.com/cbhacks/CrashEdit)
 
 namespace CrateModLoader
@@ -43,6 +44,7 @@ namespace CrateModLoader
                     CodeName = "SCPS_10047", },
                 },
             };
+            ModCratesManualInstall = true;
 
             Options.Add(RandomizeADIO, new ModOption("Randomize sound effects"));
         }
@@ -59,6 +61,9 @@ namespace CrateModLoader
         protected override void ModProcess()
         {
             Random rand = new Random(Program.ModProgram.randoSeed);
+
+            CrateSettings.VerifyModCrates();
+            ModCrates.InstallLayerMods(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"temp\"), 0);
 
             List<FileInfo> nsfs = new List<FileInfo>();
             List<FileInfo> nsds = new List<FileInfo>();

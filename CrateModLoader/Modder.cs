@@ -19,6 +19,8 @@ namespace CrateModLoader
     {
         public Dictionary<int,ModOption> Options { get; } = new Dictionary<int,ModOption>();
 
+        public bool ModCratesManualInstall = false; // A game might require some type of verification (i.e. file integrity, region matching) before installing layer0 mod crates.
+
         public abstract void StartModProcess();
         protected virtual void ModProcess() { }
         protected virtual void EndModProcess() { }

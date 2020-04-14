@@ -683,7 +683,7 @@ namespace CrateModLoader
 
         public void EditGameContent()
         {
-            if (ModCrates.ModsActiveAmount > 0)
+            if (ModCrates.ModsActiveAmount > 0 && (Modder == null || !Modder.ModCratesManualInstall))
             {
                 string basePath = AppDomain.CurrentDomain.BaseDirectory + @"temp\";
                 if (isoType == ConsoleMode.GCN)
