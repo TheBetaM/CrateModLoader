@@ -103,6 +103,7 @@
     <Compile Include="GameSpecific\CNK\Modder_CNK.cs" />
     <Compile Include="GameSpecific\Crash1\Modder_Crash1.cs" />
     <Compile Include="GameSpecific\Crash2\Modder_Crash2.cs" />
+    <Compile Include="GameSpecific\Crash2\CrateSettings.cs" />
     <Compile Include="GameSpecific\Crash3\Modder_Crash3.cs" />
     <Compile Include="GameSpecific\CTR\BIG.cs" />
     <Compile Include="GameSpecific\CTR\CTRFile.cs" />
