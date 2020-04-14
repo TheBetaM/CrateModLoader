@@ -76,7 +76,25 @@ namespace CrateModLoader
                     //MessageBox.Show($"NSF/NSD file pair mismatch. First mismatch:\n\n{nsfFile.Name}\n{nsdFile.Name}");
                     continue;
                 }
-                if (Options[RandomizeADIO].Enabled) Mod_RandomizeADIO(nsfFile, nsdFile, rand);
+
+                NSF nsf;
+                OldNSD nsd;
+                try
+                {
+                    nsf = NSF.LoadAndProcess(File.ReadAllBytes(nsfFile.FullName), GameVersion.Crash1);
+                    nsd = OldNSD.Load(File.ReadAllBytes(nsdFile.FullName));
+                }
+                catch (LoadAbortedException)
+                {
+                    return;
+                }
+
+                if (Options[RandomizeADIO].Enabled) Mod_RandomizeADIO(nsf, nsd, rand);
+
+                PatchNSD(nsf, nsd);
+
+                File.WriteAllBytes(nsfFile.FullName, nsf.Save());
+                File.WriteAllBytes(nsdFile.FullName, nsd.Save());
             }
 
             ErrorManager.ExitSkipRegion();
@@ -100,20 +118,17 @@ namespace CrateModLoader
             // ...or here
         }
 
-        internal void Mod_RandomizeADIO(FileInfo nsfFile, FileInfo nsdFile, Random rand)
+        internal void PatchNSD(NSF nsf, OldNSD nsd)
         {
-            NSF nsf;
-            OldNSD nsd;
-            try
-            {
-                nsf = NSF.LoadAndProcess(File.ReadAllBytes(nsfFile.FullName), GameVersion.Crash1);
-                nsd = OldNSD.Load(File.ReadAllBytes(nsdFile.FullName));
-            }
-            catch (LoadAbortedException)
-            {
-                return;
-            }
+            // edit NSD
+            nsd.ChunkCount = nsf.Chunks.Count;
+            var indexdata = nsf.MakeNSDIndex();
+            nsd.HashKeyMap = indexdata.Item1;
+            nsd.Index = indexdata.Item2;
+        }
 
+        internal void Mod_RandomizeADIO(NSF nsf, OldNSD nsd, Random rand)
+        {
             // edit NSF
             foreach (Chunk chunk in nsf.Chunks)
             {
@@ -135,15 +150,6 @@ namespace CrateModLoader
                     }
                 }
             }
-
-            // edit NSD
-            nsd.ChunkCount = nsf.Chunks.Count;
-            var indexdata = nsf.MakeNSDIndex();
-            nsd.HashKeyMap = indexdata.Item1;
-            nsd.Index = indexdata.Item2;
-
-            File.WriteAllBytes(nsfFile.FullName, nsf.Save());
-            File.WriteAllBytes(nsdFile.FullName, nsd.Save());
         }
     }
 }

@@ -76,7 +76,25 @@ namespace CrateModLoader
                     //MessageBox.Show($"NSF/NSD file pair mismatch. First mismatch:\n\n{nsfFile.Name}\n{nsdFile.Name}");
                     continue;
                 }
-                if (Options[RandomizeADIO].Enabled) Mod_RandomizeADIO(nsfFile, nsdFile, rand);
+
+                NSF nsf;
+                NSD nsd;
+                try
+                {
+                    nsf = NSF.LoadAndProcess(File.ReadAllBytes(nsfFile.FullName), GameVersion.Crash2);
+                    nsd = NSD.Load(File.ReadAllBytes(nsdFile.FullName));
+                }
+                catch (LoadAbortedException)
+                {
+                    return;
+                }
+
+                if (Options[RandomizeADIO].Enabled) Mod_RandomizeADIO(nsf, nsd, rand);
+
+                PatchNSD(nsf, nsd);
+
+                File.WriteAllBytes(nsfFile.FullName, nsf.Save());
+                File.WriteAllBytes(nsdFile.FullName, nsd.Save());
             }
 
             ErrorManager.ExitSkipRegion();
@@ -100,42 +118,8 @@ namespace CrateModLoader
             // ...or here
         }
 
-        internal void Mod_RandomizeADIO(FileInfo nsfFile, FileInfo nsdFile, Random rand)
+        internal void PatchNSD(NSF nsf, NSD nsd)
         {
-            NSF nsf;
-            NSD nsd;
-            try
-            {
-                nsf = NSF.LoadAndProcess(File.ReadAllBytes(nsfFile.FullName), GameVersion.Crash2);
-                nsd = NSD.Load(File.ReadAllBytes(nsdFile.FullName));
-            }
-            catch (LoadAbortedException)
-            {
-                return;
-            }
-
-            // edit NSF
-            foreach (Chunk chunk in nsf.Chunks)
-            {
-                if (chunk is SoundChunk soundchunk)
-                {
-                    List<int> oldeids = new List<int>();
-                    foreach (Entry entry in soundchunk.Entries)
-                    {
-                        oldeids.Add(entry.EID);
-                    }
-                    foreach (Entry entry in soundchunk.Entries)
-                    {
-                        if (entry is SoundEntry soundentry)
-                        {
-                            int eid = oldeids[rand.Next(oldeids.Count)];
-                            entry.EID = eid;
-                            oldeids.Remove(eid);
-                        }
-                    }
-                }
-            }
-
             // edit NSD
             nsd.ChunkCount = nsf.Chunks.Count;
             var indexdata = nsf.MakeNSDIndex();
@@ -195,9 +179,31 @@ namespace CrateModLoader
                     }
                 }
             }
+        }
 
-            File.WriteAllBytes(nsfFile.FullName, nsf.Save());
-            File.WriteAllBytes(nsdFile.FullName, nsd.Save());
+        internal void Mod_RandomizeADIO(NSF nsf, NSD nsd, Random rand)
+        {
+            // edit NSF
+            foreach (Chunk chunk in nsf.Chunks)
+            {
+                if (chunk is SoundChunk soundchunk)
+                {
+                    List<int> oldeids = new List<int>();
+                    foreach (Entry entry in soundchunk.Entries)
+                    {
+                        oldeids.Add(entry.EID);
+                    }
+                    foreach (Entry entry in soundchunk.Entries)
+                    {
+                        if (entry is SoundEntry)
+                        {
+                            int eid = oldeids[rand.Next(oldeids.Count)];
+                            entry.EID = eid;
+                            oldeids.Remove(eid);
+                        }
+                    }
+                }
+            }
         }
     }
 }
