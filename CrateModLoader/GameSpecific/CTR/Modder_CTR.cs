@@ -68,15 +68,15 @@ namespace CrateModLoader
             switch (Program.ModProgram.targetRegion)
             {
                 case RegionType.NTSC_U:
-                    big = new bigtool.BIG(basePath + path_Bigfile, "usa");
+                    big = new bigtool.BIG(basePath + path_Bigfile, false);
                     big.Export();
                     break;
                 case RegionType.NTSC_J:
-                    big = new bigtool.BIG(basePath + path_Bigfile, "jap");
+                    big = new bigtool.BIG(basePath + path_Bigfile, false);
                     big.Export();
                     break;
                 case RegionType.PAL:
-                    big = new bigtool.BIG(basePath + path_Bigfile, "pal");
+                    big = new bigtool.BIG(basePath + path_Bigfile, true);
                     big.Export();
                     break;
             }
@@ -95,7 +95,7 @@ namespace CrateModLoader
             string[] lang_lines = File.ReadAllLines(path_extr + @"lang\en.txt", System.Text.Encoding.Default);
             for (int i = 0; i < lang_lines.Length; i++)
             {
-                if (lang_lines[i].Contains("LOADING..."))
+                if (lang_lines[i].Contains("LOADING.."))
                 {
                     lang_lines[i] = "CML " + Program.ModProgram.releaseVersionString + "|" + "SEED: " + Program.ModProgram.randoSeed;
                 }
@@ -110,7 +110,7 @@ namespace CrateModLoader
                 string[] lang_lines1 = File.ReadAllLines(path_extr + @"lang\en2.txt", System.Text.Encoding.Default);
                 for (int i = 0; i < lang_lines1.Length; i++)
                 {
-                    if (lang_lines[i].Contains("LOADING..."))
+                    if (lang_lines[i].Contains("LOADING.."))
                     {
                         lang_lines[i] = "CML " + Program.ModProgram.releaseVersionString + "|" + "SEED: " + Program.ModProgram.randoSeed;
                     }

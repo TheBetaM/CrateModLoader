@@ -33,11 +33,11 @@ API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)
 - Randomize Sound Effects  
   
 ## Crash Team Racing
-Supported: All PS1 versions (.BIN/.ISO formats)  
+Supported: NTSC-U and NTSC-J PS1 versions (.BIN/.ISO formats)  
 Mod abbreviation: CrashTR  
 API by DCxDemo. (https://github.com/DCxDemo/CTR-tools)  
 ### Features:  
-- Version and seed visible in the Loading screen  
+- Version and seed visible in the Loading screen (English only)  
   
 ## Crash Nitro Kart ![Crash Nitro Kart](../master/CrateModLoader/Resources/icon_cnk.png "Crash Nitro Kart")
 Supported: All PS2 versions (.ISO format), All GC versions (.ISO format), All XBOX versions (.ISO format)  
@@ -66,11 +66,11 @@ API by NeoKesha, Smartkin, ManDude and Marko. (https://github.com/Smartkin/twins
 - Randomize Gem Locations   
 - Randomize Level Music  
 - Randomize Character Parameters  
-- Enable Flying Kick for Crash  
-- Enable Stomp Kick for Crash (Flying Kick variation)  
+- Enable Flying Kick for Crash (Jump + Slide)  
+- Enable Stomp Kick for Crash (Flying Kick replacement)  
 - Enable Double Jump for Cortex  
 - Enable Double Jump for Nina  
-- Enable Some Unused Enemies  
+- Enable Unused Enemies  
 - Version, seed and settings visible in the Autosave Disabled screen  
   
 ## Crash Tag Team Racing ![Crash Tag Team Racing](../master/CrateModLoader/Resources/icon_crash.png "Crash Tag Team Racing")
@@ -103,7 +103,7 @@ API by NeoKesha.
 Supported: All PS2 versions (.ISO format), All GC versions (.ISO format), All XBOX versions (.ISO format)  
 Mod abbreviation: Rayman3  
 ### Features:
-- Randomize Level Order (All Levels or Any amount of Levels)  
+- Randomize Level Order (Any amount of Levels)  
 - Randomize Outfit Visuals (GC Only)  
 - New Game Into 2D Nightmare (GC Only)  
 - Remove Intro Videos (GC Only)  

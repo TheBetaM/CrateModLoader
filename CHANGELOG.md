@@ -24,7 +24,7 @@ New mod layers:
 Crash Twinsanity:  
 - Added support for the XBOX version.  
 - Randomize Character Parameters: Now also randomizes health (masks) on spawn.  
-- Randomize Level Music: Attempted to fix music tracks repeating.  
+- Randomize Level Music: Fixed music tracks being repeatedly chosen sometimes.  
 - Enable Unused Enemies: Added Frog N. Stein's in Classroom Chaos.  
 - Fixed some symbols missing in the pause menu.  
   

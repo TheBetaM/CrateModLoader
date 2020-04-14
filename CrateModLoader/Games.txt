@@ -22,12 +22,12 @@ Features:
 - Randomize Sound Effects  
   
 Crash Team Racing
-Supported: NTSC-U PS1 version (.BIN/.ISO formats)  
+Supported: NTSC-U and NTSC-J PS1 versions (.BIN/.ISO formats)  
 Mod abbreviation: CrashTR  
 Mod layers: 1 - BIGFILE.BIG contents
 API by DCxDemo. (https://github.com/DCxDemo/CTR-tools)  
 Features:  
-- Version and seed visible in the Loading screen  
+- Version and seed visible in the Loading screen (English only)  
   
 Crash Nitro Kart
 Supported: All PS2 versions (.ISO format), All GC versions (.ISO format), All XBOX versions (.ISO format)  
@@ -98,7 +98,7 @@ Rayman 3: Hoodlum Havoc
 Supported: All PS2 versions (.ISO format), All GC versions (.ISO format), All XBOX versions (.ISO format)
 Mod abbreviation: Rayman3  
 Features:
-- Randomize Level Order (All Levels or Any amount of Levels)  
+- Randomize Level Order (Any amount of Levels)  
 - Randomize Outfit Visuals (GC Only)  
 - New Game Into 2D Nightmare (GC Only)  
 - Remove Intro Videos (GC Only)  

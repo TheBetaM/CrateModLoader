@@ -349,7 +349,7 @@ namespace CrateModLoader.GameSpecific.Twins
                 musicTypes.Add((uint)MusicID.BossAmberly);
                 musicTypes.Add((uint)MusicID.BossDingodile);
                 musicTypes.Add((uint)MusicID.BossNGin);
-                //musicTypes.Add((uint)MusicID.BossTikimon); //maybe this track was broken specifically?
+                musicTypes.Add((uint)MusicID.BossTikimon);
                 musicTypes.Add((uint)MusicID.BossTwins);
                 musicTypes.Add((uint)MusicID.BossUka);
                 musicTypes.Add((uint)MusicID.BP);

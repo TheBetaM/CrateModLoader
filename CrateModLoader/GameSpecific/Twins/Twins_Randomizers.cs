@@ -220,14 +220,30 @@ namespace CrateModLoader.GameSpecific.Twins
                         if (instance.ObjectID == (ushort)ObjectID.DJ)
                         {
                             uint sourceMusic = instance.UnkI323[0];
+                            uint targetMusic = (uint)MusicID.TitleTheme;
                             for (int m = 0; m < musicTypes.Count; m++)
                             {
                                 if (musicTypes[m] == sourceMusic)
                                 {
-                                    sourceMusic = randMusicList[m];
+                                    targetMusic = randMusicList[m];
                                 }
                             }
-                            instance.UnkI323 = new List<uint>() { sourceMusic, 255, instance.UnkI323[2] };
+                            instance.UnkI323 = new List<uint>() { targetMusic, 255, instance.UnkI323[2] };
+
+                            break;
+                        }
+                        else if (instance.ObjectID == (ushort)ObjectID.DJ_TRIGGERABLE)
+                        {
+                            uint sourceMusic = instance.UnkI323[0];
+                            uint targetMusic = (uint)MusicID.TitleTheme;
+                            for (int m = 0; m < musicTypes.Count; m++)
+                            {
+                                if (musicTypes[m] == sourceMusic)
+                                {
+                                    targetMusic = randMusicList[m];
+                                }
+                            }
+                            instance.UnkI323 = new List<uint>() { targetMusic, 255 };
 
                             break;
                         }

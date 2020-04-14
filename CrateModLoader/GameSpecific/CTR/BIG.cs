@@ -69,7 +69,7 @@ namespace bigtool
         }
 
 
-        public BIG(string fn, string reg)
+        public BIG(string fn, bool isPAL)
         {
             Console.WriteLine("Begin: " + fn);
             InitPaths(fn);
@@ -78,22 +78,13 @@ namespace bigtool
 
             //string reg = Meta.Detect(fn, "files");
 
-            //so messy
-            switch (reg)
+            if (isPAL)
             {
-                case "usa_demo":
-                case "pal_demo": //check if matches
-                    filelist = Path.Combine(basepath, "filenames_demo.txt"); break;
-
-                case "pal": filelist = Path.Combine(basepath, "filenames_pal.txt"); break;
-
-                case "usa_beta_aug": filelist = Path.Combine(basepath, "filenames_beta.txt"); break;
-
-                case "usa_beta_sep": //no list yet
-                case "usa":
-                case "jap": break; //we're usa by default, jap matches
-
-                default: break;
+                filelist = Path.Combine(basepath, "filenames_pal.txt");
+            }
+            else
+            {
+                filelist = Path.Combine(basepath, "filenames_usa.txt");
             }
 
             bool listExists = LoadNames(filelist);
