@@ -119,22 +119,22 @@ namespace CrateModLoader
                 },
                 RegionID_GCN = new RegionCode[] {
                     new RegionCode() {
-                    Name = "G9RE7D",
+                    Name = "G9RE",
                     Region = RegionType.NTSC_U },
                     new RegionCode() {
-                    Name = "G9RH7D",
+                    Name = "G9RH",
                     Region = RegionType.PAL },
                     new RegionCode() {
-                    Name = "G9RJ7D",
+                    Name = "G9RJ",
                     Region = RegionType.NTSC_J },
                     new RegionCode() {
-                    Name = "G9RD7D",
+                    Name = "G9RD",
                     Region = RegionType.PAL },
                     new RegionCode() {
-                    Name = "G9RF7D",
+                    Name = "G9RF",
                     Region = RegionType.PAL },
                     new RegionCode() {
-                    Name = "G9RP7D",
+                    Name = "G9RP",
                     Region = RegionType.PAL },
                 },
                 RegionID_PSP = new RegionCode[] {
@@ -142,10 +142,10 @@ namespace CrateModLoader
                     Name = "ULUS-10044",
                     Region = RegionType.NTSC_U },
                     new RegionCode() {
-                    Name = "ULJM-05036",
+                    Name = "ULES-00168",
                     Region = RegionType.PAL },
                     new RegionCode() {
-                    Name = "ULES-00168",
+                    Name = "ULJM-05036",
                     Region = RegionType.NTSC_J },
                 },
                 RegionID_XBOX = new RegionCode[] {

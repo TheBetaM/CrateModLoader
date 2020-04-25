@@ -26,9 +26,13 @@ namespace CrateModLoader
         PS1 = 4, // PlayStation
         WII = 5, // Wii
         XBOX360 = 6,  // Xbox 360, not supported yet
-        PC = 7, // PC CDROM/DVDROM
+        PC = 7, // PC CDROM/DVDROM, being considered
         DC = 8, // Dreamcast, not supported yet
         PS3 = 9, // PlayStation 3, just for reference
+        Android = 10, // Android, being considered
+        NDS = 11, // DS, not supported yet
+        N3DS = 12, // 3DS, not supported yet
+        N64 = 13, // N64, being considered
     }
     public enum RegionType
     {

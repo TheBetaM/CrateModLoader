@@ -94,7 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameDatabase.cs" />
-    <Compile Include="GameSpecific\Bash\Modder_Bash.cs" />
+    <Compile Include="GameSpecific\CrashBash\Modder_Bash.cs" />
     <Compile Include="GameSpecific\CNK\CNK_Data.cs" />
     <Compile Include="GameSpecific\CNK\CNK_Data_Adventure.cs" />
     <Compile Include="GameSpecific\CNK\CNK_Data_KartStats.cs" />
@@ -228,12 +228,18 @@
     <Compile Include="GameSpecific\CTTR\Pure3D\Util.cs" />
     <Compile Include="GameSpecific\CTTR\RCF.cs" />
     <Compile Include="GameSpecific\CTTR\RCF_Manager.cs" />
-    <Compile Include="GameSpecific\MoM\Modder_MoM.cs" />
+    <Compile Include="GameSpecific\MarioSunshine\Modder_MarioSunshine.cs" />
+    <Compile Include="GameSpecific\CrashMoM\Modder_MoM.cs" />
+    <Compile Include="GameSpecific\Persona3\Modder_Persona3.cs" />
+    <Compile Include="GameSpecific\Persona4\Modder_Persona4.cs" />
+    <Compile Include="GameSpecific\Rayman2\Modder_Rayman2.cs" />
     <Compile Include="GameSpecific\Rayman3\Modder_Rayman3.cs" />
     <Compile Include="GameSpecific\Rayman3\TBFtool\BitmapHelper.cs" />
     <Compile Include="GameSpecific\Rayman3\TBFtool\TBFtool.cs" />
     <Compile Include="GameSpecific\Rayman3\TBFtool\PS2ImageHelper.cs" />
-    <Compile Include="GameSpecific\Titans\Modder_Titans.cs" />
+    <Compile Include="GameSpecific\RaymanM\Modder_RaymanM.cs" />
+    <Compile Include="GameSpecific\SonicAdventure\Modder_SonicAdventure.cs" />
+    <Compile Include="GameSpecific\CrashTitans\Modder_Titans.cs" />
     <Compile Include="GameSpecific\Twins\Modder_Twins.cs" />
     <Compile Include="GameSpecific\CTTR\Modder_CTTR.cs" />
     <Compile Include="GameSpecific\CNK\ModMenu_CNK.cs">
@@ -248,7 +254,7 @@
     <Compile Include="GameSpecific\Twins\Twins_Mods.cs" />
     <Compile Include="GameSpecific\Twins\Twins_Randomizers.cs" />
     <Compile Include="GameSpecific\Twins\Twins_Settings.cs" />
-    <Compile Include="GameSpecific\TWOC\Modder_TWOC.cs" />
+    <Compile Include="GameSpecific\CrashTWOC\Modder_TWOC.cs" />
     <Compile Include="ModCrateManagerForm.cs">
       <SubType>Form</SubType>
     </Compile>

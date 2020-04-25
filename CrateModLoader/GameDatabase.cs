@@ -39,6 +39,10 @@ namespace CrateModLoader
         public RegionCode[] RegionID_PC;
         /// <summary> List of region identifiers for DC games. </summary>
         public RegionCode[] RegionID_DC;
+        /// <summary> List of region identifiers for NDS games. </summary>
+        public RegionCode[] RegionID_NDS;
+        /// <summary> List of region identifiers for 3DS games. </summary>
+        public RegionCode[] RegionID_N3DS;
     }
 
     public struct RegionCode
