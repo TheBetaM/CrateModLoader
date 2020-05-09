@@ -1,6 +1,7 @@
 Crate Mod Loader v1.1.1
 The all-in-one Randomizer and Mod Loader for console games.  
 It detects, extracts, modifies and rebuilds disc image files and directories in an easy to setup way.  
+In addition, it allows for standalone "Mod Crates" to be installed seamlessly into games.
 
 Website: https://github.com/TheBetaM/CrateModLoader/
 

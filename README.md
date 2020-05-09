@@ -4,13 +4,14 @@
   
 The all-in-one Randomizer and Mod Loader for console games.  
 It detects, extracts, modifies and rebuilds disc image files and directories in an easy to setup way.  
-In addition, it allows for standalone "Mod Crates" to be installed seamlessly into game ROMs.  
+In addition, it allows for standalone "Mod Crates" to be installed seamlessly into games.   
   
 <p><img src="https://img.shields.io/github/downloads/TheBetaM/CrateModLoader/total.svg" alt="Downloads"/></p>
   
 Visit the [Releases](https://github.com/TheBetaM/CrateModLoader/releases) section to find the latest release.  
   
 See [this list](../master/GAMES.md) for supported games and their features in the current build.  
+See [this list](../master/CONSOLES.md) for supported consoles in the current build.  
 
 # Mod Crates
 
