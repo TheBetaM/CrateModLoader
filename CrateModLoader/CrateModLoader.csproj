@@ -25,7 +25,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.1.1.%2a</ApplicationVersion>
+    <ApplicationVersion>1.2.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -331,6 +331,9 @@
     </Content>
     <Content Include="Resources\cml_header.png" />
     <Content Include="Resources\cml_icon.png" />
+    <Content Include="Tools\xextool.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Resources\icon_ray3.png" />
     <Content Include="Tools\CTR\filenames_pal.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

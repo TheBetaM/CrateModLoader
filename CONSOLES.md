@@ -1,25 +1,29 @@
 # Crate Mod Loader Supported Consoles  
   
 ## PS1
-Extraction and packing handled by [DiscUtils](https://github.com/DiscUtils/DiscUtils). (MIT license)  
+ISO/BIN extraction and packing handled by [DiscUtils](https://github.com/DiscUtils/DiscUtils). (MIT license)  
   
 ## PS2
-Extraction handled by [DiscUtils](https://github.com/DiscUtils/DiscUtils). (MIT license)  
-Packing handled by [ImgBurn](https://www.imgburn.com/). (freeware)  
-  
-## XBOX
-Extraction and packing handled by [extract-xiso](https://github.com/XboxDev/extract-xiso) (license included)  
+ISO extraction handled by [DiscUtils](https://github.com/DiscUtils/DiscUtils). (MIT license)  
+ISO packing handled by [ImgBurn](https://www.imgburn.com/). (freeware)  
   
 ## PSP
-Extraction handled by [DiscUtils](https://github.com/DiscUtils/DiscUtils). (MIT license)  
-Packing handled by [WQSG_UMD_kkMod](https://github.com/KyousukeKyaa/WQSG_UMD_kkMod) (GPL-2.0 license)  
+ISO extraction handled by [DiscUtils](https://github.com/DiscUtils/DiscUtils). (MIT license)  
+ISO packing handled by [WQSG_UMD_kkMod](https://github.com/KyousukeKyaa/WQSG_UMD_kkMod). (GPL-2.0 license)  
+  
+## XBOX
+XISO extraction and packing handled by [extract-xiso](https://github.com/XboxDev/extract-xiso). (license included)  
+  
+## XBOX 360
+XISO detection handled by [xextool by xorloser](http://xorloser.com/blog/?p=395). (freeware)  
+XISO extraction handled by [extract-xiso](https://github.com/XboxDev/extract-xiso). (license included)  
   
 ## GCN
-Extraction handled by [Wiims ISO Tools](https://wit.wiimm.de/). (GPL-2.0 license)  
-Packing handled by [Gamecube ISO Tool](http://www.wiibackupmanager.co.uk/gcit.html). (freeware)  
+ISO extraction handled by [Wiims ISO Tools](https://wit.wiimm.de/). (GPL-2.0 license)  
+ISO packing handled by [Gamecube ISO Tool](http://www.wiibackupmanager.co.uk/gcit.html). (freeware)  
 
 ## WII
-Extraction and packing handled by [Wiims ISO Tools](https://wit.wiimm.de/). (GPL-2.0 license)  
+ISO/WBFS extraction and packing handled by [Wiims ISO Tools](https://wit.wiimm.de/). (GPL-2.0 license)  
   
 ## Fallback
 As a fallback, the default extraction and packing method is handled by [DiscUtils](https://github.com/DiscUtils/DiscUtils). (MIT license)  

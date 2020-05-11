@@ -25,7 +25,7 @@ namespace CrateModLoader
                     ConsoleMode.WII,
                     ConsoleMode.XBOX360,
                 },
-                API_Credit = "API by NeoKesha",
+                API_Credit = "API by NeoKesha and BetaM",
                 API_Link = string.Empty,
                 Icon = Properties.Resources.icon_titans,
                 ModMenuEnabled = false,
@@ -60,6 +60,12 @@ namespace CrateModLoader
                     new RegionCode() {
                     Name = "RQJX7D",
                     Region = RegionType.PAL },
+                },
+                RegionID_XBOX360 = new RegionCode[]
+                {
+                    new RegionCode() {
+                        Name = "Crash Of The Titans",
+                        Region = RegionType.Global, }
                 }
             };
 
@@ -73,26 +79,25 @@ namespace CrateModLoader
         public override void StartModProcess()
         {
             string path_RCF_frontend = "DEFAULT.RCF";
-            basePath = AppDomain.CurrentDomain.BaseDirectory + @"temp\";
+            basePath = Program.ModProgram.tempPath;
             RCF_Manager.cachedRCF = null;
 
             if (Program.ModProgram.isoType == ConsoleMode.WII)
             {
                 path_RCF_frontend = "default.rcf";
-                basePath = AppDomain.CurrentDomain.BaseDirectory + @"temp\files\";
+                basePath = Program.ModProgram.tempPath + @"files\";
             }
             else if (Program.ModProgram.isoType == ConsoleMode.PSP)
             {
                 path_RCF_frontend = "default.rcf";
-                basePath = AppDomain.CurrentDomain.BaseDirectory + @"temp\PSP_GAME\USRDIR\";
+                basePath = Program.ModProgram.tempPath + @"PSP_GAME\USRDIR\";
             }
             else if  (Program.ModProgram.isoType == ConsoleMode.XBOX360)
             {
                 path_RCF_frontend = "default.rcf";
-                basePath = AppDomain.CurrentDomain.BaseDirectory + @"temp\";
             }
 
-            string path_extr = AppDomain.CurrentDomain.BaseDirectory + @"temp\cml_extr\";
+            string path_extr = Program.ModProgram.tempPath + @"cml_extr\";
             
             RCF_Manager.Extract(basePath + path_RCF_frontend, path_extr);
 

@@ -25,7 +25,7 @@ namespace CrateModLoader
         GCN = 3, // Gamecube
         PS1 = 4, // PlayStation
         WII = 5, // Wii
-        XBOX360 = 6,  // Xbox 360, not supported yet
+        XBOX360 = 6,  // Xbox 360
         PC = 7, // PC CDROM/DVDROM, being considered
         DC = 8, // Dreamcast, not supported yet
         PS3 = 9, // PlayStation 3, just for reference
@@ -73,7 +73,7 @@ namespace CrateModLoader
         //public RadioButton button_radio_ToFolder;
         public BackgroundWorker asyncWorker;
         /// <summary> String used to show which version of CML the modded game was built with. </summary>
-        public string releaseVersionString = "v1.1.1";
+        public string releaseVersionString = "v1.2.0";
         /// <summary> Hexadecimal display of which quick options were selected (automatically adjusts according the amount of quick options) - MSB is first option from the top </summary>
         public string optionsSelectedString
         {
@@ -105,7 +105,10 @@ namespace CrateModLoader
         public ConsoleMode isoType = ConsoleMode.Undefined;
         public Modder Modder;
         public RegionType targetRegion = RegionType.Undefined;
+
         public string extractedPath = "";
+        public string tempPath = AppDomain.CurrentDomain.BaseDirectory + @"temp\";
+
         public string PS2_executable_name = "";
         public string ProductCode = "";
         public bool loadedISO = false;
@@ -464,6 +467,10 @@ namespace CrateModLoader
                 {
                     throw new Exception("Building GC directories is not supported yet!");
                 }
+            }
+            if (isoType == ConsoleMode.XBOX360 && !outputDirectoryMode)
+            {
+                throw new Exception("Building 360 ROMs is not supported yet! Save to folder instead.");
             }
             if (isoType == ConsoleMode.PC)
             {
@@ -906,6 +913,52 @@ namespace CrateModLoader
                             ConsoleDetected = true;
                         }
                     }
+                    else if (File.Exists(inputISOpath + @"default.xex"))
+                    {
+                        isoType = ConsoleMode.XBOX360;
+
+                        string args = "-l ";
+                        args += "\"" + inputISOpath + @"default.xex" + "\"";
+
+                        ISOcreatorProcess = new Process();
+                        ISOcreatorProcess.StartInfo.FileName = AppDomain.CurrentDomain.BaseDirectory + "/Tools/xextool.exe";
+                        //ISOcreatorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
+                        ISOcreatorProcess.StartInfo.Arguments = args;
+                        ISOcreatorProcess.StartInfo.UseShellExecute = false;
+                        ISOcreatorProcess.StartInfo.RedirectStandardOutput = true;
+                        ISOcreatorProcess.StartInfo.CreateNoWindow = true;
+                        ISOcreatorProcess.Start();
+
+                        string outputMessage = ISOcreatorProcess.StandardOutput.ReadToEnd();
+                        //Console.WriteLine(outputMessage);
+
+                        ISOcreatorProcess.WaitForExit();
+
+                        if (outputMessage.Length > 200)
+                        {
+                            string[] outputLines = outputMessage.Split('\n');
+                            string titleID = "";
+
+                            for (int i = 0; i < outputLines.Length; i++)
+                            {
+                                if (outputLines[i].Contains("Xex Name: "))
+                                {
+                                    titleID = outputLines[i];
+                                    break;
+                                }
+                            }
+
+                            if (!string.IsNullOrWhiteSpace(titleID))
+                            {
+                                SetGameType(titleID, ConsoleMode.XBOX360);
+                                if (Modder != null)
+                                {
+                                    ProductCode = titleID;
+                                }
+                                ConsoleDetected = true;
+                            }
+                        }
+                    }
                     else if (File.Exists(inputISOpath + @"sys/main.dol") && File.Exists(inputISOpath + @"sys/boot.bin"))
                     {
                         isoType = ConsoleMode.GCN;
@@ -1030,18 +1083,27 @@ namespace CrateModLoader
                 }
                 if (Modder == null && (OpenROM_Selection == OpenROM_SelectionType.PSXPS2PSPGCNWIIXBOX || OpenROM_Selection == OpenROM_SelectionType.Any))
                 {
-                    // TODO: add free space checks
                     extractedPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"temp\");
                     DeleteTempFiles();
 
-                    string args = "";
-                    args += "\"" + inputISOpath + "\" ";
+                    string args = "-i -x ";
+                    args += "\"" + inputISOpath + "\"";
+
+                    //Modified extract-xiso only extracts the executables to check
 
                     ISOcreatorProcess = new Process();
                     ISOcreatorProcess.StartInfo.FileName = AppDomain.CurrentDomain.BaseDirectory + "/Tools/extract-xiso.exe";
                     ISOcreatorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
                     ISOcreatorProcess.StartInfo.Arguments = args;
+                    //ISOcreatorProcess.Start();
+
+                    ISOcreatorProcess.StartInfo.UseShellExecute = false;
+                    ISOcreatorProcess.StartInfo.RedirectStandardOutput = true;
+                    ISOcreatorProcess.StartInfo.CreateNoWindow = true;
                     ISOcreatorProcess.Start();
+                    string outputMessage = ISOcreatorProcess.StandardOutput.ReadToEnd();
+                    Console.WriteLine(outputMessage);
+
                     ISOcreatorProcess.WaitForExit();
 
                     if (Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + @"\" + Path.GetFileNameWithoutExtension(inputISOpath)))
@@ -1087,6 +1149,52 @@ namespace CrateModLoader
 
                             SetGameType(TitleName, ConsoleMode.XBOX, CertRegion);
                             ConsoleDetected = true;
+                        }
+                    }
+                    else if (Directory.Exists(extractedPath) && File.Exists(extractedPath + @"default.xex"))
+                    {
+                        isoType = ConsoleMode.XBOX360;
+
+                        string xargs = "-l ";
+                        xargs += "\"" + extractedPath + @"default.xex" + "\"";
+
+                        ISOcreatorProcess = new Process();
+                        ISOcreatorProcess.StartInfo.FileName = AppDomain.CurrentDomain.BaseDirectory + "/Tools/xextool.exe";
+                        //ISOcreatorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
+                        ISOcreatorProcess.StartInfo.Arguments = xargs;
+                        ISOcreatorProcess.StartInfo.UseShellExecute = false;
+                        ISOcreatorProcess.StartInfo.RedirectStandardOutput = true;
+                        ISOcreatorProcess.StartInfo.CreateNoWindow = true;
+                        ISOcreatorProcess.Start();
+
+                        string xoutputMessage = ISOcreatorProcess.StandardOutput.ReadToEnd();
+                        //Console.WriteLine(outputMessage);
+
+                        ISOcreatorProcess.WaitForExit();
+
+                        if (xoutputMessage.Length > 200)
+                        {
+                            string[] outputLines = xoutputMessage.Split('\n');
+                            string titleID = "";
+
+                            for (int i = 0; i < outputLines.Length; i++)
+                            {
+                                if (outputLines[i].Contains("Xex Name: "))
+                                {
+                                    titleID = outputLines[i];
+                                    break;
+                                }
+                            }
+
+                            if (!string.IsNullOrWhiteSpace(titleID))
+                            {
+                                SetGameType(titleID, ConsoleMode.XBOX360);
+                                if (Modder != null)
+                                {
+                                    ProductCode = titleID;
+                                }
+                                ConsoleDetected = true;
+                            }
                         }
                     }
                     else
@@ -1293,6 +1401,7 @@ namespace CrateModLoader
                     : console == ConsoleMode.GCN ? modder.Game.RegionID_GCN
                     : console == ConsoleMode.WII ? modder.Game.RegionID_WII
                     : console == ConsoleMode.XBOX ? modder.Game.RegionID_XBOX
+                    : console == ConsoleMode.XBOX360 ? modder.Game.RegionID_XBOX360
                     : console == ConsoleMode.PC ? modder.Game.RegionID_PC
                     : null;
                 foreach (var r in codelist)
@@ -1440,7 +1549,15 @@ namespace CrateModLoader
                 button_randomize.Enabled = button_randomize.Visible = true;
                 textbox_rando_seed.Enabled = textbox_rando_seed.Visible = true;
 
-                text_gameType.Text = string.Format("{0} ({1} {2})", Modder.Game.Name, region_mod, cons_mod);
+                if (string.IsNullOrWhiteSpace(region_mod))
+                {
+                    text_gameType.Text = string.Format("{0} ({1})", Modder.Game.Name, cons_mod);
+                }
+                else
+                {
+                    text_gameType.Text = string.Format("{0} ({1} {2})", Modder.Game.Name, region_mod, cons_mod);
+                }
+                
                 if (!string.IsNullOrWhiteSpace(Modder.Game.API_Credit))
                 {
                     text_apiLabel.Text = Modder.Game.API_Credit;
