@@ -30,6 +30,7 @@ namespace CrateModLoader
         public const string IconFileName = "modcrateicon.png";
         public const string UnsupportedGameShortName = "NoGame";
         public const string AllGamesShortName = "All";
+        public static string ModDirectory = AppDomain.CurrentDomain.BaseDirectory + "/Mods/";
         public static List<ModCrate> ModList;
         public static List<ModCrate> SupportedMods;
         public static int ModsActiveAmount
@@ -59,25 +60,39 @@ namespace CrateModLoader
             }
             else if (string.IsNullOrEmpty(Program.ModProgram.Modder.Game.ShortName))
             {
-                Console.WriteLine("Target game is missing short name!");
+                Console.WriteLine("WARN: Target game is missing short name!");
                 SupportAll = true;
             }
 
             ModList = new List<ModCrate>();
 
-            DirectoryInfo di = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory + "/Mods/");
+            DirectoryInfo di = new DirectoryInfo(ModDirectory);
             foreach (FileInfo file in di.EnumerateFiles())
             {
                 if (file.Extension.ToLower() == ".zip")
                 {
-                    LoadMetadata(file);
+                    try
+                    {
+                        LoadMetadata(file);
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Failed to verify Mod Crate at: " + file.FullName);
+                    }
                 }
             }
             if (di.GetDirectories().Length > 0)
             {
                 foreach (DirectoryInfo dir in di.GetDirectories())
                 {
-                    LoadMetadata(dir);
+                    try
+                    {
+                        LoadMetadata(dir);
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Failed to verify Mod folder at: " + dir.FullName);
+                    }
                 }
             }
 
@@ -243,7 +258,7 @@ namespace CrateModLoader
 
             if (!HasInfo)
             {
-                Console.WriteLine("Mod Crate has no info.txt file!");
+                Console.WriteLine("WARN: Mod Crate has no info.txt file! Ignored.");
                 return;
             }
 
@@ -347,7 +362,7 @@ namespace CrateModLoader
 
             if (!HasInfo)
             {
-                Console.WriteLine("Mod Crate has no info.txt file!");
+                Console.WriteLine("WARN: Mod Crate has no info.txt file! Ignored.");
                 return;
             }
 

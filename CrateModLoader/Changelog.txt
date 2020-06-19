@@ -3,6 +3,7 @@
 General:  
 - Added support for Xbox 360 ROMs and directories (can only output to folder).  
 - Improved Xbox ROM detection speed.  
+- Added a warning if the program fails to verify a Mod Crate.  
   
 Crash Bandicoot, Crash Bandicoot 2, Crash Bandicoot: WARPED:  
 - Added region detection for Mod Crates.  
