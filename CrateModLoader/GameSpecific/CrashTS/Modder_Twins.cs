@@ -80,7 +80,7 @@ namespace CrateModLoader.GameSpecific.Twins
         internal const int RandomizeAllCrates       = 0;
         internal const int RandomizeCrateTypes      = 10;
         internal const int RandomizeGemLocations    = 1;
-        //internal const int RandomizeEnemies         = 2;
+        internal const int RandomizeEnemies         = 2;
         internal const int RandomizeMusic           = 3;
         internal const int RandomizeCharParams      = 4;
         internal const int RandomizeStartingChunk   = 11;
@@ -137,18 +137,19 @@ namespace CrateModLoader.GameSpecific.Twins
                 },
             };
 
-            Options.Add(RandomizeCrateTypes, new ModOption("Randomize Crate Types")); // TODO: Make this a toggle between CrateTypes/AllCrates in the mod menu?
-            Options.Add(RandomizeAllCrates, new ModOption("Randomize Individual Crates"));
-            Options.Add(RandomizeGemLocations, new ModOption("Randomize Gem Locations"));
-            //Options.Add(RandomizeEnemies, new ModOption("Randomize Enemies (Soundless)")); // not stable enough
-            Options.Add(RandomizeMusic, new ModOption("Randomize Level Music"));
-            Options.Add(RandomizeCharParams, new ModOption("Randomize Character Parameters"));
-            //Options.Add(RandomizeStartingChunk, new ModOption("Randomize Starting Chunk")); // TODO
-            Options.Add(ModFlyingKick, new ModOption("Enable Flying Kick for Crash (Jump + Slide)"));
-            Options.Add(ModStompKick, new ModOption("Enable Stomp Kick for Crash (Flying Kick replacement)"));
-            Options.Add(ModDoubleJumpCortex, new ModOption("Enable Double Jump for Cortex"));
-            Options.Add(ModDoubleJumpNina, new ModOption("Enable Double Jump for Nina"));
-            Options.Add(ModEnableUnusedEnemies, new ModOption("Enable Unused Enemies"));
+            AddOption(RandomizeCrateTypes, new ModOption("Randomize Crate Types")); // TODO: Make this a toggle between CrateTypes/AllCrates in the mod menu?
+            AddOption(RandomizeAllCrates, new ModOption("Randomize Individual Crates"));
+            AddOption(RandomizeGemLocations, new ModOption("Randomize Gem Locations"));
+            //AddOption(RandomizeEnemies, new ModOption("Randomize Enemies (Soundless)")); // not stable enough
+            AddOption(RandomizeMusic, new ModOption("Randomize Level Music"));
+            AddOption(RandomizeCharParams, new ModOption("Randomize Character Parameters"));
+            //AddOption(RandomizeStartingChunk, new ModOption("Randomize Starting Chunk")); // TODO
+            AddOption(ModFlyingKick, new ModOption("Enable Flying Kick for Crash (Jump + Slide)"));
+            AddOption(ModStompKick, new ModOption("Enable Stomp Kick for Crash (Flying Kick replacement)"));
+            AddOption(ModDoubleJumpCortex, new ModOption("Enable Double Jump for Cortex"));
+            AddOption(ModDoubleJumpNina, new ModOption("Enable Double Jump for Nina"));
+            AddOption(ModEnableUnusedEnemies, new ModOption("Enable Unused Enemies"));
+
         }
 
         internal string bdPath = "";
@@ -207,7 +208,7 @@ namespace CrateModLoader.GameSpecific.Twins
             bool Twins_Edit_CodeText = true;
             bool Twins_Edit_AllLevels = false;
 
-            if (Options[RandomizeCrateTypes].Enabled)
+            if (GetOption(RandomizeCrateTypes))
             {
                 TwinsFile mainArchive = new TwinsFile();
                 mainArchive.LoadFile(bdPath + @"Startup\Default.rm" + extensionMod, rmType);
@@ -259,7 +260,7 @@ namespace CrateModLoader.GameSpecific.Twins
 
                 mainArchive.SaveFile(bdPath + "/Startup/Default.rm" + extensionMod);
             }
-            if (Options[RandomizeAllCrates].Enabled)
+            if (GetOption(RandomizeAllCrates))
             {
                 //Importing ammo crate
                 TwinsFile cortexlevelArchive = new TwinsFile();
@@ -284,7 +285,7 @@ namespace CrateModLoader.GameSpecific.Twins
                 mainArchive.SaveFile(bdPath + "/Startup/Default.rm" + extensionMod);
             }
 
-            if (Options[RandomizeAllCrates].Enabled)
+            if (GetOption(RandomizeAllCrates))
             {
 
                 // Crates to insert
@@ -320,7 +321,7 @@ namespace CrateModLoader.GameSpecific.Twins
                 Twins_Edit_AllLevels = true;
             }
 
-            if (Options[RandomizeGemLocations].Enabled)
+            if (GetOption(RandomizeGemLocations))
             {
                 Twins_Data.Twins_Randomize_Gems(ref randState);
 
@@ -335,7 +336,7 @@ namespace CrateModLoader.GameSpecific.Twins
                 Twins_Edit_AllLevels = true;
             }
 
-            if (Options[RandomizeMusic].Enabled)
+            if (GetOption(RandomizeMusic))
             {
                 List<uint> temp_musicList = new List<uint>();
 
@@ -386,7 +387,7 @@ namespace CrateModLoader.GameSpecific.Twins
                 Twins_Edit_AllLevels = true;
             }
 
-            if (Options[ModFlyingKick].Enabled || Options[ModStompKick].Enabled || Options[ModDoubleJumpCortex].Enabled || Options[ModDoubleJumpNina].Enabled)// || Options[RandomizeEnemies].Enabled)
+            if (GetOption(ModFlyingKick) || GetOption(ModStompKick) || GetOption(ModDoubleJumpCortex) || GetOption(ModDoubleJumpNina))// || GetOption(RandomizeEnemies))
             {
                 Twins_Edit_AllLevels = true;
 
@@ -409,7 +410,7 @@ namespace CrateModLoader.GameSpecific.Twins
 
                 
                 /*
-                if (Options[RandomizeEnemies].Enabled)
+                if (GetOption(RandomizeEnemies))
                 {
                     EnemyReplaceList.Add(ObjectID.GLOBAL_MONKEY);
                     EnemyReplaceList.Add(ObjectID.GLOBAL_CHICKEN);
@@ -538,11 +539,11 @@ namespace CrateModLoader.GameSpecific.Twins
             }
             
 
-            if (Options[ModEnableUnusedEnemies].Enabled)
+            if (GetOption(ModEnableUnusedEnemies))
             {
                 Twins_Edit_AllLevels = true;
             }
-            if (Options[RandomizeCharParams].Enabled)
+            if (GetOption(RandomizeCharParams))
             {
                 Twins_Data.Twins_Randomize_Character((int)CharacterID.Crash, ref randState);
                 Twins_Data.Twins_Randomize_Character((int)CharacterID.Cortex, ref randState);
@@ -654,29 +655,29 @@ namespace CrateModLoader.GameSpecific.Twins
             TwinsFile RM_Archive = new TwinsFile();
             RM_Archive.LoadFile(path, rmType);
 
-            if (Options[RandomizeAllCrates].Enabled)
+            if (GetOption(RandomizeAllCrates))
                 Twins_Randomizers.RM_Randomize_Crates(RM_Archive, chunkType, ref randState, ref CrateReplaceList, ref randCrateList);
-            if (Options[RandomizeGemLocations].Enabled)
+            if (GetOption(RandomizeGemLocations))
                 Twins_Randomizers.RM_Randomize_Gems(RM_Archive, chunkType, ref gemObjectList);
-            if (Options[RandomizeMusic].Enabled)
+            if (GetOption(RandomizeMusic))
                 Twins_Randomizers.RM_Randomize_Music(RM_Archive, ref musicTypes, ref randMusicList);
-            if (Options[RandomizeCharParams].Enabled)
+            if (GetOption(RandomizeCharParams))
                 Twins_Randomizers.RM_Randomize_CharacterInstanceStats(RM_Archive);
 
             /*
-            if (Options[RandomizeEnemies].Enabled)
+            if (GetOption(RandomizeEnemies))
                 Twins_Randomizers.RM_Randomize_Enemies(RM_Archive, chunkType, ref randState, ref EnemyReplaceList, ref EnemyInsertList);
             */
 
-            if (Options[ModStompKick].Enabled)
+            if (GetOption(ModStompKick))
                 Twins_Mods.RM_CharacterObjectMod(RM_Archive);
-            if (Options[ModFlyingKick].Enabled || Options[ModStompKick].Enabled)
+            if (GetOption(ModFlyingKick) || GetOption(ModStompKick))
                 Twins_Mods.RM_CharacterMod_EnableFlyingKick(RM_Archive);
-            if (Options[ModDoubleJumpCortex].Enabled)
+            if (GetOption(ModDoubleJumpCortex))
                 Twins_Mods.RM_CharacterMod_DoubleJumpCortex(RM_Archive);
-            if (Options[ModDoubleJumpNina].Enabled)
+            if (GetOption(ModDoubleJumpNina))
                 Twins_Mods.RM_CharacterMod_DoubleJumpNina(RM_Archive);
-            if (Options[ModEnableUnusedEnemies].Enabled)
+            if (GetOption(ModEnableUnusedEnemies))
                 Twins_Mods.RM_EnableUnusedEnemies(RM_Archive);
 
             RM_Archive.SaveFile(path);
@@ -708,9 +709,9 @@ namespace CrateModLoader.GameSpecific.Twins
             RM_LoadScripts(RM_Archive);
             RM_LoadObjects(RM_Archive);
 
-            
+
             /*
-            if (Options[RandomizeEnemies].Enabled)
+            if (GetOption(RandomizeEnemies))
             {
                 List<ObjectID> ExportedObjects = new List<ObjectID>();
                 if (chunkType == Twins_Data.ChunkType.Earth_Hub_Beach)
@@ -794,7 +795,7 @@ namespace CrateModLoader.GameSpecific.Twins
                 //}
             }
             */
-            
+
         }
 
         void Recursive_EditLevels(DirectoryInfo di)

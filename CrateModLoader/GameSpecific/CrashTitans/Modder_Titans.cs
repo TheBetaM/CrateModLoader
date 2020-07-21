@@ -69,7 +69,7 @@ namespace CrateModLoader
                 }
             };
 
-            Options.Add(TestMod, new ModOption("Test Mod: Wide camera angle in Episode 1"));
+            AddOption(TestMod, new ModOption("Test Mod: Wide camera angle in Episode 1"));
         }
 
         internal const int TestMod = 0;
@@ -103,7 +103,7 @@ namespace CrateModLoader
 
             ModCrates.InstallLayerMods(path_extr, 1);
 
-            if (Options[TestMod].Enabled)
+            if (GetOption(TestMod))
             {
                 // Proof of concept mod increasing gameplay FOV in Episode 1
                 string[] frontend_lines = File.ReadAllLines(path_extr + @"levels\L1_E1\cameraoverrides.blua");

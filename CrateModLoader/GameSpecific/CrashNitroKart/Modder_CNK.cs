@@ -95,23 +95,24 @@ namespace CrateModLoader
                 },
             };
 
-            Options.Add(RandomizeAdventure, new ModOption("Randomize Adventure"));
-            Options.Add(RandomizeCharacterStats, new ModOption("Randomize Character Stats"));
-            Options.Add(RandomizeKartStats, new ModOption("Randomize Kart Stats")); // TODO
-            //Options.Add(RandomizeWumpaCrate, new ModOption()); //TODO dda
-            //Options.Add(RandomizeObstacles, new ModOption()); //TODO obstacles
-            //Options.Add(RandomizeCupPoints, new ModOption()); // Maybe? gameprogression
-            //Options.Add(RandomizeSurfaceParameters, new ModOption("Randomize Surface Parameters")); // TODO: later version
-            //Options.Add(RandomizeWeaponPools, new ModOption("Randomize Powerup Distribution")); // TODO: later version
-            Options.Add(RandomizeWeapons, new ModOption("Randomize Powerup Effects"));
-            Options.Add(RandomizeCharacters, new ModOption("Randomize Drivers")); //TODO: later version: icon replacement, name replacement, main menu model replacement, adventure character select model
-            Options.Add(RandomizeKarts, new ModOption("Randomize Karts"));
-            //Options.Add(RandomizeMusic, new ModOption()); //TODO music.csv
-            //Options.Add(NoMask, new ModOption()); //TODO, hinthistory.csv
-            Options.Add(DisableFadeout, new ModOption("Disable Fadeout/Flash Overlay"));
-            Options.Add(DisablePopups, new ModOption("Disable Unlock Popups"));
-            Options.Add(SpeedUpMaskHints, new ModOption("Speed Up Mask Hint Appearance"));
-            Options.Add(NoAlchemyIntro, new ModOption("Remove Intro Videos", true));
+            AddOption(RandomizeAdventure, new ModOption("Randomize Adventure"));
+            AddOption(RandomizeCharacterStats, new ModOption("Randomize Character Stats"));
+            AddOption(RandomizeKartStats, new ModOption("Randomize Kart Stats")); // TODO
+            //AddOption(RandomizeWumpaCrate, new ModOption()); //TODO dda
+            //AddOption(RandomizeObstacles, new ModOption()); //TODO obstacles
+            //AddOption(RandomizeCupPoints, new ModOption()); // Maybe? gameprogression
+            //AddOption(RandomizeSurfaceParameters, new ModOption("Randomize Surface Parameters")); // TODO: later version
+            //AddOption(RandomizeWeaponPools, new ModOption("Randomize Powerup Distribution")); // TODO: later version
+            AddOption(RandomizeWeapons, new ModOption("Randomize Powerup Effects"));
+            AddOption(RandomizeCharacters, new ModOption("Randomize Drivers")); //TODO: later version: icon replacement, name replacement, main menu model replacement, adventure character select model
+            AddOption(RandomizeKarts, new ModOption("Randomize Karts"));
+            //AddOption(RandomizeMusic, new ModOption()); //TODO music.csv
+            //AddOption(NoMask, new ModOption()); //TODO, hinthistory.csv
+            AddOption(DisableFadeout, new ModOption("Disable Fadeout/Flash Overlay"));
+            AddOption(DisablePopups, new ModOption("Disable Unlock Popups"));
+            AddOption(SpeedUpMaskHints, new ModOption("Speed Up Mask Hint Appearance"));
+            AddOption(NoAlchemyIntro, new ModOption("Remove Intro Videos", true));
+
         }
 
         internal string path_gob_extracted = "";
@@ -199,7 +200,7 @@ namespace CrateModLoader
             //bool Editing_CSV_AI_WeaponSelection = false;
             bool Editing_CSV_Credits = true;
 
-            if (Options[NoAlchemyIntro].Enabled)
+            if (GetOption(NoAlchemyIntro))
             {
                 if (Program.ModProgram.isoType == ConsoleMode.PS2)
                 {
@@ -301,15 +302,15 @@ namespace CrateModLoader
                         File.Delete(Program.ModProgram.extractedPath + "/video/intro/scospa.sfd");
                 }
             }
-            if (Options[RandomizeCharacters].Enabled)
+            if (GetOption(RandomizeCharacters))
             {
                 Mod_Randomize_Characters(randState);
             }
-            if (Options[RandomizeKarts].Enabled)
+            if (GetOption(RandomizeKarts))
             {
                 Mod_Randomize_Karts(randState);
             }
-            if (Options[RandomizeAdventure].Enabled)
+            if (GetOption(RandomizeAdventure))
             {
                 Editing_CSV_WarpPadInfo = true;
                 Editing_CSV_AdventureCup = true;
@@ -318,12 +319,12 @@ namespace CrateModLoader
                 CNK_Data.CNK_Randomize_WarpPads(randState);
                 CNK_Data.CNK_Randomize_ReqsRewards(randState);
             }
-            if (Options[RandomizeKartStats].Enabled)
+            if (GetOption(RandomizeKartStats))
             {
                 Editing_CSV_KartPhysicsBase = true;
                 CNK_Data.CNK_Randomize_KartStats(randState);
             }
-            if (Options[RandomizeCharacterStats].Enabled)
+            if (GetOption(RandomizeCharacterStats))
             {
                 Editing_CSV_CharacterPhysics = true;
                 for (int i = 0; i < 16; i++)
@@ -332,13 +333,13 @@ namespace CrateModLoader
                 }
             }
             /*
-            if (Options[RandomizeSurfaceParameters].Enabled)
+            if (GetOption(RandomizeSurfaceParameters))
             {
                 Editing_CSV_SurfaceParams = true;
                 CNK_Data.CNK_Randomize_SufParams(randState);
             }
             */
-            if (Options[RandomizeWeapons].Enabled)
+            if (GetOption(RandomizeWeapons))
             {
                 Editing_CSV_PowerShield = true;
                 Editing_CSV_FreezingMine = true;
@@ -362,17 +363,17 @@ namespace CrateModLoader
                 CNK_Data.CNK_Randomize_StaticShock(randState);
             }
             /*
-            if (Options[RandomizeWeaponPools].Enabled)
+            if (GetOption(RandomizeWeaponPools))
             {
                 Editing_CSV_PlayerWeaponSelection = true;
                 Editing_CSV_PlayerWeaponSelection_Boss = true;
             }
             */
-            if (Options[DisablePopups].Enabled)
+            if (GetOption(DisablePopups))
             {
                 Editing_CSV_Unlockables = true;
             }
-            if (Options[SpeedUpMaskHints].Enabled)
+            if (GetOption(SpeedUpMaskHints))
             {
                 Editing_CSV_HintsConfig = true;
             }
@@ -631,7 +632,7 @@ namespace CrateModLoader
                 
             }
 
-            if (Options[RandomizeKartStats].Enabled)
+            if (GetOption(RandomizeKartStats))
             {
                 Editing_CSV_AI_KartPhysicsBase = true;
                 CNK_Data.CNK_Randomize_KartStats(randState);
@@ -1442,7 +1443,7 @@ namespace CrateModLoader
                 File.WriteAllLines(path_gob_extracted + "common/hints/config.csv", csv_HintsConfig);
             }
 
-            if (Options[DisableFadeout].Enabled)
+            if (GetOption(DisableFadeout))
             {
                 DirectoryInfo dir_hud = new DirectoryInfo(path_gob_extracted + "common/hud/");
                 foreach (FileInfo file in dir_hud.EnumerateFiles())

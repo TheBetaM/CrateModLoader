@@ -19,6 +19,39 @@ namespace CrateModLoader
     {
         public Dictionary<int,ModOption> Options { get; } = new Dictionary<int,ModOption>();
 
+        // Use this instead of Options.Add!
+        /// <summary>
+        /// Adds an option to the dictionary if the region and console is allowed for it.
+        /// </summary>
+        /// <param name="id">Option ID in dictionary</param>
+        /// <param name="option">Option constructor</param>
+        public virtual void AddOption(int id, ModOption option)
+        {
+            if (option.AllowedConsoles.Count > 0 && !option.AllowedConsoles.Contains(Program.ModProgram.isoType))
+            {
+                return;
+            }
+            if (option.AllowedRegions.Count > 0 && !option.AllowedRegions.Contains(Program.ModProgram.targetRegion))
+            {
+                return;
+            }
+            Options.Add(id, option);
+        }
+
+        // Use this! Mostly for error handling and when options may be missing.
+        /// <summary>
+        /// Gets the enabled state of the mod option (false if option doesn't exist)
+        /// </summary>
+        /// <param name="id">Option ID in dictionary</param>
+        public virtual bool GetOption(int id)
+        {
+            if (Options.ContainsKey(id) && Options[id].Enabled)
+            {
+                return true;
+            }
+            return false;
+        }
+
         public bool ModCratesManualInstall = false; // A game might require some type of verification (i.e. file integrity, region matching) before installing layer0 mod crates.
 
         public abstract void StartModProcess();

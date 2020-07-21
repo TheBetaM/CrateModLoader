@@ -99,7 +99,6 @@ namespace CrateModLoader
 
             // Proof of concept mod replacing credits text
             string[] credits_lines = File.ReadAllLines(path_extr + @"script\CreditsList.txt");
-            //credits_lines[3] = "false       \"Modded MoM\"                                               false           true    kforbes";
 
             List<string> credits_LineList = new List<string>();
             credits_LineList.Add(credits_lines[0]);

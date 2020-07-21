@@ -80,7 +80,7 @@ namespace CrateModLoader
             get
             {
                 string str = string.Empty;
-                if (list_modOptions != null)
+                if (list_modOptions != null && list_modOptions.Items.Count > 0)
                 {
                     for (int l = 0; l < (list_modOptions.Items.Count+31) / 32; ++l)
                     {
@@ -95,6 +95,10 @@ namespace CrateModLoader
                         }
                         str += val.ToString("X08");
                     }
+                }
+                else
+                {
+                    str = "00000000";
                 }
                 return str;
             }
@@ -1386,6 +1390,8 @@ namespace CrateModLoader
             button_modCrateMenu.Text = "Mod Crates";
             ModCrates.ClearModLists();
 
+            isoType = console;
+
             Assembly assembly = Assembly.GetExecutingAssembly();
             foreach (Type type in assembly.GetTypes())
             {
@@ -1460,7 +1466,6 @@ namespace CrateModLoader
                 if (Modder != null)
                     break;
             }
-            isoType = console;
 
             string cons_mod = "";
             if (console == ConsoleMode.Undefined)
@@ -1595,7 +1600,8 @@ namespace CrateModLoader
                 }
                 else
                 {
-                    list_modOptions.Items.Add("No options available", false);
+                    // probably no longer needed
+                    //list_modOptions.Items.Add("No options available", false);
                 }
             }
             int height = 306 + (list_modOptions.Items.Count * 15);

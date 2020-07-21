@@ -51,7 +51,7 @@ namespace CrateModLoader
                 },
             };
 
-            //Options.Add(RandomizeAdvCharacters, new ModOption("Randomize adventure mode characters"));
+            //AddOption(RandomizeAdvCharacters, new ModOption("Randomize adventure mode characters"));
         }
 
         private string basePath = "";

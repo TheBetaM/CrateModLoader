@@ -46,7 +46,7 @@ namespace CrateModLoader
             };
             ModCratesManualInstall = true;
 
-            Options.Add(RandomizeADIO, new ModOption("Randomize sound effects"));
+            AddOption(RandomizeADIO, new ModOption("Randomize sound effects"));
         }
 
         public override void StartModProcess()
@@ -94,7 +94,7 @@ namespace CrateModLoader
                     continue;
                 }
 
-                if (Options[RandomizeADIO].Enabled) Mod_RandomizeADIO(nsf, nsd, rand);
+                if (GetOption(RandomizeADIO)) Mod_RandomizeADIO(nsf, nsd, rand);
 
                 PatchNSD(nsf, nsd);
 
