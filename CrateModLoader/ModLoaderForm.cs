@@ -36,6 +36,7 @@ namespace CrateModLoader
             Program.ModProgram.checkbox_fromFolder = checkBox_loadFromFolder;
             Program.ModProgram.checkbox_toFolder = checkBox_saveToFolder;
             Program.ModProgram.asyncWorker = backgroundWorker1;
+            Program.ModProgram.formHandle = this.Handle;
 
             progressBar1.Minimum = 0;
             progressBar1.Maximum = 100;

@@ -8,6 +8,7 @@ using System.IO;
 using System.Media;
 using System.Reflection;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 
 namespace CrateModLoader
 {
@@ -35,6 +36,10 @@ namespace CrateModLoader
         public Button button_modCrateMenu;
         public CheckBox checkbox_fromFolder;
         public CheckBox checkbox_toFolder;
+        public IntPtr formHandle;
+
+        [DllImport("user32.dll")]
+        public static extern int FlashWindow(IntPtr Hwnd, bool Revert);
 
         // Active settings
         public enum OpenROM_SelectionType
@@ -684,6 +689,7 @@ namespace CrateModLoader
         private void asyncWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             progressBar.Value = 100;
+            FlashWindow(formHandle, false);
             if (e.Error != null)
             {
                 progressBar.Value = progressBar.Minimum;

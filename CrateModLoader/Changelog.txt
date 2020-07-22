@@ -5,6 +5,7 @@ General:
 - Improved Xbox ROM detection speed.  
 - Added a warning if the program fails to verify a Mod Crate.  
 - Console/Region specific options will not appear on unsupported versions anymore.  
+- The window will now flash when the process is complete.  
   
 Crash Bandicoot, Crash Bandicoot 2, Crash Bandicoot: WARPED:  
 - Added region detection for Mod Crates.  
