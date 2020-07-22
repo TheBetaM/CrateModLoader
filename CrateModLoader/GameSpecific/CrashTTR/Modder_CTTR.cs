@@ -380,16 +380,12 @@ namespace CrateModLoader
 
         public override void StartModProcess()
         {
-            SetPaths(Program.ModProgram.isoType, Program.ModProgram.PS2_executable_name);
-            basePath = AppDomain.CurrentDomain.BaseDirectory + @"temp\";
-            if (Program.ModProgram.isoType == ConsoleMode.GCN)
-            {
-                basePath = AppDomain.CurrentDomain.BaseDirectory + @"temp\P-" + Program.ModProgram.ProductCode.Substring(0, 4) + @"\";
-            }
+            SetPaths(ModLoaderGlobals.Console, ModLoaderGlobals.ExecutableName);
+            basePath = ModLoaderGlobals.ExtractedPath;
 
             RCF_Manager.cachedRCF = null;
 
-            randState = new Random(Program.ModProgram.randoSeed);
+            randState = new Random(ModLoaderGlobals.RandomizerSeed);
 
             bool Editing_DefaultCommon = false;
 
@@ -629,23 +625,23 @@ namespace CrateModLoader
         {
 
             /*
-            basePath = AppDomain.CurrentDomain.BaseDirectory + @"\Tools\";
+            basePath = ModLoaderGlobals.ToolsPath;
             RCF_Manager.Extract(basePath + @"frontend.rcf", basePath + @"temp\");
 
             RCF_Manager.Pack(basePath + @"exfrontend.rcf", basePath + @"temp\");
             */
-            
+
 
             /*
             Pure3D.File CrashOnfootAnim1 = new Pure3D.File();
-            CrashOnfootAnim1.Load(AppDomain.CurrentDomain.BaseDirectory + "/Tools/file.p3d");
+            CrashOnfootAnim1.Load(ModLoaderGlobals.ToolsPath + "file.p3d");
             PrintHierarchy(CrashOnfootAnim1.RootChunk, 0);
 
             GameSpecific.CTTR.Pure3D.ModelExporter.AddSkinnedModelWithAnimations(ref CrashOnfootAnim1.RootChunk.GetChildren<Skin>()[0], ref CrashOnfootAnim1.RootChunk.GetChildren<SkeletonCTTR>()[0], ref shaders);
-            GameSpecific.CTTR.Pure3D.ModelExporter.ExportModel(AppDomain.CurrentDomain.BaseDirectory + "/Tools/out.dae");
+            GameSpecific.CTTR.Pure3D.ModelExporter.ExportModel(ModLoaderGlobals.ToolsPath + "out.dae");
 
             Console.WriteLine("\nNow saving...\n");
-            CrashOnfootAnim1.Save(AppDomain.CurrentDomain.BaseDirectory + "/Tools/file1.p3d");
+            CrashOnfootAnim1.Save(ModLoaderGlobals.ToolsPath + "file1.p3d");
             */
 
         }

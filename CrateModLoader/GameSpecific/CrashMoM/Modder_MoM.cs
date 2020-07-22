@@ -76,25 +76,23 @@ namespace CrateModLoader
         public override void StartModProcess()
         {
             string path_RCF_frontend = "DEFAULT.RCF";
-            basePath = Program.ModProgram.tempPath;
+            basePath = ModLoaderGlobals.ExtractedPath;
             RCF_Manager.cachedRCF = null;
 
-            if (Program.ModProgram.isoType == ConsoleMode.WII)
+            if (ModLoaderGlobals.Console == ConsoleMode.WII)
             {
                 path_RCF_frontend = "default.rcf";
-                basePath = Program.ModProgram.tempPath + @"DATA\files\";
             }
-            else if (Program.ModProgram.isoType == ConsoleMode.PSP)
+            else if (ModLoaderGlobals.Console == ConsoleMode.PSP)
             {
                 path_RCF_frontend = "default.rcf";
-                basePath = Program.ModProgram.tempPath + @"PSP_GAME\USRDIR\";
             }
-            else if (Program.ModProgram.isoType == ConsoleMode.XBOX360)
+            else if (ModLoaderGlobals.Console == ConsoleMode.XBOX360)
             {
                 path_RCF_frontend = "default.rcf";
             }
 
-            string path_extr = Program.ModProgram.tempPath + @"cml_extr\";
+            string path_extr = basePath + @"cml_extr\";
             RCF_Manager.Extract(basePath + path_RCF_frontend, path_extr);
 
             // Proof of concept mod replacing credits text
@@ -103,9 +101,9 @@ namespace CrateModLoader
             List<string> credits_LineList = new List<string>();
             credits_LineList.Add(credits_lines[0]);
 
-            credits_LineList.Add("false        \"Crate Mod Loader " + Program.ModProgram.releaseVersionString + "\"                 false           false");
-            credits_LineList.Add("false        \"Seed: " + Program.ModProgram.randoSeed + "\"                 false           false");
-            credits_LineList.Add("false        \"Options: " + Program.ModProgram.optionsSelectedString + "\"                 false           false");
+            credits_LineList.Add("false        \"Crate Mod Loader " + ModLoaderGlobals.ProgramVersion + "\"                 false           false");
+            credits_LineList.Add("false        \"Seed: " + ModLoaderGlobals.RandomizerSeed + "\"                 false           false");
+            credits_LineList.Add("false        \"Options: " + OptionsSelectedString + "\"                 false           false");
 
             for (int i = 1; i < credits_lines.Length; i++)
             {

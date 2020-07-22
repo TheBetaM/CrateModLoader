@@ -61,11 +61,11 @@ namespace CrateModLoader
 
             string path_Bigfile = "BIGFILE.BIG";
 
-            basePath = AppDomain.CurrentDomain.BaseDirectory + @"temp\";
+            basePath = ModLoaderGlobals.ExtractedPath;
 
             bigtool.BIG big;
 
-            switch (Program.ModProgram.targetRegion)
+            switch (ModLoaderGlobals.Region)
             {
                 case RegionType.NTSC_U:
                     big = new bigtool.BIG(basePath + path_Bigfile, false);
@@ -87,7 +87,7 @@ namespace CrateModLoader
         protected override void ModProcess()
         {
 
-            string path_extr = AppDomain.CurrentDomain.BaseDirectory + @"temp\BIGFILE\";
+            string path_extr = ModLoaderGlobals.ExtractedPath + @"BIGFILE\";
 
             ModCrates.InstallLayerMods(path_extr, 1);
             
@@ -97,7 +97,7 @@ namespace CrateModLoader
             {
                 if (lang_lines[i].Contains("LOADING.."))
                 {
-                    lang_lines[i] = "CML " + Program.ModProgram.releaseVersionString + "|" + "SEED: " + Program.ModProgram.randoSeed;
+                    lang_lines[i] = "CML " + ModLoaderGlobals.ProgramVersion + "|" + "SEED: " + ModLoaderGlobals.RandomizerSeed;
                 }
             }
             File.WriteAllLines(path_extr + @"lang\en.txt", lang_lines, System.Text.Encoding.Default);
@@ -112,7 +112,7 @@ namespace CrateModLoader
                 {
                     if (lang_lines[i].Contains("LOADING.."))
                     {
-                        lang_lines[i] = "CML " + Program.ModProgram.releaseVersionString + "|" + "SEED: " + Program.ModProgram.randoSeed;
+                        lang_lines[i] = "CML " + ModLoaderGlobals.ProgramVersion + "|" + "SEED: " + ModLoaderGlobals.RandomizerSeed;
                     }
                 }
                 File.WriteAllLines(path_extr + @"lang\en2.txt", lang_lines1, System.Text.Encoding.Default);

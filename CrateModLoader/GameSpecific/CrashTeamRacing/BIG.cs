@@ -49,13 +49,13 @@ namespace bigtool
         public void InitPaths(string fn)
         {
             path = fn;
-            basepath = System.AppDomain.CurrentDomain.BaseDirectory + @"\Tools\CTR\";
-            filelist = AppDomain.CurrentDomain.BaseDirectory + @"\Tools\CTR\filenames_usa.txt";
+            basepath = CrateModLoader.ModLoaderGlobals.ToolsPath + @"CTR\";
+            filelist = basepath + @"filenames_usa.txt";
             bigname = Path.GetFileNameWithoutExtension(fn);
             bigpath = Path.GetDirectoryName(fn);
             if (bigpath == null || bigpath == "") bigpath = basepath;
             extpath = Path.Combine(bigpath, bigname) + "\\";
-            verpath = AppDomain.CurrentDomain.BaseDirectory + @"\Tools\CTR\versions.json";
+            verpath = basepath + @"versions.json";
 
             //uncomment if something goes wrong
             /*
@@ -241,7 +241,7 @@ namespace bigtool
             //Console.WriteLine(p.disk_dump);
 
             //File.WriteAllBytes(path + ".BIG", final_big);
-            File.WriteAllBytes(AppDomain.CurrentDomain.BaseDirectory + @"temp\" + path + ".BIG", final_big);
+            File.WriteAllBytes(CrateModLoader.ModLoaderGlobals.ExtractedPath + path + ".BIG", final_big);
 
             //Console.WriteLine(p.big_created);
 

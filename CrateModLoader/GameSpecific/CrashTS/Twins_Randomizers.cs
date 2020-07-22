@@ -9,7 +9,7 @@ namespace CrateModLoader.GameSpecific.Twins
 
         public static void RM_Randomize_Crates(TwinsFile RM_Archive, ChunkType chunkType, ref Random randState, ref List<uint> CrateReplaceList, ref List<uint> randCrateList)
         {
-            randState = new Random((Program.ModProgram.randoSeed + (int)chunkType) % int.MaxValue);
+            randState = new Random((ModLoaderGlobals.RandomizerSeed + (int)chunkType) % int.MaxValue);
             List<uint> lifecrates = new List<uint>
             {
                 (uint)ObjectID.EXTRALIFECRATE,

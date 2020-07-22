@@ -11,7 +11,7 @@ namespace CrateModLoader
         public ModLoaderForm()
         {
             InitializeComponent();
-            linkLabel2.Text = "Crate Mod Loader " + Program.ModProgram.releaseVersionString;
+            linkLabel2.Text = "Crate Mod Loader " + ModLoaderGlobals.ProgramVersion;
             label7.Text = "";
             linkLabel1.Text = "";
             label6.Text = "Waiting for input (1) ...";
@@ -44,7 +44,7 @@ namespace CrateModLoader
             Random rand = new Random();
             int Seed = rand.Next(0, int.MaxValue);
             numericUpDown1.Value = Seed;
-            Program.ModProgram.randoSeed = Seed;
+            ModLoaderGlobals.RandomizerSeed = Seed;
 
             openFileDialog1.FileName = string.Empty;
         }
@@ -55,22 +55,23 @@ namespace CrateModLoader
             {
                 if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
                 {
-                    Program.ModProgram.OpenROM_Selection = OpenROM_SelectionType.Any;
-                    Program.ModProgram.inputISOpath = folderBrowserDialog1.SelectedPath + @"\";
+                    Program.ModProgram.OpenROM_Selection = ModLoader.OpenROM_SelectionType.Any;
+                    ModLoaderGlobals.InputPath = folderBrowserDialog1.SelectedPath + @"\";
                     Program.ModProgram.CheckISO();
-                    textBox1.Text = Program.ModProgram.inputISOpath;
+                    textBox1.Text = ModLoaderGlobals.InputPath;
                 }
             }
             else
             {
-                openFileDialog1.Filter = "PSX/PS2/PSP/GCN/WII/XBOX ROM (*.iso; *.bin; *.wbfs)|*.iso;*.bin;*.wbfs|All files (*.*)|*.*";
+                //openFileDialog1.Filter = "PSX/PS2/PSP/GCN/WII/XBOX/360 ROM (*.iso; *.bin; *.wbfs)|*.iso;*.bin;*.wbfs|All files (*.*)|*.*";
+                openFileDialog1.Filter = "Supported ROM formats (*.iso; *.bin; *.wbfs)|*.iso;*.bin;*.wbfs|All files (*.*)|*.*";
 
                 if (openFileDialog1.ShowDialog() == DialogResult.OK)
                 {
-                    Program.ModProgram.OpenROM_Selection = (OpenROM_SelectionType)openFileDialog1.FilterIndex;
-                    Program.ModProgram.inputISOpath = openFileDialog1.FileName;
+                    Program.ModProgram.OpenROM_Selection = (ModLoader.OpenROM_SelectionType)openFileDialog1.FilterIndex;
+                    ModLoaderGlobals.InputPath = openFileDialog1.FileName;
                     Program.ModProgram.CheckISO();
-                    textBox1.Text = Program.ModProgram.inputISOpath;
+                    textBox1.Text = ModLoaderGlobals.InputPath;
                 }
             }
             
@@ -82,8 +83,8 @@ namespace CrateModLoader
             {
                 if (folderBrowserDialog2.ShowDialog() == DialogResult.OK)
                 {
-                    Program.ModProgram.outputISOpath = folderBrowserDialog2.SelectedPath + @"\";
-                    textBox2.Text = Program.ModProgram.outputISOpath;
+                    ModLoaderGlobals.OutputPath = folderBrowserDialog2.SelectedPath + @"\";
+                    textBox2.Text = ModLoaderGlobals.OutputPath;
                     Program.ModProgram.outputPathSet = true;
                     if (Program.ModProgram.loadedISO && Program.ModProgram.outputPathSet)
                     {
@@ -107,7 +108,7 @@ namespace CrateModLoader
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
-            Program.ModProgram.randoSeed = int.Parse(numericUpDown1.Text);
+            ModLoaderGlobals.RandomizerSeed = int.Parse(numericUpDown1.Text);
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -115,13 +116,13 @@ namespace CrateModLoader
             Random rand = new Random();
             int Seed = rand.Next(0,int.MaxValue);
             numericUpDown1.Value = Seed;
-            Program.ModProgram.randoSeed = Seed;
+            ModLoaderGlobals.RandomizerSeed = Seed;
         }
 
         private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
-            Program.ModProgram.outputISOpath = saveFileDialog1.FileName;
-            textBox2.Text = Program.ModProgram.outputISOpath;
+            ModLoaderGlobals.OutputPath = saveFileDialog1.FileName;
+            textBox2.Text = ModLoaderGlobals.OutputPath;
             Program.ModProgram.outputPathSet = true;
             if (Program.ModProgram.loadedISO && Program.ModProgram.outputPathSet)
             {
@@ -136,7 +137,7 @@ namespace CrateModLoader
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
-            Program.ModProgram.outputISOpath = textBox2.Text;
+            ModLoaderGlobals.OutputPath = textBox2.Text;
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -213,18 +214,18 @@ namespace CrateModLoader
                             Program.ModProgram.inputDirectoryMode = true;
                             checkBox_loadFromFolder.Checked = true;
                             Program.ModProgram.UpdateInputSetting();
-                            Program.ModProgram.inputISOpath = fileList[0] + @"\";
+                            ModLoaderGlobals.InputPath = fileList[0] + @"\";
                         }
                         else
                         {
                             Program.ModProgram.inputDirectoryMode = false;
                             checkBox_loadFromFolder.Checked = false;
                             Program.ModProgram.UpdateInputSetting();
-                            Program.ModProgram.inputISOpath = fileList[0];
+                            ModLoaderGlobals.InputPath = fileList[0];
                         }
-                        Program.ModProgram.OpenROM_Selection = OpenROM_SelectionType.Any;
+                        Program.ModProgram.OpenROM_Selection = ModLoader.OpenROM_SelectionType.Any;
                         Program.ModProgram.CheckISO();
-                        textBox1.Text = Program.ModProgram.inputISOpath;
+                        textBox1.Text = ModLoaderGlobals.InputPath;
                     }
                 }
                 catch

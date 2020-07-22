@@ -102,9 +102,9 @@ namespace CrateModLoader.GameSpecific.CTTR
                 {
                     if (frontend_lines[i] == "screen.AddLine(\"\",0,\"\")")
                     {
-                        frontend_lines[i + 1] = "screen.AddLine(\"Crate Mod Loader " + Program.ModProgram.releaseVersionString + "\",0,\"\")";
-                        frontend_lines[i + 2] = "screen.AddLine(\"Seed: " + Program.ModProgram.randoSeed + "\",0,\"\")";
-                        frontend_lines[i + 3] = "screen.AddLine(\"Options: " + Program.ModProgram.optionsSelectedString + "\",0,\"\")";
+                        frontend_lines[i + 1] = "screen.AddLine(\"Crate Mod Loader " + ModLoaderGlobals.ProgramVersion + "\",0,\"\")";
+                        frontend_lines[i + 2] = "screen.AddLine(\"Seed: " + ModLoaderGlobals.RandomizerSeed + "\",0,\"\")";
+                        frontend_lines[i + 3] = "screen.AddLine(\"Options: " + Program.ModProgram.Modder.OptionsSelectedString + "\",0,\"\")";
                         frontend_lines[i + 4] = "screen.AddLineSpecial(\"creditscttr\",0,104,104,255,1.2,true)";
                         break;
                     }

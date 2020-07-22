@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 using System.Collections.Generic;
 
 namespace CrateModLoader
@@ -27,11 +28,11 @@ namespace CrateModLoader
         /// <param name="option">Option constructor</param>
         public virtual void AddOption(int id, ModOption option)
         {
-            if (option.AllowedConsoles.Count > 0 && !option.AllowedConsoles.Contains(Program.ModProgram.isoType))
+            if (option.AllowedConsoles.Count > 0 && !option.AllowedConsoles.Contains(ModLoaderGlobals.Console))
             {
                 return;
             }
-            if (option.AllowedRegions.Count > 0 && !option.AllowedRegions.Contains(Program.ModProgram.targetRegion))
+            if (option.AllowedRegions.Count > 0 && !option.AllowedRegions.Contains(ModLoaderGlobals.Region))
             {
                 return;
             }
@@ -50,6 +51,36 @@ namespace CrateModLoader
                 return true;
             }
             return false;
+        }
+
+        /// <summary> Hexadecimal display of which quick options were selected (automatically adjusts according the amount of quick options) - MSB is first option from the top </summary>
+        public virtual string OptionsSelectedString
+        {
+            get
+            {
+                string str = string.Empty;
+                if (Options != null && Options.Count > 0)
+                {
+                    for (int l = 0; l < (Options.Count + 31) / 32; ++l)
+                    {
+                        int val = 0;
+                        for (int i = 0, s = Math.Min(32, Options.Count - l * 32); i < s; ++i)
+                        {
+                            if (Options.ContainsKey(l * 32 + i) && Options[l * 32 + i] is ModOption o)
+                            {
+                                if (o.Enabled)
+                                    val |= 1 << (31 - i);
+                            }
+                        }
+                        str += val.ToString("X08");
+                    }
+                }
+                else
+                {
+                    str = "00000000";
+                }
+                return str;
+            }
         }
 
         public bool ModCratesManualInstall = false; // A game might require some type of verification (i.e. file integrity, region matching) before installing layer0 mod crates.

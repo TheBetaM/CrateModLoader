@@ -42,16 +42,16 @@ namespace CrateModLoader.GameSpecific.Twins
 
         public static void PatchEXE(string StartingChunk = @"Levels\Earth\Hub\Beach")
         {
-            string filePath = Path.Combine(Program.ModProgram.extractedPath, Program.ModProgram.PS2_executable_name);
+            string filePath = Path.Combine(ModLoaderGlobals.ExtractedPath, ModLoaderGlobals.ExecutableName);
 
             ExecutablePatchInfo executable;
-            if (Program.ModProgram.isoType == ConsoleMode.XBOX)
+            if (ModLoaderGlobals.Console == ConsoleMode.XBOX)
             {
-                if (Program.ModProgram.targetRegion == RegionType.PAL)
+                if (ModLoaderGlobals.Region == RegionType.PAL)
                 {
                     executable = executables[(int)ExecutableIndex.XBOX_PAL];
                 }
-                else if (Program.ModProgram.targetRegion == RegionType.NTSC_U)
+                else if (ModLoaderGlobals.Region == RegionType.NTSC_U)
                 {
                     executable = executables[(int)ExecutableIndex.XBOX_NTSC];
                 }
@@ -62,7 +62,7 @@ namespace CrateModLoader.GameSpecific.Twins
             }
             else
             {
-                if (Program.ModProgram.targetRegion == RegionType.NTSC_U)
+                if (ModLoaderGlobals.Region == RegionType.NTSC_U)
                 {
                     using (BinaryReader reader = new BinaryReader(new FileStream(filePath, FileMode.Open, FileAccess.Read)))
                     {
@@ -79,11 +79,11 @@ namespace CrateModLoader.GameSpecific.Twins
                         }
                     }
                 }
-                else if (Program.ModProgram.targetRegion == RegionType.PAL)
+                else if (ModLoaderGlobals.Region == RegionType.PAL)
                 {
                     executable = executables[(int)ExecutableIndex.PAL];
                 }
-                else if (Program.ModProgram.targetRegion == RegionType.NTSC_J)
+                else if (ModLoaderGlobals.Region == RegionType.NTSC_J)
                 {
                     executable = executables[(int)ExecutableIndex.NTSCJ];
                 }
@@ -94,7 +94,7 @@ namespace CrateModLoader.GameSpecific.Twins
             }
 
             BinaryWriter writer = new BinaryWriter(new FileStream(filePath, FileMode.Open, FileAccess.Write));
-            if (ModCrates.HasSetting("ArchiveName") && Program.ModProgram.isoType != ConsoleMode.XBOX)
+            if (ModCrates.HasSetting("ArchiveName") && ModLoaderGlobals.Console != ConsoleMode.XBOX)
             {
                 string archiveName = ModCrates.GetSetting("ArchiveName");
                 writer.BaseStream.Position = executable.ArchiveOff;

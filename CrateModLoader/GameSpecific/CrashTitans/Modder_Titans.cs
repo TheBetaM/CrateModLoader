@@ -79,25 +79,23 @@ namespace CrateModLoader
         public override void StartModProcess()
         {
             string path_RCF_frontend = "DEFAULT.RCF";
-            basePath = Program.ModProgram.tempPath;
+            basePath = ModLoaderGlobals.ExtractedPath;
             RCF_Manager.cachedRCF = null;
 
-            if (Program.ModProgram.isoType == ConsoleMode.WII)
+            if (ModLoaderGlobals.Console == ConsoleMode.WII)
             {
                 path_RCF_frontend = "default.rcf";
-                basePath = Program.ModProgram.tempPath + @"files\";
             }
-            else if (Program.ModProgram.isoType == ConsoleMode.PSP)
+            else if (ModLoaderGlobals.Console == ConsoleMode.PSP)
             {
                 path_RCF_frontend = "default.rcf";
-                basePath = Program.ModProgram.tempPath + @"PSP_GAME\USRDIR\";
             }
-            else if  (Program.ModProgram.isoType == ConsoleMode.XBOX360)
+            else if  (ModLoaderGlobals.Console == ConsoleMode.XBOX360)
             {
                 path_RCF_frontend = "default.rcf";
             }
 
-            string path_extr = Program.ModProgram.tempPath + @"cml_extr\";
+            string path_extr = basePath + @"cml_extr\";
             
             RCF_Manager.Extract(basePath + path_RCF_frontend, path_extr);
 

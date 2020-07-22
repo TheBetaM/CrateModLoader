@@ -266,6 +266,7 @@
     <Compile Include="ModLoaderForm.Designer.cs">
       <DependentUpon>ModLoaderForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ModLoaderGlobals.cs" />
     <Compile Include="ModOption.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

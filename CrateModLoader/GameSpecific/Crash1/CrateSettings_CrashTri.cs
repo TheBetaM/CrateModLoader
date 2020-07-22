@@ -8,7 +8,7 @@
             foreach (var crate in ModCrates.SupportedMods)
             {
                 if (!crate.IsActivated) continue;
-                if (!crate.HasSettings || !crate.Settings.ContainsKey("GameRegion") || crate.Settings["GameRegion"] != Program.ModProgram.targetRegion.ToString())
+                if (!crate.HasSettings || !crate.Settings.ContainsKey("GameRegion") || crate.Settings["GameRegion"] != ModLoaderGlobals.Region.ToString())
                 {
                     crate.IsActivated = false;
                     modsdirty = true;

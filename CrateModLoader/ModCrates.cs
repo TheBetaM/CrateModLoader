@@ -30,7 +30,6 @@ namespace CrateModLoader
         public const string IconFileName = "modcrateicon.png";
         public const string UnsupportedGameShortName = "NoGame";
         public const string AllGamesShortName = "All";
-        public static string ModDirectory = AppDomain.CurrentDomain.BaseDirectory + "/Mods/";
         public static List<ModCrate> ModList;
         public static List<ModCrate> SupportedMods;
         public static int ModsActiveAmount
@@ -66,7 +65,7 @@ namespace CrateModLoader
 
             ModList = new List<ModCrate>();
 
-            DirectoryInfo di = new DirectoryInfo(ModDirectory);
+            DirectoryInfo di = new DirectoryInfo(ModLoaderGlobals.ModDirectory);
             foreach (FileInfo file in di.EnumerateFiles())
             {
                 if (file.Extension.ToLower() == ".zip")
@@ -589,7 +588,7 @@ namespace CrateModLoader
         public string Desc = "(No Description)";
         public string Author = "(Not credited)";
         public string Version = "v1.0";
-        public string CML_Version = Program.ModProgram.releaseVersionString;
+        public string CML_Version = ModLoaderGlobals.ProgramVersion;
         public string TargetGame = ModCrates.AllGamesShortName;
         public bool IsActivated = false;
         public bool HasSettings = false;

@@ -11,43 +11,11 @@ using System.Windows.Forms;
 
 namespace CrateModLoader
 {
-    public enum OpenROM_SelectionType
-    {
-        PSXPS2PSPGCNWIIXBOX = 1,
-        Any = 2,
-    }
-    public enum ConsoleMode
-    {
-        Undefined = -1,
-        PSP = 0, // PlayStation Portable
-        PS2 = 1, // PlayStation 2
-        XBOX = 2, // Xbox
-        GCN = 3, // Gamecube
-        PS1 = 4, // PlayStation
-        WII = 5, // Wii
-        XBOX360 = 6,  // Xbox 360
-        PC = 7, // PC CDROM/DVDROM, being considered
-        DC = 8, // Dreamcast, not supported yet
-        PS3 = 9, // PlayStation 3, just for reference
-        Android = 10, // Android, being considered
-        NDS = 11, // DS, not supported yet
-        N3DS = 12, // 3DS, not supported yet
-        N64 = 13, // N64, being considered
-    }
-    public enum RegionType
-    {
-        Undefined = -1,
-        NTSC_U = 0,
-        PAL = 1,
-        NTSC_J = 2,
-        Global = 3,
-    }
 
-    //Crate Mod Loader Main Class
     public class ModLoader
     {
-        /// <summary> Global Randomizer Seed </summary>
-        public int randoSeed = 0;
+
+        // UI elements
         public Label processText;
         public ProgressBar progressBar;
         public Button startButton;
@@ -67,74 +35,32 @@ namespace CrateModLoader
         public Button button_modCrateMenu;
         public CheckBox checkbox_fromFolder;
         public CheckBox checkbox_toFolder;
-        //public RadioButton button_radio_FromROM;
-        //public RadioButton button_radio_FromFolder;
-        //public RadioButton button_radio_ToROM;
-        //public RadioButton button_radio_ToFolder;
-        public BackgroundWorker asyncWorker;
-        /// <summary> String used to show which version of CML the modded game was built with. </summary>
-        public string releaseVersionString = "v1.2.0";
-        /// <summary> Hexadecimal display of which quick options were selected (automatically adjusts according the amount of quick options) - MSB is first option from the top </summary>
-        public string optionsSelectedString
+
+        // Active settings
+        public enum OpenROM_SelectionType
         {
-            get
-            {
-                string str = string.Empty;
-                if (list_modOptions != null && list_modOptions.Items.Count > 0)
-                {
-                    for (int l = 0; l < (list_modOptions.Items.Count+31) / 32; ++l)
-                    {
-                        int val = 0;
-                        for (int i = 0, s = Math.Min(32,list_modOptions.Items.Count - l * 32); i < s; ++i)
-                        {
-                            if (list_modOptions.Items[l*32+i] is ModOption o)
-                            {
-                                if (o.Enabled)
-                                    val |= 1 << (31 - i);
-                            }
-                        }
-                        str += val.ToString("X08");
-                    }
-                }
-                else
-                {
-                    str = "00000000";
-                }
-                return str;
-            }
+            AutomaticOnly = 1, //PSX/PS2/PSP/GC/WII/XBOX/360
+            Any = 2,
         }
-
-        public string inputISOpath = "";
-        public string outputISOpath = "";
-        public ConsoleMode isoType = ConsoleMode.Undefined;
-        public Modder Modder;
-        public RegionType targetRegion = RegionType.Undefined;
-
-        public string extractedPath = "";
-        public string tempPath = AppDomain.CurrentDomain.BaseDirectory + @"temp\";
-
-        public string PS2_executable_name = "";
-        public string ProductCode = "";
         public bool loadedISO = false;
         public bool outputPathSet = false;
         public bool keepTempFiles = false;
         public bool inputDirectoryMode = false;
         public bool outputDirectoryMode = false;
-        private Process ISOcreatorProcess;
-        public OpenROM_SelectionType OpenROM_Selection = OpenROM_SelectionType.PSXPS2PSPGCNWIIXBOX;
         public bool processActive = false;
+        public Modder Modder;
+        private Process ISOcreatorProcess;
+        public BackgroundWorker asyncWorker;
+        public OpenROM_SelectionType OpenROM_Selection = OpenROM_SelectionType.AutomaticOnly;
 
-        //ISO settings
-        public string ISO_label;
-
-        // Build the ISO
+        // Builds the ISO
         void CreateISO()
         {
             if (outputDirectoryMode)
             {
                 //Directory Mode
-                DirectoryInfo di = new DirectoryInfo(extractedPath);
-                if (isoType == ConsoleMode.PS2)
+                DirectoryInfo di = new DirectoryInfo(ModLoaderGlobals.TempPath);
+                if (ModLoaderGlobals.Console == ConsoleMode.PS2)
                 {
                     foreach (DirectoryInfo dir in di.EnumerateDirectories())
                     {
@@ -150,12 +76,12 @@ namespace CrateModLoader
                     }
                 }
 
-                if (!Directory.Exists(outputISOpath))
+                if (!Directory.Exists(ModLoaderGlobals.OutputPath))
                 {
-                    Directory.CreateDirectory(outputISOpath);
+                    Directory.CreateDirectory(ModLoaderGlobals.OutputPath);
                 }
 
-                string pathparent = outputISOpath + @"\";
+                string pathparent = ModLoaderGlobals.OutputPath + @"\";
                 foreach (DirectoryInfo dir in di.EnumerateDirectories())
                 {
                     Directory.CreateDirectory(pathparent + dir.Name);
@@ -170,10 +96,10 @@ namespace CrateModLoader
                     file.CopyTo(pathparent + file.Name);
                 }
             }
-            else if (isoType == ConsoleMode.PS2)
+            else if (ModLoaderGlobals.Console == ConsoleMode.PS2)
             {
                 //Use ImgBurn
-                DirectoryInfo di = new DirectoryInfo(extractedPath);
+                DirectoryInfo di = new DirectoryInfo(ModLoaderGlobals.TempPath);
                 foreach (DirectoryInfo dir in di.EnumerateDirectories())
                 {
                     foreach (FileInfo file in dir.EnumerateFiles())
@@ -203,10 +129,10 @@ namespace CrateModLoader
                     args += "|";
                 }
                 args += "\" ";
-                args += "/DEST " + outputISOpath + " ";
+                args += "/DEST " + ModLoaderGlobals.OutputPath + " ";
                 args += "/FILESYSTEM \"ISO9660 + UDF\" ";
                 args += "/UDFREVISION \"1.02\" ";
-                args += "/VOLUMELABEL \"" + ISO_label + "\" ";
+                args += "/VOLUMELABEL \"" + ModLoaderGlobals.ISO_Label + "\" ";
                 args += "/OVERWRITE YES ";
                 args += "/START ";
                 args += "/CLOSE ";
@@ -218,7 +144,7 @@ namespace CrateModLoader
                 args += "/NOSAVESETTINGS ";
 
                 ISOcreatorProcess = new Process();
-                ISOcreatorProcess.StartInfo.FileName = AppDomain.CurrentDomain.BaseDirectory + "/Tools/ImgBurn.exe";
+                ISOcreatorProcess.StartInfo.FileName = ModLoaderGlobals.ToolsPath + "ImgBurn.exe";
                 ISOcreatorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
                 ISOcreatorProcess.StartInfo.Arguments = args;
                 ISOcreatorProcess.Start();
@@ -261,7 +187,7 @@ namespace CrateModLoader
                     }
                 }
 
-                isoBuild.Build(outputISOpath);
+                isoBuild.Build(ModLoaderGlobals.OutputPath);
 
                 foreach (FileStream file in files)
                 {
@@ -269,43 +195,43 @@ namespace CrateModLoader
                 }
                 */
             }
-            else if (isoType == ConsoleMode.PSP)
+            else if (ModLoaderGlobals.Console == ConsoleMode.PSP)
             {
                 if (inputDirectoryMode)
                 {
                     throw new Exception("Building PSP ROMs from directories is not supported!");
                 }
                 // Use WQSG_UMD
-                File.Copy(inputISOpath, AppDomain.CurrentDomain.BaseDirectory + "/Tools/Game.iso");
+                File.Copy(ModLoaderGlobals.InputPath, ModLoaderGlobals.ToolsPath + "Game.iso");
 
                 string args = "";
                 args += @"--iso=";
                 args += "\"" + AppDomain.CurrentDomain.BaseDirectory + "/Tools/Game.iso\"";
                 args += " --file=\"";
-                args += extractedPath + "PSP_GAME\"";
+                args += ModLoaderGlobals.TempPath + "PSP_GAME\"";
                 //args += " --log";
 
                 ISOcreatorProcess = new Process();
-                ISOcreatorProcess.StartInfo.FileName = AppDomain.CurrentDomain.BaseDirectory + "/Tools/WQSG_UMD.exe";
+                ISOcreatorProcess.StartInfo.FileName = ModLoaderGlobals.ToolsPath + "WQSG_UMD.exe";
                 ISOcreatorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                 ISOcreatorProcess.StartInfo.Arguments = args;
                 ISOcreatorProcess.Start();
                 ISOcreatorProcess.WaitForExit();
 
-                File.Move(AppDomain.CurrentDomain.BaseDirectory + "/Tools/Game.iso", outputISOpath);
+                File.Move(ModLoaderGlobals.ToolsPath + "Game.iso", ModLoaderGlobals.OutputPath);
             }
-            else if (isoType == ConsoleMode.GCN)
+            else if (ModLoaderGlobals.Console == ConsoleMode.GCN)
             {
                 // Use GCIT (Wiims ISO Tool doesn't work for this?)
 
-                Directory.Move(extractedPath + @"\P-" + Program.ModProgram.ProductCode.Substring(0, 4) + @"\files\", extractedPath + @"\P-" + Program.ModProgram.ProductCode.Substring(0, 4) + @"\root\");
+                Directory.Move(ModLoaderGlobals.TempPath + @"\P-" + ModLoaderGlobals.ProductCode.Substring(0, 4) + @"\files\", ModLoaderGlobals.TempPath + @"\P-" + ModLoaderGlobals.ProductCode.Substring(0, 4) + @"\root\");
 
                 string args = "";
-                args += "\"" + extractedPath + @"\P-" + Program.ModProgram.ProductCode.Substring(0, 4) + "\" -q -d ";
-                args += "\"" + outputISOpath + "\" ";
+                args += "\"" + ModLoaderGlobals.TempPath + @"\P-" + ModLoaderGlobals.ProductCode.Substring(0, 4) + "\" -q -d ";
+                args += "\"" + ModLoaderGlobals.OutputPath + "\" ";
 
                 ISOcreatorProcess = new Process();
-                ISOcreatorProcess.StartInfo.FileName = AppDomain.CurrentDomain.BaseDirectory + "/Tools/gcit.exe";
+                ISOcreatorProcess.StartInfo.FileName = ModLoaderGlobals.ToolsPath + "gcit.exe";
                 ISOcreatorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
                 ISOcreatorProcess.StartInfo.Arguments = args;
                 //ISOcreatorProcess.StartInfo.UseShellExecute = false;
@@ -317,19 +243,19 @@ namespace CrateModLoader
 
                 ISOcreatorProcess.WaitForExit();
             }
-            else if (isoType == ConsoleMode.WII)
+            else if (ModLoaderGlobals.Console == ConsoleMode.WII)
             {
                 // Use Wiimms ISO Tool
                 string args = "copy ";
-                args += "\"" + extractedPath + "\" ";
-                if (isoType == ConsoleMode.GCN)
+                args += "\"" + ModLoaderGlobals.TempPath + "\" ";
+                if (ModLoaderGlobals.Console == ConsoleMode.GCN)
                 {
                     args += "--ciso ";
                 }
-                args += "\"" + outputISOpath + "\" ";
+                args += "\"" + ModLoaderGlobals.OutputPath + "\" ";
 
                 ISOcreatorProcess = new Process();
-                ISOcreatorProcess.StartInfo.FileName = AppDomain.CurrentDomain.BaseDirectory + "/Tools/wit/wit.exe";
+                ISOcreatorProcess.StartInfo.FileName = ModLoaderGlobals.ToolsPath + @"wit\wit.exe";
                 ISOcreatorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                 ISOcreatorProcess.StartInfo.Arguments = args;
                 //ISOcreatorProcess.StartInfo.UseShellExecute = false;
@@ -341,15 +267,15 @@ namespace CrateModLoader
 
                 ISOcreatorProcess.WaitForExit();
             }
-            else if (isoType == ConsoleMode.XBOX)
+            else if (ModLoaderGlobals.Console == ConsoleMode.XBOX)
             {
                 //Use extract-xiso
                 string args = "-c ";
-                args += extractedPath + " ";
-                args += "\"" + outputISOpath + "\" ";
+                args += ModLoaderGlobals.TempPath + " ";
+                args += "\"" + ModLoaderGlobals.OutputPath + "\" ";
 
                 ISOcreatorProcess = new Process();
-                ISOcreatorProcess.StartInfo.FileName = AppDomain.CurrentDomain.BaseDirectory + "/Tools/extract-xiso.exe";
+                ISOcreatorProcess.StartInfo.FileName = ModLoaderGlobals.ToolsPath + "extract-xiso.exe";
                 ISOcreatorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
                 ISOcreatorProcess.StartInfo.Arguments = args;
                 ISOcreatorProcess.Start();
@@ -361,9 +287,9 @@ namespace CrateModLoader
                 // Otherwise, try CDBuilder
                 CDBuilder isoBuild = new CDBuilder();
                 isoBuild.UseJoliet = true;
-                isoBuild.VolumeIdentifier = ISO_label;
+                isoBuild.VolumeIdentifier = ModLoaderGlobals.ISO_Label;
 
-                DirectoryInfo di = new DirectoryInfo(extractedPath);
+                DirectoryInfo di = new DirectoryInfo(ModLoaderGlobals.TempPath);
                 HashSet<FileStream> files = new HashSet<FileStream>();
 
                 foreach (DirectoryInfo dir in di.GetDirectories())
@@ -375,9 +301,9 @@ namespace CrateModLoader
                     AddFile(isoBuild, file, string.Empty, files);
                 }
 
-                if (isoType == ConsoleMode.PS1)
+                if (ModLoaderGlobals.Console == ConsoleMode.PS1)
                 {
-                    using (FileStream output = new FileStream(outputISOpath, FileMode.Create, FileAccess.Write))
+                    using (FileStream output = new FileStream(ModLoaderGlobals.OutputPath, FileMode.Create, FileAccess.Write))
                     using (Stream input = isoBuild.Build())
                     {
                         ISO2PSX.Run(input, output);
@@ -385,7 +311,7 @@ namespace CrateModLoader
                 }
                 else
                 {
-                    isoBuild.Build(outputISOpath);
+                    isoBuild.Build(ModLoaderGlobals.OutputPath);
                 }
 
                 foreach (FileStream file in files)
@@ -437,7 +363,7 @@ namespace CrateModLoader
         void AddFile(CDBuilder isoBuild, FileInfo file, string sName, HashSet<FileStream> files)
         {
             var fstream = file.Open(FileMode.Open);
-            if (isoType == ConsoleMode.PS1 || isoType == ConsoleMode.PS2)
+            if (ModLoaderGlobals.Console == ConsoleMode.PS1 || ModLoaderGlobals.Console == ConsoleMode.PS2)
             {
                 isoBuild.AddFile(sName + file.Name + ";1", fstream);
             }
@@ -450,8 +376,8 @@ namespace CrateModLoader
 
         void LoadISO()
         {
-            extractedPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"temp\");
-            if (Directory.Exists(extractedPath))
+
+            if (Directory.Exists(ModLoaderGlobals.TempPath))
             {
                 DeleteTempFiles();
             }
@@ -459,7 +385,7 @@ namespace CrateModLoader
             if (inputDirectoryMode && !outputDirectoryMode)
             {
                 // To fix: PS1, PS2 require ISO label; PSP requires ISO file; GCN: Incorrect paths because of product code folder
-                if (isoType == ConsoleMode.PS1 || isoType == ConsoleMode.PS2 || isoType == ConsoleMode.PSP || isoType == ConsoleMode.GCN)
+                if (ModLoaderGlobals.Console == ConsoleMode.PS1 || ModLoaderGlobals.Console == ConsoleMode.PS2 || ModLoaderGlobals.Console == ConsoleMode.PSP || ModLoaderGlobals.Console == ConsoleMode.GCN)
                 {
                     throw new Exception("Building ROMs from directories with this console is not supported yet!");
                 }
@@ -467,16 +393,16 @@ namespace CrateModLoader
             if (outputDirectoryMode)
             {
                 // To fix: Incorrect paths because of product code folder
-                if (isoType == ConsoleMode.GCN)
+                if (ModLoaderGlobals.Console == ConsoleMode.GCN)
                 {
                     throw new Exception("Building GC directories is not supported yet!");
                 }
             }
-            if (isoType == ConsoleMode.XBOX360 && !outputDirectoryMode)
+            if (ModLoaderGlobals.Console == ConsoleMode.XBOX360 && !outputDirectoryMode)
             {
                 throw new Exception("Building 360 ROMs is not supported yet! Save to folder instead.");
             }
-            if (isoType == ConsoleMode.PC)
+            if (ModLoaderGlobals.Console == ConsoleMode.PC)
             {
                 if (!inputDirectoryMode || !outputDirectoryMode)
                 {
@@ -486,17 +412,17 @@ namespace CrateModLoader
 
             if (inputDirectoryMode)
             {
-                DirectoryInfo di = new DirectoryInfo(inputISOpath);
+                DirectoryInfo di = new DirectoryInfo(ModLoaderGlobals.InputPath);
                 if (!di.Exists)
                 {
                     throw new IOException("Extraction error: Input directory cannot be accessed!");
                 }
 
-                Directory.CreateDirectory(extractedPath);
+                Directory.CreateDirectory(ModLoaderGlobals.TempPath);
 
                 asyncWorker.ReportProgress(25);
 
-                string pathparent = extractedPath + @"\";
+                string pathparent = ModLoaderGlobals.TempPath + @"\";
                 foreach (DirectoryInfo dir in di.EnumerateDirectories())
                 {
                     Directory.CreateDirectory(pathparent + dir.Name);
@@ -511,49 +437,48 @@ namespace CrateModLoader
                     file.CopyTo(pathparent + file.Name);
                 }
             }
-            else if (isoType == ConsoleMode.GCN || isoType == ConsoleMode.WII)
+            else if (ModLoaderGlobals.Console == ConsoleMode.GCN || ModLoaderGlobals.Console == ConsoleMode.WII)
             {
                 // TODO: add free space checks
-                extractedPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"temp");
 
                 string args = "extract ";
-                args += "\"" + inputISOpath + "\" ";
-                args += "\"" + extractedPath + "\" ";
+                args += "\"" + ModLoaderGlobals.InputPath + "\" ";
+                args += "\"" + ModLoaderGlobals.TempPath + "\" ";
 
                 asyncWorker.ReportProgress(25);
 
                 ISOcreatorProcess = new Process();
-                ISOcreatorProcess.StartInfo.FileName = AppDomain.CurrentDomain.BaseDirectory + "/Tools/wit/wit.exe";
+                ISOcreatorProcess.StartInfo.FileName = ModLoaderGlobals.ToolsPath + @"wit\wit.exe";
                 ISOcreatorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                 ISOcreatorProcess.StartInfo.Arguments = args;
                 ISOcreatorProcess.Start();
                 ISOcreatorProcess.WaitForExit();
             }
-            else if (isoType == ConsoleMode.XBOX)
+            else if (ModLoaderGlobals.Console == ConsoleMode.XBOX)
             {
                 // TODO: add free space checks
                 string args = "-x ";
-                args += "\"" + inputISOpath + "\" ";
+                args += "\"" + ModLoaderGlobals.InputPath + "\" ";
 
                 asyncWorker.ReportProgress(25);
 
                 ISOcreatorProcess = new Process();
-                ISOcreatorProcess.StartInfo.FileName = AppDomain.CurrentDomain.BaseDirectory + "/Tools/extract-xiso.exe";
+                ISOcreatorProcess.StartInfo.FileName = ModLoaderGlobals.ToolsPath + "extract-xiso.exe";
                 ISOcreatorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
                 ISOcreatorProcess.StartInfo.Arguments = args;
                 ISOcreatorProcess.Start();
                 ISOcreatorProcess.WaitForExit();
 
-                Directory.Move(AppDomain.CurrentDomain.BaseDirectory + @"\" + Path.GetFileNameWithoutExtension(inputISOpath), extractedPath);
+                Directory.Move(AppDomain.CurrentDomain.BaseDirectory + @"\" + Path.GetFileNameWithoutExtension(ModLoaderGlobals.InputPath), ModLoaderGlobals.TempPath);
             }
             else
             {
-                using (FileStream isoStream = File.Open(inputISOpath, FileMode.Open))
+                using (FileStream isoStream = File.Open(ModLoaderGlobals.InputPath, FileMode.Open))
                 {
-                    FileInfo isoInfo = new FileInfo(inputISOpath);
+                    FileInfo isoInfo = new FileInfo(ModLoaderGlobals.InputPath);
                     CDReader cd;
                     FileStream tempbin = null;
-                    if (Path.GetExtension(inputISOpath).ToLower() == ".bin") // PS1 image
+                    if (Path.GetExtension(ModLoaderGlobals.InputPath).ToLower() == ".bin") // PS1 image
                     {
                         FileStream binconvout = new FileStream(AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso", FileMode.Create, FileAccess.Write);
                         PSX2ISO.Run(isoStream, binconvout);
@@ -563,15 +488,15 @@ namespace CrateModLoader
                     }
                     else
                         cd = new CDReader(isoStream, true);
-                    ISO_label = cd.VolumeLabel;
+                    ModLoaderGlobals.ISO_Label = cd.VolumeLabel;
 
                     /* Sometimes doesn't work?
-                    if (isoInfo.Length * 2 > GetTotalFreeSpace(extractedPath.Substring(0, 3)))
+                    if (isoInfo.Length * 2 > GetTotalFreeSpace(ModLoaderGlobals.TempPath.Substring(0, 3)))
                     {
                         cd.Dispose();
                         throw new IOException("Extraction error: Not enough hard drive space where this program is!");
                     }
-                    if (isoInfo.Length * 2 > GetTotalFreeSpace(outputISOpath.Substring(0, 3)))
+                    if (isoInfo.Length * 2 > GetTotalFreeSpace(ModLoaderGlobals.OutputPath.Substring(0, 3)))
                     {
                         cd.Dispose();
                         throw new IOException("Extraction error: Not enough hard drive space in the output path!");
@@ -581,9 +506,9 @@ namespace CrateModLoader
                     asyncWorker.ReportProgress(25);
                     //fileStream = cd.OpenFile(@"SYSTEM.CNF", FileMode.Open);
 
-                    if (!Directory.Exists(extractedPath))
+                    if (!Directory.Exists(ModLoaderGlobals.TempPath))
                     {
-                        Directory.CreateDirectory(extractedPath);
+                        Directory.CreateDirectory(ModLoaderGlobals.TempPath);
                     }
 
                     //Extracting ISO
@@ -593,13 +518,13 @@ namespace CrateModLoader
                     {
                         foreach (string directory in cd.GetDirectories(""))
                         {
-                            Directory.CreateDirectory(extractedPath + directory);
+                            Directory.CreateDirectory(ModLoaderGlobals.TempPath + directory);
                             if (cd.GetDirectoryInfo(directory).GetFiles().Length > 0)
                             {
                                 foreach (string file in cd.GetFiles(directory))
                                 {
                                     fileStreamFrom = cd.OpenFile(file, FileMode.Open);
-                                    string filename = extractedPath + file;
+                                    string filename = ModLoaderGlobals.TempPath + file;
                                     filename = filename.Replace(";1", string.Empty);
                                     fileStreamTo = File.Open(filename, FileMode.OpenOrCreate);
                                     fileStreamFrom.CopyTo(fileStreamTo);
@@ -618,7 +543,7 @@ namespace CrateModLoader
                         foreach (string file in cd.GetFiles(""))
                         {
                             fileStreamFrom = cd.OpenFile(file, FileMode.Open);
-                            string filename = extractedPath + "/" + file;
+                            string filename = ModLoaderGlobals.TempPath + "/" + file;
                             filename = filename.Replace(";1", string.Empty);
                             fileStreamTo = File.Open(filename, FileMode.OpenOrCreate);
                             fileStreamFrom.CopyTo(fileStreamTo);
@@ -642,13 +567,13 @@ namespace CrateModLoader
         {
             foreach (string directory in cd.GetDirectories(dir))
             {
-                Directory.CreateDirectory(extractedPath + "/" + directory);
+                Directory.CreateDirectory(ModLoaderGlobals.TempPath + @"\" + directory);
                 if (cd.GetDirectoryInfo(directory).GetFiles().Length > 0)
                 {
                     foreach (string file in cd.GetFiles(directory))
                     {
                         fileStreamFrom = cd.OpenFile(file, FileMode.Open);
-                        fileStreamTo = File.Open(extractedPath + "/" + file, FileMode.OpenOrCreate);
+                        fileStreamTo = File.Open(ModLoaderGlobals.TempPath + @"\" + file, FileMode.OpenOrCreate);
                         fileStreamFrom.CopyTo(fileStreamTo);
                         fileStreamFrom.Close();
                         fileStreamTo.Close();
@@ -698,22 +623,12 @@ namespace CrateModLoader
 
         public void EditGameContent()
         {
+            //To make sure the seed matches
+            ModLoaderGlobals.RandomizerSeed = int.Parse(textbox_rando_seed.Text);
+
             if (ModCrates.ModsActiveAmount > 0 && (Modder == null || !Modder.ModCratesManualInstall))
             {
-                string basePath = AppDomain.CurrentDomain.BaseDirectory + @"temp\";
-                if (isoType == ConsoleMode.GCN)
-                {
-                    basePath = AppDomain.CurrentDomain.BaseDirectory + @"temp\P-" + ProductCode.Substring(0, 4) + @"\files\";
-                }
-                else if (isoType == ConsoleMode.WII)
-                {
-                    basePath = AppDomain.CurrentDomain.BaseDirectory + @"temp\DATA\files\";
-                }
-                else if (isoType == ConsoleMode.PSP)
-                {
-                    basePath = AppDomain.CurrentDomain.BaseDirectory + @"temp\PSP_GAME\USRDIR\";
-                }
-                ModCrates.InstallLayerMods(basePath, 0);
+                ModCrates.InstallLayerMods(ModLoaderGlobals.ExtractedPath, 0);
             }
             if (Modder != null)
             {
@@ -733,9 +648,9 @@ namespace CrateModLoader
 
         void DeleteTempFiles()
         {
-            if (Directory.Exists(extractedPath))
+            if (Directory.Exists(ModLoaderGlobals.TempPath))
             {
-                DirectoryInfo di = new DirectoryInfo(extractedPath);
+                DirectoryInfo di = new DirectoryInfo(ModLoaderGlobals.TempPath);
 
                 foreach (DirectoryInfo dir in di.GetDirectories())
                 {
@@ -836,11 +751,11 @@ namespace CrateModLoader
             {
                 try
                 {
-                    isoType = ConsoleMode.Undefined;
+                    ModLoaderGlobals.Console = ConsoleMode.Undefined;
 
-                    if (File.Exists(inputISOpath + @"SYSTEM.CNF"))
+                    if (File.Exists(ModLoaderGlobals.InputPath + @"SYSTEM.CNF"))
                     {
-                        using (StreamReader sr = new StreamReader(inputISOpath + @"SYSTEM.CNF"))
+                        using (StreamReader sr = new StreamReader(ModLoaderGlobals.InputPath + @"SYSTEM.CNF"))
                         {
                             string titleID = sr.ReadLine();
                             if (titleID.Contains("BOOT2"))
@@ -849,8 +764,8 @@ namespace CrateModLoader
                                 if (Modder != null)
                                 {
                                     foreach (var rc in Modder.Game.RegionID_PS2)
-                                        if (rc.Region == targetRegion)
-                                            ProductCode = rc.CodeName;
+                                        if (rc.Region == ModLoaderGlobals.Region)
+                                            ModLoaderGlobals.ProductCode = rc.CodeName;
                                 }
                             }
                             else
@@ -859,31 +774,31 @@ namespace CrateModLoader
                                 if (Modder != null)
                                 {
                                     foreach (var rc in Modder.Game.RegionID_PS1)
-                                        if (rc.Region == targetRegion)
-                                            ProductCode = rc.CodeName;
+                                        if (rc.Region == ModLoaderGlobals.Region)
+                                            ModLoaderGlobals.ProductCode = rc.CodeName;
                                 }
                             }
                             ConsoleDetected = true;
                         }
                     }
-                    else if (File.Exists(inputISOpath + @"UMD_DATA.BIN"))
+                    else if (File.Exists(ModLoaderGlobals.InputPath + @"UMD_DATA.BIN"))
                     {
-                        using (StreamReader sr = new StreamReader(inputISOpath + @"UMD_DATA.BIN"))
+                        using (StreamReader sr = new StreamReader(ModLoaderGlobals.InputPath + @"UMD_DATA.BIN"))
                         {
                             string titleID = sr.ReadLine().Substring(0, 10);
                             SetGameType(titleID, ConsoleMode.PSP);
                             if (Modder != null)
                             {
-                                ProductCode = titleID;
+                                ModLoaderGlobals.ProductCode = titleID;
                             }
                             ConsoleDetected = true;
                         }
                     }
-                    else if (File.Exists(inputISOpath + @"default.xbe"))
+                    else if (File.Exists(ModLoaderGlobals.InputPath + @"default.xbe"))
                     {
-                        isoType = ConsoleMode.XBOX;
+                        ModLoaderGlobals.Console = ConsoleMode.XBOX;
                         //Based on OpenXDK
-                        using (FileStream fileStream = new FileStream(inputISOpath + @"default.xbe", FileMode.Open, FileAccess.Read, FileShare.Read))
+                        using (FileStream fileStream = new FileStream(ModLoaderGlobals.InputPath + @"default.xbe", FileMode.Open, FileAccess.Read, FileShare.Read))
                         {
                             fileStream.Seek(0x0118, SeekOrigin.Begin);
                             BinaryReader reader = new BinaryReader(fileStream);
@@ -917,15 +832,15 @@ namespace CrateModLoader
                             ConsoleDetected = true;
                         }
                     }
-                    else if (File.Exists(inputISOpath + @"default.xex"))
+                    else if (File.Exists(ModLoaderGlobals.InputPath + @"default.xex"))
                     {
-                        isoType = ConsoleMode.XBOX360;
+                        ModLoaderGlobals.Console = ConsoleMode.XBOX360;
 
                         string args = "-l ";
-                        args += "\"" + inputISOpath + @"default.xex" + "\"";
+                        args += "\"" + ModLoaderGlobals.InputPath + @"default.xex" + "\"";
 
                         ISOcreatorProcess = new Process();
-                        ISOcreatorProcess.StartInfo.FileName = AppDomain.CurrentDomain.BaseDirectory + "/Tools/xextool.exe";
+                        ISOcreatorProcess.StartInfo.FileName = ModLoaderGlobals.ToolsPath + "xextool.exe";
                         //ISOcreatorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
                         ISOcreatorProcess.StartInfo.Arguments = args;
                         ISOcreatorProcess.StartInfo.UseShellExecute = false;
@@ -957,43 +872,43 @@ namespace CrateModLoader
                                 SetGameType(titleID, ConsoleMode.XBOX360);
                                 if (Modder != null)
                                 {
-                                    ProductCode = titleID;
+                                    ModLoaderGlobals.ProductCode = titleID;
                                 }
                                 ConsoleDetected = true;
                             }
                         }
                     }
-                    else if (File.Exists(inputISOpath + @"sys/main.dol") && File.Exists(inputISOpath + @"sys/boot.bin"))
+                    else if (File.Exists(ModLoaderGlobals.InputPath + @"sys/main.dol") && File.Exists(ModLoaderGlobals.InputPath + @"sys/boot.bin"))
                     {
-                        isoType = ConsoleMode.GCN;
+                        ModLoaderGlobals.Console = ConsoleMode.GCN;
 
-                        using (StreamReader sr = new StreamReader(inputISOpath + @"sys/boot.bin"))
+                        using (StreamReader sr = new StreamReader(ModLoaderGlobals.InputPath + @"sys/boot.bin"))
                         {
                             string titleID = sr.ReadLine().Substring(0, 6);
                             SetGameType(titleID, ConsoleMode.GCN);
                             if (Modder != null)
                             {
-                                ProductCode = titleID;
+                                ModLoaderGlobals.ProductCode = titleID;
                             }
                             else
                             {
                                 SetGameType(titleID, ConsoleMode.WII);
                                 if (Modder != null)
                                 {
-                                    ProductCode = titleID;
+                                    ModLoaderGlobals.ProductCode = titleID;
                                 }
                             }
                             ConsoleDetected = true;
                         }
                     }
-                    else if (Directory.GetFiles(inputISOpath, "*.exe").Length > 0 || Directory.GetFiles(inputISOpath, "*.EXE").Length > 0)
+                    else if (Directory.GetFiles(ModLoaderGlobals.InputPath, "*.exe").Length > 0 || Directory.GetFiles(ModLoaderGlobals.InputPath, "*.EXE").Length > 0)
                     {
-                        isoType = ConsoleMode.PC;
+                        ModLoaderGlobals.Console = ConsoleMode.PC;
 
                         string[] ExeFiles;
-                        if (Modder == null && Directory.GetFiles(inputISOpath, "*.exe").Length > 0)
+                        if (Modder == null && Directory.GetFiles(ModLoaderGlobals.InputPath, "*.exe").Length > 0)
                         {
-                            ExeFiles = Directory.GetFiles(inputISOpath, "*.exe");
+                            ExeFiles = Directory.GetFiles(ModLoaderGlobals.InputPath, "*.exe");
                             for (int i = 0; i < ExeFiles.Length; i++)
                             {
                                 if (Modder == null)
@@ -1001,15 +916,15 @@ namespace CrateModLoader
                                     SetGameType(ExeFiles[i], ConsoleMode.PC);
                                     if (Modder != null)
                                     {
-                                        ProductCode = ExeFiles[i];
+                                        ModLoaderGlobals.ProductCode = ExeFiles[i];
                                     }
                                     ConsoleDetected = true;
                                 }
                             }
                         }
-                        else if (Modder == null && Directory.GetFiles(inputISOpath, "*.EXE").Length > 0)
+                        else if (Modder == null && Directory.GetFiles(ModLoaderGlobals.InputPath, "*.EXE").Length > 0)
                         {
-                            ExeFiles = Directory.GetFiles(inputISOpath, "*.EXE");
+                            ExeFiles = Directory.GetFiles(ModLoaderGlobals.InputPath, "*.EXE");
                             for (int i = 0; i < ExeFiles.Length; i++)
                             {
                                 if (Modder == null)
@@ -1017,7 +932,7 @@ namespace CrateModLoader
                                     SetGameType(ExeFiles[i], ConsoleMode.PC);
                                     if (Modder != null)
                                     {
-                                        ProductCode = ExeFiles[i];
+                                        ModLoaderGlobals.ProductCode = ExeFiles[i];
                                     }
                                     ConsoleDetected = true;
                                 }
@@ -1029,7 +944,7 @@ namespace CrateModLoader
                         Modder = null;
                         ModCrates.ClearModLists();
                     }
-                    ISO_label = ProductCode;
+                    ModLoaderGlobals.ISO_Label = ModLoaderGlobals.ProductCode;
                 }
                 catch
                 {
@@ -1041,15 +956,15 @@ namespace CrateModLoader
             }
             else
             {
-                if (OpenROM_Selection == OpenROM_SelectionType.PSXPS2PSPGCNWIIXBOX || OpenROM_Selection == OpenROM_SelectionType.Any)
+                if (OpenROM_Selection == OpenROM_SelectionType.AutomaticOnly || OpenROM_Selection == OpenROM_SelectionType.Any)
                 {
                     // Gamecube/Wii ROMs
 
                     string args = "ID6 ";
-                    args += "\"" + inputISOpath + "\"";
+                    args += "\"" + ModLoaderGlobals.InputPath + "\"";
 
                     ISOcreatorProcess = new Process();
-                    ISOcreatorProcess.StartInfo.FileName = AppDomain.CurrentDomain.BaseDirectory + "/Tools/wit/wit.exe";
+                    ISOcreatorProcess.StartInfo.FileName = ModLoaderGlobals.ToolsPath + @"wit\wit.exe";
                     //ISOcreatorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
                     ISOcreatorProcess.StartInfo.Arguments = args;
                     ISOcreatorProcess.StartInfo.UseShellExecute = false;
@@ -1071,32 +986,32 @@ namespace CrateModLoader
                             SetGameType(titleID, ConsoleMode.GCN);
                             if (Modder != null)
                             {
-                                ProductCode = titleID;
+                                ModLoaderGlobals.ProductCode = titleID;
                             }
                             else
                             {
                                 SetGameType(titleID, ConsoleMode.WII);
                                 if (Modder != null)
                                 {
-                                    ProductCode = titleID;
+                                    ModLoaderGlobals.ProductCode = titleID;
                                 }
                             }
                             ConsoleDetected = true;
                         }
                     }
                 }
-                if (Modder == null && (OpenROM_Selection == OpenROM_SelectionType.PSXPS2PSPGCNWIIXBOX || OpenROM_Selection == OpenROM_SelectionType.Any))
+                if (Modder == null && (OpenROM_Selection == OpenROM_SelectionType.AutomaticOnly || OpenROM_Selection == OpenROM_SelectionType.Any))
                 {
-                    extractedPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"temp\");
+
                     DeleteTempFiles();
 
                     string args = "-i -x ";
-                    args += "\"" + inputISOpath + "\"";
+                    args += "\"" + ModLoaderGlobals.InputPath + "\"";
 
                     //Modified extract-xiso only extracts the executables to check
 
                     ISOcreatorProcess = new Process();
-                    ISOcreatorProcess.StartInfo.FileName = AppDomain.CurrentDomain.BaseDirectory + "/Tools/extract-xiso.exe";
+                    ISOcreatorProcess.StartInfo.FileName = ModLoaderGlobals.ToolsPath + "extract-xiso.exe";
                     ISOcreatorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
                     ISOcreatorProcess.StartInfo.Arguments = args;
                     //ISOcreatorProcess.Start();
@@ -1110,18 +1025,18 @@ namespace CrateModLoader
 
                     ISOcreatorProcess.WaitForExit();
 
-                    if (Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + @"\" + Path.GetFileNameWithoutExtension(inputISOpath)))
+                    if (Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + @"\" + Path.GetFileNameWithoutExtension(ModLoaderGlobals.InputPath)))
                     {
-                        Directory.Move(AppDomain.CurrentDomain.BaseDirectory + @"\" + Path.GetFileNameWithoutExtension(inputISOpath), extractedPath);
+                        Directory.Move(AppDomain.CurrentDomain.BaseDirectory + @"\" + Path.GetFileNameWithoutExtension(ModLoaderGlobals.InputPath), ModLoaderGlobals.TempPath);
                     }
 
                     processText.Text = "Reading XISO...";
 
-                    if (Directory.Exists(extractedPath) && File.Exists(extractedPath + @"default.xbe"))
+                    if (Directory.Exists(ModLoaderGlobals.TempPath) && File.Exists(ModLoaderGlobals.TempPath + @"default.xbe"))
                     {
-                        isoType = ConsoleMode.XBOX;
+                        ModLoaderGlobals.Console = ConsoleMode.XBOX;
                         //Based on OpenXDK
-                        using (FileStream fileStream = new FileStream(extractedPath + @"default.xbe", FileMode.Open, FileAccess.Read, FileShare.Read))
+                        using (FileStream fileStream = new FileStream(ModLoaderGlobals.TempPath + @"default.xbe", FileMode.Open, FileAccess.Read, FileShare.Read))
                         {
                             fileStream.Seek(0x0118, SeekOrigin.Begin);
                             BinaryReader reader = new BinaryReader(fileStream);
@@ -1155,15 +1070,15 @@ namespace CrateModLoader
                             ConsoleDetected = true;
                         }
                     }
-                    else if (Directory.Exists(extractedPath) && File.Exists(extractedPath + @"default.xex"))
+                    else if (Directory.Exists(ModLoaderGlobals.TempPath) && File.Exists(ModLoaderGlobals.TempPath + @"default.xex"))
                     {
-                        isoType = ConsoleMode.XBOX360;
+                        ModLoaderGlobals.Console = ConsoleMode.XBOX360;
 
                         string xargs = "-l ";
-                        xargs += "\"" + extractedPath + @"default.xex" + "\"";
+                        xargs += "\"" + ModLoaderGlobals.TempPath + @"default.xex" + "\"";
 
                         ISOcreatorProcess = new Process();
-                        ISOcreatorProcess.StartInfo.FileName = AppDomain.CurrentDomain.BaseDirectory + "/Tools/xextool.exe";
+                        ISOcreatorProcess.StartInfo.FileName = ModLoaderGlobals.ToolsPath + "xextool.exe";
                         //ISOcreatorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
                         ISOcreatorProcess.StartInfo.Arguments = xargs;
                         ISOcreatorProcess.StartInfo.UseShellExecute = false;
@@ -1195,7 +1110,7 @@ namespace CrateModLoader
                                 SetGameType(titleID, ConsoleMode.XBOX360);
                                 if (Modder != null)
                                 {
-                                    ProductCode = titleID;
+                                    ModLoaderGlobals.ProductCode = titleID;
                                 }
                                 ConsoleDetected = true;
                             }
@@ -1208,17 +1123,17 @@ namespace CrateModLoader
 
                     DeleteTempFiles();
                 }
-                if (Modder == null && (OpenROM_Selection == OpenROM_SelectionType.PSXPS2PSPGCNWIIXBOX || OpenROM_Selection == OpenROM_SelectionType.Any))
+                if (Modder == null && (OpenROM_Selection == OpenROM_SelectionType.AutomaticOnly || OpenROM_Selection == OpenROM_SelectionType.Any))
                 {
                     try
                     {
-                        using (FileStream isoStream = File.Open(inputISOpath, FileMode.Open))
+                        using (FileStream isoStream = File.Open(ModLoaderGlobals.InputPath, FileMode.Open))
                         {
                             CDReader cd;
                             FileStream tempbin = null;
-                            isoType = ConsoleMode.Undefined;
+                            ModLoaderGlobals.Console = ConsoleMode.Undefined;
 
-                            if (Path.GetExtension(inputISOpath).ToLower() == ".bin") // PS1 image
+                            if (Path.GetExtension(ModLoaderGlobals.InputPath).ToLower() == ".bin") // PS1 image
                             {
                                 FileStream binconvout = new FileStream(AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso", FileMode.Create, FileAccess.Write);
                                 PSX2ISO.Run(isoStream, binconvout);
@@ -1251,8 +1166,8 @@ namespace CrateModLoader
                                         if (Modder != null)
                                         {
                                             foreach (var rc in Modder.Game.RegionID_PS2)
-                                                if (rc.Region == targetRegion)
-                                                    ProductCode = rc.CodeName;
+                                                if (rc.Region == ModLoaderGlobals.Region)
+                                                    ModLoaderGlobals.ProductCode = rc.CodeName;
                                         }
                                     }
                                     else
@@ -1261,8 +1176,8 @@ namespace CrateModLoader
                                         if (Modder != null)
                                         {
                                             foreach (var rc in Modder.Game.RegionID_PS1)
-                                                if (rc.Region == targetRegion)
-                                                    ProductCode = rc.CodeName;
+                                                if (rc.Region == ModLoaderGlobals.Region)
+                                                    ModLoaderGlobals.ProductCode = rc.CodeName;
                                         }
                                     }
                                     ConsoleDetected = true;
@@ -1276,14 +1191,14 @@ namespace CrateModLoader
                                     SetGameType(titleID, ConsoleMode.PSP);
                                     if (Modder != null)
                                     {
-                                        ProductCode = titleID;
+                                        ModLoaderGlobals.ProductCode = titleID;
                                     }
                                     ConsoleDetected = true;
                                 }
                             }
                             else if (cd.FileExists(@"default.xbe"))
                             {
-                                isoType = ConsoleMode.XBOX;
+                                ModLoaderGlobals.Console = ConsoleMode.XBOX;
                                 //Based on OpenXDK
                                 using (FileStream fileStream = new FileStream(@"default.xbe", FileMode.Open, FileAccess.Read, FileShare.Read))
                                 {
@@ -1346,9 +1261,9 @@ namespace CrateModLoader
 
             if (!ConsoleDetected)
             {
-                if (OpenROM_Selection == OpenROM_SelectionType.PSXPS2PSPGCNWIIXBOX)
+                if (OpenROM_Selection == OpenROM_SelectionType.AutomaticOnly)
                 {
-                    text_gameType.Text = "Unknown PSX/PS2/PSP/GCN/WII/XBOX game ROM!";
+                    text_gameType.Text = "Unknown PSX/PS2/PSP/GCN/WII/XBOX/360 game ROM!";
                 }
                 else
                 {
@@ -1390,7 +1305,7 @@ namespace CrateModLoader
             button_modCrateMenu.Text = "Mod Crates";
             ModCrates.ClearModLists();
 
-            isoType = console;
+            ModLoaderGlobals.Console = console;
 
             Assembly assembly = Assembly.GetExecutingAssembly();
             foreach (Type type in assembly.GetTypes())
@@ -1418,12 +1333,12 @@ namespace CrateModLoader
                         {
                             if (RegionID == r.RegionNumber)
                             {
-                                targetRegion = r.Region;
+                                ModLoaderGlobals.Region = r.Region;
                                 RegionNotSupported = false;
                                 Modder = modder;
                                 if (!string.IsNullOrEmpty(r.ExecName))
                                 {
-                                    PS2_executable_name = r.ExecName;
+                                    ModLoaderGlobals.ExecutableName = r.ExecName;
                                 }
                                 break;
                             }
@@ -1434,12 +1349,12 @@ namespace CrateModLoader
                         }
                         else
                         {
-                            targetRegion = r.Region;
+                            ModLoaderGlobals.Region = r.Region;
                             Modder = modder;
                             RegionNotSupported = false;
                             if (!string.IsNullOrEmpty(r.ExecName))
                             {
-                                PS2_executable_name = r.ExecName;
+                                ModLoaderGlobals.ExecutableName = r.ExecName;
                             }
                             break;
                         }
@@ -1452,11 +1367,11 @@ namespace CrateModLoader
                     {
                         if (serial.Contains(r.Name))
                         {
-                            targetRegion = RegionType.Undefined;
+                            ModLoaderGlobals.Region = RegionType.Undefined;
                             Modder = modder;
                             if (!string.IsNullOrEmpty(r.ExecName))
                             {
-                                PS2_executable_name = r.ExecName;
+                                ModLoaderGlobals.ExecutableName = r.ExecName;
                             }
                             break;
                         }
@@ -1468,65 +1383,33 @@ namespace CrateModLoader
             }
 
             string cons_mod = "";
-            if (console == ConsoleMode.Undefined)
+            switch (console)
             {
-                cons_mod = "(Unknwon Console)";
-            }
-            else if (console == ConsoleMode.PSP)
-            {
-                cons_mod = "PSP";
-            }
-            else if (console == ConsoleMode.PS2)
-            {
-                cons_mod = "PS2";
-            }
-            else if (console == ConsoleMode.GCN)
-            {
-                cons_mod = "GC";
-            }
-            else if (console == ConsoleMode.XBOX)
-            {
-                cons_mod = "XBOX";
-            }
-            else if (console == ConsoleMode.PS1)
-            {
-                cons_mod = "PS1";
-            }
-            else if (console == ConsoleMode.WII)
-            {
-                cons_mod = "WII";
-            }
-            else if (console == ConsoleMode.XBOX360)
-            {
-                cons_mod = "360";
-            }
-            else if (console == ConsoleMode.DC)
-            {
-                cons_mod = "DC";
-            }
-            else if (console == ConsoleMode.PC)
-            {
-                cons_mod = "PC";
+                default:
+                case ConsoleMode.Undefined: cons_mod = "(Unknown Console)"; break;
+                case ConsoleMode.PSP: cons_mod = "PSP"; break;
+                case ConsoleMode.PS2: cons_mod = "PS2"; break;
+                case ConsoleMode.GCN: cons_mod = "GC"; break;
+                case ConsoleMode.XBOX: cons_mod = "XBOX"; break;
+                case ConsoleMode.PS1: cons_mod = "PS1"; break;
+                case ConsoleMode.WII: cons_mod = "Wii"; break;
+                case ConsoleMode.XBOX360: cons_mod = "360"; break;
+                case ConsoleMode.DC: cons_mod = "DC"; break;
+                case ConsoleMode.PC: cons_mod = "PC"; break;
+                case ConsoleMode.Android: cons_mod = "Android"; break;
+                case ConsoleMode.N3DS: cons_mod = "3DS"; break;
+                case ConsoleMode.N64: cons_mod = "N64"; break;
+                case ConsoleMode.NDS: cons_mod = "DS"; break;
             }
 
-            string region_mod;
-            switch (targetRegion)
+            string region_mod = "";
+            switch (ModLoaderGlobals.Region)
             {
-                case RegionType.NTSC_J:
-                    region_mod = "NTSC-J";
-                    break;
-                case RegionType.NTSC_U:
-                    region_mod = "NTSC-U";
-                    break;
-                case RegionType.PAL:
-                    region_mod = "PAL";
-                    break;
-                case RegionType.Global:
-                    region_mod = "";
-                    break;
-                default:
-                    region_mod = "(Unknown Region)";
-                    break;
+                case RegionType.NTSC_J: region_mod = "NTSC-J"; break;
+                case RegionType.NTSC_U: region_mod = "NTSC-U"; break;
+                case RegionType.PAL: region_mod = "PAL"; break;
+                case RegionType.Global: region_mod = ""; break;
+                default: region_mod = "(Unknown Region)"; break;
             }
 
             list_modOptions.Items.Clear();
@@ -1688,7 +1571,7 @@ namespace CrateModLoader
 
             processText.Text = "Waiting for input (1) ...";
             textbox_input_path.Text = "";
-            inputISOpath = "";
+            ModLoaderGlobals.InputPath = "";
 
             ResetGameSpecific(true, false);
         }
@@ -1697,7 +1580,7 @@ namespace CrateModLoader
             outputDirectoryMode = checkbox_toFolder.Checked;
 
             textbox_output_path.Text = "";
-            outputISOpath = "";
+            ModLoaderGlobals.OutputPath = "";
 
             if (loadedISO)
             {

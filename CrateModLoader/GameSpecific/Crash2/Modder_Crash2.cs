@@ -60,14 +60,14 @@ namespace CrateModLoader
 
         protected override void ModProcess()
         {
-            Random rand = new Random(Program.ModProgram.randoSeed);
+            Random rand = new Random(ModLoaderGlobals.RandomizerSeed);
 
             CrateSettings_CrashTri.VerifyModCrates();
-            ModCrates.InstallLayerMods(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"temp\"), 0);
+            ModCrates.InstallLayerMods(ModLoaderGlobals.ExtractedPath, 0);
 
             List<FileInfo> nsfs = new List<FileInfo>();
             List<FileInfo> nsds = new List<FileInfo>();
-            DirectoryInfo di = new DirectoryInfo(Program.ModProgram.extractedPath);
+            DirectoryInfo di = new DirectoryInfo(ModLoaderGlobals.ExtractedPath);
             AppendFileInfoDir(nsfs, nsds, di); // this should return all NSF/NSD file pairs
 
             ErrorManager.EnterSkipRegion();
