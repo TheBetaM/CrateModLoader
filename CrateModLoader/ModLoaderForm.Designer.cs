@@ -55,8 +55,10 @@
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.checkBox_loadFromFolder = new System.Windows.Forms.CheckBox();
             this.checkBox_saveToFolder = new System.Windows.Forms.CheckBox();
+            this.panel1 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // checkedListBox1
@@ -89,17 +91,17 @@
             // 
             this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Location = new System.Drawing.Point(114, 90);
+            this.textBox1.Location = new System.Drawing.Point(13, 34);
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(219, 20);
+            this.textBox1.Size = new System.Drawing.Size(320, 20);
             this.textBox1.TabIndex = 1;
-            this.textBox1.Text = "1. Click \"Browse\" to select the game ROM.";
+            this.textBox1.Text = "1. Click \"Browse\" to select the game ROM or drag & drop it here.";
             // 
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(339, 89);
+            this.button1.Location = new System.Drawing.Point(339, 33);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(74, 22);
             this.button1.TabIndex = 2;
@@ -111,18 +113,18 @@
             // 
             this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar1.Location = new System.Drawing.Point(11, 36);
+            this.progressBar1.Location = new System.Drawing.Point(13, 94);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(402, 23);
+            this.progressBar1.Size = new System.Drawing.Size(320, 20);
             this.progressBar1.TabIndex = 4;
             // 
             // textBox2
             // 
             this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox2.Location = new System.Drawing.Point(114, 118);
+            this.textBox2.Location = new System.Drawing.Point(13, 64);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(219, 20);
+            this.textBox2.Size = new System.Drawing.Size(320, 20);
             this.textBox2.TabIndex = 6;
             this.textBox2.Text = "2. Click \"Browse\" to choose the output path.";
             this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
@@ -130,7 +132,7 @@
             // button2
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Location = new System.Drawing.Point(339, 117);
+            this.button2.Location = new System.Drawing.Point(339, 63);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(74, 22);
             this.button2.TabIndex = 7;
@@ -142,9 +144,9 @@
             // 
             this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button3.Enabled = false;
-            this.button3.Location = new System.Drawing.Point(339, 7);
+            this.button3.Location = new System.Drawing.Point(339, 93);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(74, 23);
+            this.button3.Size = new System.Drawing.Size(74, 22);
             this.button3.TabIndex = 11;
             this.button3.Text = "Start!";
             this.button3.UseVisualStyleBackColor = true;
@@ -189,8 +191,9 @@
             // label6
             // 
             this.label6.AutoSize = true;
+            this.label6.BackColor = System.Drawing.Color.Transparent;
             this.label6.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.label6.Location = new System.Drawing.Point(10, 68);
+            this.label6.Location = new System.Drawing.Point(12, 125);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(66, 13);
             this.label6.TabIndex = 15;
@@ -201,7 +204,7 @@
             // 
             this.checkBox1.AutoSize = true;
             this.checkBox1.Enabled = false;
-            this.checkBox1.Location = new System.Drawing.Point(94, 67);
+            this.checkBox1.Location = new System.Drawing.Point(349, 10);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(105, 17);
             this.checkBox1.TabIndex = 18;
@@ -212,10 +215,10 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox1.Location = new System.Drawing.Point(349, 257);
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(64, 64);
+            this.pictureBox1.Size = new System.Drawing.Size(48, 48);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 16;
             this.pictureBox1.TabStop = false;
@@ -259,18 +262,22 @@
             // 
             this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.label7.BackColor = System.Drawing.Color.Transparent;
+            this.label7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label7.ForeColor = System.Drawing.SystemColors.ControlText;
             this.label7.Location = new System.Drawing.Point(10, 148);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(398, 20);
             this.label7.TabIndex = 28;
-            this.label7.Text = "Game A of Region B of Console C detected!";
+            this.label7.Text = "Game Name (Region Console)";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // linkLabel1
             // 
             this.linkLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.linkLabel1.BackColor = System.Drawing.Color.Transparent;
             this.linkLabel1.Enabled = false;
             this.linkLabel1.Location = new System.Drawing.Point(10, 169);
             this.linkLabel1.Name = "linkLabel1";
@@ -285,7 +292,7 @@
             // linkLabel2
             // 
             this.linkLabel2.AutoSize = true;
-            this.linkLabel2.Location = new System.Drawing.Point(10, 12);
+            this.linkLabel2.Location = new System.Drawing.Point(10, 10);
             this.linkLabel2.Name = "linkLabel2";
             this.linkLabel2.Size = new System.Drawing.Size(125, 13);
             this.linkLabel2.TabIndex = 30;
@@ -297,7 +304,7 @@
             // checkBox_loadFromFolder
             // 
             this.checkBox_loadFromFolder.AutoSize = true;
-            this.checkBox_loadFromFolder.Location = new System.Drawing.Point(11, 92);
+            this.checkBox_loadFromFolder.Location = new System.Drawing.Point(141, 10);
             this.checkBox_loadFromFolder.Name = "checkBox_loadFromFolder";
             this.checkBox_loadFromFolder.Size = new System.Drawing.Size(97, 17);
             this.checkBox_loadFromFolder.TabIndex = 31;
@@ -309,7 +316,7 @@
             // checkBox_saveToFolder
             // 
             this.checkBox_saveToFolder.AutoSize = true;
-            this.checkBox_saveToFolder.Location = new System.Drawing.Point(11, 120);
+            this.checkBox_saveToFolder.Location = new System.Drawing.Point(244, 10);
             this.checkBox_saveToFolder.Name = "checkBox_saveToFolder";
             this.checkBox_saveToFolder.Size = new System.Drawing.Size(99, 17);
             this.checkBox_saveToFolder.TabIndex = 32;
@@ -318,6 +325,15 @@
             this.checkBox_saveToFolder.UseVisualStyleBackColor = true;
             this.checkBox_saveToFolder.CheckedChanged += new System.EventHandler(this.checkBox_saveToFolder_CheckedChanged);
             // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.pictureBox1);
+            this.panel1.Location = new System.Drawing.Point(365, 145);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(48, 48);
+            this.panel1.TabIndex = 33;
+            // 
             // ModLoaderForm
             // 
             this.AllowDrop = true;
@@ -325,6 +341,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(424, 149);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.checkBox_saveToFolder);
             this.Controls.Add(this.checkBox_loadFromFolder);
             this.Controls.Add(this.linkLabel2);
@@ -333,7 +350,6 @@
             this.Controls.Add(this.label7);
             this.Controls.Add(this.button_modCrateMenu);
             this.Controls.Add(this.button_openModMenu);
-            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.numericUpDown1);
@@ -352,6 +368,7 @@
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.ModLoaderForm_DragEnter);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -384,6 +401,7 @@
         private System.Windows.Forms.LinkLabel linkLabel2;
         private System.Windows.Forms.CheckBox checkBox_loadFromFolder;
         private System.Windows.Forms.CheckBox checkBox_saveToFolder;
+        private System.Windows.Forms.Panel panel1;
     }
 }
 
