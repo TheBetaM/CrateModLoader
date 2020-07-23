@@ -10,6 +10,9 @@ namespace CrateModLoader
     public sealed class Modder_Crash2 : Modder
     {
         internal const int RandomizeADIO = 0;
+        internal const int RandomizeCratesIntoWood = 1;
+        internal const int TurnCratesIntoWumpa = 2;
+        internal const int RandomizeLevelOrder = 3;
 
         public Modder_Crash2()
         {
@@ -46,7 +49,10 @@ namespace CrateModLoader
             };
             ModCratesManualInstall = true;
 
-            AddOption(RandomizeADIO, new ModOption("Randomize sound effects"));
+            AddOption(RandomizeADIO, new ModOption("Randomize Sound Effects"));
+            AddOption(RandomizeCratesIntoWood, new ModOption("All Crates Are Blank"));
+            AddOption(TurnCratesIntoWumpa, new ModOption("All Crates Are Wumpa"));
+            //AddOption(RandomizeLevelOrder, new ModOption("Randomize Level Order"));
         }
 
         public override void StartModProcess()
@@ -68,6 +74,9 @@ namespace CrateModLoader
             List<FileInfo> nsfs = new List<FileInfo>();
             List<FileInfo> nsds = new List<FileInfo>();
             DirectoryInfo di = new DirectoryInfo(ModLoaderGlobals.ExtractedPath);
+
+            if (GetOption(RandomizeLevelOrder)) Randomize_LevelOrder(rand);
+
             AppendFileInfoDir(nsfs, nsds, di); // this should return all NSF/NSD file pairs
 
             ErrorManager.EnterSkipRegion();
@@ -95,6 +104,8 @@ namespace CrateModLoader
                 }
 
                 if (GetOption(RandomizeADIO)) Mod_RandomizeADIO(nsf, nsd, rand);
+                if (GetOption(RandomizeCratesIntoWood)) Mod_RandomWoodCrates(nsf, nsd, rand);
+                if (GetOption(TurnCratesIntoWumpa)) Mod_TurnCratesIntoWumpa(nsf, nsd, rand);
 
                 PatchNSD(nsf, nsd);
 
@@ -210,5 +221,190 @@ namespace CrateModLoader
                 }
             }
         }
+
+        public enum CrateSubTypes
+        {
+            TNT = 0,
+            Blank = 2,
+            WoodSpring = 3,
+            Checkpoint = 4,
+            Iron = 5,
+            Fruit = 6, //Multiple bounce
+            IronSwitch = 7,
+            Life = 8,
+            Aku = 9,
+            Pickup = 10,
+            Outline = 13,
+            IronSpring = 15,
+            Nitro = 18,
+            Steel = 23,
+        }
+
+        public List<CrateSubTypes> Crates_ToReplace = new List<CrateSubTypes>()
+        {
+            CrateSubTypes.TNT, CrateSubTypes.Nitro, CrateSubTypes.Steel, CrateSubTypes.Fruit, CrateSubTypes.Life, CrateSubTypes.Aku, CrateSubTypes.Pickup, CrateSubTypes.WoodSpring, CrateSubTypes.Outline,
+        };
+        public List<CrateSubTypes> Crates_Wood = new List<CrateSubTypes>()
+        {
+            CrateSubTypes.Blank, //CrateSubTypes.Fruit, CrateSubTypes.Life, CrateSubTypes.Aku, CrateSubTypes.Pickup
+        };
+
+        internal void Mod_RandomWoodCrates(NSF nsf, NSD nsd, Random rand)
+        {
+            // edit NSF
+            foreach (Chunk chunk in nsf.Chunks)
+            {
+                if (chunk is NormalChunk zonechunk)
+                {
+                    foreach (Entry entry in zonechunk.Entries)
+                    {
+                        if (entry is ZoneEntry)
+                        {
+                            ZoneEntry zone = (ZoneEntry)entry;
+                            foreach (Entity ent in zone.Entities)
+                            {
+                                if (ent.Type != null && ent.Type == 34)
+                                {
+                                    if (ent.Subtype != null && (Crates_ToReplace.Contains((CrateSubTypes)ent.Subtype) || Crates_Wood.Contains((CrateSubTypes)ent.Subtype)))
+                                    {
+                                        int entType = (int)Crates_Wood[rand.Next(Crates_Wood.Count)];
+                                        ent.Subtype = entType;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        internal void Mod_TurnCratesIntoWumpa(NSF nsf, NSD nsd, Random rand)
+        {
+            // edit NSF
+            foreach (Chunk chunk in nsf.Chunks)
+            {
+                if (chunk is NormalChunk zonechunk)
+                {
+                    foreach (Entry entry in zonechunk.Entries)
+                    {
+                        if (entry is ZoneEntry)
+                        {
+                            ZoneEntry zone = (ZoneEntry)entry;
+                            foreach (Entity ent in zone.Entities)
+                            {
+                                if (ent.Type != null && ent.Type == 34)
+                                {
+                                    if (ent.Subtype != null && (Crates_ToReplace.Contains((CrateSubTypes)ent.Subtype) || Crates_Wood.Contains((CrateSubTypes)ent.Subtype) || ent.Subtype == (int)CrateSubTypes.Checkpoint))
+                                    {
+                                        ent.Type = 3;
+                                        ent.Subtype = 16;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        public enum Crash2_Levels
+        {
+            L01_TurleWoords = 17,
+            L02_SnowGo = 3,
+            L03_HangEight = 13,
+            L04_ThePits = 18,
+            L05_CrashDash = 12,
+            L06_SnowBiz = 6,
+            L07_AirCrash = 19,
+            L08_BearIt = 16,
+            L09_CrashCrush = 15,
+            L10_TheEelDeal = 22,
+            L11_PlantFood = 20,
+            L12_SewerOrLater = 0,
+            L13_BearDown = 21,
+            L14_RoadToRuin = 10,
+            L15_UnBearable = 11,
+            L16_HanginOut = 2,
+            L17_DigginIt = 9,
+            L18_ColdHardCrash = 8,
+            L19_Ruination = 4,
+            L20_BeeHaving = 23,
+            L21_PistonItAway = 5,
+            L22_RockIt = 7,
+            L23_NightFight = 1,
+            L24_PackAttack = 14,
+            L25_SpacedOut = 25,
+            L26_TotallyBear = 24,
+            L27_TotallyFly = 26,
+            B01_RipperRoo = 27,
+            B02_KomodoBros = 28,
+            B03_TinyTiger = 29,
+            B04_NGin = 30,
+            B05_Cortex = 31,
+        }
+
+        internal string[] Crash2_LevelFileNames = new string[]
+        {
+            "0A",
+            "0C",
+            "0D",
+            "0E",
+            "0F",
+            "10",
+            "11",
+            "12",
+            "13",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "1A",
+            "1B",
+            "1D",
+            "1E",
+            "1F",
+            "20",
+            "21",
+            "22",
+            "23",
+            "24",
+            "25",
+            "26",
+            "27",
+            //Bosses
+            "03",
+            "06",
+            "07",
+            "08",
+            "09",
+        };
+
+        internal void Randomize_LevelOrder(Random rand)
+        {
+            DirectoryInfo di = new DirectoryInfo(ModLoaderGlobals.ExtractedPath);
+
+            List<int> LevelsToGo = new List<int>();
+
+            for (int i = 0; i < Crash2_LevelFileNames.Length - 7; i++)
+            {
+                File.Move(di.FullName + "S" + Crash2_LevelFileNames[i].Substring(0, 1) + @"\S00000" + Crash2_LevelFileNames[i] + ".NSD", di.FullName + "level" + i + ".NSD");
+                File.Move(di.FullName + "S" + Crash2_LevelFileNames[i].Substring(0, 1) + @"\S00000" + Crash2_LevelFileNames[i] + ".NSF", di.FullName + "level" + i + ".NSF");
+                LevelsToGo.Add(i);
+            }
+
+            int id = 0;
+            while (LevelsToGo.Count > 0)
+            {
+                int target = rand.Next(LevelsToGo.Count);
+                int i = LevelsToGo[target];
+                File.Move(di.FullName + "level" + i + ".NSD", di.FullName + "S" + Crash2_LevelFileNames[id].Substring(0, 1) + @"\S00000" + Crash2_LevelFileNames[id] + ".NSD");
+                File.Move(di.FullName + "level" + i + ".NSF", di.FullName + "S" + Crash2_LevelFileNames[id].Substring(0, 1) + @"\S00000" + Crash2_LevelFileNames[id] + ".NSF");
+                LevelsToGo.RemoveAt(target);
+                id++;
+            }
+
+        }
+
     }
 }
