@@ -92,6 +92,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameDatabase.cs" />
+    <Compile Include="GameSpecific\Crash1\CrashTri_Common.cs" />
+    <Compile Include="GameSpecific\Crash2\Crash2_Mods.cs" />
     <Compile Include="GameSpecific\CrashBash\Modder_Bash.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\CNK_Data.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\CNK_Data_Adventure.cs" />

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using CrateModLoader.GameSpecific;
+using CrateModLoader.GameSpecific.Crash2;
 //Crash 2 API by chekwob and ManDude (https://github.com/cbhacks/CrashEdit)
 
 namespace CrateModLoader
@@ -13,6 +14,12 @@ namespace CrateModLoader
         internal const int RandomizeCratesIntoWood = 1;
         internal const int TurnCratesIntoWumpa = 2;
         internal const int RandomizeLevelOrder = 3;
+        internal const int SceneryGreyscale = 4;
+        internal const int SceneryRainbow = 5;
+        internal const int SceneryColorSwizzle = 6;
+        internal const int SceneryUntextured = 7;
+        internal const int ZoneCloseCamera = 8;
+
 
         public Modder_Crash2()
         {
@@ -49,10 +56,16 @@ namespace CrateModLoader
             };
             ModCratesManualInstall = true;
 
-            AddOption(RandomizeADIO, new ModOption("Randomize Sound Effects"));
             AddOption(RandomizeCratesIntoWood, new ModOption("All Crates Are Blank"));
             AddOption(TurnCratesIntoWumpa, new ModOption("All Crates Are Wumpa"));
             //AddOption(RandomizeLevelOrder, new ModOption("Randomize Level Order"));
+            AddOption(RandomizeADIO, new ModOption("Randomize Sound Effects"));
+            //AddOption(ZoneCloseCamera, new ModOption("Closer Camera"));
+            AddOption(SceneryRainbow, new ModOption("Randomize World Colors"));
+            AddOption(SceneryColorSwizzle, new ModOption("Randomize World Palette"));
+            AddOption(SceneryGreyscale, new ModOption("Greyscale World"));
+            AddOption(SceneryUntextured, new ModOption("Untextured World"));
+
         }
 
         public override void StartModProcess()
@@ -104,8 +117,13 @@ namespace CrateModLoader
                 }
 
                 if (GetOption(RandomizeADIO)) Mod_RandomizeADIO(nsf, nsd, rand);
-                if (GetOption(RandomizeCratesIntoWood)) Mod_RandomWoodCrates(nsf, nsd, rand);
-                if (GetOption(TurnCratesIntoWumpa)) Mod_TurnCratesIntoWumpa(nsf, nsd, rand);
+                if (GetOption(RandomizeCratesIntoWood)) Crash2_Mods.Mod_RandomWoodCrates(nsf, nsd, rand);
+                if (GetOption(TurnCratesIntoWumpa)) Crash2_Mods.Mod_TurnCratesIntoWumpa(nsf, nsd, rand);
+                if (GetOption(SceneryColorSwizzle)) CrashTri_Common.Mod_Scenery_Swizzle(nsf, nsd, rand);
+                if (GetOption(SceneryGreyscale)) CrashTri_Common.Mod_Scenery_Greyscale(nsf, nsd);
+                if (GetOption(SceneryRainbow)) CrashTri_Common.Mod_Scenery_Rainbow(nsf, nsd, rand);
+                if (GetOption(SceneryUntextured)) CrashTri_Common.Mod_Scenery_Untextured(nsf, nsd);
+                if (GetOption(ZoneCloseCamera)) CrashTri_Common.Mod_Camera_Closeup(nsf, nsd);
 
                 PatchNSD(nsf, nsd);
 
@@ -216,91 +234,6 @@ namespace CrateModLoader
                             int eid = oldeids[rand.Next(oldeids.Count)];
                             entry.EID = eid;
                             oldeids.Remove(eid);
-                        }
-                    }
-                }
-            }
-        }
-
-        public enum CrateSubTypes
-        {
-            TNT = 0,
-            Blank = 2,
-            WoodSpring = 3,
-            Checkpoint = 4,
-            Iron = 5,
-            Fruit = 6, //Multiple bounce
-            IronSwitch = 7,
-            Life = 8,
-            Aku = 9,
-            Pickup = 10,
-            Outline = 13,
-            IronSpring = 15,
-            Nitro = 18,
-            Steel = 23,
-        }
-
-        public List<CrateSubTypes> Crates_ToReplace = new List<CrateSubTypes>()
-        {
-            CrateSubTypes.TNT, CrateSubTypes.Nitro, CrateSubTypes.Steel, CrateSubTypes.Fruit, CrateSubTypes.Life, CrateSubTypes.Aku, CrateSubTypes.Pickup, CrateSubTypes.WoodSpring, CrateSubTypes.Outline,
-        };
-        public List<CrateSubTypes> Crates_Wood = new List<CrateSubTypes>()
-        {
-            CrateSubTypes.Blank, //CrateSubTypes.Fruit, CrateSubTypes.Life, CrateSubTypes.Aku, CrateSubTypes.Pickup
-        };
-
-        internal void Mod_RandomWoodCrates(NSF nsf, NSD nsd, Random rand)
-        {
-            // edit NSF
-            foreach (Chunk chunk in nsf.Chunks)
-            {
-                if (chunk is NormalChunk zonechunk)
-                {
-                    foreach (Entry entry in zonechunk.Entries)
-                    {
-                        if (entry is ZoneEntry)
-                        {
-                            ZoneEntry zone = (ZoneEntry)entry;
-                            foreach (Entity ent in zone.Entities)
-                            {
-                                if (ent.Type != null && ent.Type == 34)
-                                {
-                                    if (ent.Subtype != null && (Crates_ToReplace.Contains((CrateSubTypes)ent.Subtype) || Crates_Wood.Contains((CrateSubTypes)ent.Subtype)))
-                                    {
-                                        int entType = (int)Crates_Wood[rand.Next(Crates_Wood.Count)];
-                                        ent.Subtype = entType;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        internal void Mod_TurnCratesIntoWumpa(NSF nsf, NSD nsd, Random rand)
-        {
-            // edit NSF
-            foreach (Chunk chunk in nsf.Chunks)
-            {
-                if (chunk is NormalChunk zonechunk)
-                {
-                    foreach (Entry entry in zonechunk.Entries)
-                    {
-                        if (entry is ZoneEntry)
-                        {
-                            ZoneEntry zone = (ZoneEntry)entry;
-                            foreach (Entity ent in zone.Entities)
-                            {
-                                if (ent.Type != null && ent.Type == 34)
-                                {
-                                    if (ent.Subtype != null && (Crates_ToReplace.Contains((CrateSubTypes)ent.Subtype) || Crates_Wood.Contains((CrateSubTypes)ent.Subtype) || ent.Subtype == (int)CrateSubTypes.Checkpoint))
-                                    {
-                                        ent.Type = 3;
-                                        ent.Subtype = 16;
-                                    }
-                                }
-                            }
                         }
                     }
                 }
