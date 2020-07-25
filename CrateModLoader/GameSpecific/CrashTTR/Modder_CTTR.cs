@@ -97,7 +97,7 @@ namespace CrateModLoader
                 },
                 API_Credit = "APIs by NeoKesha and BetaM",
                 API_Link = string.Empty,
-                Icon = Properties.Resources.icon_crash,
+                Icon = Properties.Resources.icon_crashttr,
                 ModMenuEnabled = false,
                 ModCratesSupported = true,
                 RegionID_PS2 = new RegionCode[] {

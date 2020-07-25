@@ -103,7 +103,7 @@ namespace CrateModLoader.GameSpecific.Twins
                 },
                 API_Credit = "API by NeoKesha, Smartkin, ManDude and Marko",
                 API_Link = "https://github.com/Smartkin/twinsanity-editor",
-                Icon = Properties.Resources.icon_twins,
+                Icon = Properties.Resources.icon_crashts,
                 ModMenuEnabled = false,
                 ModCratesSupported = true,
                 RegionID_PS2 = new RegionCode[] {

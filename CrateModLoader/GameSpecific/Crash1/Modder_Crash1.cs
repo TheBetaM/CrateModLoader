@@ -23,7 +23,7 @@ namespace CrateModLoader
                 },
                 API_Credit = "API by chekwob and ManDude",
                 API_Link = "https://github.com/cbhacks/CrashEdit",
-                Icon = null,
+                Icon = Properties.Resources.icon_crash1,
                 ModMenuEnabled = false,
                 ModCratesSupported = true,
                 RegionID_PS1 = new RegionCode[] {

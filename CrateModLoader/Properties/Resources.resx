@@ -121,19 +121,40 @@
   <data name="cml_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\cml_icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icon_cnk" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon_cnk.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icon_crash1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_crash1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icon_crash" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon_crash.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icon_crash2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_crash2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_crash3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_crash3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_crashbash" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_crashbash.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_crashmom" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_crashmom.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_crashnk" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_crashnk.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_crashtitans" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_crashtitans.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_crashtr" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_crashtr.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_crashts" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_crashts.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_crashttr" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_crashttr.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_crashtwoc" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_crashtwoc.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="icon_ray3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon_ray3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_titans" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon_titans.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_twins" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon_twins.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

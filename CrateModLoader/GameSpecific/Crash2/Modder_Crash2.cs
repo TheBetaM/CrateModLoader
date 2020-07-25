@@ -33,7 +33,7 @@ namespace CrateModLoader
                 },
                 API_Credit = "API by chekwob and ManDude",
                 API_Link = "https://github.com/cbhacks/CrashEdit",
-                Icon = null,
+                Icon = Properties.Resources.icon_crash2,
                 ModMenuEnabled = false,
                 ModCratesSupported = true,
                 RegionID_PS1 = new RegionCode[] {
@@ -117,13 +117,13 @@ namespace CrateModLoader
                 }
 
                 if (GetOption(RandomizeADIO)) Mod_RandomizeADIO(nsf, nsd, rand);
-                if (GetOption(RandomizeCratesIntoWood)) Crash2_Mods.Mod_RandomWoodCrates(nsf, nsd, rand);
-                if (GetOption(TurnCratesIntoWumpa)) Crash2_Mods.Mod_TurnCratesIntoWumpa(nsf, nsd, rand);
-                if (GetOption(SceneryColorSwizzle)) CrashTri_Common.Mod_Scenery_Swizzle(nsf, nsd, rand);
-                if (GetOption(SceneryGreyscale)) CrashTri_Common.Mod_Scenery_Greyscale(nsf, nsd);
-                if (GetOption(SceneryRainbow)) CrashTri_Common.Mod_Scenery_Rainbow(nsf, nsd, rand);
-                if (GetOption(SceneryUntextured)) CrashTri_Common.Mod_Scenery_Untextured(nsf, nsd);
-                if (GetOption(ZoneCloseCamera)) CrashTri_Common.Mod_Camera_Closeup(nsf, nsd);
+                if (GetOption(RandomizeCratesIntoWood)) Crash2_Mods.Mod_RandomWoodCrates(nsf, rand);
+                if (GetOption(TurnCratesIntoWumpa)) Crash2_Mods.Mod_TurnCratesIntoWumpa(nsf, rand);
+                if (GetOption(SceneryColorSwizzle)) CrashTri_Common.Mod_Scenery_Swizzle(nsf, rand);
+                if (GetOption(SceneryGreyscale)) CrashTri_Common.Mod_Scenery_Greyscale(nsf);
+                if (GetOption(SceneryRainbow)) CrashTri_Common.Mod_Scenery_Rainbow(nsf, rand);
+                if (GetOption(SceneryUntextured)) CrashTri_Common.Mod_Scenery_Untextured(nsf);
+                if (GetOption(ZoneCloseCamera)) CrashTri_Common.Mod_Camera_Closeup(nsf);
 
                 PatchNSD(nsf, nsd);
 

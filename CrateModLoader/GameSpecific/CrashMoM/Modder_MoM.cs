@@ -28,7 +28,7 @@ namespace CrateModLoader
                 },
                 API_Credit = "API by NeoKesha and BetaM",
                 API_Link = string.Empty,
-                Icon = Properties.Resources.icon_titans,
+                Icon = Properties.Resources.icon_crashmom,
                 ModMenuEnabled = false,
                 ModCratesSupported = true,
                 RegionID_PS2 = new RegionCode[] {

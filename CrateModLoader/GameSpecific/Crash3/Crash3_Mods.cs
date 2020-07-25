@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace CrateModLoader.GameSpecific.Crash2
+namespace CrateModLoader.GameSpecific.Crash3
 {
-    public static class Crash2_Mods
+    public static class Crash3_Mods
     {
         public enum CrateSubTypes
         {
@@ -26,11 +26,12 @@ namespace CrateModLoader.GameSpecific.Crash2
             AutoBlank = 20,
             Blank2 = 21,
             Steel = 23,
+            Slot = 25,
         }
 
         public static List<CrateSubTypes> Crates_ToReplace = new List<CrateSubTypes>()
         {
-            CrateSubTypes.TNT, CrateSubTypes.Nitro, CrateSubTypes.Steel, CrateSubTypes.Fruit, CrateSubTypes.Life, CrateSubTypes.Aku, CrateSubTypes.Pickup, CrateSubTypes.WoodSpring, CrateSubTypes.Outline,
+            CrateSubTypes.TNT, CrateSubTypes.Nitro, CrateSubTypes.Steel, CrateSubTypes.Fruit, CrateSubTypes.Life, CrateSubTypes.Aku, CrateSubTypes.Pickup, CrateSubTypes.WoodSpring, CrateSubTypes.Outline, CrateSubTypes.Slot
         };
         public static List<CrateSubTypes> Crates_Wood = new List<CrateSubTypes>()
         {
@@ -46,9 +47,9 @@ namespace CrateModLoader.GameSpecific.Crash2
                 {
                     foreach (Entry entry in zonechunk.Entries)
                     {
-                        if (entry is ZoneEntry)
+                        if (entry is NewZoneEntry)
                         {
-                            ZoneEntry zone = (ZoneEntry)entry;
+                            NewZoneEntry zone = (NewZoneEntry)entry;
                             foreach (Entity ent in zone.Entities)
                             {
                                 if (ent.Type != null && ent.Type == 34)
@@ -78,9 +79,9 @@ namespace CrateModLoader.GameSpecific.Crash2
                 {
                     foreach (Entry entry in zonechunk.Entries)
                     {
-                        if (entry is ZoneEntry)
+                        if (entry is NewZoneEntry)
                         {
-                            ZoneEntry zone = (ZoneEntry)entry;
+                            NewZoneEntry zone = (NewZoneEntry)entry;
                             foreach (Entity ent in zone.Entities)
                             {
                                 if (ent.Type != null && ent.Type == 34)
@@ -89,6 +90,23 @@ namespace CrateModLoader.GameSpecific.Crash2
                                     {
                                         ent.Type = 3;
                                         ent.Subtype = 16;
+                                        ent.AlternateID = null;
+                                        ent.TimeTrialReward = null;
+                                        ent.Victims.Clear();
+                                        ent.BonusBoxCount = null;
+                                        ent.BoxCount = null;
+                                        ent.DDASection = null;
+                                        ent.DDASettings = null;
+                                        ent.ZMod = null;
+                                        ent.OtherSettings = null;
+                                        if (ent.Settings.Count > 0)
+                                        {
+                                            while (ent.Settings.Count > 0)
+                                            {
+                                                ent.Settings.RemoveAt(0);
+                                            }
+                                            ent.Settings.Add(new EntitySetting(0, 0));
+                                        }
                                     }
                                 }
                             }

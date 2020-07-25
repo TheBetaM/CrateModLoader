@@ -10,7 +10,7 @@ namespace CrateModLoader.GameSpecific
     static class CrashTri_Common
     {
 
-        public static void Fix_Detonator(NSF nsf, NSD nsd)
+        public static void Fix_Detonator(NSF nsf)
         {
             List<Entity> nitros = new List<Entity>();
             List<Entity> detonators = new List<Entity>();
@@ -73,7 +73,7 @@ namespace CrateModLoader.GameSpecific
             }
         }
 
-        public static void Fix_BoxCount(NSF nsf, NSD nsd)
+        public static void Fix_BoxCount(NSF nsf)
         {
             int boxcount = 0;
             List<Entity> willys = new List<Entity>();
@@ -171,7 +171,7 @@ namespace CrateModLoader.GameSpecific
             }
         }
 
-        public static void Mod_Scenery_Greyscale(NSF nsf, NSD nsd)
+        public static void Mod_Scenery_Greyscale(NSF nsf)
         {
             foreach (Chunk ck in nsf.Chunks)
             {
@@ -181,28 +181,59 @@ namespace CrateModLoader.GameSpecific
                 }
                 foreach (Entry en in ((EntryChunk)ck).Entries)
                 {
-                    if (!(en is SceneryEntry))
+                    if (en is SceneryEntry)
                     {
-                        continue;
+                        SceneryEntry entry = (SceneryEntry)en;
+                        for (int i = 0; i < entry.Colors.Count; i++)
+                        {
+                            SceneryColor color = entry.Colors[i];
+                            byte r = color.Red;
+                            byte g = color.Green;
+                            byte b = color.Blue;
+                            byte avg = (byte)((r + g + b) / 3);
+                            r = avg;
+                            g = avg;
+                            b = avg;
+                            entry.Colors[i] = new SceneryColor(r, g, b, color.Extra);
+                        }
                     }
-                    SceneryEntry entry = (SceneryEntry)en;
-                    for (int i = 0; i < entry.Colors.Count; i++)
+                    else if (en is NewSceneryEntry)
                     {
-                        SceneryColor color = entry.Colors[i];
-                        byte r = color.Red;
-                        byte g = color.Green;
-                        byte b = color.Blue;
-                        byte avg = (byte)((r + g + b) / 3);
-                        r = avg;
-                        g = avg;
-                        b = avg;
-                        entry.Colors[i] = new SceneryColor(r, g, b, color.Extra);
+                        NewSceneryEntry entry = (NewSceneryEntry)en;
+                        for (int i = 0; i < entry.Colors.Count; i++)
+                        {
+                            SceneryColor color = entry.Colors[i];
+                            byte r = color.Red;
+                            byte g = color.Green;
+                            byte b = color.Blue;
+                            byte avg = (byte)((r + g + b) / 3);
+                            r = avg;
+                            g = avg;
+                            b = avg;
+                            entry.Colors[i] = new SceneryColor(r, g, b, color.Extra);
+                        }
+                    }
+                    else if (en is OldSceneryEntry)
+                    {
+                        OldSceneryEntry entry = (OldSceneryEntry)en;
+                        for (int i = 0; i < entry.Vertices.Count; i++)
+                        {
+                            OldSceneryVertex color = entry.Vertices[i];
+                            byte r = color.Red;
+                            byte g = color.Green;
+                            byte b = color.Blue;
+                            byte avg = (byte)((r + g + b) / 3);
+                            r = avg;
+                            g = avg;
+                            b = avg;
+                            entry.Vertices[i] = new OldSceneryVertex(color.X, color.Y, color.Z, r, g, b, color.FX);
+                        }
                     }
                 }
             }
         }
 
-        public static void Mod_Scenery_Rainbow(NSF nsf, NSD nsd, Random rand)
+        public static void Mod_Scenery_Rainbow(NSF nsf, Random rand)
         {
             foreach (Chunk ck in nsf.Chunks)
             {
@@ -212,27 +243,41 @@ namespace CrateModLoader.GameSpecific
                 }
                 foreach (Entry en in ((EntryChunk)ck).Entries)
                 {
-                    if (!(en is SceneryEntry))
+                    if (en is SceneryEntry)
                     {
-                        continue;
+                        SceneryEntry entry = (SceneryEntry)en;
+                        for (int i = 0; i < entry.Colors.Count; i++)
+                        {
+                            SceneryColor color = entry.Colors[i];
+                            byte r = color.Red;
+                            byte g = color.Green;
+                            byte b = color.Blue;
+                            r = (byte)rand.Next(0, 256);
+                            g = (byte)rand.Next(0, 256);
+                            b = (byte)rand.Next(0, 256);
+                            entry.Colors[i] = new SceneryColor(r, g, b, color.Extra);
+                        }
                     }
-                    SceneryEntry entry = (SceneryEntry)en;
-                    for (int i = 0; i < entry.Colors.Count; i++)
+                    else if (en is NewSceneryEntry)
                     {
-                        SceneryColor color = entry.Colors[i];
-                        byte r = color.Red;
-                        byte g = color.Green;
-                        byte b = color.Blue;
-                        r = (byte)rand.Next(0, 256);
-                        g = (byte)rand.Next(0, 256);
-                        b = (byte)rand.Next(0, 256);
-                        entry.Colors[i] = new SceneryColor(r, g, b, color.Extra);
+                        NewSceneryEntry entry = (NewSceneryEntry)en;
+                        for (int i = 0; i < entry.Colors.Count; i++)
+                        {
+                            SceneryColor color = entry.Colors[i];
+                            byte r = color.Red;
+                            byte g = color.Green;
+                            byte b = color.Blue;
+                            r = (byte)rand.Next(0, 256);
+                            g = (byte)rand.Next(0, 256);
+                            b = (byte)rand.Next(0, 256);
+                            entry.Colors[i] = new SceneryColor(r, g, b, color.Extra);
+                        }
                     }
                 }
             }
         }
 
-        public static void Mod_Scenery_Swizzle(NSF nsf, NSD nsd, Random rand)
+        public static void Mod_Scenery_Swizzle(NSF nsf, Random rand)
         {
             int r_r = rand.Next(2);
             int r_g = rand.Next(2);
@@ -258,29 +303,45 @@ namespace CrateModLoader.GameSpecific
                 }
                 foreach (Entry en in ((EntryChunk)ck).Entries)
                 {
-                    if (!(en is SceneryEntry))
+                    if (en is SceneryEntry)
                     {
-                        continue;
+                        SceneryEntry entry = (SceneryEntry)en;
+                        for (int i = 0; i < entry.Colors.Count; i++)
+                        {
+                            SceneryColor color = entry.Colors[i];
+                            int r = color.Red;
+                            int g = color.Green;
+                            int b = color.Blue;
+                            entry.Colors[i] = new SceneryColor(
+                                (byte)((r_r * r + r_g * g + r_b * b) / r_s),
+                                (byte)((g_r * r + g_g * g + g_b * b) / g_s),
+                                (byte)((b_r * r + b_g * g + b_b * b) / b_s),
+                                color.Extra
+                            );
+                        }
                     }
-                    SceneryEntry entry = (SceneryEntry)en;
-                    for (int i = 0; i < entry.Colors.Count; i++)
+                    else if (en is NewSceneryEntry)
                     {
-                        SceneryColor color = entry.Colors[i];
-                        int r = color.Red;
-                        int g = color.Green;
-                        int b = color.Blue;
-                        entry.Colors[i] = new SceneryColor(
-                            (byte)((r_r * r + r_g * g + r_b * b) / r_s),
-                            (byte)((g_r * r + g_g * g + g_b * b) / g_s),
-                            (byte)((b_r * r + b_g * g + b_b * b) / b_s),
-                            color.Extra
-                        );
+                        NewSceneryEntry entry = (NewSceneryEntry)en;
+                        for (int i = 0; i < entry.Colors.Count; i++)
+                        {
+                            SceneryColor color = entry.Colors[i];
+                            int r = color.Red;
+                            int g = color.Green;
+                            int b = color.Blue;
+                            entry.Colors[i] = new SceneryColor(
+                                (byte)((r_r * r + r_g * g + r_b * b) / r_s),
+                                (byte)((g_r * r + g_g * g + g_b * b) / g_s),
+                                (byte)((b_r * r + b_g * g + b_b * b) / b_s),
+                                color.Extra
+                            );
+                        }
                     }
                 }
             }
         }
 
-        public static void Mod_Scenery_Untextured(NSF nsf, NSD nsd)
+        public static void Mod_Scenery_Untextured(NSF nsf)
         {
             foreach (Chunk ck in nsf.Chunks)
             {
@@ -290,38 +351,63 @@ namespace CrateModLoader.GameSpecific
                 }
                 foreach (Entry en in ((EntryChunk)ck).Entries)
                 {
-                    if (!(en is SceneryEntry))
+                    if (en is SceneryEntry)
                     {
-                        continue;
+                        SceneryEntry e = (SceneryEntry)en;
+                        for (int i = 0; i < e.Triangles.Count; i++)
+                        {
+                            SceneryTriangle tri = e.Triangles[i];
+                            int vertexa = tri.VertexA;
+                            int vertexb = tri.VertexB;
+                            int vertexc = tri.VertexC;
+                            short texture = 0;
+                            bool animated = false;
+                            e.Triangles[i] = new SceneryTriangle(vertexa, vertexb, vertexc, texture, animated);
+                        }
+                        for (int i = 0; i < e.Quads.Count; i++)
+                        {
+                            SceneryQuad quad = e.Quads[i];
+                            int vertexa = quad.VertexA;
+                            int vertexb = quad.VertexB;
+                            int vertexc = quad.VertexC;
+                            int vertexd = quad.VertexD;
+                            short texture = 0;
+                            byte unknown = 0;
+                            bool animated = false;
+                            e.Quads[i] = new SceneryQuad(vertexa, vertexb, vertexc, vertexd, texture, unknown, animated);
+                        }
                     }
-                    SceneryEntry e = (SceneryEntry)en;
-                    for (int i = 0; i < e.Triangles.Count; i++)
+                    else if (en is NewSceneryEntry)
                     {
-                        SceneryTriangle tri = e.Triangles[i];
-                        int vertexa = tri.VertexA;
-                        int vertexb = tri.VertexB;
-                        int vertexc = tri.VertexC;
-                        short texture = 0;
-                        bool animated = false;
-                        e.Triangles[i] = new SceneryTriangle(vertexa, vertexb, vertexc, texture, animated);
-                    }
-                    for (int i = 0; i < e.Quads.Count; i++)
-                    {
-                        SceneryQuad quad = e.Quads[i];
-                        int vertexa = quad.VertexA;
-                        int vertexb = quad.VertexB;
-                        int vertexc = quad.VertexC;
-                        int vertexd = quad.VertexD;
-                        short texture = 0;
-                        byte unknown = 0;
-                        bool animated = false;
-                        e.Quads[i] = new SceneryQuad(vertexa, vertexb, vertexc, vertexd, texture, unknown, animated);
+                        NewSceneryEntry e = (NewSceneryEntry)en;
+                        for (int i = 0; i < e.Triangles.Count; i++)
+                        {
+                            SceneryTriangle tri = e.Triangles[i];
+                            int vertexa = tri.VertexA;
+                            int vertexb = tri.VertexB;
+                            int vertexc = tri.VertexC;
+                            short texture = 0;
+                            bool animated = false;
+                            e.Triangles[i] = new SceneryTriangle(vertexa, vertexb, vertexc, texture, animated);
+                        }
+                        for (int i = 0; i < e.Quads.Count; i++)
+                        {
+                            SceneryQuad quad = e.Quads[i];
+                            int vertexa = quad.VertexA;
+                            int vertexb = quad.VertexB;
+                            int vertexc = quad.VertexC;
+                            int vertexd = quad.VertexD;
+                            short texture = 0;
+                            byte unknown = 0;
+                            bool animated = false;
+                            e.Quads[i] = new SceneryQuad(vertexa, vertexb, vertexc, vertexd, texture, unknown, animated);
+                        }
                     }
                 }
             }
         }
 
-        public static void Mod_Camera_Closeup(NSF nsf, NSD nsd)
+        public static void Mod_Camera_Closeup(NSF nsf)
         {
             foreach (Chunk ck in nsf.Chunks)
             {

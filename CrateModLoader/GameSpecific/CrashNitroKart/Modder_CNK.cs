@@ -52,7 +52,7 @@ namespace CrateModLoader
                 },
                 API_Credit = "Tools/API by BetaM, ManDude and eezstreet",
                 API_Link = string.Empty,
-                Icon = Properties.Resources.icon_cnk,
+                Icon = Properties.Resources.icon_crashnk,
                 ModMenuEnabled = false,
                 ModCratesSupported = true,
                 RegionID_PS2 = new RegionCode[] {

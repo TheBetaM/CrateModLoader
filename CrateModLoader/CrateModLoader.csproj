@@ -94,6 +94,7 @@
     <Compile Include="GameDatabase.cs" />
     <Compile Include="GameSpecific\Crash1\CrashTri_Common.cs" />
     <Compile Include="GameSpecific\Crash2\Crash2_Mods.cs" />
+    <Compile Include="GameSpecific\Crash3\Crash3_Mods.cs" />
     <Compile Include="GameSpecific\CrashBash\Modder_Bash.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\CNK_Data.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\CNK_Data_Adventure.cs" />
@@ -312,7 +313,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\icon_crash.png" />
+    <None Include="Resources\icon_crashttr.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Changelog.txt">
@@ -332,6 +333,16 @@
     </Content>
     <Content Include="Resources\cml_header.png" />
     <Content Include="Resources\cml_icon.png" />
+    <None Include="Resources\icon_crash2.png" />
+    <None Include="Resources\icon_crash3.png" />
+    <None Include="Resources\icon_crashbash.png" />
+    <None Include="Resources\icon_crashtr.png" />
+    <None Include="Resources\icon_crash1.png" />
+    <None Include="Resources\icon_crashtwoc.png" />
+    <None Include="Resources\icon_crashtitans.png" />
+    <None Include="Resources\icon_crashnk.png" />
+    <None Include="Resources\icon_crashts.png" />
+    <None Include="Resources\icon_crashmom.png" />
     <Content Include="Tools\xextool.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -478,8 +489,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\icon_titans.png" />
-    <None Include="Resources\icon_cnk.png" />
-    <None Include="Resources\icon_twins.png" />
     <Content Include="rando_icon.ico" />
   </ItemGroup>
   <ItemGroup>

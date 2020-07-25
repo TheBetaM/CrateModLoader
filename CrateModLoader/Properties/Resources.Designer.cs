@@ -73,9 +73,9 @@ namespace CrateModLoader.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap icon_cnk {
+        internal static System.Drawing.Bitmap icon_crash1 {
             get {
-                object obj = ResourceManager.GetObject("icon_cnk", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_crash1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,9 +83,99 @@ namespace CrateModLoader.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap icon_crash {
+        internal static System.Drawing.Bitmap icon_crash2 {
             get {
-                object obj = ResourceManager.GetObject("icon_crash", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_crash2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_crash3 {
+            get {
+                object obj = ResourceManager.GetObject("icon_crash3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_crashbash {
+            get {
+                object obj = ResourceManager.GetObject("icon_crashbash", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_crashmom {
+            get {
+                object obj = ResourceManager.GetObject("icon_crashmom", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_crashnk {
+            get {
+                object obj = ResourceManager.GetObject("icon_crashnk", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_crashtitans {
+            get {
+                object obj = ResourceManager.GetObject("icon_crashtitans", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_crashtr {
+            get {
+                object obj = ResourceManager.GetObject("icon_crashtr", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_crashts {
+            get {
+                object obj = ResourceManager.GetObject("icon_crashts", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_crashttr {
+            get {
+                object obj = ResourceManager.GetObject("icon_crashttr", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_crashtwoc {
+            get {
+                object obj = ResourceManager.GetObject("icon_crashtwoc", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -96,26 +186,6 @@ namespace CrateModLoader.Properties {
         internal static System.Drawing.Bitmap icon_ray3 {
             get {
                 object obj = ResourceManager.GetObject("icon_ray3", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap icon_titans {
-            get {
-                object obj = ResourceManager.GetObject("icon_titans", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap icon_twins {
-            get {
-                object obj = ResourceManager.GetObject("icon_twins", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
