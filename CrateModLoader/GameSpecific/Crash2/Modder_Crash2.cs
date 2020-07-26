@@ -113,7 +113,9 @@ namespace CrateModLoader
                 }
                 catch (LoadAbortedException)
                 {
-                    return;
+                    Console.WriteLine("Crash: LoadAbortedException: " + nsfFile.Name);
+                    continue;
+                    //return;
                 }
 
                 if (GetOption(RandomizeADIO)) Mod_RandomizeADIO(nsf, nsd, rand);

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using CrateModLoader.GameSpecific;
+using CrateModLoader.GameSpecific.Crash1;
 //Crash 1 API by chekwob and ManDude (https://github.com/cbhacks/CrashEdit)
 
 namespace CrateModLoader
@@ -10,6 +11,14 @@ namespace CrateModLoader
     public sealed class Modder_Crash1 : Modder
     {
         internal const int RandomizeADIO = 0;
+        internal const int RandomizeCratesIntoWood = 1;
+        internal const int TurnCratesIntoWumpa = 2;
+        internal const int RandomizeLevelOrder = 3;
+        internal const int SceneryGreyscale = 4;
+        internal const int SceneryRainbow = 5;
+        internal const int SceneryColorSwizzle = 6;
+        internal const int SceneryUntextured = 7;
+        internal const int ZoneCloseCamera = 8;
 
         public Modder_Crash1()
         {
@@ -46,7 +55,13 @@ namespace CrateModLoader
             };
             ModCratesManualInstall = true;
 
-            AddOption(RandomizeADIO, new ModOption("Randomize sound effects"));
+            AddOption(RandomizeCratesIntoWood, new ModOption("All Crates Are Blank"));
+            AddOption(TurnCratesIntoWumpa, new ModOption("All Crates Are Wumpa"));
+            AddOption(RandomizeADIO, new ModOption("Randomize Sound Effects"));
+            AddOption(SceneryRainbow, new ModOption("Randomize World Colors"));
+            AddOption(SceneryColorSwizzle, new ModOption("Randomize World Palette"));
+            AddOption(SceneryGreyscale, new ModOption("Greyscale World"));
+            AddOption(SceneryUntextured, new ModOption("Untextured World"));
         }
 
         public override void StartModProcess()
@@ -91,10 +106,19 @@ namespace CrateModLoader
                 }
                 catch (LoadAbortedException)
                 {
-                    return;
+                    Console.WriteLine("Crash: LoadAbortedException: " + nsfFile.Name);
+                    continue;
+                    //return;
                 }
 
                 if (GetOption(RandomizeADIO)) Mod_RandomizeADIO(nsf, nsd, rand);
+                if (GetOption(RandomizeCratesIntoWood)) Crash1_Mods.Mod_RandomWoodCrates(nsf, rand);
+                if (GetOption(TurnCratesIntoWumpa)) Crash1_Mods.Mod_TurnCratesIntoWumpa(nsf, rand);
+                if (GetOption(SceneryColorSwizzle)) CrashTri_Common.Mod_Scenery_Swizzle(nsf, rand);
+                if (GetOption(SceneryGreyscale)) CrashTri_Common.Mod_Scenery_Greyscale(nsf);
+                if (GetOption(SceneryRainbow)) CrashTri_Common.Mod_Scenery_Rainbow(nsf, rand);
+                if (GetOption(SceneryUntextured)) CrashTri_Common.Mod_Scenery_Untextured(nsf);
+                if (GetOption(ZoneCloseCamera)) CrashTri_Common.Mod_Camera_Closeup(nsf);
 
                 PatchNSD(nsf, nsd);
 

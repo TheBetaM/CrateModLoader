@@ -92,6 +92,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameDatabase.cs" />
+    <Compile Include="GameSpecific\Crash1\Crash1_Mods.cs" />
     <Compile Include="GameSpecific\Crash1\CrashTri_Common.cs" />
     <Compile Include="GameSpecific\Crash2\Crash2_Mods.cs" />
     <Compile Include="GameSpecific\Crash3\Crash3_Mods.cs" />

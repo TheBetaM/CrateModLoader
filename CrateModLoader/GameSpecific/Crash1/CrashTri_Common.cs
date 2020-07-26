@@ -273,6 +273,21 @@ namespace CrateModLoader.GameSpecific
                             entry.Colors[i] = new SceneryColor(r, g, b, color.Extra);
                         }
                     }
+                    else if (en is OldSceneryEntry)
+                    {
+                        OldSceneryEntry entry = (OldSceneryEntry)en;
+                        for (int i = 0; i < entry.Vertices.Count; i++)
+                        {
+                            OldSceneryVertex color = entry.Vertices[i];
+                            byte r = color.Red;
+                            byte g = color.Green;
+                            byte b = color.Blue;
+                            r = (byte)rand.Next(0, 256);
+                            g = (byte)rand.Next(0, 256);
+                            b = (byte)rand.Next(0, 256);
+                            entry.Vertices[i] = new OldSceneryVertex(color.X, color.Y, color.Z, r, g, b, color.FX);
+                        }
+                    }
                 }
             }
         }
@@ -335,6 +350,21 @@ namespace CrateModLoader.GameSpecific
                                 (byte)((b_r * r + b_g * g + b_b * b) / b_s),
                                 color.Extra
                             );
+                        }
+                    }
+                    else if (en is OldSceneryEntry)
+                    {
+                        OldSceneryEntry entry = (OldSceneryEntry)en;
+                        for (int i = 0; i < entry.Vertices.Count; i++)
+                        {
+                            OldSceneryVertex color = entry.Vertices[i];
+                            byte r = color.Red;
+                            byte g = color.Green;
+                            byte b = color.Blue;
+                            r = (byte)((r_r * r + r_g * g + r_b * b) / r_s);
+                            g = (byte)((g_r * r + g_g * g + g_b * b) / g_s);
+                            b = (byte)((b_r * r + b_g * g + b_b * b) / b_s);
+                            entry.Vertices[i] = new OldSceneryVertex(color.X, color.Y, color.Z, r, g, b, color.FX);
                         }
                     }
                 }
@@ -401,6 +431,15 @@ namespace CrateModLoader.GameSpecific
                             byte unknown = 0;
                             bool animated = false;
                             e.Quads[i] = new SceneryQuad(vertexa, vertexb, vertexc, vertexd, texture, unknown, animated);
+                        }
+                    }
+                    else if (en is OldSceneryEntry)
+                    {
+                        OldSceneryEntry entry = (OldSceneryEntry)en;
+                        for (int i = 0; i < entry.Polygons.Count; i++)
+                        {
+                            OldSceneryPolygon poly = entry.Polygons[i];
+                            entry.Polygons[i] = new OldSceneryPolygon(poly.VertexA, poly.VertexB, poly.VertexC, 0, 0, 0, 0);
                         }
                     }
                 }

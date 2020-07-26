@@ -56,7 +56,7 @@ namespace CrateModLoader
 
             AddOption(RandomizeCratesIntoWood, new ModOption("All Crates Are Blank"));
             //AddOption(TurnCratesIntoWumpa, new ModOption("All Crates Are Wumpa")); //crashes in level 1
-            AddOption(RandomizeADIO, new ModOption("Randomize sound effects"));
+            AddOption(RandomizeADIO, new ModOption("Randomize Sound Effects"));
             AddOption(SceneryRainbow, new ModOption("Randomize World Colors"));
             AddOption(SceneryColorSwizzle, new ModOption("Randomize World Palette"));
             AddOption(SceneryGreyscale, new ModOption("Greyscale World"));
@@ -105,7 +105,9 @@ namespace CrateModLoader
                 }
                 catch (LoadAbortedException)
                 {
+                    Console.WriteLine("Crash: LoadAbortedException: " + nsfFile.Name);
                     continue;
+                    //return;
                 }
 
                 if (GetOption(RandomizeADIO)) Mod_RandomizeADIO(nsf, nsd, rand);
