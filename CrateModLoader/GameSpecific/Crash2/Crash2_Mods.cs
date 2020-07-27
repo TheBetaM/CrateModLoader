@@ -144,7 +144,7 @@ namespace CrateModLoader.GameSpecific.Crash2
             double FoV_Mod = 0.8d;
             if (isRandom)
             {
-                FoV_Mod = (rand.NextDouble() / 3d) + 0.75d;
+                FoV_Mod = (rand.NextDouble() / 2d) + 0.75d;
             }
             // edit NSF
             foreach (Chunk chunk in nsf.Chunks)
@@ -178,7 +178,40 @@ namespace CrateModLoader.GameSpecific.Crash2
 
         static List<Crash2_Levels> BackwardsLevelsList = new List<Crash2_Levels>()
         {
-            Crash2_Levels.L01_TurtleWoods, Crash2_Levels.L04_ThePits, Crash2_Levels.L14_RoadToRuin, Crash2_Levels.L17_DigginIt, Crash2_Levels.L19_Ruination, Crash2_Levels.L20_BeeHaving, Crash2_Levels.L21_PistonItAway, Crash2_Levels.L25_SpacedOut, Crash2_Levels.L27_TotallyFly
+            Crash2_Levels.L01_TurtleWoods,
+            //Crash2_Levels.L02_SnowGo, // todo: section teleports
+            //Crash2_Levels.L03_HangEight, // todo: jetski position
+            Crash2_Levels.L04_ThePits,
+            Crash2_Levels.L05_CrashDash, 
+            //Crash2_Levels.L06_SnowBiz, // todo: section teleports
+            //Crash2_Levels.L07_AirCrash, // todo: jetski position
+            //Crash2_Levels.L08_BearIt, // todo: bear stuff, probably won't be possible
+            Crash2_Levels.L09_CrashCrush, 
+            //Crash2_Levels.L10_TheEelDeal, // todo: section teleports
+            //Crash2_Levels.L11_PlantFood, // todo: jetski position
+            //Crash2_Levels.L12_SewerOrLater, // todo: section teleports
+            //Crash2_Levels.L13_BearDown, // todo: bear stuff, probably won't be possible
+            Crash2_Levels.L14_RoadToRuin,
+            Crash2_Levels.L15_UnBearable,
+            //Crash2_Levels.L16_HanginOut, // todo: section teleports
+            Crash2_Levels.L17_DigginIt,
+            //Crash2_Levels.L18_ColdHardCrash, // todo: section teleports
+            Crash2_Levels.L19_Ruination,
+            Crash2_Levels.L20_BeeHaving,
+            Crash2_Levels.L21_PistonItAway,
+            //Crash2_Levels.L22_RockIt, // todo: jetpack position
+            Crash2_Levels.L23_NightFight, // Fireflys need moving?
+            //Crash2_Levels.L24_PackAttack, // todo: jetpack position
+            Crash2_Levels.L25_SpacedOut,
+            //Crash2_Levels.L26_TotallyBear, // todo: bear stuff, probably won't be possible
+            Crash2_Levels.L27_TotallyFly // Fireflys need moving?
+        };
+
+        static List<Crash2_Levels> ChaseLevelsList = new List<Crash2_Levels>()
+        {
+            Crash2_Levels.L05_CrashDash, 
+            Crash2_Levels.L09_CrashCrush, 
+            Crash2_Levels.L15_UnBearable,
         };
 
         public static void Mod_BackwardsLevels(NSF nsf, NSD nsd, Crash2_Levels level, bool isRandom, Random rand)
@@ -196,6 +229,7 @@ namespace CrateModLoader.GameSpecific.Crash2
             ZoneEntry CrashZone = null;
             Entity WarpOutEntity = null;
             ZoneEntry WarpOutZone = null;
+            Entity EmptyEntity = null;
             foreach (Chunk chunk in nsf.Chunks)
             {
                 if (chunk is NormalChunk zonechunk)
@@ -213,6 +247,8 @@ namespace CrateModLoader.GameSpecific.Crash2
                                         CrashEntity = zone.Entities[i];
                                         CrashZone = zone;
                                         zone.Entities.RemoveAt(i);
+                                        if (EmptyEntity == null)
+                                            EmptyEntity = zone.Entities[2];
                                         i--;
                                     }
                                     else if (zone.Entities[i].Type == 1 && zone.Entities[i].Subtype == 1)
@@ -221,6 +257,34 @@ namespace CrateModLoader.GameSpecific.Crash2
                                         WarpOutZone = zone;
                                         zone.Entities.RemoveAt(i);
                                         i--;
+                                    }
+                                    if (ChaseLevelsList.Contains(level))
+                                    {
+                                        if (zone.Entities[i].Type == 41 && zone.Entities[i].Subtype == 0) // Boulder
+                                        {
+                                            zone.Entities.RemoveAt(i);
+                                            zone.Entities.Insert(i, EmptyEntity);
+                                            i--;
+                                        }
+                                        else if (zone.Entities[i].Type == 39 && zone.Entities[i].Subtype == 5) // Boulder door
+                                        {
+                                            zone.Entities.RemoveAt(i);
+                                            zone.Entities.Insert(i, EmptyEntity);
+                                            i--;
+                                        }
+                                        else if (zone.Entities[i].Type == 41 && zone.Entities[i].Subtype == 2) // Papa bear
+                                        {
+                                            zone.Entities.RemoveAt(i);
+                                            zone.Entities.Insert(i, EmptyEntity);
+                                            i--;
+                                        }
+                                        else if (zone.Entities[i].Type == 48 && zone.Entities[i].Subtype == 0) // Bear
+                                        {
+                                            zone.Entities.RemoveAt(i);
+                                            zone.Entities.Insert(i, EmptyEntity);
+                                            i--;
+                                        }
+                                        
                                     }
                                 }
                             }

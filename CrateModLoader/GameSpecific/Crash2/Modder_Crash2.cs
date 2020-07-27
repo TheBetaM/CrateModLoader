@@ -26,6 +26,9 @@ namespace CrateModLoader
         internal const int RandomBackwardsLevels = 13;
         internal const int CameraBiggerFOV = 14;
         internal const int RandomizeCameraFOV = 15;
+        internal const int VehicleLevelsOnFoot = 16;
+        internal const int MirroredWorld = 17;
+        internal const int RandomLevelsMirrored = 18;
 
         public Modder_Crash2()
         {
@@ -67,6 +70,9 @@ namespace CrateModLoader
             //AddOption(RandomizeLevelOrder, new ModOption("Randomize Level Order")); // doesn't work
             AddOption(BackwardsLevels, new ModOption("Backwards Levels (where possible)"));
             AddOption(RandomBackwardsLevels, new ModOption("Random Levels Are Backwards"));
+            //AddOption(VehicleLevelsOnFoot, new ModOption("Vehicle Levels On Foot"));
+            //AddOption(SceneryUntextured, new ModOption("Mirrored World"));
+            //AddOption(SceneryUntextured, new ModOption("Random Levels Are Mirrored"));
             AddOption(CameraBiggerFOV, new ModOption("Wider Camera Field-Of-View"));
             AddOption(RandomizeCameraFOV, new ModOption("Randomize Camera Field-Of-View"));
             AddOption(RandomizeADIO, new ModOption("Randomize Sound Effects"));
