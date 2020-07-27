@@ -18,6 +18,16 @@ namespace CrateModLoader
         internal const int SceneryRainbow = 5;
         internal const int SceneryColorSwizzle = 6;
         internal const int SceneryUntextured = 7;
+        internal const int RandomizeMusic = 9;
+        internal const int RandomizeMusicTracks = 10;
+        internal const int RandomzieMusicInstruments = 11;
+        internal const int BackwardsLevels = 12;
+        internal const int RandomBackwardsLevels = 13;
+        internal const int CameraBiggerFOV = 14;
+        internal const int RandomizeCameraFOV = 15;
+        internal const int VehicleLevelsOnFoot = 16;
+        internal const int MirroredWorld = 17;
+        internal const int RandomLevelsMirrored = 18;
 
         public Modder_Crash3()
         {
@@ -56,11 +66,21 @@ namespace CrateModLoader
 
             AddOption(RandomizeCratesIntoWood, new ModOption("All Crates Are Blank"));
             //AddOption(TurnCratesIntoWumpa, new ModOption("All Crates Are Wumpa")); //crashes in level 1
+            AddOption(BackwardsLevels, new ModOption("Backwards Levels (where possible)"));
+            AddOption(RandomBackwardsLevels, new ModOption("Random Levels Are Backwards"));
+            //AddOption(MirroredWorld, new ModOption("Mirrored World"));
+            //AddOption(RandomLevelsMirrored, new ModOption("Random Levels Are Mirrored"));
+            AddOption(CameraBiggerFOV, new ModOption("Wider Camera Field-Of-View"));
+            AddOption(RandomizeCameraFOV, new ModOption("Randomize Camera Field-Of-View"));
             AddOption(RandomizeADIO, new ModOption("Randomize Sound Effects"));
+            //AddOption(RandomizeMusic, new ModOption("Randomize Music")); //shuffle tracks from different levels (must be identical to vanilla playback, just in a different level)
+            //AddOption(RandomizeMusicTracks, new ModOption("Randomize Music Tracks")); //only swap midis
+            //AddOption(RandomzieMusicInstruments, new ModOption("Randomize Music Instruments")); //only swap wavebanks
             AddOption(SceneryRainbow, new ModOption("Randomize World Colors"));
             AddOption(SceneryColorSwizzle, new ModOption("Randomize World Palette"));
             AddOption(SceneryGreyscale, new ModOption("Greyscale World"));
             AddOption(SceneryUntextured, new ModOption("Untextured World"));
+            
         }
 
         public override void StartModProcess()
@@ -110,9 +130,13 @@ namespace CrateModLoader
                     //return;
                 }
 
-                if (GetOption(RandomizeADIO)) Mod_RandomizeADIO(nsf, nsd, rand);
+                Crash3_Levels NSF_Level = GetLevelFromNSF(nsfFile.Name);
+
+                if (GetOption(BackwardsLevels) || GetOption(RandomBackwardsLevels)) Crash3_Mods.Mod_BackwardsLevels(nsf, nsd, NSF_Level, GetOption(RandomBackwardsLevels), rand);
+                if (GetOption(CameraBiggerFOV) || GetOption(RandomizeCameraFOV)) Crash3_Mods.Mod_CameraFOV(nsf, rand, GetOption(RandomizeCameraFOV));
                 if (GetOption(RandomizeCratesIntoWood)) Crash3_Mods.Mod_RandomWoodCrates(nsf, rand);
                 if (GetOption(TurnCratesIntoWumpa)) Crash3_Mods.Mod_TurnCratesIntoWumpa(nsf, rand);
+                if (GetOption(RandomizeADIO)) Mod_RandomizeADIO(nsf, nsd, rand);
                 if (GetOption(SceneryColorSwizzle)) CrashTri_Common.Mod_Scenery_Swizzle(nsf, rand);
                 if (GetOption(SceneryGreyscale)) CrashTri_Common.Mod_Scenery_Greyscale(nsf);
                 if (GetOption(SceneryRainbow)) CrashTri_Common.Mod_Scenery_Rainbow(nsf, rand);
@@ -231,6 +255,58 @@ namespace CrateModLoader
                     }
                 }
             }
+        }
+
+        internal string[] Crash3_LevelFileNames = new string[]
+        {
+            "0A",
+            "0B",
+            "0C",
+            "0D",
+            "0E",
+            "0F",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "1A",
+            "1B",
+            "1C",
+            "1D",
+            "1E",
+            "1F",
+            "20",
+            "21",
+            "22",
+            "23",
+            "24",
+            "25",
+            "26",
+            "27",
+            //Bosses
+            "06",
+            "03",
+            "04",
+            "05",
+            "07",
+        };
+
+        internal Crash3_Levels GetLevelFromNSF(string NSf_Name)
+        {
+            for (int i = 0; i < Crash3_LevelFileNames.Length; i++)
+            {
+                if (NSf_Name.Contains("S00000" + Crash3_LevelFileNames[i]))
+                {
+                    return (Crash3_Levels)i;
+                }
+            }
+            return Crash3_Levels.Unknown;
         }
     }
 }

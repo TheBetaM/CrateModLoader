@@ -71,8 +71,8 @@ namespace CrateModLoader
             AddOption(BackwardsLevels, new ModOption("Backwards Levels (where possible)"));
             AddOption(RandomBackwardsLevels, new ModOption("Random Levels Are Backwards"));
             //AddOption(VehicleLevelsOnFoot, new ModOption("Vehicle Levels On Foot"));
-            //AddOption(SceneryUntextured, new ModOption("Mirrored World"));
-            //AddOption(SceneryUntextured, new ModOption("Random Levels Are Mirrored"));
+            //AddOption(MirroredWorld, new ModOption("Mirrored World"));
+            //AddOption(RandomLevelsMirrored, new ModOption("Random Levels Are Mirrored"));
             AddOption(CameraBiggerFOV, new ModOption("Wider Camera Field-Of-View"));
             AddOption(RandomizeCameraFOV, new ModOption("Randomize Camera Field-Of-View"));
             AddOption(RandomizeADIO, new ModOption("Randomize Sound Effects"));
@@ -153,6 +153,7 @@ namespace CrateModLoader
                     if (GetOption(CameraBiggerFOV) || GetOption(RandomizeCameraFOV)) Crash2_Mods.Mod_CameraFOV(nsf, rand, GetOption(RandomizeCameraFOV));
                     if (GetOption(RandomizeCratesIntoWood)) Crash2_Mods.Mod_RandomWoodCrates(nsf, rand);
                     if (GetOption(TurnCratesIntoWumpa)) Crash2_Mods.Mod_TurnCratesIntoWumpa(nsf, rand);
+                    if (GetOption(MirroredWorld) || GetOption(RandomLevelsMirrored)) Mod_MirrorLevel(nsf, nsd, rand, GetOption(RandomLevelsMirrored));
                     if (GetOption(SceneryColorSwizzle)) CrashTri_Common.Mod_Scenery_Swizzle(nsf, rand);
                     if (GetOption(SceneryGreyscale)) CrashTri_Common.Mod_Scenery_Greyscale(nsf);
                     if (GetOption(SceneryRainbow)) CrashTri_Common.Mod_Scenery_Rainbow(nsf, rand);
@@ -407,6 +408,42 @@ namespace CrateModLoader
                     
                 }
             }
+        }
+
+        internal void Mod_MirrorLevel(NSF nsf, NSD nsd, Random rand, bool isRandom)
+        {
+            //unfinished
+
+            foreach (Chunk chunk in nsf.Chunks)
+            {
+                if (chunk is NormalChunk zonechunk)
+                {
+                    foreach (Entry entry in zonechunk.Entries)
+                    {
+                        if (entry is ZoneEntry zone)
+                        {
+                            
+                        }
+                        else if (entry is SceneryEntry scen)
+                        {
+                            for (int i = 0; i < scen.Vertices.Count; i++)
+                            {
+                                SceneryVertex vertex = scen.Vertices[i];
+                                int x = -vertex.X;
+                                int y = vertex.Y;
+                                int z = vertex.Z;
+                                int unknownx = vertex.UnknownX;
+                                int unknowny = vertex.UnknownY;
+                                int unknownz = vertex.UnknownZ;
+                                int color = vertex.Color;
+                                scen.Vertices[i] = new SceneryVertex(x, y, z, unknownx, unknowny, unknownz);
+                            }
+                        }
+                    }
+                }
+            }
+
+            nsd.Spawns[0].SpawnX = -nsd.Spawns[0].SpawnX;
         }
 
     }
