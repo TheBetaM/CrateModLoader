@@ -19,7 +19,13 @@ namespace CrateModLoader
         internal const int SceneryColorSwizzle = 6;
         internal const int SceneryUntextured = 7;
         internal const int ZoneCloseCamera = 8;
-
+        internal const int RandomizeMusic = 9;
+        internal const int RandomizeMusicTracks = 10;
+        internal const int RandomzieMusicInstruments = 11;
+        internal const int BackwardsLevels = 12;
+        internal const int RandomBackwardsLevels = 13;
+        internal const int CameraBiggerFOV = 14;
+        internal const int RandomizeCameraFOV = 15;
 
         public Modder_Crash2()
         {
@@ -58,9 +64,15 @@ namespace CrateModLoader
 
             AddOption(RandomizeCratesIntoWood, new ModOption("All Crates Are Blank"));
             AddOption(TurnCratesIntoWumpa, new ModOption("All Crates Are Wumpa"));
-            //AddOption(RandomizeLevelOrder, new ModOption("Randomize Level Order"));
+            //AddOption(RandomizeLevelOrder, new ModOption("Randomize Level Order")); // doesn't work
+            AddOption(BackwardsLevels, new ModOption("Backwards Levels (where possible)"));
+            AddOption(RandomBackwardsLevels, new ModOption("Random Levels Are Backwards"));
+            AddOption(CameraBiggerFOV, new ModOption("Wider Camera Field-Of-View"));
+            AddOption(RandomizeCameraFOV, new ModOption("Randomize Camera Field-Of-View"));
             AddOption(RandomizeADIO, new ModOption("Randomize Sound Effects"));
-            //AddOption(ZoneCloseCamera, new ModOption("Closer Camera"));
+            //AddOption(RandomizeMusic, new ModOption("Randomize Music")); //shuffle tracks from different levels (must be identical to vanilla playback, just in a different level)
+            //AddOption(RandomizeMusicTracks, new ModOption("Randomize Music Tracks")); //only swap midis
+            //AddOption(RandomzieMusicInstruments, new ModOption("Randomize Music Instruments")); //only swap wavebanks
             AddOption(SceneryRainbow, new ModOption("Randomize World Colors"));
             AddOption(SceneryColorSwizzle, new ModOption("Randomize World Palette"));
             AddOption(SceneryGreyscale, new ModOption("Greyscale World"));
@@ -94,6 +106,15 @@ namespace CrateModLoader
 
             ErrorManager.EnterSkipRegion();
 
+            bool CachingPass = false;
+            if (GetOption(RandomizeMusic) || GetOption(RandomizeMusicTracks) || GetOption(RandomzieMusicInstruments))
+            {
+                CachingPass = true;
+            }
+
+            List<List<WavebankChunk>> wavebankChunks = new List<List<WavebankChunk>>();
+            List<List<MusicEntry>> musicEntries = new List<List<MusicEntry>>();
+
             for (int i = 0; i < Math.Min(nsfs.Count, nsds.Count); ++i)
             {
                 FileInfo nsfFile = nsfs[i];
@@ -118,19 +139,38 @@ namespace CrateModLoader
                     //return;
                 }
 
-                if (GetOption(RandomizeADIO)) Mod_RandomizeADIO(nsf, nsd, rand);
-                if (GetOption(RandomizeCratesIntoWood)) Crash2_Mods.Mod_RandomWoodCrates(nsf, rand);
-                if (GetOption(TurnCratesIntoWumpa)) Crash2_Mods.Mod_TurnCratesIntoWumpa(nsf, rand);
-                if (GetOption(SceneryColorSwizzle)) CrashTri_Common.Mod_Scenery_Swizzle(nsf, rand);
-                if (GetOption(SceneryGreyscale)) CrashTri_Common.Mod_Scenery_Greyscale(nsf);
-                if (GetOption(SceneryRainbow)) CrashTri_Common.Mod_Scenery_Rainbow(nsf, rand);
-                if (GetOption(SceneryUntextured)) CrashTri_Common.Mod_Scenery_Untextured(nsf);
-                if (GetOption(ZoneCloseCamera)) CrashTri_Common.Mod_Camera_Closeup(nsf);
+                Crash2_Levels NSF_Level = GetLevelFromNSF(nsfFile.Name);
+
+                if (!CachingPass)
+                {
+                    if (GetOption(BackwardsLevels) || GetOption(RandomBackwardsLevels)) Crash2_Mods.Mod_BackwardsLevels(nsf, nsd, NSF_Level, GetOption(RandomBackwardsLevels), rand);
+                    if (GetOption(CameraBiggerFOV) || GetOption(RandomizeCameraFOV)) Crash2_Mods.Mod_CameraFOV(nsf, rand, GetOption(RandomizeCameraFOV));
+                    if (GetOption(RandomizeCratesIntoWood)) Crash2_Mods.Mod_RandomWoodCrates(nsf, rand);
+                    if (GetOption(TurnCratesIntoWumpa)) Crash2_Mods.Mod_TurnCratesIntoWumpa(nsf, rand);
+                    if (GetOption(SceneryColorSwizzle)) CrashTri_Common.Mod_Scenery_Swizzle(nsf, rand);
+                    if (GetOption(SceneryGreyscale)) CrashTri_Common.Mod_Scenery_Greyscale(nsf);
+                    if (GetOption(SceneryRainbow)) CrashTri_Common.Mod_Scenery_Rainbow(nsf, rand);
+                    if (GetOption(SceneryUntextured)) CrashTri_Common.Mod_Scenery_Untextured(nsf);
+                    if (GetOption(ZoneCloseCamera)) CrashTri_Common.Mod_Camera_Closeup(nsf);
+                    if (GetOption(RandomizeMusic) || GetOption(RandomizeMusicTracks) || GetOption(RandomzieMusicInstruments))
+                        Randomize_Music(nsf, rand, ref wavebankChunks, ref musicEntries, GetOption(RandomizeMusic), GetOption(RandomizeMusicTracks), GetOption(RandomzieMusicInstruments));
+                    if (GetOption(RandomizeADIO)) Mod_RandomizeADIO(nsf, nsd, rand);
+                }
+                else
+                {
+                    if (GetOption(RandomizeMusic) || GetOption(RandomizeMusicTracks) || GetOption(RandomzieMusicInstruments)) CacheMusic(nsf, ref wavebankChunks, ref musicEntries);
+                }
 
                 PatchNSD(nsf, nsd);
 
                 File.WriteAllBytes(nsfFile.FullName, nsf.Save());
                 File.WriteAllBytes(nsdFile.FullName, nsd.Save());
+
+                if (CachingPass && i == Math.Min(nsfs.Count, nsds.Count) - 1)
+                {
+                    CachingPass = false;
+                    i = -1;
+                }
             }
 
             ErrorManager.ExitSkipRegion();
@@ -242,42 +282,6 @@ namespace CrateModLoader
             }
         }
 
-        public enum Crash2_Levels
-        {
-            L01_TurleWoords = 17,
-            L02_SnowGo = 3,
-            L03_HangEight = 13,
-            L04_ThePits = 18,
-            L05_CrashDash = 12,
-            L06_SnowBiz = 6,
-            L07_AirCrash = 19,
-            L08_BearIt = 16,
-            L09_CrashCrush = 15,
-            L10_TheEelDeal = 22,
-            L11_PlantFood = 20,
-            L12_SewerOrLater = 0,
-            L13_BearDown = 21,
-            L14_RoadToRuin = 10,
-            L15_UnBearable = 11,
-            L16_HanginOut = 2,
-            L17_DigginIt = 9,
-            L18_ColdHardCrash = 8,
-            L19_Ruination = 4,
-            L20_BeeHaving = 23,
-            L21_PistonItAway = 5,
-            L22_RockIt = 7,
-            L23_NightFight = 1,
-            L24_PackAttack = 14,
-            L25_SpacedOut = 25,
-            L26_TotallyBear = 24,
-            L27_TotallyFly = 26,
-            B01_RipperRoo = 27,
-            B02_KomodoBros = 28,
-            B03_TinyTiger = 29,
-            B04_NGin = 30,
-            B05_Cortex = 31,
-        }
-
         internal string[] Crash2_LevelFileNames = new string[]
         {
             "0A",
@@ -315,6 +319,18 @@ namespace CrateModLoader
             "09",
         };
 
+        internal Crash2_Levels GetLevelFromNSF(string NSf_Name)
+        {
+            for (int i = 0; i < Crash2_LevelFileNames.Length; i++)
+            {
+                if (NSf_Name.Contains("S00000" + Crash2_LevelFileNames[i]))
+                {
+                    return (Crash2_Levels)i;
+                }
+            }
+            return Crash2_Levels.Unknown;
+        }
+
         internal void Randomize_LevelOrder(Random rand)
         {
             DirectoryInfo di = new DirectoryInfo(ModLoaderGlobals.ExtractedPath);
@@ -339,6 +355,52 @@ namespace CrateModLoader
                 id++;
             }
 
+        }
+
+        internal void CacheMusic(NSF nsf, ref List<List<WavebankChunk>> wavebankChunks, ref List<List<MusicEntry>> musicEntries)
+        {
+            List<WavebankChunk> waveBanks = new List<WavebankChunk>();
+            List<MusicEntry> musicFiles = new List<MusicEntry>();
+            foreach (Chunk chunk in nsf.Chunks)
+            {
+                if (chunk is NormalChunk normchunk)
+                {
+                    foreach (Entry entry in normchunk.Entries)
+                    {
+                        if (entry is MusicEntry music)
+                        {
+                            musicFiles.Add(music);
+                        }
+                    }
+                }
+                else if (chunk is WavebankChunk wavechunk)
+                {
+                    waveBanks.Add(wavechunk);
+                }
+            }
+            wavebankChunks.Add(waveBanks);
+            musicEntries.Add(musicFiles);
+        }
+
+        internal void Randomize_Music(NSF nsf, Random rand, ref List<List<WavebankChunk>> wavebankChunks, ref List<List<MusicEntry>> musicEntries, bool RandomMusic, bool RandomTracks, bool RandomInstruments)
+        {
+            foreach (Chunk chunk in nsf.Chunks)
+            {
+                if (chunk is NormalChunk normchunk)
+                {
+                    foreach (Entry entry in normchunk.Entries)
+                    {
+                        if (entry is MusicEntry music)
+                        {
+                            
+                        }
+                    }
+                }
+                else if (chunk is WavebankChunk wavechunk)
+                {
+                    
+                }
+            }
         }
 
     }
