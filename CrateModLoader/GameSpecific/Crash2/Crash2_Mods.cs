@@ -178,33 +178,38 @@ namespace CrateModLoader.GameSpecific.Crash2
 
         static List<Crash2_Levels> BackwardsLevelsList = new List<Crash2_Levels>()
         {
-            Crash2_Levels.L01_TurtleWoods,
+            Crash2_Levels.L01_TurtleWoods, // verified
             //Crash2_Levels.L02_SnowGo, // todo: section teleports
-            //Crash2_Levels.L03_HangEight, // todo: jetski position
-            Crash2_Levels.L04_ThePits,
-            Crash2_Levels.L05_CrashDash, 
+            //Crash2_Levels.L03_HangEight, // todo: one fence wall, secret spawn?
+            Crash2_Levels.L04_ThePits, // verified
+            Crash2_Levels.L05_CrashDash, // verified
+
             //Crash2_Levels.L06_SnowBiz, // todo: section teleports
-            //Crash2_Levels.L07_AirCrash, // todo: jetski position
+            //Crash2_Levels.L07_AirCrash, // todo: 3 fence walls, secret spawn?
             //Crash2_Levels.L08_BearIt, // todo: bear stuff, probably won't be possible
-            Crash2_Levels.L09_CrashCrush, 
+            Crash2_Levels.L09_CrashCrush, // verified
             //Crash2_Levels.L10_TheEelDeal, // todo: section teleports
-            //Crash2_Levels.L11_PlantFood, // todo: jetski position
+
+            //Crash2_Levels.L11_PlantFood, // todo: board dropoff in the wrong direction, design: requires a mask to beat
             //Crash2_Levels.L12_SewerOrLater, // todo: section teleports
             //Crash2_Levels.L13_BearDown, // todo: bear stuff, probably won't be possible
-            Crash2_Levels.L14_RoadToRuin,
-            Crash2_Levels.L15_UnBearable,
+            Crash2_Levels.L14_RoadToRuin, // verified
+            //Crash2_Levels.L15_UnBearable, // todo: secret exit invisible wall in the way
+
             //Crash2_Levels.L16_HanginOut, // todo: section teleports
             Crash2_Levels.L17_DigginIt,
             //Crash2_Levels.L18_ColdHardCrash, // todo: section teleports
-            Crash2_Levels.L19_Ruination,
+            Crash2_Levels.L19_Ruination, // verified
             Crash2_Levels.L20_BeeHaving,
-            Crash2_Levels.L21_PistonItAway,
-            //Crash2_Levels.L22_RockIt, // todo: jetpack position
-            Crash2_Levels.L23_NightFight, // Fireflys need moving?
-            //Crash2_Levels.L24_PackAttack, // todo: jetpack position
-            Crash2_Levels.L25_SpacedOut,
+
+            //Crash2_Levels.L21_PistonItAway, // design: big gap right after the crystal
+            //Crash2_Levels.L22_RockIt, // todo: crashes on jetpack pickup, because of lack of alarms?
+            Crash2_Levels.L23_NightFight, // verified
+            //Crash2_Levels.L24_PackAttack, // todo: crashes on jetpack pickup, because of lack of alarms?
+            Crash2_Levels.L25_SpacedOut, // verified
+
             //Crash2_Levels.L26_TotallyBear, // todo: bear stuff, probably won't be possible
-            Crash2_Levels.L27_TotallyFly // Fireflys need moving?
+            Crash2_Levels.L27_TotallyFly // verified, design: needs more/better fireflys
         };
 
         static List<Crash2_Levels> ChaseLevelsList = new List<Crash2_Levels>()
@@ -212,6 +217,17 @@ namespace CrateModLoader.GameSpecific.Crash2
             Crash2_Levels.L05_CrashDash, 
             Crash2_Levels.L09_CrashCrush, 
             Crash2_Levels.L15_UnBearable,
+        };
+        static List<Crash2_Levels> BoardLevelsList = new List<Crash2_Levels>()
+        {
+            Crash2_Levels.L03_HangEight,
+            Crash2_Levels.L07_AirCrash,
+            Crash2_Levels.L11_PlantFood,
+        };
+        static List<Crash2_Levels> SpaceLevelsList = new List<Crash2_Levels>()
+        {
+            Crash2_Levels.L22_RockIt,
+            Crash2_Levels.L24_PackAttack,
         };
 
         public static void Mod_BackwardsLevels(NSF nsf, NSD nsd, Crash2_Levels level, bool isRandom, Random rand)
@@ -230,6 +246,15 @@ namespace CrateModLoader.GameSpecific.Crash2
             Entity WarpOutEntity = null;
             ZoneEntry WarpOutZone = null;
             Entity EmptyEntity = null;
+            List<ZoneEntry> BoardLaunchZones = new List<ZoneEntry>();
+            List<Entity> BoardEnts = new List<Entity>();
+            List<ZoneEntry> BoardDropoffZones = new List<ZoneEntry>();
+            List<Entity> BoardDropEnts = new List<Entity>();
+            Entity JetpackEnt = null;
+            Entity SpacepadEnt = null;
+            ZoneEntry JetpackZone = null;
+            ZoneEntry SpacepadZone = null;
+
             foreach (Chunk chunk in nsf.Chunks)
             {
                 if (chunk is NormalChunk zonechunk)
@@ -242,7 +267,7 @@ namespace CrateModLoader.GameSpecific.Crash2
                             {
                                 if (i < zone.Entities.Count && zone.Entities[i].Type != null && zone.Entities[i].Subtype != null)
                                 {
-                                    if (zone.Entities[i].Type == 0 && zone.Entities[i].Subtype == 0)
+                                    if (CrashEntity == null && zone.Entities[i].Type == 0 && zone.Entities[i].Subtype == 0)
                                     {
                                         CrashEntity = zone.Entities[i];
                                         CrashZone = zone;
@@ -251,13 +276,56 @@ namespace CrateModLoader.GameSpecific.Crash2
                                             EmptyEntity = zone.Entities[2];
                                         i--;
                                     }
-                                    else if (zone.Entities[i].Type == 1 && zone.Entities[i].Subtype == 1)
+                                    else if (WarpOutEntity == null && zone.Entities[i].Type == 1 && zone.Entities[i].Subtype == 1)
                                     {
                                         WarpOutEntity = zone.Entities[i];
                                         WarpOutZone = zone;
                                         zone.Entities.RemoveAt(i);
                                         i--;
                                     }
+
+                                    if (BoardLevelsList.Contains(level))
+                                    {
+                                        if (zone.Entities[i].Type == 47 && zone.Entities[i].Subtype == 2) // Board launch
+                                        {
+                                            BoardEnts.Add(zone.Entities[i]);
+                                            BoardLaunchZones.Add(zone);
+                                            zone.Entities.RemoveAt(i);
+                                            i--;
+                                        }
+                                        else if (zone.Entities[i].Type == 47 && zone.Entities[i].Subtype == 3) // Board dropoff
+                                        {
+                                            BoardDropEnts.Add(zone.Entities[i]);
+                                            BoardDropoffZones.Add(zone);
+                                            zone.Entities.RemoveAt(i);
+                                            i--;
+                                        }
+                                    }
+
+                                    if (SpaceLevelsList.Contains(level))
+                                    {
+                                        if (zone.Entities[i].Type == 35 && zone.Entities[i].Subtype == 1) // Jetpack
+                                        {
+                                            JetpackEnt = zone.Entities[i];
+                                            JetpackZone = zone;
+                                            zone.Entities.RemoveAt(i);
+                                            i--;
+                                        }
+                                        else if (zone.Entities[i].Type == 35 && zone.Entities[i].Subtype == 8) // Spacepad
+                                        {
+                                            SpacepadEnt = zone.Entities[i];
+                                            SpacepadZone = zone;
+                                            zone.Entities.RemoveAt(i);
+                                            i--;
+                                        }
+                                        else if (zone.Entities[i].Type == 35 && zone.Entities[i].Subtype == 6) // Spacelock
+                                        {
+                                            zone.Entities.RemoveAt(i);
+                                            zone.Entities.Insert(i, EmptyEntity);
+                                            i--;
+                                        }
+                                    }
+
                                     if (ChaseLevelsList.Contains(level))
                                     {
                                         if (zone.Entities[i].Type == 41 && zone.Entities[i].Subtype == 0) // Boulder
@@ -284,7 +352,6 @@ namespace CrateModLoader.GameSpecific.Crash2
                                             zone.Entities.Insert(i, EmptyEntity);
                                             i--;
                                         }
-                                        
                                     }
                                 }
                             }
@@ -299,6 +366,29 @@ namespace CrateModLoader.GameSpecific.Crash2
             WarpOutEntity.Positions.RemoveAt(0);
             CrashEntity.Positions.Add(WarpOutPos);
             WarpOutEntity.Positions.Add(CrashPos);
+
+            if (BoardEnts.Count > 0)
+            {
+                for (int i = 0; i < BoardEnts.Count; i++)
+                {
+                    EntityPosition LaunchPos = new EntityPosition(BoardEnts[i].Positions[0].X, BoardEnts[i].Positions[0].Y, BoardEnts[i].Positions[0].Z);
+                    EntityPosition DropoffPos = new EntityPosition(BoardDropEnts[i].Positions[0].X, BoardDropEnts[i].Positions[0].Y, BoardDropEnts[i].Positions[0].Z);
+                    BoardEnts[i].Positions.RemoveAt(0);
+                    BoardDropEnts[i].Positions.RemoveAt(0);
+                    BoardEnts[i].Positions.Add(DropoffPos);
+                    BoardDropEnts[i].Positions.Add(LaunchPos);
+                }
+            }
+
+            if (JetpackEnt != null)
+            {
+                EntityPosition JetpackPos = new EntityPosition(JetpackEnt.Positions[0].X, JetpackEnt.Positions[0].Y, JetpackEnt.Positions[0].Z);
+                EntityPosition SpacepadPos = new EntityPosition(SpacepadEnt.Positions[0].X, SpacepadEnt.Positions[0].Y, SpacepadEnt.Positions[0].Z);
+                JetpackEnt.Positions.RemoveAt(0);
+                SpacepadEnt.Positions.RemoveAt(0);
+                JetpackEnt.Positions.Add(SpacepadPos);
+                SpacepadEnt.Positions.Add(JetpackPos);
+            }
 
             foreach (Chunk chunk in nsf.Chunks)
             {
@@ -315,6 +405,31 @@ namespace CrateModLoader.GameSpecific.Crash2
                             else if (zone.EName == WarpOutZone.EName)
                             {
                                 zone.Entities.Add(CrashEntity);
+                            }
+                            if (BoardEnts.Count > 0)
+                            {
+                                for (int i = 0; i < BoardEnts.Count; i++)
+                                {
+                                    if (zone.EName == BoardLaunchZones[i].EName)
+                                    {
+                                        zone.Entities.Add(BoardDropEnts[i]);
+                                    }
+                                    else if (zone.EName == BoardDropoffZones[i].EName)
+                                    {
+                                        zone.Entities.Add(BoardEnts[i]);
+                                    }
+                                }
+                            }
+                            if (JetpackEnt != null)
+                            {
+                                if (zone.EName == JetpackZone.EName)
+                                {
+                                    zone.Entities.Add(SpacepadEnt);
+                                }
+                                else if (zone.EName == SpacepadZone.EName)
+                                {
+                                    zone.Entities.Add(JetpackEnt);
+                                }
                             }
                         }
                     }
