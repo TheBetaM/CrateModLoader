@@ -178,38 +178,38 @@ namespace CrateModLoader.GameSpecific.Crash2
 
         static List<Crash2_Levels> BackwardsLevelsList = new List<Crash2_Levels>()
         {
-            Crash2_Levels.L01_TurtleWoods, // verified
-            //Crash2_Levels.L02_SnowGo, // todo: section teleports
+            Crash2_Levels.L01_TurtleWoods,
+            //Crash2_Levels.L02_SnowGo, // todo: 2 section teleports
             //Crash2_Levels.L03_HangEight, // todo: one fence wall, secret spawn?
-            Crash2_Levels.L04_ThePits, // verified
-            Crash2_Levels.L05_CrashDash, // verified
+            Crash2_Levels.L04_ThePits,
+            Crash2_Levels.L05_CrashDash,
 
-            //Crash2_Levels.L06_SnowBiz, // todo: section teleports
+            //Crash2_Levels.L06_SnowBiz, // todo: 2 section teleports
             //Crash2_Levels.L07_AirCrash, // todo: 3 fence walls, secret spawn?
-            //Crash2_Levels.L08_BearIt, // todo: bear stuff, probably won't be possible
-            Crash2_Levels.L09_CrashCrush, // verified
-            //Crash2_Levels.L10_TheEelDeal, // todo: section teleports
+            //Crash2_Levels.L08_BearIt, // todo: bear stuff
+            Crash2_Levels.L09_CrashCrush,
+            //Crash2_Levels.L10_TheEelDeal, // todo: 1 section teleport
 
             //Crash2_Levels.L11_PlantFood, // todo: board dropoff in the wrong direction, design: requires a mask to beat
-            //Crash2_Levels.L12_SewerOrLater, // todo: section teleports
-            //Crash2_Levels.L13_BearDown, // todo: bear stuff, probably won't be possible
-            Crash2_Levels.L14_RoadToRuin, // verified
-            //Crash2_Levels.L15_UnBearable, // todo: secret exit invisible wall in the way
+            //Crash2_Levels.L12_SewerOrLater, // todo: death on spawn, out of bounds spawn zone?
+            //Crash2_Levels.L13_BearDown, // todo: bear stuff
+            Crash2_Levels.L14_RoadToRuin,
+            Crash2_Levels.L15_UnBearable, // had to remove secret exit
 
-            //Crash2_Levels.L16_HanginOut, // todo: section teleports
-            Crash2_Levels.L17_DigginIt,
-            //Crash2_Levels.L18_ColdHardCrash, // todo: section teleports
-            Crash2_Levels.L19_Ruination, // verified
-            Crash2_Levels.L20_BeeHaving,
+            //Crash2_Levels.L16_HanginOut, // todo: 2 section teleports
+            Crash2_Levels.L17_DigginIt, // unverified to be beatable
+            //Crash2_Levels.L18_ColdHardCrash, // todo: 2 section teleports
+            Crash2_Levels.L19_Ruination,
+            Crash2_Levels.L20_BeeHaving, // unverified to be beatable
 
-            //Crash2_Levels.L21_PistonItAway, // design: big gap right after the crystal
+            Crash2_Levels.L21_PistonItAway,
             //Crash2_Levels.L22_RockIt, // todo: crashes on jetpack pickup, because of lack of alarms?
-            Crash2_Levels.L23_NightFight, // verified
+            Crash2_Levels.L23_NightFight,
             //Crash2_Levels.L24_PackAttack, // todo: crashes on jetpack pickup, because of lack of alarms?
-            Crash2_Levels.L25_SpacedOut, // verified
+            Crash2_Levels.L25_SpacedOut,
 
             //Crash2_Levels.L26_TotallyBear, // todo: bear stuff, probably won't be possible
-            Crash2_Levels.L27_TotallyFly // verified, design: needs more/better fireflys
+            Crash2_Levels.L27_TotallyFly
         };
 
         static List<Crash2_Levels> ChaseLevelsList = new List<Crash2_Levels>()
@@ -229,6 +229,42 @@ namespace CrateModLoader.GameSpecific.Crash2
             Crash2_Levels.L22_RockIt,
             Crash2_Levels.L24_PackAttack,
         };
+        static List<Crash2_Levels> DarknessLevelsList = new List<Crash2_Levels>()
+        {
+            Crash2_Levels.L23_NightFight,
+            Crash2_Levels.L27_TotallyFly,
+        };
+
+        static List<Crash2_Levels> BackwardsCameraList = new List<Crash2_Levels>()
+        {
+            Crash2_Levels.L01_TurtleWoods, // full level
+            //Crash2_Levels.L02_SnowGo, // 2 sections
+            Crash2_Levels.L03_HangEight, // full level
+            Crash2_Levels.L04_ThePits, // full level
+            //Crash2_Levels.L05_CrashDash, // not needed
+            //Crash2_Levels.L06_SnowBiz, // 2 sections
+            Crash2_Levels.L07_AirCrash, // full level
+            Crash2_Levels.L08_BearIt, // full level
+            //Crash2_Levels.L09_CrashCrush, // not needed
+            Crash2_Levels.L10_TheEelDeal, // full level
+            Crash2_Levels.L11_PlantFood, // full level
+            Crash2_Levels.L12_SewerOrLater, // full level
+            Crash2_Levels.L13_BearDown, // full level
+            //Crash2_Levels.L14_RoadToRuin, // some sections?
+            //Crash2_Levels.L15_UnBearable, // not needed
+            Crash2_Levels.L16_HanginOut, // full level
+            Crash2_Levels.L17_DigginIt, // full level
+            //Crash2_Levels.L18_ColdHardCrash, // 2 sections
+            //Crash2_Levels.L19_Ruination, // some sections?
+            Crash2_Levels.L20_BeeHaving, // full levvel
+            //Crash2_Levels.L21_PistonItAway, // not needed
+            Crash2_Levels.L22_RockIt, // full level
+            Crash2_Levels.L23_NightFight, // full level
+            Crash2_Levels.L24_PackAttack, // full level
+            //Crash2_Levels.L25_SpacedOut, // not needed
+            Crash2_Levels.L26_TotallyBear, // full level
+            Crash2_Levels.L27_TotallyFly // full level
+        };
 
         public static void Mod_BackwardsLevels(NSF nsf, NSD nsd, Crash2_Levels level, bool isRandom, Random rand)
         {
@@ -246,6 +282,7 @@ namespace CrateModLoader.GameSpecific.Crash2
             Entity WarpOutEntity = null;
             ZoneEntry WarpOutZone = null;
             Entity EmptyEntity = null;
+            Entity BoxCounterEntity = null;
             List<ZoneEntry> BoardLaunchZones = new List<ZoneEntry>();
             List<Entity> BoardEnts = new List<Entity>();
             List<ZoneEntry> BoardDropoffZones = new List<ZoneEntry>();
@@ -254,6 +291,9 @@ namespace CrateModLoader.GameSpecific.Crash2
             Entity SpacepadEnt = null;
             ZoneEntry JetpackZone = null;
             ZoneEntry SpacepadZone = null;
+            Entity MainEnt = null;
+
+            bool CameraFlip = true;
 
             foreach (Chunk chunk in nsf.Chunks)
             {
@@ -263,8 +303,28 @@ namespace CrateModLoader.GameSpecific.Crash2
                     {
                         if (entry is ZoneEntry zone)
                         {
+                            MainEnt = null;
                             for (int i = 0; i < zone.Entities.Count; i++)
                             {
+                                if (MainEnt == null && zone.Entities[i].DrawListA != null)
+                                {
+                                    MainEnt = zone.Entities[i];
+                                }
+
+                                if (DarknessLevelsList.Contains(level))
+                                {
+                                    //design workaround: disable darkness
+                                    if (zone.Entities[i].ExtraProperties.ContainsKey(0x185))
+                                    {
+                                        EntityUInt32Property property = (EntityUInt32Property)zone.Entities[i].ExtraProperties[0x185];
+                                        foreach (EntityPropertyRow<uint> row in property.Rows)
+                                        {
+                                            if (row.Values.Count >= 1)
+                                                row.Values[0] &= ~4U;
+                                        }
+                                    }
+                                }
+
                                 if (i < zone.Entities.Count && zone.Entities[i].Type != null && zone.Entities[i].Subtype != null)
                                 {
                                     if (CrashEntity == null && zone.Entities[i].Type == 0 && zone.Entities[i].Subtype == 0)
@@ -282,6 +342,12 @@ namespace CrateModLoader.GameSpecific.Crash2
                                         WarpOutZone = zone;
                                         zone.Entities.RemoveAt(i);
                                         i--;
+                                    }
+                                    else if (BoxCounterEntity == null && zone.Entities[i].Type == 4 && zone.Entities[i].Subtype == 17)
+                                    {
+                                        BoxCounterEntity = zone.Entities[i];
+                                        //zone.Entities.RemoveAt(i);
+                                        //i--;
                                     }
 
                                     if (BoardLevelsList.Contains(level))
@@ -352,8 +418,185 @@ namespace CrateModLoader.GameSpecific.Crash2
                                             zone.Entities.Insert(i, EmptyEntity);
                                             i--;
                                         }
+                                        else if (zone.Entities[i].Type == 48 && zone.Entities[i].Subtype == 9) // Secret bear
+                                        {
+                                            zone.Entities.RemoveAt(i);
+                                            zone.Entities.Insert(i, EmptyEntity);
+                                            i--;
+                                        }
                                     }
                                 }
+                                else
+                                {
+                                    if (CameraFlip && BackwardsCameraList.Contains(level) && zone.Entities[i].CameraIndex != null && zone.Entities[i].CameraSubIndex != null)
+                                    {
+                                        if (zone.Entities[i].CameraSubIndex == 1)
+                                        {
+                                            EntityPosition[] Angles = new EntityPosition[zone.Entities[i].Positions.Count];
+                                            zone.Entities[i].Positions.CopyTo(Angles, 0);
+                                            for (int a = 0; a < Angles.Length; a++)
+                                            {
+                                                Angles[a] = new EntityPosition(Angles[a].X, (short)(Angles[a].Y + 2000), Angles[a].Z);
+                                            }
+                                            zone.Entities[i].Positions.Clear();
+                                            for (int a = 0; a < Angles.Length; a++)
+                                            {
+                                                zone.Entities[i].Positions.Add(Angles[a]);
+                                            }
+                                        }
+                                        else if (zone.Entities[i].CameraSubIndex == 0)
+                                        {
+                                            if (zone.Entities[i].DrawListA != null)
+                                            {
+                                                
+                                                for (int a = 0; a < zone.Entities[i].DrawListA.Rows.Count; a++)
+                                                {
+                                                    //zone.Entities[i].DrawListA.Rows[a].MetaValue = Math.Max((short)(zone.Entities[i].DrawListA.Rows[a].MetaValue - 5), (short)0);
+                                                    zone.Entities[i].DrawListA.Rows[a].MetaValue = Math.Min((short)(zone.Entities[i].DrawListA.Rows[a].MetaValue + 8), (short)(zone.Entities[i].Positions.Count - 1));
+                                                }
+                                                
+                                                //zone.Entities[i].DrawListA.Rows.Reverse();
+                                            }
+                                            if (zone.Entities[i].DrawListB != null)
+                                            {
+                                                
+                                                for (int a = 0; a < zone.Entities[i].DrawListB.Rows.Count; a++)
+                                                {
+                                                    //zone.Entities[i].DrawListB.Rows[a].MetaValue = Math.Max((short)(zone.Entities[i].DrawListB.Rows[a].MetaValue - 5), (short)0);
+                                                    zone.Entities[i].DrawListB.Rows[a].MetaValue = Math.Min((short)(zone.Entities[i].DrawListB.Rows[a].MetaValue + 8), (short)(zone.Entities[i].Positions.Count - 1));
+                                                }
+                                                
+                                                //zone.Entities[i].DrawListB.Rows.Reverse();
+                                            }
+                                            // switching positions gives some results, but breaks the level, so it's not the right approach
+                                            /*
+                                            if (zone.Entities[i].Positions.Count > 0)
+                                            {
+                                                List<EntityPosition> campos = new List<EntityPosition>();
+                                                for (int a = 0; a < zone.Entities[i].Positions.Count; a++)
+                                                {
+                                                    campos.Add(zone.Entities[i].Positions[a]);
+                                                }
+                                                campos.Reverse();
+                                                zone.Entities[i].Positions.Clear();
+                                                for (int a = 0; a < campos.Count; a++)
+                                                {
+                                                    zone.Entities[i].Positions.Add(campos[a]);
+                                                }
+                                            }
+                                            */
+                                            
+
+                                        }
+                                    }
+                                }
+                            }
+
+                            //Crutch zone
+                            if (level == Crash2_Levels.L21_PistonItAway)
+                            {
+                                if (zone.EName == "05_gZ")
+                                {
+
+                                    int id = 10;
+                                    foreach (Chunk chunk1 in nsf.Chunks)
+                                    {
+                                        if (chunk1 is EntryChunk entrychunk)
+                                        {
+                                            foreach (Entry entry1 in entrychunk.Entries)
+                                            {
+                                                if (entry1 is ZoneEntry zone1)
+                                                {
+                                                    foreach (Entity otherentity in zone1.Entities)
+                                                    {
+                                                        if (otherentity.ID != null && id < otherentity.ID)
+                                                        {
+                                                            id = (int)otherentity.ID + 1;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    Entity newentity = Entity.Load(new Entity(new Dictionary<short, EntityProperty>()).Save());
+                                    newentity.ID = id;
+                                    newentity.AlternateID = id;
+                                    newentity.Name = "obj_box_iron#2Dnew";
+                                    newentity.Positions.Clear();
+                                    newentity.Positions.Add(new EntityPosition(854,1149,450));
+                                    newentity.Type = 34;
+                                    newentity.Subtype = 5;
+                                    newentity.DDASection = null;
+                                    newentity.DDASettings = null;
+                                    newentity.Settings.Clear();
+                                    newentity.Settings.Add(new EntitySetting(0, 0));
+                                    newentity.Settings.Add(new EntitySetting(0, 16));
+                                    newentity.Settings.Add(new EntitySetting(0, 0));
+                                    zone.Entities.Add(newentity);
+                                    zone.EntityCount++;
+
+                                    if (MainEnt != null)
+                                    {
+                                        MainEnt.DrawListA.Rows[1].Values.Add(id);
+                                        MainEnt.DrawListA.Rows[0].Values.Add(id);
+                                    }
+                                }
+                            }
+
+                        }
+                        else if (entry is ModelEntry model)
+                        {
+                            if (BoardLevelsList.Contains(level))
+                            {
+                                if (model.EName == "Ra1kG") // ramp
+                                {
+                                    
+                                }
+                            }
+                        }
+                        else if (entry is SLSTEntry sortlist)
+                        {
+                            if (BackwardsCameraList.Contains(level))
+                            {
+                                /*
+                                List<SLSTDelta> deltas = new List<SLSTDelta>();
+                                for (int a = 0; a < sortlist.Deltas.Count; a++)
+                                {
+                                    deltas.Add(sortlist.Deltas[a]);
+                                }
+                                sortlist.Deltas.Clear();
+                                for (int a = 0; a < deltas.Count; a++)
+                                {
+                                    sortlist.Deltas.Add(deltas[a]);
+                                }
+                                */
+                                /* softlock
+                                foreach (SLSTDelta delta in sortlist.Deltas)
+                                {
+                                    List<short> AddNodes = new List<short>();
+                                    List<short> RemoveNodes = new List<short>();
+                                    for (int a = 0; a < delta.AddNodes.Count; a++)
+                                    {
+                                        AddNodes.Add(delta.AddNodes[a]);
+                                    }
+                                    for (int a = 0; a < delta.RemoveNodes.Count; a++)
+                                    {
+                                        RemoveNodes.Add(delta.RemoveNodes[a]);
+                                    }
+                                    delta.AddNodes.Clear();
+                                    delta.RemoveNodes.Clear();
+                                    for (int a = 0; a < RemoveNodes.Count; a++)
+                                    {
+                                        delta.AddNodes.Add(RemoveNodes[a]);
+                                    }
+                                    for (int a = 0; a < AddNodes.Count; a++)
+                                    {
+                                        delta.RemoveNodes.Add(AddNodes[a]);
+                                    }
+                                }
+                                */
+
                             }
                         }
                     }
@@ -364,8 +607,16 @@ namespace CrateModLoader.GameSpecific.Crash2
             EntityPosition WarpOutPos = new EntityPosition(WarpOutEntity.Positions[0].X, WarpOutEntity.Positions[0].Y, WarpOutEntity.Positions[0].Z);
             CrashEntity.Positions.RemoveAt(0);
             WarpOutEntity.Positions.RemoveAt(0);
+            //BoxCounterEntity.Positions.RemoveAt(0);
             CrashEntity.Positions.Add(WarpOutPos);
             WarpOutEntity.Positions.Add(CrashPos);
+            //BoxCounterEntity.Positions.Add(CrashPos);
+
+            //ID switch to fix drawlists?
+            int tempID = (int)CrashEntity.ID;
+            WarpOutEntity.ID = CrashEntity.ID;
+            CrashEntity.ID = tempID;
+
 
             if (BoardEnts.Count > 0)
             {
@@ -401,6 +652,7 @@ namespace CrateModLoader.GameSpecific.Crash2
                             if (zone.EName == CrashZone.EName)
                             {
                                 zone.Entities.Add(WarpOutEntity);
+                                //zone.Entities.Add(BoxCounterEntity); // not enough space in crash crush
                             }
                             else if (zone.EName == WarpOutZone.EName)
                             {
