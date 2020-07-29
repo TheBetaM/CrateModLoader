@@ -178,39 +178,40 @@ namespace CrateModLoader.GameSpecific.Crash1
 
         static List<Crash1_Levels> BackwardsLevelsList = new List<Crash1_Levels>()
         {
-            Crash1_Levels.L01_NSanityBeach, // verified
+            Crash1_Levels.L01_NSanityBeach,
             Crash1_Levels.L02_JungleRollers,
-            Crash1_Levels.L03_GreatGate,
-            //Crash1_Levels.L04_Boulders, // todo: remove boulders
-            Crash1_Levels.L05_Upstream,
+            Crash1_Levels.L03_GreatGate, 
+            Crash1_Levels.L04_Boulders,
+            Crash1_Levels.L05_Upstream, // todo: cycles not triggering reasonably
             Crash1_Levels.L06_RollingStones,
-            //Crash1_Levels.L07_HogWild, // todo: vehicle stuff
+            //Crash1_Levels.L07_HogWild, // todo: vehicle stuff, level just ends??
             Crash1_Levels.L08_NativeFortress,
-            Crash1_Levels.L09_UpTheCreek,
+            Crash1_Levels.L09_UpTheCreek, // todo: cycles not triggering reasonably
             Crash1_Levels.L10_LostCity,
-            //Crash1_Levels.L11_TempleRuins, // todo: zone transitions
-            Crash1_Levels.L12_RoadToNowhere,
-            //Crash1_Levels.L13_BoulderDash, // todo: remove boulders
-            //Crash1_Levels.L14_WholeHog, // todo: vehicle stuff
-            Crash1_Levels.L15_SunsetVista,
-            //Crash1_Levels.L16_HeavyMachinery, // todo: ???
-            Crash1_Levels.L17_CortexPower,
-            //Crash1_Levels.L18_GeneratorRoom, // todo: cycles
-            Crash1_Levels.L19_ToxicWaste,
-            //Crash1_Levels.L20_HighRoad, // todo: ???
-            Crash1_Levels.L21_SlipperyClimb,
-            Crash1_Levels.L22_LightsOut,
-            Crash1_Levels.L23_FumblingInTheDark,
-            //Crash1_Levels.L24_JawsOfDarkness, // todo: zone transitions
-            //Crash1_Levels.L25_CastleMachinery, // todo: ???
+            Crash1_Levels.L11_TempleRuins, // todo: zone transitions
+            //Crash1_Levels.L12_RoadToNowhere, // crashes on warping out
+            Crash1_Levels.L13_BoulderDash, // todo: invisible wall
+            //Crash1_Levels.L14_WholeHog, // todo: vehicle stuff, not enough chunk space
+            Crash1_Levels.L15_SunsetVista, // todo: death trigger at first vertical section
+            Crash1_Levels.L16_HeavyMachinery, // todo: cycles, crutches
+            Crash1_Levels.L17_CortexPower, // todo: broken spawn
+            Crash1_Levels.L18_GeneratorRoom, // todo: cycles
+            Crash1_Levels.L19_ToxicWaste, // todo: broken spawn
+            Crash1_Levels.L20_HighRoad,
+            Crash1_Levels.L21_SlipperyClimb, // todo: broken spawn
+            Crash1_Levels.L22_LightsOut,  // todo: turn off darkness
+            Crash1_Levels.L23_FumblingInTheDark, // todo: turn off darkness
+            Crash1_Levels.L24_JawsOfDarkness, // todo: zone transitions, crutches
+            Crash1_Levels.L25_CastleMachinery, // todo: cycles, crutches
             Crash1_Levels.L26_TheLab,
-            Crash1_Levels.L27_GreatHall,
-            Crash1_Levels.L28_StormyAscent,
+            Crash1_Levels.L27_GreatHall, // todo: doesn't spawn
+            Crash1_Levels.L28_StormyAscent, // unverified
         };
 
         static List<Crash1_Levels> ChaseLevelsList = new List<Crash1_Levels>()
         {
-            
+            Crash1_Levels.L04_Boulders,
+            Crash1_Levels.L13_BoulderDash,
         };
 
         static List<Crash1_Levels> BackwardsCameraList = new List<Crash1_Levels>()
@@ -261,6 +262,8 @@ namespace CrateModLoader.GameSpecific.Crash1
             OldZoneEntry CrashZone = null;
             OldEntity WarpOutEntity = null;
             OldZoneEntry WarpOutZone = null;
+            bool DecoySpawn = true;
+
             foreach (Chunk chunk in nsf.Chunks)
             {
                 if (chunk is NormalChunk zonechunk)
@@ -271,9 +274,9 @@ namespace CrateModLoader.GameSpecific.Crash1
                         {
                             for (int i = 0; i < zone.Entities.Count; i++)
                             {
-                                if (i < zone.Entities.Count)
+                                if (zone.Entities.Count > 0 && i < zone.Entities.Count)
                                 {
-                                    if (zone.Entities[i].Type == 0 && zone.Entities[i].Subtype == 0)
+                                    if (CrashEntity == null && zone.Entities[i].Type == 0 && zone.Entities[i].Subtype == 0)
                                     {
                                         CrashEntity = zone.Entities[i];
                                         CrashZone = zone;
@@ -282,13 +285,64 @@ namespace CrateModLoader.GameSpecific.Crash1
                                     }
                                     else if (WarpOutEntity == null && zone.Entities[i].Type == 32 && zone.Entities[i].Subtype == 1)
                                     {
-                                        WarpOutEntity = zone.Entities[i];
-                                        WarpOutZone = zone;
-                                        zone.Entities.RemoveAt(i);
-                                        i--;
+                                        if (DecoySpawn && (level == Crash1_Levels.L13_BoulderDash || level == Crash1_Levels.L22_LightsOut))
+                                        {
+                                            DecoySpawn = false;
+                                        }
+                                        else
+                                        {
+                                            WarpOutEntity = zone.Entities[i];
+                                            WarpOutZone = zone;
+                                            zone.Entities.RemoveAt(i);
+                                            i--;
+                                        }
+                                    }
+
+                                    if (zone.Entities.Count > 0)
+                                    {
+                                        if (ChaseLevelsList.Contains(level))
+                                        {
+                                            if (zone.Entities[i].Type == 22) //boulders
+                                            {
+                                                zone.Entities[i].Type = 3;
+                                                zone.Entities[i].Subtype = 16;
+                                                zone.Entities[i].Flags = 196632;
+                                                zone.Entities[i].ModeA = 0;
+                                                zone.Entities[i].ModeB = 0;
+                                                zone.Entities[i].ModeC = 0;
+                                                if (zone.Entities[i].Positions.Count > 1)
+                                                {
+                                                    while (zone.Entities[i].Positions.Count > 1)
+                                                    {
+                                                        zone.Entities[i].Positions.RemoveAt(1);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                }
+                            }
+
+                            //crutch zone
+                            if (level == Crash1_Levels.L04_Boulders)
+                            {
+                                if (zone.EName == "0t_eZ")
+                                {
+                                    int crutchID = 300;
+                                    EntityPosition[] crate_pos = new EntityPosition[]
+                                    {
+                                          new EntityPosition(580, 670, 780),
+                                          new EntityPosition(750, 950, 200),
+                                    };
+                                    for (int id = 0; id < 2; id++)
+                                    {
+                                        int entID = id + crutchID;
+                                        CreateEntity((short)entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
                                     }
                                 }
                             }
+
                         }
                     }
                 }
@@ -298,8 +352,31 @@ namespace CrateModLoader.GameSpecific.Crash1
             EntityPosition WarpOutPos = new EntityPosition(WarpOutEntity.Positions[0].X, WarpOutEntity.Positions[0].Y, WarpOutEntity.Positions[0].Z);
             CrashEntity.Positions.RemoveAt(0);
             WarpOutEntity.Positions.RemoveAt(0);
+
+            // fixes for some warp outs because crash has to land on it to work
+            if (level == Crash1_Levels.L03_GreatGate)
+            {
+                CrashPos = new EntityPosition(CrashPos.X, (short)(CrashPos.Y - 130), CrashPos.Z);
+            }
+            else if (level == Crash1_Levels.L06_RollingStones)
+            {
+                CrashPos = new EntityPosition(CrashPos.X, (short)(CrashPos.Y - 50), CrashPos.Z);
+            }
+            else if (level == Crash1_Levels.L08_NativeFortress)
+            {
+                CrashPos = new EntityPosition(CrashPos.X, (short)(CrashPos.Y - 130), CrashPos.Z);
+            }
+            else if (level == Crash1_Levels.L12_RoadToNowhere)
+            {
+                CrashPos = new EntityPosition(CrashPos.X, (short)(CrashPos.Y - 390), (short)(CrashPos.Z + 200));
+            }
+
             CrashEntity.Positions.Add(WarpOutPos);
             WarpOutEntity.Positions.Add(CrashPos);
+
+            short tempID = CrashEntity.ID;
+            CrashEntity.ID = WarpOutEntity.ID;
+            WarpOutEntity.ID = tempID;
 
             foreach (Chunk chunk in nsf.Chunks)
             {
@@ -322,11 +399,26 @@ namespace CrateModLoader.GameSpecific.Crash1
                 }
             }
 
-            int xoffset = BitConv.FromInt32(WarpOutZone.Layout, 0);
-            int yoffset = BitConv.FromInt32(WarpOutZone.Layout, 4);
-            int zoffset = BitConv.FromInt32(WarpOutZone.Layout, 8);
-
             nsd.StartZone = WarpOutZone.EID;
+        }
+
+        static void CreateEntity(short id, int type, int subtype, short x, short y, short z, ref OldZoneEntry zone)
+        {
+            OldEntity newentity = OldEntity.Load(new OldEntity(0, 0x00030018, id, 0, 0, 0, 0, 0, new List<EntityPosition>() { new EntityPosition(0, 0, 0) }, 0).Save());
+            newentity.ID = id;
+            newentity.Positions.Clear();
+            newentity.Positions.Add(new EntityPosition(x, y, z));
+            newentity.Type = (byte)type;
+            newentity.Subtype = (byte)subtype;
+
+            newentity.Flags = 196632;
+            newentity.ModeA = 0;
+            newentity.ModeB = 0;
+            newentity.ModeC = 0;
+
+            zone.Entities.Add(newentity);
+            zone.EntityCount++;
+
         }
 
     }
