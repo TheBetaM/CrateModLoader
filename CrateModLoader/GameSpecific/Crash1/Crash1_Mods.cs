@@ -151,10 +151,10 @@ namespace CrateModLoader.GameSpecific.Crash1
 
         public static void Mod_CameraFOV(NSF nsf, Random rand, bool isRandom)
         {
-            double FoV_Mod = 0.8d;
+            double FoV_Mod = 1.5d;
             if (isRandom)
             {
-                FoV_Mod = (rand.NextDouble() / 2d) + 0.75d;
+                FoV_Mod = rand.NextDouble() + 0.5d;
             }
             // edit NSF
             foreach (Chunk chunk in nsf.Chunks)
@@ -178,7 +178,7 @@ namespace CrateModLoader.GameSpecific.Crash1
 
         static List<Crash1_Levels> BackwardsLevelsList = new List<Crash1_Levels>()
         {
-            Crash1_Levels.L01_NSanityBeach,
+            Crash1_Levels.L01_NSanityBeach, // verified
             Crash1_Levels.L02_JungleRollers,
             Crash1_Levels.L03_GreatGate,
             //Crash1_Levels.L04_Boulders, // todo: remove boulders
@@ -211,6 +211,39 @@ namespace CrateModLoader.GameSpecific.Crash1
         static List<Crash1_Levels> ChaseLevelsList = new List<Crash1_Levels>()
         {
             
+        };
+
+        static List<Crash1_Levels> BackwardsCameraList = new List<Crash1_Levels>()
+        {
+            //Crash1_Levels.L01_NSanityBeach, // maybe
+            Crash1_Levels.L02_JungleRollers, // full level
+            //Crash1_Levels.L05_Upstream, // maybe
+            Crash1_Levels.L06_RollingStones, // full level
+            Crash1_Levels.L07_HogWild, // full level
+            //Crash1_Levels.L09_UpTheCreek, // maybe
+            //Crash1_Levels.L11_TempleRuins, // some sections?
+            Crash1_Levels.L12_RoadToNowhere, // full level
+            //Crash1_Levels.L14_WholeHog, // full level
+            Crash1_Levels.L17_CortexPower, // full level
+            //Crash1_Levels.L18_GeneratorRoom, // not needed?
+            Crash1_Levels.L19_ToxicWaste, // full level
+            Crash1_Levels.L20_HighRoad, // full level
+            Crash1_Levels.L22_LightsOut, // full level
+            Crash1_Levels.L23_FumblingInTheDark, // full level
+            //Crash1_Levels.L24_JawsOfDarkness, // some sections?
+            Crash1_Levels.L26_TheLab, // full level
+
+            //Crash1_Levels.L03_GreatGate, // not needed
+            //Crash1_Levels.L04_Boulders, // not needed
+            //Crash1_Levels.L08_NativeFortress, // not needed
+            //Crash1_Levels.L10_LostCity, // not needed
+            //Crash1_Levels.L13_BoulderDash, // not needed
+            //Crash1_Levels.L15_SunsetVista, // not needed
+            //Crash1_Levels.L16_HeavyMachinery, // not needed
+            //Crash1_Levels.L21_SlipperyClimb, // not needed
+            //Crash1_Levels.L25_CastleMachinery, // not needed
+            //Crash1_Levels.L27_GreatHall, // not needed
+            //Crash1_Levels.L28_StormyAscent, // not needed
         };
 
         public static void Mod_BackwardsLevels(NSF nsf, OldNSD nsd, Crash1_Levels level, bool isRandom, Random rand)
@@ -294,9 +327,6 @@ namespace CrateModLoader.GameSpecific.Crash1
             int zoffset = BitConv.FromInt32(WarpOutZone.Layout, 8);
 
             nsd.StartZone = WarpOutZone.EID;
-            //nsd.Spawns[0].SpawnX = (xoffset + WarpOutPos.X * 4) << 8;
-            //nsd.Spawns[0].SpawnY = (yoffset + WarpOutPos.Y * 4) << 8;
-            //nsd.Spawns[0].SpawnZ = (zoffset + WarpOutPos.Z * 4) << 8;
         }
 
     }

@@ -201,35 +201,35 @@ namespace CrateModLoader.GameSpecific.Crash3
         static List<Crash3_Levels> BackwardsLevelsList = new List<Crash3_Levels>()
         {
             Crash3_Levels.L01_ToadVillage,
-            Crash3_Levels.L02_UnderPressure,
+            //Crash3_Levels.L02_UnderPressure,
             //Crash3_Levels.L03_OrientExpress, // todo: tiger stuff
             //Crash3_Levels.L04_BoneYard, // todo: remove chase, area transitions
-            Crash3_Levels.L05_MakinWaves,
-            Crash3_Levels.L06_GeeWiz,
-            Crash3_Levels.L07_HangEmHigh,
+            //Crash3_Levels.L05_MakinWaves,
+            //Crash3_Levels.L06_GeeWiz,
+            //Crash3_Levels.L07_HangEmHigh,
             //Crash3_Levels.L08_HogRide, // todo: vehicle stuff
-            Crash3_Levels.L09_TombTime,
+            //Crash3_Levels.L09_TombTime,
             //Crash3_Levels.L10_MidnightRun, //todo: tiger stuff
             //Crash3_Levels.L11_DinoMight, // todo: remove chase, area transitions
-            Crash3_Levels.L12_DeepTrouble,
-            Crash3_Levels.L13_HighTime,
+            //Crash3_Levels.L12_DeepTrouble,
+            //Crash3_Levels.L13_HighTime,
             //Crash3_Levels.L14_RoadCrash, // todo: vehicle stuff
-            Crash3_Levels.L15_DoubleHeader,
-            Crash3_Levels.L16_Sphynxinator,
+            //Crash3_Levels.L15_DoubleHeader,
+            //Crash3_Levels.L16_Sphynxinator,
             //Crash3_Levels.L17_ByeByeBlimps, // probably not
-            Crash3_Levels.L18_TellNoTales,
+            //Crash3_Levels.L18_TellNoTales,
             //Crash3_Levels.L19_FutueFrenzy, // todo: zone transitions
-            Crash3_Levels.L20_TombWader,
+            //Crash3_Levels.L20_TombWader,
             //Crash3_Levels.L21_GoneTomorrow, // todo: zone transitions
             //Crash3_Levels.L22_OrangeAsphalt, // todo: vehicle stuff
-            Crash3_Levels.L23_FlamingPassion,
+            //Crash3_Levels.L23_FlamingPassion,
             //Crash3_Levels.L24_MadBombers, // probably not
-            Crash3_Levels.L25_BugLite,
-            Crash3_Levels.L26_SkiCrazed,
+            //Crash3_Levels.L25_BugLite,
+            //Crash3_Levels.L26_SkiCrazed,
             //Crash3_Levels.L27_Area51, // todo: vehicle stuff
             //Crash3_Levels.L28_RingsOfPower, // todo: vehicle stuff
             //Crash3_Levels.L29_HotCoco, // probably not
-            Crash3_Levels.L30_EggipusRex,
+            //Crash3_Levels.L30_EggipusRex,
         };
 
         static List<Crash3_Levels> ChaseLevelsList = new List<Crash3_Levels>()
@@ -286,8 +286,8 @@ namespace CrateModLoader.GameSpecific.Crash3
                                     else if (zone.Entities[i].Type == 30 && zone.Entities[i].Subtype == 9)
                                     {
                                         WarpInEntity = zone.Entities[i];
-                                        //zone.Entities.RemoveAt(i);
-                                        //i--;
+                                        zone.Entities.RemoveAt(i);
+                                        i--;
                                     }
                                 }
                             }
@@ -300,8 +300,10 @@ namespace CrateModLoader.GameSpecific.Crash3
             EntityPosition WarpOutPos = new EntityPosition(WarpOutEntity.Positions[0].X, WarpOutEntity.Positions[0].Y, WarpOutEntity.Positions[0].Z);
             CrashEntity.Positions.RemoveAt(0);
             WarpOutEntity.Positions.RemoveAt(0);
+            WarpInEntity.Positions.RemoveAt(0);
             CrashEntity.Positions.Add(WarpOutPos);
             WarpOutEntity.Positions.Add(CrashPos);
+            WarpInEntity.Positions.Add(WarpOutPos);
 
             foreach (Chunk chunk in nsf.Chunks)
             {
@@ -318,7 +320,7 @@ namespace CrateModLoader.GameSpecific.Crash3
                             else if (zone.EName == WarpOutZone.EName)
                             {
                                 zone.Entities.Add(CrashEntity);
-                                //zone.Entities.Add(WarpInEntity); // not enough space in making waves, tomb wader etc.
+                                zone.Entities.Add(WarpInEntity);
                             }
                         }
                     }

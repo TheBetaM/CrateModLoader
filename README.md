@@ -28,7 +28,7 @@ Mod Crates can be folders or standard .zip files with these contents:
 # Building Prerequisites
 
 - Microsoft Visual Studio 2017 version 15.3 (C# 7.1)
-- .NET 4.5.2
+- .NET 4.7
 
 # Contributing
 
