@@ -190,10 +190,10 @@ namespace CrateModLoader.GameSpecific.Crash1
             Crash1_Levels.L09_UpTheCreek,
             Crash1_Levels.L10_LostCity,
             Crash1_Levels.L11_TempleRuins,
-            //Crash1_Levels.L12_RoadToNowhere, // crashes on warping out
+            //Crash1_Levels.L12_RoadToNowhere, // todo: crashes on warping out
             Crash1_Levels.L13_BoulderDash, // some zone jank, but it works
             //Crash1_Levels.L14_WholeHog, // todo: vehicle stuff
-            //Crash1_Levels.L15_SunsetVista, // todo: death trigger at first vertical section
+            Crash1_Levels.L15_SunsetVista, // zone jank
 
             Crash1_Levels.L16_HeavyMachinery,
             Crash1_Levels.L17_CortexPower,
@@ -204,7 +204,7 @@ namespace CrateModLoader.GameSpecific.Crash1
             Crash1_Levels.L22_LightsOut, 
             Crash1_Levels.L23_FumblingInTheDark,
             Crash1_Levels.L24_JawsOfDarkness,
-            //Crash1_Levels.L25_CastleMachinery, // todo: cycles, crutches
+            Crash1_Levels.L25_CastleMachinery,
             Crash1_Levels.L26_TheLab,
             Crash1_Levels.L27_GreatHall,
             Crash1_Levels.L28_StormyAscent, // unverified
@@ -291,20 +291,15 @@ namespace CrateModLoader.GameSpecific.Crash1
                                         {
                                             CrashEntity = zone.Entities[i];
                                             CrashZone = zone;
-                                            if (!VehicleLevelsList.Contains(level) && level != Crash1_Levels.L27_GreatHall)
+                                            if (level != Crash1_Levels.L27_GreatHall)
                                             {
                                                 zone.Entities.RemoveAt(i);
                                                 zone.EntityCount--;
                                                 i--;
-                                            }
-                                            else if (level != Crash1_Levels.L27_GreatHall)
-                                            {
-                                                EntityPosition[] BoarPath = new EntityPosition[zone.Entities[i].Positions.Count];
-                                                zone.Entities[i].Positions.CopyTo(BoarPath, 0);
-                                                zone.Entities[i].Positions.Clear();
-                                                for (int a = 0; a < BoarPath.Length; a++)
+                                                if (level == Crash1_Levels.L12_RoadToNowhere && DecoySpawn)
                                                 {
-                                                    zone.Entities[i].Positions.Add(BoarPath[(BoarPath.Length - 1) - a]);
+                                                    CrashEntity = null;
+                                                    DecoySpawn = false;
                                                 }
                                             }
                                             else
@@ -334,6 +329,21 @@ namespace CrateModLoader.GameSpecific.Crash1
                                                     zone.Entities[i].Positions.Clear();
                                                     zone.Entities[i].Positions.Add(new EntityPosition(476, 493, 1174));
                                                 }
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (CrashEntity == null && zone.Entities[i].Type == 0 && zone.Entities[i].Subtype == 0)
+                                        {
+                                            CrashEntity = zone.Entities[i];
+                                            CrashZone = zone;
+                                            EntityPosition[] BoarPath = new EntityPosition[zone.Entities[i].Positions.Count];
+                                            zone.Entities[i].Positions.CopyTo(BoarPath, 0);
+                                            zone.Entities[i].Positions.Clear();
+                                            for (int a = 0; a < BoarPath.Length; a++)
+                                            {
+                                                zone.Entities[i].Positions.Add(BoarPath[(BoarPath.Length - 1) - a]);
                                             }
                                         }
                                     }
@@ -817,35 +827,125 @@ namespace CrateModLoader.GameSpecific.Crash1
                                 else if (zone.EName == "c8_TZ")
                                 {
                                     zone.Entities[0].Positions.Clear();
-                                    zone.Entities[0].Positions.Add(new EntityPosition(1168, 373, 190));
+                                    //zone.Entities[0].Positions.Add(new EntityPosition(1168, 373, 190));
+                                    zone.Entities[0].Positions.Add(new EntityPosition(1068, 223, 190));
                                 }
                                 else if (zone.EName == "d3_TZ")
                                 {
                                     int crutchID = 300;
                                     EntityPosition[] crate_pos = new EntityPosition[]
                                     {
-                                          new EntityPosition(780, 500, 130),
+                                          new EntityPosition(780, 550, 130),
+                                          new EntityPosition(680, 650, 130),
+                                          new EntityPosition(580, 750, 130),
+                                          new EntityPosition(880, 850, 130),
+                                          new EntityPosition(980, 950, 130),
                                     };
                                     for (int id = 0; id < crate_pos.Length; id++)
                                     {
                                         int entID = id + crutchID;
-                                        CreateEntity((short)entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
+                                        CreateEntity((short)entID, 34, 6, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
                                     }
+
+                                    OldCameraNeighbor CamSet2 = new OldCameraNeighbor(1, 1, 3, 1);
+
+                                    zone.Cameras[0].NeighborCount++;
+                                    zone.Cameras[0].Neighbors[1] = CamSet2;
                                 }
                                 else if (zone.EName == "d2_TZ")
                                 {
-                                    int crutchID = 301;
+                                    int crutchID = 305;
                                     EntityPosition[] crate_pos = new EntityPosition[]
                                     {
-                                          new EntityPosition(650, 200, 140),
+                                          new EntityPosition(500, 150, 140),
+                                          new EntityPosition(600, 250, 140),
+                                          new EntityPosition(700, 350, 140),
+                                          new EntityPosition(420, 520, 140),
                                     };
                                     for (int id = 0; id < crate_pos.Length; id++)
                                     {
                                         int entID = id + crutchID;
-                                        CreateEntity((short)entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
+                                        CreateEntity((short)entID, 34, 6, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
                                     }
                                 }
-                                // move warpout to a5_TZ
+                                else if (zone.EName == "c6_TZ")
+                                {
+                                    int crutchID = 309;
+                                    EntityPosition[] crate_pos = new EntityPosition[]
+                                    {
+                                          new EntityPosition(170, 80, 180),
+                                          new EntityPosition(270, 1580, 180),
+                                    };
+                                    for (int id = 0; id < crate_pos.Length; id++)
+                                    {
+                                        int entID = id + crutchID;
+                                        CreateEntitySpring((short)entID, 14, 0, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
+                                    }
+
+                                    OldCameraNeighbor CamSet2 = new OldCameraNeighbor(1, 1, 1, 1);
+
+                                    zone.Cameras[0].NeighborCount++;
+                                    zone.Cameras[0].Neighbors[1] = CamSet2;
+                                }
+                                else if (zone.EName == "b6_TZ")
+                                {
+                                    int crutchID = 313;
+                                    EntityPosition[] crate_pos = new EntityPosition[]
+                                    {
+                                          new EntityPosition(400, 1220, 150),
+                                          new EntityPosition(900, 720, 150),
+                                          new EntityPosition(480, 220, 150),
+                                    };
+                                    for (int id = 0; id < crate_pos.Length; id++)
+                                    {
+                                        int entID = id + crutchID;
+                                        CreateEntitySpring((short)entID, 14, 0, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
+                                    }
+
+                                    OldCameraNeighbor CamSet2 = new OldCameraNeighbor(1, 1, 3, 1);
+
+                                    zone.Cameras[0].NeighborCount++;
+                                    zone.Cameras[0].Neighbors[1] = CamSet2;
+                                }
+                                else if (zone.EName == "b5_TZ")
+                                {
+                                    int crutchID = 316;
+                                    EntityPosition[] crate_pos = new EntityPosition[]
+                                    {
+                                          new EntityPosition(1100, 390, 150),
+                                    };
+                                    for (int id = 0; id < crate_pos.Length; id++)
+                                    {
+                                        int entID = id + crutchID;
+                                        CreateEntitySpring((short)entID, 14, 0, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
+                                    }
+                                }
+                                else if (zone.EName == "b4_TZ")
+                                {
+                                    int crutchID = 317;
+                                    EntityPosition[] crate_pos = new EntityPosition[]
+                                    {
+                                          new EntityPosition(720, 330, 150),
+                                    };
+                                    for (int id = 0; id < crate_pos.Length; id++)
+                                    {
+                                        int entID = id + crutchID;
+                                        CreateEntity((short)entID, 34, 2, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
+                                    }
+                                }
+                                else if (zone.EName == "b3_TZ")
+                                {
+                                    int crutchID = 318;
+                                    EntityPosition[] crate_pos = new EntityPosition[]
+                                    {
+                                          new EntityPosition(1000, 330, 150),
+                                    };
+                                    for (int id = 0; id < crate_pos.Length; id++)
+                                    {
+                                        int entID = id + crutchID;
+                                        CreateEntity((short)entID, 34, 2, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
+                                    }
+                                }
                             }
                             else if (level == Crash1_Levels.L21_SlipperyClimb)
                             {
@@ -859,7 +959,6 @@ namespace CrateModLoader.GameSpecific.Crash1
                                         zone.Entities[0].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
                                     }
                                 }
-
                             }
                             else if (level == Crash1_Levels.L13_BoulderDash)
                             {
@@ -870,6 +969,8 @@ namespace CrateModLoader.GameSpecific.Crash1
                                     {
                                           new EntityPosition(500, 540, 800),
                                           new EntityPosition(500, 540, 910),
+                                          new EntityPosition(600, 540, 800),
+                                          new EntityPosition(600, 540, 910),
                                     };
                                     for (int id = 0; id < crate_pos.Length; id++)
                                     {
@@ -879,7 +980,7 @@ namespace CrateModLoader.GameSpecific.Crash1
                                 }
                                 else if (zone.EName == "0u_jZ")
                                 {
-                                    int crutchID = 302;
+                                    int crutchID = 304;
                                     EntityPosition[] crate_pos = new EntityPosition[]
                                     {
                                           new EntityPosition(450, 620, 950),
@@ -890,7 +991,6 @@ namespace CrateModLoader.GameSpecific.Crash1
                                         CreateEntity((short)entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
                                     }
                                 }
-
                             }
                             else if (level == Crash1_Levels.L22_LightsOut)
                             {
@@ -907,7 +1007,6 @@ namespace CrateModLoader.GameSpecific.Crash1
                                         CreateEntityMask((short)entID, 3, 6, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
                                     }
                                 }
-
                             }
                             else if (level == Crash1_Levels.L23_FumblingInTheDark)
                             {
@@ -924,9 +1023,70 @@ namespace CrateModLoader.GameSpecific.Crash1
                                         CreateEntityMask((short)entID, 3, 6, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
                                     }
                                 }
+                            }
+                            else if (level == Crash1_Levels.L15_SunsetVista)
+                            {
+                                if (zone.EName == "n3_zZ")
+                                {
+                                    // move THE ENTIRE ZONE because the transition doesn't work otherwise
+
+                                    int xoffset = BitConv.FromInt32(zone.Layout, 0);
+                                    int yoffset = BitConv.FromInt32(zone.Layout, 4);
+                                    int zoffset = BitConv.FromInt32(zone.Layout, 8);
+                                    int x2 = BitConv.FromInt32(zone.Layout, 12);
+                                    int y2 = BitConv.FromInt32(zone.Layout, 16);
+                                    int z2 = BitConv.FromInt32(zone.Layout, 20);
+                                    int xmax = (ushort)BitConv.FromInt16(zone.Layout, 0x1E);
+                                    int ymax = (ushort)BitConv.FromInt16(zone.Layout, 0x20);
+                                    int zmax = (ushort)BitConv.FromInt16(zone.Layout, 0x22);
+
+                                    short CamOffset = 2000;
+                                    short EntOffset = 505;
+                                    double ScaleMod = 1.25;
+
+                                    short offset = 0x20;
+                                    int value = (short)(ymax * ScaleMod);
+                                    zone.Layout[offset] = (byte)value;
+                                    zone.Layout[offset + 1] = (byte)(value >> 8);
+
+                                    offset = 4;
+                                    value = yoffset - CamOffset;
+                                    zone.Layout[offset] = (byte)value;
+                                    zone.Layout[offset + 1] = (byte)(value >> 8);
+
+                                    offset = 16;
+                                    value = (short)(y2 * ScaleMod);
+                                    zone.Layout[offset] = (byte)value;
+                                    zone.Layout[offset + 1] = (byte)(value >> 8);
+                                    zone.Layout[offset + 2] = (byte)(value >> 8 * 2);
+                                    zone.Layout[offset + 3] = (byte)(value >> 8 * 3);
+
+                                    for (int i = 0; i < zone.Entities.Count; i++)
+                                    {
+                                        zone.Entities[i].Positions[0] = new EntityPosition(zone.Entities[i].Positions[0].X, (short)(zone.Entities[i].Positions[0].Y + EntOffset), zone.Entities[i].Positions[0].Z);
+                                    }
+                                    for (int i = 0; i < zone.Cameras[0].Positions.Count; i++)
+                                    {
+                                        zone.Cameras[0].Positions[i] = new OldCameraPosition(zone.Cameras[0].Positions[i].X, (short)(zone.Cameras[0].Positions[i].Y + CamOffset), zone.Cameras[0].Positions[i].Z, zone.Cameras[0].Positions[i].XRot, zone.Cameras[0].Positions[i].YRot, zone.Cameras[0].Positions[i].ZRot);
+                                    }
+
+                                }
+                                else if (zone.EName == "h3_zZ")
+                                {
+                                    int crutchID = 300;
+                                    EntityPosition[] crate_pos = new EntityPosition[]
+                                    {
+                                          new EntityPosition(800, 450, 900),
+                                    };
+                                    for (int id = 0; id < crate_pos.Length; id++)
+                                    {
+                                        int entID = id + crutchID;
+                                        CreateEntity((short)entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
+                                    }
+                                }
+
 
                             }
-
 
                         }
                     }
@@ -961,7 +1121,9 @@ namespace CrateModLoader.GameSpecific.Crash1
                 }
                 else if (level == Crash1_Levels.L12_RoadToNowhere)
                 {
-                    CrashPos = new EntityPosition(CrashPos.X, (short)(CrashPos.Y - 390), (short)(CrashPos.Z + 200));
+                    //CrashPos = new EntityPosition(CrashPos.X, (short)(CrashPos.Y - 390), (short)(CrashPos.Z + 200));
+                    //CrashPos = new EntityPosition(350, 200, 2650);
+                    WarpOutEntity.Flags = 196632;
                 }
                 else if (level == Crash1_Levels.L05_Upstream)
                 {
@@ -978,6 +1140,10 @@ namespace CrateModLoader.GameSpecific.Crash1
                 else if (level == Crash1_Levels.L13_BoulderDash)
                 {
                     CrashPos = new EntityPosition(CrashPos.X, (short)(CrashPos.Y - 230), CrashPos.Z);
+                }
+                else if (level == Crash1_Levels.L25_CastleMachinery)
+                {
+                    CrashPos = new EntityPosition(420, 200, 130);
                 }
                 else if (level == Crash1_Levels.L17_CortexPower || level == Crash1_Levels.L01_NSanityBeach)
                 {
@@ -1002,7 +1168,7 @@ namespace CrateModLoader.GameSpecific.Crash1
                         {
                             if (entry is OldZoneEntry zone)
                             {
-                                if (zone.EName == CrashZone.EName)
+                                if (zone.EName == CrashZone.EName && level != Crash1_Levels.L25_CastleMachinery)
                                 {
                                     zone.Entities.Add(WarpOutEntity);
                                     zone.EntityCount++;
@@ -1027,6 +1193,11 @@ namespace CrateModLoader.GameSpecific.Crash1
                                 if (level == Crash1_Levels.L22_LightsOut && zone.EName == "d4_EZ")
                                 {
                                     nsd.StartZone = zone.EID;
+                                }
+                                if (level == Crash1_Levels.L25_CastleMachinery && zone.EName == "a5_TZ")
+                                {
+                                    zone.Entities.Add(WarpOutEntity);
+                                    zone.EntityCount++;
                                 }
                             }
                         }
@@ -1098,6 +1269,25 @@ namespace CrateModLoader.GameSpecific.Crash1
             newentity.ModeA = 0;
             newentity.ModeB = 0;
             newentity.ModeC = 450;
+
+            zone.Entities.Add(newentity);
+            zone.EntityCount++;
+
+        }
+
+        static void CreateEntitySpring(short id, int type, int subtype, short x, short y, short z, ref OldZoneEntry zone)
+        {
+            OldEntity newentity = OldEntity.Load(new OldEntity(0, 0x00030018, id, 0, 0, 0, 0, 0, new List<EntityPosition>() { new EntityPosition(0, 0, 0) }, 0).Save());
+            newentity.ID = id;
+            newentity.Positions.Clear();
+            newentity.Positions.Add(new EntityPosition(x, y, z));
+            newentity.Type = (byte)type;
+            newentity.Subtype = (byte)subtype;
+
+            newentity.Flags = 196616;
+            newentity.ModeA = 0;
+            newentity.ModeB = 0;
+            newentity.ModeC = 0;
 
             zone.Entities.Add(newentity);
             zone.EntityCount++;

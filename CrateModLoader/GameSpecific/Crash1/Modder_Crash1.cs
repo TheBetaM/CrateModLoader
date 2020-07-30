@@ -67,7 +67,7 @@ namespace CrateModLoader
 
             AddOption(RandomizeCratesIntoWood, new ModOption("All Crates Are Blank"));
             AddOption(TurnCratesIntoWumpa, new ModOption("All Crates Are Wumpa"));
-            AddOption(BackwardsLevels, new ModOption("Backwards Levels (where possible)"));
+            AddOption(BackwardsLevels, new ModOption("Backwards Levels"));
             AddOption(RandomBackwardsLevels, new ModOption("Random Levels Are Backwards"));
             //AddOption(MirroredWorld, new ModOption("Mirrored World"));
             //AddOption(RandomLevelsMirrored, new ModOption("Random Levels Are Mirrored"));
