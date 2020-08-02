@@ -28,6 +28,7 @@ namespace CrateModLoader
         internal const int VehicleLevelsOnFoot = 16;
         internal const int MirroredWorld = 17;
         internal const int RandomLevelsMirrored = 18;
+        internal const int RandomizeWarpRoom = 19;
 
         public Modder_Crash3()
         {
@@ -66,6 +67,7 @@ namespace CrateModLoader
 
             AddOption(RandomizeCratesIntoWood, new ModOption("All Crates Are Blank"));
             //AddOption(TurnCratesIntoWumpa, new ModOption("All Crates Are Wumpa")); //crashes in level 1
+            AddOption(RandomizeWarpRoom, new ModOption("Randomize Warp Room"));
             AddOption(BackwardsLevels, new ModOption("Backwards Levels (where possible)"));
             AddOption(RandomBackwardsLevels, new ModOption("Random Levels Are Backwards"));
             //AddOption(MirroredWorld, new ModOption("Mirrored World"));
@@ -132,6 +134,7 @@ namespace CrateModLoader
 
                 Crash3_Levels NSF_Level = GetLevelFromNSF(nsfFile.Name);
 
+                if (GetOption(RandomizeWarpRoom)) Crash3_Mods.Mod_RandomizeWRButtons(nsf, nsd, NSF_Level, rand);
                 if (GetOption(BackwardsLevels) || GetOption(RandomBackwardsLevels)) Crash3_Mods.Mod_BackwardsLevels(nsf, nsd, NSF_Level, GetOption(RandomBackwardsLevels), rand);
                 if (GetOption(CameraBiggerFOV) || GetOption(RandomizeCameraFOV)) Crash3_Mods.Mod_CameraFOV(nsf, rand, GetOption(RandomizeCameraFOV));
                 if (GetOption(RandomizeCratesIntoWood)) Crash3_Mods.Mod_RandomWoodCrates(nsf, rand);
@@ -141,6 +144,8 @@ namespace CrateModLoader
                 if (GetOption(SceneryGreyscale)) CrashTri_Common.Mod_Scenery_Greyscale(nsf);
                 if (GetOption(SceneryRainbow)) CrashTri_Common.Mod_Scenery_Rainbow(nsf, rand);
                 if (GetOption(SceneryUntextured)) CrashTri_Common.Mod_Scenery_Untextured(nsf);
+
+                Crash3_Mods.Mod_Metadata(nsf, nsd, NSF_Level);
 
                 PatchNSD(nsf, nsd);
 
@@ -295,6 +300,8 @@ namespace CrateModLoader
             "04",
             "05",
             "07",
+            //Other
+            "02",
         };
 
         internal Crash3_Levels GetLevelFromNSF(string NSf_Name)

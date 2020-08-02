@@ -11,6 +11,7 @@ Crash Bandicoot, Crash Bandicoot 2: Cortex Strikes Back, Crash Bandicoot: WARPED
 - Added region detection for Mod Crates. 
 - New feature: All Crates Are Blank
 - New feature: All Crates Are Wumpa (Crash 1 & 2)
+- New feature: Randomize Warp Room (Crash 2 & WARPED)
 - New feature: Backwards Levels (where possible)
 - New feature: Random Levels Are Backwards
 - New feature: Wider Camera Field-Of-View
@@ -19,6 +20,7 @@ Crash Bandicoot, Crash Bandicoot 2: Cortex Strikes Back, Crash Bandicoot: WARPED
 - New feature: Randomize World Palette
 - New feature: Greyscale World
 - New feature: Untextured World
+- Crate Mod Loader metadata is now displayed ingame (Crash 1 main menu, Crash 2/3 pause menu in the hub)
 
 Crash of the Titans, Crash Mind Over Mutant:
 - Added support for the Xbox 360 version.  

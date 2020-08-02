@@ -42,6 +42,7 @@ namespace CrateModLoader.GameSpecific.Crash1
         B04_Pinstripe = 31,
         B05_NBrio = 32,
         B06_Cortex = 33,
+        MapMainMenu = 34,
     }
 
     public static class Crash1_Mods
@@ -1292,6 +1293,130 @@ namespace CrateModLoader.GameSpecific.Crash1
             zone.Entities.Add(newentity);
             zone.EntityCount++;
 
+        }
+
+        public static void Mod_RandomizeMap(NSF nsf, NSD nsd, Crash1_Levels level, Random rand)
+        {
+            if (level != Crash1_Levels.MapMainMenu)
+            {
+                return;
+            }
+
+            List<int> LevelsToReplace = new List<int>();
+            for (int i = 0; i < 35; i++)
+            {
+                LevelsToReplace.Add(i);
+            }
+            List<int> LevelsRand = new List<int>();
+            for (int i = 0; i < 35; i++)
+            {
+                int r = rand.Next(LevelsToReplace.Count);
+                LevelsRand.Add(LevelsToReplace[r]);
+                LevelsToReplace.RemoveAt(r);
+            }
+
+            
+            foreach (Chunk chunk in nsf.Chunks)
+            {
+                if (chunk is NormalChunk zonechunk)
+                {
+                    foreach (Entry entry in zonechunk.Entries)
+                    {
+                        if (entry is MapEntry zone)
+                        {
+                            if (zone.EName == "3MapP" || zone.EName == "2MapP" || zone.EName == "1MapP")
+                            {
+                                for (int i = 0; i < zone.Entities.Count; i++)
+                                {
+                                    if (zone.Entities[i].Type == 44)
+                                    {
+
+                                    }
+                                }
+                            }
+                            
+                        }
+                    }
+                }
+            }
+
+        }
+
+        public static void Mod_Metadata(NSF nsf, OldNSD nsd, Crash1_Levels level)
+        {
+            if (level != Crash1_Levels.MapMainMenu)
+            {
+                return;
+            }
+
+            foreach (Chunk chunk in nsf.Chunks)
+            {
+                if (chunk is NormalChunk zonechunk)
+                {
+                    foreach (Entry entry in zonechunk.Entries)
+                    {
+                        if (entry is GOOLEntry gool)
+                        {
+                            if (gool.EName == "GamOC" || gool.EName == "IsldC")
+                            {
+                                if (ModLoaderGlobals.Region != RegionType.NTSC_J)
+                                {
+                                    for (int i = gool.Anims.Length - 11; i > 0; i--)
+                                    {
+                                        string s = System.Text.Encoding.Default.GetString(gool.Anims, i, 10);
+                                        if (s.Contains("PASSWORD"))
+                                        {
+                                            InsertStringsInByteArray(ref gool.Anims, i, 29, new List<string>() {
+                                            "CML " + ModLoaderGlobals.ProgramVersion.ToUpper(),
+                                            "SEED: " + ModLoaderGlobals.RandomizerSeed.ToString(),
+                                        });
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    //not working?
+                                    for (int i = gool.Anims.Length - 11; i > 0; i--)
+                                    {
+                                        string s = System.Text.Encoding.Default.GetString(gool.Anims, i, 10);
+                                        if (s.Contains("TEST SAVE SYSTEM"))
+                                        {
+                                            InsertStringsInByteArray(ref gool.Anims, i - 15, 29, new List<string>() {
+                                            "CML " + ModLoaderGlobals.ProgramVersion.ToUpper(),
+                                            "SEED: " + ModLoaderGlobals.RandomizerSeed.ToString(),
+                                        });
+                                        }
+                                    }
+                                }
+                                
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+
+        static void InsertStringsInByteArray(ref byte[] array, int index, int len, List<string> str)
+        {
+            int word = 0;
+            int letter = 0;
+            for (int i = index; i < index + len; i++)
+            {
+                array[i] = (byte)str[word][letter];
+                letter++;
+                if (letter >= str[word].Length)
+                {
+                    letter = 0;
+                    word++;
+                    i++;
+                    array[i] = (byte)0;
+                    if (word >= str.Count)
+                    {
+                        i = index + len;
+                    }
+                }
+            }
         }
 
     }

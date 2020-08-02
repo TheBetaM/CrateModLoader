@@ -40,6 +40,11 @@ namespace CrateModLoader.GameSpecific.Crash2
         B03_TinyTiger = 29,
         B04_NGin = 30,
         B05_Cortex = 31,
+        WarpRoom = 32,
+        WarpRoom2 = 33,
+        WarpRoom3 = 34,
+        WarpRoom4 = 35,
+        WarpRoom5 = 36,
     }
 
     public static class Crash2_Mods
@@ -1290,6 +1295,105 @@ namespace CrateModLoader.GameSpecific.Crash2
             nsd.Spawns[0].SpawnZ = (zoffset + WarpOutPos.Z * 4) << 8;
         }
 
+        public static void Mod_RandomizeWarpRoom(NSF nsf, NSD nsd, Crash2_Levels level, Random rand)
+        {
+            if (level != Crash2_Levels.WarpRoom && level != Crash2_Levels.WarpRoom2 && level != Crash2_Levels.WarpRoom3 && level != Crash2_Levels.WarpRoom4 && level != Crash2_Levels.WarpRoom5)
+            {
+                return;
+            }
+
+            // spawn 0 - load wall
+            // spawn 3 - new game, intro & turtle woods spawn
+            // spawn 4 - load game spawn
+
+            List<NSDSpawnPoint> OrigSpawns = new List<NSDSpawnPoint>();
+            List<NSDSpawnPoint> SpawnsToRand = new List<NSDSpawnPoint>();
+            for (int i = 0; i < nsd.Spawns.Count; i++)
+            {
+                //Console.WriteLine("ID:" + i + " Zone: " + nsd.Spawns[i].ZoneEID);
+                OrigSpawns.Add(nsd.Spawns[i]);
+                if (i != 4 && i != 0 && i < 27)
+                {
+                    SpawnsToRand.Add(nsd.Spawns[i]);
+                }
+            }
+            int spawnCount = SpawnsToRand.Count;
+            List<NSDSpawnPoint> RandSpawns = new List<NSDSpawnPoint>();
+            for (int i = 0; i < OrigSpawns.Count; i++)
+            {
+                if (i != 4 && i != 0 && i < 27)
+                {
+                    int r = rand.Next(SpawnsToRand.Count);
+                    RandSpawns.Add(SpawnsToRand[r]);
+                    SpawnsToRand.RemoveAt(r);
+                }
+                else
+                {
+                    RandSpawns.Add(null);
+                }
+            }
+            nsd.Spawns.Clear();
+            for (int i = 0; i < OrigSpawns.Count; i++)
+            {
+                
+                if (RandSpawns[i] != null)
+                {
+                    nsd.Spawns.Add(RandSpawns[i]);
+                }
+                else
+                {
+                    if (i == 4)
+                    {
+                        nsd.Spawns.Add(RandSpawns[3]);
+                    }
+                    else
+                    {
+                        nsd.Spawns.Add(OrigSpawns[i]);
+                    }
+                }
+            }
+
+
+            List<int> LevelsToReplace = new List<int>();
+            for (int i = 0; i < 35; i++)
+            {
+                LevelsToReplace.Add(i);
+            }
+            List<int> LevelsRand = new List<int>();
+            for (int i = 0; i < 35; i++)
+            {
+                int r = rand.Next(LevelsToReplace.Count);
+                LevelsRand.Add(LevelsToReplace[r]);
+                LevelsToReplace.RemoveAt(r);
+            }
+
+            /*
+            foreach (Chunk chunk in nsf.Chunks)
+            {
+                if (chunk is NormalChunk zonechunk)
+                {
+                    foreach (Entry entry in zonechunk.Entries)
+                    {
+                        if (entry is NewZoneEntry zone)
+                        {
+                            for (int i = 0; i < zone.Entities.Count; i++)
+                            {
+
+                                if (zone.Entities[i].Type != null && zone.Entities[i].Subtype != null)
+                                {
+                                    
+                                }
+
+
+                            }
+                        }
+                    }
+                }
+            }
+            */
+
+        }
+
 
         //omg why is this so convoluted for just the id ;_;
         static int GetDrawListValue(NSF nsf, ZoneEntry thiszone, int id)
@@ -1351,6 +1455,72 @@ namespace CrateModLoader.GameSpecific.Crash2
             zone.Entities.Add(newentity);
             zone.EntityCount++;
 
+        }
+
+        public static void Mod_Metadata(NSF nsf, NSD nsd, Crash2_Levels level)
+        {
+            if (level != Crash2_Levels.WarpRoom && level != Crash2_Levels.WarpRoom2 && level != Crash2_Levels.WarpRoom3 && level != Crash2_Levels.WarpRoom4 && level != Crash2_Levels.WarpRoom5)
+            {
+                return;
+            }
+
+            foreach (Chunk chunk in nsf.Chunks)
+            {
+                if (chunk is NormalChunk zonechunk)
+                {
+                    foreach (Entry entry in zonechunk.Entries)
+                    {
+                        if (entry is GOOLEntry gool)
+                        {
+                            if (gool.EName == "DispC")
+                            {
+                                if (ModLoaderGlobals.Region != RegionType.NTSC_J)
+                                {
+                                    for (int i = gool.Anims.Length - 11; i > 0; i--)
+                                    {
+                                        string s = System.Text.Encoding.Default.GetString(gool.Anims, i, 10);
+                                        if (s.Contains("RESUME"))
+                                        {
+                                            InsertStringsInByteArray(ref gool.Anims, i, 17, new List<string>() {
+                                            ModLoaderGlobals.ProgramVersion.ToUpper(),
+                                            ModLoaderGlobals.RandomizerSeed.ToString(),
+                                        });
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    // "WARP ROOM" ?
+                                }
+
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+
+        static void InsertStringsInByteArray(ref byte[] array, int index, int len, List<string> str)
+        {
+            int word = 0;
+            int letter = 0;
+            for (int i = index; i < index + len; i++)
+            {
+                array[i] = (byte)str[word][letter];
+                letter++;
+                if (letter >= str[word].Length)
+                {
+                    letter = 0;
+                    word++;
+                    i++;
+                    array[i] = (byte)0;
+                    if (word >= str.Count)
+                    {
+                        i = index + len;
+                    }
+                }
+            }
         }
 
     }

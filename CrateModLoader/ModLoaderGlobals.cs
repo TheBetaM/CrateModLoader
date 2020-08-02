@@ -36,7 +36,7 @@ namespace CrateModLoader
     public static class ModLoaderGlobals
     {
 
-        /// <summary> Global Randomizer Seed, can be modified during modding. </summary>
+        /// <summary> Global Randomizer Seed, can be modified during modding. Max length - 10 characters </summary>
         public static int RandomizerSeed = 0;
 
         /// <summary> String used to show which version of CML the modded game was built with. Should be under 10 characters. </summary>

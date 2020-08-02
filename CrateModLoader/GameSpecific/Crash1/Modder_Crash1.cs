@@ -29,6 +29,7 @@ namespace CrateModLoader
         internal const int VehicleLevelsOnFoot = 16;
         internal const int MirroredWorld = 17;
         internal const int RandomLevelsMirrored = 18;
+        internal const int RandomizeMap = 19;
 
         public Modder_Crash1()
         {
@@ -67,6 +68,7 @@ namespace CrateModLoader
 
             AddOption(RandomizeCratesIntoWood, new ModOption("All Crates Are Blank"));
             AddOption(TurnCratesIntoWumpa, new ModOption("All Crates Are Wumpa"));
+            //AddOption(RandomizeMap, new ModOption("Randomize Map"));
             AddOption(BackwardsLevels, new ModOption("Backwards Levels"));
             AddOption(RandomBackwardsLevels, new ModOption("Random Levels Are Backwards"));
             //AddOption(MirroredWorld, new ModOption("Mirrored World"));
@@ -142,6 +144,8 @@ namespace CrateModLoader
                 if (GetOption(SceneryRainbow)) CrashTri_Common.Mod_Scenery_Rainbow(nsf, rand);
                 if (GetOption(SceneryUntextured)) CrashTri_Common.Mod_Scenery_Untextured(nsf);
                 if (GetOption(ZoneCloseCamera)) CrashTri_Common.Mod_Camera_Closeup(nsf);
+
+                Crash1_Mods.Mod_Metadata(nsf, nsd, NSF_Level);
 
                 PatchNSD(nsf, nsd);
 
@@ -241,6 +245,8 @@ namespace CrateModLoader
             "08",
             "1B",
             "1F",
+            //Other
+            "19",
         };
 
         internal Crash1_Levels GetLevelFromNSF(string NSf_Name)

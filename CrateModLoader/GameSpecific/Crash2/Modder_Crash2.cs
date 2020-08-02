@@ -29,6 +29,7 @@ namespace CrateModLoader
         internal const int VehicleLevelsOnFoot = 16;
         internal const int MirroredWorld = 17;
         internal const int RandomLevelsMirrored = 18;
+        internal const int RandomizeWarpRoom = 19;
 
         public Modder_Crash2()
         {
@@ -67,6 +68,7 @@ namespace CrateModLoader
 
             AddOption(RandomizeCratesIntoWood, new ModOption("All Crates Are Blank"));
             AddOption(TurnCratesIntoWumpa, new ModOption("All Crates Are Wumpa"));
+            AddOption(RandomizeWarpRoom, new ModOption("Randomize Warp Room"));
             //AddOption(RandomizeLevelOrder, new ModOption("Randomize Level Order")); // doesn't work
             AddOption(BackwardsLevels, new ModOption("Backwards Levels (where possible)"));
             AddOption(RandomBackwardsLevels, new ModOption("Random Levels Are Backwards"));
@@ -149,6 +151,7 @@ namespace CrateModLoader
 
                 if (!CachingPass)
                 {
+                    if (GetOption(RandomizeWarpRoom)) Crash2_Mods.Mod_RandomizeWarpRoom(nsf, nsd, NSF_Level, rand);
                     if (GetOption(BackwardsLevels) || GetOption(RandomBackwardsLevels)) Crash2_Mods.Mod_BackwardsLevels(nsf, nsd, NSF_Level, GetOption(RandomBackwardsLevels), rand);
                     if (GetOption(CameraBiggerFOV) || GetOption(RandomizeCameraFOV)) Crash2_Mods.Mod_CameraFOV(nsf, rand, GetOption(RandomizeCameraFOV));
                     if (GetOption(RandomizeCratesIntoWood)) Crash2_Mods.Mod_RandomWoodCrates(nsf, rand);
@@ -162,6 +165,8 @@ namespace CrateModLoader
                     if (GetOption(RandomizeMusic) || GetOption(RandomizeMusicTracks) || GetOption(RandomzieMusicInstruments))
                         Randomize_Music(nsf, rand, ref wavebankChunks, ref musicEntries, GetOption(RandomizeMusic), GetOption(RandomizeMusicTracks), GetOption(RandomzieMusicInstruments));
                     if (GetOption(RandomizeADIO)) Mod_RandomizeADIO(nsf, nsd, rand);
+
+                    Crash2_Mods.Mod_Metadata(nsf, nsd, NSF_Level);
                 }
                 else
                 {
@@ -324,6 +329,12 @@ namespace CrateModLoader
             "07",
             "08",
             "09",
+            //Other
+            "02",
+            "2D",
+            "2E",
+            "2F",
+            "30",
         };
 
         internal Crash2_Levels GetLevelFromNSF(string NSf_Name)
