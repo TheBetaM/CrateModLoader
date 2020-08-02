@@ -195,7 +195,7 @@ namespace CrateModLoader.GameSpecific.Crash2
             Crash2_Levels.L09_CrashCrush,
             //Crash2_Levels.L10_TheEelDeal, // todo: 1 section teleport
 
-            Crash2_Levels.L11_PlantFood, // todo: sometimes crashes on death if too far away from spawn (board needs to be in loadlists?)
+            //Crash2_Levels.L11_PlantFood, // todo: out of space on PAL, sometimes crashes on death if too far away from spawn (board needs to be in loadlists?)
             Crash2_Levels.L12_SewerOrLater,
             //Crash2_Levels.L13_BearDown, // todo: bear stuff
             Crash2_Levels.L14_RoadToRuin,
@@ -1474,23 +1474,79 @@ namespace CrateModLoader.GameSpecific.Crash2
                         {
                             if (gool.EName == "DispC")
                             {
-                                if (ModLoaderGlobals.Region != RegionType.NTSC_J)
+                                if (ModLoaderGlobals.Region == RegionType.NTSC_U)
                                 {
                                     for (int i = gool.Anims.Length - 11; i > 0; i--)
                                     {
                                         string s = System.Text.Encoding.Default.GetString(gool.Anims, i, 10);
                                         if (s.Contains("RESUME"))
                                         {
+                                            string seed = ModLoaderGlobals.RandomizerSeed.ToString();
+                                            if (seed.Length < 10)
+                                            {
+                                                while (seed.Length < 10)
+                                                {
+                                                    seed += " ";
+                                                }
+                                            }
+
                                             InsertStringsInByteArray(ref gool.Anims, i, 17, new List<string>() {
                                             ModLoaderGlobals.ProgramVersion.ToUpper(),
-                                            ModLoaderGlobals.RandomizerSeed.ToString(),
+                                            seed,
+                                        });
+                                        }
+                                    }
+                                }
+                                else if (ModLoaderGlobals.Region == RegionType.PAL)
+                                {
+                                    for (int i = gool.Anims.Length - 11; i > 0; i--)
+                                    {
+                                        string s = System.Text.Encoding.Default.GetString(gool.Anims, i, 10);
+                                        if (s.Contains("RESUME"))
+                                        {
+                                            string seed = ModLoaderGlobals.RandomizerSeed.ToString();
+                                            if (seed.Length < 10)
+                                            {
+                                                while (seed.Length < 10)
+                                                {
+                                                    seed += " ";
+                                                }
+                                            }
+
+                                            InsertStringsInByteArray(ref gool.Anims, i, 45, new List<string>() {
+                                            ModLoaderGlobals.ProgramVersion.ToUpper(),
+                                            "OPTIONEN",
+                                            "OPCIONES",
+                                            "OPZIONI",
+                                            seed,
                                         });
                                         }
                                     }
                                 }
                                 else
                                 {
-                                    // "WARP ROOM" ?
+                                    /* one word off? NTSC-J broken atm anyway
+                                    for (int i = gool.Anims.Length - 11; i > 0; i--)
+                                    {
+                                        string s = System.Text.Encoding.Default.GetString(gool.Anims, i, 10);
+                                        if (s.Contains("UNKNOWN"))
+                                        {
+                                            string seed = ModLoaderGlobals.RandomizerSeed.ToString();
+                                            if (seed.Length < 10)
+                                            {
+                                                while (seed.Length < 10)
+                                                {
+                                                    seed += " ";
+                                                }
+                                            }
+
+                                            InsertStringsInByteArray(ref gool.Anims, i + 423, 23, new List<string>() {
+                                            "CML " + ModLoaderGlobals.ProgramVersion.ToUpper(),
+                                            seed,
+                                        });
+                                        }
+                                    }
+                                    */
                                 }
 
                             }

@@ -1424,24 +1424,80 @@ namespace CrateModLoader.GameSpecific.Crash3
                         {
                             if (gool.EName == "DispC")
                             {
-                                if (ModLoaderGlobals.Region != RegionType.NTSC_J)
+                                if (ModLoaderGlobals.Region == RegionType.NTSC_U)
                                 {
                                     for (int i = gool.Anims.Length - 11; i > 0; i--)
                                     {
                                         string s = System.Text.Encoding.Default.GetString(gool.Anims, i, 10);
                                         if (s.Contains("RESUME"))
                                         {
+                                            string seed = ModLoaderGlobals.RandomizerSeed.ToString();
+                                            if (seed.Length < 10)
+                                            {
+                                                while (seed.Length < 10)
+                                                {
+                                                    seed += " ";
+                                                }
+                                            }
+
                                             InsertStringsInByteArray(ref gool.Anims, i, 27, new List<string>() {
                                             "CML " + ModLoaderGlobals.ProgramVersion.ToUpper(), 
-                                            ModLoaderGlobals.RandomizerSeed.ToString(),
+                                            seed,
                                             "QUIT" 
+                                        });
+                                        }
+                                    }
+                                }
+                                else if (ModLoaderGlobals.Region == RegionType.PAL)
+                                {
+                                    for (int i = gool.Anims.Length - 11; i > 0; i--)
+                                    {
+                                        string s = System.Text.Encoding.Default.GetString(gool.Anims, i, 10);
+                                        if (s.Contains("RESUME"))
+                                        {
+                                            string seed = ModLoaderGlobals.RandomizerSeed.ToString();
+                                            if (seed.Length < 10)
+                                            {
+                                                while (seed.Length < 10)
+                                                {
+                                                    seed += " ";
+                                                }
+                                            }
+
+                                            InsertStringsInByteArray(ref gool.Anims, i, 45, new List<string>() {
+                                            ModLoaderGlobals.ProgramVersion.ToUpper(),
+                                            "OPTIONEN",
+                                            "OPCIONES",
+                                            "OPZIONI",
+                                            seed,
                                         });
                                         }
                                     }
                                 }
                                 else
                                 {
-                                    // "WARP ROOM" ?
+                                    /* one word off? NTSC-J broken atm anyway
+                                    for (int i = gool.Anims.Length - 11; i > 0; i--)
+                                    {
+                                        string s = System.Text.Encoding.Default.GetString(gool.Anims, i, 10);
+                                        if (s.Contains("GET ALL"))
+                                        {
+                                            string seed = ModLoaderGlobals.RandomizerSeed.ToString();
+                                            if (seed.Length < 10)
+                                            {
+                                                while (seed.Length < 10)
+                                                {
+                                                    seed += " ";
+                                                }
+                                            }
+
+                                            InsertStringsInByteArray(ref gool.Anims, i - 103, 20, new List<string>() {
+                                            ModLoaderGlobals.ProgramVersion.ToUpper(),
+                                            seed,
+                                        });
+                                        }
+                                    }
+                                    */
                                 }
 
                             }

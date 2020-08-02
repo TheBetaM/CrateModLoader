@@ -1359,31 +1359,48 @@ namespace CrateModLoader.GameSpecific.Crash1
                         {
                             if (gool.EName == "GamOC" || gool.EName == "IsldC")
                             {
-                                if (ModLoaderGlobals.Region != RegionType.NTSC_J)
+                                if (ModLoaderGlobals.Region == RegionType.NTSC_U || ModLoaderGlobals.Region == RegionType.PAL)
                                 {
                                     for (int i = gool.Anims.Length - 11; i > 0; i--)
                                     {
                                         string s = System.Text.Encoding.Default.GetString(gool.Anims, i, 10);
                                         if (s.Contains("PASSWORD"))
                                         {
+                                            string seed = ModLoaderGlobals.RandomizerSeed.ToString();
+                                            if (seed.Length < 10)
+                                            {
+                                                while (seed.Length < 10)
+                                                {
+                                                    seed += " ";
+                                                }
+                                            }
+
                                             InsertStringsInByteArray(ref gool.Anims, i, 29, new List<string>() {
                                             "CML " + ModLoaderGlobals.ProgramVersion.ToUpper(),
-                                            "SEED: " + ModLoaderGlobals.RandomizerSeed.ToString(),
+                                            "SEED: " + seed,
                                         });
                                         }
                                     }
                                 }
                                 else
                                 {
-                                    //not working?
                                     for (int i = gool.Anims.Length - 11; i > 0; i--)
                                     {
                                         string s = System.Text.Encoding.Default.GetString(gool.Anims, i, 10);
-                                        if (s.Contains("TEST SAVE SYSTEM"))
+                                        if (s.Contains("TEST SAVE"))
                                         {
-                                            InsertStringsInByteArray(ref gool.Anims, i - 15, 29, new List<string>() {
+                                            string seed = ModLoaderGlobals.RandomizerSeed.ToString();
+                                            if (seed.Length < 10)
+                                            {
+                                                while (seed.Length < 10)
+                                                {
+                                                    seed += " ";
+                                                }
+                                            }
+
+                                            InsertStringsInByteArray(ref gool.Anims, i - 15, 27, new List<string>() {
                                             "CML " + ModLoaderGlobals.ProgramVersion.ToUpper(),
-                                            "SEED: " + ModLoaderGlobals.RandomizerSeed.ToString(),
+                                            "SEED: " + seed,
                                         });
                                         }
                                     }
