@@ -5,6 +5,7 @@ using System.IO;
 using CrateModLoader.GameSpecific;
 using CrateModLoader.GameSpecific.Crash3;
 //Crash 3 API by chekwob and ManDude (https://github.com/cbhacks/CrashEdit)
+//Version number and seed are displayed in the pause menu in the Warp Room.
 
 namespace CrateModLoader
 {

@@ -5,6 +5,7 @@ using System.IO;
 using CrateModLoader.GameSpecific;
 using CrateModLoader.GameSpecific.Crash2;
 //Crash 2 API by chekwob and ManDude (https://github.com/cbhacks/CrashEdit)
+//Version number and seed are displayed in the pause menu in the Warp Room.
 
 namespace CrateModLoader
 {
@@ -70,7 +71,6 @@ namespace CrateModLoader
             AddOption(RandomizeCratesIntoWood, new ModOption("All Crates Are Blank"));
             AddOption(TurnCratesIntoWumpa, new ModOption("All Crates Are Wumpa"));
             AddOption(RandomizeWarpRoom, new ModOption("Randomize Warp Room"));
-            //AddOption(RandomizeLevelOrder, new ModOption("Randomize Level Order")); // doesn't work
             AddOption(BackwardsLevels, new ModOption("Backwards Levels (where possible)"));
             AddOption(RandomBackwardsLevels, new ModOption("Random Levels Are Backwards"));
             AddOption(RandomizeCrateContents, new ModOption("Randomize Crate Contents"));
@@ -109,8 +109,6 @@ namespace CrateModLoader
             List<FileInfo> nsfs = new List<FileInfo>();
             List<FileInfo> nsds = new List<FileInfo>();
             DirectoryInfo di = new DirectoryInfo(ModLoaderGlobals.ExtractedPath);
-
-            if (GetOption(RandomizeLevelOrder)) Randomize_LevelOrder(rand);
 
             AppendFileInfoDir(nsfs, nsds, di); // this should return all NSF/NSD file pairs
 
@@ -350,32 +348,6 @@ namespace CrateModLoader
                 }
             }
             return Crash2_Levels.Unknown;
-        }
-
-        internal void Randomize_LevelOrder(Random rand)
-        {
-            DirectoryInfo di = new DirectoryInfo(ModLoaderGlobals.ExtractedPath);
-
-            List<int> LevelsToGo = new List<int>();
-
-            for (int i = 0; i < Crash2_LevelFileNames.Length - 7; i++)
-            {
-                File.Move(di.FullName + "S" + Crash2_LevelFileNames[i].Substring(0, 1) + @"\S00000" + Crash2_LevelFileNames[i] + ".NSD", di.FullName + "level" + i + ".NSD");
-                File.Move(di.FullName + "S" + Crash2_LevelFileNames[i].Substring(0, 1) + @"\S00000" + Crash2_LevelFileNames[i] + ".NSF", di.FullName + "level" + i + ".NSF");
-                LevelsToGo.Add(i);
-            }
-
-            int id = 0;
-            while (LevelsToGo.Count > 0)
-            {
-                int target = rand.Next(LevelsToGo.Count);
-                int i = LevelsToGo[target];
-                File.Move(di.FullName + "level" + i + ".NSD", di.FullName + "S" + Crash2_LevelFileNames[id].Substring(0, 1) + @"\S00000" + Crash2_LevelFileNames[id] + ".NSD");
-                File.Move(di.FullName + "level" + i + ".NSF", di.FullName + "S" + Crash2_LevelFileNames[id].Substring(0, 1) + @"\S00000" + Crash2_LevelFileNames[id] + ".NSF");
-                LevelsToGo.RemoveAt(target);
-                id++;
-            }
-
         }
 
         internal void CacheMusic(NSF nsf, ref List<List<WavebankChunk>> wavebankChunks, ref List<List<MusicEntry>> musicEntries)

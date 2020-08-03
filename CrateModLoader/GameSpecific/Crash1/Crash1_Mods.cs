@@ -263,7 +263,7 @@ namespace CrateModLoader.GameSpecific.Crash1
             Crash1_Levels.L09_UpTheCreek,
             Crash1_Levels.L10_LostCity,
             Crash1_Levels.L11_TempleRuins,
-            //Crash1_Levels.L12_RoadToNowhere, // todo: crashes on warping out
+            Crash1_Levels.L12_RoadToNowhere,
             Crash1_Levels.L13_BoulderDash, // some zone jank, but it works
             //Crash1_Levels.L14_WholeHog, // todo: vehicle stuff
             Crash1_Levels.L15_SunsetVista, // zone jank
@@ -366,9 +366,12 @@ namespace CrateModLoader.GameSpecific.Crash1
                                             CrashZone = zone;
                                             if (level != Crash1_Levels.L27_GreatHall)
                                             {
-                                                zone.Entities.RemoveAt(i);
-                                                zone.EntityCount--;
-                                                i--;
+                                                //if (level != Crash1_Levels.L12_RoadToNowhere)
+                                                //{
+                                                    zone.Entities.RemoveAt(i);
+                                                    zone.EntityCount--;
+                                                    i--;
+                                                //}
                                                 if (level == Crash1_Levels.L12_RoadToNowhere && DecoySpawn)
                                                 {
                                                     CrashEntity = null;
@@ -418,6 +421,14 @@ namespace CrateModLoader.GameSpecific.Crash1
                                             {
                                                 zone.Entities[i].Positions.Add(BoarPath[(BoarPath.Length - 1) - a]);
                                             }
+                                        }
+                                        else if (WarpOutEntity == null && zone.Entities[i].Type == 32 && zone.Entities[i].Subtype == 1)
+                                        {
+                                            WarpOutEntity = zone.Entities[i];
+                                            WarpOutZone = zone;
+                                            zone.Entities.RemoveAt(i);
+                                            zone.EntityCount--;
+                                            i--;
                                         }
                                     }
 
@@ -908,37 +919,30 @@ namespace CrateModLoader.GameSpecific.Crash1
                                     int crutchID = 300;
                                     EntityPosition[] crate_pos = new EntityPosition[]
                                     {
-                                          new EntityPosition(780, 550, 130),
-                                          new EntityPosition(680, 650, 130),
-                                          new EntityPosition(580, 750, 130),
-                                          new EntityPosition(880, 850, 130),
-                                          new EntityPosition(980, 950, 130),
+                                          new EntityPosition(850, 500, 180),
                                     };
                                     for (int id = 0; id < crate_pos.Length; id++)
                                     {
                                         int entID = id + crutchID;
-                                        CreateEntity((short)entID, 34, 6, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
+                                        CreateEntitySpring((short)entID, 14, 0, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
                                     }
 
-                                    OldCameraNeighbor CamSet2 = new OldCameraNeighbor(1, 1, 3, 1);
+                                    OldCameraNeighbor CamSet2 = new OldCameraNeighbor(1, 1, 3, 2);
 
                                     zone.Cameras[0].NeighborCount++;
                                     zone.Cameras[0].Neighbors[1] = CamSet2;
                                 }
                                 else if (zone.EName == "d2_TZ")
                                 {
-                                    int crutchID = 305;
+                                    int crutchID = 301;
                                     EntityPosition[] crate_pos = new EntityPosition[]
                                     {
-                                          new EntityPosition(500, 150, 140),
-                                          new EntityPosition(600, 250, 140),
-                                          new EntityPosition(700, 350, 140),
-                                          new EntityPosition(420, 520, 140),
+                                          new EntityPosition(500, 110, 180),
                                     };
                                     for (int id = 0; id < crate_pos.Length; id++)
                                     {
                                         int entID = id + crutchID;
-                                        CreateEntity((short)entID, 34, 6, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
+                                        CreateEntitySpring((short)entID, 14, 0, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
                                     }
                                 }
                                 else if (zone.EName == "c6_TZ")
@@ -955,7 +959,7 @@ namespace CrateModLoader.GameSpecific.Crash1
                                         CreateEntitySpring((short)entID, 14, 0, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
                                     }
 
-                                    OldCameraNeighbor CamSet2 = new OldCameraNeighbor(1, 1, 1, 1);
+                                    OldCameraNeighbor CamSet2 = new OldCameraNeighbor(1, 1, 1, 2);
 
                                     zone.Cameras[0].NeighborCount++;
                                     zone.Cameras[0].Neighbors[1] = CamSet2;
@@ -975,7 +979,7 @@ namespace CrateModLoader.GameSpecific.Crash1
                                         CreateEntitySpring((short)entID, 14, 0, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
                                     }
 
-                                    OldCameraNeighbor CamSet2 = new OldCameraNeighbor(1, 1, 3, 1);
+                                    OldCameraNeighbor CamSet2 = new OldCameraNeighbor(1, 1, 3, 2);
 
                                     zone.Cameras[0].NeighborCount++;
                                     zone.Cameras[0].Neighbors[1] = CamSet2;
@@ -998,12 +1002,12 @@ namespace CrateModLoader.GameSpecific.Crash1
                                     int crutchID = 317;
                                     EntityPosition[] crate_pos = new EntityPosition[]
                                     {
-                                          new EntityPosition(720, 330, 150),
+                                          new EntityPosition(720, 280, 180),
                                     };
                                     for (int id = 0; id < crate_pos.Length; id++)
                                     {
                                         int entID = id + crutchID;
-                                        CreateEntity((short)entID, 34, 2, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
+                                        CreateEntitySpring((short)entID, 14, 0, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
                                     }
                                 }
                                 else if (zone.EName == "b3_TZ")
@@ -1011,12 +1015,110 @@ namespace CrateModLoader.GameSpecific.Crash1
                                     int crutchID = 318;
                                     EntityPosition[] crate_pos = new EntityPosition[]
                                     {
-                                          new EntityPosition(1000, 330, 150),
+                                          new EntityPosition(1000, 250, 180),
                                     };
                                     for (int id = 0; id < crate_pos.Length; id++)
                                     {
                                         int entID = id + crutchID;
-                                        CreateEntity((short)entID, 34, 2, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
+                                        CreateEntitySpring((short)entID, 14, 0, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
+                                    }
+                                }
+                                else if (zone.EName == "a5_TZ")
+                                {
+                                    int crutchID = 319;
+                                    EntityPosition[] crate_pos = new EntityPosition[]
+                                    {
+                                          new EntityPosition(270, 200, 200),
+                                          new EntityPosition(470, 1100, 200),
+                                          new EntityPosition(670, 1600, 200),
+                                    };
+                                    for (int id = 0; id < crate_pos.Length; id++)
+                                    {
+                                        int entID = id + crutchID;
+                                        CreateEntitySpring((short)entID, 14, 0, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
+                                    }
+
+                                    OldCameraNeighbor CamSet2 = new OldCameraNeighbor(1, 1, 0, 2);
+
+                                    zone.Cameras[0].NeighborCount++;
+                                    zone.Cameras[0].Neighbors[1] = CamSet2;
+                                }
+                                else if (zone.EName == "a4_TZ")
+                                {
+
+                                    int crutchID = 322;
+                                    EntityPosition[] crate_pos = new EntityPosition[]
+                                    {
+                                          new EntityPosition(470, 1100, 200),
+                                          new EntityPosition(270, 1600, 200),
+                                    };
+                                    for (int id = 0; id < crate_pos.Length; id++)
+                                    {
+                                        int entID = id + crutchID;
+                                        CreateEntitySpring((short)entID, 14, 0, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
+                                    }
+
+                                    OldCameraNeighbor CamSet2 = new OldCameraNeighbor(1, 1, 0, 2);
+
+                                    zone.Cameras[0].NeighborCount++;
+                                    zone.Cameras[0].Neighbors[1] = CamSet2;
+                                }
+                                else if (zone.EName == "a3_TZ")
+                                {
+
+                                    int crutchID = 325;
+                                    EntityPosition[] crate_pos = new EntityPosition[]
+                                    {
+                                          new EntityPosition(470, 1100, 200),
+                                          new EntityPosition(670, 1600, 200),
+                                    };
+                                    for (int id = 0; id < crate_pos.Length; id++)
+                                    {
+                                        int entID = id + crutchID;
+                                        CreateEntitySpring((short)entID, 14, 0, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
+                                    }
+
+                                    OldCameraNeighbor CamSet2 = new OldCameraNeighbor(1, 1, 0, 2);
+
+                                    zone.Cameras[0].NeighborCount++;
+                                    zone.Cameras[0].Neighbors[1] = CamSet2;
+                                }
+                                else if (zone.EName == "a2_TZ")
+                                {
+                                    int crutchID = 329;
+                                    EntityPosition[] crate_pos = new EntityPosition[]
+                                    {
+                                          new EntityPosition(470, 1100, 200),
+                                          new EntityPosition(270, 1600, 200),
+                                          new EntityPosition(270, 2000, 200),
+                                          new EntityPosition(270, 2500, 200),
+                                    };
+                                    for (int id = 0; id < crate_pos.Length; id++)
+                                    {
+                                        int entID = id + crutchID;
+                                        CreateEntitySpring((short)entID, 14, 0, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
+                                    }
+
+                                    OldCameraNeighbor CamSet2 = new OldCameraNeighbor(1, 1, 0, 2);
+
+                                    zone.Cameras[0].NeighborCount++;
+                                    zone.Cameras[0].Neighbors[1] = CamSet2;
+                                }
+                                else if (zone.EName == "a1_TZ")
+                                {
+                                    int crutchID = 336;
+                                    EntityPosition[] crate_pos = new EntityPosition[]
+                                    {
+                                          new EntityPosition(770, -110, 200),
+                                          new EntityPosition(970, -110, 200),
+                                          new EntityPosition(1170, -110, 200),
+                                          new EntityPosition(770, -210, 200),
+                                          new EntityPosition(770, 500, 200),
+                                    };
+                                    for (int id = 0; id < crate_pos.Length; id++)
+                                    {
+                                        int entID = id + crutchID;
+                                        CreateEntitySpring((short)entID, 14, 0, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
                                     }
                                 }
                             }
@@ -1194,9 +1296,7 @@ namespace CrateModLoader.GameSpecific.Crash1
                 }
                 else if (level == Crash1_Levels.L12_RoadToNowhere)
                 {
-                    //CrashPos = new EntityPosition(CrashPos.X, (short)(CrashPos.Y - 390), (short)(CrashPos.Z + 200));
-                    //CrashPos = new EntityPosition(350, 200, 2650);
-                    WarpOutEntity.Flags = 196632;
+                    CrashPos = new EntityPosition(550, 197, 1450);
                 }
                 else if (level == Crash1_Levels.L05_Upstream)
                 {
@@ -1213,10 +1313,6 @@ namespace CrateModLoader.GameSpecific.Crash1
                 else if (level == Crash1_Levels.L13_BoulderDash)
                 {
                     CrashPos = new EntityPosition(CrashPos.X, (short)(CrashPos.Y - 230), CrashPos.Z);
-                }
-                else if (level == Crash1_Levels.L25_CastleMachinery)
-                {
-                    CrashPos = new EntityPosition(420, 200, 130);
                 }
                 else if (level == Crash1_Levels.L17_CortexPower || level == Crash1_Levels.L01_NSanityBeach)
                 {
@@ -1241,7 +1337,7 @@ namespace CrateModLoader.GameSpecific.Crash1
                         {
                             if (entry is OldZoneEntry zone)
                             {
-                                if (zone.EName == CrashZone.EName && level != Crash1_Levels.L25_CastleMachinery)
+                                if (zone.EName == CrashZone.EName && level != Crash1_Levels.L12_RoadToNowhere)
                                 {
                                     zone.Entities.Add(WarpOutEntity);
                                     zone.EntityCount++;
@@ -1267,7 +1363,7 @@ namespace CrateModLoader.GameSpecific.Crash1
                                 {
                                     nsd.StartZone = zone.EID;
                                 }
-                                if (level == Crash1_Levels.L25_CastleMachinery && zone.EName == "a5_TZ")
+                                if (level == Crash1_Levels.L12_RoadToNowhere && zone.EName == "a2_kZ")
                                 {
                                     zone.Entities.Add(WarpOutEntity);
                                     zone.EntityCount++;
@@ -1285,6 +1381,8 @@ namespace CrateModLoader.GameSpecific.Crash1
                 WarpOutEntity.Positions.Clear();
                 WarpOutEntity.Positions.Add(new EntityPosition(400, 300, 500));
 
+                List<int> LinkedZones = new List<int>();
+
                 foreach (Chunk chunk in nsf.Chunks)
                 {
                     if (chunk is NormalChunk zonechunk)
@@ -1298,14 +1396,70 @@ namespace CrateModLoader.GameSpecific.Crash1
                                     zone.Entities.Add(WarpOutEntity);
                                     zone.EntityCount++;
                                 }
-                                else if (zone.EName == "1O_hZ")
+                                else if (zone.EName == "1M_hZ")
                                 {
                                     nsd.StartZone = zone.EID;
+                                    zone.Cameras[0].NeighborCount = 1;
+                                }
+                                else if (zone.EName != "s0_hZ")
+                                {
+                                    zone.Cameras[0].NeighborCount = 2;
+                                    zone.Cameras[0].Neighbors[1] = new OldCameraNeighbor(1, 1, 0, 2);
                                 }
                             }
                         }
                     }
                 }
+
+                /*
+                foreach (Chunk chunk in nsf.Chunks)
+                {
+                    if (chunk is NormalChunk zonechunk)
+                    {
+                        foreach (Entry entry in zonechunk.Entries)
+                        {
+                            if (entry is OldZoneEntry zone)
+                            {
+                                if (zone.EName == "s0_hZ")
+                                {
+                                    //BitConv.FromInt32(zone.Header, 532 + 1 * 4);
+                                    BitConv.ToInt32(zone.Header, 532 + 1 * 4, nsd.StartZone);
+
+                                    int linkedzoneentrycount = BitConv.FromInt32(zone.Header, 528);
+                                    Console.WriteLine("Linked zones: " + linkedzoneentrycount);
+                                    for (int i = 0; i < linkedzoneentrycount; i++)
+                                    {
+                                        LinkedZones.Add(BitConv.FromInt32(zone.Header, 532 + i * 4));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                */
+
+                /*
+                foreach (Chunk chunk in nsf.Chunks)
+                {
+                    if (chunk is NormalChunk zonechunk)
+                    {
+                        foreach (Entry entry in zonechunk.Entries)
+                        {
+                            if (entry is OldZoneEntry zone)
+                            {
+                                for (int i = 0; i < LinkedZones.Count; i++)
+                                {
+                                    if (LinkedZones[i] == zone.EID)
+                                    {
+                                        Console.WriteLine("Link " + i + ": " + zone.EName);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                */
+
             }
 
         }
