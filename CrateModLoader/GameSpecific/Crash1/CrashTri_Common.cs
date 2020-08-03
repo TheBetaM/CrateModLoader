@@ -439,7 +439,7 @@ namespace CrateModLoader.GameSpecific
                         for (int i = 0; i < entry.Polygons.Count; i++)
                         {
                             OldSceneryPolygon poly = entry.Polygons[i];
-                            entry.Polygons[i] = new OldSceneryPolygon(poly.VertexA, poly.VertexB, poly.VertexC, 0, 0, 0, 0);
+                            entry.Polygons[i] = new OldSceneryPolygon(poly.VertexA, poly.VertexB, poly.VertexC, 0xFFF, 0, 0, 0);
                         }
                     }
                 }

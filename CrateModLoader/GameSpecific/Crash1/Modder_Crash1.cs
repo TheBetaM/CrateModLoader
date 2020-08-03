@@ -30,6 +30,7 @@ namespace CrateModLoader
         internal const int MirroredWorld = 17;
         internal const int RandomLevelsMirrored = 18;
         internal const int RandomizeMap = 19;
+        internal const int RandomizeCrateContents = 20;
 
         public Modder_Crash1()
         {
@@ -71,6 +72,7 @@ namespace CrateModLoader
             //AddOption(RandomizeMap, new ModOption("Randomize Map"));
             AddOption(BackwardsLevels, new ModOption("Backwards Levels"));
             AddOption(RandomBackwardsLevels, new ModOption("Random Levels Are Backwards"));
+            AddOption(RandomizeCrateContents, new ModOption("Randomize Crate Contents"));
             //AddOption(MirroredWorld, new ModOption("Mirrored World"));
             //AddOption(RandomLevelsMirrored, new ModOption("Random Levels Are Mirrored"));
             AddOption(CameraBiggerFOV, new ModOption("Wider Camera Field-Of-View"));
@@ -81,8 +83,8 @@ namespace CrateModLoader
             //AddOption(RandomzieMusicInstruments, new ModOption("Randomize Music Instruments")); //only swap wavebanks
             AddOption(SceneryRainbow, new ModOption("Randomize World Colors"));
             AddOption(SceneryColorSwizzle, new ModOption("Randomize World Palette"));
-            AddOption(SceneryGreyscale, new ModOption("Greyscale World"));
-            AddOption(SceneryUntextured, new ModOption("Untextured World"));
+            //AddOption(SceneryGreyscale, new ModOption("Greyscale World")); 
+            //AddOption(SceneryUntextured, new ModOption("Untextured/Greyscale World")); //todo
         }
 
         public override void StartModProcess()
@@ -138,6 +140,7 @@ namespace CrateModLoader
                 if (GetOption(CameraBiggerFOV) || GetOption(RandomizeCameraFOV)) Crash1_Mods.Mod_CameraFOV(nsf, rand, GetOption(RandomizeCameraFOV));
                 if (GetOption(RandomizeADIO)) Mod_RandomizeADIO(nsf, nsd, rand);
                 if (GetOption(RandomizeCratesIntoWood)) Crash1_Mods.Mod_RandomWoodCrates(nsf, rand);
+                if (GetOption(RandomizeCrateContents)) Crash1_Mods.Mod_RandomCrateContents(nsf, rand);
                 if (GetOption(TurnCratesIntoWumpa)) Crash1_Mods.Mod_TurnCratesIntoWumpa(nsf, rand);
                 if (GetOption(SceneryColorSwizzle)) CrashTri_Common.Mod_Scenery_Swizzle(nsf, rand);
                 if (GetOption(SceneryGreyscale)) CrashTri_Common.Mod_Scenery_Greyscale(nsf);

@@ -72,6 +72,45 @@ namespace CrateModLoader.GameSpecific.Crash3
             Clock = 28,
         }
 
+        public enum CrateContentTypes : short
+        {
+            Wumpa_1 = 0,
+            Wumpa_10 = 77,
+            Wumpa_9 = 79,
+            Wumpa_8 = 81,
+            Wumpa_7 = 83,
+            Wumpa_6 = 85,
+            Wumpa_5 = 87,
+            Wumpa_4 = 89,
+            Wumpa_3 = 91,
+            Wumpa_2 = 93,
+            Wumpa_1_Anim = 96,
+            Life = 97,
+            Rand1 = 100,
+            Rand2 = 101,
+            Mask = 102,
+            Token_Cortex = 103,
+            Token_Brio = 104,
+            Token_Tawna = 105,
+        }
+
+        public static List<CrateContentTypes> Crate_PossibleContents = new List<CrateContentTypes>()
+        {
+            CrateContentTypes.Wumpa_1,
+            CrateContentTypes.Wumpa_2,
+            CrateContentTypes.Wumpa_3,
+            CrateContentTypes.Wumpa_4,
+            CrateContentTypes.Wumpa_5,
+            CrateContentTypes.Wumpa_6,
+            CrateContentTypes.Wumpa_7,
+            CrateContentTypes.Wumpa_8,
+            CrateContentTypes.Wumpa_9,
+            CrateContentTypes.Wumpa_10,
+            CrateContentTypes.Wumpa_1_Anim,
+            CrateContentTypes.Life,
+            CrateContentTypes.Mask,
+        };
+
         public static List<CrateSubTypes> Crates_ToReplace = new List<CrateSubTypes>()
         {
             CrateSubTypes.TNT, CrateSubTypes.Nitro, CrateSubTypes.Steel, CrateSubTypes.Fruit, CrateSubTypes.Life, CrateSubTypes.Aku, CrateSubTypes.Pickup, CrateSubTypes.WoodSpring, CrateSubTypes.Outline, CrateSubTypes.Slot
@@ -110,6 +149,36 @@ namespace CrateModLoader.GameSpecific.Crash3
             }
             CrashTri_Common.Fix_Detonator(nsf);
             CrashTri_Common.Fix_BoxCount(nsf);
+
+        }
+
+        public static void Mod_RandomCrateContents(NSF nsf, Random rand)
+        {
+            // edit NSF
+            foreach (Chunk chunk in nsf.Chunks)
+            {
+                if (chunk is NormalChunk zonechunk)
+                {
+                    foreach (Entry entry in zonechunk.Entries)
+                    {
+                        if (entry is ZoneEntry)
+                        {
+                            ZoneEntry zone = (ZoneEntry)entry;
+                            foreach (Entity ent in zone.Entities)
+                            {
+                                if (ent.Type != null && ent.Type == 34)
+                                {
+                                    if ((CrateSubTypes)ent.Subtype == CrateSubTypes.Blank || (CrateSubTypes)ent.Subtype == CrateSubTypes.Pickup || (CrateSubTypes)ent.Subtype == CrateSubTypes.WoodSpring)
+                                    {
+                                        int r = rand.Next(Crate_PossibleContents.Count);
+                                        ent.Settings[0] = new EntitySetting(ent.Settings[0].ValueA, (int)Crate_PossibleContents[r]);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
 
         }
 
