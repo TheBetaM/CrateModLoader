@@ -14,7 +14,9 @@ Crash Bandicoot, Crash Bandicoot 2: Cortex Strikes Back, Crash Bandicoot: WARPED
 - New feature: Randomize Warp Room (Crash 2 & WARPED)
 - New feature: Backwards Levels (where possible)
 - New feature: Random Levels Are Backwards
-- New feature: Randomize Crate Contents (Crash 1 & 2)
+- New feature: Randomize Crate Contents
+- New feature: Bear Levels On Foot (Crash 2)
+- New feature: Randomize Bike Levels & Flying Levels (Crash WARPED)
 - New feature: Wider Camera Field-Of-View
 - New feature: Randomize Camera Field-Of-View
 - New feature: Randomize World Colors

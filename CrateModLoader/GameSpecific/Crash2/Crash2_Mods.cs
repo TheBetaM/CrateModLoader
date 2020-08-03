@@ -261,7 +261,7 @@ namespace CrateModLoader.GameSpecific.Crash2
             //Crash2_Levels.L06_SnowBiz, // todo: 2 section teleports
             //Crash2_Levels.L07_AirCrash, // todo: chunk space problems
             //Crash2_Levels.L08_BearIt, // todo: bear stuff
-            Crash2_Levels.L09_CrashCrush,
+            Crash2_Levels.L09_CrashCrush, 
             //Crash2_Levels.L10_TheEelDeal, // todo: 1 section teleport
 
             //Crash2_Levels.L11_PlantFood, // todo: out of space on PAL, sometimes crashes on death if too far away from spawn (board needs to be in loadlists?)
@@ -271,10 +271,10 @@ namespace CrateModLoader.GameSpecific.Crash2
             Crash2_Levels.L15_UnBearable, // had to remove secret exit
 
             //Crash2_Levels.L16_HanginOut, // todo: 2 section teleports
-            Crash2_Levels.L17_DigginIt, // unverified to be beatable
+            Crash2_Levels.L17_DigginIt,
             //Crash2_Levels.L18_ColdHardCrash, // todo: 2 section teleports
             Crash2_Levels.L19_Ruination,
-            Crash2_Levels.L20_BeeHaving, // unverified to be beatable
+            Crash2_Levels.L20_BeeHaving,
 
             Crash2_Levels.L21_PistonItAway,
             //Crash2_Levels.L22_RockIt, // todo: crashes on jetpack pickup, because of lack of alarms?
@@ -307,6 +307,11 @@ namespace CrateModLoader.GameSpecific.Crash2
         {
             Crash2_Levels.L23_NightFight,
             Crash2_Levels.L27_TotallyFly,
+        };
+        static List<Crash2_Levels> BeeLevelsList = new List<Crash2_Levels>()
+        {
+            Crash2_Levels.L20_BeeHaving,
+            Crash2_Levels.L17_DigginIt,
         };
 
         static List<Crash2_Levels> BackwardsCameraList = new List<Crash2_Levels>()
@@ -365,6 +370,10 @@ namespace CrateModLoader.GameSpecific.Crash2
             Entity SpacepadEnt = null;
             ZoneEntry JetpackZone = null;
             ZoneEntry SpacepadZone = null;
+            Entity ElevEnt = null;
+            Entity ElevCatchEnt = null;
+            ZoneEntry ElevCatchZone = null;
+            ZoneEntry ElevZone = null;
 
             bool CameraFlip = false;
 
@@ -393,6 +402,9 @@ namespace CrateModLoader.GameSpecific.Crash2
                                     }
                                 }
 
+                                //save some chunk space
+                                zone.Entities[i].Name = null;
+
                                 if (i < zone.Entities.Count && zone.Entities[i].Type != null && zone.Entities[i].Subtype != null)
                                 {
                                     if (CrashEntity == null && zone.Entities[i].Type == 0 && zone.Entities[i].Subtype == 0)
@@ -403,6 +415,7 @@ namespace CrateModLoader.GameSpecific.Crash2
                                         if (EmptyEntity == null)
                                             EmptyEntity = zone.Entities[2];
                                         i--;
+                                        zone.EntityCount--;
                                     }
                                     else if (WarpOutEntity == null && zone.Entities[i].Type == 1 && zone.Entities[i].Subtype == 1)
                                     {
@@ -410,12 +423,14 @@ namespace CrateModLoader.GameSpecific.Crash2
                                         WarpOutZone = zone;
                                         zone.Entities.RemoveAt(i);
                                         i--;
+                                        zone.EntityCount--;
                                     }
                                     else if (BoxCounterEntity == null && zone.Entities[i].Type == 4 && zone.Entities[i].Subtype == 17)
                                     {
                                         BoxCounterEntity = zone.Entities[i];
-                                        //zone.Entities.RemoveAt(i);
-                                        //i--;
+                                        zone.Entities.RemoveAt(i);
+                                        i--;
+                                        zone.EntityCount--;
                                     }
 
                                     if (BoardLevelsList.Contains(level))
@@ -426,6 +441,7 @@ namespace CrateModLoader.GameSpecific.Crash2
                                             BoardLaunchZones.Add(zone);
                                             zone.Entities.RemoveAt(i);
                                             i--;
+                                            zone.EntityCount--;
                                         }
                                         else if (zone.Entities[i].Type == 47 && zone.Entities[i].Subtype == 3) // Board dropoff
                                         {
@@ -433,6 +449,7 @@ namespace CrateModLoader.GameSpecific.Crash2
                                             BoardDropoffZones.Add(zone);
                                             zone.Entities.RemoveAt(i);
                                             i--;
+                                            zone.EntityCount--;
                                         }
                                     }
 
@@ -444,6 +461,7 @@ namespace CrateModLoader.GameSpecific.Crash2
                                             JetpackZone = zone;
                                             zone.Entities.RemoveAt(i);
                                             i--;
+                                            zone.EntityCount--;
                                         }
                                         else if (zone.Entities[i].Type == 35 && zone.Entities[i].Subtype == 8) // Spacepad
                                         {
@@ -451,6 +469,7 @@ namespace CrateModLoader.GameSpecific.Crash2
                                             SpacepadZone = zone;
                                             zone.Entities.RemoveAt(i);
                                             i--;
+                                            zone.EntityCount--;
                                         }
                                         else if (zone.Entities[i].Type == 35 && zone.Entities[i].Subtype == 6) // Spacelock
                                         {
@@ -491,6 +510,36 @@ namespace CrateModLoader.GameSpecific.Crash2
                                             zone.Entities.RemoveAt(i);
                                             zone.Entities.Insert(i, EmptyEntity);
                                             i--;
+                                        }
+                                    }
+
+                                    if (BeeLevelsList.Contains(level)) // temporary until flipped camera is working
+                                    {
+                                        if (zone.Entities[i].Type == 18 && zone.Entities[i].Subtype == 0) // Bee hive
+                                        {
+                                            zone.Entities.RemoveAt(i);
+                                            zone.Entities.Insert(i, EmptyEntity);
+                                            i--;
+                                        }
+                                    }
+
+                                    if (level == Crash2_Levels.L02_SnowGo)
+                                    {
+                                        if (ElevEnt == null && zone.Entities[i].Type == 9 && zone.Entities[i].Subtype == 6) // Elevator
+                                        {
+                                            ElevEnt = zone.Entities[i];
+                                            ElevZone = zone;
+                                            zone.Entities.RemoveAt(i);
+                                            i--;
+                                            zone.EntityCount--;
+                                        }
+                                        else if (ElevCatchEnt == null && zone.Entities[i].Type == 9 && zone.Entities[i].Subtype == 32) // Elevator catch
+                                        {
+                                            ElevCatchEnt = zone.Entities[i];
+                                            ElevCatchZone = zone;
+                                            zone.Entities.RemoveAt(i);
+                                            i--;
+                                            zone.EntityCount--;
                                         }
                                     }
                                 }
@@ -620,11 +669,7 @@ namespace CrateModLoader.GameSpecific.Crash2
                                 {
                                     int id = 400;
                                     CreateEntity(id, 34, 5, 854, 1149, 450, ref zone);
-
-                                    int BoxEntID = GetDrawListValue(nsf, zone, id);
-
-                                    zone.Entities[0].DrawListA.Rows[2].Values.Add(BoxEntID);
-                                    zone.Entities[0].DrawListB.Rows[0].Values.Add(BoxEntID);
+                                    AddToDrawList(ref nsf, ref zone, id);
                                 }
                             }
                             else if (level == Crash2_Levels.L12_SewerOrLater)
@@ -669,13 +714,8 @@ namespace CrateModLoader.GameSpecific.Crash2
                                     for (int id = 0; id < 2; id++)
                                     {
                                         int entID = id + crutchboxID;
-
                                         CreateEntity(entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
-
-                                        int BoxEntID = GetDrawListValue(nsf, zone, entID);
-
-                                        zone.Entities[0].DrawListA.Rows[6].Values.Add(BoxEntID);
-                                        zone.Entities[0].DrawListB.Rows[0].Values.Add(BoxEntID);
+                                        AddToDrawList(ref nsf, ref zone, entID);
                                     }
                                 }
                                 else if (zone.EName == "19_xZ")
@@ -692,11 +732,7 @@ namespace CrateModLoader.GameSpecific.Crash2
                                         int entID = id + crutchboxID + 2;
 
                                         CreateEntity(entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
-
-                                        int BoxEntID = GetDrawListValue(nsf, zone, entID);
-
-                                        zone.Entities[0].DrawListA.Rows[4].Values.Add(BoxEntID);
-                                        zone.Entities[0].DrawListB.Rows[0].Values.Add(BoxEntID);
+                                        AddToDrawList(ref nsf, ref zone, entID);
                                     }
                                 }
                                 else if (zone.EName == "05_xZ")
@@ -713,11 +749,7 @@ namespace CrateModLoader.GameSpecific.Crash2
                                         int entID = id + crutchboxID + 4;
 
                                         CreateEntity(entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
-
-                                        int BoxEntID = GetDrawListValue(nsf, zone, entID);
-
-                                        zone.Entities[0].DrawListA.Rows[3].Values.Add(BoxEntID);
-                                        zone.Entities[0].DrawListB.Rows[0].Values.Add(BoxEntID);
+                                        AddToDrawList(ref nsf, ref zone, entID);
                                     }
                                 }
 
@@ -740,11 +772,7 @@ namespace CrateModLoader.GameSpecific.Crash2
                                         int entID = id + crutchboxID;
 
                                         CreateEntity(entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
-
-                                        int BoxEntID = GetDrawListValue(nsf, zone, entID);
-
-                                        zone.Entities[0].DrawListA.Rows[4].Values.Add(BoxEntID);
-                                        zone.Entities[0].DrawListB.Rows[0].Values.Add(BoxEntID);
+                                        AddToDrawList(ref nsf, ref zone, entID);
                                     }
                                 }
                                 else if (zone.EName == "24_pZ")
@@ -761,11 +789,7 @@ namespace CrateModLoader.GameSpecific.Crash2
                                         int entID = id + crutchboxID + 4;
 
                                         CreateEntity(entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
-
-                                        int BoxEntID = GetDrawListValue(nsf, zone, entID);
-
-                                        zone.Entities[0].DrawListA.Rows[3].Values.Add(BoxEntID);
-                                        zone.Entities[0].DrawListB.Rows[0].Values.Add(BoxEntID);
+                                        AddToDrawList(ref nsf, ref zone, entID);
                                     }
                                 }
                                 else if (zone.EName == "08_pZ")
@@ -782,11 +806,7 @@ namespace CrateModLoader.GameSpecific.Crash2
                                         int entID = id + crutchboxID + 6;
 
                                         CreateEntity(entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
-
-                                        int BoxEntID = GetDrawListValue(nsf, zone, entID);
-
-                                        zone.Entities[0].DrawListA.Rows[4].Values.Add(BoxEntID);
-                                        zone.Entities[0].DrawListB.Rows[0].Values.Add(BoxEntID);
+                                        AddToDrawList(ref nsf, ref zone, entID);
                                     }
                                 }
 
@@ -804,6 +824,7 @@ namespace CrateModLoader.GameSpecific.Crash2
                                         {
                                             zone.Entities.RemoveAt(i);
                                             i--;
+                                            zone.EntityCount--;
                                         }
                                     }
                                     */
@@ -823,11 +844,7 @@ namespace CrateModLoader.GameSpecific.Crash2
                                         int entID = id + crutchboxID;
 
                                         CreateEntity(entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
-
-                                        int BoxEntID = GetDrawListValue(nsf, zone, entID);
-
-                                        zone.Entities[0].DrawListA.Rows[5].Values.Add(BoxEntID);
-                                        zone.Entities[0].DrawListB.Rows[0].Values.Add(BoxEntID);
+                                        AddToDrawList(ref nsf, ref zone, entID);
                                     }
                                     */
                                 }
@@ -846,11 +863,7 @@ namespace CrateModLoader.GameSpecific.Crash2
                                         int entID = id + crutchboxID + 4;
 
                                         CreateEntity(entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
-
-                                        int BoxEntID = GetDrawListValue(nsf, zone, entID);
-
-                                        zone.Entities[0].DrawListA.Rows[4].Values.Add(BoxEntID);
-                                        zone.Entities[0].DrawListB.Rows[0].Values.Add(BoxEntID);
+                                        AddToDrawList(ref nsf, ref zone, entID);
                                     }
                                 }
                                 else if (zone.EName == "15_wZ")
@@ -868,11 +881,7 @@ namespace CrateModLoader.GameSpecific.Crash2
                                         int entID = id + crutchboxID + 8;
 
                                         CreateEntity(entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
-
-                                        int BoxEntID = GetDrawListValue(nsf, zone, entID);
-
-                                        zone.Entities[0].DrawListA.Rows[4].Values.Add(BoxEntID);
-                                        zone.Entities[0].DrawListB.Rows[0].Values.Add(BoxEntID);
+                                        AddToDrawList(ref nsf, ref zone, entID);
                                     }
                                 }
                                 else if (zone.EName == "24_wZ")
@@ -889,11 +898,7 @@ namespace CrateModLoader.GameSpecific.Crash2
                                         int entID = id + crutchboxID + 12;
 
                                         CreateEntity(entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
-
-                                        int BoxEntID = GetDrawListValue(nsf, zone, entID);
-
-                                        zone.Entities[0].DrawListA.Rows[8].Values.Add(BoxEntID);
-                                        zone.Entities[0].DrawListB.Rows[0].Values.Add(BoxEntID);
+                                        AddToDrawList(ref nsf, ref zone, entID);
                                     }
                                 }
                                 else if (zone.EName == "09_wZ")
@@ -910,11 +915,7 @@ namespace CrateModLoader.GameSpecific.Crash2
                                         int entID = id + crutchboxID + 14;
 
                                         CreateEntity(entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
-
-                                        int BoxEntID = GetDrawListValue(nsf, zone, entID);
-
-                                        zone.Entities[0].DrawListA.Rows[4].Values.Add(BoxEntID);
-                                        zone.Entities[0].DrawListB.Rows[0].Values.Add(BoxEntID);
+                                        AddToDrawList(ref nsf, ref zone, entID);
                                     }
                                 }
 
@@ -979,10 +980,15 @@ namespace CrateModLoader.GameSpecific.Crash2
 
             CrashEntity.Positions.RemoveAt(0);
             WarpOutEntity.Positions.RemoveAt(0);
-            //BoxCounterEntity.Positions.RemoveAt(0);
+            BoxCounterEntity.Positions.RemoveAt(0);
             CrashEntity.Positions.Add(WarpOutPos);
             WarpOutEntity.Positions.Add(CrashPos);
-            //BoxCounterEntity.Positions.Add(CrashPos);
+            BoxCounterEntity.Positions.Add(CrashPos);
+
+            //saving some chunk space
+            CrashEntity.Name = null;
+            WarpOutEntity.Name = null;
+            BoxCounterEntity.Name = null;
 
             //ID switch to fix drawlists?
             int tempID = (int)CrashEntity.ID;
@@ -1020,6 +1026,28 @@ namespace CrateModLoader.GameSpecific.Crash2
                 SpacepadEnt.ID = tempboardID;
             }
 
+            if (ElevEnt != null)
+            {
+                List<EntityPosition> Pos1 = new List<EntityPosition>(ElevEnt.Positions);
+                List<EntityPosition> Pos2 = new List<EntityPosition>(ElevCatchEnt.Positions);
+                Pos1.Reverse();
+                Pos2.Reverse();
+                ElevEnt.Positions.Clear();
+                ElevCatchEnt.Positions.Clear();
+                for (int i = 0; i < Pos1.Count; i++)
+                {
+                    ElevCatchEnt.Positions.Add(Pos1[i]);
+                }
+                for (int i = 0; i < Pos2.Count; i++)
+                {
+                    ElevEnt.Positions.Add(Pos2[i]);
+                }
+
+                int tempboardID = (int)ElevEnt.ID;
+                ElevEnt.ID = ElevCatchEnt.ID;
+                ElevCatchEnt.ID = tempboardID;
+            }
+
             foreach (Chunk chunk in nsf.Chunks)
             {
                 if (chunk is NormalChunk zonechunk)
@@ -1031,11 +1059,22 @@ namespace CrateModLoader.GameSpecific.Crash2
                             if (zone.EName == CrashZone.EName)
                             {
                                 zone.Entities.Add(WarpOutEntity);
-                                //zone.Entities.Add(BoxCounterEntity); // not enough space in crash crush
+                                zone.Entities.Add(BoxCounterEntity);
+                                zone.EntityCount++;
+                                zone.EntityCount++;
+
+                                if (level == Crash2_Levels.L09_CrashCrush)
+                                {
+                                    zone.Entities.RemoveAt(2);
+                                    zone.EntityCount--;
+                                }
+
+                                AddToDrawList(ref nsf, ref zone, (int)BoxCounterEntity.ID);
                             }
                             else if (zone.EName == WarpOutZone.EName)
                             {
                                 zone.Entities.Add(CrashEntity);
+                                zone.EntityCount++;
                             }
                             if (BoardEnts.Count > 0)
                             {
@@ -1044,10 +1083,12 @@ namespace CrateModLoader.GameSpecific.Crash2
                                     if (zone.EName == BoardLaunchZones[i].EName)
                                     {
                                         zone.Entities.Add(BoardDropEnts[i]);
+                                        zone.EntityCount++;
                                     }
                                     else if (zone.EName == BoardDropoffZones[i].EName)
                                     {
                                         zone.Entities.Add(BoardEnts[i]);
+                                        zone.EntityCount++;
                                     }
                                 }
                             }
@@ -1056,11 +1097,28 @@ namespace CrateModLoader.GameSpecific.Crash2
                                 if (zone.EName == JetpackZone.EName)
                                 {
                                     zone.Entities.Add(SpacepadEnt);
+                                    zone.EntityCount++;
                                 }
                                 else if (zone.EName == SpacepadZone.EName)
                                 {
                                     zone.Entities.Add(JetpackEnt);
+                                    zone.EntityCount++;
                                 }
+                            }
+
+                            if (level == Crash2_Levels.L02_SnowGo)
+                            {
+                                if (zone.EName == ElevZone.EName)
+                                {
+                                    zone.Entities.Add(ElevCatchEnt);
+                                    zone.EntityCount++;
+                                }
+                                else if (zone.EName == ElevCatchZone.EName)
+                                {
+                                    zone.Entities.Add(ElevEnt);
+                                    zone.EntityCount++;
+                                }
+
                             }
 
                             //Crutch zone 2
@@ -1069,17 +1127,11 @@ namespace CrateModLoader.GameSpecific.Crash2
                                 int id = 400;
                                 if (zone.EName == "04_gZ")
                                 {
-                                    int BoxEntID = GetDrawListValue(nsf, zone, id);
-
-                                    zone.Entities[0].DrawListA.Rows[3].Values.Add(BoxEntID);
-                                    zone.Entities[0].DrawListB.Rows[1].Values.Add(BoxEntID);
+                                    AddToDrawList(ref nsf, ref zone, id);
                                 }
                                 else if (zone.EName == "06_gZ")
                                 {
-                                    int BoxEntID = GetDrawListValue(nsf, zone, id);
-
-                                    zone.Entities[0].DrawListA.Rows[0].Values.Add(BoxEntID);
-                                    zone.Entities[0].DrawListB.Rows[0].Values.Add(BoxEntID);
+                                    AddToDrawList(ref nsf, ref zone, id);
                                 }
                             }
                             else if (level == Crash2_Levels.L11_PlantFood)
@@ -1089,60 +1141,42 @@ namespace CrateModLoader.GameSpecific.Crash2
                                 {
                                     for (int i = id + 0; i < id + 2; i++)
                                     {
-                                        int BoxEntID = GetDrawListValue(nsf, zone, i);
-
-                                        zone.Entities[0].DrawListA.Rows[1].Values.Add(BoxEntID);
-                                        zone.Entities[0].DrawListB.Rows[1].Values.Add(BoxEntID);
+                                        AddToDrawList(ref nsf, ref zone, i);
                                     }
                                 }
                                 else if (zone.EName == "28_xZ")
                                 {
                                     for (int i = id + 0; i < id + 2; i++)
                                     {
-                                        int BoxEntID = GetDrawListValue(nsf, zone, i);
-
-                                        zone.Entities[0].DrawListA.Rows[0].Values.Add(BoxEntID);
-                                        zone.Entities[0].DrawListB.Rows[0].Values.Add(BoxEntID);
+                                        AddToDrawList(ref nsf, ref zone, i);
                                     }
                                 }
                                 else if (zone.EName == "18_xZ")
                                 {
                                     for (int i = id + 2; i < id + 4; i++)
                                     {
-                                        int BoxEntID = GetDrawListValue(nsf, zone, i);
-
-                                        zone.Entities[0].DrawListA.Rows[6].Values.Add(BoxEntID);
-                                        zone.Entities[0].DrawListB.Rows[1].Values.Add(BoxEntID);
+                                        AddToDrawList(ref nsf, ref zone, i);
                                     }
                                 }
                                 else if (zone.EName == "20_xZ")
                                 {
                                     for (int i = id + 2; i < id + 4; i++)
                                     {
-                                        int BoxEntID = GetDrawListValue(nsf, zone, i);
-
-                                        zone.Entities[0].DrawListA.Rows[2].Values.Add(BoxEntID);
-                                        zone.Entities[0].DrawListB.Rows[2].Values.Add(BoxEntID);
+                                        AddToDrawList(ref nsf, ref zone, i);
                                     }
                                 }
                                 else if (zone.EName == "04_xZ")
                                 {
                                     for (int i = id + 4; i < id + 6; i++)
                                     {
-                                        int BoxEntID = GetDrawListValue(nsf, zone, i);
-
-                                        zone.Entities[0].DrawListA.Rows[1].Values.Add(BoxEntID);
-                                        zone.Entities[0].DrawListB.Rows[0].Values.Add(BoxEntID);
+                                        AddToDrawList(ref nsf, ref zone, i);
                                     }
                                 }
                                 else if (zone.EName == "06_xZ")
                                 {
                                     for (int i = id + 4; i < id + 6; i++)
                                     {
-                                        int BoxEntID = GetDrawListValue(nsf, zone, i);
-
-                                        zone.Entities[0].DrawListA.Rows[0].Values.Add(BoxEntID);
-                                        zone.Entities[0].DrawListB.Rows[0].Values.Add(BoxEntID);
+                                        AddToDrawList(ref nsf, ref zone, i);
                                     }
                                 }
                             }
@@ -1153,60 +1187,42 @@ namespace CrateModLoader.GameSpecific.Crash2
                                 {
                                     for (int i = id + 0; i < id + 4; i++)
                                     {
-                                        int BoxEntID = GetDrawListValue(nsf, zone, i);
-
-                                        zone.Entities[0].DrawListA.Rows[4].Values.Add(BoxEntID);
-                                        zone.Entities[0].DrawListB.Rows[0].Values.Add(BoxEntID);
+                                        AddToDrawList(ref nsf, ref zone, i);
                                     }
                                 }
                                 else if (zone.EName == "31_pZ")
                                 {
                                     for (int i = id + 0; i < id + 4; i++)
                                     {
-                                        int BoxEntID = GetDrawListValue(nsf, zone, i);
-
-                                        zone.Entities[0].DrawListA.Rows[0].Values.Add(BoxEntID);
-                                        zone.Entities[0].DrawListB.Rows[0].Values.Add(BoxEntID);
+                                        AddToDrawList(ref nsf, ref zone, i);
                                     }
                                 }
                                 else if (zone.EName == "23_pZ")
                                 {
                                     for (int i = id + 4; i < id + 6; i++)
                                     {
-                                        int BoxEntID = GetDrawListValue(nsf, zone, i);
-
-                                        zone.Entities[0].DrawListA.Rows[5].Values.Add(BoxEntID);
-                                        zone.Entities[0].DrawListB.Rows[0].Values.Add(BoxEntID);
+                                        AddToDrawList(ref nsf, ref zone, i);
                                     }
                                 }
                                 else if (zone.EName == "25_pZ")
                                 {
                                     for (int i = id + 4; i < id + 6; i++)
                                     {
-                                        int BoxEntID = GetDrawListValue(nsf, zone, i);
-
-                                        zone.Entities[0].DrawListA.Rows[1].Values.Add(BoxEntID);
-                                        zone.Entities[0].DrawListB.Rows[0].Values.Add(BoxEntID);
+                                        AddToDrawList(ref nsf, ref zone, i);
                                     }
                                 }
                                 else if (zone.EName == "07_pZ")
                                 {
                                     for (int i = id + 6; i < id + 8; i++)
                                     {
-                                        int BoxEntID = GetDrawListValue(nsf, zone, i);
-
-                                        zone.Entities[0].DrawListA.Rows[0].Values.Add(BoxEntID);
-                                        zone.Entities[0].DrawListB.Rows[0].Values.Add(BoxEntID);
+                                        AddToDrawList(ref nsf, ref zone, i);
                                     }
                                 }
                                 else if (zone.EName == "09_pZ")
                                 {
                                     for (int i = id + 6; i < id + 8; i++)
                                     {
-                                        int BoxEntID = GetDrawListValue(nsf, zone, i);
-
-                                        zone.Entities[0].DrawListA.Rows[0].Values.Add(BoxEntID);
-                                        zone.Entities[0].DrawListB.Rows[0].Values.Add(BoxEntID);
+                                        AddToDrawList(ref nsf, ref zone, i);
                                     }
                                 }
                             }
@@ -1218,19 +1234,13 @@ namespace CrateModLoader.GameSpecific.Crash2
                                     /*
                                     for (int i = id + 0; i < id + 1; i++)
                                     {
-                                        int BoxEntID = GetDrawListValue(nsf, zone, i);
-
-                                        zone.Entities[0].DrawListA.Rows[3].Values.Add(BoxEntID);
-                                        zone.Entities[0].DrawListB.Rows[0].Values.Add(BoxEntID);
+                                        AddToDrawList(ref nsf, ref zone, i);
                                     }
                                     */
-                                    
+
                                     for (int i = id + 4; i < id + 8; i++)
                                     {
-                                        int BoxEntID = GetDrawListValue(nsf, zone, i);
-
-                                        zone.Entities[0].DrawListA.Rows[3].Values.Add(BoxEntID);
-                                        zone.Entities[0].DrawListB.Rows[0].Values.Add(BoxEntID);
+                                        AddToDrawList(ref nsf, ref zone, i);
                                     }
 
                                     /*
@@ -1280,73 +1290,103 @@ namespace CrateModLoader.GameSpecific.Crash2
                                 {
                                     for (int i = id + 4; i < id + 8; i++)
                                     {
-                                        int BoxEntID = GetDrawListValue(nsf, zone, i);
-
-                                        zone.Entities[0].DrawListA.Rows[6].Values.Add(BoxEntID);
-                                        zone.Entities[0].DrawListB.Rows[0].Values.Add(BoxEntID);
+                                        AddToDrawList(ref nsf, ref zone, i);
                                     }
                                 }
                                 else if (zone.EName == "14_wZ")
                                 {
                                     for (int i = id + 8; i < id + 12; i++)
                                     {
-                                        int BoxEntID = GetDrawListValue(nsf, zone, i);
-
-                                        zone.Entities[0].DrawListA.Rows[1].Values.Add(BoxEntID);
-                                        zone.Entities[0].DrawListB.Rows[0].Values.Add(BoxEntID);
-                                        zone.Entities[3].DrawListA.Rows[2].Values.Add(BoxEntID);
-                                        zone.Entities[3].DrawListB.Rows[3].Values.Add(BoxEntID);
+                                        AddToDrawList(ref nsf, ref zone, i);
                                     }
                                 }
                                 else if (zone.EName == "16_wZ")
                                 {
                                     for (int i = id + 8; i < id + 12; i++)
                                     {
-                                        int BoxEntID = GetDrawListValue(nsf, zone, i);
-
-                                        zone.Entities[0].DrawListA.Rows[4].Values.Add(BoxEntID);
-                                        zone.Entities[0].DrawListB.Rows[0].Values.Add(BoxEntID);
+                                        AddToDrawList(ref nsf, ref zone, i);
                                     }
                                 }
                                 else if (zone.EName == "25_wZ")
                                 {
                                     for (int i = id + 12; i < id + 14; i++)
                                     {
-                                        int BoxEntID = GetDrawListValue(nsf, zone, i);
-
-                                        zone.Entities[0].DrawListA.Rows[0].Values.Add(BoxEntID);
-                                        zone.Entities[0].DrawListB.Rows[0].Values.Add(BoxEntID);
+                                        AddToDrawList(ref nsf, ref zone, i);
                                     }
                                 }
                                 else if (zone.EName == "23_wZ")
                                 {
                                     for (int i = id + 12; i < id + 14; i++)
                                     {
-                                        int BoxEntID = GetDrawListValue(nsf, zone, i);
-
-                                        zone.Entities[0].DrawListA.Rows[2].Values.Add(BoxEntID);
-                                        zone.Entities[0].DrawListB.Rows[1].Values.Add(BoxEntID);
+                                        AddToDrawList(ref nsf, ref zone, i);
                                     }
                                 }
                                 else if (zone.EName == "08_wZ")
                                 {
                                     for (int i = id + 14; i < id + 16; i++)
                                     {
-                                        int BoxEntID = GetDrawListValue(nsf, zone, i);
-
-                                        zone.Entities[0].DrawListA.Rows[3].Values.Add(BoxEntID);
-                                        zone.Entities[0].DrawListB.Rows[0].Values.Add(BoxEntID);
+                                        AddToDrawList(ref nsf, ref zone, i);
                                     }
                                 }
                                 else if (zone.EName == "10_wZ")
                                 {
                                     for (int i = id + 14; i < id + 16; i++)
                                     {
-                                        int BoxEntID = GetDrawListValue(nsf, zone, i);
-
-                                        zone.Entities[0].DrawListA.Rows[2].Values.Add(BoxEntID);
-                                        zone.Entities[0].DrawListB.Rows[0].Values.Add(BoxEntID);
+                                        AddToDrawList(ref nsf, ref zone, i);
                                     }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (level == Crash2_Levels.L02_SnowGo)
+            {
+
+                List<EntityPosition> Pos1 = new List<EntityPosition>(ElevEnt.Positions);
+                List<EntityPosition> Pos2 = new List<EntityPosition>(ElevCatchEnt.Positions);
+                Pos1.Reverse();
+                Pos2.Reverse();
+                ElevEnt.Positions.Clear();
+                ElevCatchEnt.Positions.Clear();
+                for (int i = 0; i < Pos1.Count; i++)
+                {
+                    ElevCatchEnt.Positions.Add(new EntityPosition(500, (short)(Pos2[i].Y + 190), 500));
+                }
+                for (int i = 0; i < Pos2.Count; i++)
+                {
+                    ElevEnt.Positions.Add(new EntityPosition(689, Pos2[i].Y, 555));
+                }
+                ElevEnt.ID = 400;
+                ElevCatchEnt.ID = 401;
+                ElevEnt.Settings[2] = new EntitySetting(0, 401);
+
+                foreach (Chunk chunk in nsf.Chunks)
+                {
+                    if (chunk is NormalChunk zonechunk)
+                    {
+                        foreach (Entry entry in zonechunk.Entries)
+                        {
+                            if (entry is ZoneEntry zone)
+                            {
+                                if (level == Crash2_Levels.L02_SnowGo)
+                                {
+                                    if (zone.EName == "1n_eZ")
+                                    {
+                                        zone.Entities.Add(ElevCatchEnt);
+                                        zone.EntityCount++;
+
+                                        AddToDrawList(ref nsf, ref zone, 401);
+                                    }
+                                    else if (zone.EName == "b1_eZ")
+                                    {
+                                        zone.Entities.Add(ElevEnt);
+                                        zone.EntityCount++;
+
+                                        AddToDrawList(ref nsf, ref zone, 400);
+                                    }
+
                                 }
                             }
                         }
@@ -1493,15 +1533,95 @@ namespace CrateModLoader.GameSpecific.Crash2
                 }
             }
             return 0;
-            /*
-            for (int i = 0; i < zone.ZoneCount; ++i)
+        }
+
+        static void AddToDrawList(ref NSF nsf, ref ZoneEntry zone, int ID)
+        {
+            int BoxEntID = GetDrawListValue(nsf, zone, ID);
+
+            for (int i = 0; i < zone.Entities.Count; i++)
             {
-                if (entry.EID == BitConv.FromInt32(zone.Header, 0x194 + i * 4))
+                if (zone.Entities[i].DrawListB != null)
                 {
-                    BoxEntID = (int)(i | (id << 8) | ((zone.Entities.IndexOf(newentity) - BitConv.FromInt32(zone.Header, 0x188)) << 24));
+                    short LowPos = short.MaxValue;
+                    for (int a = 0; a < zone.Entities[i].DrawListB.Rows.Count; a++)
+                    {
+                        if (zone.Entities[i].DrawListB.Rows[a].MetaValue < LowPos)
+                        {
+                            LowPos = (short)zone.Entities[i].DrawListB.Rows[a].MetaValue;
+                        }
+                    }
+                    for (int a = 0; a < zone.Entities[i].DrawListB.Rows.Count; a++)
+                    {
+                        if (zone.Entities[i].DrawListB.Rows[a].MetaValue == LowPos)
+                        {
+                            zone.Entities[i].DrawListB.Rows[a].Values.Add(BoxEntID);
+                        }
+                    }
+                }
+                if (zone.Entities[i].DrawListA != null)
+                {
+                    short MaxPos = -1;
+                    for (int a = 0; a < zone.Entities[i].DrawListA.Rows.Count; a++)
+                    {
+                        if (zone.Entities[i].DrawListA.Rows[a].MetaValue > MaxPos)
+                        {
+                            MaxPos = (short)zone.Entities[i].DrawListA.Rows[a].MetaValue;
+                        }
+                    }
+                    for (int a = 0; a < zone.Entities[i].DrawListA.Rows.Count; a++)
+                    {
+                        if (zone.Entities[i].DrawListA.Rows[a].MetaValue == MaxPos)
+                        {
+                            zone.Entities[i].DrawListA.Rows[a].Values.Add(BoxEntID);
+                        }
+                    }
                 }
             }
-            */
+        }
+        static void AddToDrawListRev(ref NSF nsf, ref ZoneEntry zone, int ID)
+        {
+            int BoxEntID = GetDrawListValue(nsf, zone, ID);
+
+            for (int i = 0; i < zone.Entities.Count; i++)
+            {
+                if (zone.Entities[i].DrawListA != null)
+                {
+                    short LowPos = short.MaxValue;
+                    for (int a = 0; a < zone.Entities[i].DrawListA.Rows.Count; a++)
+                    {
+                        if (zone.Entities[i].DrawListA.Rows[a].MetaValue < LowPos)
+                        {
+                            LowPos = (short)zone.Entities[i].DrawListA.Rows[a].MetaValue;
+                        }
+                    }
+                    for (int a = 0; a < zone.Entities[i].DrawListA.Rows.Count; a++)
+                    {
+                        if (zone.Entities[i].DrawListA.Rows[a].MetaValue == LowPos)
+                        {
+                            zone.Entities[i].DrawListA.Rows[a].Values.Add(BoxEntID);
+                        }
+                    }
+                }
+                if (zone.Entities[i].DrawListB != null)
+                {
+                    short MaxPos = -1;
+                    for (int a = 0; a < zone.Entities[i].DrawListB.Rows.Count; a++)
+                    {
+                        if (zone.Entities[i].DrawListB.Rows[a].MetaValue > MaxPos)
+                        {
+                            MaxPos = (short)zone.Entities[i].DrawListB.Rows[a].MetaValue;
+                        }
+                    }
+                    for (int a = 0; a < zone.Entities[i].DrawListB.Rows.Count; a++)
+                    {
+                        if (zone.Entities[i].DrawListB.Rows[a].MetaValue == MaxPos)
+                        {
+                            zone.Entities[i].DrawListB.Rows[a].Values.Add(BoxEntID);
+                        }
+                    }
+                }
+            }
         }
 
         static void CreateEntity(int id, int type, int subtype, short x, short y, short z, ref ZoneEntry zone)
@@ -1509,7 +1629,7 @@ namespace CrateModLoader.GameSpecific.Crash2
             Entity newentity = Entity.Load(new Entity(new Dictionary<short, EntityProperty>()).Save());
             newentity.ID = id;
             newentity.AlternateID = null;
-            newentity.Name = "cml";
+            newentity.Name = null;
             newentity.Positions.Clear();
             newentity.Positions.Add(new EntityPosition(x, y, z));
             newentity.Type = type;

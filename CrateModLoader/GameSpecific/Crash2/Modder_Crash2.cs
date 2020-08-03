@@ -74,7 +74,7 @@ namespace CrateModLoader
             AddOption(BackwardsLevels, new ModOption("Backwards Levels (where possible)"));
             AddOption(RandomBackwardsLevels, new ModOption("Random Levels Are Backwards"));
             AddOption(RandomizeCrateContents, new ModOption("Randomize Crate Contents"));
-            //AddOption(VehicleLevelsOnFoot, new ModOption("Vehicle Levels On Foot"));
+            AddOption(VehicleLevelsOnFoot, new ModOption("Bear Levels On Foot"));
             //AddOption(MirroredWorld, new ModOption("Mirrored World"));
             //AddOption(RandomLevelsMirrored, new ModOption("Random Levels Are Mirrored"));
             AddOption(CameraBiggerFOV, new ModOption("Wider Camera Field-Of-View"));
