@@ -161,9 +161,9 @@ namespace CrateModLoader.GameSpecific.Crash3
                 {
                     foreach (Entry entry in zonechunk.Entries)
                     {
-                        if (entry is ZoneEntry)
+                        if (entry is NewZoneEntry)
                         {
-                            ZoneEntry zone = (ZoneEntry)entry;
+                            NewZoneEntry zone = (NewZoneEntry)entry;
                             foreach (Entity ent in zone.Entities)
                             {
                                 if (ent.Type != null && ent.Type == 34)

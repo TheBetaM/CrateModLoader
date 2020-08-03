@@ -72,7 +72,7 @@ namespace CrateModLoader
             AddOption(RandomizeWarpRoom, new ModOption("Randomize Warp Room"));
             AddOption(BackwardsLevels, new ModOption("Backwards Levels (where possible)"));
             AddOption(RandomBackwardsLevels, new ModOption("Random Levels Are Backwards"));
-            //AddOption(RandomizeCrateContents, new ModOption("Randomize Crate Contents"));
+            AddOption(RandomizeCrateContents, new ModOption("Randomize Crate Contents"));
             //AddOption(MirroredWorld, new ModOption("Mirrored World"));
             //AddOption(RandomLevelsMirrored, new ModOption("Random Levels Are Mirrored"));
             AddOption(CameraBiggerFOV, new ModOption("Wider Camera Field-Of-View"));
