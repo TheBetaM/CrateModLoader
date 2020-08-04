@@ -10,7 +10,7 @@ Featured:
 * [Crash Bandicoot: WARPED](#crash-bandicoot-warped-)
 
 Additionally supported:
-* [Crash Team Racing](#crash-team-racing-)
+* [Crash Team Racing](#ctr-crash-team-racing-)
 * [Crash of the Titans](#crash-of-the-titans-)
 * [Crash: Mind Over Mutant](#crash-mind-over-mutant-)
 
