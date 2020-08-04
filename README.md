@@ -1,5 +1,5 @@
 <p align="center">
-<img src="../master/CrateModLoader/Resources/cml_header.png" width="433" height="200" alt="Crate Mod Loader"> 
+<img src="./CrateModLoader/Resources/cml_header.png" width="433" height="200" alt="Crate Mod Loader"> 
 </p>
   
 The all-in-one Randomizer and Mod Loader for console games.  
@@ -10,8 +10,8 @@ In addition, it allows for standalone "Mod Crates" to be installed seamlessly in
   
 Visit the [Releases](https://github.com/TheBetaM/CrateModLoader/releases) section to find the latest release.  
   
-See [this list](../master/GAMES.md) for supported games and their features in the current build.  
-See [this list](../master/CONSOLES.md) for supported consoles in the current build.  
+See [this list](./GAMES.md) for supported games and their features in the current build.  
+See [this list](./CONSOLES.md) for supported consoles in the current build.  
 
 # Mod Crates
 
@@ -23,7 +23,7 @@ Mod Crates can be folders or standard .zip files with these contents:
 - ModCrateSettings.txt game-specific settings that can't be changed with modded files  
 - ModCrateIcon.png icon of the mod displayed in the program  
 - "layer0" folder - any files and folders inside will replace or add to the base extracted contents of the game ROM  
-- "layer1" "layer2" etc. folders - supported games allow for replacement and/or addition of files in different game archives (check compatibility in [this list](../master/GAMES.md) or Games.txt)  
+- "layer1" "layer2" etc. folders - supported games allow for replacement and/or addition of files in different game archives (check compatibility in [this list](./GAMES.md) or Games.txt)  
   
 # Building Prerequisites
 
