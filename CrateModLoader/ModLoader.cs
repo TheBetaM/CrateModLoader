@@ -53,6 +53,7 @@ namespace CrateModLoader
         public bool inputDirectoryMode = false;
         public bool outputDirectoryMode = false;
         public bool processActive = false;
+        public bool isCDimage = false; //as opposed to DVD image
         public Modder Modder;
         private Process ISOcreatorProcess;
         public BackgroundWorker asyncWorker;
@@ -101,7 +102,7 @@ namespace CrateModLoader
                     file.CopyTo(pathparent + file.Name);
                 }
             }
-            else if (ModLoaderGlobals.Console == ConsoleMode.PS2)
+            else if (ModLoaderGlobals.Console == ConsoleMode.PS2 && !isCDimage)
             {
                 //Use ImgBurn
                 DirectoryInfo di = new DirectoryInfo(ModLoaderGlobals.TempPath);
@@ -294,6 +295,23 @@ namespace CrateModLoader
                 isoBuild.UseJoliet = true;
                 isoBuild.VolumeIdentifier = ModLoaderGlobals.ISO_Label;
 
+                if (isCDimage)
+                {
+                    DirectoryInfo dit = new DirectoryInfo(ModLoaderGlobals.TempPath);
+                    foreach (DirectoryInfo dir in dit.EnumerateDirectories())
+                    {
+                        foreach (FileInfo file in dir.EnumerateFiles())
+                        {
+                            file.MoveTo(file.FullName);
+                        }
+                        Recursive_RenameFiles(dir);
+                    }
+                    foreach (FileInfo file in dit.EnumerateFiles())
+                    {
+                        file.MoveTo(file.FullName);
+                    }
+                }
+
                 DirectoryInfo di = new DirectoryInfo(ModLoaderGlobals.TempPath);
                 HashSet<FileStream> files = new HashSet<FileStream>();
 
@@ -306,7 +324,7 @@ namespace CrateModLoader
                     AddFile(isoBuild, file, string.Empty, files);
                 }
 
-                if (ModLoaderGlobals.Console == ConsoleMode.PS1)
+                if (ModLoaderGlobals.Console == ConsoleMode.PS1 || ModLoaderGlobals.Console == ConsoleMode.PS2)
                 {
                     using (FileStream output = new FileStream(ModLoaderGlobals.OutputPath, FileMode.Create, FileAccess.Write))
                     using (Stream input = isoBuild.Build())
@@ -382,6 +400,7 @@ namespace CrateModLoader
         void LoadISO()
         {
 
+            isCDimage = false;
             if (Directory.Exists(ModLoaderGlobals.TempPath))
             {
                 DeleteTempFiles();
@@ -483,13 +502,14 @@ namespace CrateModLoader
                     FileInfo isoInfo = new FileInfo(ModLoaderGlobals.InputPath);
                     CDReader cd;
                     FileStream tempbin = null;
-                    if (Path.GetExtension(ModLoaderGlobals.InputPath).ToLower() == ".bin") // PS1 image
+                    if (Path.GetExtension(ModLoaderGlobals.InputPath).ToLower() == ".bin") // PS1/PS2 CD image
                     {
                         FileStream binconvout = new FileStream(AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso", FileMode.Create, FileAccess.Write);
                         PSX2ISO.Run(isoStream, binconvout);
                         binconvout.Close();
                         tempbin = new FileStream(AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso", FileMode.Open, FileAccess.Read);
                         cd = new CDReader(tempbin, true);
+                        isCDimage = true;
                     }
                     else
                         cd = new CDReader(isoStream, true);
@@ -1139,7 +1159,7 @@ namespace CrateModLoader
                             FileStream tempbin = null;
                             ModLoaderGlobals.Console = ConsoleMode.Undefined;
 
-                            if (Path.GetExtension(ModLoaderGlobals.InputPath).ToLower() == ".bin") // PS1 image
+                            if (Path.GetExtension(ModLoaderGlobals.InputPath).ToLower() == ".bin") // PS1/PS2 CD image
                             {
                                 FileStream binconvout = new FileStream(AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso", FileMode.Create, FileAccess.Write);
                                 PSX2ISO.Run(isoStream, binconvout);
