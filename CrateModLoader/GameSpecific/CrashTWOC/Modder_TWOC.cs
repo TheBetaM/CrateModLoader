@@ -74,9 +74,9 @@ namespace CrateModLoader
                 },
             };
 
-            AddOption(RandomizeCrates, new ModOption("Randomize Crates"));
-            AddOption(RandomizeLevelOrder, new ModOption("Randomize Level Order")); //doesn't work yet
-            AddOption(RandomizeMusic, new ModOption("Randomize Music", new List<ConsoleMode>() { ConsoleMode.GCN, ConsoleMode.XBOX })); //not tested
+            //AddOption(RandomizeCrates, new ModOption("Randomize Crates"));
+            //AddOption(RandomizeLevelOrder, new ModOption("Randomize Level Order")); //doesn't work yet
+            //AddOption(RandomizeMusic, new ModOption("Randomize Music", new List<ConsoleMode>() { ConsoleMode.GCN, ConsoleMode.XBOX })); //not tested
             
         }
 
@@ -187,6 +187,45 @@ namespace CrateModLoader
             "SPACE_B",
         };
 
+        string[] FileNames = new string[]
+        {
+            "SNOW",
+            "FARM",
+            "JUNGLE_A",
+            "CASTLE_C",
+            "EARTH",
+            "JUNGLE",
+            "SEASHELL",
+            "GARDEN",
+            "FIRE_FLY",
+            "WATER",
+            "CASTLE",
+            "TOONARMY",
+            "WEST_A",
+            "COLD_A",
+            "FIRE_R",
+            "AVALANCH",
+            "DROID",
+            "SPACE_A",
+            "CORAL",
+            "WEATHER",
+            "VOLCANO",
+            "WESTERN",
+            "CASTLE_A",
+            "BALLSOF",
+            "SPACE_R",
+            "CAST_BUG",
+            "WEST_B",
+            "COLD_B",
+            "S_BALLS",
+            "SNOW_B",
+            "EARTH_B",
+            "WATER_B",
+            "FIRE_B",
+            "WEATH_B",
+            "SPACE_B",
+        };
+
         void Mod_RandomizeCrates(Random rand)
         {
 
@@ -219,6 +258,18 @@ namespace CrateModLoader
             for (int i = 0; i < maxLevel; i++)
             {
                 Directory.Move(ModLoaderGlobals.ExtractedPath + LevelsPath + "LEVEL" + i, ModLoaderGlobals.ExtractedPath + LevelsPath + LevelNames[LevelsRand[i]]);
+
+                if (i != LevelsRand[i])
+                {
+                    DirectoryInfo di = new DirectoryInfo(ModLoaderGlobals.ExtractedPath + LevelsPath + LevelNames[LevelsRand[i]]);
+                    foreach (FileInfo file in di.EnumerateFiles())
+                    {
+                        if (file.Name.Contains(FileNames[i]))
+                        {
+                            file.MoveTo(di.FullName + @"\" + FileNames[LevelsRand[i]] + "." + file.Extension);
+                        }
+                    }
+                }
             }
 
 

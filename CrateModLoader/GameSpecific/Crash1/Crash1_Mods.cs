@@ -744,7 +744,7 @@ namespace CrateModLoader.GameSpecific.Crash1
                                 }
                                 else if (zone.EName == "b3_5Z")
                                 {
-                                    int crutchID = 300;
+                                    int crutchID = 299;
                                     EntityPosition[] crate_pos = new EntityPosition[]
                                     {
                                           new EntityPosition(527, 1095, 505),
@@ -757,7 +757,7 @@ namespace CrateModLoader.GameSpecific.Crash1
                                 }
                                 else if (zone.EName == "a9_5Z")
                                 {
-                                    int crutchID = 301;
+                                    int crutchID = 300;
                                     EntityPosition[] crate_pos = new EntityPosition[]
                                     {
                                           new EntityPosition(854, 545, 360),
@@ -771,7 +771,7 @@ namespace CrateModLoader.GameSpecific.Crash1
                                 }
                                 else if (zone.EName == "a8_5Z")
                                 {
-                                    int crutchID = 303;
+                                    int crutchID = 302;
                                     EntityPosition[] crate_pos = new EntityPosition[]
                                     {
                                           new EntityPosition(570, 905, 360),
@@ -788,7 +788,7 @@ namespace CrateModLoader.GameSpecific.Crash1
                             {
                                 if (zone.EName == "d9_tZ")
                                 {
-                                    int crutchID = 300;
+                                    int crutchID = 298;
                                     EntityPosition[] crate_pos = new EntityPosition[]
                                     {
                                           new EntityPosition(400, 700, 450),
@@ -832,7 +832,7 @@ namespace CrateModLoader.GameSpecific.Crash1
                                 }
                                 else if (zone.EName == "b9_tZ")
                                 {
-                                    int crutchID = 302;
+                                    int crutchID = 300;
                                     EntityPosition[] crate_pos = new EntityPosition[]
                                     {
                                           new EntityPosition(850, 800, 1040),
@@ -916,7 +916,7 @@ namespace CrateModLoader.GameSpecific.Crash1
                                 }
                                 else if (zone.EName == "d3_TZ")
                                 {
-                                    int crutchID = 300;
+                                    int crutchID = 250;
                                     EntityPosition[] crate_pos = new EntityPosition[]
                                     {
                                           new EntityPosition(850, 500, 180),
@@ -934,7 +934,7 @@ namespace CrateModLoader.GameSpecific.Crash1
                                 }
                                 else if (zone.EName == "d2_TZ")
                                 {
-                                    int crutchID = 301;
+                                    int crutchID = 252;
                                     EntityPosition[] crate_pos = new EntityPosition[]
                                     {
                                           new EntityPosition(500, 110, 180),
@@ -947,7 +947,7 @@ namespace CrateModLoader.GameSpecific.Crash1
                                 }
                                 else if (zone.EName == "c6_TZ")
                                 {
-                                    int crutchID = 309;
+                                    int crutchID = 255;
                                     EntityPosition[] crate_pos = new EntityPosition[]
                                     {
                                           new EntityPosition(170, 80, 180),
@@ -966,7 +966,7 @@ namespace CrateModLoader.GameSpecific.Crash1
                                 }
                                 else if (zone.EName == "b6_TZ")
                                 {
-                                    int crutchID = 313;
+                                    int crutchID = 260;
                                     EntityPosition[] crate_pos = new EntityPosition[]
                                     {
                                           new EntityPosition(400, 1220, 150),
@@ -986,7 +986,7 @@ namespace CrateModLoader.GameSpecific.Crash1
                                 }
                                 else if (zone.EName == "b5_TZ")
                                 {
-                                    int crutchID = 316;
+                                    int crutchID = 265;
                                     EntityPosition[] crate_pos = new EntityPosition[]
                                     {
                                           new EntityPosition(1100, 390, 150),
@@ -999,7 +999,7 @@ namespace CrateModLoader.GameSpecific.Crash1
                                 }
                                 else if (zone.EName == "b4_TZ")
                                 {
-                                    int crutchID = 317;
+                                    int crutchID = 267;
                                     EntityPosition[] crate_pos = new EntityPosition[]
                                     {
                                           new EntityPosition(720, 280, 180),
@@ -1012,7 +1012,7 @@ namespace CrateModLoader.GameSpecific.Crash1
                                 }
                                 else if (zone.EName == "b3_TZ")
                                 {
-                                    int crutchID = 318;
+                                    int crutchID = 269;
                                     EntityPosition[] crate_pos = new EntityPosition[]
                                     {
                                           new EntityPosition(1000, 250, 180),
@@ -1025,7 +1025,7 @@ namespace CrateModLoader.GameSpecific.Crash1
                                 }
                                 else if (zone.EName == "a5_TZ")
                                 {
-                                    int crutchID = 319;
+                                    int crutchID = 275;
                                     EntityPosition[] crate_pos = new EntityPosition[]
                                     {
                                           new EntityPosition(270, 200, 200),
@@ -1046,7 +1046,7 @@ namespace CrateModLoader.GameSpecific.Crash1
                                 else if (zone.EName == "a4_TZ")
                                 {
 
-                                    int crutchID = 322;
+                                    int crutchID = 280;
                                     EntityPosition[] crate_pos = new EntityPosition[]
                                     {
                                           new EntityPosition(470, 1100, 200),
@@ -1066,7 +1066,7 @@ namespace CrateModLoader.GameSpecific.Crash1
                                 else if (zone.EName == "a3_TZ")
                                 {
 
-                                    int crutchID = 325;
+                                    int crutchID = 285;
                                     EntityPosition[] crate_pos = new EntityPosition[]
                                     {
                                           new EntityPosition(470, 1100, 200),
@@ -1085,7 +1085,7 @@ namespace CrateModLoader.GameSpecific.Crash1
                                 }
                                 else if (zone.EName == "a2_TZ")
                                 {
-                                    int crutchID = 329;
+                                    int crutchID = 290;
                                     EntityPosition[] crate_pos = new EntityPosition[]
                                     {
                                           new EntityPosition(470, 1100, 200),
@@ -1106,7 +1106,7 @@ namespace CrateModLoader.GameSpecific.Crash1
                                 }
                                 else if (zone.EName == "a1_TZ")
                                 {
-                                    int crutchID = 336;
+                                    int crutchID = 295;
                                     EntityPosition[] crate_pos = new EntityPosition[]
                                     {
                                           new EntityPosition(770, -110, 200),
@@ -1139,7 +1139,7 @@ namespace CrateModLoader.GameSpecific.Crash1
                             {
                                 if (zone.EName == "0d_jZ")
                                 {
-                                    int crutchID = 300;
+                                    int crutchID = 298;
                                     EntityPosition[] crate_pos = new EntityPosition[]
                                     {
                                           new EntityPosition(500, 540, 800),
@@ -1155,7 +1155,7 @@ namespace CrateModLoader.GameSpecific.Crash1
                                 }
                                 else if (zone.EName == "0u_jZ")
                                 {
-                                    int crutchID = 304;
+                                    int crutchID = 302;
                                     EntityPosition[] crate_pos = new EntityPosition[]
                                     {
                                           new EntityPosition(450, 620, 950),

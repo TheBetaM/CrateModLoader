@@ -291,7 +291,7 @@ namespace CrateModLoader.GameSpecific.Crash3
             Crash3_Levels.L02_UnderPressure,
             Crash3_Levels.L12_DeepTrouble,
 
-            //Crash3_Levels.L05_MakinWaves, // todo: crashes, wrong spawn
+            Crash3_Levels.L05_MakinWaves, // todo: warpout doesn't appear
             Crash3_Levels.L18_TellNoTales, // unverified, todo: not spawning yet
             Crash3_Levels.L26_SkiCrazed, // unverified, todo: not spawning yet
 
@@ -406,6 +406,7 @@ namespace CrateModLoader.GameSpecific.Crash3
             NewZoneEntry WarpOutZone = null;
             Entity EmptyEntity = null;
             Entity WarpInEntity = null;
+            NewZoneEntry WarpInZone = null;
 
             Entity ClockEntity = null;
             NewZoneEntry ClockZone = null;
@@ -501,6 +502,7 @@ namespace CrateModLoader.GameSpecific.Crash3
                                     else if (WarpInEntity == null && zone.Entities[i].Type == 30 && zone.Entities[i].Subtype == 9)
                                     {
                                         WarpInEntity = zone.Entities[i];
+                                        WarpInZone = zone;
                                         zone.Entities.RemoveAt(i);
                                         i--;
                                         zone.EntityCount--;
@@ -834,12 +836,17 @@ namespace CrateModLoader.GameSpecific.Crash3
             }
 
             EntityPosition CrashPos = new EntityPosition();
+            EntityPosition WarpInPos = new EntityPosition();
             EntityPosition WarpOutPos = new EntityPosition();
 
             if (WarpOutEntity != null)
             {
                 CrashPos = new EntityPosition(CrashEntity.Positions[0].X, CrashEntity.Positions[0].Y, CrashEntity.Positions[0].Z);
                 WarpOutPos = new EntityPosition(WarpOutEntity.Positions[0].X, WarpOutEntity.Positions[0].Y, WarpOutEntity.Positions[0].Z);
+                if (WarpInEntity != null)
+                {
+                    WarpInPos = new EntityPosition(WarpInEntity.Positions[0].X, WarpInEntity.Positions[0].Y, WarpInEntity.Positions[0].Z);
+                }
                 CrashEntity.Positions.RemoveAt(0);
                 WarpOutEntity.Positions.RemoveAt(0);
                 WarpInEntity.Positions.RemoveAt(0);
@@ -889,6 +896,12 @@ namespace CrateModLoader.GameSpecific.Crash3
                 CrashEntity.Positions.Add(WarpOutPos);
                 WarpOutEntity.Positions.Add(CrashPos);
                 WarpInEntity.Positions.Add(WarpOutPos);
+            }
+
+            if (level == Crash3_Levels.L05_MakinWaves)
+            {
+                WarpOutEntity.Positions.Clear();
+                WarpOutEntity.Positions.Add(WarpInPos);
             }
 
             if (ClockEntity != null && BoxCounterEntity != null)
@@ -945,24 +958,27 @@ namespace CrateModLoader.GameSpecific.Crash3
                         {
                             if (CrashEntity != null && WarpOutEntity != null && zone.EName == CrashZone.EName)
                             {
-                                zone.Entities.Add(WarpOutEntity);
-                                //zone.Entities[0].DrawListA.Rows[0].Values.Add((int)WarpOutEntity.ID);
-                                //zone.Entities[0].DrawListB.Rows[0].Values.Add((int)WarpOutEntity.ID);
-                                zone.EntityCount++;
+                                if (level != Crash3_Levels.L05_MakinWaves)
+                                {
+                                    zone.Entities.Add(WarpOutEntity);
+                                    zone.EntityCount++;
+                                }
                             }
                             else if (WarpOutEntity != null && CrashEntity != null && zone.EName == WarpOutZone.EName)
                             {
                                 zone.Entities.Add(CrashEntity);
                                 zone.Entities.Add(WarpInEntity);
-                                //zone.Entities[0].DrawListA.Rows[0].Values.Add((int)CrashEntity.ID);
-                                //zone.Entities[0].DrawListB.Rows[0].Values.Add((int)CrashEntity.ID);
-
                                 AddToDrawList(ref nsf, ref zone, (int)WarpInEntity.ID);
-
-                                //zone.Entities[0].DrawListA.Rows[0].Values.Add(BoxEntID);
-                                //zone.Entities[0].DrawListB.Rows[0].Values.Add(BoxEntID);
                                 zone.EntityCount++;
                                 zone.EntityCount++;
+                            }
+                            else if (CrashEntity != null && WarpOutEntity != null && WarpInEntity != null && zone.EName == WarpInZone.EName)
+                            {
+                                if (level == Crash3_Levels.L05_MakinWaves)
+                                {
+                                    zone.Entities.Add(WarpOutEntity);
+                                    zone.EntityCount++;
+                                }
                             }
                             else if (ClockZone != null && BoxCounterEntity != null && ClockZone.EName == zone.EName)
                             {
@@ -1045,19 +1061,25 @@ namespace CrateModLoader.GameSpecific.Crash3
                 int yoffset = BitConv.FromInt32(WarpOutZone.Layout, 4);
                 int zoffset = BitConv.FromInt32(WarpOutZone.Layout, 8);
 
-                nsd.Spawns[0].SpawnX = (xoffset + WarpOutPos.X * 1) << 8;
-                nsd.Spawns[0].SpawnY = (yoffset + WarpOutPos.Y * 1) << 8;
-                nsd.Spawns[0].SpawnZ = (zoffset + WarpOutPos.Z * 1) << 8;
-
-                if (JetskiLevelsList.Contains(level))
+                if (level == Crash3_Levels.L05_MakinWaves)
+                {
+                    nsd.Spawns[0].SpawnX = (xoffset + WarpOutPos.X * 1) << 8;
+                    nsd.Spawns[0].SpawnY = (yoffset + WarpOutPos.Y * 1) << 8;
+                    nsd.Spawns[0].SpawnZ = (zoffset + WarpOutPos.Z * 1) << 8;
+                }
+                else if (JetskiLevelsList.Contains(level))
                 {
                     nsd.Spawns[0].SpawnX = (xoffset + WarpOutPos.X * 2) << 8;
                     nsd.Spawns[0].SpawnY = (yoffset + WarpOutPos.Y * 2) << 8;
                     nsd.Spawns[0].SpawnZ = (zoffset + WarpOutPos.Z * 2) << 8;
                 }
+                else
+                {
+                    nsd.Spawns[0].SpawnX = (xoffset + WarpOutPos.X * 1) << 8;
+                    nsd.Spawns[0].SpawnY = (yoffset + WarpOutPos.Y * 1) << 8;
+                    nsd.Spawns[0].SpawnZ = (zoffset + WarpOutPos.Z * 1) << 8;
+                }
             }
-
-            //nsd.Spawns[0].Camera = 0;
 
             /*
             int spawnX = (xoffset + CrashPos.X * 1) << 8;

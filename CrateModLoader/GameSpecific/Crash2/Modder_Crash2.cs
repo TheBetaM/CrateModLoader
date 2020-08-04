@@ -377,6 +377,7 @@ namespace CrateModLoader
 
         internal void Randomize_Music(NSF nsf, Random rand, ref List<List<WavebankChunk>> wavebankChunks, ref List<List<MusicEntry>> musicEntries, bool RandomMusic, bool RandomTracks, bool RandomInstruments)
         {
+            //unfinished
             foreach (Chunk chunk in nsf.Chunks)
             {
                 if (chunk is NormalChunk normchunk)
