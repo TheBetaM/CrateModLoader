@@ -10,11 +10,11 @@ Featured:
 * [Crash Bandicoot: WARPED](#crash-bandicoot-warped-)
 
 Additionally supported:
-* [Crash Team Racing](#ctr-crash-team-racing-)
+* [CTR: Crash Team Racing](#ctr-crash-team-racing-)
 * [Crash of the Titans](#crash-of-the-titans-)
 * [Crash: Mind Over Mutant](#crash-mind-over-mutant-)
 
-## Crash Nitro Kart ![Crash Nitro Kart](../master/CrateModLoader/Resources/icon_crashnk.png "Crash Nitro Kart")
+## Crash Nitro Kart ![Crash Nitro Kart](./CrateModLoader/Resources/icon_crashnk.png "Crash Nitro Kart")
 <details>
 <summary>Click to view details</summary>
   
@@ -35,7 +35,7 @@ Tools/API by BetaM, ManDude and eezstreet.
 - Version, seed and settings visible in the Credits screen
 </details>
   
-## Crash Twinsanity ![Crash Twinsanity](../master/CrateModLoader/Resources/icon_crashts.png "Crash Twinsanity")
+## Crash Twinsanity ![Crash Twinsanity](./CrateModLoader/Resources/icon_crashts.png "Crash Twinsanity")
 <details>
 <summary>Click to view details</summary>
 
@@ -56,7 +56,7 @@ API by NeoKesha, Smartkin, ManDude and Marko. (https://github.com/Smartkin/twins
 - Version, seed and settings visible in the Autosave Disabled screen  
 </details>
   
-## Crash Tag Team Racing ![Crash Tag Team Racing](../master/CrateModLoader/Resources/icon_crashttr.png "Crash Tag Team Racing")
+## Crash Tag Team Racing ![Crash Tag Team Racing](./CrateModLoader/Resources/icon_crashttr.png "Crash Tag Team Racing")
 <details>
 <summary>Click to view details</summary>
 
@@ -72,7 +72,7 @@ APIs by NeoKesha and BetaM. (based on https://github.com/handsomematt/Pure3D)
 - Version, seed and settings visible in the Credits screen
 </details>
   
-## Rayman 3: Hoodlum Havoc ![Rayman 3](../master/CrateModLoader/Resources/icon_ray3.png "Rayman 3")
+## Rayman 3: Hoodlum Havoc ![Rayman 3](./CrateModLoader/Resources/icon_ray3.png "Rayman 3")
 <details>
 <summary>Click to view details</summary>
 
@@ -85,7 +85,7 @@ Mod abbreviation: Rayman3
 - Remove Intro Videos (GC Only)  
 </details>
   
-## Crash Bandicoot ![Crash Bandicoot](../master/CrateModLoader/Resources/icon_crash1.png "Crash Bandicoot")
+## Crash Bandicoot ![Crash Bandicoot](./CrateModLoader/Resources/icon_crash1.png "Crash Bandicoot")
 <details>
 <summary>Click to view details</summary>
   
@@ -96,7 +96,7 @@ API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)
 - Randomize Sound Effects  
 </details>
   
-## Crash Bandicoot 2: Cortex Strikes Back ![Crash Bandicoot 2](../master/CrateModLoader/Resources/icon_crash2.png "Crash Bandicoot 2")
+## Crash Bandicoot 2: Cortex Strikes Back ![Crash Bandicoot 2](./CrateModLoader/Resources/icon_crash2.png "Crash Bandicoot 2")
 <details>
 <summary>Click to view details</summary>
 
@@ -107,7 +107,7 @@ API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)
 - Randomize Sound Effects  
 </details>
   
-## Crash Bandicoot: WARPED ![Crash Bandicoot WARPED](../master/CrateModLoader/Resources/icon_crash3.png "Crash Bandicoot WARPED")
+## Crash Bandicoot: WARPED ![Crash Bandicoot WARPED](./CrateModLoader/Resources/icon_crash3.png "Crash Bandicoot WARPED")
 <details>
 <summary>Click to view details</summary>
 
@@ -118,7 +118,7 @@ API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)
 - Randomize Sound Effects  
 </details>
   
-## CTR: Crash Team Racing ![Crash Team Racing](../master/CrateModLoader/Resources/icon_crashtr.png "Crash Team Racing")
+## CTR: Crash Team Racing ![Crash Team Racing](./CrateModLoader/Resources/icon_crashtr.png "Crash Team Racing")
 <details>
 <summary>Click to view details</summary>
 
@@ -129,7 +129,7 @@ API by DCxDemo. (https://github.com/DCxDemo/CTR-tools)
 - Version and seed visible in the Loading screen (English only)  
 </details>
   
-## Crash of the Titans ![Crash of the Titans](../master/CrateModLoader/Resources/icon_crashtitans.png "Crash of the Titans")
+## Crash of the Titans ![Crash of the Titans](./CrateModLoader/Resources/icon_crashtitans.png "Crash of the Titans")
 <details>
 <summary>Click to view details</summary>
 
@@ -140,7 +140,7 @@ API by NeoKesha.
 - Test mod: Increased camera FOV in Episode 1  
 </details>
   
-## Crash Mind Over Mutant ![Crash Mind Over Mutant](../master/CrateModLoader/Resources/icon_crashmom.png "Crash Mind Over Mutant")
+## Crash Mind Over Mutant ![Crash Mind Over Mutant](./CrateModLoader/Resources/icon_crashmom.png "Crash Mind Over Mutant")
 <details>
 <summary>Click to view details</summary>
 
