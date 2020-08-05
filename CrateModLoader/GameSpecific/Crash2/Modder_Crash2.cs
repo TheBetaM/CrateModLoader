@@ -74,7 +74,7 @@ namespace CrateModLoader
             AddOption(BackwardsLevels, new ModOption("Backwards Levels (where possible)"));
             AddOption(RandomBackwardsLevels, new ModOption("Random Levels Are Backwards"));
             AddOption(RandomizeCrateContents, new ModOption("Randomize Crate Contents"));
-            AddOption(VehicleLevelsOnFoot, new ModOption("Bear Levels On Foot"));
+            AddOption(VehicleLevelsOnFoot, new ModOption("Vehicle Levels On Foot"));
             //AddOption(MirroredWorld, new ModOption("Mirrored World"));
             //AddOption(RandomLevelsMirrored, new ModOption("Random Levels Are Mirrored"));
             AddOption(CameraBiggerFOV, new ModOption("Wider Camera Field-Of-View"));
@@ -153,6 +153,7 @@ namespace CrateModLoader
                 {
                     if (GetOption(RandomizeWarpRoom)) Crash2_Mods.Mod_RandomizeWarpRoom(nsf, nsd, NSF_Level, rand);
                     if (GetOption(BackwardsLevels) || GetOption(RandomBackwardsLevels)) Crash2_Mods.Mod_BackwardsLevels(nsf, nsd, NSF_Level, GetOption(RandomBackwardsLevels), rand);
+                    if (GetOption(VehicleLevelsOnFoot) && !GetOption(BackwardsLevels)) Crash2_Mods.Mod_VehicleLevelsOnFoot(nsf, nsd, NSF_Level);
                     if (GetOption(CameraBiggerFOV) || GetOption(RandomizeCameraFOV)) Crash2_Mods.Mod_CameraFOV(nsf, rand, GetOption(RandomizeCameraFOV));
                     if (GetOption(RandomizeCratesIntoWood)) Crash2_Mods.Mod_RandomWoodCrates(nsf, rand);
                     if (GetOption(RandomizeCrateContents)) Crash2_Mods.Mod_RandomCrateContents(nsf, rand);
