@@ -273,11 +273,11 @@ namespace CrateModLoader.GameSpecific.Crash3
         {
 
             Crash3_Levels.L01_ToadVillage, 
-            Crash3_Levels.L04_BoneYard, // unverified, todo: not spawning, camera stitching, crutches
+            Crash3_Levels.L04_BoneYard, // todo: broken counter, crutches
             Crash3_Levels.L06_GeeWiz, 
             Crash3_Levels.L07_HangEmHigh,
-            Crash3_Levels.L09_TombTime, // todo: not spawning
-            Crash3_Levels.L11_DinoMight, // unverified, todo: not spawning, broken counter, freezes around the yellow gem platform
+            Crash3_Levels.L09_TombTime,
+            Crash3_Levels.L11_DinoMight, // todo: broken counter, crutches, warpout doesn't appear (too many objects?)
             Crash3_Levels.L13_HighTime,
             Crash3_Levels.L15_DoubleHeader,
             Crash3_Levels.L16_Sphynxinator, 
@@ -285,19 +285,19 @@ namespace CrateModLoader.GameSpecific.Crash3
             Crash3_Levels.L20_TombWader,
             Crash3_Levels.L21_GoneTomorrow, // unverified, todo: camera stitching
             Crash3_Levels.L23_FlamingPassion,
-            Crash3_Levels.L25_BugLite, // todo: darkness
+            Crash3_Levels.L25_BugLite,
             Crash3_Levels.L30_EggipusRex, // todo: warpout doesn't appear
 
             Crash3_Levels.L02_UnderPressure,
             Crash3_Levels.L12_DeepTrouble,
 
-            Crash3_Levels.L05_MakinWaves, // todo: warpout doesn't appear, not spawning, broken counter
+            Crash3_Levels.L05_MakinWaves, // todo: warpout doesn't appear, broken counter
             Crash3_Levels.L18_TellNoTales, // unverified, todo: not spawning, broken counter
             Crash3_Levels.L26_SkiCrazed, // unverified, todo: not spawning, broken counter
 
-            Crash3_Levels.L03_OrientExpress, // todo: not spawning, tiger stuff (unstable - game may crash if jumped on bouncepad that turns you into crash, softlock on checkpoint respawn)
-            Crash3_Levels.L10_MidnightRun, // unverified, todo: not spawning, camera stitching, tiger stuff
-            Crash3_Levels.L28_RingsOfPower, // maybe move spawn/clock?
+            Crash3_Levels.L03_OrientExpress, // todo: broken counter, tiger stuff (unstable - game may crash if jumped on bouncepad that turns you into crash, softlock on checkpoint respawn)
+            Crash3_Levels.L10_MidnightRun, // unverified, todo: broken counter, camera stitching, tiger stuff
+            Crash3_Levels.L28_RingsOfPower,
 
             //Crash3_Levels.L08_HogRide, // todo: vehicle stuff
             //Crash3_Levels.L14_RoadCrash, // todo: vehicle stuff
@@ -534,6 +534,7 @@ namespace CrateModLoader.GameSpecific.Crash3
                                         }
                                     }
 
+                                    /*
                                     if (ChaseLevelsList.Contains(level))
                                     {
                                         if (zone.Entities[i].Type == 17 && (zone.Entities[i].Subtype == 2 || zone.Entities[i].Subtype == 0))
@@ -543,6 +544,7 @@ namespace CrateModLoader.GameSpecific.Crash3
                                             zone.EntityCount--;
                                         }
                                     }
+                                    */
 
                                 }
                             }
@@ -726,8 +728,8 @@ namespace CrateModLoader.GameSpecific.Crash3
                                 {
                                     int id = 500;
                                     int id1 = 501;
-                                    CreateEntity(id,  34, 5, 2600, 2400, 2500, ref zone);
-                                    CreateEntity(id1, 34, 5, 2600, 3050, 1350, ref zone);
+                                    CreateEntity(id,  34, 5, 2600, 2000, 2500, ref zone);
+                                    CreateEntity(id1, 34, 5, 2600, 2950, 1350, ref zone);
 
                                     AddToDrawList(ref nsf, ref zone, id);
                                     AddToDrawList(ref nsf, ref zone, id1);
@@ -738,27 +740,15 @@ namespace CrateModLoader.GameSpecific.Crash3
                                 if (zone.EName == "44_cZ")
                                 {
 
-                                    //camera pls, why don't you do something
-                                    zone.Entities[3].Neighbors = new EntityUInt32Property();
-                                    zone.Entities[3].Neighbors.Rows.Add(new EntityPropertyRow<uint>());
-                                    zone.Entities[3].Neighbors.Rows[zone.Entities[3].Neighbors.RowCount - 1].MetaValue = 5;
-                                    int neighborindex = zone.Entities[3].Neighbors.RowCount - 1;
-                                    int neighborsettingindex = 0;
+                                    for (int e = 0; e < zone.Entities.Count; e++)
+                                    {
+                                        if (zone.Entities[e].CameraIndex != null && zone.Entities[e].CameraIndex == 0 && zone.Entities[e].CameraSubIndex == 0)
+                                        {
+                                            zone.Entities[e].Neighbors.Rows.RemoveAt(1);
+                                        }
+                                    }
 
-                                    int camflag = 2;
-                                    int camIndex = 0;
-                                    int camZone = 1;
-                                    int camLink = 1;
-
-                                    zone.Entities[3].Neighbors.Rows[neighborindex].Values.Add(0);
-                                    zone.Entities[3].Neighbors.Rows[neighborindex].Values[neighborsettingindex] &= 0xFFFFFF00;
-                                    zone.Entities[3].Neighbors.Rows[neighborindex].Values[neighborsettingindex] |= (uint)((byte)camflag << 0);
-                                    zone.Entities[3].Neighbors.Rows[neighborindex].Values[neighborsettingindex] &= 0xFFFF00FF;
-                                    zone.Entities[3].Neighbors.Rows[neighborindex].Values[neighborsettingindex] |= (uint)((byte)camIndex << 8);
-                                    zone.Entities[3].Neighbors.Rows[neighborindex].Values[neighborsettingindex] &= 0xFF00FFFF;
-                                    zone.Entities[3].Neighbors.Rows[neighborindex].Values[neighborsettingindex] |= (uint)((byte)camZone << 16);
-                                    zone.Entities[3].Neighbors.Rows[neighborindex].Values[neighborsettingindex] &= 0x00FFFFFF;
-                                    zone.Entities[3].Neighbors.Rows[neighborindex].Values[neighborsettingindex] |= (uint)((byte)camLink << 24);
+                                    nsd.Spawns[0].Camera = 0;
                                     
                                     int id = 500;
                                     int id1 = 501;
@@ -778,6 +768,7 @@ namespace CrateModLoader.GameSpecific.Crash3
             EntityPosition CrashPos = new EntityPosition();
             EntityPosition WarpInPos = new EntityPosition();
             EntityPosition WarpOutPos = new EntityPosition();
+            bool FlipCrashAndWarpOut = false;
 
             if (WarpOutEntity != null)
             {
@@ -826,6 +817,11 @@ namespace CrateModLoader.GameSpecific.Crash3
             {
                 WarpOutPos = new EntityPosition(WarpOutPos.X, (short)(WarpOutPos.Y + 1600), (short)(WarpOutPos.Z + 2000));
             }
+            if (level == Crash3_Levels.L09_TombTime || level == Crash3_Levels.L03_OrientExpress ||
+                level == Crash3_Levels.L04_BoneYard || level == Crash3_Levels.L10_MidnightRun || level == Crash3_Levels.L11_DinoMight || level == Crash3_Levels.L05_MakinWaves)
+            {
+                FlipCrashAndWarpOut = true;
+            }
             
 
             if (WarpOutEntity != null)
@@ -835,7 +831,7 @@ namespace CrateModLoader.GameSpecific.Crash3
                 WarpInEntity.Positions.Add(WarpOutPos);
             }
 
-            if (level == Crash3_Levels.L05_MakinWaves)
+            if (level == Crash3_Levels.L05_MakinWaves || level == Crash3_Levels.L11_DinoMight)
             {
                 WarpOutEntity.Positions.Clear();
                 WarpOutEntity.Positions.Add(WarpInPos);
@@ -860,14 +856,18 @@ namespace CrateModLoader.GameSpecific.Crash3
 
             if (WarpOutEntity != null)
             {
-                /*
-                int tempID = (int)CrashEntity.ID;
-                CrashEntity.ID = WarpOutEntity.ID;
-                WarpOutEntity.ID = tempID;
-                */
-                int tempID = (int)WarpInEntity.ID;
-                WarpInEntity.ID = WarpOutEntity.ID;
-                WarpOutEntity.ID = tempID;
+                if (FlipCrashAndWarpOut)
+                {
+                    int tempID = (int)CrashEntity.ID;
+                    CrashEntity.ID = WarpOutEntity.ID;
+                    WarpOutEntity.ID = tempID;
+                }
+                else
+                {
+                    int tempID1 = (int)WarpInEntity.ID;
+                    WarpInEntity.ID = WarpOutEntity.ID;
+                    WarpOutEntity.ID = tempID1;
+                }
 
                 CrashEntity.Name = null;
                 WarpOutEntity.Name = null;
@@ -900,7 +900,7 @@ namespace CrateModLoader.GameSpecific.Crash3
                         {
                             if (CrashEntity != null && WarpOutEntity != null && zone.EName == CrashZone.EName)
                             {
-                                if (level != Crash3_Levels.L05_MakinWaves)
+                                if (level != Crash3_Levels.L05_MakinWaves && level != Crash3_Levels.L11_DinoMight)
                                 {
                                     zone.Entities.Add(WarpOutEntity);
                                     zone.EntityCount++;
@@ -910,14 +910,20 @@ namespace CrateModLoader.GameSpecific.Crash3
                             {
                                 zone.Entities.Add(CrashEntity);
                                 zone.Entities.Add(WarpInEntity);
-                                //AddToDrawList(ref nsf, ref zone, (int)WarpInEntity.ID);
-                                AddToDrawList(ref nsf, ref zone, (int)CrashEntity.ID);
+                                if (FlipCrashAndWarpOut)
+                                {
+                                    AddToDrawList(ref nsf, ref zone, (int)WarpInEntity.ID);
+                                }
+                                else
+                                {
+                                    AddToDrawList(ref nsf, ref zone, (int)CrashEntity.ID);
+                                }
                                 zone.EntityCount++;
                                 zone.EntityCount++;
                             }
                             else if (CrashEntity != null && WarpOutEntity != null && WarpInEntity != null && zone.EName == WarpInZone.EName)
                             {
-                                if (level == Crash3_Levels.L05_MakinWaves)
+                                if (level == Crash3_Levels.L05_MakinWaves || level == Crash3_Levels.L11_DinoMight)
                                 {
                                     zone.Entities.Add(WarpOutEntity);
                                     zone.EntityCount++;
@@ -933,8 +939,18 @@ namespace CrateModLoader.GameSpecific.Crash3
                                 zone.Entities.Add(ClockEntity);
                                 zone.EntityCount++;
                             }
-                            
-                            if (level == Crash3_Levels.L11_DinoMight)
+
+                            if (level == Crash3_Levels.L25_BugLite)
+                            {
+                                if (zone.EName == "43_AZ")
+                                {
+                                    int id = 500;
+                                    CreateEntityFireFly(id, 5412, 1283, -5299, ref zone);
+
+                                    AddToDrawList(ref nsf, ref zone, id);
+                                }
+                            }
+                            else if (level == Crash3_Levels.L11_DinoMight)
                             {
                                 if (zone.EName == "44_gZ" || zone.EName == "42_gZ")
                                 {
@@ -1378,6 +1394,36 @@ namespace CrateModLoader.GameSpecific.Crash3
             newentity.Settings.Clear();
             newentity.Settings.Add(new EntitySetting(0, 0));
             newentity.Settings.Add(new EntitySetting(4, 224));
+            newentity.Settings.Add(new EntitySetting(0, 0));
+
+            zone.Entities.Add(newentity);
+            zone.EntityCount++;
+
+        }
+
+        static void CreateEntityFireFly(int id, short x, short y, short z, ref NewZoneEntry zone)
+        {
+            Entity newentity = Entity.Load(new Entity(new Dictionary<short, EntityProperty>()).Save());
+            newentity.ID = id;
+            newentity.AlternateID = null;
+            newentity.Name = null;
+            newentity.Positions.Clear();
+            newentity.Positions.Add(new EntityPosition(x, y, z));
+            newentity.Type = 93;
+            newentity.Subtype = 1;
+            newentity.DDASection = null;
+            newentity.DDASettings = null;
+            newentity.Scaling = 0;
+            newentity.ZMod = null;
+            newentity.Settings.Clear();
+            newentity.Settings.Add(new EntitySetting(224, 1));
+            newentity.Settings.Add(new EntitySetting(255, -1));
+            newentity.Settings.Add(new EntitySetting(0, 0));
+            newentity.Settings.Add(new EntitySetting(0, 0));
+            newentity.Settings.Add(new EntitySetting(0, 0));
+            newentity.Settings.Add(new EntitySetting(0, 0));
+            newentity.Settings.Add(new EntitySetting(20, 0));
+            newentity.Settings.Add(new EntitySetting(0, 0));
             newentity.Settings.Add(new EntitySetting(0, 0));
 
             zone.Entities.Add(newentity);
