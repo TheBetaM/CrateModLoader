@@ -32,6 +32,7 @@ namespace CrateModLoader
         internal const int RandomLevelsMirrored = 18;
         internal const int RandomizeWarpRoom = 19;
         internal const int RandomizeCrateContents = 20;
+        internal const int RandomizeBosses = 21;
 
         public Modder_Crash2()
         {
@@ -74,6 +75,7 @@ namespace CrateModLoader
             AddOption(BackwardsLevels, new ModOption("Backwards Levels (where possible)"));
             AddOption(RandomBackwardsLevels, new ModOption("Random Levels Are Backwards"));
             AddOption(RandomizeCrateContents, new ModOption("Randomize Crate Contents"));
+            AddOption(RandomizeBosses, new ModOption("Randomize Boss Levels"));
             AddOption(VehicleLevelsOnFoot, new ModOption("Vehicle Levels On Foot"));
             //AddOption(MirroredWorld, new ModOption("Mirrored World"));
             //AddOption(RandomLevelsMirrored, new ModOption("Random Levels Are Mirrored"));
@@ -157,6 +159,7 @@ namespace CrateModLoader
                     if (GetOption(CameraBiggerFOV) || GetOption(RandomizeCameraFOV)) Crash2_Mods.Mod_CameraFOV(nsf, rand, GetOption(RandomizeCameraFOV));
                     if (GetOption(RandomizeCratesIntoWood)) Crash2_Mods.Mod_RandomWoodCrates(nsf, rand);
                     if (GetOption(RandomizeCrateContents)) Crash2_Mods.Mod_RandomCrateContents(nsf, rand);
+                    if (GetOption(RandomizeBosses)) Crash2_Mods.Mod_RandomizeBosses(nsf, nsd, NSF_Level, rand, false);
                     if (GetOption(TurnCratesIntoWumpa)) Crash2_Mods.Mod_TurnCratesIntoWumpa(nsf, rand);
                     if (GetOption(MirroredWorld) || GetOption(RandomLevelsMirrored)) Mod_MirrorLevel(nsf, nsd, rand, GetOption(RandomLevelsMirrored));
                     if (GetOption(SceneryColorSwizzle)) CrashTri_Common.Mod_Scenery_Swizzle(nsf, rand);

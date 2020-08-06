@@ -283,7 +283,13 @@ namespace CrateModLoader.GameSpecific.Crash2
             Crash2_Levels.L25_SpacedOut,
 
             Crash2_Levels.L26_TotallyBear, // todo: camera stitching, bear stuff
-            Crash2_Levels.L27_TotallyFly
+            Crash2_Levels.L27_TotallyFly,
+
+            Crash2_Levels.B01_RipperRoo,
+            //Crash2_Levels.B02_KomodoBros,
+            Crash2_Levels.B03_TinyTiger,
+            Crash2_Levels.B04_NGin,
+            Crash2_Levels.B05_Cortex,
         };
 
         static List<Crash2_Levels> ChaseLevelsList = new List<Crash2_Levels>()
@@ -319,6 +325,14 @@ namespace CrateModLoader.GameSpecific.Crash2
             Crash2_Levels.L13_BearDown,
             Crash2_Levels.L15_UnBearable,
             Crash2_Levels.L26_TotallyBear,
+        };
+        static List<Crash2_Levels> BossLevelsList = new List<Crash2_Levels>()
+        {
+            Crash2_Levels.B01_RipperRoo,
+            //Crash2_Levels.B02_KomodoBros,
+            Crash2_Levels.B03_TinyTiger,
+            Crash2_Levels.B04_NGin,
+            Crash2_Levels.B05_Cortex,
         };
 
         static List<Crash2_Levels> BackwardsCameraList = new List<Crash2_Levels>()
@@ -360,6 +374,11 @@ namespace CrateModLoader.GameSpecific.Crash2
             }
             if (isRandom && rand.Next(2) == 0)
             {
+                return;
+            }
+            if (BossLevelsList.Contains(level))
+            {
+                Mod_RandomizeBosses(nsf, nsd, level, rand, true);
                 return;
             }
 
@@ -1712,6 +1731,100 @@ namespace CrateModLoader.GameSpecific.Crash2
             }
 
         }
+
+        public static void Mod_RandomizeBosses(NSF nsf, NSD nsd, Crash2_Levels level, Random rand, bool isBackwards)
+        {
+            if (!BossLevelsList.Contains(level))
+            {
+                return;
+            }
+            if (level == Crash2_Levels.B05_Cortex && !isBackwards)
+            {
+                return;
+            }
+
+            foreach (Chunk chunk in nsf.Chunks)
+            {
+                if (chunk is NormalChunk zonechunk)
+                {
+                    for (int e = 0; e < zonechunk.Entries.Count; e++)
+                    {
+                        if (zonechunk.Entries[e] is ZoneEntry zone)
+                        {
+
+                            for (int i = 0; i < zone.Entities.Count; i++)
+                            {
+                                if (zone.Entities.Count > 0 && i < zone.Entities.Count)
+                                {
+                                    if (zone.Entities[i].Type == 19 && zone.Entities[i].Subtype == 0) // Ripper Roo
+                                    {
+                                        EntityPosition[] Path = new EntityPosition[zone.Entities[i].Positions.Count];
+                                        zone.Entities[i].Positions.CopyTo(Path, 0);
+                                        zone.Entities[i].Positions.Clear();
+
+                                        if (isBackwards)
+                                        {
+                                            for (int a = Path.Length - 2; a > -1; a--)
+                                            {
+                                                zone.Entities[i].Positions.Add(Path[a]);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            // todo: broken collision checks - try just randomizing rows?
+
+                                            List<int> PosToRand = new List<int>();
+                                            for (int a = 0; a < Path.Length - 1; a++)
+                                            {
+                                                PosToRand.Add(a);
+                                            }
+                                            int count = PosToRand.Count;
+                                            for (int a = 0; a < count; a++)
+                                            {
+                                                int r = rand.Next(PosToRand.Count);
+                                                zone.Entities[i].Positions.Add(Path[PosToRand[r]]);
+                                                PosToRand.RemoveAt(r);
+                                            }
+
+                                        }
+
+                                        zone.Entities[i].Positions.Add(Path[Path.Length - 1]);
+
+                                    }
+                                    else if (zone.Entities[i].Type == 58 && zone.Entities[i].Subtype == 10) // N.Gin Rocket Spawners
+                                    {
+                                        //todo
+                                    }
+                                    else if (zone.Entities[i].Type == 58 && zone.Entities[i].Subtype == 0) // N.Gin
+                                    {
+                                        //todo: 2900 positions!!
+                                    }
+                                }
+                            }
+
+                            if (!isBackwards)
+                            {
+                                for (int i = 0; i < zone.Entities.Count; i++)
+                                {
+                                    if (zone.Entities.Count > 0 && i < zone.Entities.Count)
+                                    {
+                                        if (zone.Entities[i].Type == 58 && zone.Entities[i].Subtype == 10) // N.Gin Rocket Spawners
+                                        {
+                                            //todo
+
+                                        }
+                                    }
+                                }
+                            }
+
+                            break;
+                        }
+                    }
+                }
+            }
+
+        }
+
 
         //omg why is this so convoluted for just the id ;_;
         static int GetDrawListValue(NSF nsf, ZoneEntry thiszone, int id)

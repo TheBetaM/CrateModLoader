@@ -302,11 +302,11 @@ namespace CrateModLoader.GameSpecific.Crash1
         };
         static List<Crash1_Levels> BossLevelsList = new List<Crash1_Levels>()
         {
-            Crash1_Levels.B01_PapuPapu,
+            //Crash1_Levels.B01_PapuPapu,
             Crash1_Levels.B02_RipperRoo,
-            Crash1_Levels.B03_KoalaKong,
+            //Crash1_Levels.B03_KoalaKong,
             Crash1_Levels.B04_Pinstripe,
-            Crash1_Levels.B05_NBrio,
+            //Crash1_Levels.B05_NBrio,
             Crash1_Levels.B06_Cortex,
         };
 

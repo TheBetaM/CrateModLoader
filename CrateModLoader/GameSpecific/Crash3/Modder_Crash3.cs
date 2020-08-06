@@ -33,6 +33,7 @@ namespace CrateModLoader
         internal const int RandomizeCrateContents = 20;
         internal const int RandomizeFlyingLevels = 21;
         internal const int RandomizeBikeLevels = 22;
+        internal const int RandomizeBosses = 23;
 
         public Modder_Crash3()
         {
@@ -77,6 +78,7 @@ namespace CrateModLoader
             AddOption(RandomizeCrateContents, new ModOption("Randomize Crate Contents"));
             AddOption(RandomizeFlyingLevels, new ModOption("Randomize Flying Levels"));
             AddOption(RandomizeBikeLevels, new ModOption("Randomize Bike Levels"));
+            //AddOption(RandomizeBosses, new ModOption("Randomize Final Boss Level"));
             //AddOption(MirroredWorld, new ModOption("Mirrored World"));
             //AddOption(RandomLevelsMirrored, new ModOption("Random Levels Are Mirrored"));
             AddOption(CameraBiggerFOV, new ModOption("Wider Camera Field-Of-View"));
@@ -146,6 +148,7 @@ namespace CrateModLoader
                 if (GetOption(CameraBiggerFOV) || GetOption(RandomizeCameraFOV)) Crash3_Mods.Mod_CameraFOV(nsf, rand, GetOption(RandomizeCameraFOV));
                 if (GetOption(RandomizeCratesIntoWood)) Crash3_Mods.Mod_RandomWoodCrates(nsf, rand);
                 if (GetOption(RandomizeCrateContents)) Crash3_Mods.Mod_RandomCrateContents(nsf, rand);
+                if (GetOption(RandomizeBosses)) Crash3_Mods.Mod_RandomizeBosses(nsf, nsd, NSF_Level, rand, false);
                 if (GetOption(RandomizeFlyingLevels)) Crash3_Mods.Mod_RandomizeFlyingLevels(nsf, nsd, NSF_Level, rand);
                 if (GetOption(TurnCratesIntoWumpa)) Crash3_Mods.Mod_TurnCratesIntoWumpa(nsf, rand);
                 if (GetOption(RandomizeADIO)) Mod_RandomizeADIO(nsf, nsd, rand);
