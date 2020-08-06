@@ -14,6 +14,7 @@ Crash Bandicoot, Crash Bandicoot 2: Cortex Strikes Back, Crash Bandicoot: WARPED
 - New feature: Backwards Levels (Where possible: Crash 1 - All levels, 100% completable; Crash 2 - Most levels, 100% completable, Crash WARPED - Most levels, 105% not completable)
 - New feature: Random Levels Are Backwards
 - New feature: Randomize Crate Contents
+- New feature: Randomize Boss Levels
 - New feature: Vehicle Levels On Foot (Crash 2)
 - New feature: Randomize Bike Levels & Flying Levels (Crash WARPED)
 - New feature: Wider Camera Field-Of-View

@@ -77,7 +77,7 @@ namespace CrateModLoader
             AddOption(RandomBackwardsLevels, new ModOption("Random Levels Are Backwards"));
             AddOption(BackwardsHogLevels, new ModOption("Backwards Hog Levels (Very Hard!)"));
             AddOption(RandomizeCrateContents, new ModOption("Randomize Crate Contents"));
-            //AddOption(RandomizeBosses, new ModOption("Randomize Boss Levels"));
+            AddOption(RandomizeBosses, new ModOption("Randomize Boss Levels"));
             //AddOption(VehicleLevelsOnFoot, new ModOption("Hog Levels On Foot"));
             //AddOption(MirroredWorld, new ModOption("Mirrored World"));
             //AddOption(RandomLevelsMirrored, new ModOption("Random Levels Are Mirrored"));
@@ -118,7 +118,7 @@ namespace CrateModLoader
 
             bool CachingPass = false;
             /*
-            if (GetOption(VehicleLevelsOnFoot) || GetOption(RandomBackwardsLevels) || GetOption(BackwardsLevels))
+            if (GetOption(VehicleLevelsOnFoot))
             {
                 CachingPass = true;
             }
@@ -152,7 +152,7 @@ namespace CrateModLoader
                 
                 if (CachingPass)
                 {
-                    if (GetOption(BackwardsLevels) || GetOption(RandomBackwardsLevels) || GetOption(VehicleLevelsOnFoot)) 
+                    if (GetOption(VehicleLevelsOnFoot)) 
                         Crash1_Mods.Cache_NormalCrashData(nsf, nsd, NSF_Level);
                 }
                 else
@@ -163,6 +163,7 @@ namespace CrateModLoader
                     if (GetOption(RandomizeADIO)) Mod_RandomizeADIO(nsf, nsd, rand);
                     if (GetOption(RandomizeCratesIntoWood)) Crash1_Mods.Mod_RandomWoodCrates(nsf, rand);
                     if (GetOption(RandomizeCrateContents)) Crash1_Mods.Mod_RandomCrateContents(nsf, rand);
+                    if (GetOption(RandomizeBosses)) Crash1_Mods.Mod_RandomizeBosses(nsf, nsd, NSF_Level, rand, false);
                     if (GetOption(TurnCratesIntoWumpa)) Crash1_Mods.Mod_TurnCratesIntoWumpa(nsf, rand);
                     if (GetOption(SceneryColorSwizzle)) CrashTri_Common.Mod_Scenery_Swizzle(nsf, rand);
                     if (GetOption(SceneryGreyscale)) CrashTri_Common.Mod_Scenery_Greyscale(nsf);
