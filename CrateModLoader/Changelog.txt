@@ -11,10 +11,10 @@ Crash Bandicoot, Crash Bandicoot 2: Cortex Strikes Back, Crash Bandicoot: WARPED
 - New feature: All Crates Are Blank
 - New feature: All Crates Are Wumpa (Crash 1 & 2)
 - New feature: Randomize Warp Room (Crash 2 & WARPED)
-- New feature: Backwards Levels (where possible)
+- New feature: Backwards Levels (Where possible: Crash 1 - All levels, 100% completable; Crash 2 - Most levels, 100% completable, Crash WARPED - Most levels, 105% not completable)
 - New feature: Random Levels Are Backwards
 - New feature: Randomize Crate Contents
-- New feature: Bear Levels On Foot (Crash 2)
+- New feature: Vehicle Levels On Foot (Crash 2)
 - New feature: Randomize Bike Levels & Flying Levels (Crash WARPED)
 - New feature: Wider Camera Field-Of-View
 - New feature: Randomize Camera Field-Of-View

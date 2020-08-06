@@ -32,6 +32,8 @@ namespace CrateModLoader
         internal const int RandomLevelsMirrored = 18;
         internal const int RandomizeMap = 19;
         internal const int RandomizeCrateContents = 20;
+        internal const int RandomizeBosses = 21;
+        internal const int BackwardsHogLevels = 22;
 
         public Modder_Crash1()
         {
@@ -73,7 +75,10 @@ namespace CrateModLoader
             //AddOption(RandomizeMap, new ModOption("Randomize Map"));
             AddOption(BackwardsLevels, new ModOption("Backwards Levels"));
             AddOption(RandomBackwardsLevels, new ModOption("Random Levels Are Backwards"));
+            AddOption(BackwardsHogLevels, new ModOption("Backwards Hog Levels (Very Hard!)"));
             AddOption(RandomizeCrateContents, new ModOption("Randomize Crate Contents"));
+            //AddOption(RandomizeBosses, new ModOption("Randomize Boss Levels"));
+            //AddOption(VehicleLevelsOnFoot, new ModOption("Hog Levels On Foot"));
             //AddOption(MirroredWorld, new ModOption("Mirrored World"));
             //AddOption(RandomLevelsMirrored, new ModOption("Random Levels Are Mirrored"));
             AddOption(CameraBiggerFOV, new ModOption("Wider Camera Field-Of-View"));
@@ -111,6 +116,14 @@ namespace CrateModLoader
 
             ErrorManager.EnterSkipRegion();
 
+            bool CachingPass = false;
+            /*
+            if (GetOption(VehicleLevelsOnFoot) || GetOption(RandomBackwardsLevels) || GetOption(BackwardsLevels))
+            {
+                CachingPass = true;
+            }
+            */
+
             for (int i = 0; i < Math.Min(nsfs.Count, nsds.Count); ++i)
             {
                 FileInfo nsfFile = nsfs[i];
@@ -136,25 +149,40 @@ namespace CrateModLoader
                 }
 
                 Crash1_Levels NSF_Level = GetLevelFromNSF(nsfFile.Name);
+                
+                if (CachingPass)
+                {
+                    if (GetOption(BackwardsLevels) || GetOption(RandomBackwardsLevels) || GetOption(VehicleLevelsOnFoot)) 
+                        Crash1_Mods.Cache_NormalCrashData(nsf, nsd, NSF_Level);
+                }
+                else
+                {
+                    if (GetOption(BackwardsLevels) || GetOption(RandomBackwardsLevels)) Crash1_Mods.Mod_BackwardsLevels(nsf, nsd, NSF_Level, GetOption(RandomBackwardsLevels), rand);
+                    if (GetOption(BackwardsHogLevels)) Crash1_Mods.Mod_HogLevelsBackwards(nsf, nsd, NSF_Level);
+                    if (GetOption(CameraBiggerFOV) || GetOption(RandomizeCameraFOV)) Crash1_Mods.Mod_CameraFOV(nsf, rand, GetOption(RandomizeCameraFOV));
+                    if (GetOption(RandomizeADIO)) Mod_RandomizeADIO(nsf, nsd, rand);
+                    if (GetOption(RandomizeCratesIntoWood)) Crash1_Mods.Mod_RandomWoodCrates(nsf, rand);
+                    if (GetOption(RandomizeCrateContents)) Crash1_Mods.Mod_RandomCrateContents(nsf, rand);
+                    if (GetOption(TurnCratesIntoWumpa)) Crash1_Mods.Mod_TurnCratesIntoWumpa(nsf, rand);
+                    if (GetOption(SceneryColorSwizzle)) CrashTri_Common.Mod_Scenery_Swizzle(nsf, rand);
+                    if (GetOption(SceneryGreyscale)) CrashTri_Common.Mod_Scenery_Greyscale(nsf);
+                    if (GetOption(SceneryRainbow)) CrashTri_Common.Mod_Scenery_Rainbow(nsf, rand);
+                    if (GetOption(SceneryUntextured)) CrashTri_Common.Mod_Scenery_Untextured(nsf);
+                    if (GetOption(ZoneCloseCamera)) CrashTri_Common.Mod_Camera_Closeup(nsf);
 
-                if (GetOption(BackwardsLevels) || GetOption(RandomBackwardsLevels)) Crash1_Mods.Mod_BackwardsLevels(nsf, nsd, NSF_Level, GetOption(RandomBackwardsLevels), rand);
-                if (GetOption(CameraBiggerFOV) || GetOption(RandomizeCameraFOV)) Crash1_Mods.Mod_CameraFOV(nsf, rand, GetOption(RandomizeCameraFOV));
-                if (GetOption(RandomizeADIO)) Mod_RandomizeADIO(nsf, nsd, rand);
-                if (GetOption(RandomizeCratesIntoWood)) Crash1_Mods.Mod_RandomWoodCrates(nsf, rand);
-                if (GetOption(RandomizeCrateContents)) Crash1_Mods.Mod_RandomCrateContents(nsf, rand);
-                if (GetOption(TurnCratesIntoWumpa)) Crash1_Mods.Mod_TurnCratesIntoWumpa(nsf, rand);
-                if (GetOption(SceneryColorSwizzle)) CrashTri_Common.Mod_Scenery_Swizzle(nsf, rand);
-                if (GetOption(SceneryGreyscale)) CrashTri_Common.Mod_Scenery_Greyscale(nsf);
-                if (GetOption(SceneryRainbow)) CrashTri_Common.Mod_Scenery_Rainbow(nsf, rand);
-                if (GetOption(SceneryUntextured)) CrashTri_Common.Mod_Scenery_Untextured(nsf);
-                if (GetOption(ZoneCloseCamera)) CrashTri_Common.Mod_Camera_Closeup(nsf);
-
-                Crash1_Mods.Mod_Metadata(nsf, nsd, NSF_Level);
+                    Crash1_Mods.Mod_Metadata(nsf, nsd, NSF_Level);
+                }
 
                 PatchNSD(nsf, nsd);
 
                 File.WriteAllBytes(nsfFile.FullName, nsf.Save());
                 File.WriteAllBytes(nsdFile.FullName, nsd.Save());
+
+                if (CachingPass && i == Math.Min(nsfs.Count, nsds.Count) - 1)
+                {
+                    CachingPass = false;
+                    i = -1;
+                }
             }
 
             ErrorManager.ExitSkipRegion();
