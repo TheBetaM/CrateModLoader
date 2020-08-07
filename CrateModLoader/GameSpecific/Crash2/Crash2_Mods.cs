@@ -1750,6 +1750,10 @@ namespace CrateModLoader.GameSpecific.Crash2
             List<EntityPosition> TinyPlats = new List<EntityPosition>();
             EntityPosition TinyInit = new EntityPosition();
             List<List<EntityPosition>> RocketPaths = new List<List<EntityPosition>>();
+            int SpawnZone = 0;
+            EntityPosition CrashSpawn = new EntityPosition();
+
+            bool CameraFlip = true;
 
             foreach (Chunk chunk in nsf.Chunks)
             {
@@ -1764,6 +1768,25 @@ namespace CrateModLoader.GameSpecific.Crash2
                             {
                                 if (zone.Entities.Count > 0 && i < zone.Entities.Count)
                                 {
+
+                                    if (level == Crash2_Levels.B05_Cortex && CameraFlip && zone.Entities[i].CameraIndex != null && zone.Entities[i].CameraSubIndex != null)
+                                    {
+                                        if (zone.Entities[i].CameraSubIndex == 1)
+                                        {
+                                            EntityPosition[] Angles = new EntityPosition[zone.Entities[i].Positions.Count];
+                                            zone.Entities[i].Positions.CopyTo(Angles, 0);
+                                            for (int a = 0; a < Angles.Length; a++)
+                                            {
+                                                Angles[a] = new EntityPosition(3800, (short)(Angles[a].Y + 2000), Angles[a].Z);
+                                            }
+                                            zone.Entities[i].Positions.Clear();
+                                            for (int a = 0; a < Angles.Length; a++)
+                                            {
+                                                zone.Entities[i].Positions.Add(Angles[a]);
+                                            }
+                                        }
+                                    }
+
                                     if (zone.Entities[i].Type == 19 && zone.Entities[i].Subtype == 0) // Ripper Roo
                                     {
                                         EntityPosition[] Path = new EntityPosition[zone.Entities[i].Positions.Count];
@@ -1925,6 +1948,33 @@ namespace CrateModLoader.GameSpecific.Crash2
                                         RocketPaths.Add(RPath);
                                         zone.Entities[i].Positions.Clear();
                                     }
+                                    else if (zone.Entities[i].Type == 0 && zone.Entities[i].Subtype == 0 && level == Crash2_Levels.B05_Cortex) // Crash
+                                    {
+                                        
+                                        List<EntityPosition> Pos1 = new List<EntityPosition>(zone.Entities[i].Positions);
+                                        Pos1.Reverse();
+                                        zone.Entities[i].Positions.Clear();
+                                        for (int a = 0; a < Pos1.Count - 10; a++)
+                                        {
+                                            zone.Entities[i].Positions.Add(Pos1[a]);
+                                        }
+                                        
+                                        //CrashSpawn = zone.Entities[i].Positions[0];
+                                    }
+                                    else if (zone.Entities[i].Type == 22 && zone.Entities[i].Subtype == 0 && level == Crash2_Levels.B05_Cortex) // Cortex
+                                    {
+                                        List<EntityPosition> Pos1 = new List<EntityPosition>(zone.Entities[i].Positions);
+                                        Pos1.Reverse();
+                                        zone.Entities[i].Positions.Clear();
+                                        for (int a = 0; a < 10; a++)
+                                        {
+                                            zone.Entities[i].Positions.Add(Pos1[0]);
+                                        }
+                                        for (int a = 0; a < Pos1.Count; a++)
+                                        {
+                                            zone.Entities[i].Positions.Add(Pos1[a]);
+                                        }
+                                    }
                                     else if (zone.Entities[i].Type == 58 && zone.Entities[i].Subtype == 0) // N.Gin
                                     {
                                         //todo: 2900 positions!!
@@ -2072,12 +2122,55 @@ namespace CrateModLoader.GameSpecific.Crash2
                                 }
 
                             }
-
-                            break;
                         }
                     }
                 }
             }
+
+            if (level == Crash2_Levels.B05_Cortex)
+            {
+                foreach (Chunk chunk in nsf.Chunks)
+                {
+                    if (chunk is NormalChunk zonechunk)
+                    {
+                        for (int e = 0; e < zonechunk.Entries.Count; e++)
+                        {
+                            if (zonechunk.Entries[e] is ZoneEntry zone)
+                            {
+
+                                if (zone.EName == "33_7Z")
+                                {
+                                    SpawnZone = zone.EID;
+
+                                    int xoffset = BitConv.FromInt32(zone.Layout, 0);
+                                    int yoffset = BitConv.FromInt32(zone.Layout, 4);
+                                    int zoffset = BitConv.FromInt32(zone.Layout, 8);
+
+                                    CrashSpawn = new EntityPosition(748, 750, 880);
+
+                                    nsd.Spawns[0].ZoneEID = SpawnZone;
+                                    nsd.Spawns[0].SpawnX = (xoffset + CrashSpawn.X * 4) << 8;
+                                    nsd.Spawns[0].SpawnY = (yoffset + CrashSpawn.Y * 4) << 8;
+                                    nsd.Spawns[0].SpawnZ = (zoffset + CrashSpawn.Z * 4) << 8;
+                                }
+
+                                /*
+                                if (linkedzones.Contains(zone.EID))
+                                {
+                                    Console.WriteLine("zone " + linkedzones.IndexOf(zone.EID) + ": " + zone.EName);
+                                }
+                                if (zone.EID == nsd.Spawns[0].ZoneEID)
+                                {
+                                    Console.WriteLine("spawnzone: " + zone.EName);
+                                }
+                                */
+
+                            }
+                        }
+                    }
+                }
+            }
+            
 
         }
 
