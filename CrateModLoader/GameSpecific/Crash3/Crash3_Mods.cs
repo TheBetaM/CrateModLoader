@@ -272,40 +272,41 @@ namespace CrateModLoader.GameSpecific.Crash3
         static List<Crash3_Levels> BackwardsLevelsList = new List<Crash3_Levels>()
         {
 
-            Crash3_Levels.L01_ToadVillage, 
+            Crash3_Levels.L01_ToadVillage,
+            Crash3_Levels.L02_UnderPressure,
+            Crash3_Levels.L03_OrientExpress, // todo: broken counter, tiger stuff (unstable - game may crash if jumped on bouncepad that turns you into crash, softlock on checkpoint respawn)
             Crash3_Levels.L04_BoneYard, // todo: broken counter, exit has trouble appearing sometimes
+            Crash3_Levels.L05_MakinWaves, // todo: warpout doesn't appear, broken counter
+
             Crash3_Levels.L06_GeeWiz, 
             Crash3_Levels.L07_HangEmHigh,
+            //Crash3_Levels.L08_HogRide, // todo: vehicle stuff
             Crash3_Levels.L09_TombTime,
+            Crash3_Levels.L10_MidnightRun, // unverified, todo: broken counter, camera stitching, tiger stuff
+
             Crash3_Levels.L11_DinoMight, // todo: broken counter, warpout doesn't appear (too many objects? or same as L04?)
+            Crash3_Levels.L12_DeepTrouble,
             Crash3_Levels.L13_HighTime,
+            //Crash3_Levels.L14_RoadCrash, // todo: vehicle stuff
             Crash3_Levels.L15_DoubleHeader,
-            Crash3_Levels.L16_Sphynxinator, 
+
+            Crash3_Levels.L16_Sphynxinator,
+            Crash3_Levels.L17_ByeByeBlimps,
+            Crash3_Levels.L18_TellNoTales, // todo: warpout doesn't appear
             Crash3_Levels.L19_FutureFrenzy, 
             Crash3_Levels.L20_TombWader,
+
             Crash3_Levels.L21_GoneTomorrow, // unverified, todo: camera stitching
-            Crash3_Levels.L23_FlamingPassion,
-            Crash3_Levels.L25_BugLite,
-            Crash3_Levels.L30_EggipusRex, // todo: warpout doesn't appear
-
-            Crash3_Levels.L02_UnderPressure,
-            Crash3_Levels.L12_DeepTrouble,
-
-            Crash3_Levels.L05_MakinWaves, // todo: warpout doesn't appear, broken counter
-            Crash3_Levels.L18_TellNoTales, // unverified, todo: not spawning, broken counter
-            Crash3_Levels.L26_SkiCrazed, // unverified, todo: not spawning, broken counter
-
-            Crash3_Levels.L03_OrientExpress, // todo: broken counter, tiger stuff (unstable - game may crash if jumped on bouncepad that turns you into crash, softlock on checkpoint respawn)
-            Crash3_Levels.L10_MidnightRun, // unverified, todo: broken counter, camera stitching, tiger stuff
-            Crash3_Levels.L28_RingsOfPower,
-
-            //Crash3_Levels.L08_HogRide, // todo: vehicle stuff
-            //Crash3_Levels.L14_RoadCrash, // todo: vehicle stuff
             //Crash3_Levels.L22_OrangeAsphalt, // todo: vehicle stuff
+            Crash3_Levels.L23_FlamingPassion,
+            Crash3_Levels.L24_MadBombers,
+            Crash3_Levels.L25_BugLite,
+
+            Crash3_Levels.L26_SkiCrazed, // unverified, todo: not spawning, broken counter
             //Crash3_Levels.L27_Area51, // todo: vehicle stuff
-            //Crash3_Levels.L17_ByeByeBlimps, // probably not
-            //Crash3_Levels.L24_MadBombers, // probably not
-            //Crash3_Levels.L29_HotCoco, // probably not
+            Crash3_Levels.L28_RingsOfPower,
+             //Crash3_Levels.L29_HotCoco, // probably not
+            Crash3_Levels.L30_EggipusRex, // todo: warpout doesn't appear
 
             //Crash3_Levels.B01_TinyTiger,
             //Crash3_Levels.B02_Dingodile,
@@ -418,6 +419,11 @@ namespace CrateModLoader.GameSpecific.Crash3
                 Mod_RandomizeBosses(nsf, nsd, level, rand, true);
                 return;
             }
+            if (FlyingLevelsList.Contains(level))
+            {
+                Mod_RandomizeFlyingLevels(nsf, nsd, level, rand, true);
+                return;
+            }
 
             Entity CrashEntity = null;
             NewZoneEntry CrashZone = null;
@@ -480,15 +486,6 @@ namespace CrateModLoader.GameSpecific.Crash3
                                     }
                                 }
 
-                                if (level == Crash3_Levels.L28_RingsOfPower)
-                                {
-                                    if (zone.Entities[i].Type == 87 && zone.Entities[i].Subtype == 0) //ring
-                                    {
-                                        int RingID = zone.Entities[i].Settings[0].ValueA;
-                                        zone.Entities[i].Settings[0] = new EntitySetting((byte)(29 - RingID), 0);
-                                    }
-                                }
-
                                 //save some chunk space
                                 zone.Entities[i].Name = null;
 
@@ -505,7 +502,7 @@ namespace CrateModLoader.GameSpecific.Crash3
                                         i--;
                                         zone.EntityCount--;
                                     }
-                                    else if (WarpOutEntity == null && zone.Entities[i].Type == 30 && zone.Entities[i].Subtype == 8) // subtype 8: warpout, subtype 9: warpin
+                                    if (WarpOutEntity == null && zone.Entities[i].Type == 30 && zone.Entities[i].Subtype == 8) // subtype 8: warpout, subtype 9: warpin
                                     {
                                         if (IgnoreFirstEnd)
                                         {
@@ -520,7 +517,7 @@ namespace CrateModLoader.GameSpecific.Crash3
                                             zone.EntityCount--;
                                         }
                                     }
-                                    else if (WarpInEntity == null && zone.Entities[i].Type == 30 && zone.Entities[i].Subtype == 9)
+                                    if (WarpInEntity == null && zone.Entities[i].Type == 30 && zone.Entities[i].Subtype == 9)
                                     {
                                         WarpInEntity = zone.Entities[i];
                                         WarpInZone = zone;
@@ -528,8 +525,9 @@ namespace CrateModLoader.GameSpecific.Crash3
                                         i--;
                                         zone.EntityCount--;
                                     }
-                                    else if (ClockEntity == null && zone.Entities[i].Type == 34 && zone.Entities[i].Subtype == 28)
+                                    if (ClockEntity == null && zone.Entities[i].Type == 34 && zone.Entities[i].Subtype == 28)
                                     {
+                                        
                                         ClockEntity = zone.Entities[i];
                                         ClockZone = zone;
                                         if (level != Crash3_Levels.L30_EggipusRex)
@@ -538,8 +536,9 @@ namespace CrateModLoader.GameSpecific.Crash3
                                             i--;
                                             zone.EntityCount--;
                                         }
+                                        
                                     }
-                                    else if (BoxCounterEntity == null && zone.Entities[i].Type == 4 && zone.Entities[i].Subtype == 17)
+                                    if (BoxCounterEntity == null && zone.Entities[i].Type == 4 && zone.Entities[i].Subtype == 17)
                                     {
                                         if (IgnoreFirstCounter)
                                         {
@@ -568,6 +567,74 @@ namespace CrateModLoader.GameSpecific.Crash3
                                     */
 
                                 }
+                            }
+
+                            if (BikeLevelsList.Contains(level))
+                            {
+                                for (int e = 0; e < zone.Entities.Count; e++)
+                                {
+                                    if (zone.Entities[e].Type != null)
+                                    {
+                                        /*
+                                        
+                                        if (zone.Entities[e].Type == 0 && zone.Entities[e].Subtype == 0) //crash
+                                        {
+                                            List<EntityPosition> Pos1 = new List<EntityPosition>(zone.Entities[e].Positions);
+                                            Pos1.Reverse();
+                                            zone.Entities[e].Positions.Clear();
+                                            for (int a = 0; a < Pos1.Count; a++)
+                                            {
+                                                zone.Entities[e].Positions.Add(Pos1[a]);
+                                            }
+                                        }
+                                        */
+
+                                        if (zone.Entities[e].Type == 50 && zone.Entities[e].Subtype == 2) // hotrod rail
+                                        {
+                                            List<EntityPosition> Pos1 = new List<EntityPosition>(zone.Entities[e].Positions);
+                                            Pos1.Reverse();
+                                            zone.Entities[e].Positions.Clear();
+                                            for (int a = 0; a < Pos1.Count; a++)
+                                            {
+                                                zone.Entities[e].Positions.Add(Pos1[a]);
+                                            }
+                                            zone.Entities[e].Settings[0] = new EntitySetting(0, 0);
+                                        }
+                                        if (zone.Entities[e].Type == 50 && zone.Entities[e].Subtype == 0) //hotrod
+                                        {
+                                            List<EntityPosition> Pos1 = new List<EntityPosition>(zone.Entities[e].Positions);
+                                            Pos1.Reverse();
+                                            zone.Entities[e].Positions.Clear();
+                                            for (int a = 0; a < Pos1.Count; a++)
+                                            {
+                                                zone.Entities[e].Positions.Add(Pos1[a]);
+                                            }
+                                        }
+
+                                    }
+
+                                }
+
+                                /*
+                                if (zone.EName == "00_kZ")
+                                {
+                                    EntityPosition TargetSpawn = new EntityPosition(750, 100, 100);
+
+                                    int xoffset = BitConv.FromInt32(zone.Layout, 0);
+                                    int yoffset = BitConv.FromInt32(zone.Layout, 4);
+                                    int zoffset = BitConv.FromInt32(zone.Layout, 8);
+
+                                    nsd.Spawns[0].SpawnX = (xoffset + TargetSpawn.X * 3) << 8;
+                                    nsd.Spawns[0].SpawnY = (yoffset + TargetSpawn.Y * 3) << 8;
+                                    nsd.Spawns[0].SpawnZ = (zoffset + TargetSpawn.Z * 3) << 8;
+
+                                    zone.Entities[0].DrawListA.Rows[1].Values.Clear();
+
+                                    AddToDrawList(ref nsf, ref zone, 117); //warpin
+                                }
+                                */
+
+
                             }
 
                             if (level == Crash3_Levels.L21_GoneTomorrow)
@@ -657,14 +724,24 @@ namespace CrateModLoader.GameSpecific.Crash3
                             {
                                 for (int e = 0; e < zone.Entities.Count; e++)
                                 {
-                                    if (zone.Entities[e].Type != null && zone.Entities[e].Type == 48 && zone.Entities[e].Subtype == 0)
+                                    if (zone.Entities[e].Type != null && zone.Entities[e].Type == 10 && zone.Entities[e].Subtype == 0)
                                     {
                                         EntityPosition[] PlatPath = new EntityPosition[zone.Entities[e].Positions.Count];
                                         zone.Entities[e].Positions.CopyTo(PlatPath, 0);
                                         zone.Entities[e].Positions.Clear();
-                                        for (int a = 0; a < PlatPath.Length; a++)
+                                        if (zone.Entities[e].ID == 10)
                                         {
-                                            zone.Entities[e].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
+                                            for (int a = 0; a < PlatPath.Length; a++)
+                                            {
+                                                zone.Entities[e].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            for (int a = 21; a < PlatPath.Length; a++)
+                                            {
+                                                zone.Entities[e].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
+                                            }
                                         }
                                     }
                                 }
@@ -921,7 +998,7 @@ namespace CrateModLoader.GameSpecific.Crash3
             {
                 WarpOutPos = new EntityPosition(WarpOutPos.X, (short)(WarpOutPos.Y + 1600), (short)(WarpOutPos.Z + 2000));
             }
-            if (level == Crash3_Levels.L09_TombTime || level == Crash3_Levels.L03_OrientExpress || level == Crash3_Levels.L30_EggipusRex ||
+            if (level == Crash3_Levels.L09_TombTime || level == Crash3_Levels.L03_OrientExpress || level == Crash3_Levels.L30_EggipusRex || level == Crash3_Levels.L18_TellNoTales ||
                 level == Crash3_Levels.L04_BoneYard || level == Crash3_Levels.L10_MidnightRun || level == Crash3_Levels.L11_DinoMight || level == Crash3_Levels.L05_MakinWaves)
             {
                 FlipCrashAndWarpOut = true;
@@ -949,9 +1026,19 @@ namespace CrateModLoader.GameSpecific.Crash3
 
             if (ClockEntity != null && BoxCounterEntity != null)
             {
+                
                 int tempclockID = (int)ClockEntity.ID;
-                ClockEntity.ID = BoxCounterEntity.ID;
+                int tempcounterID = (int)BoxCounterEntity.ID;
+                int tempclockScale = (int)ClockEntity.Scaling;
+                int tempcounterScale = (int)BoxCounterEntity.Scaling;
+                ClockEntity.ID = tempcounterID;
                 BoxCounterEntity.ID = tempclockID;
+                ClockEntity.Scaling = tempcounterScale;
+                BoxCounterEntity.Scaling = tempclockScale;
+
+                ClockEntity.Settings[0] = new EntitySetting(0, 0);
+                ClockEntity.Settings[1] = new EntitySetting(0, 0);
+                ClockEntity.Settings[2] = new EntitySetting(0, 0);
 
                 ClockEntity.Name = null;
                 BoxCounterEntity.Name = null;
@@ -1000,6 +1087,11 @@ namespace CrateModLoader.GameSpecific.Crash3
                 nsd.Spawns[0].ZoneEID = WarpOutZone.EID;
             }
 
+            bool Spawned_WarpOut = false;
+            bool Spawned_Crash = false;
+            bool Spawned_Counter = false;
+            bool Spawned_Clock = false;
+
             foreach (Chunk chunk in nsf.Chunks)
             {
                 if (chunk is NormalChunk zonechunk)
@@ -1008,15 +1100,16 @@ namespace CrateModLoader.GameSpecific.Crash3
                     {
                         if (entry is NewZoneEntry zone)
                         {
-                            if (CrashEntity != null && WarpOutEntity != null && zone.EName == CrashZone.EName)
+                            if (CrashEntity != null && WarpOutEntity != null && zone.EName == CrashZone.EName && !Spawned_WarpOut)
                             {
                                 if (level != Crash3_Levels.L05_MakinWaves && level != Crash3_Levels.L11_DinoMight)
                                 {
                                     zone.Entities.Add(WarpOutEntity);
                                     zone.EntityCount++;
+                                    Spawned_WarpOut = true;
                                 }
                             }
-                            else if (WarpOutEntity != null && CrashEntity != null && zone.EName == WarpOutZone.EName)
+                            if (WarpOutEntity != null && CrashEntity != null && zone.EName == WarpOutZone.EName && !Spawned_Crash)
                             {
                                 zone.Entities.Add(CrashEntity);
                                 zone.Entities.Add(WarpInEntity);
@@ -1030,24 +1123,29 @@ namespace CrateModLoader.GameSpecific.Crash3
                                 }
                                 zone.EntityCount++;
                                 zone.EntityCount++;
+                                Spawned_Crash = true;
                             }
-                            else if (CrashEntity != null && WarpOutEntity != null && WarpInEntity != null && zone.EName == WarpInZone.EName)
+                            if (CrashEntity != null && WarpOutEntity != null && WarpInEntity != null && zone.EName == WarpInZone.EName && !Spawned_WarpOut)
                             {
                                 if (level == Crash3_Levels.L05_MakinWaves || level == Crash3_Levels.L11_DinoMight)
                                 {
                                     zone.Entities.Add(WarpOutEntity);
                                     zone.EntityCount++;
+                                    Spawned_WarpOut = true;
                                 }
                             }
-                            else if (ClockZone != null && BoxCounterEntity != null && ClockZone.EName == zone.EName)
+                            if (ClockZone != null && BoxCounterEntity != null && ClockZone.EName == zone.EName && !Spawned_Counter)
                             {
                                 zone.Entities.Add(BoxCounterEntity);
                                 zone.EntityCount++;
+                                Spawned_Counter = true;
                             }
-                            else if (ClockZone != null && BoxCounterEntity != null && BoxCounterZone.EName == zone.EName)
+                            if (ClockZone != null && BoxCounterEntity != null && BoxCounterZone.EName == zone.EName && !Spawned_Clock)
                             {
                                 zone.Entities.Add(ClockEntity);
                                 zone.EntityCount++;
+                                AddToDrawList(ref nsf, ref zone, (int)ClockEntity.ID);
+                                Spawned_Clock = true;
                             }
 
                             if (level == Crash3_Levels.L25_BugLite)
@@ -1445,20 +1543,6 @@ namespace CrateModLoader.GameSpecific.Crash3
                                 }
                             }
 
-                            if (!isBackwards)
-                            {
-                                for (int i = 0; i < zone.Entities.Count; i++)
-                                {
-                                    if (zone.Entities.Count > 0 && i < zone.Entities.Count)
-                                    {
-                                        if (zone.Entities[i].Type == 58 && zone.Entities[i].Subtype == 10) // N.Gin Rocket Spawners
-                                        {
-                                            //todo
-
-                                        }
-                                    }
-                                }
-                            }
                         }
                     }
                 }
@@ -1505,6 +1589,7 @@ namespace CrateModLoader.GameSpecific.Crash3
         }
         static void AddToDrawListMulti(ref NSF nsf, ref NewZoneEntry zone, int ID)
         {
+
             AddToDrawListSingle(ref nsf, zone, ID);
             
             // doesn't do anything
@@ -1540,7 +1625,11 @@ namespace CrateModLoader.GameSpecific.Crash3
 
                     for (int a = 0; a < zone.Entities[i].DrawListB.Rows.Count; a++)
                     {
-                        if (!zone.Entities[i].DrawListB.Rows[a].Values.Contains(BoxEntID) && zone.Entities[i].DrawListB.Rows[a].MetaValue == LowPos)
+                        if (zone.Entities[i].DrawListB.Rows[a].Values.Contains(BoxEntID))
+                        {
+                            zone.Entities[i].DrawListB.Rows[a].Values.Remove(BoxEntID);
+                        }
+                        if (zone.Entities[i].DrawListB.Rows[a].MetaValue == LowPos)
                         {
                             zone.Entities[i].DrawListB.Rows[a].Values.Add(BoxEntID);
                         }
@@ -1566,7 +1655,11 @@ namespace CrateModLoader.GameSpecific.Crash3
 
                     for (int a = 0; a < zone.Entities[i].DrawListA.Rows.Count; a++)
                     {
-                        if (!zone.Entities[i].DrawListA.Rows[a].Values.Contains(BoxEntID) && zone.Entities[i].DrawListA.Rows[a].MetaValue == MaxPos)
+                        if (zone.Entities[i].DrawListA.Rows[a].Values.Contains(BoxEntID))
+                        {
+                            zone.Entities[i].DrawListA.Rows[a].Values.Remove(BoxEntID);
+                        }
+                        if (zone.Entities[i].DrawListA.Rows[a].MetaValue == MaxPos)
                         {
                             zone.Entities[i].DrawListA.Rows[a].Values.Add(BoxEntID);
                         }
@@ -1837,23 +1930,12 @@ namespace CrateModLoader.GameSpecific.Crash3
             }
         }
 
-        public static void Mod_RandomizeFlyingLevels(NSF nsf, NewNSD nsd, Crash3_Levels level, Random rand)
+        public static void Mod_RandomizeFlyingLevels(NSF nsf, NewNSD nsd, Crash3_Levels level, Random rand, bool isBackwards)
         {
             if (!FlyingLevelsList.Contains(level))
             {
                 return;
             }
-            if (level != Crash3_Levels.L17_ByeByeBlimps)
-            {
-                return;
-            }
-
-            short Min_X = -25823;
-            short Max_X = 29792;
-            short Min_Y = 7400;
-            short Max_Y = 14025;
-            short Min_Z = -29589;
-            short Max_Z = 26432;
 
             List<int> TypesToRand = new List<int>()
             {
@@ -1878,22 +1960,96 @@ namespace CrateModLoader.GameSpecific.Crash3
                             {
                                 ent.Name = null;
 
-                                MainZone = zone;
-                                if (ent.Type != null && ent.Type == 36)
+                                if (level == Crash3_Levels.L17_ByeByeBlimps)
                                 {
-                                    if (ent.Subtype == 0 || ent.Subtype == 1)
+                                    MainZone = zone;
+                                    if (ent.Type != null && ent.Type == 36)
                                     {
-                                        ent.Positions.Clear();
-                                        short X = (short)rand.Next(Min_X, Max_X);
-                                        short Y = (short)rand.Next(Min_Y, Max_Y);
-                                        short Z = (short)rand.Next(Min_Z, Max_Z);
-                                        ent.Positions.Add(new EntityPosition(X, Y, Z));
+                                        if (ent.Subtype == 0 || ent.Subtype == 1) // zep and loons
+                                        {
+                                            short Min_X = -25823;
+                                            short Max_X = 29792;
+                                            short Min_Y = 7400;
+                                            short Max_Y = 14025;
+                                            short Min_Z = -29589;
+                                            short Max_Z = 26432;
+                                            
+                                            if (isBackwards)
+                                            {
+                                                short X = ent.Positions[0].X;
+                                                short Y = ent.Positions[0].Y;
+                                                short Z = (short)(-ent.Positions[0].Z);
+                                                ent.Positions.Clear();
+                                                ent.Positions.Add(new EntityPosition(X, Y, Z));
+                                            }
+                                            else
+                                            {
+                                                ent.Positions.Clear();
+                                                short X = (short)rand.Next(Min_X, Max_X);
+                                                short Y = (short)rand.Next(Min_Y, Max_Y);
+                                                short Z = (short)rand.Next(Min_Z, Max_Z);
+                                                ent.Positions.Add(new EntityPosition(X, Y, Z));
+                                                //todo: loon types
+                                            }
+                                            
+                                        }
+                                    }
+                                    else if (ent.Type != null && ent.Type == 0 && ent.Subtype == 0)
+                                    {
+                                        //WarpOutPos = ent.Positions[0]; // maybe randomize crash's spawn?
                                     }
                                 }
-                                else if (ent.Type != null && ent.Type == 0 && ent.Subtype == 0)
+                                else if (level == Crash3_Levels.L24_MadBombers)
                                 {
-                                    //WarpOutPos = ent.Positions[0]; // maybe randomize crash's spawn?
+                                    if (isBackwards)
+                                    {
+                                        if (ent.Type == 55 && ent.Subtype == 0) //reverse paths
+                                        {
+                                            List<EntityPosition> Pos1 = new List<EntityPosition>(ent.Positions);
+                                            Pos1.Reverse();
+                                            ent.Positions.Clear();
+                                            for (int a = 0; a < Pos1.Count; a++)
+                                            {
+                                                ent.Positions.Add(Pos1[a]);
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (ent.Type == 55 && ent.Subtype == 0) //reverse paths, sometimes
+                                        {
+                                            if (rand.Next(2) == 0)
+                                            {
+                                                List<EntityPosition> Pos1 = new List<EntityPosition>(ent.Positions);
+                                                Pos1.Reverse();
+                                                ent.Positions.Clear();
+                                                for (int a = 0; a < Pos1.Count; a++)
+                                                {
+                                                    ent.Positions.Add(Pos1[a]);
+                                                }
+                                            }
+                                        }
+                                        //todo: loon types
+                                    }
                                 }
+                                else if (level == Crash3_Levels.L28_RingsOfPower)
+                                {
+                                    if (isBackwards)
+                                    {
+                                        if (ent.Type == 87 && ent.Subtype == 0) //ring
+                                        {
+                                            int RingID = ent.Settings[0].ValueA;
+                                            ent.Settings[0] = new EntitySetting((byte)(29 - RingID), 0);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        //todo
+                                        //todo: loon types
+                                    }
+                                }
+
+                                
                             }
                         }
                     }

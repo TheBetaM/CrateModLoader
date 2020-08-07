@@ -1128,7 +1128,7 @@ namespace CrateModLoader.GameSpecific.Crash2
                                     AddToDrawList(ref nsf, ref zone, (int)BoxCounterEntity.ID);
                                 }
                             }
-                            else if (zone.EName == WarpOutZone.EName)
+                            if (zone.EName == WarpOutZone.EName)
                             {
                                 if (!Debug_DontMoveCrash)
                                 {
