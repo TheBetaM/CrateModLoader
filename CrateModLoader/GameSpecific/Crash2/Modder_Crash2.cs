@@ -329,11 +329,11 @@ namespace CrateModLoader
             "26",
             "27",
             //Bosses
-            "03",
             "06",
-            "07",
             "08",
+            "03",
             "09",
+            "07",
             //Other
             "02",
             "2D",

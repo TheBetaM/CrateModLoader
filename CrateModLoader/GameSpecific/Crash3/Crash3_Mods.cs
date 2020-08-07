@@ -1390,9 +1390,6 @@ namespace CrateModLoader.GameSpecific.Crash3
                                             {
                                                 zone.Entities[i].Positions.Add(Path[a]);
                                             }
-
-                                            Console.WriteLine("path " + Path.Length);
-                                            Console.WriteLine("pos " + zone.Entities[i].Positions.Count);
                                         }
                                         else
                                         {
