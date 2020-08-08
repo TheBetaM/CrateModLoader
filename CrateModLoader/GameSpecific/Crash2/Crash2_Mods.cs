@@ -203,6 +203,17 @@ namespace CrateModLoader.GameSpecific.Crash2
                                         ent.Subtype = 16;
                                     }
                                 }
+                                else if (ent.Type != null && ent.Type == 0 && ent.Subtype == 0)
+                                {
+                                    if (ent.BoxCount != null)
+                                    {
+                                        ent.BoxCount = new EntitySetting(0, 0);
+                                    }
+                                    if (ent.BonusBoxCount != null)
+                                    {
+                                        ent.BonusBoxCount = new EntitySetting(0, 0);
+                                    }
+                                }
                             }
                         }
                     }

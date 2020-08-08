@@ -221,6 +221,17 @@ namespace CrateModLoader.GameSpecific.Crash3
                                         }
                                     }
                                 }
+                                else if (ent.Type != null && ent.Type == 0 && ent.Subtype == 0)
+                                {
+                                    if (ent.BoxCount != null)
+                                    {
+                                        ent.BoxCount = new EntitySetting(0, 0);
+                                    }
+                                    if (ent.BonusBoxCount != null)
+                                    {
+                                        ent.BonusBoxCount = new EntitySetting(0, 0);
+                                    }
+                                }
                             }
                         }
                     }
@@ -284,7 +295,7 @@ namespace CrateModLoader.GameSpecific.Crash3
             Crash3_Levels.L09_TombTime,
             Crash3_Levels.L10_MidnightRun, // unverified, todo: broken counter, camera stitching, tiger stuff
 
-            Crash3_Levels.L11_DinoMight, // todo: broken counter, warpout doesn't appear (too many objects? or same as L04?)
+            Crash3_Levels.L11_DinoMight, // todo: broken counter, warpout doesn't appear (too many objects)
             Crash3_Levels.L12_DeepTrouble,
             Crash3_Levels.L13_HighTime,
             //Crash3_Levels.L14_RoadCrash, // todo: vehicle stuff
@@ -292,8 +303,8 @@ namespace CrateModLoader.GameSpecific.Crash3
 
             Crash3_Levels.L16_Sphynxinator,
             Crash3_Levels.L17_ByeByeBlimps,
-            Crash3_Levels.L18_TellNoTales, // todo: warpout doesn't appear
-            Crash3_Levels.L19_FutureFrenzy, 
+            Crash3_Levels.L18_TellNoTales, 
+            Crash3_Levels.L19_FutureFrenzy, // todo: exit has trouble appearing sometimes (too many objects)
             Crash3_Levels.L20_TombWader,
 
             Crash3_Levels.L21_GoneTomorrow, // unverified, todo: camera stitching
@@ -302,11 +313,11 @@ namespace CrateModLoader.GameSpecific.Crash3
             Crash3_Levels.L24_MadBombers,
             Crash3_Levels.L25_BugLite,
 
-            Crash3_Levels.L26_SkiCrazed, // unverified, todo: not spawning, broken counter
+            Crash3_Levels.L26_SkiCrazed, // todo: warpout doesn't appear, broken counter
             //Crash3_Levels.L27_Area51, // todo: vehicle stuff
             Crash3_Levels.L28_RingsOfPower,
              //Crash3_Levels.L29_HotCoco, // probably not
-            Crash3_Levels.L30_EggipusRex, // todo: warpout doesn't appear
+            Crash3_Levels.L30_EggipusRex, 
 
             //Crash3_Levels.B01_TinyTiger,
             //Crash3_Levels.B02_Dingodile,
@@ -1058,12 +1069,19 @@ namespace CrateModLoader.GameSpecific.Crash3
                     int tempID = (int)CrashEntity.ID;
                     CrashEntity.ID = WarpOutEntity.ID;
                     WarpOutEntity.ID = tempID;
+
+                    WarpOutEntity.Scaling = CrashEntity.Scaling;
                 }
                 else
                 {
                     int tempID1 = (int)WarpInEntity.ID;
                     WarpInEntity.ID = WarpOutEntity.ID;
                     WarpOutEntity.ID = tempID1;
+
+                    int WarpInScale = (int)ClockEntity.Scaling;
+                    int WarpOutScale = (int)BoxCounterEntity.Scaling;
+                    WarpInEntity.Scaling = WarpOutScale;
+                    WarpOutEntity.Scaling = WarpInScale;
                 }
 
                 CrashEntity.Name = null;
@@ -1107,6 +1125,20 @@ namespace CrateModLoader.GameSpecific.Crash3
                                     zone.Entities.Add(WarpOutEntity);
                                     zone.EntityCount++;
                                     Spawned_WarpOut = true;
+                                    if (level == Crash3_Levels.L02_UnderPressure || level == Crash3_Levels.L30_EggipusRex)
+                                    {
+                                        AddToDrawList(ref nsf, ref zone, (int)WarpOutEntity.ID);
+                                    }
+                                    else if (level == Crash3_Levels.L18_TellNoTales)
+                                    {
+                                        AddToDrawListOneCam(ref nsf, zone, (int)WarpOutEntity.ID, 0); // optional?
+                                        AddToDrawListOneCam(ref nsf, zone, (int)WarpOutEntity.ID, 1);
+                                    }
+                                    else if (level == Crash3_Levels.L26_SkiCrazed)
+                                    {
+                                        //AddToDrawListOneCam(ref nsf, zone, (int)WarpOutEntity.ID, 0); //todo
+                                        //AddToDrawListOneCam(ref nsf, zone, (int)WarpOutEntity.ID, 1); //todo
+                                    }
                                 }
                             }
                             if (WarpOutEntity != null && CrashEntity != null && zone.EName == WarpOutZone.EName && !Spawned_Crash)
@@ -1115,11 +1147,31 @@ namespace CrateModLoader.GameSpecific.Crash3
                                 zone.Entities.Add(WarpInEntity);
                                 if (FlipCrashAndWarpOut)
                                 {
-                                    AddToDrawList(ref nsf, ref zone, (int)WarpInEntity.ID);
+                                    if (level == Crash3_Levels.L05_MakinWaves)
+                                    {
+                                        AddToDrawListOneCam(ref nsf, zone, (int)WarpInEntity.ID, 9);
+                                    }
+                                    else if (level == Crash3_Levels.L18_TellNoTales)
+                                    {
+                                        AddToDrawListOneCam(ref nsf, zone, (int)WarpInEntity.ID, 8);
+                                    }
+                                    else
+                                    {
+                                        AddToDrawList(ref nsf, ref zone, (int)WarpInEntity.ID);
+                                    }
                                 }
                                 else
                                 {
-                                    AddToDrawList(ref nsf, ref zone, (int)CrashEntity.ID);
+                                    if (level == Crash3_Levels.L26_SkiCrazed)
+                                    {
+                                        // randomly doesn't work
+                                        AddToDrawListOneCam(ref nsf, zone, (int)CrashEntity.ID, 5); 
+                                        AddToDrawListOneCam(ref nsf, zone, (int)WarpInEntity.ID, 5);
+                                    }
+                                    else
+                                    {
+                                        AddToDrawList(ref nsf, ref zone, (int)CrashEntity.ID);
+                                    }
                                 }
                                 zone.EntityCount++;
                                 zone.EntityCount++;
@@ -1132,6 +1184,11 @@ namespace CrateModLoader.GameSpecific.Crash3
                                     zone.Entities.Add(WarpOutEntity);
                                     zone.EntityCount++;
                                     Spawned_WarpOut = true;
+                                    if (level == Crash3_Levels.L05_MakinWaves)
+                                    {
+                                        AddToDrawListOneCam(ref nsf, zone, (int)WarpOutEntity.ID, 10); //todo
+                                        AddToDrawListOneCam(ref nsf, zone, (int)WarpOutEntity.ID, 11); //todo
+                                    }
                                 }
                             }
                             if (ClockZone != null && BoxCounterEntity != null && ClockZone.EName == zone.EName && !Spawned_Counter)
@@ -1144,7 +1201,24 @@ namespace CrateModLoader.GameSpecific.Crash3
                             {
                                 zone.Entities.Add(ClockEntity);
                                 zone.EntityCount++;
-                                AddToDrawList(ref nsf, ref zone, (int)ClockEntity.ID);
+                                if (level == Crash3_Levels.L05_MakinWaves)
+                                {
+                                    //AddToDrawListOneCam(ref nsf, zone, (int)ClockEntity.ID, 0); //still never spawns
+                                }
+                                else if (level == Crash3_Levels.L18_TellNoTales)
+                                {
+                                    //AddToDrawListOneCam(ref nsf, zone, (int)ClockEntity.ID, 8); //not needed it seems
+                                }
+                                else if (level == Crash3_Levels.L26_SkiCrazed)
+                                {
+                                    AddToDrawListOneCam(ref nsf, zone, (int)ClockEntity.ID, 5);
+                                }
+                                else 
+                                {
+                                    AddToDrawList(ref nsf, ref zone, (int)ClockEntity.ID);
+                                }
+                                
+
                                 Spawned_Clock = true;
                             }
 
@@ -1583,22 +1657,22 @@ namespace CrateModLoader.GameSpecific.Crash3
 
 
 
-        static void AddToDrawList(ref NSF nsf, ref NewZoneEntry zone, int ID)
+        static void AddToDrawList(ref NSF nsf, ref NewZoneEntry zone, int ID, bool debug = false)
         {
-            AddToDrawListSingle(ref nsf, zone, ID);
+            AddToDrawListSingle(ref nsf, zone, ID, debug);
         }
         static void AddToDrawListMulti(ref NSF nsf, ref NewZoneEntry zone, int ID)
         {
 
-            AddToDrawListSingle(ref nsf, zone, ID);
+            AddToDrawListSingle(ref nsf, zone, ID, false);
             
             // doesn't do anything
             foreach (NewZoneEntry czone in GetNeighborZones(ref nsf, ref zone))
             {
-                AddToDrawListSingle(ref nsf, czone, ID);
+                AddToDrawListSingle(ref nsf, czone, ID, false);
             }
         }
-        static void AddToDrawListSingle(ref NSF nsf, NewZoneEntry zone, int ID)
+        static void AddToDrawListSingle(ref NSF nsf, NewZoneEntry zone, int ID, bool debug)
         {
 
             int BoxEntID = GetDrawListValue(nsf, zone, ID);
@@ -1662,6 +1736,78 @@ namespace CrateModLoader.GameSpecific.Crash3
                         if (zone.Entities[i].DrawListA.Rows[a].MetaValue == MaxPos)
                         {
                             zone.Entities[i].DrawListA.Rows[a].Values.Add(BoxEntID);
+                        }
+                    }
+                }
+            }
+        }
+        static void AddToDrawListOneCam(ref NSF nsf, NewZoneEntry zone, int ID, int cam)
+        {
+
+            int BoxEntID = GetDrawListValue(nsf, zone, ID);
+
+            for (int i = 0; i < zone.Entities.Count; i++)
+            {
+                if (zone.Entities[i].CameraIndex == cam)
+                {
+                    if (zone.Entities[i].DrawListB != null)
+                    {
+                        short LowPos = short.MaxValue;
+                        for (int a = 0; a < zone.Entities[i].DrawListB.Rows.Count; a++)
+                        {
+                            if (zone.Entities[i].DrawListB.Rows[a].MetaValue < LowPos)
+                            {
+                                LowPos = (short)zone.Entities[i].DrawListB.Rows[a].MetaValue;
+                            }
+                        }
+
+                        if (LowPos > 0)
+                        {
+                            zone.Entities[i].DrawListB.Rows.Add(new EntityPropertyRow<int>());
+                            zone.Entities[i].DrawListB.Rows[zone.Entities[i].DrawListB.Rows.Count - 1].MetaValue = 0;
+                            LowPos = 0;
+                        }
+
+                        for (int a = 0; a < zone.Entities[i].DrawListB.Rows.Count; a++)
+                        {
+                            if (zone.Entities[i].DrawListB.Rows[a].Values.Contains(BoxEntID))
+                            {
+                                zone.Entities[i].DrawListB.Rows[a].Values.Remove(BoxEntID);
+                            }
+                            if (zone.Entities[i].DrawListB.Rows[a].MetaValue == LowPos)
+                            {
+                                zone.Entities[i].DrawListB.Rows[a].Values.Add(BoxEntID);
+                            }
+                        }
+                    }
+                    if (zone.Entities[i].DrawListA != null)
+                    {
+                        short MaxPos = -1;
+                        for (int a = 0; a < zone.Entities[i].DrawListA.Rows.Count; a++)
+                        {
+                            if (zone.Entities[i].DrawListA.Rows[a].MetaValue > MaxPos)
+                            {
+                                MaxPos = (short)zone.Entities[i].DrawListA.Rows[a].MetaValue;
+                            }
+                        }
+
+                        if (MaxPos < zone.Entities[i].Positions.Count - 1)
+                        {
+                            zone.Entities[i].DrawListA.Rows.Add(new EntityPropertyRow<int>());
+                            zone.Entities[i].DrawListA.Rows[zone.Entities[i].DrawListA.Rows.Count - 1].MetaValue = (short)(zone.Entities[i].Positions.Count - 1);
+                            MaxPos = (short)(zone.Entities[i].Positions.Count - 1);
+                        }
+
+                        for (int a = 0; a < zone.Entities[i].DrawListA.Rows.Count; a++)
+                        {
+                            if (zone.Entities[i].DrawListA.Rows[a].Values.Contains(BoxEntID))
+                            {
+                                zone.Entities[i].DrawListA.Rows[a].Values.Remove(BoxEntID);
+                            }
+                            if (zone.Entities[i].DrawListA.Rows[a].MetaValue == MaxPos)
+                            {
+                                zone.Entities[i].DrawListA.Rows[a].Values.Add(BoxEntID);
+                            }
                         }
                     }
                 }
