@@ -203,17 +203,6 @@ namespace CrateModLoader.GameSpecific.Crash2
                                         ent.Subtype = 16;
                                     }
                                 }
-                                else if (ent.Type != null && ent.Type == 0 && ent.Subtype == 0)
-                                {
-                                    if (ent.BoxCount != null)
-                                    {
-                                        ent.BoxCount = new EntitySetting(0, 0);
-                                    }
-                                    if (ent.BonusBoxCount != null)
-                                    {
-                                        ent.BonusBoxCount = new EntitySetting(0, 0);
-                                    }
-                                }
                             }
                         }
                     }
@@ -271,13 +260,13 @@ namespace CrateModLoader.GameSpecific.Crash2
 
             //Crash2_Levels.L06_SnowBiz, // todo: 2 section teleports
             Crash2_Levels.L07_AirCrash, // onfoot for now, todo: board stuff - too many objects?
-            Crash2_Levels.L08_BearIt, // todo: camera stitching, bear stuff
+            //Crash2_Levels.L08_BearIt, // todo: camera stitching, bear stuff
             Crash2_Levels.L09_CrashCrush,  // todo: broken box counter
             //Crash2_Levels.L10_TheEelDeal, // todo: 1 section teleport
 
             Crash2_Levels.L11_PlantFood, // onfoot for now, todo: board stuff - out of space on PAL (maybe not anymore), sometimes crashes on death if too far away from spawn (board needs to be in loadlists?)
             Crash2_Levels.L12_SewerOrLater,
-            Crash2_Levels.L13_BearDown, // todo: camera stitching, bear stuff
+            //Crash2_Levels.L13_BearDown, // todo: camera stitching, bear stuff
             Crash2_Levels.L14_RoadToRuin,
             Crash2_Levels.L15_UnBearable, // todo: broken box counter
 
@@ -293,7 +282,7 @@ namespace CrateModLoader.GameSpecific.Crash2
             //Crash2_Levels.L24_PackAttack, // todo: crashes on jetpack pickup, because of lack of alarms?
             Crash2_Levels.L25_SpacedOut,
 
-            Crash2_Levels.L26_TotallyBear, // todo: camera stitching, bear stuff
+            //Crash2_Levels.L26_TotallyBear, // todo: camera stitching, bear stuff
             Crash2_Levels.L27_TotallyFly,
 
             Crash2_Levels.B01_RipperRoo,
