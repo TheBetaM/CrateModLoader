@@ -73,7 +73,7 @@ namespace CrateModLoader
             AddOption(RandomizeCratesIntoWood, new ModOption("All Crates Are Blank"));
             //AddOption(TurnCratesIntoWumpa, new ModOption("All Crates Are Wumpa")); //crashes in level 1
             AddOption(RandomizeWarpRoom, new ModOption("Randomize Warp Room"));
-            AddOption(BackwardsLevels, new ModOption("Backwards Levels (where possible)"));
+            AddOption(BackwardsLevels, new ModOption("Backwards Levels (Beta)"));
             AddOption(RandomBackwardsLevels, new ModOption("Random Levels Are Backwards"));
             AddOption(RandomizeCrateContents, new ModOption("Randomize Crate Contents"));
             AddOption(RandomizeFlyingLevels, new ModOption("Randomize Flying Levels"));

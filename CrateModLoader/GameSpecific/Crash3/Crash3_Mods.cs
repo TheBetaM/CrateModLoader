@@ -307,7 +307,7 @@ namespace CrateModLoader.GameSpecific.Crash3
             Crash3_Levels.L19_FutureFrenzy, // todo: exit has trouble appearing sometimes (too many objects)
             Crash3_Levels.L20_TombWader, // todo: warpout doesn't appear (too many objects)
 
-            Crash3_Levels.L21_GoneTomorrow, // unverified, todo: camera stitching, crashes due to clock
+            Crash3_Levels.L21_GoneTomorrow,
             //Crash3_Levels.L22_OrangeAsphalt, // todo: vehicle stuff
             Crash3_Levels.L23_FlamingPassion,
             Crash3_Levels.L24_MadBombers,
@@ -316,7 +316,7 @@ namespace CrateModLoader.GameSpecific.Crash3
             Crash3_Levels.L26_SkiCrazed, // todo: warpout/box counter/clock doesn't appear, spawning randomly doesn't work
             //Crash3_Levels.L27_Area51, // todo: vehicle stuff
             Crash3_Levels.L28_RingsOfPower,
-             //Crash3_Levels.L29_HotCoco, // probably not
+            //Crash3_Levels.L29_HotCoco, // probably not
             Crash3_Levels.L30_EggipusRex, 
 
             //Crash3_Levels.B01_TinyTiger,
@@ -609,12 +609,36 @@ namespace CrateModLoader.GameSpecific.Crash3
 
                             if (BikeLevelsList.Contains(level))
                             {
+
                                 for (int e = 0; e < zone.Entities.Count; e++)
                                 {
+                                    if (zone.Entities[e].CameraSubIndex != null && zone.Entities[e].CameraSubIndex == 1)
+                                    {
+                                        EntityPosition[] Angles = new EntityPosition[zone.Entities[e].Positions.Count];
+                                        zone.Entities[e].Positions.CopyTo(Angles, 0);
+                                        for (int a = 0; a < Angles.Length; a++)
+                                        {
+                                            Angles[a] = new EntityPosition(Angles[a].X, (short)(Angles[a].Y + 4000), Angles[a].Z);
+                                        }
+                                        zone.Entities[e].Positions.Clear();
+                                        for (int a = 0; a < Angles.Length; a++)
+                                        {
+                                            zone.Entities[e].Positions.Add(Angles[a]);
+                                        }
+                                        
+                                        EntityVictimProperty SAngles = (EntityVictimProperty)zone.Entities[e].ExtraProperties[305];
+                                        for (int a = 0; a < SAngles.Rows.Count; a++)
+                                        {
+                                            SAngles.Rows[a].Values[0] = new EntityVictim((short)(SAngles.Rows[a].Values[0].VictimID + 1000));
+                                            SAngles.Rows[a].Values[1] = new EntityVictim((short)(SAngles.Rows[a].Values[1].VictimID + 1000));
+                                            //SAngles.Rows[a].Values[2] = new EntityVictim((short)(-SAngles.Rows[a].Values[2].VictimID));
+                                        }
+                                        zone.Entities[e].ExtraProperties[305] = SAngles;
+                                    }
+
                                     if (zone.Entities[e].Type != null)
                                     {
-                                        /*
-                                        
+
                                         if (zone.Entities[e].Type == 0 && zone.Entities[e].Subtype == 0) //crash
                                         {
                                             List<EntityPosition> Pos1 = new List<EntityPosition>(zone.Entities[e].Positions);
@@ -624,8 +648,19 @@ namespace CrateModLoader.GameSpecific.Crash3
                                             {
                                                 zone.Entities[e].Positions.Add(Pos1[a]);
                                             }
+
+                                            //int xoffset = BitConv.FromInt32(WarpOutZone.Layout, 0);
+                                            //int yoffset = BitConv.FromInt32(WarpOutZone.Layout, 4);
+                                            //int zoffset = BitConv.FromInt32(WarpOutZone.Layout, 8);
+
+                                            //nsd.Spawns[0].SpawnX = (xoffset + WarpOutPos.X * 1) << 8;
+                                            //nsd.Spawns[0].SpawnY = (yoffset + WarpOutPos.Y * 1) << 8;
+                                            //nsd.Spawns[0].SpawnZ = (zoffset + zone.Entities[e].Positions[0].Z * 1) << 8;
+
+                                            //EntityInt32Property prop = (EntityInt32Property)zone.Entities[e].ExtraProperties[664];
+                                            //prop.Rows[0].Values[0] = 1512; //512 orig
                                         }
-                                        */
+
 
                                         if (zone.Entities[e].Type == 50 && zone.Entities[e].Subtype == 2) // hotrod rail
                                         {
@@ -677,6 +712,126 @@ namespace CrateModLoader.GameSpecific.Crash3
 
                             if (level == Crash3_Levels.L21_GoneTomorrow)
                             {
+
+                                if (zone.EName == "15_zZ")
+                                {
+                                    for (int e = 0; e < zone.Entities.Count; e++)
+                                    {
+
+                                        if (zone.Entities[e].CameraIndex != null && zone.Entities[e].CameraIndex == 0 && zone.Entities[e].CameraSubIndex == 0)
+                                        {
+                                            zone.Entities[e].Neighbors.Rows.Add(new EntityPropertyRow<uint>());
+                                            zone.Entities[e].Neighbors.Rows[zone.Entities[e].Neighbors.RowCount - 1].MetaValue = 0;
+
+                                            int neighborindex = zone.Entities[e].Neighbors.RowCount - 1;
+                                            int neighborsettingindex = 0;
+
+                                            int camflag = 2;
+                                            int camIndex = 1;
+                                            int camZone = 0;
+                                            int camLink = 1;
+
+                                            zone.Entities[e].Neighbors.Rows[neighborindex].Values.Add(0);
+                                            zone.Entities[e].Neighbors.Rows[neighborindex].Values[neighborsettingindex] &= 0xFFFFFF00;
+                                            zone.Entities[e].Neighbors.Rows[neighborindex].Values[neighborsettingindex] |= (uint)((byte)camflag << 0);
+                                            zone.Entities[e].Neighbors.Rows[neighborindex].Values[neighborsettingindex] &= 0xFFFF00FF;
+                                            zone.Entities[e].Neighbors.Rows[neighborindex].Values[neighborsettingindex] |= (uint)((byte)camIndex << 8);
+                                            zone.Entities[e].Neighbors.Rows[neighborindex].Values[neighborsettingindex] &= 0xFF00FFFF;
+                                            zone.Entities[e].Neighbors.Rows[neighborindex].Values[neighborsettingindex] |= (uint)((byte)camZone << 16);
+                                            zone.Entities[e].Neighbors.Rows[neighborindex].Values[neighborsettingindex] &= 0x00FFFFFF;
+                                            zone.Entities[e].Neighbors.Rows[neighborindex].Values[neighborsettingindex] |= (uint)((byte)camLink << 24);
+
+                                            zone.Entities[e].Neighbors.Rows.Reverse();
+
+                                            EntityVictimProperty vic = (EntityVictimProperty)zone.Entities[e].ExtraProperties[374];
+                                            vic.Rows[0].Values[0] = new EntityVictim(1); // enables the connection
+
+                                            // 2. elevator stuff
+                                            EntityUInt32Property prop3 = new EntityUInt32Property();
+                                            prop3.Rows.Add(new EntityPropertyRow<uint>());
+                                            prop3.Rows[0].MetaValue = 0;
+                                            prop3.Rows[0].Values.Add(134414336);
+                                            prop3.Rows[0].Values.Add(16);
+                                            prop3.Rows[0].Values.Add(0);
+                                            prop3.Rows[0].Values.Add(0);
+
+                                            zone.Entities[e].ExtraProperties.Add(424, prop3);
+
+                                        }
+                                        else if (zone.Entities[e].CameraIndex != null && zone.Entities[e].CameraIndex == 1 && zone.Entities[e].CameraSubIndex == 0)
+                                        {
+                                            zone.Entities[e].Neighbors.Rows.Add(new EntityPropertyRow<uint>());
+                                            zone.Entities[e].Neighbors.Rows[zone.Entities[e].Neighbors.RowCount - 1].MetaValue = 0;
+
+                                            int neighborindex = zone.Entities[e].Neighbors.RowCount - 1;
+                                            int neighborsettingindex = 0;
+
+                                            int camflag = 2;
+                                            int camIndex = 0;
+                                            int camZone = 2;
+                                            int camLink = 1;
+
+                                            zone.Entities[e].Neighbors.Rows[neighborindex].Values.Add(0);
+                                            zone.Entities[e].Neighbors.Rows[neighborindex].Values[neighborsettingindex] &= 0xFFFFFF00;
+                                            zone.Entities[e].Neighbors.Rows[neighborindex].Values[neighborsettingindex] |= (uint)((byte)camflag << 0);
+                                            zone.Entities[e].Neighbors.Rows[neighborindex].Values[neighborsettingindex] &= 0xFFFF00FF;
+                                            zone.Entities[e].Neighbors.Rows[neighborindex].Values[neighborsettingindex] |= (uint)((byte)camIndex << 8);
+                                            zone.Entities[e].Neighbors.Rows[neighborindex].Values[neighborsettingindex] &= 0xFF00FFFF;
+                                            zone.Entities[e].Neighbors.Rows[neighborindex].Values[neighborsettingindex] |= (uint)((byte)camZone << 16);
+                                            zone.Entities[e].Neighbors.Rows[neighborindex].Values[neighborsettingindex] &= 0x00FFFFFF;
+                                            zone.Entities[e].Neighbors.Rows[neighborindex].Values[neighborsettingindex] |= (uint)((byte)camLink << 24);
+
+                                            zone.Entities[e].Neighbors.Rows.Reverse();
+
+                                            EntityVictimProperty vic = (EntityVictimProperty)zone.Entities[e].ExtraProperties[374];
+                                            vic.Rows[0].Values[0] = new EntityVictim(1); // enables the connection
+
+                                        }
+
+                                    }
+                                }
+
+                                if (zone.EName == "27_zZ")
+                                {
+                                    for (int e = 0; e < zone.Entities.Count; e++)
+                                    {
+
+                                        if (zone.Entities[e].CameraIndex != null && zone.Entities[e].CameraIndex == 1 && zone.Entities[e].CameraSubIndex == 0)
+                                        {
+                                            zone.Entities[e].Neighbors.Rows.Add(new EntityPropertyRow<uint>());
+                                            zone.Entities[e].Neighbors.Rows[zone.Entities[e].Neighbors.RowCount - 1].MetaValue = 0;
+
+                                            int neighborindex = zone.Entities[e].Neighbors.RowCount - 1;
+                                            int neighborsettingindex = 0;
+
+                                            int camflag = 2;
+                                            int camIndex = 0;
+                                            int camZone = 0;
+                                            int camLink = 1;
+
+                                            zone.Entities[e].Neighbors.Rows[neighborindex].Values.Add(0);
+                                            zone.Entities[e].Neighbors.Rows[neighborindex].Values[neighborsettingindex] &= 0xFFFFFF00;
+                                            zone.Entities[e].Neighbors.Rows[neighborindex].Values[neighborsettingindex] |= (uint)((byte)camflag << 0);
+                                            zone.Entities[e].Neighbors.Rows[neighborindex].Values[neighborsettingindex] &= 0xFFFF00FF;
+                                            zone.Entities[e].Neighbors.Rows[neighborindex].Values[neighborsettingindex] |= (uint)((byte)camIndex << 8);
+                                            zone.Entities[e].Neighbors.Rows[neighborindex].Values[neighborsettingindex] &= 0xFF00FFFF;
+                                            zone.Entities[e].Neighbors.Rows[neighborindex].Values[neighborsettingindex] |= (uint)((byte)camZone << 16);
+                                            zone.Entities[e].Neighbors.Rows[neighborindex].Values[neighborsettingindex] &= 0x00FFFFFF;
+                                            zone.Entities[e].Neighbors.Rows[neighborindex].Values[neighborsettingindex] |= (uint)((byte)camLink << 24);
+
+                                            zone.Entities[e].Neighbors.Rows.Reverse();
+
+                                            EntityVictimProperty vic = (EntityVictimProperty)zone.Entities[e].ExtraProperties[374];
+                                            vic.Rows[0].Values[0] = new EntityVictim(1); // enables the connection
+
+                                        }
+                                        else if (zone.Entities[e].CameraIndex != null && zone.Entities[e].CameraIndex == 0 && zone.Entities[e].CameraSubIndex == 0)
+                                        {
+                                            EntityVictimProperty vic = (EntityVictimProperty)zone.Entities[e].ExtraProperties[374];
+                                            vic.Rows[1].Values[0] = new EntityVictim(1); // enables the connection
+                                        }
+                                    }
+                                }
                                 if (zone.EName == "27_zZ" || zone.EName == "13_zZ")
                                 {
                                     for (int e = 0; e < zone.Entities.Count; e++)
@@ -698,10 +853,7 @@ namespace CrateModLoader.GameSpecific.Crash3
 
                                     for (int e = 0; e < zone.Entities.Count; e++)
                                     {
-                                        if (zone.Entities[e].Type != null && zone.Entities[e].Type == 9 && zone.Entities[e].Subtype == 6)
-                                        {
-                                            
-                                        }
+                                        
                                         if (zone.Entities[e].CameraIndex != null && zone.Entities[e].CameraIndex == 0 && zone.Entities[e].CameraSubIndex == 0)
                                         {
                                             //zone.Entities[e].CameraIndex = 2;
@@ -717,7 +869,7 @@ namespace CrateModLoader.GameSpecific.Crash3
                                             }
                                             */
 
-                                            /*
+                                            // 1. must have proper neighbors
                                             zone.Entities[e].Neighbors.Rows.Add(new EntityPropertyRow<uint>());
                                             zone.Entities[e].Neighbors.Rows[zone.Entities[e].Neighbors.RowCount - 1].MetaValue = 0;
 
@@ -740,190 +892,110 @@ namespace CrateModLoader.GameSpecific.Crash3
                                             zone.Entities[e].Neighbors.Rows[neighborindex].Values[neighborsettingindex] |= (uint)((byte)camLink << 24);
 
                                             zone.Entities[e].Neighbors.Rows.Reverse();
-                                            */
-                                            
-
+                                           
                                             //EntityVictimProperty vic = (EntityVictimProperty)zone.Entities[e].ExtraProperties[374];
-                                            //vic.Rows[0].Values[0] = new EntityVictim(1); // enables the connection?
-                                            //EntityVictimProperty vic2 = (EntityVictimProperty)zone.Entities[e].ExtraProperties[426];
-                                            //vic2.Rows.Add(new EntityPropertyRow<EntityVictim>()); // enables the connection?
-                                            //vic2.Rows[1].MetaValue = (short)(zone.Entities[e].Positions.Count - 1);
-                                            //vic2.Rows[1].Values.Add(new EntityVictim(284));
-                                            //EntityInt32Property prop1 = (EntityInt32Property)zone.Entities[e].ExtraProperties[41];
-                                            //prop1.Rows[0].Values[0] = 2; // **OFFICIAL** neighbor count??? could it be?
+                                            //vic.Rows[0].Values[0] = new EntityVictim(1); // does nothing?
                                             //EntityUInt32Property prop2 = (EntityUInt32Property)zone.Entities[e].ExtraProperties[354];
-                                            //prop2.Rows[0].Values[0] = 153608061; // some flag?
+                                            //prop2.Rows[0].Values[0] = 55041917; // does nothing?
 
+                                            // 2. elevator stuff
+                                            EntityUInt32Property prop3 = new EntityUInt32Property();
+                                            prop3.Rows.Add(new EntityPropertyRow<uint>());
+                                            prop3.Rows[0].MetaValue = 0;
+                                            prop3.Rows[0].Values.Add(134414336);
+                                            prop3.Rows[0].Values.Add(16);
+                                            prop3.Rows[0].Values.Add(0);
+                                            prop3.Rows[0].Values.Add(0);
 
-                                            //Console.WriteLine("Cam0 ID: " + e + " Index: " + zone.Entities[e].CameraIndex + " Subindex: " + zone.Entities[e].CameraSubIndex);
+                                            zone.Entities[e].ExtraProperties.Add(424, prop3);
+
                                             /*
+                                            Console.WriteLine("BCam ID: " + e + " Index: " + zone.Entities[e].CameraIndex + " Subindex: " + zone.Entities[e].CameraSubIndex);
+
                                             foreach (KeyValuePair<short, EntityProperty> pair in zone.Entities[e].ExtraProperties)
                                             {
                                                 if (pair.Value is EntityInt32Property p1)
                                                 {
-                                                    Console.WriteLine("ID: " + e + " Type: " + pair.Key + " Int32 RowCount: " + p1.RowCount + " ");
+                                                    Console.WriteLine("Type: " + pair.Key + " Int32 RowCount: " + p1.RowCount + " ");
                                                     foreach (EntityPropertyRow<int> row in p1.Rows)
                                                     {
-                                                        Console.WriteLine("Row " + row.MetaValue + " ValCount " + row.Values.Count);
+                                                        Console.Write("Row " + row.MetaValue);
                                                         foreach (int v in row.Values)
                                                         {
-                                                            Console.WriteLine("Int32 " + v);
+                                                            Console.Write(" Int32 " + v);
                                                         }
+                                                        Console.WriteLine(" ");
                                                     }
                                                 }
                                                 else if (pair.Value is EntityUInt32Property p2)
                                                 {
-                                                    Console.WriteLine("ID: " + e + " Pair: " + pair.Key + " UInt32 RowCount: " + p2.RowCount + " ");
+                                                    Console.WriteLine("Type: " + pair.Key + " UInt32 RowCount: " + p2.RowCount + " ");
                                                     foreach (EntityPropertyRow<uint> row in p2.Rows)
                                                     {
-                                                        Console.WriteLine("Row " + row.MetaValue + " ValCount " + row.Values.Count);
+                                                        Console.Write("Row " + row.MetaValue);
                                                         foreach (uint v in row.Values)
                                                         {
-                                                            Console.WriteLine("UInt32 " + v);
+                                                            Console.Write(" UInt32 " + v);
                                                         }
+                                                        Console.WriteLine(" ");
                                                     }
                                                 }
                                                 else if (pair.Value is EntitySettingProperty p3)
                                                 {
-                                                    Console.WriteLine("ID: " + e + " Pair: " + pair.Key + " Setting RowCount: " + p3.RowCount + " ");
+                                                    Console.WriteLine("Type: " + pair.Key + " Setting RowCount: " + p3.RowCount + " ");
                                                     foreach (EntityPropertyRow<EntitySetting> row in p3.Rows)
                                                     {
-                                                        Console.WriteLine("Row " + row.MetaValue + " ValCount " + row.Values.Count);
+                                                        //Console.Write("Row " + row.MetaValue);
                                                         foreach (EntitySetting v in row.Values)
                                                         {
-                                                            Console.WriteLine("EntSetting A " + v.ValueA + " B " + v.ValueB + " Int " + v.ValueInt);
+                                                            //Console.Write(" EntSetting A " + v.ValueA + " B " + v.ValueB + " Int " + v.ValueInt);
                                                         }
+                                                        //Console.WriteLine(" ");
                                                     }
                                                 }
                                                 else if (pair.Value is EntityVictimProperty p4)
                                                 {
-                                                    Console.WriteLine("ID: " + e + " Victim: " + pair.Key + " RowCount: " + p4.RowCount + " ");
+                                                    Console.WriteLine("Type: " + pair.Key + " RowCount: " + p4.RowCount + " ");
                                                     foreach (EntityPropertyRow<EntityVictim> row in p4.Rows)
                                                     {
-                                                        Console.WriteLine("Row " + row.MetaValue + " ValCount " + row.Values.Count);
+                                                        Console.Write("Row " + row.MetaValue);
                                                         foreach (EntityVictim v in row.Values)
                                                         {
-                                                            Console.WriteLine("Victim " + v.VictimID);
+                                                            Console.Write(" Victim " + v.VictimID);
                                                         }
+                                                        Console.WriteLine(" ");
                                                     }
                                                 }
                                                 else if (pair.Value is EntityUInt8Property p5)
                                                 {
-                                                    Console.WriteLine("ID: " + e + " Pair: " + pair.Key + " UInt8 RowCount: " + p5.RowCount + " ");
+                                                    Console.WriteLine("Type: " + pair.Key + " UInt8 RowCount: " + p5.RowCount + " ");
                                                     foreach (EntityPropertyRow<byte> row in p5.Rows)
                                                     {
-                                                        Console.WriteLine("Row " + row.MetaValue + " ValCount " + row.Values.Count);
+                                                        //Console.Write("Row " + row.MetaValue + " ValCount " + row.Values.Count);
                                                         foreach (byte v in row.Values)
                                                         {
-                                                            Console.WriteLine("UInt8 " + v);
+                                                            //Console.Write(" UInt8 " + v);
                                                         }
+                                                        //Console.WriteLine(" ");
                                                     }
                                                 }
                                                 else if (pair.Value is EntityUnknownProperty p6)
                                                 {
-                                                    Console.WriteLine("ID: " + e + " Pair: " + pair.Key + " Unk RowCount: " + p6.RowCount + " ");
+                                                    Console.WriteLine("Type: " + pair.Key + " Unk RowCount: " + p6.RowCount + " ");
+                                                }
+                                                else
+                                                {
+                                                    Console.WriteLine("Type: " + pair.Key + " Type: " + pair.Value);
                                                 }
                                             }
+
+                                            Console.WriteLine(" ");
                                             */
-                                            //Console.WriteLine(" ");
 
-                                        }
-                                        if (zone.Entities[e].CameraIndex != null && zone.Entities[e].CameraIndex == 0 && zone.Entities[e].CameraSubIndex != 0)
-                                        {
-
-                                            //Console.WriteLine("Cam0 ID: " + e + " Index: " + zone.Entities[e].CameraIndex + " Subindex: " + zone.Entities[e].CameraSubIndex);
-
-                                        }
-                                        else if (zone.Entities[e].CameraIndex != null && zone.Entities[e].CameraIndex == 1)
-                                        {
-
-                                            //zone.Entities[e].CameraIndex = 1;
-                                            /*
-                                            if (zone.Entities[e].Neighbors != null && zone.Entities[e].Neighbors.RowCount > 1)
-                                            {
-                                                zone.Entities[e].Neighbors.Rows.RemoveAt(1);
-                                            }
-                                            */
-                                            //Console.WriteLine("Cam1 ID: " + e + " Index: " + zone.Entities[e].CameraIndex + " Subindex: " + zone.Entities[e].CameraSubIndex);
-                                        }
-                                        else if (zone.Entities[e].CameraIndex != null && zone.Entities[e].CameraIndex == 2)
-                                        {
-
-                                            //zone.Entities[e].CameraIndex = 0;
-                                            /*
-                                            if (zone.Entities[e].Neighbors != null && zone.Entities[e].Neighbors.RowCount > 1)
-                                            {
-                                                zone.Entities[e].Neighbors.Rows.RemoveAt(1);
-                                            }
-                                            */
-                                            //Console.WriteLine("Cam2 ID: " + e + " Index: " + zone.Entities[e].CameraIndex + " Subindex: " + zone.Entities[e].CameraSubIndex);
                                         }
                                     }
                                 }
-                                /*
-                                if (zone.EName == "29_zZ")
-                                {
-                                    int camID = 0;
-                                    int neighborindex = 1;
-                                    int neighborsettingindex = 0;
-                                    int camIndex = 2;
 
-                                    zone.Entities[camID].Neighbors.Rows[neighborindex].Values[neighborsettingindex] &= 0xFFFF00FF;
-                                    zone.Entities[camID].Neighbors.Rows[neighborindex].Values[neighborsettingindex] |= (uint)((byte)camIndex << 8);
-                                }
-                                */
-                                /* none of this works
-                                if (zone.EName == "28_zZ")
-                                {
-                                    int camID = 0;
-                                    zone.Entities[camID].Neighbors = new EntityUInt32Property();
-                                    zone.Entities[camID].Neighbors.Rows.Add(new EntityPropertyRow<uint>());
-                                    zone.Entities[camID].Neighbors.Rows[zone.Entities[camID].Neighbors.RowCount - 1].MetaValue = 0;
-                                    int neighborindex = zone.Entities[camID].Neighbors.RowCount - 1;
-                                    int neighborsettingindex = 0;
-
-                                    int camflag = 1;
-                                    int camIndex = 1;
-                                    int camZone = 0;
-                                    int camLink = 2;
-
-                                    zone.Entities[camID].Neighbors.Rows[neighborindex].Values.Add(0);
-                                    zone.Entities[camID].Neighbors.Rows[neighborindex].Values[neighborsettingindex] &= 0xFFFFFF00;
-                                    zone.Entities[camID].Neighbors.Rows[neighborindex].Values[neighborsettingindex] |= (uint)((byte)camflag << 0);
-                                    zone.Entities[camID].Neighbors.Rows[neighborindex].Values[neighborsettingindex] &= 0xFFFF00FF;
-                                    zone.Entities[camID].Neighbors.Rows[neighborindex].Values[neighborsettingindex] |= (uint)((byte)camIndex << 8);
-                                    zone.Entities[camID].Neighbors.Rows[neighborindex].Values[neighborsettingindex] &= 0xFF00FFFF;
-                                    zone.Entities[camID].Neighbors.Rows[neighborindex].Values[neighborsettingindex] |= (uint)((byte)camZone << 16);
-                                    zone.Entities[camID].Neighbors.Rows[neighborindex].Values[neighborsettingindex] &= 0x00FFFFFF;
-                                    zone.Entities[camID].Neighbors.Rows[neighborindex].Values[neighborsettingindex] |= (uint)((byte)camLink << 24);
-                                }
-                                else if (zone.EName == "27_zZ")
-                                {
-                                    
-                                    int camID = 0;
-                                    zone.Entities[camID].Neighbors = new EntityUInt32Property();
-                                    zone.Entities[camID].Neighbors.Rows.Add(new EntityPropertyRow<uint>());
-                                    zone.Entities[camID].Neighbors.Rows[zone.Entities[camID].Neighbors.RowCount - 1].MetaValue = 0;
-                                    int neighborindex = zone.Entities[camID].Neighbors.RowCount - 1;
-                                    int neighborsettingindex = 0;
-
-                                    int camflag = 2;
-                                    int camIndex = 0;
-                                    int camZone = 1;
-                                    int camLink = 1;
-
-                                    zone.Entities[camID].Neighbors.Rows[neighborindex].Values.Add(0);
-                                    zone.Entities[camID].Neighbors.Rows[neighborindex].Values[neighborsettingindex] &= 0xFFFFFF00;
-                                    zone.Entities[camID].Neighbors.Rows[neighborindex].Values[neighborsettingindex] |= (uint)((byte)camflag << 0);
-                                    zone.Entities[camID].Neighbors.Rows[neighborindex].Values[neighborsettingindex] &= 0xFFFF00FF;
-                                    zone.Entities[camID].Neighbors.Rows[neighborindex].Values[neighborsettingindex] |= (uint)((byte)camIndex << 8);
-                                    zone.Entities[camID].Neighbors.Rows[neighborindex].Values[neighborsettingindex] &= 0xFF00FFFF;
-                                    zone.Entities[camID].Neighbors.Rows[neighborindex].Values[neighborsettingindex] |= (uint)((byte)camZone << 16);
-                                    zone.Entities[camID].Neighbors.Rows[neighborindex].Values[neighborsettingindex] &= 0x00FFFFFF;
-                                    zone.Entities[camID].Neighbors.Rows[neighborindex].Values[neighborsettingindex] |= (uint)((byte)camLink << 24);
-                                    
-                                }
-                                */
                             }
                             else if (level == Crash3_Levels.L03_OrientExpress)
                             {
@@ -1210,19 +1282,12 @@ namespace CrateModLoader.GameSpecific.Crash3
             {
                 FlipCrashAndWarpOut = true;
             }
-            
 
             if (WarpOutEntity != null)
             {
                 CrashEntity.Positions.Add(WarpOutPos);
                 WarpOutEntity.Positions.Add(CrashPos);
                 WarpInEntity.Positions.Add(WarpOutPos);
-            }
-
-            if (level == Crash3_Levels.L11_DinoMight) //(level == Crash3_Levels.L05_MakinWaves ||)
-            {
-                WarpOutEntity.Positions.Clear();
-                WarpOutEntity.Positions.Add(WarpInPos);
             }
 
             if (ClockEntity != null && BoxCounterEntity != null)
@@ -1259,6 +1324,10 @@ namespace CrateModLoader.GameSpecific.Crash3
                 else if (level == Crash3_Levels.L15_DoubleHeader)
                 {
                     BoxCountPos = new EntityPosition((short)(BoxCountPos.X + 1000), BoxCountPos.Y, (short)(BoxCountPos.Z + 4200));
+                }
+                else if (level == Crash3_Levels.L21_GoneTomorrow)
+                {
+                    //BoxCountPos = new EntityPosition(7500, 1500, 100);
                 }
 
                 ClockEntity.Positions.Add(BoxCountPos);
@@ -1479,23 +1548,30 @@ namespace CrateModLoader.GameSpecific.Crash3
                                 if (level == Crash3_Levels.L18_TellNoTales)
                                 {
                                     AddToDrawListOneCam(ref nsf, zone, (int)ClockEntity.ID, 8);
+                                    Spawned_Clock = true;
                                 }
                                 else if (level == Crash3_Levels.L05_MakinWaves)
                                 {
                                     AddToDrawListOneCam(ref nsf, zone, (int)ClockEntity.ID, 8);
+                                    Spawned_Clock = true;
                                 }
                                 else if (level == Crash3_Levels.L26_SkiCrazed)
                                 {
                                     //AddToDrawListOneCam(ref nsf, zone, (int)ClockEntity.ID, 5);
+                                    Spawned_Clock = true;
                                 }
                                 else 
                                 {
                                     zone.Entities.Add(ClockEntity);
                                     zone.EntityCount++;
-                                    AddToDrawList(ref nsf, ref zone, (int)ClockEntity.ID);
+                                    if (level != Crash3_Levels.L16_Sphynxinator && level != Crash3_Levels.L21_GoneTomorrow) //clock crashes when added to the drawlist
+                                    {
+                                        AddToDrawList(ref nsf, ref zone, (int)ClockEntity.ID);
+                                    }
+                                    Spawned_Clock = true;
                                 }
 
-                                Spawned_Clock = true;
+                                
                             }
                             if (ClockZone != null && GemZone != null && level == Crash3_Levels.L30_EggipusRex && !Spawned_Counter && zone.EName == ClockZone.EName)
                             {
@@ -1600,16 +1676,17 @@ namespace CrateModLoader.GameSpecific.Crash3
                                 if (zone.EName == "26_mZ")
                                     AddToDrawList(ref nsf, ref zone, (int)ClockEntity.ID);
                             }
+                            else if (level == Crash3_Levels.L15_DoubleHeader)
+                            {
+                                if (zone.EName == "35_tZ")
+                                    AddToDrawList(ref nsf, ref zone, (int)ClockEntity.ID);
+                            }
                             else if (level == Crash3_Levels.L06_GeeWiz) //crashes, lags
                             {
                                 //if (zone.EName == "36_fZ")
                                     //AddToDrawList(ref nsf, ref zone, (int)ClockEntity.ID);
                             }
-                            else if (level == Crash3_Levels.L15_DoubleHeader) //todo
-                            {
-                                if (zone.EName == "35_tZ")
-                                    AddToDrawList(ref nsf, ref zone, (int)ClockEntity.ID);
-                            }
+                            
 
                         }
                     }
