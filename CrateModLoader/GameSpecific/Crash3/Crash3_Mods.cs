@@ -285,35 +285,35 @@ namespace CrateModLoader.GameSpecific.Crash3
 
             Crash3_Levels.L01_ToadVillage,
             Crash3_Levels.L02_UnderPressure,
-            //Crash3_Levels.L03_OrientExpress, // todo: broken counter, tiger stuff (unstable - game may crash if jumped on bouncepad that turns you into crash, softlock on checkpoint respawn)
-            //Crash3_Levels.L04_BoneYard, // todo: broken counter, exit has trouble appearing sometimes
-            //Crash3_Levels.L05_MakinWaves, // todo: warpout doesn't appear, broken counter
+            Crash3_Levels.L03_OrientExpress, // todo: tiger stuff (unstable - game may crash if jumped on bouncepad that turns you into crash, softlock on checkpoint respawn)
+            Crash3_Levels.L04_BoneYard, // todo: broken counter/not spawning, stability problems, exit has trouble appearing sometimes
+            Crash3_Levels.L05_MakinWaves, // todo: warpout/box counter/clock doesn't appear
 
-            Crash3_Levels.L06_GeeWiz, 
+            Crash3_Levels.L06_GeeWiz, // todo: crashes due to clock (too many objects)
             Crash3_Levels.L07_HangEmHigh,
             //Crash3_Levels.L08_HogRide, // todo: vehicle stuff
             Crash3_Levels.L09_TombTime,
-            //Crash3_Levels.L10_MidnightRun, // unverified, todo: broken counter, camera stitching, tiger stuff
+            Crash3_Levels.L10_MidnightRun, // unverified, todo: camera stitching, tiger stuff
 
-            Crash3_Levels.L11_DinoMight, // todo: warpout doesn't appear when there's too many objects
+            Crash3_Levels.L11_DinoMight, // todo: exit doesn't appear when there's too many objects
             Crash3_Levels.L12_DeepTrouble,
             Crash3_Levels.L13_HighTime,
             //Crash3_Levels.L14_RoadCrash, // todo: vehicle stuff
             Crash3_Levels.L15_DoubleHeader,
 
-            Crash3_Levels.L16_Sphynxinator,
+            Crash3_Levels.L16_Sphynxinator, // todo: crashes due to clock (too many objects)
             Crash3_Levels.L17_ByeByeBlimps,
             Crash3_Levels.L18_TellNoTales, 
             Crash3_Levels.L19_FutureFrenzy, // todo: exit has trouble appearing sometimes (too many objects)
-            Crash3_Levels.L20_TombWader,
+            Crash3_Levels.L20_TombWader, // todo: warpout doesn't appear (too many objects)
 
-            //Crash3_Levels.L21_GoneTomorrow, // unverified, todo: camera stitching
+            Crash3_Levels.L21_GoneTomorrow, // unverified, todo: camera stitching, crashes due to clock
             //Crash3_Levels.L22_OrangeAsphalt, // todo: vehicle stuff
             Crash3_Levels.L23_FlamingPassion,
             Crash3_Levels.L24_MadBombers,
             Crash3_Levels.L25_BugLite,
 
-            //Crash3_Levels.L26_SkiCrazed, // todo: warpout doesn't appear, broken counter
+            Crash3_Levels.L26_SkiCrazed, // todo: warpout/box counter/clock doesn't appear, spawning randomly doesn't work
             //Crash3_Levels.L27_Area51, // todo: vehicle stuff
             Crash3_Levels.L28_RingsOfPower,
              //Crash3_Levels.L29_HotCoco, // probably not
@@ -1205,8 +1205,8 @@ namespace CrateModLoader.GameSpecific.Crash3
                 CrashPos = new EntityPosition((short)(CrashPos.X - 2000), CrashPos.Y, CrashPos.Z);
                 ClockEntity.Positions[0] = new EntityPosition((short)(ClockEntity.Positions[0].X + 2000), ClockEntity.Positions[0].Y, ClockEntity.Positions[0].Z);
             }
-            if (level == Crash3_Levels.L09_TombTime || level == Crash3_Levels.L05_MakinWaves  || level == Crash3_Levels.L30_EggipusRex || level == Crash3_Levels.L18_TellNoTales) //||
-                //level == Crash3_Levels.L10_MidnightRun || level == Crash3_Levels.L03_OrientExpress) // || level == Crash3_Levels.L04_BoneYard)
+            if (level == Crash3_Levels.L09_TombTime || level == Crash3_Levels.L05_MakinWaves || 
+                level == Crash3_Levels.L30_EggipusRex || level == Crash3_Levels.L18_TellNoTales) // || level == Crash3_Levels.L04_BoneYard)
             {
                 FlipCrashAndWarpOut = true;
             }
@@ -1232,7 +1232,7 @@ namespace CrateModLoader.GameSpecific.Crash3
                 int tempcounterID = (int)BoxCounterEntity.ID;
                 int tempclockScale = (int)ClockEntity.Scaling;
                 int tempcounterScale = (int)BoxCounterEntity.Scaling;
-                if (!JetskiLevelsList.Contains(level))
+                if (level == Crash3_Levels.L09_TombTime)
                 {
                     ClockEntity.ID = tempcounterID;
                     BoxCounterEntity.ID = tempclockID;
@@ -1251,6 +1251,16 @@ namespace CrateModLoader.GameSpecific.Crash3
                 EntityPosition BoxCountPos = new EntityPosition(BoxCounterEntity.Positions[0].X, BoxCounterEntity.Positions[0].Y, BoxCounterEntity.Positions[0].Z);
                 ClockEntity.Positions.RemoveAt(0);
                 BoxCounterEntity.Positions.RemoveAt(0);
+
+                if (level == Crash3_Levels.L23_FlamingPassion)
+                {
+                    BoxCountPos = new EntityPosition((short)(BoxCountPos.X + 300), BoxCountPos.Y, (short)(BoxCountPos.Z + 1600));
+                }
+                else if (level == Crash3_Levels.L15_DoubleHeader)
+                {
+                    BoxCountPos = new EntityPosition((short)(BoxCountPos.X + 1000), BoxCountPos.Y, (short)(BoxCountPos.Z + 4200));
+                }
+
                 ClockEntity.Positions.Add(BoxCountPos);
                 BoxCounterEntity.Positions.Add(ClockPos);
             }
@@ -1298,9 +1308,12 @@ namespace CrateModLoader.GameSpecific.Crash3
                 }
                 else
                 {
-                    int tempID1 = (int)WarpInEntity.ID;
-                    WarpInEntity.ID = WarpOutEntity.ID;
-                    WarpOutEntity.ID = tempID1;
+                    if (level != Crash3_Levels.L03_OrientExpress && level != Crash3_Levels.L10_MidnightRun)
+                    {
+                        int tempID1 = (int)WarpInEntity.ID;
+                        WarpInEntity.ID = WarpOutEntity.ID;
+                        WarpOutEntity.ID = tempID1;
+                    }
 
                     WarpOutEntity.Scaling = WarpInScale;
                 }
@@ -1566,9 +1579,47 @@ namespace CrateModLoader.GameSpecific.Crash3
                                 }
                             }
 
+                            //Clock zone
+                            if (level == Crash3_Levels.L01_ToadVillage)
+                            {
+                                if (zone.EName == "26_bZ")
+                                    AddToDrawList(ref nsf, ref zone, (int)ClockEntity.ID);
+                            }
+                            else if (level == Crash3_Levels.L02_UnderPressure)
+                            {
+                                if (zone.EName == "29_eZ")
+                                    AddToDrawList(ref nsf, ref zone, (int)ClockEntity.ID);
+                            }
+                            else if (level == Crash3_Levels.L03_OrientExpress)
+                            {
+                                if (zone.EName == "47_aZ")
+                                    AddToDrawList(ref nsf, ref zone, (int)ClockEntity.ID);
+                            }
+                            else if (level == Crash3_Levels.L07_HangEmHigh)
+                            {
+                                if (zone.EName == "26_mZ")
+                                    AddToDrawList(ref nsf, ref zone, (int)ClockEntity.ID);
+                            }
+                            else if (level == Crash3_Levels.L06_GeeWiz) //crashes, lags
+                            {
+                                //if (zone.EName == "36_fZ")
+                                    //AddToDrawList(ref nsf, ref zone, (int)ClockEntity.ID);
+                            }
+                            else if (level == Crash3_Levels.L15_DoubleHeader) //todo
+                            {
+                                if (zone.EName == "35_tZ")
+                                    AddToDrawList(ref nsf, ref zone, (int)ClockEntity.ID);
+                            }
+
                         }
                     }
                 }
+            }
+
+            if (level == Crash3_Levels.L06_GeeWiz)
+            {
+                CrashTri_Common.Fix_BoxCount(nsf);
+                CrashTri_Common.Fix_Detonator(nsf);
             }
 
             if (WarpOutEntity != null)
