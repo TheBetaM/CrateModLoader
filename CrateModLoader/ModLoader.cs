@@ -32,6 +32,8 @@ namespace CrateModLoader
         public Button button_browse1;
         public Button button_browse2;
         public Button button_randomize;
+        public Button button_modTools;
+        public Button button_downloadMods;
         public TextBox textbox_input_path;
         public TextBox textbox_output_path;
         public NumericUpDown textbox_rando_seed;
@@ -1445,7 +1447,7 @@ namespace CrateModLoader
                 button_modMenu.Visible = true;
                 button_modMenu.Enabled = false;
                 button_modCrateMenu.Enabled = button_modCrateMenu.Visible = true;
-                button_randomize.Enabled = button_randomize.Visible = false;
+                button_randomize.Enabled = button_randomize.Visible = button_modTools.Visible = button_modTools.Enabled = button_downloadMods.Enabled = button_downloadMods.Visible = false;
                 textbox_rando_seed.Enabled = textbox_rando_seed.Visible = false;
 
                 text_gameType.Text = ModLoaderText.UnsupportedGameTitle + " (" + cons_mod + ")";
@@ -1464,7 +1466,7 @@ namespace CrateModLoader
                 button_modMenu.Visible = true;
                 button_modMenu.Enabled = Modder.Game.ModMenuEnabled;
                 button_modCrateMenu.Enabled = button_modCrateMenu.Visible = Modder.Game.ModCratesSupported;
-                button_randomize.Enabled = button_randomize.Visible = true;
+                button_randomize.Enabled = button_randomize.Visible = button_modTools.Visible = button_downloadMods.Visible = true;
                 textbox_rando_seed.Enabled = textbox_rando_seed.Visible = true;
                 text_optionDescLabel.Text = string.Empty;
                 text_optionDescLabel.Visible = false;
@@ -1553,7 +1555,7 @@ namespace CrateModLoader
                     //list_modOptions.Items.Add("No options available", false);
                 }
             }
-            int height = 306 + 30 + (list_modOptions.Items.Count * 15);
+            int height = 295 + 30 + (list_modOptions.Items.Count * 15);
             list_modOptions.Visible = list_modOptions.Enabled = list_modOptions.Items.Count > 0;
             if (main_form.Size.Height < height)
             {
@@ -1608,6 +1610,8 @@ namespace CrateModLoader
             checkbox_toFolder.Enabled = false;
             text_apiLabel.Enabled = false;
             text_titleLabel.Enabled = false;
+            button_modTools.Enabled = false;
+            button_downloadMods.Enabled = false;
             processActive = true;
         }
         public void EnableInteraction()
@@ -1619,8 +1623,15 @@ namespace CrateModLoader
             button_randomize.Enabled = true;
             textbox_output_path.ReadOnly = false;
             textbox_rando_seed.ReadOnly = false;
-            button_modMenu.Enabled = true;
             button_modCrateMenu.Enabled = true;
+
+            if (Modder != null)
+            {
+                button_modMenu.Enabled = Modder.Game.ModMenuEnabled;
+            }
+            //button_modTools.Enabled = true;
+            //button_downloadMods.Enabled = true;
+
             checkbox_fromFolder.Enabled = true;
             checkbox_toFolder.Enabled = true;
             if (Modder != null && !string.IsNullOrWhiteSpace(Modder.Game.API_Link))
@@ -1676,7 +1687,7 @@ namespace CrateModLoader
 
             button_modMenu.Enabled = button_modMenu.Visible = false;
             button_modCrateMenu.Enabled = button_modCrateMenu.Visible = false;
-            button_randomize.Enabled = button_randomize.Visible = false;
+            button_randomize.Enabled = button_randomize.Visible = button_modTools.Visible = button_modTools.Enabled = button_downloadMods.Enabled = button_downloadMods.Visible = false;
             textbox_rando_seed.Enabled = textbox_rando_seed.Visible = false;
 
             text_apiLabel.Text = string.Empty;

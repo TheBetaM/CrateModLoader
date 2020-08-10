@@ -13,7 +13,6 @@ namespace CrateModLoader
             label_author.Text = "";
             label_desc.Text = "";
             button_confirm.Text = ModLoaderText.ModCrateManagerConfirmButton;
-            button_importmod.Text = ModLoaderText.ModCrateManagerImportModButton;
             Text = ModLoaderText.ModCrateManagerTitle;
             pictureBox_ModIcon.Image = null;
         }

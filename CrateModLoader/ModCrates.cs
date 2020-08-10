@@ -5,6 +5,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Windows.Forms;
 using CrateModLoader.Resources.Text;
+using System.Globalization;
 
 namespace CrateModLoader
 {
@@ -292,6 +293,10 @@ namespace CrateModLoader
                 NewCrate.CML_Version = NewCrate.Meta["ModLoaderVersion"];
             if (NewCrate.Meta.ContainsKey("Game"))
                 NewCrate.TargetGame = NewCrate.Meta["Game"];
+            if (NewCrate.Meta.ContainsKey("Name-" + CultureInfo.CurrentCulture.Name))
+                NewCrate.Name = NewCrate.Meta["Name-" + CultureInfo.CurrentCulture.Name];
+            if (NewCrate.Meta.ContainsKey("Description-" + CultureInfo.CurrentCulture.Name))
+                NewCrate.Desc = NewCrate.Meta["Description-" + CultureInfo.CurrentCulture.Name];
 
             NewCrate.Path = file.FullName;
 

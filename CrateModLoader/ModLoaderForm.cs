@@ -12,7 +12,8 @@ namespace CrateModLoader
         public ModLoaderForm()
         {
             InitializeComponent();
-            linkLabel2.Text = ModLoaderText.ProgramTitle + " " + ModLoaderGlobals.ProgramVersion;
+            //linkLabel2.Text = ModLoaderText.ProgramTitle + " " + ModLoaderGlobals.ProgramVersion;
+            linkLabel2.Text = ModLoaderGlobals.ProgramVersion;
             label7.Text = "";
             linkLabel1.Text = "";
             label6.Text = ModLoaderText.Step1Text;
@@ -24,6 +25,27 @@ namespace CrateModLoader
             Text = ModLoaderText.ProgramTitle;
             textBox1.Text = ModLoaderText.InputInstruction;
             textBox2.Text = ModLoaderText.OutputInstruction;
+            button_downloadMods.Text = ModLoaderText.Button_DownloadMods;
+            button_modCrateMenu.Text = ModLoaderText.ModCratesButton;
+            button_modTools.Text = ModLoaderText.Button_ModTools;
+            button4.Text = ModLoaderText.RandomizeSeedButton;
+            button1.Text = ModLoaderText.InputBrowse;
+            button2.Text = ModLoaderText.OutputBrowse;
+            button3.Text = ModLoaderText.StartProcessButton;
+            checkBox_loadFromFolder.Text = ModLoaderText.InputFolder;
+            checkBox_saveToFolder.Text = ModLoaderText.OutputFolder;
+            checkBox1.Text = ModLoaderText.KeepTempFiles;
+
+            toolTip1.SetToolTip(checkBox_loadFromFolder, ModLoaderText.Tooltip_Checkbox_LoadFromFolder);
+            toolTip1.SetToolTip(checkBox_saveToFolder, ModLoaderText.Tooltip_Checkbox_SaveToFolder);
+            toolTip1.SetToolTip(linkLabel2, ModLoaderText.Tooltip_Label_Version);
+            toolTip1.SetToolTip(linkLabel1, ModLoaderText.Tooltip_Label_API);
+            toolTip1.SetToolTip(numericUpDown1, ModLoaderText.Tooltip_Numeric_Seed);
+            toolTip1.SetToolTip(button_downloadMods, ModLoaderText.Tooltip_Button_DownloadMods);
+            toolTip1.SetToolTip(button_modCrateMenu, ModLoaderText.Tooltip_Button_ModCrates);
+            toolTip1.SetToolTip(button_openModMenu, ModLoaderText.Tooltip_Button_ModMenu);
+            toolTip1.SetToolTip(button_modTools, ModLoaderText.Tooltip_Button_ModTools);
+            toolTip1.SetToolTip(button4, ModLoaderText.Tooltip_Button_RandomizeSeed);
 
             Program.ModProgram.panel_optionDesc = panel_desc;
             Program.ModProgram.text_optionDescLabel = linkLabel_optionDesc;
@@ -39,6 +61,8 @@ namespace CrateModLoader
             Program.ModProgram.button_browse1 = button1;
             Program.ModProgram.button_browse2 = button2;
             Program.ModProgram.button_randomize = button4;
+            Program.ModProgram.button_modTools = button_modTools;
+            Program.ModProgram.button_downloadMods = button_downloadMods;
             Program.ModProgram.textbox_input_path = textBox1;
             Program.ModProgram.textbox_output_path = textBox2;
             Program.ModProgram.textbox_rando_seed = numericUpDown1;

@@ -58,10 +58,16 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.linkLabel_optionDesc = new System.Windows.Forms.LinkLabel();
             this.panel_desc = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.button_downloadMods = new System.Windows.Forms.Button();
+            this.button_modTools = new System.Windows.Forms.Button();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel_desc.SuspendLayout();
+            this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // checkedListBox1
@@ -75,9 +81,9 @@
             this.checkedListBox1.FormattingEnabled = true;
             this.checkedListBox1.Items.AddRange(new object[] {
             "Nothing"});
-            this.checkedListBox1.Location = new System.Drawing.Point(10, 257);
+            this.checkedListBox1.Location = new System.Drawing.Point(3, 249);
             this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(398, 0);
+            this.checkedListBox1.Size = new System.Drawing.Size(421, 0);
             this.checkedListBox1.TabIndex = 0;
             this.checkedListBox1.Visible = false;
             this.checkedListBox1.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged);
@@ -94,19 +100,19 @@
             // 
             this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Location = new System.Drawing.Point(13, 34);
+            this.textBox1.Location = new System.Drawing.Point(0, 35);
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(320, 20);
+            this.textBox1.Size = new System.Drawing.Size(340, 20);
             this.textBox1.TabIndex = 1;
             this.textBox1.Text = "1. Click \"Browse\" to select the game ROM or drag & drop it here.";
             // 
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(339, 33);
+            this.button1.Location = new System.Drawing.Point(340, 34);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(74, 22);
+            this.button1.Size = new System.Drawing.Size(84, 22);
             this.button1.TabIndex = 2;
             this.button1.Text = "(1) Browse...";
             this.button1.UseVisualStyleBackColor = true;
@@ -116,18 +122,18 @@
             // 
             this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar1.Location = new System.Drawing.Point(13, 94);
+            this.progressBar1.Location = new System.Drawing.Point(0, 90);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(320, 20);
+            this.progressBar1.Size = new System.Drawing.Size(340, 24);
             this.progressBar1.TabIndex = 4;
             // 
             // textBox2
             // 
             this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox2.Location = new System.Drawing.Point(13, 64);
+            this.textBox2.Location = new System.Drawing.Point(0, 63);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(320, 20);
+            this.textBox2.Size = new System.Drawing.Size(340, 20);
             this.textBox2.TabIndex = 6;
             this.textBox2.Text = "2. Click \"Browse\" to choose the output path.";
             this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
@@ -135,9 +141,9 @@
             // button2
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Location = new System.Drawing.Point(339, 63);
+            this.button2.Location = new System.Drawing.Point(340, 62);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(74, 22);
+            this.button2.Size = new System.Drawing.Size(84, 22);
             this.button2.TabIndex = 7;
             this.button2.Text = "(2) Browse...";
             this.button2.UseVisualStyleBackColor = true;
@@ -147,9 +153,9 @@
             // 
             this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button3.Enabled = false;
-            this.button3.Location = new System.Drawing.Point(339, 93);
+            this.button3.Location = new System.Drawing.Point(340, 89);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(74, 22);
+            this.button3.Size = new System.Drawing.Size(84, 26);
             this.button3.TabIndex = 11;
             this.button3.Text = "Start!";
             this.button3.UseVisualStyleBackColor = true;
@@ -157,18 +163,20 @@
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.numericUpDown1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.numericUpDown1.BackColor = System.Drawing.SystemColors.Window;
             this.numericUpDown1.Enabled = false;
-            this.numericUpDown1.Location = new System.Drawing.Point(215, 226);
+            this.numericUpDown1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.numericUpDown1.Location = new System.Drawing.Point(284, 26);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             2147483647,
             0,
             0,
             0});
             this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(198, 20);
+            this.numericUpDown1.Size = new System.Drawing.Size(140, 24);
             this.numericUpDown1.TabIndex = 12;
+            this.numericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.toolTip1.SetToolTip(this.numericUpDown1, "The seed of all randomizers for this game.");
             this.numericUpDown1.Value = new decimal(new int[] {
             2147483647,
@@ -180,10 +188,12 @@
             // 
             // button4
             // 
+            this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.button4.Enabled = false;
-            this.button4.Location = new System.Drawing.Point(10, 224);
+            this.button4.Location = new System.Drawing.Point(141, 25);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(198, 23);
+            this.button4.Size = new System.Drawing.Size(142, 26);
             this.button4.TabIndex = 13;
             this.button4.Text = "Randomize Seed";
             this.toolTip1.SetToolTip(this.button4, "Randomize the seed to the right of this button.");
@@ -196,7 +206,7 @@
             this.label6.AutoSize = true;
             this.label6.BackColor = System.Drawing.Color.Transparent;
             this.label6.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.label6.Location = new System.Drawing.Point(12, 125);
+            this.label6.Location = new System.Drawing.Point(6, 125);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(66, 13);
             this.label6.TabIndex = 15;
@@ -207,7 +217,7 @@
             // 
             this.checkBox1.AutoSize = true;
             this.checkBox1.Enabled = false;
-            this.checkBox1.Location = new System.Drawing.Point(349, 10);
+            this.checkBox1.Location = new System.Drawing.Point(314, 10);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(105, 17);
             this.checkBox1.TabIndex = 18;
@@ -229,13 +239,14 @@
             // 
             // button_openModMenu
             // 
-            this.button_openModMenu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_openModMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.button_openModMenu.Enabled = false;
-            this.button_openModMenu.Location = new System.Drawing.Point(215, 194);
+            this.button_openModMenu.Location = new System.Drawing.Point(141, 0);
             this.button_openModMenu.Name = "button_openModMenu";
-            this.button_openModMenu.Size = new System.Drawing.Size(198, 23);
+            this.button_openModMenu.Size = new System.Drawing.Size(142, 26);
             this.button_openModMenu.TabIndex = 19;
-            this.button_openModMenu.Text = "Open Mod Menu";
+            this.button_openModMenu.Text = "Mod Menu";
             this.toolTip1.SetToolTip(this.button_openModMenu, "Open the Mod Menu of this specific game.");
             this.button_openModMenu.UseVisualStyleBackColor = true;
             this.button_openModMenu.Visible = false;
@@ -243,12 +254,10 @@
             // 
             // button_modCrateMenu
             // 
-            this.button_modCrateMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.button_modCrateMenu.Enabled = false;
-            this.button_modCrateMenu.Location = new System.Drawing.Point(10, 194);
+            this.button_modCrateMenu.Location = new System.Drawing.Point(0, 0);
             this.button_modCrateMenu.Name = "button_modCrateMenu";
-            this.button_modCrateMenu.Size = new System.Drawing.Size(198, 23);
+            this.button_modCrateMenu.Size = new System.Drawing.Size(142, 26);
             this.button_modCrateMenu.TabIndex = 20;
             this.button_modCrateMenu.Text = "Mod Crates";
             this.toolTip1.SetToolTip(this.button_modCrateMenu, "Manage Mod Crates compatible with this game. They must be in the \"Mods\" folder ne" +
@@ -295,19 +304,20 @@
             // linkLabel2
             // 
             this.linkLabel2.AutoSize = true;
-            this.linkLabel2.Location = new System.Drawing.Point(10, 11);
+            this.linkLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.linkLabel2.Location = new System.Drawing.Point(36, 11);
             this.linkLabel2.Name = "linkLabel2";
-            this.linkLabel2.Size = new System.Drawing.Size(125, 13);
+            this.linkLabel2.Size = new System.Drawing.Size(43, 13);
             this.linkLabel2.TabIndex = 30;
             this.linkLabel2.TabStop = true;
-            this.linkLabel2.Text = "Crate Mod Loader v1.0.0";
+            this.linkLabel2.Text = "v1.0.0";
             this.toolTip1.SetToolTip(this.linkLabel2, "Click this to visit the website of this tool.");
             this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
             // 
             // checkBox_loadFromFolder
             // 
             this.checkBox_loadFromFolder.AutoSize = true;
-            this.checkBox_loadFromFolder.Location = new System.Drawing.Point(141, 10);
+            this.checkBox_loadFromFolder.Location = new System.Drawing.Point(86, 10);
             this.checkBox_loadFromFolder.Name = "checkBox_loadFromFolder";
             this.checkBox_loadFromFolder.Size = new System.Drawing.Size(97, 17);
             this.checkBox_loadFromFolder.TabIndex = 31;
@@ -319,7 +329,7 @@
             // checkBox_saveToFolder
             // 
             this.checkBox_saveToFolder.AutoSize = true;
-            this.checkBox_saveToFolder.Location = new System.Drawing.Point(244, 10);
+            this.checkBox_saveToFolder.Location = new System.Drawing.Point(198, 10);
             this.checkBox_saveToFolder.Name = "checkBox_saveToFolder";
             this.checkBox_saveToFolder.Size = new System.Drawing.Size(99, 17);
             this.checkBox_saveToFolder.TabIndex = 32;
@@ -367,6 +377,55 @@
             this.panel_desc.Size = new System.Drawing.Size(424, 36);
             this.panel_desc.TabIndex = 35;
             // 
+            // panel2
+            // 
+            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel2.Controls.Add(this.button_downloadMods);
+            this.panel2.Controls.Add(this.button_modTools);
+            this.panel2.Controls.Add(this.button_modCrateMenu);
+            this.panel2.Controls.Add(this.button_openModMenu);
+            this.panel2.Controls.Add(this.button4);
+            this.panel2.Controls.Add(this.numericUpDown1);
+            this.panel2.Location = new System.Drawing.Point(0, 195);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(424, 52);
+            this.panel2.TabIndex = 36;
+            // 
+            // button_downloadMods
+            // 
+            this.button_downloadMods.Enabled = false;
+            this.button_downloadMods.Location = new System.Drawing.Point(0, 25);
+            this.button_downloadMods.Name = "button_downloadMods";
+            this.button_downloadMods.Size = new System.Drawing.Size(142, 26);
+            this.button_downloadMods.TabIndex = 22;
+            this.button_downloadMods.Text = "Download Mods";
+            this.button_downloadMods.UseVisualStyleBackColor = true;
+            this.button_downloadMods.Visible = false;
+            // 
+            // button_modTools
+            // 
+            this.button_modTools.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_modTools.Enabled = false;
+            this.button_modTools.Location = new System.Drawing.Point(282, 0);
+            this.button_modTools.Name = "button_modTools";
+            this.button_modTools.Size = new System.Drawing.Size(142, 26);
+            this.button_modTools.TabIndex = 21;
+            this.button_modTools.Text = "Mod Tools";
+            this.button_modTools.UseVisualStyleBackColor = true;
+            this.button_modTools.Visible = false;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = global::CrateModLoader.Properties.Resources.cml_icon;
+            this.pictureBox2.InitialImage = global::CrateModLoader.Properties.Resources.cml_icon;
+            this.pictureBox2.Location = new System.Drawing.Point(1, 1);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(32, 32);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox2.TabIndex = 37;
+            this.pictureBox2.TabStop = false;
+            // 
             // ModLoaderForm
             // 
             this.AllowDrop = true;
@@ -374,6 +433,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(424, 149);
+            this.Controls.Add(this.pictureBox2);
+            this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel_desc);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.checkBox_saveToFolder);
@@ -382,11 +443,7 @@
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.button_modCrateMenu);
-            this.Controls.Add(this.button_openModMenu);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.textBox2);
@@ -405,6 +462,8 @@
             this.panel1.ResumeLayout(false);
             this.panel_desc.ResumeLayout(false);
             this.panel_desc.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -440,6 +499,10 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.LinkLabel linkLabel_optionDesc;
         private System.Windows.Forms.Panel panel_desc;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Button button_downloadMods;
+        private System.Windows.Forms.Button button_modTools;
+        private System.Windows.Forms.PictureBox pictureBox2;
     }
 }
 

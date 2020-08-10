@@ -61,6 +61,24 @@ namespace CrateModLoader.Resources.Text {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Download Mods.
+        /// </summary>
+        public static string Button_DownloadMods {
+            get {
+                return ResourceManager.GetString("Button_DownloadMods", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mod Tools.
+        /// </summary>
+        public static string Button_ModTools {
+            get {
+                return ResourceManager.GetString("Button_ModTools", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ModdedGame.
         /// </summary>
         public static string DefaultOutputFileName {
@@ -295,15 +313,6 @@ namespace CrateModLoader.Resources.Text {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mod Tools.
-        /// </summary>
-        public static string ModToolsButton {
-            get {
-                return ResourceManager.GetString("ModToolsButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to No options specified - Output ROM will only display version info ingame if available. Proceed?.
         /// </summary>
         public static string NoOptionsSelectedPopup {
@@ -489,6 +498,96 @@ namespace CrateModLoader.Resources.Text {
         public static string Step2Text {
             get {
                 return ResourceManager.GetString("Step2Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Browse mods to download for this specific game..
+        /// </summary>
+        public static string Tooltip_Button_DownloadMods {
+            get {
+                return ResourceManager.GetString("Tooltip_Button_DownloadMods", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage Mod Crates compatible with this game. They must be in the &quot;Mods&quot; folder near this application..
+        /// </summary>
+        public static string Tooltip_Button_ModCrates {
+            get {
+                return ResourceManager.GetString("Tooltip_Button_ModCrates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open the Mod Menu of this specific game..
+        /// </summary>
+        public static string Tooltip_Button_ModMenu {
+            get {
+                return ResourceManager.GetString("Tooltip_Button_ModMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open a tool menu for creating mods..
+        /// </summary>
+        public static string Tooltip_Button_ModTools {
+            get {
+                return ResourceManager.GetString("Tooltip_Button_ModTools", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Randomize the seed to the right of this button..
+        /// </summary>
+        public static string Tooltip_Button_RandomizeSeed {
+            get {
+                return ResourceManager.GetString("Tooltip_Button_RandomizeSeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load the game files from a folder instead of a ROM..
+        /// </summary>
+        public static string Tooltip_Checkbox_LoadFromFolder {
+            get {
+                return ResourceManager.GetString("Tooltip_Checkbox_LoadFromFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy resulting modded files to a folder. Not supported by PS1/PS2 emulators..
+        /// </summary>
+        public static string Tooltip_Checkbox_SaveToFolder {
+            get {
+                return ResourceManager.GetString("Tooltip_Checkbox_SaveToFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Click this to visit the relevant website of this game&apos;s mod support..
+        /// </summary>
+        public static string Tooltip_Label_API {
+            get {
+                return ResourceManager.GetString("Tooltip_Label_API", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Click this to visit the website of this tool..
+        /// </summary>
+        public static string Tooltip_Label_Version {
+            get {
+                return ResourceManager.GetString("Tooltip_Label_Version", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The seed of all randomizers for this game..
+        /// </summary>
+        public static string Tooltip_Numeric_Seed {
+            get {
+                return ResourceManager.GetString("Tooltip_Numeric_Seed", resourceCulture);
             }
         }
         
