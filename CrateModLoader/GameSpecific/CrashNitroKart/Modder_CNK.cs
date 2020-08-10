@@ -1,4 +1,4 @@
-﻿using CrateModLoader.GameSpecific.CNK;
+﻿using CrateModLoader.GameSpecific.CrashNitroKart;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,7 +12,7 @@ using System.IO;
  * 1: ASSETS.GOB contents
  */
 
-namespace CrateModLoader
+namespace CrateModLoader.GameSpecific.CrashNitroKart
 {
     public sealed class Modder_CNK : Modder
     {
@@ -42,7 +42,7 @@ namespace CrateModLoader
         {
             Game = new Game()
             {
-                Name = "Crash Nitro Kart",
+                Name = CNK_Text.GameTitle,
                 ShortName = "CrashNK",
                 Consoles = new List<ConsoleMode>
                 {
@@ -50,7 +50,7 @@ namespace CrateModLoader
                     ConsoleMode.GCN,
                     ConsoleMode.XBOX
                 },
-                API_Credit = "Tools/API by BetaM, ManDude and eezstreet",
+                API_Credit = CNK_Text.API_Credit,
                 API_Link = string.Empty,
                 Icon = Properties.Resources.icon_crashnk,
                 ModMenuEnabled = false,
@@ -95,23 +95,23 @@ namespace CrateModLoader
                 },
             };
 
-            AddOption(RandomizeAdventure, new ModOption("Randomize Adventure"));
-            AddOption(RandomizeCharacterStats, new ModOption("Randomize Character Stats"));
-            AddOption(RandomizeKartStats, new ModOption("Randomize Kart Stats")); // TODO
+            AddOption(RandomizeAdventure, new ModOption(CNK_Text.Rand_Adventure, CNK_Text.Rand_AdventureDesc));
+            AddOption(RandomizeCharacterStats, new ModOption(CNK_Text.Rand_CharacterStats, CNK_Text.Rand_CharacterStatsDesc));
+            AddOption(RandomizeKartStats, new ModOption(CNK_Text.Rand_KartStats, CNK_Text.Rand_KartStatsDesc));
             //AddOption(RandomizeWumpaCrate, new ModOption()); //TODO dda
             //AddOption(RandomizeObstacles, new ModOption()); //TODO obstacles
             //AddOption(RandomizeCupPoints, new ModOption()); // Maybe? gameprogression
             //AddOption(RandomizeSurfaceParameters, new ModOption("Randomize Surface Parameters")); // TODO: later version
             //AddOption(RandomizeWeaponPools, new ModOption("Randomize Powerup Distribution")); // TODO: later version
-            AddOption(RandomizeWeapons, new ModOption("Randomize Powerup Effects"));
-            AddOption(RandomizeCharacters, new ModOption("Randomize Drivers")); //TODO: later version: icon replacement, name replacement, main menu model replacement, adventure character select model
-            AddOption(RandomizeKarts, new ModOption("Randomize Karts"));
+            AddOption(RandomizeWeapons, new ModOption(CNK_Text.Rand_PowerupEffects, CNK_Text.Rand_PowerupEffectsDesc));
+            AddOption(RandomizeCharacters, new ModOption(CNK_Text.Rand_Drivers, CNK_Text.Rand_DriversDesc)); //TODO: later version: icon replacement, name replacement, main menu model replacement, adventure character select model
+            AddOption(RandomizeKarts, new ModOption(CNK_Text.Rand_Karts, CNK_Text.Rand_KartsDesc));
             //AddOption(RandomizeMusic, new ModOption()); //TODO music.csv
             //AddOption(NoMask, new ModOption()); //TODO, hinthistory.csv
-            AddOption(DisableFadeout, new ModOption("Disable Fadeout/Flash Overlay"));
-            AddOption(DisablePopups, new ModOption("Disable Unlock Popups"));
-            AddOption(SpeedUpMaskHints, new ModOption("Speed Up Mask Hint Appearance"));
-            AddOption(NoAlchemyIntro, new ModOption("Remove Intro Videos", true));
+            AddOption(DisableFadeout, new ModOption(CNK_Text.Mod_DisableFadeout, CNK_Text.Mod_DisableFadeoutDesc));
+            AddOption(DisablePopups, new ModOption(CNK_Text.Mod_DisableUnlockPopups, CNK_Text.Mod_DisableUnlockPopupsDesc));
+            AddOption(SpeedUpMaskHints, new ModOption(CNK_Text.Mod_SpeedUpMaskHint, CNK_Text.Mod_SpeedUpMaskHintDesc));
+            AddOption(NoAlchemyIntro, new ModOption(CNK_Text.Mod_RemoveIntroVideos, CNK_Text.Mod_RemoveIntroVideosDesc, true));
 
         }
 

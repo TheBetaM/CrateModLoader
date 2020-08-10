@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using CrateModLoader.GameSpecific.CTTR;
+using CrateModLoader.GameSpecific.CrashTTR;
 //RCF API by NeoKesha
 /* Mod Layers:
  * 1: Default.RCF contents (only replace files)

@@ -12,7 +12,7 @@ namespace CrateModLoader.GameSpecific.Rayman3
         {
             Game = new Game()
             {
-                Name = "Rayman 3: Hoodlum Havoc",
+                Name = Rayman3_Text.GameTitle,
                 ShortName = "Rayman3",
                 Consoles = new List<ConsoleMode>
                 {
@@ -74,11 +74,11 @@ namespace CrateModLoader.GameSpecific.Rayman3
                 */
             };
 
-            //AddOption(RandomizeLevelOrder, new ModOption("Randomize Level Order (All Levels)"));
-            AddOption(RandomizeLevelOrderAlt, new ModOption("Randomize Level Order (Any amount of Levels)"));
-            AddOption(RandomizeOutfitColors, new ModOption("Randomize Outfit Visuals", new List<ConsoleMode>() { ConsoleMode.GCN })); //todo: PS2/Xbox/PC
-            AddOption(NewGameNightmare, new ModOption("New Game Into 2D Nightmare", new List<ConsoleMode>() { ConsoleMode.GCN }));
-            AddOption(RemoveIntroVideos, new ModOption("Remove Intro Video", new List<ConsoleMode>() { ConsoleMode.GCN }, true));
+            //AddOption(RandomizeLevelOrder, new ModOption(Rayman3_Text.Rand_LevelOrder2, Rayman3_Text.Rand_LevelOrder2Desc));
+            AddOption(RandomizeLevelOrderAlt, new ModOption(Rayman3_Text.Rand_LevelOrder, Rayman3_Text.Rand_LevelOrderDesc));
+            AddOption(RandomizeOutfitColors, new ModOption(Rayman3_Text.Rand_OutfitColors, Rayman3_Text.Rand_OutfitColorsDesc, new List<ConsoleMode>() { ConsoleMode.GCN })); //todo: PS2/Xbox/PC
+            AddOption(NewGameNightmare, new ModOption(Rayman3_Text.Mod_NewGameNightmare, Rayman3_Text.Mod_NewGameNightmareDesc, new List<ConsoleMode>() { ConsoleMode.GCN }));
+            AddOption(RemoveIntroVideos, new ModOption(Rayman3_Text.Mod_RemoveIntroVideo, Rayman3_Text.Mod_RemoveIntroVideoDesc, new List<ConsoleMode>() { ConsoleMode.GCN }, true));
 
         }
 

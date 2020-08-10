@@ -99,7 +99,17 @@
       <DependentUpon>Crash1_Text.resx</DependentUpon>
     </Compile>
     <Compile Include="GameSpecific\Crash1\CrashTri_Common.cs" />
+    <Compile Include="GameSpecific\Crash2\Crash2_Text.Designer.cs">
+      <DependentUpon>Crash2_Text.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="GameSpecific\Crash2\Crash2_Mods.cs" />
+    <Compile Include="GameSpecific\Crash3\Crash3_Text.Designer.cs">
+      <DependentUpon>Crash3_Text.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="GameSpecific\Crash3\Crash3_Mods.cs" />
     <Compile Include="GameSpecific\CrashBash\Modder_Bash.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\CNK_Data.cs" />
@@ -107,6 +117,11 @@
     <Compile Include="GameSpecific\CrashNitroKart\CNK_Data_KartStats.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\CNK_Data_Powerups.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\CNK_Settings.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\CNK_Text.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CNK_Text.resx</DependentUpon>
+    </Compile>
     <Compile Include="GameSpecific\CrashNitroKart\Modder_CNK.cs" />
     <Compile Include="GameSpecific\Crash1\Modder_Crash1.cs" />
     <Compile Include="GameSpecific\Crash2\Modder_Crash2.cs" />
@@ -115,12 +130,22 @@
     <Compile Include="GameSpecific\CrashTeamRacing\BIG.cs" />
     <Compile Include="GameSpecific\CrashTeamRacing\CTRFile.cs" />
     <Compile Include="GameSpecific\CrashTeamRacing\Modder_CTR.cs" />
+    <Compile Include="GameSpecific\CrashTS\Twins_Text.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Twins_Text.resx</DependentUpon>
+    </Compile>
     <Compile Include="GameSpecific\CrashTTR\collada_schema_1_4.cs" />
     <Compile Include="GameSpecific\CrashTTR\CTTR_Data.cs" />
     <Compile Include="GameSpecific\CrashTTR\CTTR_Data_Text.cs" />
     <Compile Include="GameSpecific\CrashTTR\CTTR_Mods.cs" />
     <Compile Include="GameSpecific\CrashTTR\CTTR_Randomizers.cs" />
     <Compile Include="GameSpecific\CrashTTR\CTTR_Settings.cs" />
+    <Compile Include="GameSpecific\CrashTTR\CTTR_Text.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CTTR_Text.resx</DependentUpon>
+    </Compile>
     <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunk.cs" />
     <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\Animation.cs" />
     <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\AnimationChannelCount.cs" />
@@ -240,6 +265,11 @@
     <Compile Include="GameSpecific\CrashMoM\Modder_MoM.cs" />
     <Compile Include="GameSpecific\Rayman2\Modder_Rayman2.cs" />
     <Compile Include="GameSpecific\Rayman3\Modder_Rayman3.cs" />
+    <Compile Include="GameSpecific\Rayman3\Rayman3_Text.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Rayman3_Text.resx</DependentUpon>
+    </Compile>
     <Compile Include="GameSpecific\Rayman3\TBFtool\BitmapHelper.cs" />
     <Compile Include="GameSpecific\Rayman3\TBFtool\TBFtool.cs" />
     <Compile Include="GameSpecific\Rayman3\TBFtool\PS2ImageHelper.cs" />
@@ -290,8 +320,32 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Crash1_Text.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="GameSpecific\Crash2\Crash2_Text.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Crash2_Text.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GameSpecific\Crash3\Crash3_Text.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Crash3_Text.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GameSpecific\CrashNitroKart\CNK_Text.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>CNK_Text.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="GameSpecific\CrashNitroKart\ModMenu_CNK.resx">
       <DependentUpon>ModMenu_CNK.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GameSpecific\CrashTS\Twins_Text.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Twins_Text.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GameSpecific\CrashTTR\CTTR_Text.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>CTTR_Text.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GameSpecific\Rayman3\Rayman3_Text.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Rayman3_Text.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="ModCrateManagerForm.resx">
       <DependentUpon>ModCrateManagerForm.cs</DependentUpon>

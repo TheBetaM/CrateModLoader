@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CrateModLoader.GameSpecific.CNK
+namespace CrateModLoader.GameSpecific.CrashNitroKart
 {
     static partial class CNK_Data
     {

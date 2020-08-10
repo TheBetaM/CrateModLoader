@@ -4,7 +4,7 @@ using System.IO;
 using Pure3D;
 using Pure3D.Chunks;
 
-namespace CrateModLoader.GameSpecific.CTTR
+namespace CrateModLoader.GameSpecific.CrashTTR
 {
     public static class CTTR_Randomizers
     {

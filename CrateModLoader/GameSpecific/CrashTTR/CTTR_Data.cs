@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CrateModLoader.GameSpecific.CTTR
+namespace CrateModLoader.GameSpecific.CrashTTR
 {
     static partial class CTTR_Data
     {

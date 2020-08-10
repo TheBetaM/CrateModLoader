@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Pure3D;
 using Pure3D.Chunks;
-using CrateModLoader.GameSpecific.CTTR;
+using CrateModLoader.GameSpecific.CrashTTR;
 //RCF API by NeoKesha
 //Pure3D API by BetaM (based on https://github.com/handsomematt/Pure3D)
 //Version number, seed and options are displayed in the Credits accessible from the main menu.
@@ -14,7 +14,7 @@ using CrateModLoader.GameSpecific.CTTR;
  * 1: All .RCF file contents (only replace files)
  */
 
-namespace CrateModLoader
+namespace CrateModLoader.GameSpecific.CrashTTR
 {
     public sealed class Modder_CTTR : Modder
     {
@@ -86,7 +86,7 @@ namespace CrateModLoader
         {
             Game = new Game()
             {
-                Name = "Crash Tag Team Racing",
+                Name = CTTR_Text.GameTitle,
                 ShortName = "CrashTTR",
                 Consoles = new List<ConsoleMode>
                 {
@@ -95,7 +95,7 @@ namespace CrateModLoader
                     ConsoleMode.PSP,
                     ConsoleMode.XBOX,
                 },
-                API_Credit = "APIs by NeoKesha and BetaM",
+                API_Credit = CTTR_Text.API_Credit,
                 API_Link = string.Empty,
                 Icon = Properties.Resources.icon_crashttr,
                 ModMenuEnabled = false,
@@ -160,13 +160,13 @@ namespace CrateModLoader
                 },
             };
 
-            AddOption(RandomizeCharacters, new ModOption("Randomize Platforming Character (Unstable)")); // todo: change missions to unlock crash and cortex if they're not in the starting pool
+            AddOption(RandomizeCharacters, new ModOption(CTTR_Text.Rand_PlatformingCharacter, CTTR_Text.Rand_PlatformingCharacterDesc)); // todo: change missions to unlock crash and cortex if they're not in the starting pool
             //AddOption(RandomizeHubs, new ModOption("Randomize Hub Entrances")); // todo: gem keys in missionobjectives_x and platforming_objects, unlock failure message, key missions
-            AddOption(RandomizeTracks, new ModOption("Randomize Track Entrances")); // todo: arenas
-            AddOption(RandomizeMinigames, new ModOption("Randomize Minigames")); // todo: minigame challenges aswell
+            AddOption(RandomizeTracks, new ModOption(CTTR_Text.Rand_TrackEntrances, CTTR_Text.Rand_TrackEntrancesDesc)); // todo: arenas
+            AddOption(RandomizeMinigames, new ModOption(CTTR_Text.Rand_Minigames, CTTR_Text.Rand_MinigamesDesc)); // todo: minigame challenges aswell
             //AddOption(RandomizeMissions, new ModOption("Randomize Missions"));// todo, genericobjectives, missionobjectives_x, level NIS+NPC
             //AddOption(RandomizeCarStats, new ModOption("Randomize Car Stats")); // todo: vehicles, levels/common for speed tier values
-            AddOption(RandomizeRaceLaps, new ModOption("Randomize Race Laps"));
+            AddOption(RandomizeRaceLaps, new ModOption(CTTR_Text.Rand_RaceLaps, CTTR_Text.Rand_RaceLapsDesc));
             //AddOption(RandomizeBattleKOs, new ModOption("Randomize Battle KO's")); // doesn't work?
             //AddOption(RandomizeCrashinator, new ModOption("Randomize Crashinator")); // todo: kamikaze
             //AddOption(RandomizeRunAndGun, new ModOption("Randomize Run & Gun")); // todo: railshooter
@@ -176,7 +176,7 @@ namespace CrateModLoader
             //AddOption(RandomizePowerupEffects, new ModOption("Randomize Powerup Effects")); //todo: driving_objects
             //AddOption(RandomizeWeapons, new ModOption("Randomize Weapons")); // todo: turretmotifs
             //AddOption(RandomizeNPCs, new ModOption("Randomize NPC Locations")); // todo: NPC - locator list
-            AddOption(PreventSequenceBreaks, new ModOption("Prevent Sequence Breaks"));
+            AddOption(PreventSequenceBreaks, new ModOption(CTTR_Text.Mod_PreventSkips, CTTR_Text.Mod_PreventSkipsDesc));
 
         }
 

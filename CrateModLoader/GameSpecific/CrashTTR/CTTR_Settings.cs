@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace CrateModLoader.GameSpecific.CTTR
+namespace CrateModLoader.GameSpecific.CrashTTR
 {
     static class CTTR_Settings
     {

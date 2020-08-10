@@ -1,4 +1,4 @@
-﻿namespace CrateModLoader.GameSpecific.CTTR
+﻿namespace CrateModLoader.GameSpecific.CrashTTR
 {
 
     public enum TextBibleID_Loading

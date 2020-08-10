@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using CrateModLoader.GameSpecific.CTTR;
+using CrateModLoader.GameSpecific.CrashTTR;
 //RCF API by NeoKesha
 //Version number, seed and options are displayed in the Credits accessible from the main menu.
 /* Mod Layers:

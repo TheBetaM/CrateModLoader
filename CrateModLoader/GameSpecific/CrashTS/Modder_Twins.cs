@@ -1,4 +1,4 @@
-﻿using CrateModLoader.GameSpecific.Twins;
+﻿using CrateModLoader.GameSpecific.CrashTS;
 using System;
 using System.Text;
 using System.Collections.Generic;
@@ -15,7 +15,7 @@ using Twinsanity;
  * 1: Extracted BD/BH archive files (PS2 only, same as layer 0 on XBOX)
  */
 
-namespace CrateModLoader.GameSpecific.Twins
+namespace CrateModLoader.GameSpecific.CrashTS
 {
 
     public enum RM_Sections
@@ -94,14 +94,14 @@ namespace CrateModLoader.GameSpecific.Twins
         {
             Game = new Game()
             {
-                Name = "Crash Twinsanity",
+                Name = Twins_Text.GameTitle,
                 ShortName = "CrashTS",
                 Consoles = new List<ConsoleMode>
                 {
                     ConsoleMode.PS2,
                     ConsoleMode.XBOX,
                 },
-                API_Credit = "API by NeoKesha, Smartkin, ManDude and Marko",
+                API_Credit = Twins_Text.API_Credit,
                 API_Link = "https://github.com/Smartkin/twinsanity-editor",
                 Icon = Properties.Resources.icon_crashts,
                 ModMenuEnabled = false,
@@ -137,18 +137,18 @@ namespace CrateModLoader.GameSpecific.Twins
                 },
             };
 
-            AddOption(RandomizeCrateTypes, new ModOption("Randomize Crate Types")); // TODO: Make this a toggle between CrateTypes/AllCrates in the mod menu?
-            AddOption(RandomizeAllCrates, new ModOption("Randomize Individual Crates"));
-            AddOption(RandomizeGemLocations, new ModOption("Randomize Gem Locations"));
+            AddOption(RandomizeCrateTypes, new ModOption(Twins_Text.Rand_CrateTypes, Twins_Text.Rand_CrateTypesDesc)); // TODO: Make this a toggle between CrateTypes/AllCrates in the mod menu?
+            AddOption(RandomizeAllCrates, new ModOption(Twins_Text.Rand_Crates, Twins_Text.Rand_CratesDesc));
+            AddOption(RandomizeGemLocations, new ModOption(Twins_Text.Rand_GemLocations, Twins_Text.Rand_GemLocationsDesc));
             //AddOption(RandomizeEnemies, new ModOption("Randomize Enemies (Soundless)")); // not stable enough
-            AddOption(RandomizeMusic, new ModOption("Randomize Level Music"));
-            AddOption(RandomizeCharParams, new ModOption("Randomize Character Parameters"));
+            AddOption(RandomizeMusic, new ModOption(Twins_Text.Rand_Music, Twins_Text.Rand_MusicDesc));
+            AddOption(RandomizeCharParams, new ModOption(Twins_Text.Rand_CharParams, Twins_Text.Rand_CharParamsDesc));
             //AddOption(RandomizeStartingChunk, new ModOption("Randomize Starting Chunk")); // TODO
-            AddOption(ModFlyingKick, new ModOption("Enable Flying Kick for Crash (Jump + Slide)"));
-            AddOption(ModStompKick, new ModOption("Enable Stomp Kick for Crash (Flying Kick replacement)"));
-            AddOption(ModDoubleJumpCortex, new ModOption("Enable Double Jump for Cortex"));
-            AddOption(ModDoubleJumpNina, new ModOption("Enable Double Jump for Nina"));
-            AddOption(ModEnableUnusedEnemies, new ModOption("Enable Unused Enemies"));
+            AddOption(ModFlyingKick, new ModOption(Twins_Text.Mod_FlyingKick, Twins_Text.Mod_FlyingKickDesc));
+            AddOption(ModStompKick, new ModOption(Twins_Text.Mod_StompKick, Twins_Text.Mod_StompKickDesc));
+            AddOption(ModDoubleJumpCortex, new ModOption(Twins_Text.Mod_CortexDoubleJump, Twins_Text.Mod_CortexDoubleJumpDesc));
+            AddOption(ModDoubleJumpNina, new ModOption(Twins_Text.Mod_NinaDoubleJump, Twins_Text.Mod_NinaDoubleJumpDesc));
+            AddOption(ModEnableUnusedEnemies, new ModOption(Twins_Text.Mod_UnusedEnemies, Twins_Text.Mod_UnusedEnemiesDesc));
 
         }
 

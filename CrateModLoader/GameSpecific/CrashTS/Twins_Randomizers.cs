@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Twinsanity;
 
-namespace CrateModLoader.GameSpecific.Twins
+namespace CrateModLoader.GameSpecific.CrashTS
 {
     public static class Twins_Randomizers
     {

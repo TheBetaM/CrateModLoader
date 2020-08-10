@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Twinsanity;
 
-namespace CrateModLoader.GameSpecific.Twins
+namespace CrateModLoader.GameSpecific.CrashTS
 {
 
     public enum LevelType
@@ -1127,7 +1127,7 @@ namespace CrateModLoader.GameSpecific.Twins
             new TwinsGem(ChunkType.Earth_Cavern_Tunnel02,new Vector3(43.833f,-0.850f,37.527f)),
             // Totem locations
             new TwinsGem(ChunkType.Earth_DocAmok_DocAmok1,new Vector3(73.450f,-21.558f,38.307f)),
-            new TwinsGem(ChunkType.Earth_DocAmok_DocAmok2,new Vector3(46.554f,-27.209f,17.700f)),
+            //new TwinsGem(ChunkType.Earth_DocAmok_DocAmok2,new Vector3(46.554f,-27.209f,17.700f)),
             new TwinsGem(ChunkType.Earth_DocAmok_DocAmok3,new Vector3(61.223f,-18.748f,16.121f)),
             new TwinsGem(ChunkType.Earth_Totem_L03Beach,new Vector3(-21.121f,-11.432f,-6.162f)),
             new TwinsGem(ChunkType.Earth_Totem_L03Beach,new Vector3(-75.335f,-11.269f,-26.262f)),

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace CrateModLoader.GameSpecific.CNK
+namespace CrateModLoader.GameSpecific.CrashNitroKart
 {
     static class CNK_Settings
     {

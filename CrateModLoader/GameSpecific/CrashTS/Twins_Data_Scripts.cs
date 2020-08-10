@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Twinsanity;
 
-namespace CrateModLoader.GameSpecific.Twins
+namespace CrateModLoader.GameSpecific.CrashTS
 {
     static partial class Twins_Data
     {

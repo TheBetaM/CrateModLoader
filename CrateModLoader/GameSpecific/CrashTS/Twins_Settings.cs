@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace CrateModLoader.GameSpecific.Twins
+namespace CrateModLoader.GameSpecific.CrashTS
 {
     static class Twins_Settings
     {

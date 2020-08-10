@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using RadcoreCementFile;
 
-namespace CrateModLoader.GameSpecific.CTTR
+namespace CrateModLoader.GameSpecific.CrashTTR
 {
     public static class RCF_Manager
     {
