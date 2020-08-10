@@ -6,6 +6,7 @@ General:
 - Added a warning if the program fails to verify a Mod Crate.  
 - Console/Region specific options will not appear on unsupported versions anymore.  
 - The window will now flash when the process is complete.  
+- Options now show a description when selected.  
   
 Crash Bandicoot, Crash Bandicoot 2: Cortex Strikes Back, Crash Bandicoot: WARPED:
 - New feature: All Crates Are Blank

@@ -93,6 +93,11 @@
   <ItemGroup>
     <Compile Include="GameDatabase.cs" />
     <Compile Include="GameSpecific\Crash1\Crash1_Mods.cs" />
+    <Compile Include="GameSpecific\Crash1\Crash1_Text.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Crash1_Text.resx</DependentUpon>
+    </Compile>
     <Compile Include="GameSpecific\Crash1\CrashTri_Common.cs" />
     <Compile Include="GameSpecific\Crash2\Crash2_Mods.cs" />
     <Compile Include="GameSpecific\Crash3\Crash3_Mods.cs" />
@@ -275,7 +280,16 @@
     <Compile Include="ModOption.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\Text\ModLoaderText.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModLoaderText.resx</DependentUpon>
+    </Compile>
     <Compile Include="Tools\PSX2ISO.cs" />
+    <EmbeddedResource Include="GameSpecific\Crash1\Crash1_Text.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Crash1_Text.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="GameSpecific\CrashNitroKart\ModMenu_CNK.resx">
       <DependentUpon>ModMenu_CNK.cs</DependentUpon>
     </EmbeddedResource>
@@ -289,6 +303,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Text\ModLoaderText.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ModLoaderText.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Mods\ExampleMod.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

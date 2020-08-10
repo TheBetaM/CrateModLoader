@@ -9,6 +9,7 @@ using System.Media;
 using System.Reflection;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using CrateModLoader.Resources.Text;
 
 namespace CrateModLoader
 {
@@ -23,6 +24,8 @@ namespace CrateModLoader
         public Label text_gameType;
         public LinkLabel text_titleLabel;
         public LinkLabel text_apiLabel;
+        public LinkLabel text_optionDescLabel;
+        public Panel panel_optionDesc;
         public PictureBox image_gameIcon;
         public CheckedListBox list_modOptions;
         public Form main_form;
@@ -205,7 +208,7 @@ namespace CrateModLoader
             {
                 if (inputDirectoryMode)
                 {
-                    throw new Exception("Building PSP ROMs from directories is not supported!");
+                    throw new Exception(ModLoaderText.Error_FolderToROMNotSupported);
                 }
                 // Use WQSG_UMD
                 File.Copy(ModLoaderGlobals.InputPath, ModLoaderGlobals.ToolsPath + "Game.iso");
@@ -411,7 +414,7 @@ namespace CrateModLoader
                 // To fix: PS1, PS2 require ISO label; PSP requires ISO file; GCN: Incorrect paths because of product code folder
                 if (ModLoaderGlobals.Console == ConsoleMode.PS1 || ModLoaderGlobals.Console == ConsoleMode.PS2 || ModLoaderGlobals.Console == ConsoleMode.PSP || ModLoaderGlobals.Console == ConsoleMode.GCN)
                 {
-                    throw new Exception("Building ROMs from directories with this console is not supported yet!");
+                    throw new Exception(ModLoaderText.Error_FolderToROMNotSupported);
                 }
             }
             if (outputDirectoryMode)
@@ -419,18 +422,18 @@ namespace CrateModLoader
                 // To fix: Incorrect paths because of product code folder
                 if (ModLoaderGlobals.Console == ConsoleMode.GCN)
                 {
-                    throw new Exception("Building GC directories is not supported yet!");
+                    throw new Exception(ModLoaderText.Error_GC_FolderNotSupported);
                 }
             }
             if (ModLoaderGlobals.Console == ConsoleMode.XBOX360 && !outputDirectoryMode)
             {
-                throw new Exception("Building 360 ROMs is not supported yet! Save to folder instead.");
+                throw new Exception(ModLoaderText.Error_360_ROMNotSupported);
             }
             if (ModLoaderGlobals.Console == ConsoleMode.PC)
             {
                 if (!inputDirectoryMode || !outputDirectoryMode)
                 {
-                    throw new Exception("PC games are only supported in Folder mode!");
+                    throw new Exception(ModLoaderText.Error_PC_FolderOnly);
                 }
             }
 
@@ -439,7 +442,7 @@ namespace CrateModLoader
                 DirectoryInfo di = new DirectoryInfo(ModLoaderGlobals.InputPath);
                 if (!di.Exists)
                 {
-                    throw new IOException("Extraction error: Input directory cannot be accessed!");
+                    throw new IOException(ModLoaderText.Error_FolderNotAccessible);
                 }
 
                 Directory.CreateDirectory(ModLoaderGlobals.TempPath);
@@ -714,17 +717,17 @@ namespace CrateModLoader
             {
                 progressBar.Value = progressBar.Minimum;
                 SystemSounds.Beep.Play();
-                processText.Text = "Error: " + e.Error.Message;
+                processText.Text = ModLoaderText.Process_Error + " " + e.Error.Message;
             }
             else if (!e.Cancelled)
             {
-                processText.Text = "Finished!";
+                processText.Text = ModLoaderText.Process_Finished;
                 SystemSounds.Beep.Play();
             }
             else
             {
                 progressBar.Value = progressBar.Minimum;
-                processText.Text = "Canceled!";
+                processText.Text = ModLoaderText.Process_Cancelled;
             }
             EnableInteraction();
             asyncWorker.DoWork -= asyncWorker_DoWork;
@@ -737,32 +740,32 @@ namespace CrateModLoader
             progressBar.Value = e.ProgressPercentage;
             if (e.ProgressPercentage == 0)
             {
-                processText.Text = "Preparing...";
+                processText.Text = ModLoaderText.Process_Step0;
             }
             else if (e.ProgressPercentage == 25)
             {
                 if (inputDirectoryMode)
                 {
-                    processText.Text = "Copying files...";
+                    processText.Text = ModLoaderText.Process_Step1_Folder;
                 }
                 else
                 {
-                    processText.Text = "Extracting game...";
+                    processText.Text = ModLoaderText.Process_Step1_ROM;
                 }
             }
             else if (e.ProgressPercentage == 50)
             {
-                processText.Text = "Modding game...";
+                processText.Text = ModLoaderText.Process_Step2;
             }
             else if (e.ProgressPercentage == 75)
             {
                 if (outputDirectoryMode)
                 {
-                    processText.Text = "Copying modded files...";
+                    processText.Text = ModLoaderText.Process_Step3_Folder;
                 }
                 else
                 {
-                    processText.Text = "Building game...";
+                    processText.Text = ModLoaderText.Process_Step3_ROM;
                 }
             }
         }
@@ -974,7 +977,7 @@ namespace CrateModLoader
                 }
                 catch
                 {
-                    text_gameType.Text = "Could not open the game directory!";
+                    text_gameType.Text = ModLoaderText.Error_UnableToOpenGameFolder;
                     loadedISO = false;
                     ResetGameSpecific(false, true);
                     return;
@@ -1055,8 +1058,6 @@ namespace CrateModLoader
                     {
                         Directory.Move(AppDomain.CurrentDomain.BaseDirectory + @"\" + Path.GetFileNameWithoutExtension(ModLoaderGlobals.InputPath), ModLoaderGlobals.TempPath);
                     }
-
-                    processText.Text = "Reading XISO...";
 
                     if (Directory.Exists(ModLoaderGlobals.TempPath) && File.Exists(ModLoaderGlobals.TempPath + @"default.xbe"))
                     {
@@ -1144,7 +1145,7 @@ namespace CrateModLoader
                     }
                     else
                     {
-                        processText.Text = "Waiting for input (1) ...";
+                        processText.Text = ModLoaderText.Step1Text;
                     }
 
                     DeleteTempFiles();
@@ -1169,10 +1170,10 @@ namespace CrateModLoader
                             }
                             else if (!CDReader.Detect(isoStream))
                             {
-                                text_gameType.Text = "Unknown PSX/PS2/PSP/GCN/WII/XBOX game ROM!";
+                                text_gameType.Text = ModLoaderText.Error_UnknownAutoGameROM;
                                 loadedISO = false;
                                 startButton.Enabled = false;
-                                processText.Text = "Waiting for input (1) ...";
+                                processText.Text = ModLoaderText.Step1Text;
                                 ResetGameSpecific(false, true);
 
                                 return;
@@ -1277,7 +1278,7 @@ namespace CrateModLoader
                     }
                     catch
                     {
-                        text_gameType.Text = "Could not open the game ROM!";
+                        text_gameType.Text = ModLoaderText.Error_UnableToOpenROM;
                         loadedISO = false;
                         ResetGameSpecific(false, true);
                         return;
@@ -1289,11 +1290,11 @@ namespace CrateModLoader
             {
                 if (OpenROM_Selection == OpenROM_SelectionType.AutomaticOnly)
                 {
-                    text_gameType.Text = "Unknown PSX/PS2/PSP/GCN/WII/XBOX/360 game ROM!";
+                    text_gameType.Text = ModLoaderText.Error_UnknownAutoGameROM;
                 }
                 else
                 {
-                    text_gameType.Text = "Unknown game ROM!";
+                    text_gameType.Text = ModLoaderText.Error_UnknownGameROM;
                 }
                 loadedISO = false;
             }
@@ -1305,7 +1306,7 @@ namespace CrateModLoader
             if (loadedISO && outputPathSet)
             {
                 startButton.Enabled = true;
-                processText.Text = "Ready!";
+                processText.Text = ModLoaderText.ProcessReady;
             }
             else
             {
@@ -1313,11 +1314,11 @@ namespace CrateModLoader
 
                 if (loadedISO)
                 {
-                    processText.Text = "Waiting for output path (2) ...";
+                    processText.Text = ModLoaderText.Step2Text;
                 }
                 else
                 {
-                    processText.Text = "Waiting for input (1) ...";
+                    processText.Text = ModLoaderText.Step1Text;
 
                     ResetGameSpecific(false, true);
                 }
@@ -1328,7 +1329,7 @@ namespace CrateModLoader
         {
             bool RegionNotSupported = true;
             Modder = null;
-            button_modCrateMenu.Text = "Mod Crates";
+            button_modCrateMenu.Text = ModLoaderText.ModCratesButton;
             ModCrates.ClearModLists();
 
             ModLoaderGlobals.Console = console;
@@ -1412,7 +1413,7 @@ namespace CrateModLoader
             switch (console)
             {
                 default:
-                case ConsoleMode.Undefined: cons_mod = "(Unknown Console)"; break;
+                case ConsoleMode.Undefined: cons_mod = "(" + ModLoaderText.UnknownConsole + ")"; break;
                 case ConsoleMode.PSP: cons_mod = "PSP"; break;
                 case ConsoleMode.PS2: cons_mod = "PS2"; break;
                 case ConsoleMode.GCN: cons_mod = "GC"; break;
@@ -1435,7 +1436,7 @@ namespace CrateModLoader
                 case RegionType.NTSC_U: region_mod = "NTSC-U"; break;
                 case RegionType.PAL: region_mod = "PAL"; break;
                 case RegionType.Global: region_mod = ""; break;
-                default: region_mod = "(Unknown Region)"; break;
+                default: region_mod = "(" + ModLoaderText.UnknownRegion + ")"; break;
             }
 
             list_modOptions.Items.Clear();
@@ -1447,8 +1448,11 @@ namespace CrateModLoader
                 button_randomize.Enabled = button_randomize.Visible = false;
                 textbox_rando_seed.Enabled = textbox_rando_seed.Visible = false;
 
-                text_gameType.Text = "Unsupported " + cons_mod + " Game";
+                text_gameType.Text = ModLoaderText.UnsupportedGameTitle + " (" + cons_mod + ")";
                 text_apiLabel.Text = string.Empty;
+                text_optionDescLabel.Text = string.Empty;
+                text_optionDescLabel.Visible = false;
+                panel_optionDesc.Visible = false;
 
                 image_gameIcon.Visible = false;
             }
@@ -1462,6 +1466,9 @@ namespace CrateModLoader
                 button_modCrateMenu.Enabled = button_modCrateMenu.Visible = Modder.Game.ModCratesSupported;
                 button_randomize.Enabled = button_randomize.Visible = true;
                 textbox_rando_seed.Enabled = textbox_rando_seed.Visible = true;
+                text_optionDescLabel.Text = string.Empty;
+                text_optionDescLabel.Visible = false;
+                panel_optionDesc.Visible = false;
 
                 if (string.IsNullOrWhiteSpace(region_mod))
                 {
@@ -1486,13 +1493,46 @@ namespace CrateModLoader
                 }
                 else
                 {
-                    text_apiLabel.Text = "No API available";
+                    text_apiLabel.Text = ModLoaderText.GameHasNoAPI;
                     text_apiLabel.Enabled = false;
                 }
 
                 if (gameIcon != null)
                 {
-                    image_gameIcon.Image = gameIcon;
+                    int offset_x = 4;
+                    int offset_y = 4;
+                    Bitmap bitmap_orig = new Bitmap(gameIcon);
+                    Bitmap bitmap = new Bitmap(gameIcon.Width + offset_x, gameIcon.Height + offset_y);
+
+                    for (int x = offset_x; x < bitmap.Width; x++)
+                    {
+                        for (int y = offset_y; y < bitmap.Height; y++)
+                        {
+                            Color bitColor = bitmap_orig.GetPixel(x - offset_x, y - offset_y);
+                            if (bitColor.A > 1)
+                            {
+                                bitmap.SetPixel(x, y, Color.FromArgb(128, 0, 0, 0));
+                            }
+                            else
+                            {
+                                bitmap.SetPixel(x, y, Color.FromArgb(0, 0, 0, 0));
+                            }
+                        }
+                    }
+                    for (int x = 0; x < bitmap_orig.Width; x++)
+                    {
+                        for (int y = 0; y < bitmap_orig.Height; y++)
+                        {
+                            Color bitColor = bitmap_orig.GetPixel(x, y);
+                            if (bitColor.A > 1)
+                            {
+                                bitmap.SetPixel(x, y, bitColor);
+                            }
+                        }
+                    }
+
+                    image_gameIcon.Image = bitmap;
+                    
                     image_gameIcon.Visible = true;
                 }
                 else
@@ -1513,7 +1553,7 @@ namespace CrateModLoader
                     //list_modOptions.Items.Add("No options available", false);
                 }
             }
-            int height = 306 + (list_modOptions.Items.Count * 15);
+            int height = 306 + 30 + (list_modOptions.Items.Count * 15);
             list_modOptions.Visible = list_modOptions.Enabled = list_modOptions.Items.Count > 0;
             if (main_form.Size.Height < height)
             {
@@ -1595,7 +1635,7 @@ namespace CrateModLoader
         {
             inputDirectoryMode = checkbox_fromFolder.Checked;
 
-            processText.Text = "Waiting for input (1) ...";
+            processText.Text = ModLoaderText.Step1Text;
             textbox_input_path.Text = "";
             ModLoaderGlobals.InputPath = "";
 
@@ -1610,7 +1650,7 @@ namespace CrateModLoader
 
             if (loadedISO)
             {
-                processText.Text = "Waiting for output path (2) ...";
+                processText.Text = ModLoaderText.Step2Text;
             }
 
             startButton.Enabled = false;
@@ -1628,7 +1668,7 @@ namespace CrateModLoader
         void ResetGameSpecific(bool ClearGameText = false, bool ExtendedWindow = false)
         {
             Modder = null;
-            button_modCrateMenu.Text = "Mod Crates";
+            button_modCrateMenu.Text = ModLoaderText.ModCratesButton;
             ModCrates.ClearModLists();
             loadedISO = false;
 
@@ -1647,6 +1687,9 @@ namespace CrateModLoader
             }
 
             image_gameIcon.Visible = false;
+            text_optionDescLabel.Text = string.Empty;
+            text_optionDescLabel.Visible = false;
+            panel_optionDesc.Visible = false;
 
             list_modOptions.Visible = list_modOptions.Enabled = false;
 

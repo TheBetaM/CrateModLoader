@@ -56,9 +56,12 @@
             this.checkBox_loadFromFolder = new System.Windows.Forms.CheckBox();
             this.checkBox_saveToFolder = new System.Windows.Forms.CheckBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.linkLabel_optionDesc = new System.Windows.Forms.LinkLabel();
+            this.panel_desc = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
+            this.panel_desc.SuspendLayout();
             this.SuspendLayout();
             // 
             // checkedListBox1
@@ -218,7 +221,7 @@
             this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(48, 48);
+            this.pictureBox1.Size = new System.Drawing.Size(64, 64);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 16;
             this.pictureBox1.TabStop = false;
@@ -292,7 +295,7 @@
             // linkLabel2
             // 
             this.linkLabel2.AutoSize = true;
-            this.linkLabel2.Location = new System.Drawing.Point(10, 10);
+            this.linkLabel2.Location = new System.Drawing.Point(10, 11);
             this.linkLabel2.Name = "linkLabel2";
             this.linkLabel2.Size = new System.Drawing.Size(125, 13);
             this.linkLabel2.TabIndex = 30;
@@ -329,10 +332,40 @@
             // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.Controls.Add(this.pictureBox1);
-            this.panel1.Location = new System.Drawing.Point(365, 145);
+            this.panel1.Location = new System.Drawing.Point(349, 125);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(48, 48);
+            this.panel1.Size = new System.Drawing.Size(70, 70);
             this.panel1.TabIndex = 33;
+            // 
+            // linkLabel_optionDesc
+            // 
+            this.linkLabel_optionDesc.AutoSize = true;
+            this.linkLabel_optionDesc.BackColor = System.Drawing.Color.Transparent;
+            this.linkLabel_optionDesc.DisabledLinkColor = System.Drawing.Color.Black;
+            this.linkLabel_optionDesc.Enabled = false;
+            this.linkLabel_optionDesc.Location = new System.Drawing.Point(3, 3);
+            this.linkLabel_optionDesc.MaximumSize = new System.Drawing.Size(0, 13);
+            this.linkLabel_optionDesc.Name = "linkLabel_optionDesc";
+            this.linkLabel_optionDesc.Size = new System.Drawing.Size(509, 13);
+            this.linkLabel_optionDesc.TabIndex = 34;
+            this.linkLabel_optionDesc.TabStop = true;
+            this.linkLabel_optionDesc.Text = "Option description that is sufficiently long to explain the option. Making the de" +
+    "scription even longer like this.";
+            this.linkLabel_optionDesc.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // panel_desc
+            // 
+            this.panel_desc.AutoScroll = true;
+            this.panel_desc.AutoScrollMinSize = new System.Drawing.Size(0, 12);
+            this.panel_desc.AutoSize = true;
+            this.panel_desc.BackColor = System.Drawing.Color.Transparent;
+            this.panel_desc.Controls.Add(this.linkLabel_optionDesc);
+            this.panel_desc.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel_desc.Location = new System.Drawing.Point(0, 113);
+            this.panel_desc.Name = "panel_desc";
+            this.panel_desc.Padding = new System.Windows.Forms.Padding(3, 3, 3, 20);
+            this.panel_desc.Size = new System.Drawing.Size(424, 36);
+            this.panel_desc.TabIndex = 35;
             // 
             // ModLoaderForm
             // 
@@ -341,6 +374,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(424, 149);
+            this.Controls.Add(this.panel_desc);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.checkBox_saveToFolder);
             this.Controls.Add(this.checkBox_loadFromFolder);
@@ -369,6 +403,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel1.ResumeLayout(false);
+            this.panel_desc.ResumeLayout(false);
+            this.panel_desc.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -402,6 +438,8 @@
         private System.Windows.Forms.CheckBox checkBox_loadFromFolder;
         private System.Windows.Forms.CheckBox checkBox_saveToFolder;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.LinkLabel linkLabel_optionDesc;
+        private System.Windows.Forms.Panel panel_desc;
     }
 }
 

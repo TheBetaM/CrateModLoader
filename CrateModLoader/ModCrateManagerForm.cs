@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using CrateModLoader.Resources.Text;
 
 namespace CrateModLoader
 {
@@ -11,6 +12,9 @@ namespace CrateModLoader
             ModCrates.CheckedList_Mods = checkedListBox_mods;
             label_author.Text = "";
             label_desc.Text = "";
+            button_confirm.Text = ModLoaderText.ModCrateManagerConfirmButton;
+            button_importmod.Text = ModLoaderText.ModCrateManagerImportModButton;
+            Text = ModLoaderText.ModCrateManagerTitle;
             pictureBox_ModIcon.Image = null;
         }
 
@@ -33,10 +37,10 @@ namespace CrateModLoader
         {
             Owner.Enabled = true;
 
-            string CratesActive = "Mod Crates";
+            string CratesActive = ModLoaderText.ModCratesButton;
             if (ModCrates.ModsActiveAmount > 0)
             {
-                CratesActive += " (" + ModCrates.ModsActiveAmount + " enabled)";
+                CratesActive += " (" + ModCrates.ModsActiveAmount + "x)";
             }
 
             Program.ModProgram.button_modCrateMenu.Text = CratesActive;
@@ -60,7 +64,7 @@ namespace CrateModLoader
             int index = checkedListBox_mods.SelectedIndex;
             if (index >= 0)
             {
-                label_author.Text = "Author: " + ModCrates.SupportedMods[index].Author;
+                label_author.Text = ModLoaderText.ModCrateManagerAuthorText + " " + ModCrates.SupportedMods[index].Author;
                 label_desc.Text = ModCrates.SupportedMods[index].Desc;
                 if (ModCrates.SupportedMods[index].Icon == null)
                 {

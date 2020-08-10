@@ -1,0 +1,274 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="DefaultOutputFileName" xml:space="preserve">
+    <value>ModdedGame</value>
+  </data>
+  <data name="ErrorPopupTitle" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="Error_360_ROMNotSupported" xml:space="preserve">
+    <value>Building 360 ROMs is not supported yet! Save to folder instead.</value>
+  </data>
+  <data name="Error_FolderNotAccessible" xml:space="preserve">
+    <value>Extraction error: Input directory cannot be accessed!</value>
+  </data>
+  <data name="Error_FolderToROMNotSupported" xml:space="preserve">
+    <value>Building ROMs from folders with this console is not supported yet!</value>
+  </data>
+  <data name="Error_GC_FolderNotSupported" xml:space="preserve">
+    <value>Building GC directories is not supported yet!</value>
+  </data>
+  <data name="Error_PC_FolderOnly" xml:space="preserve">
+    <value>PC games are only supported in Folder mode!</value>
+  </data>
+  <data name="Error_UnableToOpenGameFolder" xml:space="preserve">
+    <value>Could not open the game directory!</value>
+  </data>
+  <data name="Error_UnableToOpenROM" xml:space="preserve">
+    <value>Could not open the game ROM!</value>
+  </data>
+  <data name="Error_UnknownAutoGameROM" xml:space="preserve">
+    <value>Unknown PS/GCN/WII/XBOX game ROM!</value>
+  </data>
+  <data name="Error_UnknownGameROM" xml:space="preserve">
+    <value>Unknown game ROM!</value>
+  </data>
+  <data name="GameHasNoAPI" xml:space="preserve">
+    <value>No API available</value>
+  </data>
+  <data name="InputBrowse" xml:space="preserve">
+    <value>(1) Browse...</value>
+  </data>
+  <data name="InputDialogTypeAuto" xml:space="preserve">
+    <value>Supported ROM formats</value>
+  </data>
+  <data name="InputFolder" xml:space="preserve">
+    <value>Load As Folder</value>
+  </data>
+  <data name="InputInstruction" xml:space="preserve">
+    <value>1. Click "Browse" to select the game ROM or drag &amp; drop it here.</value>
+  </data>
+  <data name="KeepTempFiles" xml:space="preserve">
+    <value>Keep Temp Files</value>
+  </data>
+  <data name="LinkOpenFail" xml:space="preserve">
+    <value>Unable to open link.</value>
+  </data>
+  <data name="ModCrateErrorPopup" xml:space="preserve">
+    <value>Failed to verify Mod Crate at:</value>
+    <comment>(followed by directory)</comment>
+  </data>
+  <data name="ModCrateManagerAuthorText" xml:space="preserve">
+    <value>Author:</value>
+  </data>
+  <data name="ModCrateManagerConfirmButton" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="ModCrateManagerImportModButton" xml:space="preserve">
+    <value>Import Mod Crate</value>
+  </data>
+  <data name="ModCrateManagerTitle" xml:space="preserve">
+    <value>Mod Crate Manager</value>
+  </data>
+  <data name="ModCratesButton" xml:space="preserve">
+    <value>Mod Crates</value>
+  </data>
+  <data name="ModMenuButton" xml:space="preserve">
+    <value>Open Mod Menu</value>
+  </data>
+  <data name="ModMenuMissingErrorPopup" xml:space="preserve">
+    <value>This game doesn't have a mod menu!</value>
+  </data>
+  <data name="ModToolsButton" xml:space="preserve">
+    <value>Mod Tools</value>
+  </data>
+  <data name="NoOptionsSelectedPopup" xml:space="preserve">
+    <value>No options specified - Output ROM will only display version info ingame if available. Proceed?</value>
+  </data>
+  <data name="NoOptionsSelectedTitle" xml:space="preserve">
+    <value>No Options Selected</value>
+  </data>
+  <data name="OutputBrowse" xml:space="preserve">
+    <value>(2) Browse...</value>
+  </data>
+  <data name="OutputDialogTypeAllFiles" xml:space="preserve">
+    <value>All files</value>
+  </data>
+  <data name="OutputFolder" xml:space="preserve">
+    <value>Save To Folder</value>
+  </data>
+  <data name="OutputInstruction" xml:space="preserve">
+    <value>2. Click "Browse" to choose the output path.</value>
+  </data>
+  <data name="ProcessReady" xml:space="preserve">
+    <value>Ready!</value>
+  </data>
+  <data name="Process_Cancelled" xml:space="preserve">
+    <value>Cancelled!</value>
+  </data>
+  <data name="Process_Error" xml:space="preserve">
+    <value>Error:</value>
+  </data>
+  <data name="Process_Finished" xml:space="preserve">
+    <value>Finished!</value>
+  </data>
+  <data name="Process_Step0" xml:space="preserve">
+    <value>Preparing...</value>
+  </data>
+  <data name="Process_Step1_Folder" xml:space="preserve">
+    <value>Copying files...</value>
+  </data>
+  <data name="Process_Step1_ROM" xml:space="preserve">
+    <value>Extracting game...</value>
+  </data>
+  <data name="Process_Step2" xml:space="preserve">
+    <value>Modding game...</value>
+  </data>
+  <data name="Process_Step3_Folder" xml:space="preserve">
+    <value>Copying modded files...</value>
+  </data>
+  <data name="Process_Step3_ROM" xml:space="preserve">
+    <value>Building game...</value>
+  </data>
+  <data name="ProgramTitle" xml:space="preserve">
+    <value>Crate Mod Loader</value>
+  </data>
+  <data name="RandomizeSeedButton" xml:space="preserve">
+    <value>Randomize Seed</value>
+  </data>
+  <data name="StartProcessButton" xml:space="preserve">
+    <value>Start!</value>
+  </data>
+  <data name="Step1Text" xml:space="preserve">
+    <value>Waiting for input (1) ...</value>
+  </data>
+  <data name="Step2Text" xml:space="preserve">
+    <value>Waiting for output path (2) ...</value>
+  </data>
+  <data name="UnknownConsole" xml:space="preserve">
+    <value>Unknown Console</value>
+  </data>
+  <data name="UnknownRegion" xml:space="preserve">
+    <value>Unknown Region</value>
+  </data>
+  <data name="UnsupportedGameTitle" xml:space="preserve">
+    <value>Unsupported Game</value>
+  </data>
+</root>

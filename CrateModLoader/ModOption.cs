@@ -5,6 +5,30 @@ namespace CrateModLoader
     public class ModOption
     {
         /// <summary>
+        /// Option name
+        /// </summary>
+        public string Name { get; }
+        /// <summary>
+        /// Option description
+        /// </summary>
+        public string Description { get; }
+        /// <summary>
+        /// Current enabled state, please use Modder.GetOption to get state instead of this directly!
+        /// </summary>
+        public bool Enabled { get; set; }
+        /// <summary>
+        /// List of regions where the option will appear
+        /// </summary>
+        public List<RegionType> AllowedRegions { get; }
+        /// <summary>
+        /// List of consoles where the option will appear
+        /// </summary>
+        public List<ConsoleMode> AllowedConsoles { get; }
+
+        public override string ToString() => Name;
+
+
+        /// <summary>
         /// Mod option allowed on all consoles and regions.
         /// </summary>
         /// <param name="name">Option name</param>
@@ -56,24 +80,65 @@ namespace CrateModLoader
             AllowedRegions = regions;
             AllowedConsoles = consoles;
         }
-
         /// <summary>
-        /// Option name
+        /// Mod option allowed on all consoles and regions.
         /// </summary>
-        public string Name { get; }
+        /// <param name="name">Option name</param>
+        /// <param name="desc">Option description</param>
+        /// <param name="enabled">Default enabled state, defaults to not enabled</param>
+        public ModOption(string name, string desc, bool enabled = false)
+        {
+            Name = name;
+            Description = desc;
+            Enabled = enabled;
+            AllowedRegions = new List<RegionType>();
+            AllowedConsoles = new List<ConsoleMode>();
+        }
         /// <summary>
-        /// Current enabled state, please use Modder.GetOption to get state instead of this directly!
+        /// Mod option allowed only on listed regions.
         /// </summary>
-        public bool Enabled { get; set; }
+        /// <param name="name">Option name</param>
+        /// <param name="desc">Option description</param>
+        /// <param name="regions">List of regions where the option will appear</param>
+        /// <param name="enabled">Default enabled state, defaults to not enabled</param>
+        public ModOption(string name, string desc, List<RegionType> regions,  bool enabled = false)
+        {
+            Name = name;
+            Description = desc;
+            Enabled = enabled;
+            AllowedRegions = regions;
+            AllowedConsoles = new List<ConsoleMode>();
+        }
         /// <summary>
-        /// List of regions where the option will appear
+        /// Mod option allowed only on listed consoles.
         /// </summary>
-        public List<RegionType> AllowedRegions { get; }
+        /// <param name="name">Option name</param>
+        /// <param name="desc">Option description</param>
+        /// <param name="consoles">List of consoles where the option will appear</param>
+        /// <param name="enabled">Default enabled state, defaults to not enabled</param>
+        public ModOption(string name, string desc, List<ConsoleMode> consoles,  bool enabled = false)
+        {
+            Name = name;
+            Description = desc;
+            Enabled = enabled;
+            AllowedRegions = new List<RegionType>();
+            AllowedConsoles = consoles;
+        }
         /// <summary>
-        /// List of consoles where the option will appear
+        /// Mod option allowed only on listed consoles and regions.
         /// </summary>
-        public List<ConsoleMode> AllowedConsoles { get; }
-
-        public override string ToString() => Name;
+        /// <param name="name">Option name</param>
+        /// <param name="desc">Option description</param>
+        /// <param name="regions">List of regions where the option will appear</param>
+        /// <param name="consoles">List of consoles where the option will appear</param>
+        /// <param name="enabled">Default enabled state, defaults to not enabled</param>
+        public ModOption(string name, string desc, List<RegionType> regions, List<ConsoleMode> consoles,  bool enabled = false)
+        {
+            Name = name;
+            Description = desc;
+            Enabled = enabled;
+            AllowedRegions = regions;
+            AllowedConsoles = consoles;
+        }
     }
 }

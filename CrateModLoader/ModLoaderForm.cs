@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Windows.Forms;
 using System.Diagnostics;
+using CrateModLoader.Resources.Text;
 
 namespace CrateModLoader
 {
@@ -11,11 +12,21 @@ namespace CrateModLoader
         public ModLoaderForm()
         {
             InitializeComponent();
-            linkLabel2.Text = "Crate Mod Loader " + ModLoaderGlobals.ProgramVersion;
+            linkLabel2.Text = ModLoaderText.ProgramTitle + " " + ModLoaderGlobals.ProgramVersion;
             label7.Text = "";
             linkLabel1.Text = "";
-            label6.Text = "Waiting for input (1) ...";
+            label6.Text = ModLoaderText.Step1Text;
             button3.Enabled = false;
+            linkLabel_optionDesc.Text = "";
+            linkLabel_optionDesc.Enabled = false;
+            linkLabel_optionDesc.Visible = false;
+            panel_desc.Visible = false;
+            Text = ModLoaderText.ProgramTitle;
+            textBox1.Text = ModLoaderText.InputInstruction;
+            textBox2.Text = ModLoaderText.OutputInstruction;
+
+            Program.ModProgram.panel_optionDesc = panel_desc;
+            Program.ModProgram.text_optionDescLabel = linkLabel_optionDesc;
             Program.ModProgram.processText = label6;
             Program.ModProgram.progressBar = progressBar1;
             Program.ModProgram.startButton = button3;
@@ -65,7 +76,7 @@ namespace CrateModLoader
             else
             {
                 //openFileDialog1.Filter = "PSX/PS2/PSP/GCN/WII/XBOX/360 ROM (*.iso; *.bin; *.wbfs)|*.iso;*.bin;*.wbfs|All files (*.*)|*.*";
-                openFileDialog1.Filter = "Supported ROM formats (*.iso; *.bin; *.wbfs)|*.iso;*.bin;*.wbfs|All files (*.*)|*.*";
+                openFileDialog1.Filter = ModLoaderText.InputDialogTypeAuto + " (*.iso; *.bin; *.wbfs)|*.iso;*.bin;*.wbfs|" + ModLoaderText.OutputDialogTypeAllFiles + " (*.*)|*.*";
 
                 if (openFileDialog1.ShowDialog() == DialogResult.OK)
                 {
@@ -90,7 +101,7 @@ namespace CrateModLoader
                     if (Program.ModProgram.loadedISO && Program.ModProgram.outputPathSet)
                     {
                         button3.Enabled = true;
-                        label6.Text = "Ready!";
+                        label6.Text = ModLoaderText.ProcessReady;
                     }
                     else
                     {
@@ -100,9 +111,9 @@ namespace CrateModLoader
             }
             else
             {
-                saveFileDialog1.Filter = "ISO (*.iso)|*.iso|BIN (*.bin)|*.bin|All files (*.*)|*.*";
+                saveFileDialog1.Filter = "ISO (*.iso)|*.iso|BIN (*.bin)|*.bin|" + ModLoaderText.OutputDialogTypeAllFiles + " (*.*)|*.*";
 
-                saveFileDialog1.FileName = "ModdedGame.iso";
+                saveFileDialog1.FileName = ModLoaderText.DefaultOutputFileName + ".iso";
                 saveFileDialog1.ShowDialog();
             }
         }
@@ -128,7 +139,7 @@ namespace CrateModLoader
             if (Program.ModProgram.loadedISO && Program.ModProgram.outputPathSet)
             {
                 button3.Enabled = true;
-                label6.Text = "Ready!";
+                label6.Text = ModLoaderText.ProcessReady;
             }
             else
             {
@@ -147,7 +158,7 @@ namespace CrateModLoader
 
             if (checkedListBox1.CheckedItems.Count <= 0 && ModCrates.ModsActiveAmount <= 0)
             {
-                if (MessageBox.Show("No options specified - Output ROM will only display version info ingame if available. Proceed?", "No Options Selected", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (MessageBox.Show(ModLoaderText.NoOptionsSelectedPopup, ModLoaderText.NoOptionsSelectedTitle, MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     Program.ModProgram.StartButtonPressed();
                 }
@@ -185,6 +196,21 @@ namespace CrateModLoader
                 if (c.Items[i] is ModOption o)
                 {
                     o.Enabled = c.GetItemChecked(i);
+                    if (c.SelectedIndex == i)
+                    {
+                        if (!string.IsNullOrEmpty(o.Description))
+                        {
+                            linkLabel_optionDesc.Text = o.Description;
+                            linkLabel_optionDesc.Visible = true;
+                            panel_desc.Visible = true;
+                        }
+                        else
+                        {
+                            linkLabel_optionDesc.Text = string.Empty;
+                            linkLabel_optionDesc.Visible = false;
+                            panel_desc.Visible = false;
+                        }
+                    }
                 }
             }
         }
@@ -197,7 +223,7 @@ namespace CrateModLoader
             }
             catch
             {
-                MessageBox.Show("Unable to open link.");
+                MessageBox.Show(ModLoaderText.LinkOpenFail);
             }
         }
 

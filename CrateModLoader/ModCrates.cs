@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.IO.Compression;
 using System.Windows.Forms;
+using CrateModLoader.Resources.Text;
 
 namespace CrateModLoader
 {
@@ -76,7 +77,7 @@ namespace CrateModLoader
                     }
                     catch
                     {
-                        MessageBox.Show("Failed to verify Mod Crate at: " + file.FullName);
+                        MessageBox.Show(ModLoaderText.ModCrateErrorPopup + " " + file.FullName);
                     }
                 }
             }
@@ -90,7 +91,7 @@ namespace CrateModLoader
                     }
                     catch
                     {
-                        MessageBox.Show("Failed to verify Mod folder at: " + dir.FullName);
+                        MessageBox.Show(ModLoaderText.ModCrateErrorPopup + " " + dir.FullName);
                     }
                 }
             }

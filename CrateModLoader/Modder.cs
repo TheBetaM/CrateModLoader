@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Collections.Generic;
+using CrateModLoader.Resources.Text;
 
 namespace CrateModLoader
 {
@@ -9,7 +10,8 @@ namespace CrateModLoader
      * 1. Make a new modder class that inherits this abstract class.
      * 2. Fill its Game member with the appropriate info in the class constructor.
      * 3. Override StartModProcess (at least, there are more modding functions that can be overriden but are optional).
-     * 4. Done.
+     * (optionally) 4. Localize game title, API credit, and options using text resources.
+     * 5. Done.
      * 
      */
 
@@ -91,7 +93,7 @@ namespace CrateModLoader
 
         public virtual void OpenModMenu()
         {
-            MessageBox.Show("This game doesn't have a mod menu!", "Error", MessageBoxButtons.OK);
+            MessageBox.Show(ModLoaderText.ModMenuMissingErrorPopup, ModLoaderText.ErrorPopupTitle, MessageBoxButtons.OK);
         }
 
         public Game Game { get; protected set; }

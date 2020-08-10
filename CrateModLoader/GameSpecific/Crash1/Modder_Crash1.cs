@@ -39,13 +39,13 @@ namespace CrateModLoader
         {
             Game = new Game()
             {
-                Name = "Crash Bandicoot",
+                Name = Crash1_Text.GameTitle,
                 ShortName = "Crash1",
                 Consoles = new List<ConsoleMode>
                 {
                     ConsoleMode.PS1
                 },
-                API_Credit = "API by chekwob and ManDude",
+                API_Credit = Crash1_Text.API_Credit,
                 API_Link = "https://github.com/cbhacks/CrashEdit",
                 Icon = Properties.Resources.icon_crash1,
                 ModMenuEnabled = false,
@@ -70,25 +70,25 @@ namespace CrateModLoader
             };
             ModCratesManualInstall = true;
 
-            AddOption(RandomizeCratesIntoWood, new ModOption("All Crates Are Blank"));
-            AddOption(TurnCratesIntoWumpa, new ModOption("All Crates Are Wumpa"));
+            AddOption(RandomizeCratesIntoWood, new ModOption(Crash1_Text.Mod_AllCratesBlank, Crash1_Text.Mod_AllCratesBlankDesc));
+            AddOption(TurnCratesIntoWumpa, new ModOption(Crash1_Text.Mod_AllCratesWumpa, Crash1_Text.Mod_AllCratesWumpaDesc));
             //AddOption(RandomizeMap, new ModOption("Randomize Map"));
-            AddOption(BackwardsLevels, new ModOption("Backwards Levels"));
-            AddOption(RandomBackwardsLevels, new ModOption("Random Levels Are Backwards"));
-            AddOption(BackwardsHogLevels, new ModOption("Backwards Hog Levels (Very Hard!)"));
-            AddOption(RandomizeCrateContents, new ModOption("Randomize Crate Contents"));
-            AddOption(RandomizeBosses, new ModOption("Randomize Boss Levels"));
+            AddOption(BackwardsLevels, new ModOption(Crash1_Text.Mod_BackwardsLevels, Crash1_Text.Mod_BackwardsLevelsDesc));
+            AddOption(RandomBackwardsLevels, new ModOption(Crash1_Text.Rand_BackwardsLevels, Crash1_Text.Rand_BackwardsLevelsDesc));
+            AddOption(BackwardsHogLevels, new ModOption(Crash1_Text.Mod_BackwardsHogLevels, Crash1_Text.Mod_BackwardsHogLevelsDesc));
+            AddOption(RandomizeCrateContents, new ModOption(Crash1_Text.Rand_CrateContents, Crash1_Text.Rand_CrateContentsDesc));
+            AddOption(RandomizeBosses, new ModOption(Crash1_Text.Rand_BossLevels, Crash1_Text.Rand_BossLevelsDesc));
             //AddOption(VehicleLevelsOnFoot, new ModOption("Hog Levels On Foot"));
             //AddOption(MirroredWorld, new ModOption("Mirrored World"));
             //AddOption(RandomLevelsMirrored, new ModOption("Random Levels Are Mirrored"));
-            AddOption(CameraBiggerFOV, new ModOption("Wider Camera Field-Of-View"));
-            AddOption(RandomizeCameraFOV, new ModOption("Randomize Camera Field-Of-View"));
-            AddOption(RandomizeADIO, new ModOption("Randomize Sound Effects"));
+            AddOption(CameraBiggerFOV, new ModOption(Crash1_Text.Mod_CameraWideFOV, Crash1_Text.Mod_CameraWideFOVDesc));
+            AddOption(RandomizeCameraFOV, new ModOption(Crash1_Text.Rand_CameraFOV, Crash1_Text.Rand_CameraFOVDesc));
+            AddOption(RandomizeADIO, new ModOption(Crash1_Text.Rand_SFX, Crash1_Text.Rand_SFXDesc));
             //AddOption(RandomizeMusic, new ModOption("Randomize Music")); //shuffle tracks from different levels (must be identical to vanilla playback, just in a different level)
             //AddOption(RandomizeMusicTracks, new ModOption("Randomize Music Tracks")); //only swap midis
             //AddOption(RandomzieMusicInstruments, new ModOption("Randomize Music Instruments")); //only swap wavebanks
-            AddOption(SceneryRainbow, new ModOption("Randomize World Colors"));
-            AddOption(SceneryColorSwizzle, new ModOption("Randomize World Palette"));
+            AddOption(SceneryRainbow, new ModOption(Crash1_Text.Rand_WorldColors, Crash1_Text.Rand_WorldColorsDesc));
+            AddOption(SceneryColorSwizzle, new ModOption(Crash1_Text.Rand_WorldPalette, Crash1_Text.Rand_WorldPaletteDesc));
             //AddOption(SceneryGreyscale, new ModOption("Greyscale World")); 
             //AddOption(SceneryUntextured, new ModOption("Untextured/Greyscale World")); //todo
         }
