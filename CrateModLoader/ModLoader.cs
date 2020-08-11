@@ -1474,11 +1474,11 @@ namespace CrateModLoader
 
                 if (string.IsNullOrWhiteSpace(region_mod))
                 {
-                    text_gameType.Text = string.Format("{0} ({1})", Modder.Game.Name, cons_mod);
+                    text_gameType.Text = string.Format("{0}\n({1})", Modder.Game.Name, cons_mod);
                 }
                 else
                 {
-                    text_gameType.Text = string.Format("{0} ({1} {2})", Modder.Game.Name, region_mod, cons_mod);
+                    text_gameType.Text = string.Format("{0}\n({1} {2})", Modder.Game.Name, region_mod, cons_mod);
                 }
                 
                 if (!string.IsNullOrWhiteSpace(Modder.Game.API_Credit))
@@ -1555,13 +1555,18 @@ namespace CrateModLoader
                     //list_modOptions.Items.Add("No options available", false);
                 }
             }
-            int height = 295 + 30 + (list_modOptions.Items.Count * 15);
+            int height = 295 + 45 + (list_modOptions.Items.Count * 15);
             list_modOptions.Visible = list_modOptions.Enabled = list_modOptions.Items.Count > 0;
             if (main_form.Size.Height < height)
             {
-                main_form.Size = new Size(main_form.Size.Width, height);
+                //main_form.Size = new Size(main_form.MinimumSize.Width, height + 300);
+                main_form.Size = new Size(main_form.MinimumSize.Width, height);
             }
             main_form.MinimumSize = new Size(main_form.MinimumSize.Width, height);
+            if (main_form.Size.Height > height)
+            {
+                main_form.Size = new Size(main_form.MinimumSize.Width, height);
+            }
         }
 
         public void OpenModCrateManager()

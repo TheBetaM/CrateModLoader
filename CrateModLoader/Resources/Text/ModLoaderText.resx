@@ -166,10 +166,10 @@
     <value>Supported ROM formats</value>
   </data>
   <data name="InputFolder" xml:space="preserve">
-    <value>Load As Folder</value>
+    <value>As Folder</value>
   </data>
   <data name="InputInstruction" xml:space="preserve">
-    <value>1. Click "Browse" to select the game ROM or drag &amp; drop it here.</value>
+    <value>1. Click "Browse" to select the game or drag &amp; drop it here.</value>
   </data>
   <data name="KeepTempFiles" xml:space="preserve">
     <value>Keep Temp Files</value>
@@ -215,7 +215,7 @@
     <value>All files</value>
   </data>
   <data name="OutputFolder" xml:space="preserve">
-    <value>Save To Folder</value>
+    <value>To Folder</value>
   </data>
   <data name="OutputInstruction" xml:space="preserve">
     <value>2. Click "Browse" to choose the output path.</value>

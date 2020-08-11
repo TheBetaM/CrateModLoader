@@ -12,14 +12,13 @@ namespace CrateModLoader
         public ModLoaderForm()
         {
             InitializeComponent();
-            //linkLabel2.Text = ModLoaderText.ProgramTitle + " " + ModLoaderGlobals.ProgramVersion;
-            linkLabel2.Text = ModLoaderGlobals.ProgramVersion;
+            linkLabel2.Text = ModLoaderText.ProgramTitle + " " + ModLoaderGlobals.ProgramVersion;
             label7.Text = "";
             linkLabel1.Text = "";
             label6.Text = ModLoaderText.Step1Text;
             button3.Enabled = false;
             linkLabel_optionDesc.Text = "";
-            linkLabel_optionDesc.Enabled = false;
+            linkLabel_optionDesc.Enabled = true;
             linkLabel_optionDesc.Visible = false;
             panel_desc.Visible = false;
             Text = ModLoaderText.ProgramTitle;
@@ -35,6 +34,7 @@ namespace CrateModLoader
             checkBox_loadFromFolder.Text = ModLoaderText.InputFolder;
             checkBox_saveToFolder.Text = ModLoaderText.OutputFolder;
             checkBox1.Text = ModLoaderText.KeepTempFiles;
+            Size = new System.Drawing.Size(MinimumSize.Width, MinimumSize.Height);
 
             toolTip1.SetToolTip(checkBox_loadFromFolder, ModLoaderText.Tooltip_Checkbox_LoadFromFolder);
             toolTip1.SetToolTip(checkBox_saveToFolder, ModLoaderText.Tooltip_Checkbox_SaveToFolder);

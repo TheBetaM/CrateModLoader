@@ -9,14 +9,22 @@ namespace CrateModLoader
         public static ModLoaderForm ModProgramForm;
 
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            ModProgram = new ModLoader();
-            using (ModProgramForm = new ModLoaderForm())
+            if (args.Length == 0)
             {
-                Application.Run(ModProgramForm);
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                ModProgram = new ModLoader();
+                using (ModProgramForm = new ModLoaderForm())
+                {
+                    Application.Run(ModProgramForm);
+                }
+            }
+            else
+            {
+                ModProgram = new ModLoader();
+                //todo: commandline
             }
         }
     }

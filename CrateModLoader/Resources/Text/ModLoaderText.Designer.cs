@@ -205,7 +205,7 @@ namespace CrateModLoader.Resources.Text {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Load As Folder.
+        ///   Looks up a localized string similar to As Folder.
         /// </summary>
         public static string InputFolder {
             get {
@@ -214,7 +214,7 @@ namespace CrateModLoader.Resources.Text {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 1. Click &quot;Browse&quot; to select the game ROM or drag &amp; drop it here..
+        ///   Looks up a localized string similar to 1. Click &quot;Browse&quot; to select the game or drag &amp; drop it here..
         /// </summary>
         public static string InputInstruction {
             get {
@@ -349,7 +349,7 @@ namespace CrateModLoader.Resources.Text {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Save To Folder.
+        ///   Looks up a localized string similar to To Folder.
         /// </summary>
         public static string OutputFolder {
             get {

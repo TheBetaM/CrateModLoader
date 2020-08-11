@@ -8,6 +8,7 @@ General:
 - The window will now flash when the process is complete.  
 - Options now show a description when selected.  
 - Mod Crate metadata now supports localization. Set Name-xx and Description-xx with a valid ISO 639-1 country code for it to be displayed in that language. (ex. Name-de (German), Name-es (Spanish) etc.)
+(language switching is planned to be added in the future, right now it will honor the system default)
   
 Crash Bandicoot, Crash Bandicoot 2: Cortex Strikes Back, Crash Bandicoot: WARPED:
 - New feature: All Crates Are Blank
