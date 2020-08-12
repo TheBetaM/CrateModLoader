@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CrateModLoader.ModProperties;
 
 namespace CrateModLoader.GameSpecific.CrashNitroKart
 {
     static partial class CNK_Data
     {
-        public static ModProperty m_AccelerationGainNormal_proptest = new ModProperty();
+        [ModCategory((int)ModProps.KartStats)]
+        public static ModPropString m_Accel_proptest = new ModPropString("test");
+        [ModCategory((int)ModProps.DriverStats)]
+        public static ModPropBool m_Accel_booltest = new ModPropBool(true);
 
         // These variable comments are from the original CNK files, not made for this tool!
         /// <summary> float | The minimum height we need to get without jumping before we set the in-air state (Note: This is from the center of the collision sphere!!!) </summary>

@@ -9,6 +9,12 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
     static partial class CNK_Data
     {
 
+        public enum ModProps : int
+        {
+            KartStats = 1,
+            DriverStats = 2,
+        }
+
         public enum Drivers
         {
             Coco = 0,

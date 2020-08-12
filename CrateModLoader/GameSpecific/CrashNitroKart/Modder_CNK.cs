@@ -94,6 +94,9 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
                 },
             };
 
+            PropCategories.Add((int)CNK_Data.ModProps.KartStats, "Kart Stats");
+            PropCategories.Add((int)CNK_Data.ModProps.DriverStats, "Driver Stats");
+
             AddOption(RandomizeAdventure, new ModOption(CNK_Text.Rand_Adventure, CNK_Text.Rand_AdventureDesc));
             AddOption(RandomizeCharacterStats, new ModOption(CNK_Text.Rand_CharacterStats, CNK_Text.Rand_CharacterStatsDesc));
             AddOption(RandomizeKartStats, new ModOption(CNK_Text.Rand_KartStats, CNK_Text.Rand_KartStatsDesc));

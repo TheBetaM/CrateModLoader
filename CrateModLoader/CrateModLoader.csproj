@@ -314,8 +314,11 @@
       <DependentUpon>ModMenuForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ModOption.cs" />
-    <Compile Include="ModProperties\ModPropertyString.cs" />
-    <Compile Include="ModProperty.cs" />
+    <Compile Include="ModProperties\ModCategory.cs" />
+    <Compile Include="ModProperties\ModPropertyBase.cs" />
+    <Compile Include="ModProperties\ModPropBool.cs" />
+    <Compile Include="ModProperties\ModPropString.cs" />
+    <Compile Include="ModProperties\ModProperty.cs" />
     <Compile Include="ModToolsForm.cs">
       <SubType>Form</SubType>
     </Compile>

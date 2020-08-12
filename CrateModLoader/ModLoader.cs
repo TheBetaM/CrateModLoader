@@ -1594,10 +1594,15 @@ namespace CrateModLoader
         public void OpenModMenu()
         {
             // Individual Game Mod Menu
-            // Detailed settings UI for some games
-            // Set availability in the respective modder's Game struct (ModMenuEnabled variable)
+            // Detailed settings UI for mod properties
+            // Automatically generated for any ModProperty in the modder class' namespace
 
-            Modder.OpenModMenu();
+            ModMenuForm modMenu = new ModMenuForm(Modder);
+
+            modMenu.Owner = Program.ModProgramForm;
+            modMenu.Show();
+
+            //Modder.OpenModMenu();
         }
 
         public void DisableInteraction()

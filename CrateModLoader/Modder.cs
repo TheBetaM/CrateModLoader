@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Reflection;
 using CrateModLoader.Resources.Text;
+using CrateModLoader.ModProperties;
 
 namespace CrateModLoader
 {
@@ -23,7 +24,8 @@ namespace CrateModLoader
     {
         public Dictionary<int,ModOption> Options { get; } = new Dictionary<int,ModOption>();
 
-        public List<ModProperty> Props = new List<ModProperty>();
+        public List<ModPropertyBase> Props = new List<ModPropertyBase>();
+        public Dictionary<int, string> PropCategories = new Dictionary<int, string>();
 
         public Modder()
         {
@@ -38,9 +40,26 @@ namespace CrateModLoader
                 {
                     foreach (FieldInfo field in type.GetFields())
                     {
-                        if (field.FieldType == typeof(ModProperty))
+                        if (field.FieldType.IsSubclassOf(typeof(ModPropertyBase)))
                         {
-                            Props.Add((ModProperty)field.GetValue(null));
+                            Props.Add((ModPropertyBase)field.GetValue(null));
+
+                            Props[Props.Count - 1].ResetToDefault();
+
+                            ModCategory chunkAttr = (ModCategory)field.GetCustomAttribute(typeof(ModCategory), false);
+                            if (chunkAttr != null)
+                            {
+                                Props[Props.Count - 1].Category = chunkAttr.ID;
+                            }
+                            else
+                            {
+                                Props[Props.Count - 1].Category = 0;
+                            }
+
+                            if (Props[Props.Count - 1].Name == null)
+                            {
+                                Props[Props.Count - 1].Name = field.Name;
+                            }
                         }
                     }
                 }
@@ -48,13 +67,7 @@ namespace CrateModLoader
 
         }
 
-        public bool ModMenuEnabled
-        {
-            get
-            {
-                return Props.Count > 0;
-            }
-        }
+        public bool ModMenuEnabled => Props.Count > 0;
 
         // Use this instead of Options.Add!
         /// <summary>
