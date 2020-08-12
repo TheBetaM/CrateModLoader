@@ -164,11 +164,12 @@
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.numericUpDown1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.numericUpDown1.BackColor = System.Drawing.SystemColors.Window;
             this.numericUpDown1.Enabled = false;
             this.numericUpDown1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.numericUpDown1.Location = new System.Drawing.Point(311, 26);
+            this.numericUpDown1.Location = new System.Drawing.Point(156, 26);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             2147483647,
             0,
@@ -192,7 +193,7 @@
             this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.button4.Enabled = false;
-            this.button4.Location = new System.Drawing.Point(155, 25);
+            this.button4.Location = new System.Drawing.Point(155, 0);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(155, 26);
             this.button4.TabIndex = 13;
@@ -241,10 +242,9 @@
             // 
             // button_openModMenu
             // 
-            this.button_openModMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_openModMenu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button_openModMenu.Enabled = false;
-            this.button_openModMenu.Location = new System.Drawing.Point(155, 0);
+            this.button_openModMenu.Location = new System.Drawing.Point(310, 25);
             this.button_openModMenu.Name = "button_openModMenu";
             this.button_openModMenu.Size = new System.Drawing.Size(155, 26);
             this.button_openModMenu.TabIndex = 19;

@@ -148,8 +148,12 @@ namespace CrateModLoader.GameSpecific.Crash1
 
         }
 
-        public static void Mod_RandomCrateContents(NSF nsf, Random rand)
+        public static void Mod_RandomCrateContents(NSF nsf, Random rand, Crash1_Levels level)
         {
+            if (VehicleLevelsList.Contains(level))
+            {
+                return; // mask crashes oops
+            }
             // edit NSF
             foreach (Chunk chunk in nsf.Chunks)
             {
@@ -433,7 +437,7 @@ namespace CrateModLoader.GameSpecific.Crash1
                                     {
                                         if (ChaseLevelsList.Contains(level))
                                         {
-                                            if (zone.Entities[i].Type == 22) //boulders
+                                            if (zone.Entities[i].Type == 22 && zone.Entities[i].Subtype == 12) //boulders
                                             {
                                                 zone.Entities[i].Type = 3;
                                                 zone.Entities[i].Subtype = 16;
@@ -505,6 +509,47 @@ namespace CrateModLoader.GameSpecific.Crash1
                                     EntityPosition[] crate_pos = new EntityPosition[]
                                     {
                                           new EntityPosition(680, 220, 120),
+                                    };
+                                    for (int id = 0; id < crate_pos.Length; id++)
+                                    {
+                                        int entID = id + crutchID;
+                                        CreateEntity((short)entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
+                                    }
+                                }
+                                else if (zone.EName == "0y_fZ")
+                                {
+                                    int crutchID = 299;
+                                    EntityPosition[] crate_pos = new EntityPosition[]
+                                    {
+                                          new EntityPosition(620, 310, 686),
+                                    };
+                                    for (int id = 0; id < crate_pos.Length; id++)
+                                    {
+                                        int entID = id + crutchID;
+                                        CreateEntity((short)entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
+                                    }
+                                }
+                                else if (zone.EName == "0A_fZ")
+                                {
+                                    EntityPosition[] GemPath = new EntityPosition[zone.Entities[1].Positions.Count];
+                                    zone.Entities[1].Positions.CopyTo(GemPath, 0);
+                                    zone.Entities[2].Positions.Clear();
+                                    for (int a = 0; a < GemPath.Length; a++)
+                                    {
+                                        int pos = (GemPath.Length - 1) - a;
+                                        GemPath[pos] = new EntityPosition((short)(GemPath[pos].X - 300), GemPath[pos].Y, (short)(GemPath[pos].Z - 20));
+                                        zone.Entities[2].Positions.Add(GemPath[pos]);
+                                    }
+                                }
+                            }
+                            else if (level == Crash1_Levels.L06_RollingStones)
+                            {
+                                if (zone.EName == "0I_lZ")
+                                {
+                                    int crutchID = 299;
+                                    EntityPosition[] crate_pos = new EntityPosition[]
+                                    {
+                                          new EntityPosition(550, 1100, 600),
                                     };
                                     for (int id = 0; id < crate_pos.Length; id++)
                                     {
@@ -841,6 +886,16 @@ namespace CrateModLoader.GameSpecific.Crash1
                                         CreateEntity((short)entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
                                     }
                                 }
+                                else if (zone.EName == "s0_tZ")
+                                {
+                                    EntityPosition[] PlatPath = new EntityPosition[zone.Entities[0].Positions.Count];
+                                    zone.Entities[0].Positions.CopyTo(PlatPath, 0);
+                                    zone.Entities[0].Positions.Clear();
+                                    for (int a = 0; a < PlatPath.Length; a++)
+                                    {
+                                        zone.Entities[0].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
+                                    }
+                                }
 
                             }
                             else if (level == Crash1_Levels.L25_CastleMachinery)
@@ -1139,10 +1194,10 @@ namespace CrateModLoader.GameSpecific.Crash1
                                     int crutchID = 298;
                                     EntityPosition[] crate_pos = new EntityPosition[]
                                     {
-                                          new EntityPosition(500, 540, 800),
-                                          new EntityPosition(500, 540, 910),
-                                          new EntityPosition(600, 540, 800),
-                                          new EntityPosition(600, 540, 910),
+                                          new EntityPosition(500, 520, 800),
+                                          new EntityPosition(500, 520, 910),
+                                          new EntityPosition(600, 520, 800),
+                                          new EntityPosition(600, 520, 910),
                                     };
                                     for (int id = 0; id < crate_pos.Length; id++)
                                     {
@@ -1163,6 +1218,53 @@ namespace CrateModLoader.GameSpecific.Crash1
                                         CreateEntity((short)entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
                                     }
                                 }
+                                else if (zone.EName == "0B_jZ")
+                                {
+                                    int crutchID = 295;
+                                    EntityPosition[] crate_pos = new EntityPosition[]
+                                    {
+                                          new EntityPosition(300, 1100, -800),
+                                    };
+                                    for (int id = 0; id < crate_pos.Length; id++)
+                                    {
+                                        int entID = id + crutchID;
+                                        CreateEntity((short)entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
+                                    }
+                                }
+                                else if (zone.EName == "0a_jZ")
+                                {
+                                    OldEntity gem = zone.Entities[0];
+
+                                    for (int a = 0; a < gem.Positions.Count; a++)
+                                    {
+                                        gem.Positions[a] = new EntityPosition((short)(gem.Positions[a].X - 50), gem.Positions[a].Y, (short)(gem.Positions[a].Z - 150)); // buggy platform >_<
+                                    }
+
+                                    CreateEntityGemPlatform(297, 5, 0, 0, 0, ref zone);
+
+                                    int pos = zone.Entities.Count - 1;
+                                    EntityPosition[] PlatPath = new EntityPosition[gem.Positions.Count];
+                                    gem.Positions.CopyTo(PlatPath, 0);
+                                    zone.Entities[pos].Positions.Clear();
+                                    for (int a = 0; a < PlatPath.Length; a++)
+                                    {
+                                        zone.Entities[pos].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
+                                    }
+
+                                    //zone.Cameras[0].Neighbors[1] = new OldCameraNeighbor(1, 2, 0, 1); // orig - 1 2 0 5
+                                }
+                                else if (zone.EName == "0b_jZ")
+                                {
+                                    zone.Cameras[1].NeighborCount = 2;
+                                    zone.Cameras[1].Neighbors[0] = new OldCameraNeighbor(1, 0, 0, 2);
+                                    zone.Cameras[1].Neighbors[1] = new OldCameraNeighbor(2, 2, 0, 5); 
+                                }
+                                else if (zone.EName == "1b_jZ")
+                                {
+                                    zone.Cameras[0].NeighborCount = 2;
+                                    zone.Cameras[0].Neighbors[0] = new OldCameraNeighbor(1, 2, 1, 2);
+                                    zone.Cameras[0].Neighbors[1] = new OldCameraNeighbor(2, 0, 3, 1);
+                                }
                             }
                             else if (level == Crash1_Levels.L22_LightsOut)
                             {
@@ -1178,6 +1280,81 @@ namespace CrateModLoader.GameSpecific.Crash1
                                         int entID = id + crutchID;
                                         CreateEntityMask((short)entID, 3, 6, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
                                     }
+                                }
+                                else if (zone.EName == "C8_EZ")
+                                {
+                                    int crutchID = 299;
+                                    EntityPosition[] crate_pos = new EntityPosition[]
+                                    {
+                                          new EntityPosition(524, -1100, 400),
+                                    };
+                                    for (int id = 0; id < crate_pos.Length; id++)
+                                    {
+                                        int entID = id + crutchID;
+                                        CreateEntityMask((short)entID, 3, 6, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
+                                    }
+                                    OldEntity gem = zone.Entities[0];
+                                    CreateEntityGemPlatform(298, 5, 0, 0, 0, ref zone);
+
+                                    int pos = zone.Entities.Count - 1;
+                                    EntityPosition[] PlatPath = new EntityPosition[gem.Positions.Count];
+                                    gem.Positions.CopyTo(PlatPath, 0);
+                                    zone.Entities[pos].Positions.Clear();
+                                    for (int a = 0; a < PlatPath.Length; a++)
+                                    {
+                                        zone.Entities[pos].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
+                                    }
+
+                                   
+
+                                    // move THE ENTIRE ZONE because the transition doesn't work otherwise
+
+                                    int xoffset = BitConv.FromInt32(zone.Layout, 0);
+                                    int yoffset = BitConv.FromInt32(zone.Layout, 4);
+                                    int zoffset = BitConv.FromInt32(zone.Layout, 8);
+                                    int x2 = BitConv.FromInt32(zone.Layout, 12);
+                                    int y2 = BitConv.FromInt32(zone.Layout, 16);
+                                    int z2 = BitConv.FromInt32(zone.Layout, 20);
+                                    int xmax = (ushort)BitConv.FromInt16(zone.Layout, 0x1E);
+                                    int ymax = (ushort)BitConv.FromInt16(zone.Layout, 0x20);
+                                    int zmax = (ushort)BitConv.FromInt16(zone.Layout, 0x22);
+
+                                    short CamOffset = 2600;
+                                    short EntOffset = 700; //800
+                                    double ScaleMod = 1.6;
+
+                                    short offset = 0x20;
+                                    int value = (short)(ymax * ScaleMod);
+                                    zone.Layout[offset] = (byte)value;
+                                    zone.Layout[offset + 1] = (byte)(value >> 8);
+
+                                    offset = 4;
+                                    value = yoffset - CamOffset;
+                                    zone.Layout[offset] = (byte)value;
+                                    zone.Layout[offset + 1] = (byte)(value >> 8);
+
+                                    offset = 16;
+                                    value = (short)(y2 * ScaleMod);
+                                    zone.Layout[offset] = (byte)value;
+                                    zone.Layout[offset + 1] = (byte)(value >> 8);
+                                    zone.Layout[offset + 2] = (byte)(value >> 8 * 2);
+                                    zone.Layout[offset + 3] = (byte)(value >> 8 * 3);
+
+                                    
+                                    for (int i = 0; i < zone.Entities.Count; i++)
+                                    {
+                                        for (int a = 0; a < zone.Entities[i].Positions.Count; a++)
+                                        {
+                                            zone.Entities[i].Positions[a] = new EntityPosition(zone.Entities[i].Positions[a].X, (short)(zone.Entities[i].Positions[a].Y + EntOffset), zone.Entities[i].Positions[a].Z);
+                                        }
+                                    }
+                                    
+                                    for (int i = 0; i < zone.Cameras[0].Positions.Count; i++)
+                                    {
+                                        zone.Cameras[0].Positions[i] = new OldCameraPosition(zone.Cameras[0].Positions[i].X, (short)(zone.Cameras[0].Positions[i].Y + CamOffset), zone.Cameras[0].Positions[i].Z, zone.Cameras[0].Positions[i].XRot, zone.Cameras[0].Positions[i].YRot, zone.Cameras[0].Positions[i].ZRot);
+                                    }
+                                    
+
                                 }
                             }
                             else if (level == Crash1_Levels.L23_FumblingInTheDark)
@@ -1256,7 +1433,6 @@ namespace CrateModLoader.GameSpecific.Crash1
                                         CreateEntity((short)entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
                                     }
                                 }
-
 
                             }
 
@@ -2179,6 +2355,25 @@ namespace CrateModLoader.GameSpecific.Crash1
             newentity.Subtype = (byte)subtype;
 
             newentity.Flags = 196616;
+            newentity.ModeA = 0;
+            newentity.ModeB = 0;
+            newentity.ModeC = 0;
+
+            zone.Entities.Add(newentity);
+            zone.EntityCount++;
+
+        }
+
+        static void CreateEntityGemPlatform(short id, int subtype, short x, short y, short z, ref OldZoneEntry zone)
+        {
+            OldEntity newentity = OldEntity.Load(new OldEntity(0, 0x00030018, id, 0, 0, 0, 0, 0, new List<EntityPosition>() { new EntityPosition(0, 0, 0) }, 0).Save());
+            newentity.ID = id;
+            newentity.Positions.Clear();
+            newentity.Positions.Add(new EntityPosition(x, y, z));
+            newentity.Type = 58;
+            newentity.Subtype = (byte)subtype;
+
+            newentity.Flags = 196608;
             newentity.ModeA = 0;
             newentity.ModeB = 0;
             newentity.ModeC = 0;

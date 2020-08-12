@@ -1609,6 +1609,7 @@ namespace CrateModLoader
             button_randomize.Enabled = false;
             textbox_output_path.ReadOnly = true;
             textbox_rando_seed.ReadOnly = true;
+            textbox_rando_seed.Enabled = false;
             button_modMenu.Enabled = false;
             button_modCrateMenu.Enabled = false;
             checkbox_fromFolder.Enabled = false;
@@ -1628,6 +1629,7 @@ namespace CrateModLoader
             button_randomize.Enabled = true;
             textbox_output_path.ReadOnly = false;
             textbox_rando_seed.ReadOnly = false;
+            textbox_rando_seed.Enabled = true;
             button_modCrateMenu.Enabled = true;
 
             if (Modder != null)
