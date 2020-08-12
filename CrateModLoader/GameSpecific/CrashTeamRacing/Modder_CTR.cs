@@ -30,7 +30,6 @@ namespace CrateModLoader
                 API_Credit = "API by DCxDemo",
                 API_Link = "https://github.com/DCxDemo/CTR-tools",
                 Icon = Properties.Resources.icon_crashtr,
-                ModMenuEnabled = false,
                 ModCratesSupported = true,
                 RegionID_PS1 = new RegionCode[] {
                     new RegionCode() {

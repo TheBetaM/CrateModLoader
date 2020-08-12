@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Collections.Generic;
+using System.Reflection;
 using CrateModLoader.Resources.Text;
 
 namespace CrateModLoader
@@ -21,6 +22,39 @@ namespace CrateModLoader
     public abstract class Modder
     {
         public Dictionary<int,ModOption> Options { get; } = new Dictionary<int,ModOption>();
+
+        public List<ModProperty> Props = new List<ModProperty>();
+
+        public Modder()
+        {
+            // Populate property list automatically from namespace
+            Assembly asm = Assembly.GetExecutingAssembly();
+
+            string nameSpace = GetType().Namespace;
+
+            foreach (Type type in asm.GetTypes())
+            {
+                if (!string.IsNullOrEmpty(type.Namespace) && type.Namespace.Contains(GetType().Namespace))
+                {
+                    foreach (FieldInfo field in type.GetFields())
+                    {
+                        if (field.FieldType == typeof(ModProperty))
+                        {
+                            Props.Add((ModProperty)field.GetValue(null));
+                        }
+                    }
+                }
+            }
+
+        }
+
+        public bool ModMenuEnabled
+        {
+            get
+            {
+                return Props.Count > 0;
+            }
+        }
 
         // Use this instead of Options.Add!
         /// <summary>

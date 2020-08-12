@@ -27,7 +27,6 @@ namespace CrateModLoader
                 API_Credit = string.Empty,
                 API_Link = string.Empty,
                 Icon = Properties.Resources.icon_crashtwoc,
-                ModMenuEnabled = false,
                 ModCratesSupported = true,
                 RegionID_PS2 = new RegionCode[] {
                     new RegionCode() {

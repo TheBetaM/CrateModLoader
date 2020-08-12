@@ -19,7 +19,6 @@ namespace CrateModLoader
                 API_Credit = string.Empty,
                 API_Link = string.Empty,
                 Icon = null,
-                ModMenuEnabled = false,
                 ModCratesSupported = true,
                 RegionID_PS2 = new RegionCode[] {
                     new RegionCode() {

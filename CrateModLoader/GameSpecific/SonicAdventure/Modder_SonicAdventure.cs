@@ -18,7 +18,6 @@ namespace CrateModLoader
                 API_Credit = string.Empty,
                 API_Link = string.Empty,
                 Icon = null,
-                ModMenuEnabled = false,
                 ModCratesSupported = true,
                 RegionID_GCN = new RegionCode[] {
                     new RegionCode() {

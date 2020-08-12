@@ -28,7 +28,6 @@ namespace CrateModLoader
                 API_Credit = "API by NeoKesha and BetaM",
                 API_Link = string.Empty,
                 Icon = Properties.Resources.icon_crashtitans,
-                ModMenuEnabled = false,
                 ModCratesSupported = true,
                 RegionID_PS2 = new RegionCode[] {
                     new RegionCode() {

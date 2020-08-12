@@ -53,7 +53,6 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
                 API_Credit = CNK_Text.API_Credit,
                 API_Link = string.Empty,
                 Icon = Properties.Resources.icon_crashnk,
-                ModMenuEnabled = false,
                 ModCratesSupported = true,
                 RegionID_PS2 = new RegionCode[] {
                     new RegionCode() {

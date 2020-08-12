@@ -1464,7 +1464,7 @@ namespace CrateModLoader
 
                 //button_modMenu.Enabled = button_modMenu.Visible = Modder.Game.ModMenuEnabled;
                 button_modMenu.Visible = true;
-                button_modMenu.Enabled = Modder.Game.ModMenuEnabled;
+                button_modMenu.Enabled = Modder.ModMenuEnabled;
                 button_modCrateMenu.Enabled = button_modCrateMenu.Visible = Modder.Game.ModCratesSupported;
                 button_randomize.Enabled = button_randomize.Visible = button_modTools.Visible = button_downloadMods.Visible = true;
                 textbox_rando_seed.Enabled = textbox_rando_seed.Visible = true;
@@ -1634,7 +1634,7 @@ namespace CrateModLoader
 
             if (Modder != null)
             {
-                button_modMenu.Enabled = Modder.Game.ModMenuEnabled;
+                button_modMenu.Enabled = Modder.ModMenuEnabled;
             }
             //button_modTools.Enabled = true;
             //button_downloadMods.Enabled = true;

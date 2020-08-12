@@ -47,7 +47,6 @@ namespace CrateModLoader
                 API_Credit = Crash2_Text.API_Credit,
                 API_Link = "https://github.com/cbhacks/CrashEdit",
                 Icon = Properties.Resources.icon_crash2,
-                ModMenuEnabled = false,
                 ModCratesSupported = true,
                 RegionID_PS1 = new RegionCode[] {
                     new RegionCode() {

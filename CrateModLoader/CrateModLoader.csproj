@@ -307,7 +307,21 @@
       <DependentUpon>ModLoaderForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ModLoaderGlobals.cs" />
+    <Compile Include="ModMenuForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ModMenuForm.Designer.cs">
+      <DependentUpon>ModMenuForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ModOption.cs" />
+    <Compile Include="ModProperties\ModPropertyString.cs" />
+    <Compile Include="ModProperty.cs" />
+    <Compile Include="ModToolsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ModToolsForm.Designer.cs">
+      <DependentUpon>ModToolsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Text\ModLoaderText.Designer.cs">
@@ -352,6 +366,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ModLoaderForm.resx">
       <DependentUpon>ModLoaderForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ModMenuForm.resx">
+      <DependentUpon>ModMenuForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ModToolsForm.resx">
+      <DependentUpon>ModToolsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

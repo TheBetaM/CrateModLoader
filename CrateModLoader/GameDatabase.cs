@@ -17,8 +17,6 @@ namespace CrateModLoader
         public string API_Link;
         /// <summary> Display an icon or set to null to not display one. </summary>
         public Image Icon;
-        /// <summary> Set to true to enable mod menu. </summary>
-        public bool ModMenuEnabled;
         /// <summary> Set to true to enable mod crates. </summary>
         public bool ModCratesSupported;
         /// <summary> List of region identifiers for PS1 games. </summary>

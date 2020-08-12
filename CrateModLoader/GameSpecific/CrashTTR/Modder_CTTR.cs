@@ -98,7 +98,6 @@ namespace CrateModLoader.GameSpecific.CrashTTR
                 API_Credit = CTTR_Text.API_Credit,
                 API_Link = string.Empty,
                 Icon = Properties.Resources.icon_crashttr,
-                ModMenuEnabled = false,
                 ModCratesSupported = true,
                 RegionID_PS2 = new RegionCode[] {
                     new RegionCode() {

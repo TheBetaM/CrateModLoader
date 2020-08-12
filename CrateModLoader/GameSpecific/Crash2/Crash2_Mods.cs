@@ -167,10 +167,10 @@ namespace CrateModLoader.GameSpecific.Crash2
                             {
                                 if (ent.Type != null && ent.Type == 34)
                                 {
-                                    if ((CrateSubTypes)ent.Subtype == CrateSubTypes.Blank || (CrateSubTypes)ent.Subtype == CrateSubTypes.Pickup || (CrateSubTypes)ent.Subtype == CrateSubTypes.WoodSpring)
+                                    if ((CrateSubTypes)ent.Subtype == CrateSubTypes.Blank  || (CrateSubTypes)ent.Subtype == CrateSubTypes.Pickup || (CrateSubTypes)ent.Subtype == CrateSubTypes.WoodSpring)
                                     {
                                         int r = rand.Next(Crate_PossibleContents.Count);
-                                        ent.Settings[0] = new EntitySetting(ent.Settings[0].ValueA, (int)Crate_PossibleContents[r]);
+                                        ent.Settings[0] = new EntitySetting(0, (int)Crate_PossibleContents[r]);
                                     }
                                 }
                             }

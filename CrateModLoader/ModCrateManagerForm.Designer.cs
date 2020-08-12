@@ -110,7 +110,6 @@
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(400, 400);
             this.Name = "ModCrateManagerForm";
-            this.ShowIcon = false;
             this.Text = "Mod Crate Manager";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ModCrateManagerForm_FormClosed);
             this.Load += new System.EventHandler(this.ModCrateManagerForm_Load);

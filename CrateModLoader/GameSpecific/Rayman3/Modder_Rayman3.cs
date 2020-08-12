@@ -24,7 +24,6 @@ namespace CrateModLoader.GameSpecific.Rayman3
                 API_Credit = string.Empty,
                 API_Link = string.Empty,
                 Icon = Properties.Resources.icon_ray3,
-                ModMenuEnabled = false,
                 ModCratesSupported = true,
                 RegionID_PS2 = new RegionCode[] {
                     new RegionCode() {
