@@ -8,6 +8,7 @@ using CrateModLoader.ModProperties;
 
 namespace CrateModLoader.GameSpecific.CrashTS
 {
+    [ModCategory((int)ModProps.Misc)]
     static class Twins_Settings
     {
 

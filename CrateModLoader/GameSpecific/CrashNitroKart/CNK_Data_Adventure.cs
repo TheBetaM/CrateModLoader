@@ -159,7 +159,7 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
         Gem_Yellow = 14,
     }
 
-    [ModCategory((int)ModProps.Surfaces)]
+    [ModCategory((int)ModProps.Adventure)]
     static class CNK_Data_Adventure
     {
         

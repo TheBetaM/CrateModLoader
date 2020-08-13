@@ -3,196 +3,299 @@ using CrateModLoader.ModProperties;
 
 namespace CrateModLoader.GameSpecific.CrashNitroKart
 {
+    public enum Drivers
+    {
+        Coco = 0,
+        Cortex = 1,
+        Crash = 2,
+        Crunch = 3,
+        Dingodile = 4,
+        FakeCrash = 5,
+        NGin = 6,
+        Oxide = 7,
+        NTrance = 8,
+        NTropy = 9,
+        Polar = 10,
+        Pura = 11,
+        RealVelo = 12,
+        Tiny = 13,
+        Zam = 14,
+        Zem = 15,
+
+        Nash = 16,
+        Krunk = 17,
+        EmperorVelo = 18,
+        BigNorm = 19,
+        SmallNorm = 20,
+        Geary = 21,
+        GearyMinion = 22,
+        VeloMinion = 23,
+    }
 
     [ModCategory((int)ModProps.DriverStats)]
     static class CNK_Data_DriverStats
     {
-        //Temp values, maybe set them up as a class? todo
+        public static string[] DriverNames = Enum.GetNames(typeof(Drivers));
+
         /// <summary> float </summary>
-        public static float[] c_MaxForwardSpeedNormal = new float[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+        public static ModPropNamedFloatArray c_MaxForwardSpeedNormal  = new ModPropNamedFloatArray(new float[] 
+        { 0.916666667f, 0.95f, 0.95f, 0.983333333f, 1f, 0.916666667f, 0.916666667f, 0.95f, 0.95f, 0.983333333f, 0.916666667f, 0.916666667f, 1f, 0.983333333f, 0.916666667f, 1f }, DriverNames);
         /// <summary> float </summary>
-        public static float[] c_MaxForwardSpeedWumpa = new float[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+        public static ModPropNamedFloatArray c_MaxForwardSpeedWumpa   = new ModPropNamedFloatArray(new float[] 
+        { 0.925925926f, 0.955555556f, 0.955555556f, 0.985185185f, 1f, 0.925925926f, 0.925925926f, 0.955555556f, 0.955555556f, 0.985185185f, 0.925925926f, 0.925925926f, 1f, 0.985185185f, 0.925925926f, 1f }, DriverNames);
         /// <summary> float </summary>
-        public static float[] c_AccelerationGainNormal = new float[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+        public static ModPropNamedFloatArray c_AccelerationGainNormal = new ModPropNamedFloatArray(new float[] 
+        { 0.85989011f, 0.906593407f, 0.906593407f, 0.85989011f, 0.85989011f, 0.766483516f, 0.85989011f, 0.85989011f, 0.85989011f, 0.953296703f, 0.85989011f, 0.85989011f, 1f, 0.85989011f, 0.85989011f, 0.766483516f }, DriverNames);
         /// <summary> float </summary>
-        public static float[] c_AccelerationGainWumpa = new float[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+        public static ModPropNamedFloatArray c_AccelerationGainWumpa  = new ModPropNamedFloatArray(new float[] 
+        { 0.85989011f, 0.906593407f, 0.906593407f, 0.85989011f, 0.85989011f, 0.766483516f, 0.85989011f, 0.85989011f, 0.85989011f, 0.953296703f, 0.85989011f, 0.85989011f, 1f, 0.85989011f, 0.85989011f, 0.766483516f }, DriverNames);
         /// <summary> float </summary>
-        public static float[] c_BrakeForce = new float[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+        public static ModPropNamedFloatArray c_BrakeForce             = new ModPropNamedFloatArray(new float[] 
+        { 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f }, DriverNames);
         /// <summary> float </summary>
-        public static float[] c_TurnRateNormal = new float[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+        public static ModPropNamedFloatArray c_TurnRateNormal         = new ModPropNamedFloatArray(new float[] 
+        { 0.902040816f, 0.608163265f, 0.608163265f, 0.510204082f, 0.510204082f, 0.510204082f, 0.902040816f, 0.706122449f, 0.706122449f, 0.706122449f, 1f, 1f, 0.706122449f, 0.510204082f, 1f, 0.706122449f }, DriverNames);
         /// <summary> float </summary>
-        public static float[] c_TurnRateWumpa = new float[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+        public static ModPropNamedFloatArray c_TurnRateWumpa          = new ModPropNamedFloatArray(new float[] 
+        { 0.902040816f, 0.608163265f, 0.608163265f, 0.510204082f, 0.510204082f, 0.510204082f, 0.902040816f, 0.706122449f, 0.706122449f, 0.706122449f, 1f, 1f, 0.706122449f, 0.510204082f, 1f, 0.706122449f }, DriverNames);
         /// <summary> float </summary>
-        public static float[] c_TurnRateBrake = new float[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+        public static ModPropNamedFloatArray c_TurnRateBrake          = new ModPropNamedFloatArray(new float[] 
+        { 1.068571429f, 1.274285714f, 1.274285714f, 1.342857143f, 1.342857143f, 1.342857143f, 1.068571429f, 1.205714286f, 1.205714286f, 1.205714286f, 1f, 1f, 1.205714286f, 1.342857143f, 1f, 1.205714286f }, DriverNames);
         /// <summary> float </summary>
-        public static float[] c_TurnRateAccel = new float[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+        public static ModPropNamedFloatArray c_TurnRateAccel          = new ModPropNamedFloatArray(new float[] 
+        { 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f }, DriverNames);
         /// <summary> float </summary>
-        public static float[] c_HiTurnStartAngle = new float[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+        public static ModPropNamedFloatArray c_HiTurnStartAngle       = new ModPropNamedFloatArray(new float[] 
+        { 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f }, DriverNames);
         /// <summary> lat / long / lat 2 long </summary>
-        public static float[,] c_HiTurnFriction = new float[,] { { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 } };
+        public static ModPropNamedFloatArray2 c_HiTurnFriction        = new ModPropNamedFloatArray2(new float[,] 
+        { { 1f, 1f, 1f }, { 1f, 1f, 1f }, { 1f, 1f, 1f }, { 1f, 1f, 1f }, { 1f, 1f, 1f }, { 1f, 1f, 1f }, { 1f, 1f, 1f }, { 1f, 1f, 1f }, { 1f, 1f, 1f }, { 1f, 1f, 1f }, { 1f, 1f, 1f }, { 1f, 1f, 1f  }, 
+            { 1f, 1f, 1f }, { 1f, 1f, 1f }, { 1f, 1f, 1f }, { 1f, 1f, 1f } }, DriverNames);
         /// <summary> lat / long / lat 2 long </summary>
-        public static float[,] c_NormalFriction = new float[,] { { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 } };
+        public static ModPropNamedFloatArray2 c_NormalFriction        = new ModPropNamedFloatArray2(new float[,] 
+        { { 1f, 1f, 1f }, { 1f, 1f, 1f }, { 1f, 1f, 1f }, { 1f, 1f, 1f }, { 1f, 1f, 1f }, { 1f, 1f, 1f }, { 1f, 1f, 1f }, { 1f, 1f, 1f }, { 1f, 1f, 1f }, { 1f, 1f, 1f }, { 1f, 1f, 1f }, { 1f, 1f, 1f  }, 
+            { 1f, 1f, 1f  }, { 1f, 1f, 1f }, { 1f, 1f, 1f }, { 1f, 1f, 1f } }, DriverNames);
         /// <summary> float </summary>
-        public static float[] c_InAirTurnRateNormal = new float[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+        public static ModPropNamedFloatArray c_InAirTurnRateNormal    = new ModPropNamedFloatArray(new float[] 
+        { 0.902040816f, 0.608163265f, 0.608163265f, 0.510204082f, 0.510204082f, 0.510204082f, 0.902040816f, 0.706122449f, 0.706122449f, 0.706122449f, 1f, 1f, 0.706122449f, 0.510204082f, 1f, 0.706122449f }, DriverNames);
         /// <summary> float </summary>
-        public static float[] c_InAirTurnRateWumpa = new float[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+        public static ModPropNamedFloatArray c_InAirTurnRateWumpa     = new ModPropNamedFloatArray(new float[] 
+        { 0.902040816f, 0.608163265f, 0.608163265f, 0.510204082f, 0.510204082f, 0.510204082f, 0.902040816f, 0.706122449f, 0.706122449f, 0.706122449f, 1f, 1f, 0.706122449f, 0.510204082f, 1f, 0.706122449f }, DriverNames);
         /// <summary> float </summary>
-        public static float[] c_TurnDecellSpeed = new float[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+        public static ModPropNamedFloatArray c_TurnDecellSpeed        = new ModPropNamedFloatArray(new float[] 
+        { 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f }, DriverNames);
         /// <summary> float </summary>
-        public static float[] c_TurnDecellForce = new float[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+        public static ModPropNamedFloatArray c_TurnDecellForce        = new ModPropNamedFloatArray(new float[] 
+        { 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f }, DriverNames);
         /// <summary> float </summary>
-        public static float[] c_TurnDecellForceMax = new float[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+        public static ModPropNamedFloatArray c_TurnDecellForceMax     = new ModPropNamedFloatArray(new float[] 
+        { 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f }, DriverNames);
         /// <summary> float </summary>
-        public static float[] c_SlideMaxAngle = new float[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+        public static ModPropNamedFloatArray c_SlideMaxAngle          = new ModPropNamedFloatArray(new float[]
+        { 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f }, DriverNames);
         /// <summary> float </summary>
-        public static float[] c_SlideMinAngle = new float[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+        public static ModPropNamedFloatArray c_SlideMinAngle          = new ModPropNamedFloatArray(new float[] 
+        { 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f }, DriverNames);
         /// <summary> float </summary>
-        public static float[] c_SlideTurnRateInToSlide = new float[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+        public static ModPropNamedFloatArray c_SlideTurnRateInToSlide = new ModPropNamedFloatArray(new float[] 
+        { 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f }, DriverNames);
         /// <summary> float </summary>
-        public static float[] c_SlideTurnRateAwayFromSlide = new float[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+        public static ModPropNamedFloatArray c_SlideTurnRateAwayFromSlide = new ModPropNamedFloatArray(new float[] 
+        { 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f }, DriverNames);
         /// <summary> lat / long / lat 2 long </summary>
-        public static float[,] c_SlideFrictionLow = new float[,] { { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 } };
+        public static ModPropNamedFloatArray2 c_SlideFrictionLow      = new ModPropNamedFloatArray2(new float[,]
+        { { 1f, 1f, 1f }, { 1f, 1f, 1f }, { 1f, 1f, 1f }, { 1f, 1f, 1f }, { 1f, 1f, 1f }, { 1f, 1f, 1f }, { 1f, 1f, 1f }, { 1f, 1f, 1f }, 
+            { 1f, 1f, 1f }, { 1f, 1f, 1f }, { 1f, 1f, 1f }, { 1f, 1f, 1f }, { 1f, 1f, 1f }, { 1f, 1f, 1f }, { 1f, 1f, 1f }, { 1f, 1f, 1f } }, DriverNames);
         /// <summary> lat / long / lat 2 long </summary>
-        public static float[,] c_SlideFrictionNorm = new float[,] { { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 } };
+        public static ModPropNamedFloatArray2 c_SlideFrictionNorm     = new ModPropNamedFloatArray2(new float[,] 
+        { { 0.9f, 0.9f, 0.9f }, { 0.6f, 0.6f, 0.6f }, { 0.6f, 0.6f, 0.6f }, { 0.5f, 0.5f, 0.5f }, { 0.5f, 0.5f, 0.5f }, { 0.5f, 0.5f, 0.5f }, { 0.9f, 0.9f, 0.9f },
+            { 0.7f, 0.7f, 0.7f }, { 0.7f, 0.7f, 0.7f }, { 0.7f, 0.7f, 0.7f }, { 1f, 1f, 1f }, { 1f, 1f, 1f }, { 0.7f, 0.7f, 0.7f }, { 0.5f, 0.5f, 0.5f }, { 1f, 1f, 1f }, { 0.7f, 0.7f, 0.7f } }, DriverNames);
         /// <summary> lat / long / lat 2 long </summary>
-        public static float[,] c_SlideFrictionHigh = new float[,] { { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 } };
+        public static ModPropNamedFloatArray2 c_SlideFrictionHigh     = new ModPropNamedFloatArray2(new float[,] 
+        { { 0.931578947f, 0.931868132f, 0.931578947f }, { 0.726315789f, 0.727472527f, 0.726315789f }, { 0.726315789f, 0.727472527f, 0.726315789f }, { 0.657894737f, 0.659340659f, 0.657894737f }, 
+            { 0.657894737f, 0.659340659f, 0.657894737f }, { 0.657894737f, 0.659340659f, 0.657894737f }, { 0.931578947f, 0.931868132f, 0.931578947f }, 
+            { 0.794736842f, 0.795604396f, 0.794736842f }, { 0.794736842f, 0.795604396f, 0.794736842f }, { 0.794736842f, 0.795604396f, 0.794736842f }, 
+            { 1f, 1f, 1f }, { 1f, 1f, 1f }, { 0.794736842f, 0.795604396f, 0.794736842f }, { 0.657894737f, 0.659340659f, 0.657894737f }, { 1f, 1f, 1f }, { 0.794736842f, 0.795604396f, 0.794736842f } }, DriverNames);
         /// <summary> float </summary>
-        public static float[] c_BoostMaxImpulsePerSecond = new float[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+        public static ModPropNamedFloatArray c_BoostMaxImpulsePerSecond = new ModPropNamedFloatArray(new float[]
+        { 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f }, DriverNames);
         /// <summary> float </summary>
-        public static float[] c_BoostSlidePushTime = new float[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+        public static ModPropNamedFloatArray c_BoostSlidePushTime     = new ModPropNamedFloatArray(new float[] 
+        { 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f }, DriverNames);
         /// <summary> float </summary>
-        public static float[] c_BoostSlidePushAngle = new float[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+        public static ModPropNamedFloatArray c_BoostSlidePushAngle    = new ModPropNamedFloatArray(new float[] 
+        { 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f }, DriverNames);
         /// <summary> speed / time / wheelie </summary>
-        public static float[,] c_BoostInfo_eBOOST_JUMP_SMALL = new float[,] { { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 } };
+        public static ModPropNamedFloatArray2 c_BoostInfo_eBOOST_JUMP_SMALL        = new ModPropNamedFloatArray2(new float[,] 
+        { { 0.925925926f, 1f, 1f }, { 0.955555556f, 1f, 1f }, { 0.955555556f, 1f, 1f }, { 0.985185185f, 1f, 1f }, 
+            { 1f, 1f, 1f }, { 0.925925926f, 1f, 1f }, { 0.925925926f, 1f, 1f }, { 0.955555556f, 1f, 1f }, { 0.955555556f, 1f, 1f }, 
+            { 0.985185185f, 1f, 1f }, { 0.925925926f, 1f, 1f }, { 0.925925926f, 1f, 1f }, { 1f, 1f, 1f }, { 0.985185185f, 1f, 1f }, { 0.925925926f, 1f, 1f }, { 1f, 1f, 1f } }, DriverNames);
         /// <summary> speed / time / wheelie </summary>
-        public static float[,] c_BoostInfo_eBOOST_JUMP_MEDIUM = new float[,] { { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 } };
+        public static ModPropNamedFloatArray2 c_BoostInfo_eBOOST_JUMP_MEDIUM       = new ModPropNamedFloatArray2(new float[,] 
+        { { 0.930423776f, 1f, 1f }, { 0.958254265f, 1f, 1f }, { 0.958254265f, 1f, 1f }, { 0.986084755f, 1f, 1f }, 
+            { 1f, 1f, 1f }, { 0.930423776f, 1f, 1f }, { 0.930423776f, 1f, 1f }, { 0.958254265f, 1f, 1f }, { 0.958254265f, 1f, 1f }, 
+            { 0.986084755f, 1f, 1f }, { 0.930423776f, 1f, 1f }, { 0.930423776f, 1f, 1f }, { 1f, 1f, 1f }, { 0.986084755f, 1f, 1f }, { 0.930423776f, 1f, 1f }, { 1f, 1f, 1f } }, DriverNames);
         /// <summary> speed / time / wheelie </summary>
-        public static float[,] c_BoostInfo_eBOOST_JUMP_LARGE = new float[,] { { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 } };
+        public static ModPropNamedFloatArray2 c_BoostInfo_eBOOST_JUMP_LARGE        = new ModPropNamedFloatArray2(new float[,] 
+        { { 0.936046498f, 1f, 1f }, { 0.961627899f, 1f, 1f}, { 0.961627899f, 1f, 1f }, { 0.9872093f, 1f, 1f }, 
+            { 1f, 1f, 1f }, { 0.936046498f, 1f, 1f }, { 0.936046498f, 1f, 1f }, { 0.961627899f, 1f, 1f }, { 0.961627899f, 1f, 1f }, 
+            { 0.9872093f, 1f, 1f }, { 0.936046498f, 1f, 1f }, { 0.936046498f, 1f, 1f }, { 1f, 1f, 1f }, { 0.9872093f, 1f, 1f }, { 0.936046498f, 1f, 1f }, { 1f, 1f, 1f} }, DriverNames);
         /// <summary> speed / time / wheelie </summary>
-        public static float[,] c_BoostInfo_eBOOST_SLIDE_1 = new float[,] { { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 } };
+        public static ModPropNamedFloatArray2 c_BoostInfo_eBOOST_SLIDE_1           = new ModPropNamedFloatArray2(new float[,] 
+        { { 0.925925926f, 1f, 1f }, { 0.955555556f, 1f, 1f }, { 0.955555556f, 1f, 1f }, { 0.985185185f, 1f, 1f }, 
+            { 1f, 1f, 1f }, { 0.925925926f, 1f, 1f }, { 0.925925926f, 1f, 1f }, { 0.955555556f, 1f, 1f }, { 0.955555556f, 1f, 1f }, 
+            { 0.985185185f, 1f, 1f }, { 0.925925926f, 1f, 1f }, { 0.925925926f, 1f, 1f }, { 1f, 1f, 1f }, { 0.985185185f, 1f, 1f }, { 0.925925926f, 1f, 1f }, { 1f, 1f, 1f } }, DriverNames);
         /// <summary> speed / time / wheelie </summary>
-        public static float[,] c_BoostInfo_eBOOST_SLIDE_2 = new float[,] { { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 } };
+        public static ModPropNamedFloatArray2 c_BoostInfo_eBOOST_SLIDE_2           = new ModPropNamedFloatArray2(new float[,] 
+        { { 0.931249992f, 1f, 1f }, { 0.958749995f, 1f, 1f }, { 0.958749995f, 1f, 1f }, { 0.986249998f, 1f, 1f }, 
+            { 1f, 1f, 1f }, { 0.931249992f, 1f, 1f }, { 0.931249992f, 1f, 1f }, { 0.958749995f, 1f, 1f }, { 0.958749995f, 1f, 1f }, 
+            { 0.986249998f, 1f, 1f }, { 0.931249992f, 1f, 1f }, { 0.931249992f, 1f, 1f }, { 1f, 1f, 1f }, { 0.986249998f, 1f, 1f }, { 0.931249992f, 1f, 1f }, { 1f, 1f, 1f } }, DriverNames);
         /// <summary> speed / time / wheelie </summary>
-        public static float[,] c_BoostInfo_eBOOST_SLIDE_3 = new float[,] { { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 } };
+        public static ModPropNamedFloatArray2 c_BoostInfo_eBOOST_SLIDE_3           = new ModPropNamedFloatArray2(new float[,] 
+        { { 0.936046498f, 1f, 1f }, { 0.961627899f, 1f, 1f }, { 0.961627899f, 1f, 1f }, { 0.9872093f, 1f, 1f }, 
+            { 1f, 1f, 1f }, { 0.936046498f, 1f, 1f }, { 0.936046498f, 1f, 1f }, { 0.961627899f, 1f, 1f }, { 0.961627899f, 1f, 1f }, 
+            { 0.9872093f, 1f, 1f }, { 0.936046498f, 1f, 1f }, { 0.936046498f, 1f, 1f }, { 1f, 1f, 1f }, { 0.9872093f, 1f, 1f }, { 0.936046498f, 1f, 1f }, { 1f, 1f, 1f } }, DriverNames);
         /// <summary> speed / time / wheelie </summary>
-        public static float[,] c_BoostInfo_eBOOST_PAD = new float[,] { { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 } };
+        public static ModPropNamedFloatArray2 c_BoostInfo_eBOOST_PAD               = new ModPropNamedFloatArray2(new float[,] 
+        { { 1.000000179f, 1f, 1f }, { 1.000000107f, 1f, 1f }, { 1.000000107f, 1f, 1f }, { 1.000000036f, 1f, 1f }, 
+            { 1f, 1f, 1f }, { 1.000000179f, 1f, 1f }, { 1.000000179f, 1f, 1f }, { 1.000000107f, 1f, 1f }, { 1.000000107f, 1f, 1f }, 
+            { 1.000000036f, 1f, 1f }, { 1.000000179f, 1f, 1f }, { 1.000000179f, 1f, 1f }, { 1f, 1f, 1f }, { 1.000000036f, 1f, 1f }, { 1.000000179f, 1f, 1f }, { 1f, 1f, 1f } }, DriverNames);
         /// <summary> speed / time / wheelie </summary>
-        public static float[,] c_BoostInfo_eBOOST_START = new float[,] { { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 } };
+        public static ModPropNamedFloatArray2 c_BoostInfo_eBOOST_START             = new ModPropNamedFloatArray2(new float[,] 
+        { { 0.936046498f, 1f, 1f }, { 0.961627899f, 1f, 1f }, { 0.961627899f, 1f, 1f }, { 0.9872093f, 1f, 1f }, 
+            { 1f, 1f, 1f }, { 0.936046498f, 1f, 1f }, { 0.936046498f, 1f, 1f }, { 0.961627899f, 1f, 1f }, { 0.961627899f, 1f, 1f }, 
+            { 0.9872093f, 1f, 1f }, { 0.936046498f, 1f, 1f }, { 0.936046498f, 1f, 1f }, { 1f, 1f, 1f }, { 0.9872093f, 1f, 1f }, { 0.936046498f, 1f, 1f }, { 1f, 1f, 1f } }, DriverNames);
         /// <summary> speed / time / wheelie </summary>
-        public static float[,] c_BoostInfo_eBOOST_AKU_DROP = new float[,] { { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 } };
+        public static ModPropNamedFloatArray2 c_BoostInfo_eBOOST_AKU_DROP          = new ModPropNamedFloatArray2(new float[,] 
+        { { 0.931249992f, 1f, 1f }, { 0.958749995f, 1f, 1f }, { 0.958749995f, 1f, 1f }, { 0.986249998f, 1f, 1f },
+            { 1f, 1f, 1f }, { 0.931249992f, 1f, 1f }, { 0.931249992f, 1f, 1f }, { 0.958749995f, 1f, 1f }, { 0.958749995f, 1f, 1f }, 
+            { 0.986249998f, 1f, 1f }, { 0.931249992f, 1f, 1f }, { 0.931249992f, 1f, 1f }, { 1f, 1f, 1f }, { 0.986249998f, 1f, 1f }, { 0.931249992f, 1f, 1f }, { 1f, 1f, 1f} }, DriverNames);
         /// <summary> speed / time / wheelie </summary>
-        public static float[,] c_BoostInfo_eBOOST_TURBOBOOST = new float[,] { { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 } };
+        public static ModPropNamedFloatArray2 c_BoostInfo_eBOOST_TURBOBOOST        = new ModPropNamedFloatArray2(new float[,] 
+        { { 1.000000179f, 1f, 1f }, { 1.000000107f, 1f, 1f }, { 1.000000107f, 1f, 1f }, { 1.000000036f, 1f, 1f }, 
+            { 1f, 1f, 1f }, { 1.000000179f, 1f, 1f }, { 1.000000179f, 1f, 1f }, { 1.000000107f, 1f, 1f }, { 1.000000107f, 1f, 1f }, 
+            { 1.000000036f, 1f, 1f }, { 1.000000179f, 1f, 1f }, { 1.000000179f, 1f, 1f }, { 1f, 1f, 1f }, { 1.000000036f, 1f, 1f }, { 1.000000179f, 1f, 1f }, { 1f, 1f, 1f } }, DriverNames);
         /// <summary> speed / time / wheelie </summary>
-        public static float[,] c_BoostInfo_eBOOST_TURBOBOOST_JUICED = new float[,] { { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 } };
+        public static ModPropNamedFloatArray2 c_BoostInfo_eBOOST_TURBOBOOST_JUICED = new ModPropNamedFloatArray2(new float[,] 
+        { { 1.000000179f, 1f, 1f }, { 1.000000107f, 1f, 1f }, { 1.000000107f, 1f, 1f }, { 1.000000036f, 1f, 1f }, 
+            { 1f, 1f, 1f }, { 1.000000179f, 1f, 1f }, { 1.000000179f, 1f, 1f }, { 1.000000107f, 1f, 1f }, { 1.000000107f, 1f, 1f }, 
+            { 1.000000036f, 1f, 1f }, { 1.000000179f, 1f, 1f }, { 1.000000179f, 1f, 1f }, { 1f, 1f, 1f }, { 1.000000036f, 1f, 1f }, { 1.000000179f, 1f, 1f }, { 1f, 1f, 1f } }, DriverNames);
         /// <summary> speed / time / wheelie </summary>
-        public static float[,] c_BoostInfo_eBOOST_SUPER_ENGINE = new float[,] { { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 }, { 60, 7, 0 } };
+        public static ModPropNamedFloatArray2 c_BoostInfo_eBOOST_SUPER_ENGINE      = new ModPropNamedFloatArray2(new float[,] 
+        { { 1.000000179f, 1f, 1f }, { 1.000000107f, 1f, 1f }, { 1.000000107f, 1f, 1f }, { 1.000000036f, 1f, 1f },
+            { 1f, 1f, 1f }, { 1.000000179f, 1f, 1f }, { 1.000000179f, 1f, 1f }, { 1.000000107f, 1f, 1f }, { 1.000000107f, 1f, 1f }, 
+            { 1.000000036f, 1f, 1f }, { 1.000000179f, 1f, 1f }, { 1.000000179f, 1f, 1f }, { 1f, 1f, 1f }, { 1.000000036f, 1f, 1f }, { 1.000000179f, 1f, 1f }, { 1f, 1f, 1f } }, DriverNames);
         /// <summary> float </summary>
-        public static float[] c_UIStats_Speed = new float[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+        public static ModPropNamedFloatArray c_UIStats_Speed        = new ModPropNamedFloatArray(new float[] 
+        { 2, 4, 4, 6, 7, 2, 2, 4, 4, 6, 2, 2, 7, 6, 2, 7 }, DriverNames);
         /// <summary> float </summary>
-        public static float[] c_UIStats_Acceleration = new float[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+        public static ModPropNamedFloatArray c_UIStats_Acceleration = new ModPropNamedFloatArray(new float[]
+        { 4, 5, 5, 4, 4, 2, 4, 4, 4, 6, 4, 4, 7, 4, 4, 2 }, DriverNames);
         /// <summary> float </summary>
-        public static float[] c_UIStats_Turn = new float[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+        public static ModPropNamedFloatArray c_UIStats_Turn         = new ModPropNamedFloatArray(new float[] 
+        { 6, 3, 3, 2, 2, 2, 6, 4, 4, 4, 7, 7, 4, 2, 7, 4 }, DriverNames);
         /// <summary> float </summary>
-        public static float[] c_UIStats_MaxValue = new float[] { 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7 };
+        public static ModPropNamedFloatArray c_UIStats_MaxValue     = new ModPropNamedFloatArray(new float[] 
+        { 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7 }, DriverNames);
 
         public static void CNK_Randomize_CharacterStats(Random randState, int targetDriver)
         {
 
             //Boost sources speed, length
-            c_BoostInfo_eBOOST_AKU_DROP[targetDriver, 0] = (float)randState.NextDouble() + 0.75f;
-            c_BoostInfo_eBOOST_AKU_DROP[targetDriver, 1] = (float)randState.NextDouble() + 0.75f;
-            c_BoostInfo_eBOOST_AKU_DROP[targetDriver, 2] = (float)randState.NextDouble() + 0.75f;
-            c_BoostInfo_eBOOST_JUMP_LARGE[targetDriver, 0] = (float)randState.NextDouble() + 0.75f;
-            c_BoostInfo_eBOOST_JUMP_LARGE[targetDriver, 1] = (float)randState.NextDouble() + 0.75f;
-            c_BoostInfo_eBOOST_JUMP_LARGE[targetDriver, 2] = (float)randState.NextDouble() + 0.75f;
-            c_BoostInfo_eBOOST_JUMP_MEDIUM[targetDriver, 0] = (float)randState.NextDouble() + 0.75f;
-            c_BoostInfo_eBOOST_JUMP_MEDIUM[targetDriver, 1] = (float)randState.NextDouble() + 0.75f;
-            c_BoostInfo_eBOOST_JUMP_MEDIUM[targetDriver, 2] = (float)randState.NextDouble() + 0.75f;
-            c_BoostInfo_eBOOST_JUMP_SMALL[targetDriver, 0] = (float)randState.NextDouble() + 0.75f;
-            c_BoostInfo_eBOOST_JUMP_SMALL[targetDriver, 1] = (float)randState.NextDouble() + 0.75f;
-            c_BoostInfo_eBOOST_JUMP_SMALL[targetDriver, 2] = (float)randState.NextDouble() + 0.75f;
-            c_BoostInfo_eBOOST_PAD[targetDriver, 0] = (float)randState.NextDouble() + 0.75f;
-            c_BoostInfo_eBOOST_PAD[targetDriver, 1] = (float)randState.NextDouble() + 0.75f;
-            c_BoostInfo_eBOOST_PAD[targetDriver, 2] = (float)randState.NextDouble() + 0.75f;
-            c_BoostInfo_eBOOST_SLIDE_1[targetDriver, 0] = (float)randState.NextDouble() + 0.75f;
-            c_BoostInfo_eBOOST_SLIDE_1[targetDriver, 1] = (float)randState.NextDouble() + 0.75f;
-            c_BoostInfo_eBOOST_SLIDE_1[targetDriver, 2] = (float)randState.NextDouble() + 0.75f;
-            c_BoostInfo_eBOOST_SLIDE_2[targetDriver, 0] = (float)randState.NextDouble() + 0.75f;
-            c_BoostInfo_eBOOST_SLIDE_2[targetDriver, 1] = (float)randState.NextDouble() + 0.75f;
-            c_BoostInfo_eBOOST_SLIDE_2[targetDriver, 2] = (float)randState.NextDouble() + 0.75f;
-            c_BoostInfo_eBOOST_SLIDE_3[targetDriver, 0] = (float)randState.NextDouble() + 0.75f;
-            c_BoostInfo_eBOOST_SLIDE_3[targetDriver, 1] = (float)randState.NextDouble() + 0.75f;
-            c_BoostInfo_eBOOST_SLIDE_3[targetDriver, 2] = (float)randState.NextDouble() + 0.75f;
-            c_BoostInfo_eBOOST_START[targetDriver, 0] = (float)randState.NextDouble() + 0.75f;
-            c_BoostInfo_eBOOST_START[targetDriver, 1] = (float)randState.NextDouble() + 0.75f;
-            c_BoostInfo_eBOOST_START[targetDriver, 2] = (float)randState.NextDouble() + 0.75f;
-            c_BoostInfo_eBOOST_SUPER_ENGINE[targetDriver, 0] = (float)randState.NextDouble() + 0.75f;
-            c_BoostInfo_eBOOST_SUPER_ENGINE[targetDriver, 1] = (float)randState.NextDouble() + 0.75f;
-            c_BoostInfo_eBOOST_SUPER_ENGINE[targetDriver, 2] = (float)randState.NextDouble() + 0.75f;
-            c_BoostInfo_eBOOST_TURBOBOOST[targetDriver, 0] = (float)randState.NextDouble() + 0.75f;
-            c_BoostInfo_eBOOST_TURBOBOOST[targetDriver, 1] = (float)randState.NextDouble() + 0.75f;
-            c_BoostInfo_eBOOST_TURBOBOOST[targetDriver, 2] = (float)randState.NextDouble() + 0.75f;
-            c_BoostInfo_eBOOST_TURBOBOOST_JUICED[targetDriver, 0] = (float)randState.NextDouble() + 0.75f;
-            c_BoostInfo_eBOOST_TURBOBOOST_JUICED[targetDriver, 1] = (float)randState.NextDouble() + 0.75f;
-            c_BoostInfo_eBOOST_TURBOBOOST_JUICED[targetDriver, 2] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_AKU_DROP.Value[targetDriver, 0] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_AKU_DROP.Value[targetDriver, 1] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_AKU_DROP.Value[targetDriver, 2] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_JUMP_LARGE.Value[targetDriver, 0] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_JUMP_LARGE.Value[targetDriver, 1] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_JUMP_LARGE.Value[targetDriver, 2] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_JUMP_MEDIUM.Value[targetDriver, 0] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_JUMP_MEDIUM.Value[targetDriver, 1] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_JUMP_MEDIUM.Value[targetDriver, 2] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_JUMP_SMALL.Value[targetDriver, 0] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_JUMP_SMALL.Value[targetDriver, 1] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_JUMP_SMALL.Value[targetDriver, 2] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_PAD.Value[targetDriver, 0] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_PAD.Value[targetDriver, 1] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_PAD.Value[targetDriver, 2] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_SLIDE_1.Value[targetDriver, 0] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_SLIDE_1.Value[targetDriver, 1] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_SLIDE_1.Value[targetDriver, 2] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_SLIDE_2.Value[targetDriver, 0] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_SLIDE_2.Value[targetDriver, 1] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_SLIDE_2.Value[targetDriver, 2] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_SLIDE_3.Value[targetDriver, 0] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_SLIDE_3.Value[targetDriver, 1] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_SLIDE_3.Value[targetDriver, 2] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_START.Value[targetDriver, 0] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_START.Value[targetDriver, 1] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_START.Value[targetDriver, 2] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_SUPER_ENGINE.Value[targetDriver, 0] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_SUPER_ENGINE.Value[targetDriver, 1] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_SUPER_ENGINE.Value[targetDriver, 2] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_TURBOBOOST.Value[targetDriver, 0] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_TURBOBOOST.Value[targetDriver, 1] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_TURBOBOOST.Value[targetDriver, 2] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_TURBOBOOST_JUICED.Value[targetDriver, 0] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_TURBOBOOST_JUICED.Value[targetDriver, 1] = (float)randState.NextDouble() + 0.75f;
+            c_BoostInfo_eBOOST_TURBOBOOST_JUICED.Value[targetDriver, 2] = (float)randState.NextDouble() + 0.75f;
 
-            c_BoostMaxImpulsePerSecond[targetDriver] = randState.Next(1, 4);
-            c_BoostSlidePushAngle[targetDriver] = 1;
-            c_BoostSlidePushTime[targetDriver] = 1;
+            c_BoostMaxImpulsePerSecond.Value[targetDriver] = randState.Next(1, 4);
+            c_BoostSlidePushAngle.Value[targetDriver] = 1;
+            c_BoostSlidePushTime.Value[targetDriver] = 1;
 
-            c_BrakeForce[targetDriver] = 1;
+            c_BrakeForce.Value[targetDriver] = 1;
 
-            c_HiTurnFriction[targetDriver, 0] = 1;
-            c_HiTurnFriction[targetDriver, 1] = 1;
-            c_HiTurnFriction[targetDriver, 2] = 1;
-            c_HiTurnStartAngle[targetDriver] = 1;
+            c_HiTurnFriction.Value[targetDriver, 0] = 1;
+            c_HiTurnFriction.Value[targetDriver, 1] = 1;
+            c_HiTurnFriction.Value[targetDriver, 2] = 1;
+            c_HiTurnStartAngle.Value[targetDriver] = 1;
 
-            c_InAirTurnRateNormal[targetDriver] = (float)randState.NextDouble() + 0.6f;
-            c_InAirTurnRateWumpa[targetDriver] = c_InAirTurnRateNormal[targetDriver] + 0.2f;
+            c_InAirTurnRateNormal.Value[targetDriver] = (float)randState.NextDouble() + 0.6f;
+            c_InAirTurnRateWumpa.Value[targetDriver] = c_InAirTurnRateNormal.Value[targetDriver] + 0.2f;
 
-            c_NormalFriction[targetDriver, 0] = 1;
-            c_NormalFriction[targetDriver, 1] = 1;
-            c_NormalFriction[targetDriver, 2] = 1;
+            c_NormalFriction.Value[targetDriver, 0] = 1;
+            c_NormalFriction.Value[targetDriver, 1] = 1;
+            c_NormalFriction.Value[targetDriver, 2] = 1;
 
-            c_SlideFrictionHigh[targetDriver, 0] = (float)(randState.NextDouble() / 5f) + 0.75f;
-            c_SlideFrictionHigh[targetDriver, 1] = c_SlideFrictionHigh[targetDriver, 0];
-            c_SlideFrictionHigh[targetDriver, 2] = c_SlideFrictionHigh[targetDriver, 0];
-            c_SlideFrictionLow[targetDriver, 0] = 1;
-            c_SlideFrictionLow[targetDriver, 1] = 1;
-            c_SlideFrictionLow[targetDriver, 2] = 1;
-            c_SlideFrictionNorm[targetDriver, 0] = randState.Next(5, 10) / 10f;
-            c_SlideFrictionNorm[targetDriver, 1] = c_SlideFrictionNorm[targetDriver, 0];
-            c_SlideFrictionNorm[targetDriver, 2] = c_SlideFrictionNorm[targetDriver, 0];
+            c_SlideFrictionHigh.Value[targetDriver, 0] = (float)(randState.NextDouble() / 5f) + 0.75f;
+            c_SlideFrictionHigh.Value[targetDriver, 1] = c_SlideFrictionHigh.Value[targetDriver, 0];
+            c_SlideFrictionHigh.Value[targetDriver, 2] = c_SlideFrictionHigh.Value[targetDriver, 0];
+            c_SlideFrictionLow.Value[targetDriver, 0] = 1;
+            c_SlideFrictionLow.Value[targetDriver, 1] = 1;
+            c_SlideFrictionLow.Value[targetDriver, 2] = 1;
+            c_SlideFrictionNorm.Value[targetDriver, 0] = randState.Next(5, 10) / 10f;
+            c_SlideFrictionNorm.Value[targetDriver, 1] = c_SlideFrictionNorm.Value[targetDriver, 0];
+            c_SlideFrictionNorm.Value[targetDriver, 2] = c_SlideFrictionNorm.Value[targetDriver, 0];
 
-            c_SlideMaxAngle[targetDriver] = 1;
-            c_SlideMinAngle[targetDriver] = 1;
-            c_SlideTurnRateAwayFromSlide[targetDriver] = 1;
-            c_SlideTurnRateInToSlide[targetDriver] = 1;
+            c_SlideMaxAngle.Value[targetDriver] = 1;
+            c_SlideMinAngle.Value[targetDriver] = 1;
+            c_SlideTurnRateAwayFromSlide.Value[targetDriver] = 1;
+            c_SlideTurnRateInToSlide.Value[targetDriver] = 1;
 
-            c_TurnDecellForce[targetDriver] = 1;
-            c_TurnDecellForceMax[targetDriver] = 1;
-            c_TurnDecellSpeed[targetDriver] = 1;
+            c_TurnDecellForce.Value[targetDriver] = 1;
+            c_TurnDecellForceMax.Value[targetDriver] = 1;
+            c_TurnDecellSpeed.Value[targetDriver] = 1;
 
-            c_TurnRateAccel[targetDriver] = 1;
-            c_TurnRateBrake[targetDriver] = (float)(randState.NextDouble() / 2f) + 1f;
+            c_TurnRateAccel.Value[targetDriver] = 1;
+            c_TurnRateBrake.Value[targetDriver] = (float)(randState.NextDouble() / 2f) + 1f;
 
             //Speed
-            c_MaxForwardSpeedNormal[targetDriver] = (float)randState.NextDouble() + 0.9f;
-            c_MaxForwardSpeedWumpa[targetDriver] = c_MaxForwardSpeedNormal[targetDriver] + 0.01f;
+            c_MaxForwardSpeedNormal.Value[targetDriver] = (float)randState.NextDouble() + 0.9f;
+            c_MaxForwardSpeedWumpa.Value[targetDriver] = c_MaxForwardSpeedNormal.Value[targetDriver] + 0.01f;
 
             //Accel
-            c_AccelerationGainNormal[targetDriver] = (float)randState.NextDouble() + 0.75f;
-            c_AccelerationGainWumpa[targetDriver] = c_AccelerationGainNormal[targetDriver] + 0.01f;
+            c_AccelerationGainNormal.Value[targetDriver] = (float)randState.NextDouble() + 0.75f;
+            c_AccelerationGainWumpa.Value[targetDriver] = c_AccelerationGainNormal.Value[targetDriver] + 0.01f;
 
             //Turning
-            c_TurnRateNormal[targetDriver] = (float)randState.NextDouble() + 0.6f;
-            c_TurnRateWumpa[targetDriver] = c_TurnRateNormal[targetDriver] + 0.01f;
+            c_TurnRateNormal.Value[targetDriver] = (float)randState.NextDouble() + 0.6f;
+            c_TurnRateWumpa.Value[targetDriver] = c_TurnRateNormal.Value[targetDriver] + 0.01f;
 
             //UI Stats
-            c_UIStats_MaxValue[targetDriver] = 7;
-            c_UIStats_Speed[targetDriver] = (int)Math.Ceiling((c_MaxForwardSpeedNormal[targetDriver] / 1.9) * c_UIStats_MaxValue[targetDriver]);
-            c_UIStats_Acceleration[targetDriver] = (int)Math.Ceiling((c_AccelerationGainNormal[targetDriver] / 1.75) * c_UIStats_MaxValue[targetDriver]);
-            c_UIStats_Turn[targetDriver] = (int)Math.Ceiling((c_TurnRateNormal[targetDriver] / 1.6) * c_UIStats_MaxValue[targetDriver]);
+            c_UIStats_MaxValue.Value[targetDriver] = 7;
+            c_UIStats_Speed.Value[targetDriver] = (int)Math.Ceiling((c_MaxForwardSpeedNormal.Value[targetDriver] / 1.9) * c_UIStats_MaxValue.Value[targetDriver]);
+            c_UIStats_Acceleration.Value[targetDriver] = (int)Math.Ceiling((c_AccelerationGainNormal.Value[targetDriver] / 1.75) * c_UIStats_MaxValue.Value[targetDriver]);
+            c_UIStats_Turn.Value[targetDriver] = (int)Math.Ceiling((c_TurnRateNormal.Value[targetDriver] / 1.6) * c_UIStats_MaxValue.Value[targetDriver]);
         }
     }
 

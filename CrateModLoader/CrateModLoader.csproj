@@ -131,6 +131,7 @@
     <Compile Include="GameSpecific\CrashTeamRacing\BIG.cs" />
     <Compile Include="GameSpecific\CrashTeamRacing\CTRFile.cs" />
     <Compile Include="GameSpecific\CrashTeamRacing\Modder_CTR.cs" />
+    <Compile Include="GameSpecific\CrashTS\Twins_Data_Characters.cs" />
     <Compile Include="GameSpecific\CrashTS\Twins_Text.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -315,6 +316,9 @@
     <Compile Include="ModProperties\ModPropFloat.cs" />
     <Compile Include="ModProperties\ModPropFloatArray.cs" />
     <Compile Include="ModProperties\ModPropInt.cs" />
+    <Compile Include="ModProperties\ModPropNamedFloatArray.cs" />
+    <Compile Include="ModProperties\ModPropNamedFloatArray2.cs" />
+    <Compile Include="ModProperties\ModPropNamedUIntArray.cs" />
     <Compile Include="ModProperties\ModPropString.cs" />
     <Compile Include="ModProperties\ModProperty.cs" />
     <Compile Include="ModProperties\ModPropUInt.cs" />

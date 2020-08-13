@@ -49,36 +49,9 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
     static class CNK_Data
     {
 
-        public enum Drivers
-        {
-            Coco = 0,
-            Crash = 1,
-            Cortex = 2,
-            Crunch = 3,
-            Dingodile = 4,
-            FakeCrash = 5,
-            NGin = 6,
-            Oxide = 7,
-            NTrance = 8,
-            NTropy = 9,
-            Polar = 10,
-            Pura = 11,
-            RealVelo = 12,
-            Tiny = 13,
-            Zam = 14,
-            Zem = 15,
-            Nash = 16,
-            Krunk = 17,
-            EmperorVelo = 18,
-            BigNorm = 19,
-            SmallNorm = 20,
-            Geary = 21,
-            GearyMinion = 22,
-            VeloMinion = 23,
-        }
-        public static string[] DriverTypes = new string[] { "coco", "crash", "cortex", "crunch", "dingodile", "fakecrash", "ngin", "noxide", "ntrance", "ntropy", "polar", "pura", "realvelo", "tiny", "zam", "zem" };
-        public static string[] DriverModelTypes = new string[] { "coco", "crash", "ncortex", "crunch", "dingodile", "fakecrash", "ngin", "noxide", "ntrance", "ntropy", "polar", "pura", "realvelo", "tiny", "zam", "zem", "barinboss", "earthboss", "empvelo", "fenombigboss", "fenomlittleboss", "tekneeboss", "tekneeminion", "velominion" };
-        public static string[] DriverAudioTypes = new string[] { "cob", "crb", "dnc", "cnb", "ddl", "fcb", "ngn", "oxd", "ntn", "ntp", "plr", "pur", "rvl", "tny", "zam", "zem", "nsh", "kgo", "vlo", "bnm", "lnm", "oto", "scr", "vlm" };
+        public static string[] DriverTypes = new string[] { "coco", "cortex", "crash", "crunch", "dingodile", "fakecrash", "ngin", "noxide", "ntrance", "ntropy", "polar", "pura", "realvelo", "tiny", "zam", "zem" };
+        public static string[] DriverModelTypes = new string[] { "coco", "ncortex", "crash", "crunch", "dingodile", "fakecrash", "ngin", "noxide", "ntrance", "ntropy", "polar", "pura", "realvelo", "tiny", "zam", "zem", "barinboss", "earthboss", "empvelo", "fenombigboss", "fenomlittleboss", "tekneeboss", "tekneeminion", "velominion" };
+        public static string[] DriverAudioTypes = new string[] { "cob", "dnc", "crb", "cnb", "ddl", "fcb", "ngn", "oxd", "ntn", "ntp", "plr", "pur", "rvl", "tny", "zam", "zem", "nsh", "kgo", "vlo", "bnm", "lnm", "oto", "scr", "vlm" };
 
         public static string[] SubModeName = new string[]
         {

@@ -75,6 +75,12 @@ namespace CrateModLoader.GameSpecific.CrashTS
         Camera = 8,
     }
 
+    public enum ModProps : int
+    {
+        Misc = 0,
+        Character = 1,
+    }
+
     public sealed class Modder_Twins : Modder
     {
         internal const int RandomizeAllCrates       = 0;
@@ -136,6 +142,9 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 },
             };
 
+            PropCategories.Add((int)ModProps.Misc, "Misc.");
+            PropCategories.Add((int)ModProps.Character, "Character");
+
             AddOption(RandomizeCrateTypes, new ModOption(Twins_Text.Rand_CrateTypes, Twins_Text.Rand_CrateTypesDesc)); // TODO: Make this a toggle between CrateTypes/AllCrates in the mod menu?
             AddOption(RandomizeAllCrates, new ModOption(Twins_Text.Rand_Crates, Twins_Text.Rand_CratesDesc));
             AddOption(RandomizeGemLocations, new ModOption(Twins_Text.Rand_GemLocations, Twins_Text.Rand_GemLocationsDesc));
@@ -164,7 +173,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
         internal List<ObjectID> EnemyReplaceList = new List<ObjectID>();
         internal List<ObjectID> EnemyInsertList = new List<ObjectID>();
         internal bool[] levelEdited;
-
+        internal bool Edit_AllCharacters = false;
         
 
         public override void StartModProcess()
@@ -206,6 +215,20 @@ namespace CrateModLoader.GameSpecific.CrashTS
 
             bool Twins_Edit_CodeText = true;
             bool Twins_Edit_AllLevels = false;
+
+            Edit_AllCharacters = false;
+
+            foreach (ModPropertyBase prop in Props)
+            {
+                if (prop.HasChanged)
+                {
+                    if (prop.Category == (int)ModProps.Character)
+                    {
+                        Twins_Edit_AllLevels = true;
+                        Edit_AllCharacters = true;
+                    }
+                }
+            }
 
             if (GetOption(RandomizeCrateTypes))
             {
@@ -544,9 +567,9 @@ namespace CrateModLoader.GameSpecific.CrashTS
             }
             if (GetOption(RandomizeCharParams))
             {
-                Twins_Data.Twins_Randomize_Character((int)CharacterID.Crash, ref randState);
-                Twins_Data.Twins_Randomize_Character((int)CharacterID.Cortex, ref randState);
-                Twins_Data.Twins_Randomize_Character((int)CharacterID.Nina, ref randState);
+                Twins_Data_Characters.Twins_Randomize_Character((int)CharacterID.Crash, ref randState);
+                Twins_Data_Characters.Twins_Randomize_Character((int)CharacterID.Cortex, ref randState);
+                Twins_Data_Characters.Twins_Randomize_Character((int)CharacterID.Nina, ref randState);
                 Twins_Edit_AllLevels = true;
             }
 
@@ -660,7 +683,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 Twins_Randomizers.RM_Randomize_Gems(RM_Archive, chunkType, ref gemObjectList);
             if (GetOption(RandomizeMusic))
                 Twins_Randomizers.RM_Randomize_Music(RM_Archive, ref musicTypes, ref randMusicList);
-            if (GetOption(RandomizeCharParams))
+            if (GetOption(RandomizeCharParams) || Edit_AllCharacters)
                 Twins_Randomizers.RM_Randomize_CharacterInstanceStats(RM_Archive);
 
             /*

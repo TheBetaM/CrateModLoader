@@ -301,478 +301,478 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
         public static float[] WeaponSelection_Buddy_InRange = new float[] { 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1 };
 
 
-        public static float PowerShield_m_Time = 8000f;
-        public static float PowerShield_m_RangeForZapping = 7.5f; //15, 10
-        public static float PowerShield_m_ZapSpeed = 9f;
-        public static float[] PowerShield_m_ColorNonJuiced = new float[] { 0.309f, 0.616f, 0.318f };
-        public static float[] PowerShield_m_ColorJuiced = new float[] { 0.322f, 0.31f, 0.616f };
-        public static float PowerShield_m_ColRadius = 1.75f;
+        public static ModPropFloat PowerShield_m_Time = new ModPropFloat(8000f);
+        public static ModPropFloat PowerShield_m_RangeForZapping = new ModPropFloat(7.5f); //15, 10
+        public static ModPropFloat PowerShield_m_ZapSpeed = new ModPropFloat(9f);
+        public static ModPropFloatArray PowerShield_m_ColorNonJuiced = new ModPropFloatArray(new float[] { 0.309f, 0.616f, 0.318f });
+        public static ModPropFloatArray PowerShield_m_ColorJuiced = new ModPropFloatArray(new float[] { 0.322f, 0.31f, 0.616f });
+        public static ModPropFloat PowerShield_m_ColRadius = new ModPropFloat(1.75f);
 
 
         /// <summary> How long effect lasts when not juiced </summary>
-        public static int StaticShock_m_NormalTime = 3000;
+        public static ModPropInt StaticShock_m_NormalTime = new ModPropInt(3000);
         /// <summary> How long effect lasts when it is juiced | 3000 </summary>
-        public static int StaticShock_m_JuicedTime = 6000;
+        public static ModPropInt StaticShock_m_JuicedTime = new ModPropInt(6000);
         /// <summary> How much wumpa you loose when hit </summary>
-        public static int StaticShock_m_NormalWumpaLoss = 2;
+        public static ModPropInt StaticShock_m_NormalWumpaLoss = new ModPropInt(2);
         /// <summary> How much wumpa you loose when hit </summary>
-        public static int StaticShock_m_JuicedWumpaLoss = 2;
+        public static ModPropInt StaticShock_m_JuicedWumpaLoss = new ModPropInt(2);
         /// <summary> How fast does it move when its homing in on someone | 12 </summary>
-        public static float StaticShock_m_HomingSpeed = 12f;
+        public static ModPropFloat StaticShock_m_HomingSpeed = new ModPropFloat(12f);
         /// <summary> How close to kart, before start homing </summary>
-        public static float StaticShock_m_DistanceForHome = 12f;
+        public static ModPropFloat StaticShock_m_DistanceForHome = new ModPropFloat(12f);
 
         /// <summary> How long effect lasts </summary>
-        public static float TurboBoost_m_NormalTime = 8000f;
+        public static ModPropFloat TurboBoost_m_NormalTime = new ModPropFloat(8000f);
         /// <summary> How long effect lasts when juiced </summary>
-        public static float TurboBoost_m_JuicedTime = 12000f;
+        public static ModPropFloat TurboBoost_m_JuicedTime = new ModPropFloat(12000f);
 
 
         /// <summary> How long effect lasts </summary>
-        public static int TNT_m_Time = 4300;
+        public static ModPropInt TNT_m_Time = new ModPropInt(4300);
         /// <summary> How long before the character hides </summary>
-        public static int TNT_m_TimeBeforeHiddenChar = 2500;
+        public static ModPropInt TNT_m_TimeBeforeHiddenChar = new ModPropInt(2500);
         /// <summary> Time when character comes out from hiding </summary>
-        public static int TNT_m_TimeHiddenChar = 4300;
+        public static ModPropInt TNT_m_TimeHiddenChar = new ModPropInt(4300);
         /// <summary> How much wumpa victim looses </summary>
-        public static int TNT_m_NormalWumpaLoss = 3;
+        public static ModPropInt TNT_m_NormalWumpaLoss = new ModPropInt(3);
         /// <summary> How much wumpa victim looses </summary>
-        public static int TNT_m_JuicedWumpaLoss = 3;
+        public static ModPropInt TNT_m_JuicedWumpaLoss = new ModPropInt(3);
         /// <summary> Blast Radius of Explosion </summary>
-        public static float TNT_m_ExplosionBlastRadius = 5f;
+        public static ModPropFloat TNT_m_ExplosionBlastRadius = new ModPropFloat(5f);
         /// <summary> Scale of explosion normal </summary>
-        public static float TNT_m_ExplScale = 0.714f;
+        public static ModPropFloat TNT_m_ExplScale = new ModPropFloat(0.714f);
         /// <summary> Scale of explosion juiced(nitro crate) </summary>
-        public static float TNT_m_ExplScaleJuiced = 0.714f;
+        public static ModPropFloat TNT_m_ExplScaleJuiced = new ModPropFloat(0.714f);
 
         /// <summary> How long effect lasts with a normal mine | 1500 </summary>
-        public static int FreezingMine_m_NormalFreezeTime = 3000;
+        public static ModPropInt FreezingMine_m_NormalFreezeTime = new ModPropInt(3000);
         /// <summary> How long effect lasts with a juiced mine </summary>
-        public static int FreezingMine_m_JuicedFreezeTime = 12000;
+        public static ModPropInt FreezingMine_m_JuicedFreezeTime = new ModPropInt(12000);
         /// <summary> How much wumpa fruit victim looses </summary>
-        public static int FreezingMine_m_NormalWumpaFruitLost = 1;
+        public static ModPropInt FreezingMine_m_NormalWumpaFruitLost = new ModPropInt(1);
         /// <summary> How much wumpa fruit victim looses(juiced) </summary>
-        public static int FreezingMine_m_JuicedWumpaFruitLost = 1;
+        public static ModPropInt FreezingMine_m_JuicedWumpaFruitLost = new ModPropInt(1);
         /// <summary> How far to throw freeze mine </summary>
-        public static float FreezingMine_m_ThrowDistance = 24;
+        public static ModPropFloat FreezingMine_m_ThrowDistance = new ModPropFloat(24);
         /// <summary> This number is multiplied by currentspeed and added to the throw distance </summary>
-        public static float FreezingMine_m_ThrowSpeedFactor = 1f;
+        public static ModPropFloat FreezingMine_m_ThrowSpeedFactor = new ModPropFloat(1f);
         /// <summary> 2 </summary>
-        public static float FreezingMine_m_BlastRadius = 3f;
+        public static ModPropFloat FreezingMine_m_BlastRadius = new ModPropFloat(3f);
         /// <summary> 3 </summary>
-        public static float FreezingMine_m_BlastRadiusJuiced = 5f;
+        public static ModPropFloat FreezingMine_m_BlastRadiusJuiced = new ModPropFloat(5f);
         /// <summary> 1=7m </summary>
-        public static float FreezingMine_m_ExplScale = 0.429f;
+        public static ModPropFloat FreezingMine_m_ExplScale = new ModPropFloat(0.429f);
         /// <summary> 1=7m </summary>
-        public static float FreezingMine_m_ExplScaleJuiced = 0.714f;
+        public static ModPropFloat FreezingMine_m_ExplScaleJuiced = new ModPropFloat(0.714f);
 
         /// <summary> 45 </summary>
-        public static float RedEye_Acceleration = 50f;
-        public static float RedEye_Deceleration = 15f;
-        public static float RedEye_MaxSpeed = 60f;
-        public static float RedEye_MinSpeed = 28f;
+        public static ModPropFloat RedEye_Acceleration = new ModPropFloat(50f);
+        public static ModPropFloat RedEye_Deceleration = new ModPropFloat(15f);
+        public static ModPropFloat RedEye_MaxSpeed = new ModPropFloat(60f);
+        public static ModPropFloat RedEye_MinSpeed = new ModPropFloat(28f);
         /// <summary> 20, 13 </summary>
-        public static float RedEye_TurnSpeed = 10f;
-        public static float RedEye_Explosion_Radius = 3f;
+        public static ModPropFloat RedEye_TurnSpeed = new ModPropFloat(10f);
+        public static ModPropFloat RedEye_Explosion_Radius = new ModPropFloat(3f);
         /// <summary> 30, 13.5 </summary>
-        public static float RedEye_TurnSpeedJuiced = 12f;
-        public static float RedEye_Explosion_Radius_Juiced = 7f;
-        public static float RedEye_Expl_Scale = 0.429f;
-        public static float RedEye_Expl_Scale_Juiced = 1f;
+        public static ModPropFloat RedEye_TurnSpeedJuiced = new ModPropFloat(12f);
+        public static ModPropFloat RedEye_Explosion_Radius_Juiced = new ModPropFloat(7f);
+        public static ModPropFloat RedEye_Expl_Scale = new ModPropFloat(0.429f);
+        public static ModPropFloat RedEye_Expl_Scale_Juiced = new ModPropFloat(1f);
         /// <summary> (at min speed drop turn angle by 0, at full speed drop turn angle by this number - and it interpolates in between) </summary>
-        public static float RedEye_FullSpeedTurnSlowdown = 4f;
+        public static ModPropFloat RedEye_FullSpeedTurnSlowdown = new ModPropFloat(4f);
 
         /// <summary> How long effect lasts </summary>
-        public static int InvincMask_m_NormalTime = 8000;
+        public static ModPropInt InvincMask_m_NormalTime = new ModPropInt(8000);
         /// <summary> How long effect lasts when juiced </summary>
-        public static int InvincMask_m_JuicedTime = 12000;
+        public static ModPropInt InvincMask_m_JuicedTime = new ModPropInt(12000);
         /// <summary> When Teamed </summary>
-        public static int InvincMask_m_NormalTimeTeamed = 12000;
+        public static ModPropInt InvincMask_m_NormalTimeTeamed = new ModPropInt(12000);
         /// <summary> When Teamed and Juiced </summary>
-        public static int InvincMask_m_JuicedTimeTeamed = 16000;
+        public static ModPropInt InvincMask_m_JuicedTimeTeamed = new ModPropInt(16000);
         /// <summary> How much wumpa fruit lost by victim </summary>
-        public static int InvincMask_m_NormalWumpaLoss = 3;
+        public static ModPropInt InvincMask_m_NormalWumpaLoss = new ModPropInt(3);
         /// <summary> How much wumpa fruit lost by victim </summary>
-        public static int InvincMask_m_JuicedWumpaLoss = 3;
+        public static ModPropInt InvincMask_m_JuicedWumpaLoss = new ModPropInt(3);
         /// <summary> How fast mask travels to buddy from buddy </summary>
-        public static float InvincMask_m_TeamSpeed = 15f;
+        public static ModPropFloat InvincMask_m_TeamSpeed = new ModPropFloat(15f);
         /// <summary> How big explosion is for team effect </summary>
-        public static float InvincMask_m_TeamBlastRange = 40f;
+        public static ModPropFloat InvincMask_m_TeamBlastRange = new ModPropFloat(40f);
         /// <summary> How full does the buddy meter need to be before explosion </summary>
-        public static float InvincMask_m_TeamMeterFull = 5f;
+        public static ModPropFloat InvincMask_m_TeamMeterFull = new ModPropFloat(5f);
         /// <summary> Scale of explosion normal </summary>
-        public static float InvincMask_m_ExplScale = 1f;
+        public static ModPropFloat InvincMask_m_ExplScale = new ModPropFloat(1f);
         /// <summary> Scale of explosion juiced </summary>
-        public static float InvincMask_m_ExplScaleJuiced = 1.5f;
+        public static ModPropFloat InvincMask_m_ExplScaleJuiced = new ModPropFloat(1.5f);
         /// <summary> Collision Radius </summary>
-        public static float InvincMask_m_ColRadius = 2f;
+        public static ModPropFloat InvincMask_m_ColRadius = new ModPropFloat(2f);
 
         /// <summary> Speed of the bowling bomb </summary>
-        public static float BowlingBomb_m_Speed = 65f;
+        public static ModPropFloat BowlingBomb_m_Speed = new ModPropFloat(65f);
         /// <summary> Acceleration </summary>
-        public static float BowlingBomb_m_Acceleration = 80f;
+        public static ModPropFloat BowlingBomb_m_Acceleration = new ModPropFloat(80f);
         /// <summary> Acceleration </summary>
-        public static float BowlingBomb_m_AccelerationJuiced = 90f;
+        public static ModPropFloat BowlingBomb_m_AccelerationJuiced = new ModPropFloat(90f);
         /// <summary> Mass of bomb </summary>
-        public static float BowlingBomb_m_Mass = 2500f;
+        public static ModPropFloat BowlingBomb_m_Mass = new ModPropFloat(2500f);
         /// <summary> Radius of bomb </summary>
-        public static float BowlingBomb_m_Radius = 1f;
+        public static ModPropFloat BowlingBomb_m_Radius = new ModPropFloat(1f);
         /// <summary> Gravity in the air normally | 8 </summary>
-        public static float BowlingBomb_m_AirGravity = 12f;
+        public static ModPropFloat BowlingBomb_m_AirGravity = new ModPropFloat(12f);
         /// <summary> Gravity on the ground normally | 1.25 </summary>
-        public static float BowlingBomb_m_GroundGravity = 4f;
+        public static ModPropFloat BowlingBomb_m_GroundGravity = new ModPropFloat(4f);
         /// <summary> Gravity in the air on maglev surfaces </summary>
-        public static float BowlingBomb_m_AirGravityMaglev = 17f;
+        public static ModPropFloat BowlingBomb_m_AirGravityMaglev = new ModPropFloat(17f);
         /// <summary> Gravity on the ground on maglev surfaces </summary>
-        public static float BowlingBomb_m_GroundGravityMaglev = 15f;
+        public static ModPropFloat BowlingBomb_m_GroundGravityMaglev = new ModPropFloat(15f);
         /// <summary> How fast it turns | 0.25 </summary>
-        public static float BowlingBomb_m_TurnSpeed = 0.9f;
+        public static ModPropFloat BowlingBomb_m_TurnSpeed = new ModPropFloat(0.9f);
         /// <summary> How fast does it turn(juiced) | 0.25 </summary>
-        public static float BowlingBomb_m_TurnSpeedJuiced = 0.9f;
+        public static ModPropFloat BowlingBomb_m_TurnSpeedJuiced = new ModPropFloat(0.9f);
         /// <summary> Targeting range target must be in | (7.5 degrees) </summary>
-        public static float BowlingBomb_m_ViewRange = 0.993f;
+        public static ModPropFloat BowlingBomb_m_ViewRange = new ModPropFloat(0.993f);
         /// <summary> Targeting range target must be in | 130, 100 </summary>
-        public static float BowlingBomb_m_RangeInFront = 150f;
+        public static ModPropFloat BowlingBomb_m_RangeInFront = new ModPropFloat(150f);
         /// <summary> How much wumpa fruit victim looses </summary>
-        public static int BowlingBomb_m_NormalWumpaLoss = 3;
+        public static ModPropInt BowlingBomb_m_NormalWumpaLoss = new ModPropInt(3);
         /// <summary> How much wumpa fruit victim looses </summary>
-        public static int BowlingBomb_m_JuicedWumpaLoss = 3;
+        public static ModPropInt BowlingBomb_m_JuicedWumpaLoss = new ModPropInt(3);
         /// <summary> Blast Radius of Explosion | 3 </summary>
-        public static float BowlingBomb_m_ExplosionBlastRadius = 5f;
+        public static ModPropFloat BowlingBomb_m_ExplosionBlastRadius = new ModPropFloat(5f);
         /// <summary> Blast Radius of Explosion Juiced | 6 </summary>
-        public static float BowlingBomb_m_ExplosionBlastRadiusJuiced = 8f;
+        public static ModPropFloat BowlingBomb_m_ExplosionBlastRadiusJuiced = new ModPropFloat(8f);
         /// <summary> How much drag from the "wind"</summary>
-        public static float BowlingBomb_m_DragCoef = 0.00125f;
+        public static ModPropFloat BowlingBomb_m_DragCoef = new ModPropFloat(0.00125f);
         /// <summary> Friction that helps when turning | 30 </summary>
-        public static float BowlingBomb_m_EasyLatFriction = 30f;
+        public static ModPropFloat BowlingBomb_m_EasyLatFriction = new ModPropFloat(30f);
         /// <summary> Friction that slows the missile down </summary>
-        public static float BowlingBomb_m_EasyLongFriction = 1f;
+        public static ModPropFloat BowlingBomb_m_EasyLongFriction = new ModPropFloat(1f);
         /// <summary> Friction that helps when turning | 50 </summary>
-        public static float BowlingBomb_m_HardLatFriction = 30f;
+        public static ModPropFloat BowlingBomb_m_HardLatFriction = new ModPropFloat(30f);
         /// <summary> Friction that slows the missile down </summary>
-        public static float BowlingBomb_m_HardLongFriction = 1f;
+        public static ModPropFloat BowlingBomb_m_HardLongFriction = new ModPropFloat(1f);
         /// <summary> Speed of the bowling bomb when shot backwards </summary>
-        public static float BowlingBomb_m_BackSpeed = 40f;
+        public static ModPropFloat BowlingBomb_m_BackSpeed = new ModPropFloat(40f);
         /// <summary> Scale of explosion normal | (1=7m) </summary>
-        public static float BowlingBomb_m_ExplScale = 0.714f;
+        public static ModPropFloat BowlingBomb_m_ExplScale = new ModPropFloat(0.714f);
         /// <summary> Scale of explosion juiced | (1=7m) </summary>
-        public static float BowlingBomb_m_ExplScaleJuiced = 1.143f;
+        public static ModPropFloat BowlingBomb_m_ExplScaleJuiced = new ModPropFloat(1.143f);
 
         /// <summary> How man times farther will the missile target someone who is in front of them, rather than in back </summary>
-        public static float HomingMissle_m_TrackingFrontDistance = 50f;
+        public static ModPropFloat HomingMissle_m_TrackingFrontDistance = new ModPropFloat(50f);
         /// <summary> Max speed of homing missile | 60 </summary>
-        public static float HomingMissle_m_MaxSpeed = 60f;
+        public static ModPropFloat HomingMissle_m_MaxSpeed = new ModPropFloat(60f);
         /// <summary> Max speed of homing missile(juiced) | 70 </summary>
-        public static float HomingMissle_m_MaxSpeedJuiced = 70f;
+        public static ModPropFloat HomingMissle_m_MaxSpeedJuiced = new ModPropFloat(70f);
         /// <summary> How long will missile last in ms </summary>
-        public static int HomingMissle_m_TimeLimit = 15000;
+        public static ModPropInt HomingMissle_m_TimeLimit = new ModPropInt(15000);
         /// <summary> Gravity in the air </summary>
-        public static float HomingMissle_m_AirGravityNormal = 8f;
+        public static ModPropFloat HomingMissle_m_AirGravityNormal = new ModPropFloat(8f);
         /// <summary> Gravity on the ground, </summary>
-        public static float HomingMissle_m_GroundGravityNormal = 1.25f;
+        public static ModPropFloat HomingMissle_m_GroundGravityNormal = new ModPropFloat(1.25f);
         /// <summary> Gravity in the air, when on maglev </summary>
-        public static float HomingMissle_m_AirGravityMaglev = 8f;
+        public static ModPropFloat HomingMissle_m_AirGravityMaglev = new ModPropFloat(8f);
         /// <summary> Gravity on the ground, when on maglev, should be high(there are sharp changes in curvature of ground in maglev) </summary>
-        public static float HomingMissle_m_GroundGravityMaglev = 8f;
+        public static ModPropFloat HomingMissle_m_GroundGravityMaglev = new ModPropFloat(8f);
         /// <summary> How fast it accelerates, note the reason this is so high is because of the long. friction | 40 </summary>
-        public static float HomingMissle_m_Acceleration = 45f;
+        public static ModPropFloat HomingMissle_m_Acceleration = new ModPropFloat(45f);
         /// <summary> How fast it accelerates juiced, note the reason this is so high is because of the long. friction | 50 </summary>
-        public static float HomingMissle_m_AccelerationJuiced = 55f;
+        public static ModPropFloat HomingMissle_m_AccelerationJuiced = new ModPropFloat(55f);
         /// <summary> How fast homing missile turns (radians / sec) | 4 </summary>
-        public static float HomingMissle_m_TurnSpeed = 5f;
+        public static ModPropFloat HomingMissle_m_TurnSpeed = new ModPropFloat(5f);
         /// <summary> How fast homing missile turns (radians / sec)(juiced) | 8 </summary>
-        public static float HomingMissle_m_TurnSpeedJuiced = 8f;
+        public static ModPropFloat HomingMissle_m_TurnSpeedJuiced = new ModPropFloat(8f);
         /// <summary> Mass of missile </summary>
-        public static float HomingMissle_m_Mass = 1000f;
+        public static ModPropFloat HomingMissle_m_Mass = new ModPropFloat(1000f);
         /// <summary> Radius of missile(for collision) </summary>
-        public static float HomingMissle_m_Radius = 1f;
+        public static ModPropFloat HomingMissle_m_Radius = new ModPropFloat(1f);
         /// <summary> Delay between updates of tracking </summary>
-        public static int HomingMissle_m_DelayTrackingUpdate = 100;
+        public static ModPropInt HomingMissle_m_DelayTrackingUpdate = new ModPropInt(100);
         /// <summary> Range of view the homing missile targets, if 0, then targets everything infront of him, 1 is exactly in front of him </summary>
-        public static float HomingMissle_m_ViewRange = 0.2f;
+        public static ModPropFloat HomingMissle_m_ViewRange = new ModPropFloat(0.2f);
         /// <summary> How far will the missile track in front of user kart </summary>
-        public static float HomingMissle_m_RangeInFront = 140;
+        public static ModPropFloat HomingMissle_m_RangeInFront = new ModPropFloat(140);
         /// <summary> How far to the back will the missile track of the user kart </summary>
-        public static float HomingMissle_m_RangeInBack = 0f;
+        public static ModPropFloat HomingMissle_m_RangeInBack = new ModPropFloat(0f);
         /// <summary> How much wumpa fruit victim losses </summary>
-        public static int HomingMissle_m_NormalWumpaLoss = 3;
+        public static ModPropInt HomingMissle_m_NormalWumpaLoss = new ModPropInt(3);
         /// <summary> How much wumpa fruit victim losses </summary>
-        public static int HomingMissle_m_JuicedWumpaLoss = 3;
+        public static ModPropInt HomingMissle_m_JuicedWumpaLoss = new ModPropInt(3);
         /// <summary> Blast Radius of Explosion </summary>
-        public static float HomingMissle_m_ExplosionBlastRadius = 1f;
+        public static ModPropFloat HomingMissle_m_ExplosionBlastRadius = new ModPropFloat(1f);
         /// <summary> Blast Radius of Explosion Juiced </summary>
-        public static float HomingMissle_m_ExplosionBlastRadiusJuiced = 1f;
+        public static ModPropFloat HomingMissle_m_ExplosionBlastRadiusJuiced = new ModPropFloat(1f);
         /// <summary> How much drag force applied to missile </summary>
-        public static float HomingMissle_m_DragCoef = 0.00125f;
+        public static ModPropFloat HomingMissle_m_DragCoef = new ModPropFloat(0.00125f);
         /// <summary> Lateral friction, helps when turning(higher the better you turn) </summary>
-        public static float HomingMissle_m_EasyLatFriction = 15f;
+        public static ModPropFloat HomingMissle_m_EasyLatFriction = new ModPropFloat(15f);
         /// <summary> Long. Friction, friction working against missile, this force the acceleration to be much higher than normal </summary>
-        public static float HomingMissle_m_EasyLongFriction = 1f;
+        public static ModPropFloat HomingMissle_m_EasyLongFriction = new ModPropFloat(1f);
         /// <summary> Same as above, except when making a tight turn </summary>
-        public static float HomingMissle_m_HardLatFriction = 55f;
+        public static ModPropFloat HomingMissle_m_HardLatFriction = new ModPropFloat(55f);
         /// <summary> Same as above, except when making a tight turn </summary>
-        public static float HomingMissle_m_HardLongFriction = 1f;
+        public static ModPropFloat HomingMissle_m_HardLongFriction = new ModPropFloat(1f);
         /// <summary> How long before decay starts</summary>
-        public static int HomingMissle_m_DecayTime = 5000;
+        public static ModPropInt HomingMissle_m_DecayTime = new ModPropInt(5000);
         /// <summary> How fast velocity decays(in meteres/sec) </summary>
-        public static float HomingMissle_m_DecaySpeed = 2f;
+        public static ModPropFloat HomingMissle_m_DecaySpeed = new ModPropFloat(2f);
         /// <summary> Min value for velocity | 40 </summary>
-        public static float HomingMissle_m_DecayMin = 40f;
+        public static ModPropFloat HomingMissle_m_DecayMin = new ModPropFloat(40f);
         /// <summary> Scale of explosion normal | 0.45 </summary>
-        public static float HomingMissle_m_ExplScale = 0.45f;
+        public static ModPropFloat HomingMissle_m_ExplScale = new ModPropFloat(0.45f);
         /// <summary> Scale of explosion juiced | 0.45 </summary>
-        public static float HomingMissle_m_ExplScaleJuiced = 0.45f;
+        public static ModPropFloat HomingMissle_m_ExplScaleJuiced = new ModPropFloat(0.45f);
 
         /// <summary> NO USE | How man times farther will the missile target someone who is in front of them, rather than in back </summary>
-        public static float Tornado_m_TrackingFrontDistance = 35f;
+        public static ModPropFloat Tornado_m_TrackingFrontDistance = new ModPropFloat(35f);
         /// <summary> Max speed of homing missile | 35 </summary>
-        public static float Tornado_m_MaxSpeed = 55f;
+        public static ModPropFloat Tornado_m_MaxSpeed = new ModPropFloat(55f);
         /// <summary> Max speed of homing missile(juiced) | 48 </summary>
-        public static float Tornado_m_MaxSpeedJuiced = 55f;
+        public static ModPropFloat Tornado_m_MaxSpeedJuiced = new ModPropFloat(55f);
         /// <summary> Max speed, when tornado has picked up a kart</summary>
-        public static float Tornado_m_MaxSpeedWithKart = 10f;
+        public static ModPropFloat Tornado_m_MaxSpeedWithKart = new ModPropFloat(10f);
         /// <summary> How long will missile last in ms | 20000 </summary>
-        public static int Tornado_m_TimeLimit = 30000;
+        public static ModPropInt Tornado_m_TimeLimit = new ModPropInt(30000);
         /// <summary> Gravity in the air </summary>
-        public static float Tornado_m_AirGravity = 6f;
+        public static ModPropFloat Tornado_m_AirGravity = new ModPropFloat(6f);
         /// <summary> Gravity on the ground </summary>
-        public static float Tornado_m_GroundGravity = 1.5f;
+        public static ModPropFloat Tornado_m_GroundGravity = new ModPropFloat(1.5f);
         /// <summary> Gravity in the air on maglev surface </summary>
-        public static float Tornado_m_AirGravityMaglev = 6f;
+        public static ModPropFloat Tornado_m_AirGravityMaglev = new ModPropFloat(6f);
         /// <summary> Gravity on the ground on maglev surface </summary>
-        public static float Tornado_m_GroundGravityMaglev = 8f;
+        public static ModPropFloat Tornado_m_GroundGravityMaglev = new ModPropFloat(8f);
         /// <summary> How fast it accelerates(20/s/s) | 50 </summary>
-        public static float Tornado_m_Acceleration = 50f;
+        public static ModPropFloat Tornado_m_Acceleration = new ModPropFloat(50f);
         /// <summary> How fast it accelerates(20/s/s) | 50 </summary>
-        public static float Tornado_m_AccelerationJuiced = 50f;
+        public static ModPropFloat Tornado_m_AccelerationJuiced = new ModPropFloat(50f);
         /// <summary> How fast homing missile turns (radians / sec) | 6 </summary>
-        public static float Tornado_m_TurnSpeed = 8f;
+        public static ModPropFloat Tornado_m_TurnSpeed = new ModPropFloat(8f);
         /// <summary> How fast homing missile turns (radians / sec)(juiced) | 11 </summary>
-        public static float Tornado_m_TurnSpeedJuiced = 8f;
+        public static ModPropFloat Tornado_m_TurnSpeedJuiced = new ModPropFloat(8f);
         /// <summary> Mass of missile </summary>
-        public static float Tornado_m_Mass = 50f;
+        public static ModPropFloat Tornado_m_Mass = new ModPropFloat(50f);
         /// <summary> Radius of missile(for collision) | 0.75 </summary>
-        public static float Tornado_m_Radius = 2.5f;
+        public static ModPropFloat Tornado_m_Radius = new ModPropFloat(2.5f);
         /// <summary> NO USE | Delay between updates of tracking </summary>
-        public static int Tornado_m_DelayTrackingUpdate = 100;
+        public static ModPropInt Tornado_m_DelayTrackingUpdate = new ModPropInt(100);
         /// <summary> DO NOT USE | Range of view the homing missile targets, if 0, then targets everything infront of him, 1 is exactly in front of him </summary>
-        public static float Tornado_m_ViewRange = 0f;
+        public static ModPropFloat Tornado_m_ViewRange = new ModPropFloat(0f);
         /// <summary> DO NOT USE | How far will the missile track in front of user kart </summary>
-        public static float Tornado_m_RangeInFront = 0f;
+        public static ModPropFloat Tornado_m_RangeInFront = new ModPropFloat(0f);
         /// <summary> DO NOT USE | How far to the back will the missile track of the user kart </summary>
-        public static float Tornado_m_RangeInBack = 0f;
+        public static ModPropFloat Tornado_m_RangeInBack = new ModPropFloat(0f);
         /// <summary> How long to lift a caught player | 1500</summary>
-        public static int Tornado_m_LiftTime = 3000;
+        public static ModPropInt Tornado_m_LiftTime = new ModPropInt(3000);
         /// <summary> How much force upon lifting the player </summary>
-        public static float Tornado_m_LiftForce = 30f;
+        public static ModPropFloat Tornado_m_LiftForce = new ModPropFloat(30f);
         /// <summary> How long before it fizzles once its messed with its final target </summary>
-        public static int Tornado_m_FizzleTime = 1000;
+        public static ModPropInt Tornado_m_FizzleTime = new ModPropInt(1000);
         /// <summary> How much wumpa fruit victim looses </summary>
-        public static int Tornado_m_NormalWumpaLoss = 5;
+        public static ModPropInt Tornado_m_NormalWumpaLoss = new ModPropInt(5);
         /// <summary> How much wumpa fruit victim looses </summary>
-        public static int Tornado_m_JuicedWumpaLoss = 5;
+        public static ModPropInt Tornado_m_JuicedWumpaLoss = new ModPropInt(5);
         /// <summary> How much drag (from "wind") </summary>
-        public static float Tornado_m_DragCoef = 0.01f;
+        public static ModPropFloat Tornado_m_DragCoef = new ModPropFloat(0.01f);
         /// <summary> Friction that helps with turning </summary>
-        public static float Tornado_m_EasyLatFriction = 30f;
+        public static ModPropFloat Tornado_m_EasyLatFriction = new ModPropFloat(30f);
         /// <summary> Friction that slows the missile down </summary>
-        public static float Tornado_m_EasyLongFriction = 1f;
+        public static ModPropFloat Tornado_m_EasyLongFriction = new ModPropFloat(1f);
         /// <summary> Friction that helps with turning </summary>
-        public static float Tornado_m_HardLatFriction = 50f;
+        public static ModPropFloat Tornado_m_HardLatFriction = new ModPropFloat(50f);
         /// <summary> Friction that slows the missile down </summary>
-        public static float Tornado_m_HardLongFriction = 1f;
+        public static ModPropFloat Tornado_m_HardLongFriction = new ModPropFloat(1f);
         /// <summary> If juiced, what is the distance a kart needs to be from tornado for it to start targeting it on its way to victim | 15 </summary>
-        public static float Tornado_m_TargetAllDistance = 18f;
+        public static ModPropFloat Tornado_m_TargetAllDistance = new ModPropFloat(18f);
         /// <summary> If juiced, what range does target kart have to be in for tornado to target it on the way to victim | 0.15 </summary>
-        public static float Tornado_m_ViewRangleOfTarget = 0.707f;
+        public static ModPropFloat Tornado_m_ViewRangleOfTarget = new ModPropFloat(0.707f);
 
 
         public static void CNK_Randomize_StaticShock(Random randState)
         {
-            StaticShock_m_NormalTime = randState.Next(15, 45) * 100;
-            StaticShock_m_JuicedTime = StaticShock_m_NormalTime * 2;
-            StaticShock_m_NormalWumpaLoss = randState.Next(1, 5);
-            StaticShock_m_JuicedWumpaLoss = StaticShock_m_NormalWumpaLoss + randState.Next(0, 2);
-            StaticShock_m_HomingSpeed = randState.Next(9, 15);
-            StaticShock_m_DistanceForHome = randState.Next(9, 15);
+            StaticShock_m_NormalTime.Value = randState.Next(15, 45) * 100;
+            StaticShock_m_JuicedTime.Value = StaticShock_m_NormalTime.Value * 2;
+            StaticShock_m_NormalWumpaLoss.Value = randState.Next(1, 5);
+            StaticShock_m_JuicedWumpaLoss.Value = StaticShock_m_NormalWumpaLoss.Value + randState.Next(0, 2);
+            StaticShock_m_HomingSpeed.Value = randState.Next(9, 15);
+            StaticShock_m_DistanceForHome.Value = randState.Next(9, 15);
         }
 
         public static void CNK_Randomize_PowerShield(Random randState)
         {
-            PowerShield_m_Time = randState.Next(4, 16) * 1000f;
-            PowerShield_m_ZapSpeed = randState.Next(6, 12);
+            PowerShield_m_Time.Value = randState.Next(4, 16) * 1000f;
+            PowerShield_m_ZapSpeed.Value = randState.Next(6, 12);
             //Sadly, it doesn't seem like this actually changes the shield's color
-            PowerShield_m_ColorNonJuiced[0] = (float)randState.NextDouble();
-            PowerShield_m_ColorNonJuiced[1] = (float)randState.NextDouble();
-            PowerShield_m_ColorNonJuiced[2] = (float)randState.NextDouble();
-            PowerShield_m_ColorJuiced[0] = (float)randState.NextDouble();
-            PowerShield_m_ColorJuiced[1] = (float)randState.NextDouble();
-            PowerShield_m_ColorJuiced[2] = (float)randState.NextDouble();
-            PowerShield_m_RangeForZapping = randState.Next(50, 100) / 10f;
-            PowerShield_m_ColRadius = PowerShield_m_RangeForZapping / 4.3f;
+            PowerShield_m_ColorNonJuiced.Value[0] = (float)randState.NextDouble();
+            PowerShield_m_ColorNonJuiced.Value[1] = (float)randState.NextDouble();
+            PowerShield_m_ColorNonJuiced.Value[2] = (float)randState.NextDouble();
+            PowerShield_m_ColorJuiced.Value[0] = (float)randState.NextDouble();
+            PowerShield_m_ColorJuiced.Value[1] = (float)randState.NextDouble();
+            PowerShield_m_ColorJuiced.Value[2] = (float)randState.NextDouble();
+            PowerShield_m_RangeForZapping.Value = randState.Next(50, 100) / 10f;
+            PowerShield_m_ColRadius.Value = PowerShield_m_RangeForZapping.Value / 4.3f;
         }
 
         public static void CNK_Randomize_TurboBoost(Random randState)
         {
-            TurboBoost_m_NormalTime = randState.Next(60, 120) * 100f;
-            TurboBoost_m_JuicedTime = TurboBoost_m_NormalTime * 1.5f;
+            TurboBoost_m_NormalTime.Value = randState.Next(60, 120) * 100f;
+            TurboBoost_m_JuicedTime.Value = TurboBoost_m_NormalTime.Value * 1.5f;
         }
 
         public static void CNK_Randomize_TNTCrate(Random randState)
         {
-            TNT_m_Time = 4300;
-            TNT_m_TimeBeforeHiddenChar = 2500;
-            TNT_m_TimeHiddenChar = 4300;
-            TNT_m_NormalWumpaLoss = randState.Next(1, 5);
-            TNT_m_JuicedWumpaLoss = TNT_m_JuicedWumpaLoss + randState.Next(0, 2);
-            TNT_m_ExplosionBlastRadius = randState.Next(300, 800) / 100f;
-            TNT_m_ExplScale = (float)randState.NextDouble() + 0.25f;
-            TNT_m_ExplScaleJuiced = TNT_m_ExplScale + 0.1f;
+            TNT_m_Time.Value = 4300;
+            TNT_m_TimeBeforeHiddenChar.Value = 2500;
+            TNT_m_TimeHiddenChar.Value = 4300;
+            TNT_m_NormalWumpaLoss.Value = randState.Next(1, 5);
+            TNT_m_JuicedWumpaLoss.Value = TNT_m_JuicedWumpaLoss.Value + randState.Next(0, 2);
+            TNT_m_ExplosionBlastRadius.Value = randState.Next(300, 800) / 100f;
+            TNT_m_ExplScale.Value = (float)randState.NextDouble() + 0.25f;
+            TNT_m_ExplScaleJuiced.Value = TNT_m_ExplScale.Value + 0.1f;
         }
 
         public static void CNK_Randomize_FreezingMine(Random randState)
         {
-            FreezingMine_m_NormalFreezeTime = randState.Next(15, 45) * 100;
-            FreezingMine_m_JuicedFreezeTime = randState.Next(9, 15) * 1000;
-            FreezingMine_m_NormalWumpaFruitLost = randState.Next(1, 5);
-            FreezingMine_m_JuicedWumpaFruitLost = FreezingMine_m_NormalWumpaFruitLost + randState.Next(0, 2);
-            FreezingMine_m_ThrowDistance = randState.Next(16, 32);
-            FreezingMine_m_ThrowSpeedFactor = (float)randState.NextDouble() + 0.75f;
-            FreezingMine_m_BlastRadius = (float)randState.NextDouble() + randState.Next(1, 5);
-            FreezingMine_m_BlastRadiusJuiced = FreezingMine_m_BlastRadius * 2f;
-            FreezingMine_m_ExplScale = (float)randState.NextDouble() + 0.1f;
-            FreezingMine_m_ExplScaleJuiced = FreezingMine_m_ExplScale * 2f;
+            FreezingMine_m_NormalFreezeTime.Value = randState.Next(15, 45) * 100;
+            FreezingMine_m_JuicedFreezeTime.Value = randState.Next(9, 15) * 1000;
+            FreezingMine_m_NormalWumpaFruitLost.Value = randState.Next(1, 5);
+            FreezingMine_m_JuicedWumpaFruitLost.Value = FreezingMine_m_NormalWumpaFruitLost.Value + randState.Next(0, 2);
+            FreezingMine_m_ThrowDistance.Value = randState.Next(16, 32);
+            FreezingMine_m_ThrowSpeedFactor.Value = (float)randState.NextDouble() + 0.75f;
+            FreezingMine_m_BlastRadius.Value = (float)randState.NextDouble() + randState.Next(1, 5);
+            FreezingMine_m_BlastRadiusJuiced.Value = FreezingMine_m_BlastRadius.Value * 2f;
+            FreezingMine_m_ExplScale.Value = (float)randState.NextDouble() + 0.1f;
+            FreezingMine_m_ExplScaleJuiced.Value = FreezingMine_m_ExplScale.Value * 2f;
         }
 
         public static void CNK_Randomize_RedEye(Random randState)
         {
-            RedEye_Acceleration = randState.Next(25, 75) + (float)randState.NextDouble();
-            RedEye_Deceleration = randState.Next(10, 20) + (float)randState.NextDouble();
-            RedEye_MaxSpeed = randState.Next(45, 75);
-            RedEye_MinSpeed = randState.Next(24, 32);
-            RedEye_TurnSpeed = randState.Next(8, 12) + (float)randState.NextDouble();
-            RedEye_Explosion_Radius = randState.Next(2, 5) + (float)randState.NextDouble();
-            RedEye_TurnSpeedJuiced = RedEye_TurnSpeed + 2f;
-            RedEye_Explosion_Radius_Juiced = RedEye_Explosion_Radius + 4f;
-            RedEye_Expl_Scale = (float)randState.NextDouble() + 0.1f;
-            RedEye_Expl_Scale_Juiced = RedEye_Expl_Scale * 2f;
-            RedEye_FullSpeedTurnSlowdown = 4f;
+            RedEye_Acceleration.Value = randState.Next(25, 75) + (float)randState.NextDouble();
+            RedEye_Deceleration.Value = randState.Next(10, 20) + (float)randState.NextDouble();
+            RedEye_MaxSpeed.Value = randState.Next(45, 75);
+            RedEye_MinSpeed.Value = randState.Next(24, 32);
+            RedEye_TurnSpeed.Value = randState.Next(8, 12) + (float)randState.NextDouble();
+            RedEye_Explosion_Radius.Value = randState.Next(2, 5) + (float)randState.NextDouble();
+            RedEye_TurnSpeedJuiced.Value = RedEye_TurnSpeed.Value + 2f;
+            RedEye_Explosion_Radius_Juiced.Value = RedEye_Explosion_Radius.Value + 4f;
+            RedEye_Expl_Scale.Value = (float)randState.NextDouble() + 0.1f;
+            RedEye_Expl_Scale_Juiced.Value = RedEye_Expl_Scale.Value * 2f;
+            RedEye_FullSpeedTurnSlowdown.Value = 4f;
         }
 
         public static void CNK_Randomize_InvincMask(Random randState)
         {
-            InvincMask_m_NormalTime = randState.Next(60, 100) * 100;
-            InvincMask_m_JuicedTime = InvincMask_m_NormalTime + ((int)Math.Ceiling(InvincMask_m_NormalTime / 2f));
-            InvincMask_m_NormalTimeTeamed = randState.Next(80, 160) * 100;
-            InvincMask_m_JuicedTimeTeamed = InvincMask_m_NormalTimeTeamed + ((int)Math.Ceiling(InvincMask_m_NormalTimeTeamed / 3f));
-            InvincMask_m_NormalWumpaLoss = randState.Next(1, 5);
-            InvincMask_m_JuicedWumpaLoss = InvincMask_m_NormalWumpaLoss + randState.Next(0, 2);
-            InvincMask_m_TeamSpeed = 15f;
-            InvincMask_m_TeamBlastRange = 40f;
-            InvincMask_m_TeamMeterFull = 5f;
-            InvincMask_m_ExplScale = (float)randState.NextDouble() + 0.5f;
-            InvincMask_m_ExplScaleJuiced = 1.5f * InvincMask_m_ExplScale;
-            InvincMask_m_ColRadius = randState.Next(1, 3) + (float)randState.NextDouble();
+            InvincMask_m_NormalTime.Value = randState.Next(60, 100) * 100;
+            InvincMask_m_JuicedTime.Value = InvincMask_m_NormalTime.Value + ((int)Math.Ceiling(InvincMask_m_NormalTime.Value / 2f));
+            InvincMask_m_NormalTimeTeamed.Value = randState.Next(80, 160) * 100;
+            InvincMask_m_JuicedTimeTeamed.Value = InvincMask_m_NormalTimeTeamed.Value + ((int)Math.Ceiling(InvincMask_m_NormalTimeTeamed.Value / 3f));
+            InvincMask_m_NormalWumpaLoss.Value = randState.Next(1, 5);
+            InvincMask_m_JuicedWumpaLoss.Value = InvincMask_m_NormalWumpaLoss.Value + randState.Next(0, 2);
+            InvincMask_m_TeamSpeed.Value = 15f;
+            InvincMask_m_TeamBlastRange.Value = 40f;
+            InvincMask_m_TeamMeterFull.Value = 5f;
+            InvincMask_m_ExplScale.Value = (float)randState.NextDouble() + 0.5f;
+            InvincMask_m_ExplScaleJuiced.Value = 1.5f * InvincMask_m_ExplScale.Value;
+            InvincMask_m_ColRadius.Value = randState.Next(1, 3) + (float)randState.NextDouble();
         }
 
         public static void CNK_Randomize_BowlingBomb(Random randState)
         {
-            BowlingBomb_m_Speed = randState.Next(50, 80);
-            BowlingBomb_m_Acceleration = randState.Next(70, 90);
-            BowlingBomb_m_AccelerationJuiced = BowlingBomb_m_Acceleration * 1.125f;
-            BowlingBomb_m_Mass = 2500f;
-            BowlingBomb_m_Radius = 1f;
-            BowlingBomb_m_AirGravity = 12f;
-            BowlingBomb_m_GroundGravity = 4f;
-            BowlingBomb_m_AirGravityMaglev = 17f;
-            BowlingBomb_m_GroundGravityMaglev = 15f;
-            BowlingBomb_m_TurnSpeed = 0.9f;
-            BowlingBomb_m_TurnSpeedJuiced = BowlingBomb_m_TurnSpeed;
-            BowlingBomb_m_ViewRange = 0.993f;
-            BowlingBomb_m_RangeInFront = 150f;
-            BowlingBomb_m_NormalWumpaLoss = randState.Next(1, 5);
-            BowlingBomb_m_JuicedWumpaLoss = BowlingBomb_m_NormalWumpaLoss + randState.Next(0, 2);
-            BowlingBomb_m_ExplosionBlastRadius = randState.Next(25, 75) / 10f;
-            BowlingBomb_m_ExplosionBlastRadiusJuiced = BowlingBomb_m_ExplosionBlastRadius * 1.6f;
-            BowlingBomb_m_DragCoef = 0.00125f;
-            BowlingBomb_m_EasyLatFriction = 30f;
-            BowlingBomb_m_EasyLongFriction = 1f;
-            BowlingBomb_m_HardLatFriction = 30f;
-            BowlingBomb_m_HardLongFriction = 1f;
-            BowlingBomb_m_BackSpeed = randState.Next(30, 60);
-            BowlingBomb_m_ExplScale = (float)randState.NextDouble() + 0.5f;
-            BowlingBomb_m_ExplScaleJuiced = BowlingBomb_m_ExplScale * 1.5f;
+            BowlingBomb_m_Speed.Value = randState.Next(50, 80);
+            BowlingBomb_m_Acceleration.Value = randState.Next(70, 90);
+            BowlingBomb_m_AccelerationJuiced.Value = BowlingBomb_m_Acceleration.Value * 1.125f;
+            BowlingBomb_m_Mass.Value = 2500f;
+            BowlingBomb_m_Radius.Value = 1f;
+            BowlingBomb_m_AirGravity.Value = 12f;
+            BowlingBomb_m_GroundGravity.Value = 4f;
+            BowlingBomb_m_AirGravityMaglev.Value = 17f;
+            BowlingBomb_m_GroundGravityMaglev.Value = 15f;
+            BowlingBomb_m_TurnSpeed.Value = 0.9f;
+            BowlingBomb_m_TurnSpeedJuiced.Value = BowlingBomb_m_TurnSpeed.Value;
+            BowlingBomb_m_ViewRange.Value = 0.993f;
+            BowlingBomb_m_RangeInFront.Value = 150f;
+            BowlingBomb_m_NormalWumpaLoss.Value = randState.Next(1, 5);
+            BowlingBomb_m_JuicedWumpaLoss.Value = BowlingBomb_m_NormalWumpaLoss.Value + randState.Next(0, 2);
+            BowlingBomb_m_ExplosionBlastRadius.Value = randState.Next(25, 75) / 10f;
+            BowlingBomb_m_ExplosionBlastRadiusJuiced.Value = BowlingBomb_m_ExplosionBlastRadius.Value * 1.6f;
+            BowlingBomb_m_DragCoef.Value = 0.00125f;
+            BowlingBomb_m_EasyLatFriction.Value = 30f;
+            BowlingBomb_m_EasyLongFriction.Value = 1f;
+            BowlingBomb_m_HardLatFriction.Value = 30f;
+            BowlingBomb_m_HardLongFriction.Value = 1f;
+            BowlingBomb_m_BackSpeed.Value = randState.Next(30, 60);
+            BowlingBomb_m_ExplScale.Value = (float)randState.NextDouble() + 0.5f;
+            BowlingBomb_m_ExplScaleJuiced.Value = BowlingBomb_m_ExplScale.Value * 1.5f;
         }
 
         public static void CNK_Randomize_HomingMissle(Random randState)
         {
-            HomingMissle_m_TrackingFrontDistance = 50f;
-            HomingMissle_m_MaxSpeed = randState.Next(40, 80);
-            HomingMissle_m_MaxSpeedJuiced = HomingMissle_m_MaxSpeed * (70f / 60f);
-            HomingMissle_m_TimeLimit = 15000;
-            HomingMissle_m_AirGravityNormal = 8f;
-            HomingMissle_m_GroundGravityNormal = 1.25f;
-            HomingMissle_m_AirGravityMaglev = 8f;
-            HomingMissle_m_GroundGravityMaglev = HomingMissle_m_AirGravityMaglev;
-            HomingMissle_m_Acceleration = randState.Next(35, 55);
-            HomingMissle_m_AccelerationJuiced = HomingMissle_m_Acceleration * (55f / 45f);
-            HomingMissle_m_TurnSpeed = 5f;
-            HomingMissle_m_TurnSpeedJuiced = HomingMissle_m_TurnSpeed * (8f / 5f);
-            HomingMissle_m_Mass = 1000f;
-            HomingMissle_m_Radius = 1f;
-            HomingMissle_m_DelayTrackingUpdate = 100;
-            HomingMissle_m_ViewRange = 0.2f;
-            HomingMissle_m_RangeInFront = 140;
-            HomingMissle_m_RangeInBack = 0f;
-            HomingMissle_m_NormalWumpaLoss = randState.Next(1, 5);
-            HomingMissle_m_JuicedWumpaLoss = HomingMissle_m_NormalWumpaLoss + randState.Next(0, 2);
-            HomingMissle_m_ExplosionBlastRadius = 1f;
-            HomingMissle_m_ExplosionBlastRadiusJuiced = HomingMissle_m_ExplosionBlastRadius;
-            HomingMissle_m_DragCoef = 0.00125f;
-            HomingMissle_m_EasyLatFriction = 15f;
-            HomingMissle_m_EasyLongFriction = 1f;
-            HomingMissle_m_HardLatFriction = 55f;
-            HomingMissle_m_HardLongFriction = 1f;
-            HomingMissle_m_DecayTime = 5000;
-            HomingMissle_m_DecaySpeed = 2f;
-            HomingMissle_m_DecayMin = 40f;
-            HomingMissle_m_ExplScale = 0.45f;
+            HomingMissle_m_TrackingFrontDistance.Value = 50f;
+            HomingMissle_m_MaxSpeed.Value = randState.Next(40, 80);
+            HomingMissle_m_MaxSpeedJuiced.Value = HomingMissle_m_MaxSpeed.Value * (70f / 60f);
+            HomingMissle_m_TimeLimit.Value = 15000;
+            HomingMissle_m_AirGravityNormal.Value = 8f;
+            HomingMissle_m_GroundGravityNormal.Value = 1.25f;
+            HomingMissle_m_AirGravityMaglev.Value = 8f;
+            HomingMissle_m_GroundGravityMaglev.Value = HomingMissle_m_AirGravityMaglev.Value;
+            HomingMissle_m_Acceleration.Value = randState.Next(35, 55);
+            HomingMissle_m_AccelerationJuiced.Value = HomingMissle_m_Acceleration.Value * (55f / 45f);
+            HomingMissle_m_TurnSpeed.Value = 5f;
+            HomingMissle_m_TurnSpeedJuiced.Value = HomingMissle_m_TurnSpeed.Value * (8f / 5f);
+            HomingMissle_m_Mass.Value = 1000f;
+            HomingMissle_m_Radius.Value = 1f;
+            HomingMissle_m_DelayTrackingUpdate.Value = 100;
+            HomingMissle_m_ViewRange.Value = 0.2f;
+            HomingMissle_m_RangeInFront.Value = 140;
+            HomingMissle_m_RangeInBack.Value = 0f;
+            HomingMissle_m_NormalWumpaLoss.Value = randState.Next(1, 5);
+            HomingMissle_m_JuicedWumpaLoss.Value = HomingMissle_m_NormalWumpaLoss.Value + randState.Next(0, 2);
+            HomingMissle_m_ExplosionBlastRadius.Value = 1f;
+            HomingMissle_m_ExplosionBlastRadiusJuiced.Value = HomingMissle_m_ExplosionBlastRadius.Value;
+            HomingMissle_m_DragCoef.Value = 0.00125f;
+            HomingMissle_m_EasyLatFriction.Value = 15f;
+            HomingMissle_m_EasyLongFriction.Value = 1f;
+            HomingMissle_m_HardLatFriction.Value = 55f;
+            HomingMissle_m_HardLongFriction.Value = 1f;
+            HomingMissle_m_DecayTime.Value = 5000;
+            HomingMissle_m_DecaySpeed.Value = 2f;
+            HomingMissle_m_DecayMin.Value = 40f;
+            HomingMissle_m_ExplScale.Value = 0.45f;
             HomingMissle_m_ExplScaleJuiced = HomingMissle_m_ExplScale;
         }
 
         public static void CNK_Randomize_Tornado(Random randState)
         {
-            Tornado_m_TrackingFrontDistance = 35f;
-            Tornado_m_MaxSpeed = randState.Next(45, 60);
-            Tornado_m_MaxSpeedJuiced = Tornado_m_MaxSpeed;
-            Tornado_m_MaxSpeedWithKart = 10f;
-            Tornado_m_TimeLimit = 30000;
-            Tornado_m_AirGravity = 6f;
-            Tornado_m_GroundGravity = 1.5f;
-            Tornado_m_AirGravityMaglev = Tornado_m_AirGravity;
-            Tornado_m_GroundGravityMaglev = 8f;
-            Tornado_m_Acceleration = randState.Next(40, 60);
-            Tornado_m_AccelerationJuiced = Tornado_m_Acceleration;
-            Tornado_m_TurnSpeed = randState.Next(6, 10);
-            Tornado_m_TurnSpeedJuiced = Tornado_m_TurnSpeed;
-            Tornado_m_Mass = 50f;
-            Tornado_m_Radius = 2.5f;
-            Tornado_m_DelayTrackingUpdate = 100;
-            Tornado_m_ViewRange = 0f;
-            Tornado_m_RangeInFront = 0f;
-            Tornado_m_RangeInBack = 0f;
-            Tornado_m_LiftTime = 3000;
-            Tornado_m_LiftForce = 30f;
-            Tornado_m_FizzleTime = 1000;
-            Tornado_m_NormalWumpaLoss = randState.Next(3, 7);
-            Tornado_m_JuicedWumpaLoss = Tornado_m_NormalWumpaLoss + randState.Next(0, 2);
-            Tornado_m_DragCoef = 0.01f;
-            Tornado_m_EasyLatFriction = 30f;
-            Tornado_m_EasyLongFriction = 1f;
-            Tornado_m_HardLatFriction = 50f;
-            Tornado_m_HardLongFriction = 1f;
-            Tornado_m_TargetAllDistance = 18f;
-            Tornado_m_ViewRangleOfTarget = 0.707f;
+            Tornado_m_TrackingFrontDistance.Value = 35f;
+            Tornado_m_MaxSpeed.Value = randState.Next(45, 60);
+            Tornado_m_MaxSpeedJuiced.Value = Tornado_m_MaxSpeed.Value;
+            Tornado_m_MaxSpeedWithKart.Value = 10f;
+            Tornado_m_TimeLimit.Value = 30000;
+            Tornado_m_AirGravity.Value = 6f;
+            Tornado_m_GroundGravity.Value = 1.5f;
+            Tornado_m_AirGravityMaglev.Value = Tornado_m_AirGravity.Value;
+            Tornado_m_GroundGravityMaglev.Value = 8f;
+            Tornado_m_Acceleration.Value = randState.Next(40, 60);
+            Tornado_m_AccelerationJuiced.Value = Tornado_m_Acceleration.Value;
+            Tornado_m_TurnSpeed.Value = randState.Next(6, 10);
+            Tornado_m_TurnSpeedJuiced.Value = Tornado_m_TurnSpeed.Value;
+            Tornado_m_Mass.Value = 50f;
+            Tornado_m_Radius.Value = 2.5f;
+            Tornado_m_DelayTrackingUpdate.Value = 100;
+            Tornado_m_ViewRange.Value = 0f;
+            Tornado_m_RangeInFront.Value = 0f;
+            Tornado_m_RangeInBack.Value = 0f;
+            Tornado_m_LiftTime.Value = 3000;
+            Tornado_m_LiftForce.Value = 30f;
+            Tornado_m_FizzleTime.Value = 1000;
+            Tornado_m_NormalWumpaLoss.Value = randState.Next(3, 7);
+            Tornado_m_JuicedWumpaLoss.Value = Tornado_m_NormalWumpaLoss.Value + randState.Next(0, 2);
+            Tornado_m_DragCoef.Value = 0.01f;
+            Tornado_m_EasyLatFriction.Value = 30f;
+            Tornado_m_EasyLongFriction.Value = 1f;
+            Tornado_m_HardLatFriction.Value = 50f;
+            Tornado_m_HardLongFriction.Value = 1f;
+            Tornado_m_TargetAllDistance.Value = 18f;
+            Tornado_m_ViewRangleOfTarget.Value = 0.707f;
         }
 
         public static void CNK_Randomize_WeaponSelection(Random randState)

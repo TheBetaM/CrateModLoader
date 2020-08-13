@@ -1,22 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace CrateModLoader.ModProperties
 {
-    public class ModPropFloatArray : ModProperty<float[]>
+    public class ModPropNamedFloatArray : ModProperty<float[]>
     {
 
-        public ModPropFloatArray(float[] f) : base(f)
+        public string[] PropNames;
+
+        public ModPropNamedFloatArray(float[] f, string[] names) : base(f)
         {
+            PropNames = names;
             DefaultValue = new float[Value.Length];
             for (int i = 0; i < Value.Length; i++)
             {
                 DefaultValue[i] = Value[i];
             }
         }
-        public ModPropFloatArray(float[] f, string name, string desc) : base(f, name, desc)
+        public ModPropNamedFloatArray(float[] f, string[] names, string name, string desc) : base(f, name, desc)
         {
+            PropNames = names;
             DefaultValue = new float[Value.Length];
             for (int i = 0; i < Value.Length; i++)
             {
@@ -34,32 +39,40 @@ namespace CrateModLoader.ModProperties
 
             offset += 20;
 
-            int x_offset = 10;
-            int size = 130;
-            if (Value.Length > 5)
-            {
-                size = 65;
-            }
+            TabControl tabControl = new TabControl();
+            tabControl.TabPages.Clear();
+            tabControl.Parent = page;
+            //tabControl.Multiline = true;
+            tabControl.Location = new Point(10, offset);
+            tabControl.Size = new Size(page.Width - 20, 50);
+            tabControl.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
 
-            foreach (float f in Value)
+            int x_offset = 10;
+            int size = 150;
+
+            for (int i = 0; i < Value.Length; i++)
             {
+                tabControl.TabPages.Add(PropNames[i]);
+                tabControl.TabPages[tabControl.TabPages.Count - 1].AutoScroll = false;
+
                 NumericUpDown num = new NumericUpDown();
 
                 num.DecimalPlaces = 5;
                 num.Minimum = decimal.MinValue;
                 num.Maximum = decimal.MaxValue;
 
-                num.Value = (decimal)f;
-                num.Parent = page;
-                num.Location = new System.Drawing.Point(x_offset, offset);
+                num.Value = (decimal)Value[i];
+                num.Parent = tabControl.TabPages[tabControl.TabPages.Count - 1];
+                num.Location = new Point(0, 2);
                 num.Anchor = AnchorStyles.Top | AnchorStyles.Left;
-                num.Size = new System.Drawing.Size(size, num.Size.Height);
+                num.Size = new Size(size, num.Size.Height);
                 num.ValueChanged += ValueChange;
 
                 nums.Add(num);
 
-                x_offset += size + 20;
             }
+
+            offset += 30;
 
         }
 
@@ -118,7 +131,7 @@ namespace CrateModLoader.ModProperties
                 }
             }
 
-            
+
         }
 
     }

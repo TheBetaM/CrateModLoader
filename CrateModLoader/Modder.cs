@@ -68,7 +68,7 @@ namespace CrateModLoader
                                 }
                             }
 
-                            if (Props[Props.Count - 1].Name == null)
+                            if (string.IsNullOrWhiteSpace(Props[Props.Count - 1].Name))
                             {
                                 Props[Props.Count - 1].Name = field.Name;
                             }
