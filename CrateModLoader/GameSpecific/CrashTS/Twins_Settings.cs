@@ -4,11 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using CrateModLoader.ModProperties;
 
 namespace CrateModLoader.GameSpecific.CrashTS
 {
     static class Twins_Settings
     {
+
+        //public static ModPropString ArchiveName = new ModPropString("Crash");
+        public static ModPropString UnsafeStartingChunk = new ModPropString(@"Levels\Earth\Hub\Beach");
+        public static ModPropString StartingChunk = new ModPropString(@"Levels\Earth\Hub\Beach");
 
         //EXE patching support based on Twinsanity Editor code
         internal struct ExecutablePatchInfo
@@ -40,7 +45,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
             new ExecutablePatchInfo() { LevelOff = 0x368858, LevelSize = 0x17, ArchiveOff = 0x1ED310, ArchiveSize = 0x7 },
         };
 
-        public static void PatchEXE(string StartingChunk = @"Levels\Earth\Hub\Beach")
+        public static void PatchEXE(string StartChunk = @"Levels\Earth\Hub\Beach")
         {
             string filePath = Path.Combine(ModLoaderGlobals.ExtractedPath, ModLoaderGlobals.ExecutableName);
 
@@ -94,6 +99,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
             }
 
             BinaryWriter writer = new BinaryWriter(new FileStream(filePath, FileMode.Open, FileAccess.Write));
+            /*
             if (ModCrates.HasSetting("ArchiveName") && ModLoaderGlobals.Console != ConsoleMode.XBOX)
             {
                 string archiveName = ModCrates.GetSetting("ArchiveName");
@@ -106,17 +112,18 @@ namespace CrateModLoader.GameSpecific.CrashTS
                     writer.Write(archiveName[i]);
                 }
             }
-            string levelName = StartingChunk;
+            */
+            string levelName = StartChunk;
 
             int LevelSize = executable.LevelSize;
-            if (ModCrates.HasSetting("UnsafeStartingChunk"))
+            if (UnsafeStartingChunk.HasChanged)
             {
-                levelName = ModCrates.GetSetting("UnsafeStartingChunk");
+                levelName = UnsafeStartingChunk.Value;
                 LevelSize = 0x2D;
             }
-            else if (ModCrates.HasSetting("StartingChunk"))
+            else if (StartingChunk.HasChanged)
             {
-                levelName = ModCrates.GetSetting("StartingChunk");
+                levelName = StartingChunk.Value;
             }
 
             writer.BaseStream.Position = executable.LevelOff;

@@ -662,6 +662,10 @@ namespace CrateModLoader
             }
             if (Modder != null)
             {
+                if (ModCrates.ModsActiveAmount > 0)
+                {
+                    Modder.InstallCrateSettings();
+                }
                 Modder.StartModProcess();
             }
         }

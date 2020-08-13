@@ -5,9 +5,7 @@ using System.Diagnostics;
 using System.IO;
 //CNK Tools/API by BetaM, ManDude and eezstreet.
 //Version number, seed and options are displayed in the Credits accessible from the main menu.
-/* Mod settings available:
- * kart_AccelerationGainNormal - float - m_AccelerationGainNormal variable (example setting)
- * 
+/* 
  * Mod Layers:
  * 1: ASSETS.GOB contents
  */
@@ -172,8 +170,6 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
 
             ModCrates.InstallLayerMods(path_gob_extracted, 1);
 
-            CNK_Settings.ParseSettings(path_gob_extracted);
-
             bool Editing_CSV_AdventureTracksManager = false;
             bool Editing_CSV_GoalsToRewardsConverter = false;
             bool Editing_CSV_WarpPadInfo = false;
@@ -199,6 +195,47 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
             bool Editing_CSV_PlayerWeaponSelection_Boss = false;
             //bool Editing_CSV_AI_WeaponSelection = false;
             bool Editing_CSV_Credits = true;
+
+            foreach (ModPropertyBase mod in Props)
+            {
+                if (mod.HasChanged)
+                {
+                    if (mod.Category == (int)ModProps.KartStats)
+                    {
+                        Editing_CSV_KartPhysicsBase = true;
+                        Editing_CSV_AI_KartPhysicsBase = true;
+                    }
+                    else if (mod.Category == (int)ModProps.DriverStats)
+                    {
+                        Editing_CSV_CharacterPhysics = true;
+                    }
+                    else if (mod.Category == (int)ModProps.Adventure)
+                    {
+                        Editing_CSV_WarpPadInfo = true;
+                        Editing_CSV_AdventureCup = true;
+                        Editing_CSV_AdventureTracksManager = true;
+                        Editing_CSV_GoalsToRewardsConverter = true;
+                    }
+                    else if (mod.Category == (int)ModProps.Powerups)
+                    {
+                        Editing_CSV_PowerShield = true;
+                        Editing_CSV_FreezingMine = true;
+                        Editing_CSV_HomingMissle = true;
+                        Editing_CSV_InvincMask = true;
+                        Editing_CSV_RedEye = true;
+                        Editing_CSV_TNT = true;
+                        Editing_CSV_Tornado = true;
+                        Editing_CSV_TurboBoost = true;
+                        Editing_CSV_BowlingBomb = true;
+                        Editing_CSV_StaticShock = true;
+                    }
+                    else if (mod.Category == (int)ModProps.Surfaces)
+                    {
+
+                    }
+                }
+            }
+
 
             if (GetOption(NoAlchemyIntro))
             {

@@ -403,6 +403,10 @@ namespace CrateModLoader
                 NewCrate.CML_Version = NewCrate.Meta["ModLoaderVersion"];
             if (NewCrate.Meta.ContainsKey("Game"))
                 NewCrate.TargetGame = NewCrate.Meta["Game"];
+            if (NewCrate.Meta.ContainsKey("Name-" + CultureInfo.CurrentCulture.Name))
+                NewCrate.Name = NewCrate.Meta["Name-" + CultureInfo.CurrentCulture.Name];
+            if (NewCrate.Meta.ContainsKey("Description-" + CultureInfo.CurrentCulture.Name))
+                NewCrate.Desc = NewCrate.Meta["Description-" + CultureInfo.CurrentCulture.Name];
 
             NewCrate.Path = dir.FullName;
 
@@ -414,81 +418,6 @@ namespace CrateModLoader
             ModList = new List<ModCrate>();
             SupportedMods = new List<ModCrate>();
         }
-
-        // Use this to handle settings checks. This will only return the first detected instance of a setting in any enabled mod.
-        public static string GetSetting(string property)
-        {
-            if (ModsActiveAmount <= 0)
-            {
-                return string.Empty;
-            }
-            for (int i = 0; i < SupportedMods.Count; i++)
-            {
-                if (SupportedMods[i].IsActivated && SupportedMods[i].HasSettings)
-                {
-                    if (SupportedMods[i].Settings.ContainsKey(property))
-                    {
-                        return SupportedMods[i].Settings[property];
-                    }
-                }
-            }
-            return string.Empty;
-        }
-        public static int GetIntSetting(string property)
-        {
-            if (ModsActiveAmount <= 0)
-            {
-                return -1;
-            }
-            for (int i = 0; i < SupportedMods.Count; i++)
-            {
-                if (SupportedMods[i].IsActivated && SupportedMods[i].HasSettings)
-                {
-                    if (SupportedMods[i].Settings.ContainsKey(property))
-                    {
-                        return int.Parse(SupportedMods[i].Settings[property]);
-                    }
-                }
-            }
-            return -1;
-        }
-        public static float GetFloatSetting(string property)
-        {
-            if (ModsActiveAmount <= 0)
-            {
-                return -1f;
-            }
-            for (int i = 0; i < SupportedMods.Count; i++)
-            {
-                if (SupportedMods[i].IsActivated && SupportedMods[i].HasSettings)
-                {
-                    if (SupportedMods[i].Settings.ContainsKey(property))
-                    {
-                        return float.Parse(SupportedMods[i].Settings[property]);
-                    }
-                }
-            }
-            return -1f;
-        }
-        public static bool HasSetting(string property)
-        {
-            if (ModsActiveAmount <= 0)
-            {
-                return false;
-            }
-            for (int i = 0; i < SupportedMods.Count; i++)
-            {
-                if (SupportedMods[i].IsActivated && SupportedMods[i].HasSettings)
-                {
-                    if (SupportedMods[i].Settings.ContainsKey(property))
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-
 
         /// <summary>
         /// Installs all active mods of the specified layer in the specified path

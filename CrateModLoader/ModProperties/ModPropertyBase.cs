@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace CrateModLoader.ModProperties
+namespace CrateModLoader
 {
     public abstract class ModPropertyBase
     {
@@ -15,6 +15,10 @@ namespace CrateModLoader.ModProperties
         public abstract void GenerateUI(TabPage page, ref int offset);
 
         public abstract void ValueChange(object sender, System.EventArgs e);
+
+        public abstract void Serialize(ref string input);
+
+        public abstract void DeSerialize(string input);
 
         public abstract void ResetToDefault();
 

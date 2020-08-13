@@ -7,8 +7,13 @@ General:
 - Console/Region specific options will not appear on unsupported versions anymore.  
 - The window will now flash when the process is complete.  
 - Options now show a description when selected.  
+- Mod Menus have been implemented. Variables can be edited in the menu, loaded from a text file or Mod Crate, and saved to a text file or Mod Crate.
 - Mod Crate metadata now supports localization. Set Name-xx and Description-xx with a valid ISO 639-1 country code for it to be displayed in that language. (ex. Name-de (German), Name-es (Spanish) etc.)
 (language switching is planned to be added in the future, right now it will honor the system default)
+
+Mod Menu updates:
+- Crash Nitro Kart - Added Mod Menu
+- Crash Twinsanity - Added Mod Menu
   
 Crash Bandicoot, Crash Bandicoot 2: Cortex Strikes Back, Crash Bandicoot: WARPED:
 - New feature: All Crates Are Blank
@@ -28,6 +33,9 @@ Crash Bandicoot, Crash Bandicoot 2: Cortex Strikes Back, Crash Bandicoot: WARPED
 - New feature: Untextured World (Crash 2 & WARPED)
 - Crate Mod Loader info is now displayed ingame. (Crash 1 - Main menu, Crash 2/WARPED - Pause menu in the Warp Room)
 - Added region detection for Mod Crates.
+
+Crash Tag Team Racing: 
+- Mod layer 1 now supports repacking of Movies.rcf files
 
 Crash of the Titans, Crash Mind Over Mutant:
 - Added support for the Xbox 360 version.  

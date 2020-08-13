@@ -7,9 +7,7 @@ using CrateModLoader.GameSpecific.CrashTTR;
 //RCF API by NeoKesha
 //Pure3D API by BetaM (based on https://github.com/handsomematt/Pure3D)
 //Version number, seed and options are displayed in the Credits accessible from the main menu.
-/* Mod settings available:
- * RaceLaps - integer - Set the amount of laps in all races (example setting)
- * 
+/* 
  * Mod Layers:
  * 1: All .RCF file contents (only replace files)
  */

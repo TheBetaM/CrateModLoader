@@ -118,7 +118,6 @@
     <Compile Include="GameSpecific\CrashNitroKart\CNK_Data_KartStats.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\CNK_Data_Powerups.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\CNK_Data_Surfaces.cs" />
-    <Compile Include="GameSpecific\CrashNitroKart\CNK_Settings.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\CNK_Text.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

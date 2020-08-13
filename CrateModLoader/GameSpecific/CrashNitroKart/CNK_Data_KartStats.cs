@@ -7,11 +7,6 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
     static class CNK_Data_KartStats
     {
 
-        //public static ModPropString m_Accel_proptest = new ModPropString("test");
-        //public static ModPropBool m_Accel_booltest = new ModPropBool(true);
-        //public static ModPropFloat m_Accel_floattest = new ModPropFloat(1.34f);
-        //public static ModPropFloatArray m_Accel_floatatest = new ModPropFloatArray(new float[] { 2.5f , 1.22f, 313.177f });
-
         // These variable comments are from the original CNK files, not made for this tool!
         /// <summary> float | The minimum height we need to get without jumping before we set the in-air state (Note: This is from the center of the collision sphere!!!) </summary>
         public static ModPropFloat m_MinHeightForAirNoJump = new ModPropFloat(1f);

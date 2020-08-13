@@ -145,6 +145,27 @@ namespace CrateModLoader
             }
         }
 
+        public void InstallCrateSettings()
+        {
+            if (!ModMenuEnabled)
+                return;
+
+            for (int mod = 0; mod < ModCrates.SupportedMods.Count; mod++)
+            {
+                if (ModCrates.SupportedMods[mod].IsActivated && ModCrates.SupportedMods[mod].HasSettings)
+                {
+                    foreach (ModPropertyBase prop in Props)
+                    {
+                        if (ModCrates.SupportedMods[mod].Settings.ContainsKey(prop.CodeName) && !prop.HasChanged) // Manual mod menu changes override mod crates
+                        {
+                            prop.DeSerialize(ModCrates.SupportedMods[mod].Settings[prop.CodeName]);
+                            prop.HasChanged = true;
+                        }
+                    }
+                }
+            }
+        }
+
         public bool ModCratesManualInstall = false; // A game might require some type of verification (i.e. file integrity, region matching) before installing layer0 mod crates.
 
         public abstract void StartModProcess();

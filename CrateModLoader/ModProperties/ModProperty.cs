@@ -52,6 +52,17 @@ namespace CrateModLoader
             HasChanged = false;
         }
 
+        public override void Serialize(ref string line)
+        {
+            line += CodeName;
+            line += ModCrates.Separator;
+        }
+
+        public override void DeSerialize(string input)
+        {
+
+        }
+
         void GenerateTitle(TabPage page, ref int offset)
         {
             Label TitleLabel = new Label();
@@ -63,6 +74,7 @@ namespace CrateModLoader
         }
 
         
+
 
     }
 }
