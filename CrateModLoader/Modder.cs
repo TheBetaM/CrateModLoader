@@ -12,8 +12,9 @@ namespace CrateModLoader
      * 1. Make a new modder class that inherits this abstract class.
      * 2. Fill its Game member with the appropriate info in the class constructor.
      * 3. Override StartModProcess (at least, there are more modding functions that can be overriden but are optional).
-     * (optionally) 4. Localize game title, API credit, and options using text resources.
-     * 5. Done.
+     * (optional) 4. Localize game title, API credit, and options using text resources.
+     * (optional) 5. Create ModProperty variables for automatic Mod Menu setup.
+     * 6. Done.
      * 
      */
 
@@ -45,21 +46,33 @@ namespace CrateModLoader
                             Props.Add((ModPropertyBase)field.GetValue(null));
 
                             Props[Props.Count - 1].ResetToDefault();
-
-                            ModCategory chunkAttr = (ModCategory)field.GetCustomAttribute(typeof(ModCategory), false);
-                            if (chunkAttr != null)
+                            
+                            if (Props[Props.Count - 1].Category == null)
                             {
-                                Props[Props.Count - 1].Category = chunkAttr.ID;
-                            }
-                            else
-                            {
-                                Props[Props.Count - 1].Category = 0;
+                                ModCategory chunkAttr = (ModCategory)field.GetCustomAttribute(typeof(ModCategory), false);
+                                if (chunkAttr != null)
+                                {
+                                    Props[Props.Count - 1].Category = chunkAttr.ID;
+                                }
+                                else
+                                {
+                                    ModCategory typeAttr = (ModCategory)field.DeclaringType.GetCustomAttribute(typeof(ModCategory), false);
+                                    if (typeAttr != null)
+                                    {
+                                        Props[Props.Count - 1].Category = typeAttr.ID;
+                                    }
+                                    else
+                                    {
+                                        Props[Props.Count - 1].Category = 0;
+                                    }
+                                }
                             }
 
                             if (Props[Props.Count - 1].Name == null)
                             {
                                 Props[Props.Count - 1].Name = field.Name;
                             }
+                            Props[Props.Count - 1].CodeName = field.Name;
                         }
                     }
                 }

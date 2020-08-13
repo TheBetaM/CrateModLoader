@@ -1,37 +1,38 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using CrateModLoader.ModProperties;
 
 namespace CrateModLoader.GameSpecific.CrashNitroKart
 {
-    static partial class CNK_Data
+
+    public enum PowerupTypes
+    {
+        EXPLOSIVE_CRATE = 0,
+        FREEZING_MINE = 1,
+        HOMING_MISSLE = 2,
+        BOWLING_BOMB = 3,
+        TORNADO = 4,
+        STATIC_SHOCK = 5,
+        POWER_SHIELD = 6,
+        INVINCIBILITY_MASK = 7,
+        INVISIBILITY = 8,
+        VOODOO_DOLL = 9, //Dummied out in retail :(
+        TROPY_CLOCKS = 10,
+        TURBO_BOOSTS = 11,
+        SUPER_ENGINE = 12,
+        REDEYE = 13,
+        HOMING_MISSLE_X3 = 14,
+        BOWLING_BOMB_X3 = 15,
+        TURBO_BOOST_X3 = 16,
+        EXPCRATE_X3 = 17,
+        FREEZEMINE_X3 = 18,
+        STATICSHOCK_X3 = 19,
+    }
+
+    [ModCategory((int)ModProps.Powerups)]
+    static class CNK_Data_Powerups
     {
 
-        public enum PowerupTypes
-        {
-            EXPLOSIVE_CRATE = 0,
-            FREEZING_MINE = 1,
-            HOMING_MISSLE = 2,
-            BOWLING_BOMB = 3,
-            TORNADO = 4,
-            STATIC_SHOCK = 5,
-            POWER_SHIELD = 6,
-            INVINCIBILITY_MASK = 7,
-            INVISIBILITY = 8,
-            VOODOO_DOLL = 9, //Dummied out in retail :(
-            TROPY_CLOCKS = 10,
-            TURBO_BOOSTS = 11,
-            SUPER_ENGINE = 12,
-            REDEYE = 13,
-            HOMING_MISSLE_X3 = 14,
-            BOWLING_BOMB_X3 = 15,
-            TURBO_BOOST_X3 = 16,
-            EXPCRATE_X3 = 17,
-            FREEZEMINE_X3 = 18,
-            STATICSHOCK_X3 = 19,
-        }
+        
         public enum WeaponSelectionRows
         {
             Track_Earth_1 = 11,
@@ -584,5 +585,201 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
         public static float Tornado_m_TargetAllDistance = 18f;
         /// <summary> If juiced, what range does target kart have to be in for tornado to target it on the way to victim | 0.15 </summary>
         public static float Tornado_m_ViewRangleOfTarget = 0.707f;
+
+
+        public static void CNK_Randomize_StaticShock(Random randState)
+        {
+            StaticShock_m_NormalTime = randState.Next(15, 45) * 100;
+            StaticShock_m_JuicedTime = StaticShock_m_NormalTime * 2;
+            StaticShock_m_NormalWumpaLoss = randState.Next(1, 5);
+            StaticShock_m_JuicedWumpaLoss = StaticShock_m_NormalWumpaLoss + randState.Next(0, 2);
+            StaticShock_m_HomingSpeed = randState.Next(9, 15);
+            StaticShock_m_DistanceForHome = randState.Next(9, 15);
+        }
+
+        public static void CNK_Randomize_PowerShield(Random randState)
+        {
+            PowerShield_m_Time = randState.Next(4, 16) * 1000f;
+            PowerShield_m_ZapSpeed = randState.Next(6, 12);
+            //Sadly, it doesn't seem like this actually changes the shield's color
+            PowerShield_m_ColorNonJuiced[0] = (float)randState.NextDouble();
+            PowerShield_m_ColorNonJuiced[1] = (float)randState.NextDouble();
+            PowerShield_m_ColorNonJuiced[2] = (float)randState.NextDouble();
+            PowerShield_m_ColorJuiced[0] = (float)randState.NextDouble();
+            PowerShield_m_ColorJuiced[1] = (float)randState.NextDouble();
+            PowerShield_m_ColorJuiced[2] = (float)randState.NextDouble();
+            PowerShield_m_RangeForZapping = randState.Next(50, 100) / 10f;
+            PowerShield_m_ColRadius = PowerShield_m_RangeForZapping / 4.3f;
+        }
+
+        public static void CNK_Randomize_TurboBoost(Random randState)
+        {
+            TurboBoost_m_NormalTime = randState.Next(60, 120) * 100f;
+            TurboBoost_m_JuicedTime = TurboBoost_m_NormalTime * 1.5f;
+        }
+
+        public static void CNK_Randomize_TNTCrate(Random randState)
+        {
+            TNT_m_Time = 4300;
+            TNT_m_TimeBeforeHiddenChar = 2500;
+            TNT_m_TimeHiddenChar = 4300;
+            TNT_m_NormalWumpaLoss = randState.Next(1, 5);
+            TNT_m_JuicedWumpaLoss = TNT_m_JuicedWumpaLoss + randState.Next(0, 2);
+            TNT_m_ExplosionBlastRadius = randState.Next(300, 800) / 100f;
+            TNT_m_ExplScale = (float)randState.NextDouble() + 0.25f;
+            TNT_m_ExplScaleJuiced = TNT_m_ExplScale + 0.1f;
+        }
+
+        public static void CNK_Randomize_FreezingMine(Random randState)
+        {
+            FreezingMine_m_NormalFreezeTime = randState.Next(15, 45) * 100;
+            FreezingMine_m_JuicedFreezeTime = randState.Next(9, 15) * 1000;
+            FreezingMine_m_NormalWumpaFruitLost = randState.Next(1, 5);
+            FreezingMine_m_JuicedWumpaFruitLost = FreezingMine_m_NormalWumpaFruitLost + randState.Next(0, 2);
+            FreezingMine_m_ThrowDistance = randState.Next(16, 32);
+            FreezingMine_m_ThrowSpeedFactor = (float)randState.NextDouble() + 0.75f;
+            FreezingMine_m_BlastRadius = (float)randState.NextDouble() + randState.Next(1, 5);
+            FreezingMine_m_BlastRadiusJuiced = FreezingMine_m_BlastRadius * 2f;
+            FreezingMine_m_ExplScale = (float)randState.NextDouble() + 0.1f;
+            FreezingMine_m_ExplScaleJuiced = FreezingMine_m_ExplScale * 2f;
+        }
+
+        public static void CNK_Randomize_RedEye(Random randState)
+        {
+            RedEye_Acceleration = randState.Next(25, 75) + (float)randState.NextDouble();
+            RedEye_Deceleration = randState.Next(10, 20) + (float)randState.NextDouble();
+            RedEye_MaxSpeed = randState.Next(45, 75);
+            RedEye_MinSpeed = randState.Next(24, 32);
+            RedEye_TurnSpeed = randState.Next(8, 12) + (float)randState.NextDouble();
+            RedEye_Explosion_Radius = randState.Next(2, 5) + (float)randState.NextDouble();
+            RedEye_TurnSpeedJuiced = RedEye_TurnSpeed + 2f;
+            RedEye_Explosion_Radius_Juiced = RedEye_Explosion_Radius + 4f;
+            RedEye_Expl_Scale = (float)randState.NextDouble() + 0.1f;
+            RedEye_Expl_Scale_Juiced = RedEye_Expl_Scale * 2f;
+            RedEye_FullSpeedTurnSlowdown = 4f;
+        }
+
+        public static void CNK_Randomize_InvincMask(Random randState)
+        {
+            InvincMask_m_NormalTime = randState.Next(60, 100) * 100;
+            InvincMask_m_JuicedTime = InvincMask_m_NormalTime + ((int)Math.Ceiling(InvincMask_m_NormalTime / 2f));
+            InvincMask_m_NormalTimeTeamed = randState.Next(80, 160) * 100;
+            InvincMask_m_JuicedTimeTeamed = InvincMask_m_NormalTimeTeamed + ((int)Math.Ceiling(InvincMask_m_NormalTimeTeamed / 3f));
+            InvincMask_m_NormalWumpaLoss = randState.Next(1, 5);
+            InvincMask_m_JuicedWumpaLoss = InvincMask_m_NormalWumpaLoss + randState.Next(0, 2);
+            InvincMask_m_TeamSpeed = 15f;
+            InvincMask_m_TeamBlastRange = 40f;
+            InvincMask_m_TeamMeterFull = 5f;
+            InvincMask_m_ExplScale = (float)randState.NextDouble() + 0.5f;
+            InvincMask_m_ExplScaleJuiced = 1.5f * InvincMask_m_ExplScale;
+            InvincMask_m_ColRadius = randState.Next(1, 3) + (float)randState.NextDouble();
+        }
+
+        public static void CNK_Randomize_BowlingBomb(Random randState)
+        {
+            BowlingBomb_m_Speed = randState.Next(50, 80);
+            BowlingBomb_m_Acceleration = randState.Next(70, 90);
+            BowlingBomb_m_AccelerationJuiced = BowlingBomb_m_Acceleration * 1.125f;
+            BowlingBomb_m_Mass = 2500f;
+            BowlingBomb_m_Radius = 1f;
+            BowlingBomb_m_AirGravity = 12f;
+            BowlingBomb_m_GroundGravity = 4f;
+            BowlingBomb_m_AirGravityMaglev = 17f;
+            BowlingBomb_m_GroundGravityMaglev = 15f;
+            BowlingBomb_m_TurnSpeed = 0.9f;
+            BowlingBomb_m_TurnSpeedJuiced = BowlingBomb_m_TurnSpeed;
+            BowlingBomb_m_ViewRange = 0.993f;
+            BowlingBomb_m_RangeInFront = 150f;
+            BowlingBomb_m_NormalWumpaLoss = randState.Next(1, 5);
+            BowlingBomb_m_JuicedWumpaLoss = BowlingBomb_m_NormalWumpaLoss + randState.Next(0, 2);
+            BowlingBomb_m_ExplosionBlastRadius = randState.Next(25, 75) / 10f;
+            BowlingBomb_m_ExplosionBlastRadiusJuiced = BowlingBomb_m_ExplosionBlastRadius * 1.6f;
+            BowlingBomb_m_DragCoef = 0.00125f;
+            BowlingBomb_m_EasyLatFriction = 30f;
+            BowlingBomb_m_EasyLongFriction = 1f;
+            BowlingBomb_m_HardLatFriction = 30f;
+            BowlingBomb_m_HardLongFriction = 1f;
+            BowlingBomb_m_BackSpeed = randState.Next(30, 60);
+            BowlingBomb_m_ExplScale = (float)randState.NextDouble() + 0.5f;
+            BowlingBomb_m_ExplScaleJuiced = BowlingBomb_m_ExplScale * 1.5f;
+        }
+
+        public static void CNK_Randomize_HomingMissle(Random randState)
+        {
+            HomingMissle_m_TrackingFrontDistance = 50f;
+            HomingMissle_m_MaxSpeed = randState.Next(40, 80);
+            HomingMissle_m_MaxSpeedJuiced = HomingMissle_m_MaxSpeed * (70f / 60f);
+            HomingMissle_m_TimeLimit = 15000;
+            HomingMissle_m_AirGravityNormal = 8f;
+            HomingMissle_m_GroundGravityNormal = 1.25f;
+            HomingMissle_m_AirGravityMaglev = 8f;
+            HomingMissle_m_GroundGravityMaglev = HomingMissle_m_AirGravityMaglev;
+            HomingMissle_m_Acceleration = randState.Next(35, 55);
+            HomingMissle_m_AccelerationJuiced = HomingMissle_m_Acceleration * (55f / 45f);
+            HomingMissle_m_TurnSpeed = 5f;
+            HomingMissle_m_TurnSpeedJuiced = HomingMissle_m_TurnSpeed * (8f / 5f);
+            HomingMissle_m_Mass = 1000f;
+            HomingMissle_m_Radius = 1f;
+            HomingMissle_m_DelayTrackingUpdate = 100;
+            HomingMissle_m_ViewRange = 0.2f;
+            HomingMissle_m_RangeInFront = 140;
+            HomingMissle_m_RangeInBack = 0f;
+            HomingMissle_m_NormalWumpaLoss = randState.Next(1, 5);
+            HomingMissle_m_JuicedWumpaLoss = HomingMissle_m_NormalWumpaLoss + randState.Next(0, 2);
+            HomingMissle_m_ExplosionBlastRadius = 1f;
+            HomingMissle_m_ExplosionBlastRadiusJuiced = HomingMissle_m_ExplosionBlastRadius;
+            HomingMissle_m_DragCoef = 0.00125f;
+            HomingMissle_m_EasyLatFriction = 15f;
+            HomingMissle_m_EasyLongFriction = 1f;
+            HomingMissle_m_HardLatFriction = 55f;
+            HomingMissle_m_HardLongFriction = 1f;
+            HomingMissle_m_DecayTime = 5000;
+            HomingMissle_m_DecaySpeed = 2f;
+            HomingMissle_m_DecayMin = 40f;
+            HomingMissle_m_ExplScale = 0.45f;
+            HomingMissle_m_ExplScaleJuiced = HomingMissle_m_ExplScale;
+        }
+
+        public static void CNK_Randomize_Tornado(Random randState)
+        {
+            Tornado_m_TrackingFrontDistance = 35f;
+            Tornado_m_MaxSpeed = randState.Next(45, 60);
+            Tornado_m_MaxSpeedJuiced = Tornado_m_MaxSpeed;
+            Tornado_m_MaxSpeedWithKart = 10f;
+            Tornado_m_TimeLimit = 30000;
+            Tornado_m_AirGravity = 6f;
+            Tornado_m_GroundGravity = 1.5f;
+            Tornado_m_AirGravityMaglev = Tornado_m_AirGravity;
+            Tornado_m_GroundGravityMaglev = 8f;
+            Tornado_m_Acceleration = randState.Next(40, 60);
+            Tornado_m_AccelerationJuiced = Tornado_m_Acceleration;
+            Tornado_m_TurnSpeed = randState.Next(6, 10);
+            Tornado_m_TurnSpeedJuiced = Tornado_m_TurnSpeed;
+            Tornado_m_Mass = 50f;
+            Tornado_m_Radius = 2.5f;
+            Tornado_m_DelayTrackingUpdate = 100;
+            Tornado_m_ViewRange = 0f;
+            Tornado_m_RangeInFront = 0f;
+            Tornado_m_RangeInBack = 0f;
+            Tornado_m_LiftTime = 3000;
+            Tornado_m_LiftForce = 30f;
+            Tornado_m_FizzleTime = 1000;
+            Tornado_m_NormalWumpaLoss = randState.Next(3, 7);
+            Tornado_m_JuicedWumpaLoss = Tornado_m_NormalWumpaLoss + randState.Next(0, 2);
+            Tornado_m_DragCoef = 0.01f;
+            Tornado_m_EasyLatFriction = 30f;
+            Tornado_m_EasyLongFriction = 1f;
+            Tornado_m_HardLatFriction = 50f;
+            Tornado_m_HardLongFriction = 1f;
+            Tornado_m_TargetAllDistance = 18f;
+            Tornado_m_ViewRangleOfTarget = 0.707f;
+        }
+
+        public static void CNK_Randomize_WeaponSelection(Random randState)
+        {
+            //todo
+            double target_val = 0;
+            target_val = randState.NextDouble() + 0.5;
+        }
     }
 }

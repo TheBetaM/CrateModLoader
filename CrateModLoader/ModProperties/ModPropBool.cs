@@ -1,4 +1,6 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace CrateModLoader.ModProperties
 {
@@ -20,14 +22,23 @@ namespace CrateModLoader.ModProperties
             
             CheckBox checkBox = new CheckBox();
             checkBox.Text = Name;
-            checkBox.Checked = (bool)Value;
+            checkBox.BackColor = Color.FromKnownColor(KnownColor.Transparent);
+            checkBox.Checked = Value;
             checkBox.Parent = page;
-            checkBox.Location = new System.Drawing.Point(10, offset);
+            checkBox.Location = new Point(10, offset);
             checkBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            checkBox.Size = new System.Drawing.Size(page.Width - 30, checkBox.Size.Height);
+            checkBox.Size = new Size(page.Width - 30, checkBox.Size.Height);
             checkBox.CheckedChanged += ValueChange;
             
 
+        }
+
+        public override void ValueChange(object sender, EventArgs e)
+        {
+            base.ValueChange(sender, e);
+
+            CheckBox box = (CheckBox)sender;
+            Value = box.Checked;
         }
 
     }

@@ -202,6 +202,9 @@
   <data name="ModMenuMissingErrorPopup" xml:space="preserve">
     <value>This game doesn't have a mod menu!</value>
   </data>
+  <data name="ModMenuPage" xml:space="preserve">
+    <value>Page</value>
+  </data>
   <data name="NoOptionsSelectedPopup" xml:space="preserve">
     <value>No options specified - Output ROM will only display version info ingame if available. Proceed?</value>
   </data>

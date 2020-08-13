@@ -114,8 +114,10 @@
     <Compile Include="GameSpecific\CrashBash\Modder_Bash.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\CNK_Data.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\CNK_Data_Adventure.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\CNK_Data_DriverStats.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\CNK_Data_KartStats.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\CNK_Data_Powerups.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\CNK_Data_Surfaces.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\CNK_Settings.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\CNK_Text.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -278,12 +280,6 @@
     <Compile Include="GameSpecific\CrashTitans\Modder_Titans.cs" />
     <Compile Include="GameSpecific\CrashTS\Modder_Twins.cs" />
     <Compile Include="GameSpecific\CrashTTR\Modder_CTTR.cs" />
-    <Compile Include="GameSpecific\CrashNitroKart\ModMenu_CNK.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GameSpecific\CrashNitroKart\ModMenu_CNK.Designer.cs">
-      <DependentUpon>ModMenu_CNK.cs</DependentUpon>
-    </Compile>
     <Compile Include="GameSpecific\CrashTS\Twins_Data.cs" />
     <Compile Include="GameSpecific\CrashTS\Twins_Data_Objects.cs" />
     <Compile Include="GameSpecific\CrashTS\Twins_Data_Scripts.cs" />
@@ -317,8 +313,12 @@
     <Compile Include="ModProperties\ModCategory.cs" />
     <Compile Include="ModProperties\ModPropertyBase.cs" />
     <Compile Include="ModProperties\ModPropBool.cs" />
+    <Compile Include="ModProperties\ModPropFloat.cs" />
+    <Compile Include="ModProperties\ModPropFloatArray.cs" />
+    <Compile Include="ModProperties\ModPropInt.cs" />
     <Compile Include="ModProperties\ModPropString.cs" />
     <Compile Include="ModProperties\ModProperty.cs" />
+    <Compile Include="ModProperties\ModPropUInt.cs" />
     <Compile Include="ModToolsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -348,9 +348,6 @@
     <EmbeddedResource Include="GameSpecific\CrashNitroKart\CNK_Text.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>CNK_Text.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GameSpecific\CrashNitroKart\ModMenu_CNK.resx">
-      <DependentUpon>ModMenu_CNK.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GameSpecific\CrashTS\Twins_Text.resx">
       <Generator>ResXFileCodeGenerator</Generator>

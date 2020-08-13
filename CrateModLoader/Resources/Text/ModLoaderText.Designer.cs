@@ -313,6 +313,15 @@ namespace CrateModLoader.Resources.Text {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Page.
+        /// </summary>
+        public static string ModMenuPage {
+            get {
+                return ResourceManager.GetString("ModMenuPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No options specified - Output ROM will only display version info ingame if available. Proceed?.
         /// </summary>
         public static string NoOptionsSelectedPopup {

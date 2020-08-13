@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 
 namespace CrateModLoader.ModProperties
 {
@@ -21,13 +22,21 @@ namespace CrateModLoader.ModProperties
 
             offset += 20;
             TextBox textBox = new TextBox();
-            textBox.Text = (string)Value;
+            textBox.Text = Value;
             textBox.Parent = page;
             textBox.Location = new System.Drawing.Point(10, offset);
             textBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             textBox.Size = new System.Drawing.Size(page.Width - 30, textBox.Size.Height);
             textBox.TextChanged += ValueChange;
 
+        }
+
+        public override void ValueChange(object sender, EventArgs e)
+        {
+            base.ValueChange(sender, e);
+
+            TextBox box = (TextBox)sender;
+            Value = box.Text;
         }
 
     }

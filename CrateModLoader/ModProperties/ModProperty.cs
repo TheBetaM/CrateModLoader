@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
 using CrateModLoader.ModProperties;
@@ -8,10 +9,9 @@ namespace CrateModLoader
     public class ModProperty<T> : ModPropertyBase
     {
 
-        // Code access
         public T Value { get; set; }
 
-        public T DefaultValue { get; }
+        public T DefaultValue { get; set; }
 
         public ModProperty(T o, string name, string desc = "")
         {
@@ -25,14 +25,14 @@ namespace CrateModLoader
                 Name = null;
             }
             Description = desc;
-            DefaultValue = Value;
+            DefaultValue = o;
         }
         public ModProperty(T o)
         {
             Value = o;
             Name = null;
             Description = string.Empty;
-            DefaultValue = Value;
+            DefaultValue = o;
         }
 
         public override void GenerateUI(TabPage page, ref int offset)
@@ -43,26 +43,13 @@ namespace CrateModLoader
 
         public override void ValueChange(object sender, System.EventArgs e)
         {
-            if (sender is CheckBox)
-            {
-                CheckBox box = (CheckBox)sender;
-                Value = (T)(object)box.Checked;
-            }
-            else if (sender is TextBox)
-            {
-                TextBox box = (TextBox)sender;
-                Value = (T)(object)box.Text;
-            }
-            else if (sender is ComboBox)
-            {
-                ComboBox box = (ComboBox)sender;
-                Value = (T)(object)box.SelectedIndex;
-            }
+            HasChanged = true;
         }
 
         public override void ResetToDefault()
         {
             Value = DefaultValue;
+            HasChanged = false;
         }
 
         void GenerateTitle(TabPage page, ref int offset)
