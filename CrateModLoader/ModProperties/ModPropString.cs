@@ -39,5 +39,15 @@ namespace CrateModLoader.ModProperties
             Value = box.Text;
         }
 
+        public override void Serialize(ref string line)
+        {
+            line += Value;
+        }
+
+        public override void DeSerialize(string input)
+        {
+            Value = input;
+        }
+
     }
 }

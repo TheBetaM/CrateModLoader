@@ -40,7 +40,7 @@ namespace CrateModLoader.ModProperties
             {
                 NumericUpDown num = new NumericUpDown();
 
-                num.DecimalPlaces = 8;
+                num.DecimalPlaces = 5;
                 num.Minimum = decimal.MinValue;
                 num.Maximum = decimal.MaxValue;
 
@@ -83,6 +83,37 @@ namespace CrateModLoader.ModProperties
                 Value[i] = DefaultValue[i];
             }
             HasChanged = false;
+        }
+
+        public override void Serialize(ref string line)
+        {
+            for (int i = 0; i < Value.Length; i++)
+            {
+                line += Value[i];
+                line += ";";
+            }
+        }
+
+        public override void DeSerialize(string input)
+        {
+            string[] vals = input.Split(';');
+
+            if (vals.Length != Value.Length + 1 && vals.Length != Value.Length)
+            {
+                Console.WriteLine("Error: Input array length mismatch!");
+                return;
+            }
+
+            for (int i = 0; i < vals.Length - 1; i++)
+            {
+                float val;
+                if (float.TryParse(vals[i], out val))
+                {
+                    Value[i] = val;
+                }
+            }
+
+            
         }
 
     }

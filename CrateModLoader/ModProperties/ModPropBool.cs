@@ -29,8 +29,14 @@ namespace CrateModLoader.ModProperties
             checkBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             checkBox.Size = new Size(page.Width - 30, checkBox.Size.Height);
             checkBox.CheckedChanged += ValueChange;
-            
 
+            if (HasChanged && Value != DefaultValue)
+            {
+                if (checkBox.Text[checkBox.Text.Length - 1] != '*')
+                {
+                    checkBox.Text += '*';
+                }
+            }
         }
 
         public override void ValueChange(object sender, EventArgs e)
@@ -39,6 +45,30 @@ namespace CrateModLoader.ModProperties
 
             CheckBox box = (CheckBox)sender;
             Value = box.Checked;
+
+            if (HasChanged && Value != DefaultValue)
+            {
+                if (box.Text[box.Text.Length - 1] != '*')
+                {
+                    box.Text += '*';
+                }
+            }
+        }
+
+        public override void Serialize(ref string line)
+        {
+            if (Value)
+                line += "1";
+            else
+                line += "0";
+        }
+
+        public override void DeSerialize(string input)
+        {
+            if (input == "1")
+                Value = true;
+            else
+                Value = false;
         }
 
     }

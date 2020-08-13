@@ -32,6 +32,8 @@ namespace CrateModLoader
             int initOffset = 10;
             int offset = initOffset;
 
+            int itemsPerPage = 30; // to reduce lag
+
             SortedDictionary<int, string> Pages = new SortedDictionary<int, string>();
             foreach (ModPropertyBase prop in mod.Props)
             {
@@ -50,18 +52,33 @@ namespace CrateModLoader
 
             tabControl1.TabPages.Clear();
 
+            int curItem = 0;
+            int curPage = 1;
+
             foreach (KeyValuePair<int, string> pair in Pages)
             {
                 tabControl1.TabPages.Add(pair.Value);
                 tabControl1.TabPages[tabControl1.TabPages.Count - 1].AutoScroll = true; //causes massive cpu usage and choppy visuals with lots of elements
                 //tabControl1.TabPages[tabControl1.TabPages.Count - 1].AutoScroll = false;
 
+                curItem = 0;
+                curPage = 1;
+
                 foreach (ModPropertyBase prop in mod.Props)
                 {
+                    if (curItem == itemsPerPage)
+                    {
+                        curPage++;
+                        tabControl1.TabPages.Add(string.Format("{0} {1} {2}", pair.Value, ModLoaderText.ModMenuPage, curPage));
+                        tabControl1.TabPages[tabControl1.TabPages.Count - 1].AutoScroll = true;
+                        curItem = 0;
+                        offset = initOffset;
+                    }
                     if (prop.Category == pair.Key)
                     {
                         prop.GenerateUI(tabControl1.TabPages[tabControl1.TabPages.Count - 1], ref offset);
                         offset += 25;
+                        curItem++;
                     }
                 }
                 

@@ -13,6 +13,8 @@ namespace CrateModLoader
 
         public T DefaultValue { get; set; }
 
+        public Label TitleLabel = null;
+
         public ModProperty(T o, string name, string desc = "")
         {
             Value = o;
@@ -39,11 +41,29 @@ namespace CrateModLoader
         {
             GenerateTitle(page, ref offset);
 
+            // Changed values show a * next to the name
+            if (HasChanged && TitleLabel != null)
+            {
+                if (TitleLabel.Text[TitleLabel.Text.Length - 1] != '*')
+                {
+                    TitleLabel.Text += '*';
+                }
+            }
+
         }
 
         public override void ValueChange(object sender, System.EventArgs e)
         {
             HasChanged = true;
+
+            // Changed values show a * next to the name
+            if (TitleLabel != null)
+            {
+                if (TitleLabel.Text[TitleLabel.Text.Length - 1] != '*')
+                {
+                    TitleLabel.Text += '*';
+                }
+            }
         }
 
         public override void ResetToDefault()
@@ -65,7 +85,7 @@ namespace CrateModLoader
 
         void GenerateTitle(TabPage page, ref int offset)
         {
-            Label TitleLabel = new Label();
+            TitleLabel = new Label();
             TitleLabel.Text = Name;
             TitleLabel.Parent = page;
             TitleLabel.Location = new Point(10, offset);

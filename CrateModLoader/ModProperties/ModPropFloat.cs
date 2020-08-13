@@ -22,7 +22,7 @@ namespace CrateModLoader.ModProperties
             offset += 20;
             NumericUpDown num = new NumericUpDown();
 
-            num.DecimalPlaces = 8;
+            num.DecimalPlaces = 5;
             num.Minimum = decimal.MinValue;
             num.Maximum = decimal.MaxValue;
 
@@ -42,6 +42,20 @@ namespace CrateModLoader.ModProperties
 
             NumericUpDown box = (NumericUpDown)sender;
             Value = (float)box.Value;
+        }
+
+        public override void Serialize(ref string line)
+        {
+            line += Value;
+        }
+
+        public override void DeSerialize(string input)
+        {
+            float val;
+            if (float.TryParse(input, out val))
+            {
+                Value = val;
+            }
         }
 
     }
