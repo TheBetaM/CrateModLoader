@@ -20,14 +20,15 @@ namespace CrateModLoader.ModProperties
             
             base.GenerateUI(page, ref offset);
 
-            offset += 20;
+            //offset += 20;
             TextBox textBox = new TextBox();
             textBox.Text = Value;
             textBox.Parent = page;
-            textBox.Location = new System.Drawing.Point(10, offset);
-            textBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            textBox.Size = new System.Drawing.Size(page.Width - 30, textBox.Size.Height);
+            textBox.Location = new System.Drawing.Point(245, offset);
+            textBox.Anchor = AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Left;
+            textBox.Size = new System.Drawing.Size(page.Width - 250, textBox.Size.Height);
             textBox.TextChanged += ValueChange;
+            textBox.MouseEnter += FocusUI;
 
         }
 

@@ -27,6 +27,7 @@ namespace CrateModLoader
             button_downloadMods.Text = ModLoaderText.Button_DownloadMods;
             button_modCrateMenu.Text = ModLoaderText.ModCratesButton;
             button_modTools.Text = ModLoaderText.Button_ModTools;
+            button_openModMenu.Text = ModLoaderText.ModMenuButton;
             button4.Text = ModLoaderText.RandomizeSeedButton;
             button1.Text = ModLoaderText.InputBrowse;
             button2.Text = ModLoaderText.OutputBrowse;

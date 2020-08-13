@@ -29,10 +29,12 @@ namespace CrateModLoader
 
         void GenerateUI()
         {
+            label1.Text = "";
+
             int initOffset = 10;
             int offset = initOffset;
 
-            int itemsPerPage = 30; // to reduce lag
+            int itemsPerPage = 40; // to reduce lag
 
             SortedDictionary<int, string> Pages = new SortedDictionary<int, string>();
             foreach (ModPropertyBase prop in mod.Props)
@@ -68,6 +70,10 @@ namespace CrateModLoader
                 {
                     if (curItem == itemsPerPage)
                     {
+                        if (curPage == 1)
+                        {
+                            tabControl1.TabPages[tabControl1.TabPages.Count - 1].Text = string.Format("{0} {1} {2}", tabControl1.TabPages[tabControl1.TabPages.Count - 1].Text, ModLoaderText.ModMenuPage, curPage);
+                        }
                         curPage++;
                         tabControl1.TabPages.Add(string.Format("{0} {1} {2}", pair.Value, ModLoaderText.ModMenuPage, curPage));
                         tabControl1.TabPages[tabControl1.TabPages.Count - 1].AutoScroll = true;
@@ -115,6 +121,11 @@ namespace CrateModLoader
             }
         }
 
+        public void UpdateDescLabel(string desc)
+        {
+            label1.Text = desc;
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             Close();
@@ -123,6 +134,26 @@ namespace CrateModLoader
         private void ModMenuForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             Owner.Enabled = true;
+
+            bool HasChanged = false;
+
+            foreach (ModPropertyBase prop in mod.Props)
+            {
+                if (prop.HasChanged)
+                {
+                    HasChanged = true;
+                    break;
+                }
+            }
+
+            if (HasChanged)
+            {
+                Program.ModProgram.button_modMenu.Text = ModLoaderText.ModMenuButton + "*";
+            }
+            else
+            {
+                Program.ModProgram.button_modMenu.Text = ModLoaderText.ModMenuButton;
+            }
         }
 
         private void ModMenuForm_Load(object sender, EventArgs e)

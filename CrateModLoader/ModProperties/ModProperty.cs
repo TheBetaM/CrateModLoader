@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
-using CrateModLoader.ModProperties;
 
-namespace CrateModLoader
+namespace CrateModLoader.ModProperties
 {
     public class ModProperty<T> : ModPropertyBase
     {
@@ -14,6 +13,7 @@ namespace CrateModLoader
         public T DefaultValue { get; set; }
 
         public Label TitleLabel = null;
+        public ModMenuForm ParentForm = null;
 
         public ModProperty(T o, string name, string desc = "")
         {
@@ -49,6 +49,8 @@ namespace CrateModLoader
                     TitleLabel.Text += '*';
                 }
             }
+
+            ParentForm = (ModMenuForm)page.Parent.Parent;
 
         }
 
@@ -88,12 +90,20 @@ namespace CrateModLoader
             TitleLabel = new Label();
             TitleLabel.Text = Name;
             TitleLabel.Parent = page;
-            TitleLabel.Location = new Point(10, offset);
-            TitleLabel.AutoSize = true;
+            TitleLabel.Location = new Point(5, offset);
+            TitleLabel.AutoSize = false;
+            TitleLabel.Size = new Size(240, 20);
+            TitleLabel.TextAlign = ContentAlignment.TopRight;
             TitleLabel.BackColor = Color.FromKnownColor(KnownColor.Transparent);
+            TitleLabel.MouseEnter += FocusUI;
         }
 
-        
+        public override void FocusUI(object sender, object e)
+        {
+            ParentForm.UpdateDescLabel(Description);
+        }
+
+
 
 
     }

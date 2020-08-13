@@ -295,7 +295,7 @@ namespace CrateModLoader.Resources.Text {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Open Mod Menu.
+        ///   Looks up a localized string similar to Mod Menu.
         /// </summary>
         public static string ModMenuButton {
             get {

@@ -197,7 +197,7 @@
     <value>Mod Crates</value>
   </data>
   <data name="ModMenuButton" xml:space="preserve">
-    <value>Open Mod Menu</value>
+    <value>Mod Menu</value>
   </data>
   <data name="ModMenuMissingErrorPopup" xml:space="preserve">
     <value>This game doesn't have a mod menu!</value>

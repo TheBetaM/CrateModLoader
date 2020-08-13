@@ -67,6 +67,7 @@ namespace CrateModLoader.ModProperties
                 num.Anchor = AnchorStyles.Top | AnchorStyles.Left;
                 num.Size = new Size(size, num.Size.Height);
                 num.ValueChanged += ValueChange;
+                num.MouseCaptureChanged += FocusUI;
 
                 nums.Add(num);
 

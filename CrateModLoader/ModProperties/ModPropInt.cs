@@ -19,7 +19,7 @@ namespace CrateModLoader.ModProperties
         {
             base.GenerateUI(page, ref offset);
 
-            offset += 20;
+            //offset += 20;
             NumericUpDown num = new NumericUpDown();
 
             num.DecimalPlaces = 0;
@@ -28,7 +28,7 @@ namespace CrateModLoader.ModProperties
 
             num.Value = Value;
             num.Parent = page;
-            num.Location = new System.Drawing.Point(10, offset);
+            num.Location = new System.Drawing.Point(245, offset - 3);
             num.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             num.Size = new System.Drawing.Size(230, num.Size.Height);
             num.ValueChanged += ValueChange;

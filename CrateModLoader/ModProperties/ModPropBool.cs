@@ -29,6 +29,7 @@ namespace CrateModLoader.ModProperties
             checkBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             checkBox.Size = new Size(page.Width - 30, checkBox.Size.Height);
             checkBox.CheckedChanged += ValueChange;
+            checkBox.MouseEnter += FocusUI;
 
             if (HasChanged && Value != DefaultValue)
             {

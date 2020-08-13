@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 
 namespace CrateModLoader
 {
@@ -21,6 +22,8 @@ namespace CrateModLoader
         public abstract void DeSerialize(string input);
 
         public abstract void ResetToDefault();
+
+        public abstract void FocusUI(object sender, object e);
 
     }
 }

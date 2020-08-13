@@ -32,9 +32,9 @@ namespace CrateModLoader.ModProperties
 
             nums.Clear();
 
-            offset += 20;
+            //offset += 20;
 
-            int x_offset = 10;
+            int x_offset = 245;
             int size = 130;
             if (Value.Length > 5)
             {
@@ -51,10 +51,11 @@ namespace CrateModLoader.ModProperties
 
                 num.Value = (decimal)f;
                 num.Parent = page;
-                num.Location = new System.Drawing.Point(x_offset, offset);
+                num.Location = new System.Drawing.Point(x_offset, offset - 3);
                 num.Anchor = AnchorStyles.Top | AnchorStyles.Left;
                 num.Size = new System.Drawing.Size(size, num.Size.Height);
                 num.ValueChanged += ValueChange;
+                num.MouseCaptureChanged += FocusUI;
 
                 nums.Add(num);
 
