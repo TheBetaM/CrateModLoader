@@ -6,6 +6,8 @@ namespace CrateModLoader.ModProperties
     public class ModPropString : ModProperty<string>
     {
 
+        public int MaxLength = int.MaxValue;
+
         public ModPropString(string text) : base(text)
         {
 
@@ -13,6 +15,14 @@ namespace CrateModLoader.ModProperties
         public ModPropString(string text, string name, string desc) : base(text, name, desc)
         {
 
+        }
+        public ModPropString(string text, int maxLen) : base(text)
+        {
+            MaxLength = maxLen;
+        }
+        public ModPropString(string text, int maxLen, string name, string desc) : base(text, name, desc)
+        {
+            MaxLength = maxLen;
         }
 
         public override void GenerateUI(TabPage page, ref int offset)
@@ -29,6 +39,10 @@ namespace CrateModLoader.ModProperties
             textBox.Size = new System.Drawing.Size(page.Width - 250, textBox.Size.Height);
             textBox.TextChanged += ValueChange;
             textBox.MouseEnter += FocusUI;
+            if (MaxLength != int.MaxValue)
+            {
+                textBox.MaxLength = MaxLength;
+            }
 
         }
 

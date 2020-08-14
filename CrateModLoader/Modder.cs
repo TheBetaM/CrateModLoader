@@ -2,6 +2,8 @@
 using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Reflection;
+using System.IO;
+using System.IO.Compression;
 using CrateModLoader.Resources.Text;
 using CrateModLoader.ModProperties;
 
@@ -164,6 +166,78 @@ namespace CrateModLoader
                     }
                 }
             }
+        }
+
+        public void LoadSettingsFromFile(string path)
+        {
+            FileInfo file = new FileInfo(path);
+
+            bool isModCrate = file.Extension.ToLower() == ".zip";
+
+            Dictionary<string, string> Settings = new Dictionary<string, string>();
+
+            //zip handling
+            if (isModCrate)
+            {
+                using (ZipArchive archive = ZipFile.OpenRead(file.FullName))
+                {
+                    foreach (ZipArchiveEntry entry in archive.Entries)
+                    {
+                        if (entry.FullName.EndsWith(".txt", StringComparison.OrdinalIgnoreCase))
+                        {
+                            if (entry.Name.ToLower() == ModCrates.SettingsFileName)
+                            {
+                                using (StreamReader fileStream = new StreamReader(entry.Open(), true))
+                                {
+                                    string line;
+                                    while ((line = fileStream.ReadLine()) != null)
+                                    {
+                                        if (line[0] != ModCrates.CommentSymbol)
+                                        {
+                                            string[] setting = line.Split(ModCrates.Separator);
+                                            Settings[setting[0]] = setting[1];
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                using (StreamReader fileStream = new StreamReader(path, true))
+                {
+                    string line;
+                    while ((line = fileStream.ReadLine()) != null)
+                    {
+                        if (line[0] != ModCrates.CommentSymbol)
+                        {
+                            string[] setting = line.Split(ModCrates.Separator);
+                            if (setting.Length > 1)
+                            {
+                                Settings[setting[0]] = setting[1];
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (Settings.Count == 0)
+            {
+                MessageBox.Show(ModLoaderText.ModMenuLoad_Error);
+                return;
+            }
+
+            foreach (ModPropertyBase prop in Props)
+            {
+                if (Settings.ContainsKey(prop.CodeName))
+                {
+                    prop.DeSerialize(Settings[prop.CodeName]);
+                    prop.HasChanged = true;
+                }
+            }
+
         }
 
         public bool ModCratesManualInstall = false; // A game might require some type of verification (i.e. file integrity, region matching) before installing layer0 mod crates.

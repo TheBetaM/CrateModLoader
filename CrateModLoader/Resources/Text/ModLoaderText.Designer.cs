@@ -304,6 +304,15 @@ namespace CrateModLoader.Resources.Text {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No settings found!.
+        /// </summary>
+        public static string ModMenuLoad_Error {
+            get {
+                return ResourceManager.GetString("ModMenuLoad_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This game doesn&apos;t have a mod menu!.
         /// </summary>
         public static string ModMenuMissingErrorPopup {
@@ -547,7 +556,7 @@ namespace CrateModLoader.Resources.Text {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Randomize the seed to the right of this button..
+        ///   Looks up a localized string similar to Randomize the seed below this button..
         /// </summary>
         public static string Tooltip_Button_RandomizeSeed {
             get {

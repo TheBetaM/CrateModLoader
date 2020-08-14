@@ -6,11 +6,7 @@ using System.IO;
 using Twinsanity;
 //Twinsanity API by NeoKesha, Smartkin, ManDude and Marko (https://github.com/Smartkin/twinsanity-editor)
 //Version number, seed and options are displayed in the Autosave Disabled screen accessible by starting a new game without saving or just disabling autosave.
-/* Mod settings available:
- * ArchiveName - string - Name of main archive loaded by the game - Default: Crash
- * StartingChunk - string - Path and name of chunk that is loaded when the game boots up (case sensitive, must have a character object in it) - Default: Levels\Earth\Hub\Beach (name size limit: 0x17)
- * UnsafeStartingChunk - string - Starting chunk that allows for a longer name (game will softlock after credits because it overwrites the post-credits chunk name) (name size limit: 0x2D)
- * 
+/* 
  * Mod Layers:
  * 1: Extracted BD/BH archive files (PS2 only, same as layer 0 on XBOX)
  */

@@ -13,8 +13,8 @@ namespace CrateModLoader.GameSpecific.CrashTS
     {
 
         //public static ModPropString ArchiveName = new ModPropString("Crash");
-        public static ModPropString UnsafeStartingChunk = new ModPropString(@"Levels\Earth\Hub\Beach");
-        public static ModPropString StartingChunk = new ModPropString(@"Levels\Earth\Hub\Beach");
+        public static ModPropString StartingChunk = new ModPropString(@"Levels\Earth\Hub\Beach", 0x17);
+        public static ModPropString UnsafeStartingChunk = new ModPropString(@"Levels\Earth\Hub\Beach", 0x2D);
 
         //EXE patching support based on Twinsanity Editor code
         internal struct ExecutablePatchInfo

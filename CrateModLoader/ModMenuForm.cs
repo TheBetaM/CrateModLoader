@@ -173,7 +173,16 @@ namespace CrateModLoader
 
         private void button3_Click(object sender, EventArgs e)
         {
-            // todo: load from text file / mod crate
+            openFileDialog1.Filter = string.Format("{0} (*.zip; *.txt)|*.zip;*.txt", "Mod Crates, Mod Settings");
+            openFileDialog1.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory + ModLoaderGlobals.ModDirectory;
+            openFileDialog1.FileName = "";
+
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                mod.LoadSettingsFromFile(openFileDialog1.FileName);
+
+                GenerateUI();
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)

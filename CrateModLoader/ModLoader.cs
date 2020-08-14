@@ -1450,8 +1450,8 @@ namespace CrateModLoader
             {
                 button_modMenu.Visible = true;
                 button_modMenu.Enabled = false;
-                button_modCrateMenu.Enabled = button_modCrateMenu.Visible = true;
-                button_randomize.Enabled = button_randomize.Visible = button_modTools.Visible = button_modTools.Enabled = button_downloadMods.Enabled = button_downloadMods.Visible = false;
+                button_modCrateMenu.Enabled = button_modCrateMenu.Visible = button_modTools.Visible = button_modTools.Enabled = true;
+                button_randomize.Enabled = button_randomize.Visible = button_modMenu.Visible = button_modMenu.Enabled = button_downloadMods.Enabled = button_downloadMods.Visible = false;
                 textbox_rando_seed.Enabled = textbox_rando_seed.Visible = false;
 
                 text_gameType.Text = ModLoaderText.UnsupportedGameTitle + " (" + cons_mod + ")";
@@ -1469,8 +1469,9 @@ namespace CrateModLoader
                 //button_modMenu.Enabled = button_modMenu.Visible = Modder.Game.ModMenuEnabled;
                 button_modMenu.Visible = true;
                 button_modMenu.Enabled = Modder.ModMenuEnabled;
-                button_modCrateMenu.Enabled = button_modCrateMenu.Visible = Modder.Game.ModCratesSupported;
-                button_randomize.Enabled = button_randomize.Visible = button_modTools.Visible = button_downloadMods.Visible = true;
+                button_modCrateMenu.Visible = true;
+                button_modCrateMenu.Enabled = Modder.Game.ModCratesSupported;
+                button_randomize.Enabled = button_randomize.Visible = button_modTools.Enabled = button_modTools.Visible = button_downloadMods.Visible = true;
                 textbox_rando_seed.Enabled = textbox_rando_seed.Visible = true;
                 text_optionDescLabel.Text = string.Empty;
                 text_optionDescLabel.Visible = false;
@@ -1696,6 +1697,7 @@ namespace CrateModLoader
         {
             Modder = null;
             button_modCrateMenu.Text = ModLoaderText.ModCratesButton;
+            button_modMenu.Text = ModLoaderText.ModMenuButton;
             ModCrates.ClearModLists();
             loadedISO = false;
 

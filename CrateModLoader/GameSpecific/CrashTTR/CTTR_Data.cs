@@ -3,6 +3,31 @@ using System.Collections.Generic;
 
 namespace CrateModLoader.GameSpecific.CrashTTR
 {
+    public enum TrackID
+    {
+        adventure1 = 0,
+        adventure2 = 1,
+        adventure3 = 2,
+        fairy1 = 3,
+        fairy2 = 4,
+        fairy3 = 5,
+        dino1 = 6,
+        dino2 = 7,
+        dino3 = 8,
+        egypt1 = 9,
+        egypt2 = 10,
+        egypt3 = 11,
+        solar1 = 12,
+        solar2 = 13,
+        solar3 = 14,
+        adventure_arena = 15,
+        fairy_arena = 16,
+        dino_arena = 17,
+        egypt_arena = 18,
+        solar_arena = 19,
+        bonus1_arena = 20,
+    }
+
     static partial class CTTR_Data
     {
         public enum CharacterID
@@ -249,30 +274,7 @@ namespace CrateModLoader.GameSpecific.CrashTTR
             "Solar",
             "Tutorial",
         };
-        public enum TrackID
-        {
-            adventure1 = 0,
-            adventure2 = 1,
-            adventure3 = 2,
-            fairy1 = 3,
-            fairy2 = 4,
-            fairy3 = 5,
-            dino1 = 6,
-            dino2 = 7,
-            dino3 = 8,
-            egypt1 = 9,
-            egypt2 = 10,
-            egypt3 = 11,
-            solar1 = 12,
-            solar2 = 13,
-            solar3 = 14,
-            adventure_arena = 15,
-            fairy_arena = 16,
-            dino_arena = 17,
-            egypt_arena = 18,
-            solar_arena = 19,
-            bonus1_arena = 20,
-        }
+        
         public static string[] TrackNames = new string[]
         {
             "adventure1",

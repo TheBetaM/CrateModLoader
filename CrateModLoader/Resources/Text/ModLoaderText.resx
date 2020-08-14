@@ -199,6 +199,9 @@
   <data name="ModMenuButton" xml:space="preserve">
     <value>Mod Menu</value>
   </data>
+  <data name="ModMenuLoad_Error" xml:space="preserve">
+    <value>No settings found!</value>
+  </data>
   <data name="ModMenuMissingErrorPopup" xml:space="preserve">
     <value>This game doesn't have a mod menu!</value>
   </data>
@@ -281,7 +284,7 @@
     <value>Open a tool menu for creating mods.</value>
   </data>
   <data name="Tooltip_Button_RandomizeSeed" xml:space="preserve">
-    <value>Randomize the seed to the right of this button.</value>
+    <value>Randomize the seed below this button.</value>
   </data>
   <data name="Tooltip_Checkbox_LoadFromFolder" xml:space="preserve">
     <value>Load the game files from a folder instead of a ROM.</value>
