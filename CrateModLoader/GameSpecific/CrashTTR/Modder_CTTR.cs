@@ -19,7 +19,7 @@ namespace CrateModLoader.GameSpecific.CrashTTR
         internal string path_RCF_default = "";
         internal string path_RCF_common = "";
         internal string path_RCF_frontend = "";
-        internal string path_executable = "";
+        //internal string path_executable = "";
         internal string path_RCF_onfoot0 = "";
         internal string path_RCF_onfoot1 = "";
         internal string path_RCF_onfoot2 = "";
@@ -57,6 +57,7 @@ namespace CrateModLoader.GameSpecific.CrashTTR
         internal string path_RCF_6 = ""; // XBOX
         internal string path_RCF_sound = "";
         internal string path_RCF_english = "";
+        internal string path_RCF_movies = "";
         internal string basePath = "";
 
         internal const int RandomizeCharacters          = 0;
@@ -192,7 +193,7 @@ namespace CrateModLoader.GameSpecific.CrashTTR
             path_RCF_default = "";
             path_RCF_common = "";
             path_RCF_frontend = "";
-            path_executable = "";
+            //path_executable = "";
             path_RCF_onfoot0 = "";
             path_RCF_onfoot1 = "";
             path_RCF_onfoot2 = "";
@@ -230,10 +231,11 @@ namespace CrateModLoader.GameSpecific.CrashTTR
             path_RCF_6 = ""; 
             path_RCF_sound = "";
             path_RCF_english = "";
+            path_RCF_movies = "";
 
             if (console == ConsoleMode.PS2)
             {
-                path_executable = exec_name;
+                //path_executable = exec_name;
                 path_RCF_default = @"ADEFAULT\DEFAULT.RCF";
                 path_RCF_advent1 = @"ADVENT\ADVENT1.RCF";
                 path_RCF_advent2 = @"ADVENT\ADVENT2.RCF";
@@ -264,79 +266,82 @@ namespace CrateModLoader.GameSpecific.CrashTTR
                 path_RCF_onfoot3 = @"ONFOOT\ONFOOT3.RCF";
                 path_RCF_onfoot5 = @"ONFOOT\ONFOOT5.RCF";
                 path_RCF_onfoot6 = @"ONFOOT\ONFOOT6.RCF";
+                path_RCF_movies = @"MOVIES.RCF";
             }
             else if (console == ConsoleMode.PSP)
             {
-                path_executable = @"PSP_GAME\SYSDIR\BOOT.BIN";
-                path_RCF_default = @"PSP_GAME\USRDIR\adefault\default.rcf";
-                path_RCF_advent1 = @"PSP_GAME\USRDIR\advent\advent1.rcf";
-                path_RCF_advent2 = @"PSP_GAME\USRDIR\advent\advent2.rcf";
-                path_RCF_advent3 = @"PSP_GAME\USRDIR\advent\advent3.rcf";
-                path_RCF_adventa = @"PSP_GAME\USRDIR\advent\adventa.rcf";
-                path_RCF_common = @"PSP_GAME\USRDIR\common\common.rcf";
-                path_RCF_dino1 = @"PSP_GAME\USRDIR\dino\dino1.rcf";
-                path_RCF_dino2 = @"PSP_GAME\USRDIR\dino\dino2.rcf";
-                path_RCF_dino3 = @"PSP_GAME\USRDIR\dino\dino3.rcf";
-                path_RCF_dinoa = @"PSP_GAME\USRDIR\dino\dinoa.rcf";
-                path_RCF_egypt1 = @"PSP_GAME\USRDIR\egypt\egypt1.rcf";
-                path_RCF_egypt2 = @"PSP_GAME\USRDIR\egypt\egypt2.rcf";
-                path_RCF_egypt3 = @"PSP_GAME\USRDIR\egypt\egypt3.rcf";
-                path_RCF_egypta = @"PSP_GAME\USRDIR\egypt\egypta.rcf";
-                path_RCF_english = @"PSP_GAME\USRDIR\english.rcf";
-                path_RCF_fairy1 = @"PSP_GAME\USRDIR\fairy\fairy1.rcf";
-                path_RCF_fairy2 = @"PSP_GAME\USRDIR\fairy\fairy2.rcf";
-                path_RCF_fairy3 = @"PSP_GAME\USRDIR\fairy\fairy3.rcf";
-                path_RCF_fairys = @"PSP_GAME\USRDIR\fairy\fairys.rcf";
-                path_RCF_frontend = @"PSP_GAME\USRDIR\common\frontend.rcf";
-                path_RCF_solar1 = @"PSP_GAME\USRDIR\solar\solar1.rcf";
-                path_RCF_solar2 = @"PSP_GAME\USRDIR\solar\solar2.rcf";
-                path_RCF_solar3 = @"PSP_GAME\USRDIR\solar\solar3.rcf";
-                path_RCF_solars = @"PSP_GAME\USRDIR\solar\solars.rcf";
-                path_RCF_onfoot0 = @"PSP_GAME\USRDIR\onfoot\onfoot.rcf";
-                path_RCF_onfoot1 = @"PSP_GAME\USRDIR\onfoot\onfoot1.rcf";
-                path_RCF_onfoot2 = @"PSP_GAME\USRDIR\onfoot\onfoot2.rcf";
-                path_RCF_onfoot3 = @"PSP_GAME\USRDIR\onfoot\onfoot3.rcf";
-                path_RCF_onfoot4 = @"PSP_GAME\USRDIR\onfoot\onfoot4.rcf";
-                path_RCF_onfoot5 = @"PSP_GAME\USRDIR\onfoot\onfoot5.rcf";
-                path_RCF_onfoot6 = @"PSP_GAME\USRDIR\onfoot\onfoot6.rcf";
+                //path_executable = @"PSP_GAME\SYSDIR\BOOT.BIN";
+                path_RCF_default = @"adefault\default.rcf";
+                path_RCF_advent1 = @"advent\advent1.rcf";
+                path_RCF_advent2 = @"advent\advent2.rcf";
+                path_RCF_advent3 = @"advent\advent3.rcf";
+                path_RCF_adventa = @"advent\adventa.rcf";
+                path_RCF_common = @"common\common.rcf";
+                path_RCF_dino1 = @"dino\dino1.rcf";
+                path_RCF_dino2 = @"dino\dino2.rcf";
+                path_RCF_dino3 = @"dino\dino3.rcf";
+                path_RCF_dinoa = @"dino\dinoa.rcf";
+                path_RCF_egypt1 = @"egypt\egypt1.rcf";
+                path_RCF_egypt2 = @"egypt\egypt2.rcf";
+                path_RCF_egypt3 = @"egypt\egypt3.rcf";
+                path_RCF_egypta = @"egypt\egypta.rcf";
+                path_RCF_english = @"english.rcf";
+                path_RCF_fairy1 = @"fairy\fairy1.rcf";
+                path_RCF_fairy2 = @"fairy\fairy2.rcf";
+                path_RCF_fairy3 = @"fairy\fairy3.rcf";
+                path_RCF_fairys = @"fairy\fairys.rcf";
+                path_RCF_frontend = @"common\frontend.rcf";
+                path_RCF_solar1 = @"solar\solar1.rcf";
+                path_RCF_solar2 = @"solar\solar2.rcf";
+                path_RCF_solar3 = @"solar\solar3.rcf";
+                path_RCF_solars = @"solar\solars.rcf";
+                path_RCF_onfoot0 = @"onfoot\onfoot.rcf";
+                path_RCF_onfoot1 = @"onfoot\onfoot1.rcf";
+                path_RCF_onfoot2 = @"onfoot\onfoot2.rcf";
+                path_RCF_onfoot3 = @"onfoot\onfoot3.rcf";
+                path_RCF_onfoot4 = @"onfoot\onfoot4.rcf";
+                path_RCF_onfoot5 = @"onfoot\onfoot5.rcf";
+                path_RCF_onfoot6 = @"onfoot\onfoot6.rcf";
+                path_RCF_movies = @"movies.rcf";
             }
             else if (console == ConsoleMode.GCN)
             {
-                path_executable = @"sys\main.dol";
-                path_RCF_default = @"files\adefault\default.rcf";
-                path_RCF_advent1 = @"files\advent\advent1.rcf";
-                path_RCF_advent2 = @"files\advent\advent2.rcf";
-                path_RCF_advent3 = @"files\advent\advent3.rcf";
-                path_RCF_adventa = @"files\advent\adventa.rcf";
-                path_RCF_common = @"files\common\common.rcf";
-                path_RCF_dino1 = @"files\dino\dino1.rcf";
-                path_RCF_dino2 = @"files\dino\dino2.rcf";
-                path_RCF_dino3 = @"files\dino\dino3.rcf";
-                path_RCF_dinoa = @"files\dino\dinoa.rcf";
-                path_RCF_egypt1 = @"files\egypt\egypt1.rcf";
-                path_RCF_egypt2 = @"files\egypt\egypt2.rcf";
-                path_RCF_egypt3 = @"files\egypt\egypt3.rcf";
-                path_RCF_english = @"files\english.rcf";
-                path_RCF_fairy1 = @"files\fairy\fairy1.rcf";
-                path_RCF_fairy2 = @"files\fairy\fairy2.rcf";
-                path_RCF_fairy3 = @"files\fairy\fairy3.rcf";
-                path_RCF_fairys = @"files\fairy\fairys.rcf";
-                path_RCF_frontend = @"files\common\frontend.rcf";
-                path_RCF_solar1 = @"files\solar\solar1.rcf";
-                path_RCF_solar2 = @"files\solar\solar2.rcf";
-                path_RCF_solar3 = @"files\solar\solar3.rcf";
-                path_RCF_solars = @"files\solar\solars.rcf";
-                path_RCF_onfoot0 = @"files\onfoot\onfoot.rcf";
-                path_RCF_onfoot1 = @"files\onfoot\onfoot1.rcf";
-                path_RCF_onfoot2 = @"files\onfoot\onfoot2.rcf";
-                path_RCF_onfoot3 = @"files\onfoot\onfoot3.rcf";
-                path_RCF_onfoot5 = @"files\onfoot\onfoot5.rcf";
-                path_RCF_onfoot6 = @"files\onfoot\onfoot6.rcf";
-                path_RCF_onfoot7 = @"files\onfoot\onfoot7.rcf";
+                // path_executable = @"sys\main.dol";
+                path_RCF_default = @"adefault\default.rcf";
+                path_RCF_advent1 = @"advent\advent1.rcf";
+                path_RCF_advent2 = @"advent\advent2.rcf";
+                path_RCF_advent3 = @"advent\advent3.rcf";
+                path_RCF_adventa = @"advent\adventa.rcf";
+                path_RCF_common = @"common\common.rcf";
+                path_RCF_dino1 = @"dino\dino1.rcf";
+                path_RCF_dino2 = @"dino\dino2.rcf";
+                path_RCF_dino3 = @"dino\dino3.rcf";
+                path_RCF_dinoa = @"dino\dinoa.rcf";
+                path_RCF_egypt1 = @"egypt\egypt1.rcf";
+                path_RCF_egypt2 = @"egypt\egypt2.rcf";
+                path_RCF_egypt3 = @"egypt\egypt3.rcf";
+                path_RCF_english = @"english.rcf";
+                path_RCF_fairy1 = @"fairy\fairy1.rcf";
+                path_RCF_fairy2 = @"fairy\fairy2.rcf";
+                path_RCF_fairy3 = @"fairy\fairy3.rcf";
+                path_RCF_fairys = @"fairy\fairys.rcf";
+                path_RCF_frontend = @"common\frontend.rcf";
+                path_RCF_solar1 = @"solar\solar1.rcf";
+                path_RCF_solar2 = @"solar\solar2.rcf";
+                path_RCF_solar3 = @"solar\solar3.rcf";
+                path_RCF_solars = @"solar\solars.rcf";
+                path_RCF_onfoot0 = @"onfoot\onfoot.rcf";
+                path_RCF_onfoot1 = @"onfoot\onfoot1.rcf";
+                path_RCF_onfoot2 = @"onfoot\onfoot2.rcf";
+                path_RCF_onfoot3 = @"onfoot\onfoot3.rcf";
+                path_RCF_onfoot5 = @"onfoot\onfoot5.rcf";
+                path_RCF_onfoot6 = @"onfoot\onfoot6.rcf";
+                path_RCF_onfoot7 = @"onfoot\onfoot7.rcf";
+                path_RCF_movies = @"movies.rcf";
             }
             else
             {
-                path_executable = @"default.xbe";
+                //path_executable = @"default.xbe";
                 path_RCF_advent1 = @"advent\advent1.rcf";
                 path_RCF_advent2 = @"advent\advent2.rcf";
                 path_RCF_advent3 = @"advent\advent3.rcf";
@@ -384,27 +389,7 @@ namespace CrateModLoader.GameSpecific.CrashTTR
 
             randState = new Random(ModLoaderGlobals.RandomizerSeed);
 
-            bool Editing_DefaultCommon = false;
-
-            if (GetOption(RandomizeCharacters) ||
-                //GetOption(RandomizeHubs) ||
-                GetOption(RandomizeTracks) ||
-                GetOption(RandomizeMinigames) ||
-                GetOption(PreventSequenceBreaks) ||
-                //GetOption(RandomizeMissions) ||
-                //GetOption(RandomizeCarStats) ||
-                GetOption(RandomizeRaceLaps) )
-                //GetOption(RandomizeBattleKOs)  ||
-                //GetOption(RandomizeCrashinator) ||
-                //GetOption(RandomizeRunAndGun))
-            {
-                Editing_DefaultCommon = true;
-            }
-
-            if (Editing_DefaultCommon)
-            {
-                EditDefaultAndCommon();
-            }
+            EditDefaultAndCommon();
 
             CTTR_Randomizers.targetCharAnim = null;
             CTTR_Randomizers.targetIdleAnim = null;
@@ -560,6 +545,7 @@ namespace CrateModLoader.GameSpecific.CrashTTR
                 path_RCF_6,
                 path_RCF_sound,
                 path_RCF_english,
+                path_RCF_movies,
             };
 
             for (int i = 0; i < all_RCF.Length; i++)

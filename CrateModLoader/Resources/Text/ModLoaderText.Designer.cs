@@ -754,7 +754,7 @@ namespace CrateModLoader.Resources.Text {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Randomize the seed below this button..
+        ///   Looks up a localized string similar to Randomize the seed next to this button..
         /// </summary>
         public static string Tooltip_Button_RandomizeSeed {
             get {

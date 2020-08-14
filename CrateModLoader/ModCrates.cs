@@ -39,8 +39,8 @@ namespace CrateModLoader
         public const string Prop_CML_Version = "ModLoaderVersion";
         public const string Prop_Game = "Game";
 
-        public static List<ModCrate> ModList;
-        public static List<ModCrate> SupportedMods;
+        //public static List<ModCrate> ModList;
+        public static List<ModCrate> SupportedMods = new List<ModCrate>();
         public static int ModsActiveAmount
         {
             get
@@ -72,7 +72,7 @@ namespace CrateModLoader
                 SupportAll = true;
             }
 
-            ModList = new List<ModCrate>();
+            List<ModCrate> ModList = new List<ModCrate>();
 
             DirectoryInfo di = new DirectoryInfo(ModLoaderGlobals.ModDirectory);
             foreach (FileInfo file in di.EnumerateFiles())
@@ -81,7 +81,24 @@ namespace CrateModLoader
                 {
                     try
                     {
-                        LoadMetadata(file);
+                        ModCrate Crate = LoadMetadata(file);
+                        if (Crate != null)
+                        {
+                            if (SupportAll)
+                            {
+                                if (Crate.TargetGame == UnsupportedGameShortName || Crate.TargetGame == AllGamesShortName)
+                                {
+                                    ModList.Add(Crate);
+                                }
+                            }
+                            else
+                            {
+                                if (Crate.TargetGame == Program.ModProgram.Modder.Game.ShortName || Crate.TargetGame == AllGamesShortName)
+                                {
+                                    ModList.Add(Crate);
+                                }
+                            }
+                        }
                     }
                     catch
                     {
@@ -95,7 +112,24 @@ namespace CrateModLoader
                 {
                     try
                     {
-                        LoadMetadata(dir);
+                        ModCrate Crate = LoadMetadata(dir);
+                        if (Crate != null)
+                        {
+                            if (SupportAll)
+                            {
+                                if (Crate.TargetGame == UnsupportedGameShortName || Crate.TargetGame == AllGamesShortName)
+                                {
+                                    ModList.Add(Crate);
+                                }
+                            }
+                            else
+                            {
+                                if (Crate.TargetGame == Program.ModProgram.Modder.Game.ShortName || Crate.TargetGame == AllGamesShortName)
+                                {
+                                    ModList.Add(Crate);
+                                }
+                            }
+                        }
                     }
                     catch
                     {
@@ -110,46 +144,23 @@ namespace CrateModLoader
                 return;
             }
 
-            SupportedMods = new List<ModCrate>();
-
-            if (SupportAll)
+            for (int mod = 0; mod < ModList.Count; mod++)
             {
-                for (int i = 0; i < ModList.Count; i++)
+                bool wasAdded = false;
+                for (int i = 0; i < SupportedMods.Count; i++)
                 {
-                    if (ModList[i].TargetGame == UnsupportedGameShortName || ModList[i].TargetGame == AllGamesShortName)
+                    if (SupportedMods[i].Path == ModList[mod].Path)
                     {
-                        SupportedMods.Add(ModList[i]);
+                        wasAdded = true;
                     }
                 }
-            }
-            else
-            {
-                for (int i = 0; i < ModList.Count; i++)
+
+                if (!wasAdded)
                 {
-                    if (ModList[i].TargetGame == Program.ModProgram.Modder.Game.ShortName || ModList[i].TargetGame == AllGamesShortName)
-                    {
-                        SupportedMods.Add(ModList[i]);
-                    }
+                    SupportedMods.Add(ModList[mod]);
                 }
             }
-
-            for (int i = 0; i < SupportedMods.Count; i++)
-            {
-                string ListName = SupportedMods[i].Name;
-                ListName += " ";
-                ListName += SupportedMods[i].Version;
-                CheckedList_Mods.Items.Add(ListName);
-            }
-        }
-
-        public static void UpdateModSelection(int index, bool value)
-        {
-            SupportedMods[index].IsActivated = value;
-        }
-
-        public static void UpdateModList()
-        {
-            CheckedList_Mods.Items.Clear();
+            // todo: if a mod has been removed externally, the list won't update that
 
             if (SupportedMods.Count <= 0)
             {
@@ -162,6 +173,22 @@ namespace CrateModLoader
                 string ListName = SupportedMods[i].Name;
                 ListName += " ";
                 ListName += SupportedMods[i].Version;
+
+                uint ModLoaderVer;
+                if (uint.TryParse(SupportedMods[i].CML_Version, out ModLoaderVer))
+                {
+                    if (ModLoaderVer != ModLoaderGlobals.ProgramVersionSimple)
+                    {
+                        ListName += " ";
+                        ListName += "(*)";
+                    }
+                }
+                else
+                {
+                    ListName += " ";
+                    ListName += "(*)";
+                }
+
                 CheckedList_Mods.Items.Add(ListName);
                 if (SupportedMods[i].IsActivated)
                 {
@@ -174,8 +201,13 @@ namespace CrateModLoader
             }
         }
 
+        public static void UpdateModSelection(int index, bool value)
+        {
+            SupportedMods[index].IsActivated = value;
+        }
+
         // Load metadata from a .zip file
-        public static void LoadMetadata(FileInfo file)
+        public static ModCrate LoadMetadata(FileInfo file)
         {
             ModCrate NewCrate = new ModCrate();
             bool HasInfo = false;
@@ -267,7 +299,7 @@ namespace CrateModLoader
             if (!HasInfo)
             {
                 Console.WriteLine("WARN: Mod Crate has no info.txt file! Ignored.");
-                return;
+                return null;
             }
 
             if (ModdedLayers.Count > 0)
@@ -307,9 +339,10 @@ namespace CrateModLoader
 
             NewCrate.Path = file.FullName;
 
-            ModList.Add(NewCrate);
+            //ModList.Add(NewCrate);
+            return NewCrate;
         }
-        public static void LoadMetadata(DirectoryInfo dir)
+        public static ModCrate LoadMetadata(DirectoryInfo dir)
         {
             ModCrate NewCrate = new ModCrate();
             bool HasInfo = false;
@@ -375,7 +408,7 @@ namespace CrateModLoader
             if (!HasInfo)
             {
                 Console.WriteLine("WARN: Mod Crate has no info.txt file! Ignored.");
-                return;
+                return null;
             }
 
             NewCrate.IsFolder = true;
@@ -417,12 +450,13 @@ namespace CrateModLoader
 
             NewCrate.Path = dir.FullName;
 
-            ModList.Add(NewCrate);
+            //ModList.Add(NewCrate);
+            return NewCrate;
         }
 
         public static void ClearModLists()
         {
-            ModList = new List<ModCrate>();
+            //ModList = new List<ModCrate>();
             SupportedMods = new List<ModCrate>();
         }
 

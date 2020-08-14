@@ -93,6 +93,16 @@ Supported: All PS1 versions (.BIN/.ISO formats)
 Mod abbreviation: Crash1  
 API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)  
 ### Features:  
+- All Crates Are Blank
+- All Crates Are Wumpa (Crash 1 & 2)
+- Backwards Levels
+- Random Levels Are Backwards
+- Randomize Crate Contents
+- Randomize Boss Levels
+- Wider Camera Field-Of-View
+- Randomize Camera Field-Of-View
+- Randomize World Colors
+- Randomize World Palette
 - Randomize Sound Effects  
 </details>
   
@@ -104,6 +114,19 @@ Supported: All PS1 versions (.BIN/.ISO formats)
 Mod abbreviation: Crash2  
 API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)  
 ### Features:  
+- All Crates Are Blank
+- All Crates Are Wumpa
+- Randomize Warp Room
+- Backwards Levels 
+- Random Levels Are Backwards
+- Randomize Crate Contents
+- Randomize Boss Levels
+- Wider Camera Field-Of-View
+- Randomize Camera Field-Of-View
+- Randomize World Colors
+- Randomize World Palette
+- Greyscale World
+- Untextured World
 - Randomize Sound Effects  
 </details>
   
@@ -115,7 +138,19 @@ Supported: All PS1 versions (.BIN/.ISO formats)
 Mod abbreviation: Crash3  
 API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)  
 ### Features:  
-- Randomize Sound Effects  
+- All Crates Are Blank
+- Randomize Warp Room
+- Backwards Levels
+- Random Levels Are Backwards
+- Randomize Crate Contents
+- Randomize Flying Levels
+- Wider Camera Field-Of-View
+- Randomize Camera Field-Of-View
+- Randomize World Colors
+- Randomize World Palette
+- Greyscale World
+- Untextured World
+- Randomize Sound Effects 
 </details>
   
 ## CTR: Crash Team Racing ![Crash Team Racing](./CrateModLoader/Resources/icon_crashtr.png "Crash Team Racing")

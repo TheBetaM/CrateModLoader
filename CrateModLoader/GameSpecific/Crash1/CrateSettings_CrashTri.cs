@@ -15,7 +15,7 @@
                 }
             }
             if (modsdirty)
-                ModCrates.UpdateModList();
+                ModCrates.PopulateModList();
         }
     }
 }

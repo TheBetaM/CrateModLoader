@@ -184,8 +184,8 @@ namespace CrateModLoader
 
         private void button3_Click(object sender, EventArgs e)
         {
+            openFileDialog1.InitialDirectory = ModLoaderGlobals.ModDirectory;
             openFileDialog1.Filter = string.Format("{0} (*.zip; *.txt)|*.zip;*.txt", ModLoaderText.ModMenuLoad_FileTypes);
-            openFileDialog1.InitialDirectory = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ModLoaderGlobals.ModDirectory);
             openFileDialog1.FileName = "";
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
@@ -198,8 +198,8 @@ namespace CrateModLoader
 
         private void button2_Click(object sender, EventArgs e)
         {
+            saveFileDialog1.InitialDirectory = ModLoaderGlobals.ModDirectory;
             saveFileDialog1.Filter = string.Format("{0} (*.zip)|*.zip|{1} (*.txt)|*.txt|{2} (*.txt)|*.txt", ModLoaderText.ModMenuSaveAs_ModCrate, ModLoaderText.ModMenuSaveAs_SettingFileFull, ModLoaderText.ModMenuSaveAs_SettingFile);
-            saveFileDialog1.InitialDirectory = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ModLoaderGlobals.ModDirectory);
             saveFileDialog1.FileName = "";
 
 

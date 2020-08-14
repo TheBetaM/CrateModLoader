@@ -231,7 +231,7 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
                     }
                     else if (mod.Category == (int)ModProps.Surfaces)
                     {
-
+                        Editing_CSV_SurfaceParams = true;
                     }
                 }
             }

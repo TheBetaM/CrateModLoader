@@ -1583,14 +1583,7 @@ namespace CrateModLoader
 
             ModCrateManagerForm modCrateManagerMenu = new ModCrateManagerForm();
 
-            if (ModCrates.SupportedMods.Count <= 0)
-            {
-                ModCrates.PopulateModList();
-            }
-            else
-            {
-                ModCrates.UpdateModList();
-            }
+            ModCrates.PopulateModList();
 
             modCrateManagerMenu.Owner = Program.ModProgramForm;
             modCrateManagerMenu.Show();
@@ -1646,7 +1639,7 @@ namespace CrateModLoader
             {
                 button_modMenu.Enabled = Modder.ModMenuEnabled;
             }
-            //button_modTools.Enabled = true;
+            button_modTools.Enabled = true;
             //button_downloadMods.Enabled = true;
 
             checkbox_fromFolder.Enabled = true;

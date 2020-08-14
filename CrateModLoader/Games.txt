@@ -52,8 +52,8 @@ Features:
 - Randomize Camera Field-Of-View
 - Randomize World Colors
 - Randomize World Palette
-- Greyscale World (Crash 2 & WARPED)
-- Untextured World (Crash 2 & WARPED)
+- Greyscale World
+- Untextured World
 - Randomize Sound Effects 
   
 Crash Team Racing

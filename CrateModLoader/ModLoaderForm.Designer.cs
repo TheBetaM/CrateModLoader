@@ -169,14 +169,14 @@
             this.numericUpDown1.BackColor = System.Drawing.SystemColors.Window;
             this.numericUpDown1.Enabled = false;
             this.numericUpDown1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.numericUpDown1.Location = new System.Drawing.Point(156, 26);
+            this.numericUpDown1.Location = new System.Drawing.Point(228, 26);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             2147483647,
             0,
             0,
             0});
             this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(153, 24);
+            this.numericUpDown1.Size = new System.Drawing.Size(235, 24);
             this.numericUpDown1.TabIndex = 12;
             this.numericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.toolTip1.SetToolTip(this.numericUpDown1, "The seed of all randomizers for this game.");
@@ -190,12 +190,10 @@
             // 
             // button4
             // 
-            this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.button4.Enabled = false;
-            this.button4.Location = new System.Drawing.Point(155, 0);
+            this.button4.Location = new System.Drawing.Point(0, 25);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(155, 26);
+            this.button4.Size = new System.Drawing.Size(228, 26);
             this.button4.TabIndex = 13;
             this.button4.Text = "Randomize Seed";
             this.toolTip1.SetToolTip(this.button4, "Randomize the seed to the right of this button.");
@@ -242,9 +240,10 @@
             // 
             // button_openModMenu
             // 
-            this.button_openModMenu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_openModMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.button_openModMenu.Enabled = false;
-            this.button_openModMenu.Location = new System.Drawing.Point(310, 25);
+            this.button_openModMenu.Location = new System.Drawing.Point(155, 0);
             this.button_openModMenu.Name = "button_openModMenu";
             this.button_openModMenu.Size = new System.Drawing.Size(155, 26);
             this.button_openModMenu.TabIndex = 19;
@@ -402,7 +401,7 @@
             // button_downloadMods
             // 
             this.button_downloadMods.Enabled = false;
-            this.button_downloadMods.Location = new System.Drawing.Point(0, 25);
+            this.button_downloadMods.Location = new System.Drawing.Point(0, 60);
             this.button_downloadMods.Name = "button_downloadMods";
             this.button_downloadMods.Size = new System.Drawing.Size(155, 26);
             this.button_downloadMods.TabIndex = 22;

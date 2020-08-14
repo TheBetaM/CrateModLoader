@@ -98,10 +98,10 @@ namespace CrateModLoader
         public static string ISO_Label = "";
 
         /// <summary> Path to external tools' folder. Ends with '\' </summary>
-        public static string ToolsPath = AppDomain.CurrentDomain.BaseDirectory + @"\Tools\";
+        public static string ToolsPath = AppDomain.CurrentDomain.BaseDirectory + @"Tools\";
 
         /// <summary> Path to mods' folder. Ends with '\' </summary>
-        public static string ModDirectory = AppDomain.CurrentDomain.BaseDirectory + @"\Mods\";
+        public static string ModDirectory = AppDomain.CurrentDomain.BaseDirectory + @"Mods\";
 
         /// <summary> Partial path to the extracted files. Use ExtractedPath instead!! </summary>
         public static string TempPath
