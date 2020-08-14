@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.IO;
 using System.IO.Compression;
+using System.Drawing;
 using CrateModLoader.Resources.Text;
 using CrateModLoader.ModProperties;
 
@@ -245,6 +246,8 @@ namespace CrateModLoader
 
             List<string> LineList = new List<string>();
 
+            LineList.Add(string.Format("{0} {1} {2} {3}", ModCrates.CommentSymbol, ModLoaderText.ProgramTitle, ModLoaderGlobals.ProgramVersion, "Auto-Generated Settings File"));
+
             foreach (ModPropertyBase prop in Props)
             {
                 if (fullSettings || (!fullSettings && prop.HasChanged))
@@ -254,14 +257,51 @@ namespace CrateModLoader
                     LineList.Add(text);
                 }
             }
-            
-            if (LineList.Count == 0)
-            {
-                MessageBox.Show(ModLoaderText.ModMenuSaveAs_NoSettingsChanged);
-                return;
-            }
 
             File.WriteAllLines(path, LineList);
+        }
+
+        public void SaveSimpleCrateToFile(string path, ModCrate crate)
+        {
+            List<string> LineList_Info = new List<string>();
+
+            LineList_Info.Add(string.Format("{0}{1}{2}", ModCrates.Prop_Name, ModCrates.Separator, crate.Name));
+            LineList_Info.Add(string.Format("{0}{1}{2}", ModCrates.Prop_Desc, ModCrates.Separator, crate.Desc));
+            LineList_Info.Add(string.Format("{0}{1}{2}", ModCrates.Prop_Author, ModCrates.Separator, crate.Author));
+            LineList_Info.Add(string.Format("{0}{1}{2}", ModCrates.Prop_Version, ModCrates.Separator, crate.Version));
+            LineList_Info.Add(string.Format("{0}{1}{2}", ModCrates.Prop_CML_Version, ModCrates.Separator, crate.CML_Version));
+            LineList_Info.Add(string.Format("{0}{1}{2}", ModCrates.Prop_Game, ModCrates.Separator, crate.TargetGame));
+
+            File.WriteAllLines(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ModCrates.InfoFileName), LineList_Info);
+
+            SaveSettingsToFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ModCrates.SettingsFileName), false);
+
+            if (crate.Icon != null)
+            {
+                crate.Icon.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ModCrates.IconFileName));
+            }
+
+            using (FileStream fileStream = new FileStream(path, FileMode.Create))
+            {
+                using (ZipArchive zip = new ZipArchive(fileStream, ZipArchiveMode.Create))
+                {
+                    zip.CreateEntryFromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ModCrates.InfoFileName), ModCrates.InfoFileName);
+                    zip.CreateEntryFromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ModCrates.SettingsFileName), ModCrates.SettingsFileName);
+                    if (crate.Icon != null)
+                    {
+                        zip.CreateEntryFromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ModCrates.IconFileName), ModCrates.IconFileName);
+                    }
+                }
+            }
+
+            //cleanup
+            File.Delete(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ModCrates.InfoFileName));
+            File.Delete(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ModCrates.SettingsFileName));
+            if (crate.Icon != null)
+            {
+                File.Delete(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ModCrates.IconFileName));
+            }
+
         }
 
         public bool ModCratesManualInstall = false; // A game might require some type of verification (i.e. file integrity, region matching) before installing layer0 mod crates.

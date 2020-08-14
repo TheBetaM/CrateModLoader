@@ -250,6 +250,78 @@ namespace CrateModLoader.Resources.Text {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Browse....
+        /// </summary>
+        public static string ModCrateMaker_Button_Browse {
+            get {
+                return ResourceManager.GetString("ModCrateMaker_Button_Browse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string ModCrateMaker_Button_Cancel {
+            get {
+                return ResourceManager.GetString("ModCrateMaker_Button_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string ModCrateMaker_Button_Save {
+            get {
+                return ResourceManager.GetString("ModCrateMaker_Button_Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Author.
+        /// </summary>
+        public static string ModCrateMaker_Label_Author {
+            get {
+                return ResourceManager.GetString("ModCrateMaker_Label_Author", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        public static string ModCrateMaker_Label_Description {
+            get {
+                return ResourceManager.GetString("ModCrateMaker_Label_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Icon.
+        /// </summary>
+        public static string ModCrateMaker_Label_Icon {
+            get {
+                return ResourceManager.GetString("ModCrateMaker_Label_Icon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string ModCrateMaker_Label_Name {
+            get {
+                return ResourceManager.GetString("ModCrateMaker_Label_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mod Version.
+        /// </summary>
+        public static string ModCrateMaker_Label_Version {
+            get {
+                return ResourceManager.GetString("ModCrateMaker_Label_Version", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Author:.
         /// </summary>
         public static string ModCrateManagerAuthorText {
@@ -291,6 +363,51 @@ namespace CrateModLoader.Resources.Text {
         public static string ModCratesButton {
             get {
                 return ResourceManager.GetString("ModCratesButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm.
+        /// </summary>
+        public static string ModMenu_Button_Confirm {
+            get {
+                return ResourceManager.GetString("ModMenu_Button_Confirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load....
+        /// </summary>
+        public static string ModMenu_Button_Load {
+            get {
+                return ResourceManager.GetString("ModMenu_Button_Load", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Publish....
+        /// </summary>
+        public static string ModMenu_Button_Publish {
+            get {
+                return ResourceManager.GetString("ModMenu_Button_Publish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset to default.
+        /// </summary>
+        public static string ModMenu_Button_ResetToDefault {
+            get {
+                return ResourceManager.GetString("ModMenu_Button_ResetToDefault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save as....
+        /// </summary>
+        public static string ModMenu_Button_SaveAs {
+            get {
+                return ResourceManager.GetString("ModMenu_Button_SaveAs", resourceCulture);
             }
         }
         
@@ -349,7 +466,7 @@ namespace CrateModLoader.Resources.Text {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No proprerties have been changed - nothing to save!.
+        ///   Looks up a localized string similar to No properties have been changed - nothing to save!.
         /// </summary>
         public static string ModMenuSaveAs_NoSettingsChanged {
             get {

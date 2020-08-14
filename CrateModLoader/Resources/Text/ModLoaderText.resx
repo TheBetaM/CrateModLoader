@@ -181,6 +181,30 @@
     <value>Failed to verify Mod Crate at:</value>
     <comment>(followed by directory)</comment>
   </data>
+  <data name="ModCrateMaker_Button_Browse" xml:space="preserve">
+    <value>Browse...</value>
+  </data>
+  <data name="ModCrateMaker_Button_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="ModCrateMaker_Button_Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="ModCrateMaker_Label_Author" xml:space="preserve">
+    <value>Author</value>
+  </data>
+  <data name="ModCrateMaker_Label_Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="ModCrateMaker_Label_Icon" xml:space="preserve">
+    <value>Icon</value>
+  </data>
+  <data name="ModCrateMaker_Label_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="ModCrateMaker_Label_Version" xml:space="preserve">
+    <value>Mod Version</value>
+  </data>
   <data name="ModCrateManagerAuthorText" xml:space="preserve">
     <value>Author:</value>
   </data>
@@ -215,13 +239,28 @@
     <value>Mod Crate</value>
   </data>
   <data name="ModMenuSaveAs_NoSettingsChanged" xml:space="preserve">
-    <value>No proprerties have been changed - nothing to save!</value>
+    <value>No properties have been changed - nothing to save!</value>
   </data>
   <data name="ModMenuSaveAs_SettingFile" xml:space="preserve">
     <value>Setting File</value>
   </data>
   <data name="ModMenuSaveAs_SettingFileFull" xml:space="preserve">
     <value>Full Setting File</value>
+  </data>
+  <data name="ModMenu_Button_Confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="ModMenu_Button_Load" xml:space="preserve">
+    <value>Load...</value>
+  </data>
+  <data name="ModMenu_Button_Publish" xml:space="preserve">
+    <value>Publish...</value>
+  </data>
+  <data name="ModMenu_Button_ResetToDefault" xml:space="preserve">
+    <value>Reset to default</value>
+  </data>
+  <data name="ModMenu_Button_SaveAs" xml:space="preserve">
+    <value>Save as...</value>
   </data>
   <data name="NoOptionsSelectedPopup" xml:space="preserve">
     <value>No options specified - Output ROM will only display version info ingame if available. Proceed?</value>

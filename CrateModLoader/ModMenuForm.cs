@@ -21,6 +21,12 @@ namespace CrateModLoader
         {
             InitializeComponent();
 
+            button1.Text = ModLoaderText.ModMenu_Button_Confirm;
+            button2.Text = ModLoaderText.ModMenu_Button_SaveAs;
+            button3.Text = ModLoaderText.ModMenu_Button_Load;
+            button4.Text = ModLoaderText.ModMenu_Button_ResetToDefault;
+            button5.Text = ModLoaderText.ModMenu_Button_Publish;
+
             mod = modder;
 
             GenerateUI();
@@ -174,7 +180,7 @@ namespace CrateModLoader
         private void button3_Click(object sender, EventArgs e)
         {
             openFileDialog1.Filter = string.Format("{0} (*.zip; *.txt)|*.zip;*.txt", ModLoaderText.ModMenuLoad_FileTypes);
-            openFileDialog1.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory + ModLoaderGlobals.ModDirectory;
+            openFileDialog1.InitialDirectory = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ModLoaderGlobals.ModDirectory);
             openFileDialog1.FileName = "";
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
@@ -187,20 +193,40 @@ namespace CrateModLoader
 
         private void button2_Click(object sender, EventArgs e)
         {
-            saveFileDialog1.Filter = string.Format("{0} (*.txt)|*.txt|{1} (*.zip)|*.zip|{2} (*.txt)|*.txt", ModLoaderText.ModMenuSaveAs_SettingFile, ModLoaderText.ModMenuSaveAs_ModCrate, ModLoaderText.ModMenuSaveAs_SettingFileFull);
-            saveFileDialog1.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory + ModLoaderGlobals.ModDirectory;
+            saveFileDialog1.Filter = string.Format("{0} (*.zip)|*.zip|{1} (*.txt)|*.txt|{2} (*.txt)|*.txt", ModLoaderText.ModMenuSaveAs_ModCrate, ModLoaderText.ModMenuSaveAs_SettingFileFull, ModLoaderText.ModMenuSaveAs_SettingFile);
+            saveFileDialog1.InitialDirectory = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ModLoaderGlobals.ModDirectory);
             saveFileDialog1.FileName = "";
+
+
+            bool HasChanged = false;
+
+            foreach (ModPropertyBase prop in mod.Props)
+            {
+                if (prop.HasChanged)
+                {
+                    HasChanged = true;
+                    break;
+                }
+            }
+
+            if (!HasChanged)
+            {
+                MessageBox.Show(ModLoaderText.ModMenuSaveAs_NoSettingsChanged);
+                return;
+            }
 
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 if (saveFileDialog1.FilterIndex == 1)
                 {
-                    mod.SaveSettingsToFile(saveFileDialog1.FileName, false);
+                    ModCrateMakerForm modMenu = new ModCrateMakerForm(mod, saveFileDialog1.FileName);
+
+                    modMenu.Owner = this;
+                    modMenu.Show();
                 }
                 else if (saveFileDialog1.FilterIndex == 2)
                 {
-                    // todo: Mod Crate maker
-                    MessageBox.Show("Mod Crate maker not yet implemented!");
+                    mod.SaveSettingsToFile(saveFileDialog1.FileName, false);
                 }
                 else if (saveFileDialog1.FilterIndex == 3)
                 {

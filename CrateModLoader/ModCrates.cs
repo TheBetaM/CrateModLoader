@@ -32,6 +32,13 @@ namespace CrateModLoader
         public const string IconFileName = "modcrateicon.png";
         public const string UnsupportedGameShortName = "NoGame";
         public const string AllGamesShortName = "All";
+        public const string Prop_Name = "Name";
+        public const string Prop_Desc = "Description";
+        public const string Prop_Author = "Author";
+        public const string Prop_Version = "Version";
+        public const string Prop_CML_Version = "ModLoaderVersion";
+        public const string Prop_Game = "Game";
+
         public static List<ModCrate> ModList;
         public static List<ModCrate> SupportedMods;
         public static int ModsActiveAmount
@@ -281,22 +288,22 @@ namespace CrateModLoader
                 NewCrate.HasSettings = true;
             }
 
-            if (NewCrate.Meta.ContainsKey("Name"))
-                NewCrate.Name = NewCrate.Meta["Name"];
-            if (NewCrate.Meta.ContainsKey("Description"))
-                NewCrate.Desc = NewCrate.Meta["Description"];
-            if (NewCrate.Meta.ContainsKey("Author"))
-                NewCrate.Author = NewCrate.Meta["Author"];
-            if (NewCrate.Meta.ContainsKey("Version"))
-                NewCrate.Version = NewCrate.Meta["Version"];
-            if (NewCrate.Meta.ContainsKey("ModLoaderVersion"))
-                NewCrate.CML_Version = NewCrate.Meta["ModLoaderVersion"];
-            if (NewCrate.Meta.ContainsKey("Game"))
-                NewCrate.TargetGame = NewCrate.Meta["Game"];
-            if (NewCrate.Meta.ContainsKey("Name-" + CultureInfo.CurrentCulture.Name))
-                NewCrate.Name = NewCrate.Meta["Name-" + CultureInfo.CurrentCulture.Name];
-            if (NewCrate.Meta.ContainsKey("Description-" + CultureInfo.CurrentCulture.Name))
-                NewCrate.Desc = NewCrate.Meta["Description-" + CultureInfo.CurrentCulture.Name];
+            if (NewCrate.Meta.ContainsKey(Prop_Name))
+                NewCrate.Name = NewCrate.Meta[Prop_Name];
+            if (NewCrate.Meta.ContainsKey(Prop_Desc))
+                NewCrate.Desc = NewCrate.Meta[Prop_Desc];
+            if (NewCrate.Meta.ContainsKey(Prop_Author))
+                NewCrate.Author = NewCrate.Meta[Prop_Author];
+            if (NewCrate.Meta.ContainsKey(Prop_Version))
+                NewCrate.Version = NewCrate.Meta[Prop_Version];
+            if (NewCrate.Meta.ContainsKey(Prop_CML_Version))
+                NewCrate.CML_Version = NewCrate.Meta[Prop_CML_Version];
+            if (NewCrate.Meta.ContainsKey(Prop_Game))
+                NewCrate.TargetGame = NewCrate.Meta[Prop_Game];
+            if (NewCrate.Meta.ContainsKey(Prop_Name + "-" + CultureInfo.CurrentCulture.Name))
+                NewCrate.Name = NewCrate.Meta[Prop_Name + "-" + CultureInfo.CurrentCulture.Name];
+            if (NewCrate.Meta.ContainsKey(Prop_Desc + "-" + CultureInfo.CurrentCulture.Name))
+                NewCrate.Desc = NewCrate.Meta[Prop_Desc + "-" + CultureInfo.CurrentCulture.Name];
 
             NewCrate.Path = file.FullName;
 
@@ -391,22 +398,22 @@ namespace CrateModLoader
                 NewCrate.HasSettings = true;
             }
 
-            if (NewCrate.Meta.ContainsKey("Name"))
-                NewCrate.Name = NewCrate.Meta["Name"];
-            if (NewCrate.Meta.ContainsKey("Description"))
-                NewCrate.Desc = NewCrate.Meta["Description"];
-            if (NewCrate.Meta.ContainsKey("Author"))
-                NewCrate.Author = NewCrate.Meta["Author"];
-            if (NewCrate.Meta.ContainsKey("Version"))
-                NewCrate.Version = NewCrate.Meta["Version"];
-            if (NewCrate.Meta.ContainsKey("ModLoaderVersion"))
-                NewCrate.CML_Version = NewCrate.Meta["ModLoaderVersion"];
-            if (NewCrate.Meta.ContainsKey("Game"))
-                NewCrate.TargetGame = NewCrate.Meta["Game"];
-            if (NewCrate.Meta.ContainsKey("Name-" + CultureInfo.CurrentCulture.Name))
-                NewCrate.Name = NewCrate.Meta["Name-" + CultureInfo.CurrentCulture.Name];
-            if (NewCrate.Meta.ContainsKey("Description-" + CultureInfo.CurrentCulture.Name))
-                NewCrate.Desc = NewCrate.Meta["Description-" + CultureInfo.CurrentCulture.Name];
+            if (NewCrate.Meta.ContainsKey(Prop_Name))
+                NewCrate.Name = NewCrate.Meta[Prop_Name];
+            if (NewCrate.Meta.ContainsKey(Prop_Desc))
+                NewCrate.Desc = NewCrate.Meta[Prop_Desc];
+            if (NewCrate.Meta.ContainsKey(Prop_Author))
+                NewCrate.Author = NewCrate.Meta[Prop_Author];
+            if (NewCrate.Meta.ContainsKey(Prop_Version))
+                NewCrate.Version = NewCrate.Meta[Prop_Version];
+            if (NewCrate.Meta.ContainsKey(Prop_CML_Version))
+                NewCrate.CML_Version = NewCrate.Meta[Prop_CML_Version];
+            if (NewCrate.Meta.ContainsKey(Prop_Game))
+                NewCrate.TargetGame = NewCrate.Meta[Prop_Game];
+            if (NewCrate.Meta.ContainsKey(Prop_Name + "-" + CultureInfo.CurrentCulture.Name))
+                NewCrate.Name = NewCrate.Meta[Prop_Name + "-" + CultureInfo.CurrentCulture.Name];
+            if (NewCrate.Meta.ContainsKey(Prop_Desc + "-" + CultureInfo.CurrentCulture.Name))
+                NewCrate.Desc = NewCrate.Meta[Prop_Desc + "-" + CultureInfo.CurrentCulture.Name];
 
             NewCrate.Path = dir.FullName;
 
@@ -514,7 +521,7 @@ namespace CrateModLoader
 
     }
 
-    class ModCrate
+    public class ModCrate
     {
         public Dictionary<string, string> Meta = new Dictionary<string, string>();
         public Dictionary<string, string> Settings = new Dictionary<string, string>();
