@@ -106,6 +106,8 @@ namespace CrateModLoader.ModProperties
 
         public override void Serialize(ref string line)
         {
+            base.Serialize(ref line);
+
             for (int i = 0; i < Value.Length; i++)
             {
                 line += Value[i];
@@ -119,7 +121,7 @@ namespace CrateModLoader.ModProperties
 
             if (vals.Length != Value.Length + 1 && vals.Length != Value.Length)
             {
-                Console.WriteLine("Error: Input array length mismatch!");
+                Console.WriteLine("Error: Input Named float array length mismatch!");
                 return;
             }
 

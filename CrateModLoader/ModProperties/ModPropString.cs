@@ -56,6 +56,8 @@ namespace CrateModLoader.ModProperties
 
         public override void Serialize(ref string line)
         {
+            base.Serialize(ref line);
+
             line += Value;
         }
 

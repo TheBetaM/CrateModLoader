@@ -240,6 +240,30 @@ namespace CrateModLoader
 
         }
 
+        public void SaveSettingsToFile(string path, bool fullSettings)
+        {
+
+            List<string> LineList = new List<string>();
+
+            foreach (ModPropertyBase prop in Props)
+            {
+                if (fullSettings || (!fullSettings && prop.HasChanged))
+                {
+                    string text = "";
+                    prop.Serialize(ref text);
+                    LineList.Add(text);
+                }
+            }
+            
+            if (LineList.Count == 0)
+            {
+                MessageBox.Show(ModLoaderText.ModMenuSaveAs_NoSettingsChanged);
+                return;
+            }
+
+            File.WriteAllLines(path, LineList);
+        }
+
         public bool ModCratesManualInstall = false; // A game might require some type of verification (i.e. file integrity, region matching) before installing layer0 mod crates.
 
         public abstract void StartModProcess();

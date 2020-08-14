@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ModMenuForm));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
@@ -41,7 +42,7 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.button5 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -70,6 +71,15 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Page 1";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Size = new System.Drawing.Size(694, 346);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Page 2";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // button1
             // 
@@ -109,10 +119,9 @@
             // label1
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 384);
+            this.label1.Location = new System.Drawing.Point(3, 384);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(154, 13);
+            this.label1.Size = new System.Drawing.Size(698, 13);
             this.label1.TabIndex = 4;
             this.label1.Text = "Property Description (very long)";
             // 
@@ -131,20 +140,24 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // tabPage2
+            // button5
             // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Size = new System.Drawing.Size(694, 346);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Page 2";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.button5.Enabled = false;
+            this.button5.Location = new System.Drawing.Point(617, 379);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(75, 23);
+            this.button5.TabIndex = 6;
+            this.button5.Text = "Publish...";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Visible = false;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // ModMenuForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(704, 441);
+            this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button3);
@@ -161,7 +174,6 @@
             this.Load += new System.EventHandler(this.ModMenuForm_Load);
             this.tabControl1.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -179,5 +191,6 @@
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.Button button5;
     }
 }

@@ -313,6 +313,15 @@ namespace CrateModLoader.Resources.Text {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mod Crates, Mod Settings.
+        /// </summary>
+        public static string ModMenuLoad_FileTypes {
+            get {
+                return ResourceManager.GetString("ModMenuLoad_FileTypes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This game doesn&apos;t have a mod menu!.
         /// </summary>
         public static string ModMenuMissingErrorPopup {
@@ -327,6 +336,42 @@ namespace CrateModLoader.Resources.Text {
         public static string ModMenuPage {
             get {
                 return ResourceManager.GetString("ModMenuPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mod Crate.
+        /// </summary>
+        public static string ModMenuSaveAs_ModCrate {
+            get {
+                return ResourceManager.GetString("ModMenuSaveAs_ModCrate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No proprerties have been changed - nothing to save!.
+        /// </summary>
+        public static string ModMenuSaveAs_NoSettingsChanged {
+            get {
+                return ResourceManager.GetString("ModMenuSaveAs_NoSettingsChanged", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Setting File.
+        /// </summary>
+        public static string ModMenuSaveAs_SettingFile {
+            get {
+                return ResourceManager.GetString("ModMenuSaveAs_SettingFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Full Setting File.
+        /// </summary>
+        public static string ModMenuSaveAs_SettingFileFull {
+            get {
+                return ResourceManager.GetString("ModMenuSaveAs_SettingFileFull", resourceCulture);
             }
         }
         

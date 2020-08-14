@@ -173,7 +173,7 @@ namespace CrateModLoader
 
         private void button3_Click(object sender, EventArgs e)
         {
-            openFileDialog1.Filter = string.Format("{0} (*.zip; *.txt)|*.zip;*.txt", "Mod Crates, Mod Settings");
+            openFileDialog1.Filter = string.Format("{0} (*.zip; *.txt)|*.zip;*.txt", ModLoaderText.ModMenuLoad_FileTypes);
             openFileDialog1.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory + ModLoaderGlobals.ModDirectory;
             openFileDialog1.FileName = "";
 
@@ -187,8 +187,31 @@ namespace CrateModLoader
 
         private void button2_Click(object sender, EventArgs e)
         {
-            // todo: save to text file / mod crate
+            saveFileDialog1.Filter = string.Format("{0} (*.txt)|*.txt|{1} (*.zip)|*.zip|{2} (*.txt)|*.txt", ModLoaderText.ModMenuSaveAs_SettingFile, ModLoaderText.ModMenuSaveAs_ModCrate, ModLoaderText.ModMenuSaveAs_SettingFileFull);
+            saveFileDialog1.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory + ModLoaderGlobals.ModDirectory;
+            saveFileDialog1.FileName = "";
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                if (saveFileDialog1.FilterIndex == 1)
+                {
+                    mod.SaveSettingsToFile(saveFileDialog1.FileName, false);
+                }
+                else if (saveFileDialog1.FilterIndex == 2)
+                {
+                    // todo: Mod Crate maker
+                    MessageBox.Show("Mod Crate maker not yet implemented!");
+                }
+                else if (saveFileDialog1.FilterIndex == 3)
+                {
+                    mod.SaveSettingsToFile(saveFileDialog1.FileName, true);
+                }
+            }
         }
 
+        private void button5_Click(object sender, EventArgs e)
+        {
+            // publish button
+        }
     }
 }

@@ -58,6 +58,8 @@ namespace CrateModLoader.ModProperties
 
         public override void Serialize(ref string line)
         {
+            base.Serialize(ref line);
+
             if (Value)
                 line += "1";
             else

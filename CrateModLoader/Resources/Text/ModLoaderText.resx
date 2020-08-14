@@ -202,11 +202,26 @@
   <data name="ModMenuLoad_Error" xml:space="preserve">
     <value>No settings found!</value>
   </data>
+  <data name="ModMenuLoad_FileTypes" xml:space="preserve">
+    <value>Mod Crates, Mod Settings</value>
+  </data>
   <data name="ModMenuMissingErrorPopup" xml:space="preserve">
     <value>This game doesn't have a mod menu!</value>
   </data>
   <data name="ModMenuPage" xml:space="preserve">
     <value>Page</value>
+  </data>
+  <data name="ModMenuSaveAs_ModCrate" xml:space="preserve">
+    <value>Mod Crate</value>
+  </data>
+  <data name="ModMenuSaveAs_NoSettingsChanged" xml:space="preserve">
+    <value>No proprerties have been changed - nothing to save!</value>
+  </data>
+  <data name="ModMenuSaveAs_SettingFile" xml:space="preserve">
+    <value>Setting File</value>
+  </data>
+  <data name="ModMenuSaveAs_SettingFileFull" xml:space="preserve">
+    <value>Full Setting File</value>
   </data>
   <data name="NoOptionsSelectedPopup" xml:space="preserve">
     <value>No options specified - Output ROM will only display version info ingame if available. Proceed?</value>
