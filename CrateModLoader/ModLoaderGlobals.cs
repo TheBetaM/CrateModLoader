@@ -41,6 +41,7 @@ namespace CrateModLoader
 
         /// <summary> String used to show which version of CML the modded game was built with. Should be under 10 characters. </summary>
         public static string ProgramVersion = "v1.2.0";
+        public static uint ProgramVersionSimple = 4;
 
         /// <summary> Console of the currently loaded ROM. </summary>
         public static ConsoleMode Console = ConsoleMode.Undefined;

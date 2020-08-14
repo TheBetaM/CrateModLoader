@@ -530,7 +530,7 @@ namespace CrateModLoader
         public string Desc = "(No Description)";
         public string Author = "(Not credited)";
         public string Version = "v1.0";
-        public string CML_Version = ModLoaderGlobals.ProgramVersion;
+        public string CML_Version = ModLoaderGlobals.ProgramVersionSimple.ToString();
         public string TargetGame = ModCrates.AllGamesShortName;
         public bool IsActivated = false;
         public bool HasSettings = false;

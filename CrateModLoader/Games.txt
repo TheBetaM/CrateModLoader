@@ -5,21 +5,56 @@ Supported: All PS1 versions (.BIN/.ISO formats)
 Mod abbreviation: Crash1 
 API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)  
 Features:  
+- All Crates Are Blank
+- All Crates Are Wumpa (Crash 1 & 2)
+- Backwards Levels
+- Random Levels Are Backwards
+- Randomize Crate Contents
+- Randomize Boss Levels
+- Wider Camera Field-Of-View
+- Randomize Camera Field-Of-View
+- Randomize World Colors
+- Randomize World Palette
 - Randomize Sound Effects  
   
 Crash Bandicoot 2: Cortex Strikes Back
-Supported: All PS1 versions (.BIN/.ISO formats)  
+Supported: NTSC-U and PAL PS1 versions (.BIN/.ISO formats)  
 Mod abbreviation: Crash2  
 API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)  
 Features:  
+- All Crates Are Blank
+- All Crates Are Wumpa
+- Randomize Warp Room
+- Backwards Levels 
+- Random Levels Are Backwards
+- Randomize Crate Contents
+- Randomize Boss Levels
+- Wider Camera Field-Of-View
+- Randomize Camera Field-Of-View
+- Randomize World Colors
+- Randomize World Palette
+- Greyscale World
+- Untextured World
 - Randomize Sound Effects  
   
 Crash Bandicoot: Warped
-Supported: All PS1 versions (.BIN/.ISO formats)  
+Supported: NTSC-U and PAL PS1 versions (.BIN/.ISO formats)  
 Mod abbreviation: Crash3  
 API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)  
 Features:  
-- Randomize Sound Effects  
+- All Crates Are Blank
+- Randomize Warp Room
+- Backwards Levels
+- Random Levels Are Backwards
+- Randomize Crate Contents
+- Randomize Flying Levels
+- Wider Camera Field-Of-View
+- Randomize Camera Field-Of-View
+- Randomize World Colors
+- Randomize World Palette
+- Greyscale World (Crash 2 & WARPED)
+- Untextured World (Crash 2 & WARPED)
+- Randomize Sound Effects 
   
 Crash Team Racing
 Supported: NTSC-U and NTSC-J PS1 versions (.BIN/.ISO formats)  
@@ -32,6 +67,7 @@ Features:
 Crash Nitro Kart
 Supported: All PS2 versions (.ISO format), All GC versions (.ISO format), All XBOX versions (.ISO format)  
 Mod abbreviation: CrashNK  
+Mod Menu enabled.
 Mod layers: 1 - ASSETS.GOB contents
 Tools/API by BetaM, ManDude and eezstreet.  
 Features:  
@@ -50,6 +86,7 @@ Features:
 Crash Twinsanity
 Supported: All PS2 versions (.ISO format), All XBOX versions (.ISO format)
 Mod abbreviation: CrashTS  
+Mod Menu enabled.  
 Mod layers: 1 - CRASH.BD contents (Same as Layer 0 on XBOX)
 API by NeoKesha, Smartkin, ManDude and Marko. (https://github.com/Smartkin/twinsanity-editor)  
 Features:  

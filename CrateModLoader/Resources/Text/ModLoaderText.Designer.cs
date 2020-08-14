@@ -322,6 +322,15 @@ namespace CrateModLoader.Resources.Text {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Simple Mod Crate Maker.
+        /// </summary>
+        public static string ModCrateMakerTitle {
+            get {
+                return ResourceManager.GetString("ModCrateMakerTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Author:.
         /// </summary>
         public static string ModCrateManagerAuthorText {
@@ -385,6 +394,15 @@ namespace CrateModLoader.Resources.Text {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Copy to clipboard.
+        /// </summary>
+        public static string ModMenu_Button_ModBitCopy {
+            get {
+                return ResourceManager.GetString("ModMenu_Button_ModBitCopy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Publish....
         /// </summary>
         public static string ModMenu_Button_Publish {
@@ -408,6 +426,15 @@ namespace CrateModLoader.Resources.Text {
         public static string ModMenu_Button_SaveAs {
             get {
                 return ResourceManager.GetString("ModMenu_Button_SaveAs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mod Bit.
+        /// </summary>
+        public static string ModMenu_Label_ModBit {
+            get {
+                return ResourceManager.GetString("ModMenu_Label_ModBit", resourceCulture);
             }
         }
         
@@ -489,6 +516,15 @@ namespace CrateModLoader.Resources.Text {
         public static string ModMenuSaveAs_SettingFileFull {
             get {
                 return ResourceManager.GetString("ModMenuSaveAs_SettingFileFull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mod Menu.
+        /// </summary>
+        public static string ModMenuTitle {
+            get {
+                return ResourceManager.GetString("ModMenuTitle", resourceCulture);
             }
         }
         

@@ -26,8 +26,13 @@ namespace CrateModLoader
             button3.Text = ModLoaderText.ModMenu_Button_Load;
             button4.Text = ModLoaderText.ModMenu_Button_ResetToDefault;
             button5.Text = ModLoaderText.ModMenu_Button_Publish;
+            button_modbit.Text = ModLoaderText.ModMenu_Label_ModBit;
+            button_copymodbit.Text = ModLoaderText.ModMenu_Button_ModBitCopy;
+            Text = ModLoaderText.ModMenuTitle;
 
             mod = modder;
+
+            //todo: generate Mod Bit
 
             GenerateUI();
             
@@ -238,6 +243,16 @@ namespace CrateModLoader
         private void button5_Click(object sender, EventArgs e)
         {
             // publish button
+        }
+
+        private void button_copymodbit_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(textBox_modbit.Text, TextDataFormat.Text);
+        }
+
+        private void button_modbit_Click(object sender, EventArgs e)
+        {
+            // todo: input Mod Bit
         }
     }
 }

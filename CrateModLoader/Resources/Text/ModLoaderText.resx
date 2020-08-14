@@ -181,6 +181,9 @@
     <value>Failed to verify Mod Crate at:</value>
     <comment>(followed by directory)</comment>
   </data>
+  <data name="ModCrateMakerTitle" xml:space="preserve">
+    <value>Simple Mod Crate Maker</value>
+  </data>
   <data name="ModCrateMaker_Button_Browse" xml:space="preserve">
     <value>Browse...</value>
   </data>
@@ -247,11 +250,17 @@
   <data name="ModMenuSaveAs_SettingFileFull" xml:space="preserve">
     <value>Full Setting File</value>
   </data>
+  <data name="ModMenuTitle" xml:space="preserve">
+    <value>Mod Menu</value>
+  </data>
   <data name="ModMenu_Button_Confirm" xml:space="preserve">
     <value>Confirm</value>
   </data>
   <data name="ModMenu_Button_Load" xml:space="preserve">
     <value>Load...</value>
+  </data>
+  <data name="ModMenu_Button_ModBitCopy" xml:space="preserve">
+    <value>Copy to clipboard</value>
   </data>
   <data name="ModMenu_Button_Publish" xml:space="preserve">
     <value>Publish...</value>
@@ -261,6 +270,9 @@
   </data>
   <data name="ModMenu_Button_SaveAs" xml:space="preserve">
     <value>Save as...</value>
+  </data>
+  <data name="ModMenu_Label_ModBit" xml:space="preserve">
+    <value>Mod Bit</value>
   </data>
   <data name="NoOptionsSelectedPopup" xml:space="preserve">
     <value>No options specified - Output ROM will only display version info ingame if available. Proceed?</value>

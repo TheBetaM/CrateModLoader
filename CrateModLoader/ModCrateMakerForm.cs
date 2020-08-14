@@ -33,6 +33,7 @@ namespace CrateModLoader
             label_description.Text = ModLoaderText.ModCrateMaker_Label_Description;
             label_version.Text = ModLoaderText.ModCrateMaker_Label_Version;
             label_icon.Text = ModLoaderText.ModCrateMaker_Label_Icon;
+            Text = ModLoaderText.ModCrateMakerTitle;
 
             crate = new ModCrate();
 

@@ -203,7 +203,7 @@
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(640, 300);
             this.Name = "ModCrateMakerForm";
-            this.Text = "Mod Crate Maker";
+            this.Text = "Simple Mod Crate Maker";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ModCrateMakerForm_FormClosed);
             this.Load += new System.EventHandler(this.ModCrateMakerForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
