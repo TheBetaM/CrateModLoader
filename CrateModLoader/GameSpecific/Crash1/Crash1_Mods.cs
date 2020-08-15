@@ -118,7 +118,7 @@ namespace CrateModLoader.GameSpecific.Crash1
             CrateSubTypes.Blank, //CrateSubTypes.Fruit, CrateSubTypes.Life, CrateSubTypes.Aku, CrateSubTypes.Pickup
         };
 
-        public static void Mod_RandomWoodCrates(NSF nsf, Random rand)
+        public static void Mod_RandomWoodCrates(NSF nsf, Random rand, Crash1_Levels level)
         {
             // edit NSF
             foreach (Chunk chunk in nsf.Chunks)
@@ -136,8 +136,15 @@ namespace CrateModLoader.GameSpecific.Crash1
                                 {
                                     if ((Crates_ToReplace.Contains((CrateSubTypes)ent.Subtype) || Crates_Wood.Contains((CrateSubTypes)ent.Subtype)))
                                     {
-                                        int entType = (int)Crates_Wood[rand.Next(Crates_Wood.Count)];
-                                        ent.Subtype = (byte)entType;
+                                        if ((level == Crash1_Levels.L22_LightsOut || level == Crash1_Levels.L23_FumblingInTheDark) && ent.Subtype == (int)CrateSubTypes.Aku)
+                                        {
+
+                                        }
+                                        else
+                                        {
+                                            int entType = (int)Crates_Wood[rand.Next(Crates_Wood.Count)];
+                                            ent.Subtype = (byte)entType;
+                                        }
                                     }
                                 }
                             }
@@ -185,7 +192,7 @@ namespace CrateModLoader.GameSpecific.Crash1
 
         }
 
-        public static void Mod_TurnCratesIntoWumpa(NSF nsf, Random rand)
+        public static void Mod_TurnCratesIntoWumpa(NSF nsf, Random rand, Crash1_Levels level)
         {
             // edit NSF
             foreach (Chunk chunk in nsf.Chunks)
@@ -197,24 +204,34 @@ namespace CrateModLoader.GameSpecific.Crash1
                         if (entry is OldZoneEntry)
                         {
                             OldZoneEntry zone = (OldZoneEntry)entry;
-                            foreach (OldEntity ent in zone.Entities)
+                            if (zone.EName != "c0_3Z" && zone.EName != "d3_TZ" && zone.EName != "d4_TZ") //cortex power ending, castle machinery last crates
                             {
-                                if (ent.Type == 34)
+                                foreach (OldEntity ent in zone.Entities)
                                 {
-                                    if ((Crates_ToReplace.Contains((CrateSubTypes)ent.Subtype) || Crates_Wood.Contains((CrateSubTypes)ent.Subtype)
-                                        || ent.Subtype == (int)CrateSubTypes.Checkpoint || ent.Subtype == (int)CrateSubTypes.Iron))
+                                    if (ent.Type == 34)
                                     {
-                                        ent.Type = 3;
-                                        ent.Subtype = 16;
-                                        ent.Flags = 196632;
-                                        ent.ModeA = 0;
-                                        ent.ModeB = 0;
-                                        ent.ModeC = 0;
-                                        if (ent.Positions.Count > 1)
+                                        if ((Crates_ToReplace.Contains((CrateSubTypes)ent.Subtype) || Crates_Wood.Contains((CrateSubTypes)ent.Subtype)
+                                            || ent.Subtype == (int)CrateSubTypes.Checkpoint || ent.Subtype == (int)CrateSubTypes.Iron))
                                         {
-                                            while (ent.Positions.Count > 1)
+                                            if ((level == Crash1_Levels.L22_LightsOut || level == Crash1_Levels.L23_FumblingInTheDark) && ent.Subtype == (int)CrateSubTypes.Aku)
                                             {
-                                                ent.Positions.RemoveAt(1);
+
+                                            }
+                                            else
+                                            {
+                                                ent.Type = 3;
+                                                ent.Subtype = 16;
+                                                ent.Flags = 196632;
+                                                ent.ModeA = 0;
+                                                ent.ModeB = 0;
+                                                ent.ModeC = 0;
+                                                if (ent.Positions.Count > 1)
+                                                {
+                                                    while (ent.Positions.Count > 1)
+                                                    {
+                                                        ent.Positions.RemoveAt(1);
+                                                    }
+                                                }
                                             }
                                         }
                                     }
