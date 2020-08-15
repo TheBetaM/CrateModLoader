@@ -133,7 +133,7 @@
     <value>All Crates Are Wumpa</value>
   </data>
   <data name="Mod_AllCratesWumpaDesc" xml:space="preserve">
-    <value>All regular crates are replaced with Wumpa fruit.</value>
+    <value>All regular crates are replaced with Wumpa fruit. (Cannot earn any gems)</value>
   </data>
   <data name="Mod_BackwardsHogLevels" xml:space="preserve">
     <value>Backwards Hog Levels (Very Hard!)</value>
@@ -145,7 +145,7 @@
     <value>Backwards Levels</value>
   </data>
   <data name="Mod_BackwardsLevelsDesc" xml:space="preserve">
-    <value>All levels start at the end and end at the start. There are minimal design changes to ensure levels are beatable. The game is 100% completable.</value>
+    <value>All onfoot levels start at the end and end at the start. There are minimal design changes to ensure levels are beatable. The game is 100% completable.</value>
   </data>
   <data name="Mod_CameraWideFOV" xml:space="preserve">
     <value>Wider Camera Field-Of-View</value>

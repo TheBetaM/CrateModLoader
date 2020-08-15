@@ -211,14 +211,10 @@ namespace CrateModLoader.GameSpecific.Crash3
                                         ent.DDASettings = null;
                                         ent.ZMod = null;
                                         ent.OtherSettings = null;
-                                        if (ent.Settings.Count > 0)
-                                        {
-                                            while (ent.Settings.Count > 0)
-                                            {
-                                                ent.Settings.RemoveAt(0);
-                                            }
-                                            ent.Settings.Add(new EntitySetting(0, 0));
-                                        }
+                                        ent.Scaling = 0;
+                                        ent.Settings.Clear();
+                                        ent.Settings.Add(new EntitySetting(0, 0));
+                                        ent.ExtraProperties.Clear();
                                     }
                                 }
                                 else if (ent.Type != null && ent.Type == 0 && ent.Subtype == 0)

@@ -139,7 +139,7 @@
     <value>Backwards Levels (Beta)</value>
   </data>
   <data name="Mod_BackwardsLevelsDesc" xml:space="preserve">
-    <value>Most levels start at the end and end at the start. There are minimal design changes to ensure levels are beatable. The game is 100% completable.</value>
+    <value>Most levels start at the end and end at the start. There are minimal design changes to ensure levels are beatable. The game is 100% completable. (Jet board levels are onfoot)</value>
   </data>
   <data name="Mod_CameraWideFOV" xml:space="preserve">
     <value>Wider Camera Field-Of-View</value>

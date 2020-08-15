@@ -106,7 +106,7 @@ namespace CrateModLoader.GameSpecific.Crash1 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to All regular crates are replaced with Wumpa fruit..
+        ///   Looks up a localized string similar to All regular crates are replaced with Wumpa fruit. (Cannot earn any gems).
         /// </summary>
         internal static string Mod_AllCratesWumpaDesc {
             get {
@@ -142,7 +142,7 @@ namespace CrateModLoader.GameSpecific.Crash1 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to All levels start at the end and end at the start. There are minimal design changes to ensure levels are beatable. The game is 100% completable..
+        ///   Looks up a localized string similar to All onfoot levels start at the end and end at the start. There are minimal design changes to ensure levels are beatable. The game is 100% completable..
         /// </summary>
         internal static string Mod_BackwardsLevelsDesc {
             get {

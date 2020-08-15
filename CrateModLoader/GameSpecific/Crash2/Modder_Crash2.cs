@@ -77,7 +77,7 @@ namespace CrateModLoader.GameSpecific.Crash2
             AddOption(RandomizeCrateContents, new ModOption(Crash2_Text.Rand_CrateContents, Crash2_Text.Rand_CrateContentsDesc));
             AddOption(RandomizeBoxCount, new ModOption(Crash2_Text.Rand_CrateCounter, Crash2_Text.Rand_CrateCounterDesc));
             AddOption(RandomizeBosses, new ModOption(Crash2_Text.Rand_BossLevels, Crash2_Text.Rand_BossLevelsDesc));
-            AddOption(VehicleLevelsOnFoot, new ModOption("Vehicle Levels On Foot"));
+            //AddOption(VehicleLevelsOnFoot, new ModOption("Vehicle Levels On Foot"));
             //AddOption(MirroredWorld, new ModOption("Mirrored World"));
             //AddOption(RandomLevelsMirrored, new ModOption("Random Levels Are Mirrored"));
             AddOption(CameraBiggerFOV, new ModOption(Crash2_Text.Mod_CameraWideFOV, Crash2_Text.Mod_CameraWideFOVDesc));

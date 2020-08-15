@@ -20,6 +20,7 @@ Additionally supported:
   
 Supported: All PS2 versions (.ISO format), All GC versions (.ISO format), All XBOX versions (.ISO format)  
 Mod abbreviation: CrashNK  
+Mod Menu enabled.  
 Tools/API by BetaM, ManDude and eezstreet.  
 ### Features:  
 - Randomize Adventure  
@@ -41,6 +42,7 @@ Tools/API by BetaM, ManDude and eezstreet.
 
 Supported: All PS2 versions (.ISO format), All XBOX versions (.ISO format)    
 Mod abbreviation: CrashTS  
+Mod Menu enabled.  
 API by NeoKesha, Smartkin, ManDude and Marko. (https://github.com/Smartkin/twinsanity-editor)  
 ### Features:  
 - Randomize Crate Types  
@@ -110,13 +112,13 @@ API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)
 <details>
 <summary>Click to view details</summary>
 
-Supported: All PS1 versions (.BIN/.ISO formats)  
+Supported: NTSC-U and PAL PS1 versions (.BIN/.ISO formats)  
 Mod abbreviation: Crash2  
 API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)  
 ### Features:  
 - All Crates Are Blank
 - All Crates Are Wumpa
-- Randomize Warp Room
+- Randomize Warp Room Exits
 - Backwards Levels 
 - Random Levels Are Backwards
 - Randomize Crate Contents
@@ -135,7 +137,7 @@ API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)
 <details>
 <summary>Click to view details</summary>
 
-Supported: All PS1 versions (.BIN/.ISO formats)  
+Supported: NTSC-U and PAL PS1 versions (.BIN/.ISO formats)  
 Mod abbreviation: Crash3  
 API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)  
 ### Features:  

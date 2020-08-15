@@ -201,6 +201,17 @@ namespace CrateModLoader.GameSpecific.Crash2
                                     {
                                         ent.Type = 3;
                                         ent.Subtype = 16;
+                                        ent.AlternateID = null;
+                                        ent.TimeTrialReward = null;
+                                        ent.Victims.Clear();
+                                        ent.BonusBoxCount = null;
+                                        ent.BoxCount = null;
+                                        ent.DDASection = null;
+                                        ent.DDASettings = null;
+                                        ent.ZMod = null;
+                                        ent.OtherSettings = null;
+                                        ent.Settings.Clear();
+                                        ent.ExtraProperties.Clear();
                                     }
                                 }
                             }
@@ -264,7 +275,7 @@ namespace CrateModLoader.GameSpecific.Crash2
             Crash2_Levels.L09_CrashCrush,  // todo: broken box counter
             //Crash2_Levels.L10_TheEelDeal, // todo: 1 section teleport
 
-            Crash2_Levels.L11_PlantFood, // onfoot for now, todo: board stuff - out of space on PAL (maybe not anymore), sometimes crashes on death if too far away from spawn (board needs to be in loadlists?)
+            Crash2_Levels.L11_PlantFood, // onfoot for now, todo: board stuff - sometimes crashes on death if too far away from spawn (board needs to be in loadlists?)
             Crash2_Levels.L12_SewerOrLater,
             //Crash2_Levels.L13_BearDown, // todo: camera stitching, bear stuff
             Crash2_Levels.L14_RoadToRuin,
@@ -394,6 +405,7 @@ namespace CrateModLoader.GameSpecific.Crash2
             List<ZoneEntry> BoardDropoffZones = new List<ZoneEntry>();
             List<Entity> BoardDropEnts = new List<Entity>();
             Entity JetpackEnt = null;
+            Entity SpaceLockEnt = null;
             Entity SpacepadEnt = null;
             ZoneEntry JetpackZone = null;
             ZoneEntry SpacepadZone = null;
@@ -407,10 +419,17 @@ namespace CrateModLoader.GameSpecific.Crash2
             bool Debug_DontMoveCounter = false;
             bool Debug_DontMoveCrash = false;
 
+            /*
             if (BearLevelsList.Contains(level) && level != Crash2_Levels.L15_UnBearable) //temp forward testing
             {
                 Debug_DontMoveCounter = true;
                 Debug_DontMoveCrash = true;
+            }
+            */
+
+            if (ChaseLevelsList.Contains(level)) // bugged counter
+            {
+                Debug_DontMoveCounter = true;
             }
 
             foreach (Chunk chunk in nsf.Chunks)
@@ -503,6 +522,7 @@ namespace CrateModLoader.GameSpecific.Crash2
                                         */
                                     }
 
+                                    /*
                                     if (SpaceLevelsList.Contains(level))
                                     {
                                         if (zone.Entities[i].Type == 35 && zone.Entities[i].Subtype == 1) // Jetpack
@@ -523,11 +543,13 @@ namespace CrateModLoader.GameSpecific.Crash2
                                         }
                                         else if (zone.Entities[i].Type == 35 && zone.Entities[i].Subtype == 6) // Spacelock
                                         {
+                                            SpaceLockEnt = zone.Entities[i];
                                             zone.Entities.RemoveAt(i);
-                                            zone.Entities.Insert(i, EmptyEntity);
                                             i--;
+                                            zone.EntityCount--;
                                         }
                                     }
+                                    */
 
                                     if (ChaseLevelsList.Contains(level))
                                     {
@@ -1069,6 +1091,7 @@ namespace CrateModLoader.GameSpecific.Crash2
             }
             */
 
+            /*
             if (JetpackEnt != null)
             {
                 EntityPosition JetpackPos = new EntityPosition(JetpackEnt.Positions[0].X, JetpackEnt.Positions[0].Y, JetpackEnt.Positions[0].Z);
@@ -1077,11 +1100,13 @@ namespace CrateModLoader.GameSpecific.Crash2
                 SpacepadEnt.Positions.RemoveAt(0);
                 JetpackEnt.Positions.Add(SpacepadPos);
                 SpacepadEnt.Positions.Add(JetpackPos);
+                SpaceLockEnt.Positions[0] = new EntityPosition(12000, 12000, 12000);
 
                 int tempboardID = (int)JetpackEnt.ID;
                 JetpackEnt.ID = SpacepadEnt.ID;
                 SpacepadEnt.ID = tempboardID;
             }
+            */
 
             if (ElevEnt != null)
             {
@@ -1154,19 +1179,29 @@ namespace CrateModLoader.GameSpecific.Crash2
                                 }
                             }
                             */
+                            
+                            /*
                             if (JetpackEnt != null)
                             {
                                 if (zone.EName == JetpackZone.EName)
                                 {
                                     zone.Entities.Add(SpacepadEnt);
                                     zone.EntityCount++;
+                                    AddToDrawList(ref nsf, ref zone, (int)SpacepadEnt.ID);
+                                    RemoveFromDrawList(ref nsf, zone, (int)JetpackEnt.ID);
+                                    RemoveFromDrawList(ref nsf, zone, (int)SpaceLockEnt.ID);
                                 }
                                 else if (zone.EName == SpacepadZone.EName)
                                 {
                                     zone.Entities.Add(JetpackEnt);
                                     zone.EntityCount++;
+                                    AddToDrawList(ref nsf, ref zone, (int)JetpackEnt.ID);
+                                    AddToDrawList(ref nsf, ref zone, (int)SpaceLockEnt.ID);
+                                    RemoveFromDrawList(ref nsf, zone, (int)SpacepadEnt.ID);
                                 }
                             }
+                            */
+                            
 
                             if (level == Crash2_Levels.L02_SnowGo)
                             {
@@ -2268,7 +2303,7 @@ namespace CrateModLoader.GameSpecific.Crash2
             }
         }
 
-        static void RemoveFromDrawList(ref NSF nsf, ref ZoneEntry zone, int ID)
+        static void RemoveFromDrawList(ref NSF nsf, ZoneEntry zone, int ID)
         {
 
             int BoxEntID = GetDrawListValue(nsf, zone, ID);
@@ -2287,7 +2322,6 @@ namespace CrateModLoader.GameSpecific.Crash2
                 }
                 if (zone.Entities[i].DrawListA != null)
                 {
-
                     for (int a = 0; a < zone.Entities[i].DrawListA.Rows.Count; a++)
                     {
                         if (zone.Entities[i].DrawListA.Rows[a].Values.Contains(BoxEntID))
