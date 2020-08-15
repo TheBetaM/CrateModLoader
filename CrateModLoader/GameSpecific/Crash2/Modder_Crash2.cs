@@ -154,6 +154,7 @@ namespace CrateModLoader.GameSpecific.Crash2
 
                 if (!CachingPass)
                 {
+                    if (GetOption(TurnCratesIntoWumpa)) Crash2_Mods.Mod_TurnCratesIntoWumpa(nsf, rand);
                     if (GetOption(RandomizeWarpRoom)) Crash2_Mods.Mod_RandomizeWarpRoom(nsf, nsd, NSF_Level, rand);
                     if (GetOption(BackwardsLevels) || GetOption(RandomBackwardsLevels)) Crash2_Mods.Mod_BackwardsLevels(nsf, nsd, NSF_Level, GetOption(RandomBackwardsLevels), rand);
                     if (GetOption(VehicleLevelsOnFoot) && !GetOption(BackwardsLevels)) Crash2_Mods.Mod_VehicleLevelsOnFoot(nsf, nsd, NSF_Level);
@@ -161,7 +162,6 @@ namespace CrateModLoader.GameSpecific.Crash2
                     if (GetOption(RandomizeCratesIntoWood)) Crash2_Mods.Mod_RandomWoodCrates(nsf, rand);
                     if (GetOption(RandomizeCrateContents)) Crash2_Mods.Mod_RandomCrateContents(nsf, rand);
                     if (GetOption(RandomizeBosses)) Crash2_Mods.Mod_RandomizeBosses(nsf, nsd, NSF_Level, rand, false);
-                    if (GetOption(TurnCratesIntoWumpa)) Crash2_Mods.Mod_TurnCratesIntoWumpa(nsf, rand);
                     if (GetOption(RandomizeBoxCount)) CrashTri_Common.Rand_BoxCount(nsf, rand);
                     if (GetOption(MirroredWorld) || GetOption(RandomLevelsMirrored)) Mod_MirrorLevel(nsf, nsd, rand, GetOption(RandomLevelsMirrored));
                     if (GetOption(SceneryColorSwizzle)) CrashTri_Common.Mod_Scenery_Swizzle(nsf, rand);

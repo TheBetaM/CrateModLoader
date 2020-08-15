@@ -282,7 +282,7 @@ namespace CrateModLoader.GameSpecific.Crash3
             Crash3_Levels.L01_ToadVillage,
             Crash3_Levels.L02_UnderPressure,
             Crash3_Levels.L03_OrientExpress, // todo: tiger stuff (onfoot is unstable)
-            Crash3_Levels.L04_BoneYard, // todo: exit has trouble appearing, stability problems?
+            //Crash3_Levels.L04_BoneYard, // todo: exit has trouble appearing, stability problems?, out of space on PAL and NTSC-J
             Crash3_Levels.L05_MakinWaves, // todo: warpout/box counter/clock doesn't appear
 
             Crash3_Levels.L06_GeeWiz, // todo: laggy start
@@ -2663,7 +2663,7 @@ namespace CrateModLoader.GameSpecific.Crash3
                                 }
                                 else
                                 {
-                                    /* one word off? NTSC-J broken atm anyway
+                                    /* 
                                     for (int i = gool.Anims.Length - 11; i > 0; i--)
                                     {
                                         string s = System.Text.Encoding.Default.GetString(gool.Anims, i, 10);

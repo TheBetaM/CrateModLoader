@@ -214,7 +214,7 @@ namespace CrateModLoader.GameSpecific.Crash2 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Boss patterns in 3 levels are randomized. (Ripper Roo/Tiny Tiger/N. Gin).
+        ///   Looks up a localized string similar to Boss patterns in 4 levels are randomized. (Ripper Roo/Komodo Bros./Tiny Tiger/N. Gin).
         /// </summary>
         internal static string Rand_BossLevelsDesc {
             get {

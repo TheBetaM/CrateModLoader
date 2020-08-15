@@ -25,14 +25,13 @@ Crash Bandicoot, Crash Bandicoot 2: Cortex Strikes Back, Crash Bandicoot: WARPED
 - New feature: Randomize Boss Levels (Crash 1 & 2) (Where possible)
 - New feature: Randomize Crate Counter (Crash 2 & WARPED)
 - New feature: Randomize Flying Levels (Crash WARPED)
-- New feature: Vehicle Levels On Foot (Crash 2)
 - New feature: Wider Camera Field-Of-View
 - New feature: Randomize Camera Field-Of-View
 - New feature: Randomize World Colors
 - New feature: Randomize World Palette
 - New feature: Greyscale World (Crash 2 & WARPED)
 - New feature: Untextured World (Crash 2 & WARPED)
-- Crate Mod Loader info is now displayed ingame. (Crash 1 - Main menu, Crash 2/WARPED - Pause menu in the Warp Room)
+- Crate Mod Loader info is now displayed ingame. (Crash 1 - Main menu, Crash 2/WARPED - Pause menu in the Warp Room) (English only)
 - Added region detection for Mod Crates.
 
 Crash Tag Team Racing: 

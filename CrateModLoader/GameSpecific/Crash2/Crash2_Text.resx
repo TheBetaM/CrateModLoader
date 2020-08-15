@@ -169,7 +169,7 @@
     <value>Randomize Boss Levels</value>
   </data>
   <data name="Rand_BossLevelsDesc" xml:space="preserve">
-    <value>Boss patterns in 3 levels are randomized. (Ripper Roo/Tiny Tiger/N. Gin)</value>
+    <value>Boss patterns in 4 levels are randomized. (Ripper Roo/Komodo Bros./Tiny Tiger/N. Gin)</value>
   </data>
   <data name="Rand_CameraFOV" xml:space="preserve">
     <value>Randomize Camera Field-Of-View</value>

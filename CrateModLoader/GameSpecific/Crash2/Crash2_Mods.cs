@@ -2423,7 +2423,7 @@ namespace CrateModLoader.GameSpecific.Crash2
                                 }
                                 else
                                 {
-                                    /* one word off? NTSC-J broken atm anyway
+                                    /*
                                     for (int i = gool.Anims.Length - 11; i > 0; i--)
                                     {
                                         string s = System.Text.Encoding.Default.GetString(gool.Anims, i, 10);
@@ -2438,8 +2438,8 @@ namespace CrateModLoader.GameSpecific.Crash2
                                                 }
                                             }
 
-                                            InsertStringsInByteArray(ref gool.Anims, i + 423, 23, new List<string>() {
-                                            "CML " + ModLoaderGlobals.ProgramVersion.ToUpper(),
+                                            InsertStringsInByteArray(ref gool.Anims, i + 436, 11, new List<string>() {
+                                            //ModLoaderGlobals.ProgramVersion.ToUpper(),
                                             seed,
                                         });
                                         }

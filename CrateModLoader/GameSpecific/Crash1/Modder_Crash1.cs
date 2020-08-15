@@ -156,6 +156,7 @@ namespace CrateModLoader.GameSpecific.Crash1
                 }
                 else
                 {
+                    if (GetOption(TurnCratesIntoWumpa)) Crash1_Mods.Mod_TurnCratesIntoWumpa(nsf, rand);
                     if (GetOption(BackwardsLevels) || GetOption(RandomBackwardsLevels)) Crash1_Mods.Mod_BackwardsLevels(nsf, nsd, NSF_Level, GetOption(RandomBackwardsLevels), rand);
                     if (GetOption(BackwardsHogLevels)) Crash1_Mods.Mod_HogLevelsBackwards(nsf, nsd, NSF_Level);
                     if (GetOption(CameraBiggerFOV) || GetOption(RandomizeCameraFOV)) Crash1_Mods.Mod_CameraFOV(nsf, rand, GetOption(RandomizeCameraFOV));
@@ -163,7 +164,6 @@ namespace CrateModLoader.GameSpecific.Crash1
                     if (GetOption(RandomizeCratesIntoWood)) Crash1_Mods.Mod_RandomWoodCrates(nsf, rand);
                     if (GetOption(RandomizeCrateContents)) Crash1_Mods.Mod_RandomCrateContents(nsf, rand, NSF_Level);
                     if (GetOption(RandomizeBosses)) Crash1_Mods.Mod_RandomizeBosses(nsf, nsd, NSF_Level, rand, false);
-                    if (GetOption(TurnCratesIntoWumpa)) Crash1_Mods.Mod_TurnCratesIntoWumpa(nsf, rand);
                     if (GetOption(SceneryColorSwizzle)) CrashTri_Common.Mod_Scenery_Swizzle(nsf, rand);
                     if (GetOption(SceneryGreyscale)) CrashTri_Common.Mod_Scenery_Greyscale(nsf);
                     if (GetOption(SceneryRainbow)) CrashTri_Common.Mod_Scenery_Rainbow(nsf, rand);

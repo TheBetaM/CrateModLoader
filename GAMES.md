@@ -96,7 +96,7 @@ Mod abbreviation: Crash1
 API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)  
 ### Features:  
 - All Crates Are Blank
-- All Crates Are Wumpa (Crash 1 & 2)
+- All Crates Are Wumpa
 - Backwards Levels
 - Random Levels Are Backwards
 - Randomize Crate Contents
@@ -106,13 +106,14 @@ API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)
 - Randomize World Colors
 - Randomize World Palette
 - Randomize Sound Effects  
+- Version and seed visible in the Main Menu
 </details>
   
 ## Crash Bandicoot 2: Cortex Strikes Back ![Crash Bandicoot 2](./CrateModLoader/Resources/icon_crash2.png "Crash Bandicoot 2")
 <details>
 <summary>Click to view details</summary>
 
-Supported: NTSC-U and PAL PS1 versions (.BIN/.ISO formats)  
+Supported: All PS1 versions (.BIN/.ISO formats)  
 Mod abbreviation: Crash2  
 API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)  
 ### Features:  
@@ -131,13 +132,14 @@ API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)
 - Greyscale World
 - Untextured World
 - Randomize Sound Effects  
+- Version and seed visible in the Pause screen in the Warp Room (English only)  
 </details>
   
 ## Crash Bandicoot: WARPED ![Crash Bandicoot WARPED](./CrateModLoader/Resources/icon_crash3.png "Crash Bandicoot WARPED")
 <details>
 <summary>Click to view details</summary>
 
-Supported: NTSC-U and PAL PS1 versions (.BIN/.ISO formats)  
+Supported: All PS1 versions (.BIN/.ISO formats)  
 Mod abbreviation: Crash3  
 API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)  
 ### Features:  
@@ -155,6 +157,7 @@ API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)
 - Greyscale World
 - Untextured World
 - Randomize Sound Effects 
+- Version and seed visible in the Pause screen in the Warp Room (English only)  
 </details>
   
 ## CTR: Crash Team Racing ![Crash Team Racing](./CrateModLoader/Resources/icon_crashtr.png "Crash Team Racing")

@@ -201,7 +201,8 @@ namespace CrateModLoader.GameSpecific.Crash1
                             {
                                 if (ent.Type == 34)
                                 {
-                                    if ((Crates_ToReplace.Contains((CrateSubTypes)ent.Subtype) || Crates_Wood.Contains((CrateSubTypes)ent.Subtype) || ent.Subtype == (int)CrateSubTypes.Checkpoint))
+                                    if ((Crates_ToReplace.Contains((CrateSubTypes)ent.Subtype) || Crates_Wood.Contains((CrateSubTypes)ent.Subtype)
+                                        || ent.Subtype == (int)CrateSubTypes.Checkpoint || ent.Subtype == (int)CrateSubTypes.Iron))
                                     {
                                         ent.Type = 3;
                                         ent.Subtype = 16;

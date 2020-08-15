@@ -1,70 +1,4 @@
-Crate Mod Loader Supported Games & Features
-  
-Crash Bandicoot
-Supported: All PS1 versions (.BIN/.ISO formats)  
-Mod abbreviation: Crash1 
-API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)  
-Features:  
-- All Crates Are Blank
-- All Crates Are Wumpa (Crash 1 & 2)
-- Backwards Levels
-- Random Levels Are Backwards
-- Randomize Crate Contents
-- Randomize Boss Levels
-- Wider Camera Field-Of-View
-- Randomize Camera Field-Of-View
-- Randomize World Colors
-- Randomize World Palette
-- Randomize Sound Effects  
-  
-Crash Bandicoot 2: Cortex Strikes Back
-Supported: NTSC-U and PAL PS1 versions (.BIN/.ISO formats)  
-Mod abbreviation: Crash2  
-API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)  
-Features:  
-- All Crates Are Blank
-- All Crates Are Wumpa
-- Randomize Warp Room
-- Backwards Levels 
-- Random Levels Are Backwards
-- Randomize Crate Contents
-- Randomize Crate Counter
-- Randomize Boss Levels
-- Wider Camera Field-Of-View
-- Randomize Camera Field-Of-View
-- Randomize World Colors
-- Randomize World Palette
-- Greyscale World
-- Untextured World
-- Randomize Sound Effects  
-  
-Crash Bandicoot: Warped
-Supported: NTSC-U and PAL PS1 versions (.BIN/.ISO formats)  
-Mod abbreviation: Crash3  
-API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)  
-Features:  
-- All Crates Are Blank
-- Randomize Warp Room
-- Backwards Levels
-- Random Levels Are Backwards
-- Randomize Crate Contents
-- Randomize Crate Counter
-- Randomize Flying Levels
-- Wider Camera Field-Of-View
-- Randomize Camera Field-Of-View
-- Randomize World Colors
-- Randomize World Palette
-- Greyscale World
-- Untextured World
-- Randomize Sound Effects 
-  
-Crash Team Racing
-Supported: NTSC-U and NTSC-J PS1 versions (.BIN/.ISO formats)  
-Mod abbreviation: CrashTR  
-Mod layers: 1 - BIGFILE.BIG contents
-API by DCxDemo. (https://github.com/DCxDemo/CTR-tools)  
-Features:  
-- Version and seed visible in the Loading screen (English only)  
+Crate Mod Loader Supported Games
   
 Crash Nitro Kart
 Supported: All PS2 versions (.ISO format), All GC versions (.ISO format), All XBOX versions (.ISO format)  
@@ -116,6 +50,84 @@ Features:
 - Randomize Race Laps
 - Prevent Sequence Breaks
 - Version, seed and settings visible in the Credits screen
+
+Rayman 3: Hoodlum Havoc
+Supported: All PS2 versions (.ISO format), All GC versions (.ISO format), All XBOX versions (.ISO format)
+Mod abbreviation: Rayman3  
+Features:
+- Randomize Level Order (Any amount of Levels)  
+- Randomize Outfit Visuals (GC Only)  
+- New Game Into 2D Nightmare (GC Only)  
+- Remove Intro Videos (GC Only)  
+
+Crash Bandicoot
+Supported: All PS1 versions (.BIN/.ISO formats)  
+Mod abbreviation: Crash1 
+API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)  
+Features:  
+- All Crates Are Blank
+- All Crates Are Wumpa
+- Backwards Levels
+- Random Levels Are Backwards
+- Randomize Crate Contents
+- Randomize Boss Levels
+- Wider Camera Field-Of-View
+- Randomize Camera Field-Of-View
+- Randomize World Colors
+- Randomize World Palette
+- Randomize Sound Effects  
+- Version and seed visible in the Main Menu
+  
+Crash Bandicoot 2: Cortex Strikes Back
+Supported: All PS1 versions (.BIN/.ISO formats)  
+Mod abbreviation: Crash2  
+API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)  
+Features:  
+- All Crates Are Blank
+- All Crates Are Wumpa
+- Randomize Warp Room
+- Backwards Levels 
+- Random Levels Are Backwards
+- Randomize Crate Contents
+- Randomize Crate Counter
+- Randomize Boss Levels
+- Wider Camera Field-Of-View
+- Randomize Camera Field-Of-View
+- Randomize World Colors
+- Randomize World Palette
+- Greyscale World
+- Untextured World
+- Randomize Sound Effects  
+- Version and seed visible in the Pause screen in the Warp Room (English only)  
+  
+Crash Bandicoot: Warped
+Supported: All PS1 versions (.BIN/.ISO formats)  
+Mod abbreviation: Crash3  
+API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)  
+Features:  
+- All Crates Are Blank
+- Randomize Warp Room
+- Backwards Levels
+- Random Levels Are Backwards
+- Randomize Crate Contents
+- Randomize Crate Counter
+- Randomize Flying Levels
+- Wider Camera Field-Of-View
+- Randomize Camera Field-Of-View
+- Randomize World Colors
+- Randomize World Palette
+- Greyscale World
+- Untextured World
+- Randomize Sound Effects 
+- Version and seed visible in the Pause screen in the Warp Room (English only)  
+  
+Crash Team Racing
+Supported: NTSC-U and NTSC-J PS1 versions (.BIN/.ISO formats)  
+Mod abbreviation: CrashTR  
+Mod layers: 1 - BIGFILE.BIG contents
+API by DCxDemo. (https://github.com/DCxDemo/CTR-tools)  
+Features:  
+- Version and seed visible in the Loading screen (English only)  
   
 Crash of the Titans
 Supported: All PS2 versions (.ISO format), All Wii versions (.ISO/.WBFS formats), All PSP versions (.ISO format), All 360 versions (.ISO format)   
@@ -132,12 +144,3 @@ Mod layers: 1 - Default.RCF contents (only replace files)
 API by NeoKesha.  
 Features:    
 - Version, seed and settings visible in the Credits screen  
-
-Rayman 3: Hoodlum Havoc
-Supported: All PS2 versions (.ISO format), All GC versions (.ISO format), All XBOX versions (.ISO format)
-Mod abbreviation: Rayman3  
-Features:
-- Randomize Level Order (Any amount of Levels)  
-- Randomize Outfit Visuals (GC Only)  
-- New Game Into 2D Nightmare (GC Only)  
-- Remove Intro Videos (GC Only)  

@@ -144,6 +144,7 @@ namespace CrateModLoader.GameSpecific.Crash3
 
                 Crash3_Levels NSF_Level = GetLevelFromNSF(nsfFile.Name);
 
+                if (GetOption(TurnCratesIntoWumpa)) Crash3_Mods.Mod_TurnCratesIntoWumpa(nsf, rand);
                 if (GetOption(RandomizeWarpRoom)) Crash3_Mods.Mod_RandomizeWRButtons(nsf, nsd, NSF_Level, rand);
                 if (GetOption(BackwardsLevels) || GetOption(RandomBackwardsLevels)) Crash3_Mods.Mod_BackwardsLevels(nsf, nsd, NSF_Level, GetOption(RandomBackwardsLevels), rand);
                 if (GetOption(CameraBiggerFOV) || GetOption(RandomizeCameraFOV)) Crash3_Mods.Mod_CameraFOV(nsf, rand, GetOption(RandomizeCameraFOV));
@@ -151,7 +152,6 @@ namespace CrateModLoader.GameSpecific.Crash3
                 if (GetOption(RandomizeCrateContents)) Crash3_Mods.Mod_RandomCrateContents(nsf, rand);
                 if (GetOption(RandomizeBosses)) Crash3_Mods.Mod_RandomizeBosses(nsf, nsd, NSF_Level, rand, false);
                 if (GetOption(RandomizeFlyingLevels)) Crash3_Mods.Mod_RandomizeFlyingLevels(nsf, nsd, NSF_Level, rand, false);
-                if (GetOption(TurnCratesIntoWumpa)) Crash3_Mods.Mod_TurnCratesIntoWumpa(nsf, rand);
                 if (GetOption(RandomizeBoxCount)) CrashTri_Common.Rand_BoxCount(nsf,rand);
                 if (GetOption(RandomizeADIO)) Mod_RandomizeADIO(nsf, nsd, rand);
                 if (GetOption(SceneryColorSwizzle)) CrashTri_Common.Mod_Scenery_Swizzle(nsf, rand);
