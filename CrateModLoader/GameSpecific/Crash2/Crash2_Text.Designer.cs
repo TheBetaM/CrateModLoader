@@ -259,6 +259,24 @@ namespace CrateModLoader.GameSpecific.Crash2 {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Randomize Crate Counter.
+        /// </summary>
+        internal static string Rand_CrateCounter {
+            get {
+                return ResourceManager.GetString("Rand_CrateCounter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Randomize the number of required crates to break to get a gem in each level. Breaking more crates than required will not grant a gem..
+        /// </summary>
+        internal static string Rand_CrateCounterDesc {
+            get {
+                return ResourceManager.GetString("Rand_CrateCounterDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Randomize Sound Effects.
         /// </summary>
         internal static string Rand_SFX {

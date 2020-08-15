@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CrateModLoader
+namespace CrateModLoader.GameSpecific.SonicAdventure
 {
     public sealed class Modder_SonicAdventure : Modder
     {

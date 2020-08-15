@@ -7,7 +7,7 @@ using CrateModLoader.GameSpecific.Crash1;
 //Crash 1 API by chekwob and ManDude (https://github.com/cbhacks/CrashEdit)
 //Version number and seed are displayed in the main menu.
 
-namespace CrateModLoader
+namespace CrateModLoader.GameSpecific.Crash1
 {
     public sealed class Modder_Crash1 : Modder
     {

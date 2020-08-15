@@ -7,7 +7,7 @@ using CrateModLoader.GameSpecific.Crash3;
 //Crash 3 API by chekwob and ManDude (https://github.com/cbhacks/CrashEdit)
 //Version number and seed are displayed in the pause menu in the Warp Room.
 
-namespace CrateModLoader
+namespace CrateModLoader.GameSpecific.Crash3
 {
     public sealed class Modder_Crash3 : Modder
     {
@@ -34,6 +34,7 @@ namespace CrateModLoader
         internal const int RandomizeFlyingLevels = 21;
         internal const int RandomizeBikeLevels = 22;
         internal const int RandomizeBosses = 23;
+        internal const int RandomizeBoxCount = 24;
 
         public Modder_Crash3()
         {
@@ -75,6 +76,7 @@ namespace CrateModLoader
             AddOption(BackwardsLevels, new ModOption(Crash3_Text.Mod_BackwardsLevels, Crash3_Text.Mod_BackwardsLevelsDesc));
             AddOption(RandomBackwardsLevels, new ModOption(Crash3_Text.Rand_BackwardsLevels, Crash3_Text.Rand_BackwardsLevelsDesc));
             AddOption(RandomizeCrateContents, new ModOption(Crash3_Text.Rand_CrateContents, Crash3_Text.Rand_CrateContentsDesc));
+            AddOption(RandomizeBoxCount, new ModOption(Crash3_Text.Rand_CrateCounter, Crash3_Text.Rand_CrateCounterDesc));
             AddOption(RandomizeFlyingLevels, new ModOption(Crash3_Text.Rand_FlyingLevels, Crash3_Text.Rand_FlyingLevelsDesc));
             //AddOption(RandomizeBikeLevels, new ModOption("Randomize Bike Levels"));
             //AddOption(RandomizeBosses, new ModOption("Randomize Final Boss Level"));
@@ -150,6 +152,7 @@ namespace CrateModLoader
                 if (GetOption(RandomizeBosses)) Crash3_Mods.Mod_RandomizeBosses(nsf, nsd, NSF_Level, rand, false);
                 if (GetOption(RandomizeFlyingLevels)) Crash3_Mods.Mod_RandomizeFlyingLevels(nsf, nsd, NSF_Level, rand, false);
                 if (GetOption(TurnCratesIntoWumpa)) Crash3_Mods.Mod_TurnCratesIntoWumpa(nsf, rand);
+                if (GetOption(RandomizeBoxCount)) CrashTri_Common.Rand_BoxCount(nsf,rand);
                 if (GetOption(RandomizeADIO)) Mod_RandomizeADIO(nsf, nsd, rand);
                 if (GetOption(SceneryColorSwizzle)) CrashTri_Common.Mod_Scenery_Swizzle(nsf, rand);
                 if (GetOption(SceneryGreyscale)) CrashTri_Common.Mod_Scenery_Greyscale(nsf);

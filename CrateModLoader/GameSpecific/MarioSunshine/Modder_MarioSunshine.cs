@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CrateModLoader
+namespace CrateModLoader.GameSpecific.MarioSunshine
 {
     public sealed class Modder_MarioSunshine : Modder
     {

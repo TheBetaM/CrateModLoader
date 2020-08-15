@@ -183,6 +183,12 @@
   <data name="Rand_CrateContentsDesc" xml:space="preserve">
     <value>Contents of regular crates are randomized between different amounts of Wumpa, an extra life, and a mask.</value>
   </data>
+  <data name="Rand_CrateCounter" xml:space="preserve">
+    <value>Randomize Crate Counter</value>
+  </data>
+  <data name="Rand_CrateCounterDesc" xml:space="preserve">
+    <value>Randomize the number of required crates to break to get a gem in each level. Breaking more crates than required will not grant a gem.</value>
+  </data>
   <data name="Rand_SFX" xml:space="preserve">
     <value>Randomize Sound Effects</value>
   </data>

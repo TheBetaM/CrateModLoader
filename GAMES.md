@@ -120,6 +120,7 @@ API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)
 - Backwards Levels 
 - Random Levels Are Backwards
 - Randomize Crate Contents
+- Randomize Crate Counter
 - Randomize Boss Levels
 - Wider Camera Field-Of-View
 - Randomize Camera Field-Of-View
@@ -143,6 +144,7 @@ API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)
 - Backwards Levels
 - Random Levels Are Backwards
 - Randomize Crate Contents
+- Randomize Crate Counter
 - Randomize Flying Levels
 - Wider Camera Field-Of-View
 - Randomize Camera Field-Of-View

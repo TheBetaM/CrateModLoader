@@ -7,7 +7,7 @@ using CrateModLoader.GameSpecific.Crash2;
 //Crash 2 API by chekwob and ManDude (https://github.com/cbhacks/CrashEdit)
 //Version number and seed are displayed in the pause menu in the Warp Room.
 
-namespace CrateModLoader
+namespace CrateModLoader.GameSpecific.Crash2
 {
     public sealed class Modder_Crash2 : Modder
     {
@@ -33,6 +33,7 @@ namespace CrateModLoader
         internal const int RandomizeWarpRoom = 19;
         internal const int RandomizeCrateContents = 20;
         internal const int RandomizeBosses = 21;
+        internal const int RandomizeBoxCount = 24;
 
         public Modder_Crash2()
         {
@@ -74,6 +75,7 @@ namespace CrateModLoader
             AddOption(BackwardsLevels, new ModOption(Crash2_Text.Mod_BackwardsLevels, Crash2_Text.Mod_BackwardsLevelsDesc));
             AddOption(RandomBackwardsLevels, new ModOption(Crash2_Text.Rand_BackwardsLevels, Crash2_Text.Rand_BackwardsLevelsDesc));
             AddOption(RandomizeCrateContents, new ModOption(Crash2_Text.Rand_CrateContents, Crash2_Text.Rand_CrateContentsDesc));
+            AddOption(RandomizeBoxCount, new ModOption(Crash2_Text.Rand_CrateCounter, Crash2_Text.Rand_CrateCounterDesc));
             AddOption(RandomizeBosses, new ModOption(Crash2_Text.Rand_BossLevels, Crash2_Text.Rand_BossLevelsDesc));
             AddOption(VehicleLevelsOnFoot, new ModOption("Vehicle Levels On Foot"));
             //AddOption(MirroredWorld, new ModOption("Mirrored World"));
@@ -160,6 +162,7 @@ namespace CrateModLoader
                     if (GetOption(RandomizeCrateContents)) Crash2_Mods.Mod_RandomCrateContents(nsf, rand);
                     if (GetOption(RandomizeBosses)) Crash2_Mods.Mod_RandomizeBosses(nsf, nsd, NSF_Level, rand, false);
                     if (GetOption(TurnCratesIntoWumpa)) Crash2_Mods.Mod_TurnCratesIntoWumpa(nsf, rand);
+                    if (GetOption(RandomizeBoxCount)) CrashTri_Common.Rand_BoxCount(nsf, rand);
                     if (GetOption(MirroredWorld) || GetOption(RandomLevelsMirrored)) Mod_MirrorLevel(nsf, nsd, rand, GetOption(RandomLevelsMirrored));
                     if (GetOption(SceneryColorSwizzle)) CrashTri_Common.Mod_Scenery_Swizzle(nsf, rand);
                     if (GetOption(SceneryGreyscale)) CrashTri_Common.Mod_Scenery_Greyscale(nsf);

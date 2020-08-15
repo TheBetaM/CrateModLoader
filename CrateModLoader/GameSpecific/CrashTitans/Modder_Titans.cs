@@ -8,7 +8,7 @@ using CrateModLoader.GameSpecific.CrashTTR;
  * 1: Default.RCF contents (only replace files)
  */
 
-namespace CrateModLoader
+namespace CrateModLoader.GameSpecific.CrashTitans
 {
     public sealed class Modder_Titans : Modder
     {

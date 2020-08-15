@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CrateModLoader
+namespace CrateModLoader.GameSpecific.CrashBash
 {
     public sealed class Modder_Bash : Modder
     {

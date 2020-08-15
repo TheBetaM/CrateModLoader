@@ -28,6 +28,7 @@ Features:
 - Backwards Levels 
 - Random Levels Are Backwards
 - Randomize Crate Contents
+- Randomize Crate Counter
 - Randomize Boss Levels
 - Wider Camera Field-Of-View
 - Randomize Camera Field-Of-View
@@ -47,6 +48,7 @@ Features:
 - Backwards Levels
 - Random Levels Are Backwards
 - Randomize Crate Contents
+- Randomize Crate Counter
 - Randomize Flying Levels
 - Wider Camera Field-Of-View
 - Randomize Camera Field-Of-View

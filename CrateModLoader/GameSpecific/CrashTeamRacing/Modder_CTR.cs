@@ -11,7 +11,7 @@ using bigtool;
  * 1: BIGFILE.BIG contents
  */
 
-namespace CrateModLoader
+namespace CrateModLoader.GameSpecific.CrashTeamRacing
 {
     public sealed class Modder_CTR : Modder
     {

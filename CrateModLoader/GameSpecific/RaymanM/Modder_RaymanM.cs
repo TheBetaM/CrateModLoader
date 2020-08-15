@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CrateModLoader
+namespace CrateModLoader.GameSpecific.RaymanM
 {
     public sealed class Modder_RaymanM : Modder
     {

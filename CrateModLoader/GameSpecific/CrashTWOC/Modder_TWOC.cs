@@ -1,9 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
-using CrateModLoader.GameSpecific.CrashTWOC;
 
-namespace CrateModLoader
+namespace CrateModLoader.GameSpecific.CrashTWOC
 {
     public sealed class Modder_TWOC : Modder
     {

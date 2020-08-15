@@ -9,7 +9,7 @@ using CrateModLoader.GameSpecific.CrashTTR;
  * 1: Default.RCF contents (only replace files)
  */
 
-namespace CrateModLoader
+namespace CrateModLoader.GameSpecific.CrashMoM
 {
     public sealed class Modder_MoM : Modder
     {
