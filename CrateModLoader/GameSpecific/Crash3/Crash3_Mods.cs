@@ -198,7 +198,8 @@ namespace CrateModLoader.GameSpecific.Crash3
                             {
                                 if (ent.Type != null && ent.Type == 34)
                                 {
-                                    if (ent.Subtype != null && (Crates_ToReplace.Contains((CrateSubTypes)ent.Subtype) || Crates_Wood.Contains((CrateSubTypes)ent.Subtype) || ent.Subtype == (int)CrateSubTypes.Checkpoint))
+                                    if (ent.Subtype != null && (Crates_ToReplace.Contains((CrateSubTypes)ent.Subtype) || Crates_Wood.Contains((CrateSubTypes)ent.Subtype) 
+                                        || ent.Subtype == (int)CrateSubTypes.Checkpoint || ent.Subtype == (int)CrateSubTypes.Iron))
                                     {
                                         ent.Type = 3;
                                         ent.Subtype = 16;
@@ -216,6 +217,24 @@ namespace CrateModLoader.GameSpecific.Crash3
                                         ent.Settings.Add(new EntitySetting(0, 0));
                                         ent.ExtraProperties.Clear();
                                     }
+                                }
+                                else if (ent.Type != null && ent.Type == 8 && ent.Subtype == 1) // kite
+                                {
+                                    ent.Type = 3;
+                                    ent.Subtype = 16;
+                                    ent.AlternateID = null;
+                                    ent.TimeTrialReward = null;
+                                    ent.Victims.Clear();
+                                    ent.BonusBoxCount = null;
+                                    ent.BoxCount = null;
+                                    ent.DDASection = null;
+                                    ent.DDASettings = null;
+                                    ent.ZMod = null;
+                                    ent.OtherSettings = null;
+                                    ent.Scaling = 0;
+                                    ent.Settings.Clear();
+                                    ent.Settings.Add(new EntitySetting(0, 0));
+                                    ent.ExtraProperties.Clear();
                                 }
                                 else if (ent.Type != null && ent.Type == 0 && ent.Subtype == 0)
                                 {

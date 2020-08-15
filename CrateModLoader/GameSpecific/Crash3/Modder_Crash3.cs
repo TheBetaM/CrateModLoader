@@ -71,7 +71,7 @@ namespace CrateModLoader.GameSpecific.Crash3
             ModCratesManualInstall = true;
 
             AddOption(RandomizeCratesIntoWood, new ModOption(Crash3_Text.Mod_AllCratesBlank, Crash3_Text.Mod_AllCratesBlankDesc));
-            //AddOption(TurnCratesIntoWumpa, new ModOption("All Crates Are Wumpa")); //crashes in level 1
+            AddOption(TurnCratesIntoWumpa, new ModOption(Crash3_Text.Mod_AllCratesWumpa, Crash3_Text.Mod_AllCratesWumpaDesc));
             AddOption(RandomizeWarpRoom, new ModOption(Crash3_Text.Rand_WarpRoom, Crash3_Text.Rand_WarpRoomDesc));
             AddOption(BackwardsLevels, new ModOption(Crash3_Text.Mod_BackwardsLevels, Crash3_Text.Mod_BackwardsLevelsDesc));
             AddOption(RandomBackwardsLevels, new ModOption(Crash3_Text.Rand_BackwardsLevels, Crash3_Text.Rand_BackwardsLevelsDesc));
