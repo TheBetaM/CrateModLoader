@@ -61,7 +61,7 @@ namespace CrateModLoader.GameSpecific.CrashTS {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to API by NeoKesha, Smartkin, ManDude and Marko.
+        ///   Looks up a localized string similar to API by NeoKesha, Smartkin, ManDude, BetaM and Marko.
         /// </summary>
         internal static string API_Credit {
             get {

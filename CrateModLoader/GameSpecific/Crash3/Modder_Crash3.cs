@@ -72,12 +72,12 @@ namespace CrateModLoader.GameSpecific.Crash3
 
             AddOption(RandomizeCratesIntoWood, new ModOption(Crash3_Text.Mod_AllCratesBlank, Crash3_Text.Mod_AllCratesBlankDesc));
             AddOption(TurnCratesIntoWumpa, new ModOption(Crash3_Text.Mod_AllCratesWumpa, Crash3_Text.Mod_AllCratesWumpaDesc));
-            AddOption(RandomizeWarpRoom, new ModOption(Crash3_Text.Rand_WarpRoom, Crash3_Text.Rand_WarpRoomDesc));
+            //AddOption(RandomizeWarpRoom, new ModOption(Crash3_Text.Rand_WarpRoom, Crash3_Text.Rand_WarpRoomDesc)); //unstable, unfinished
             AddOption(BackwardsLevels, new ModOption(Crash3_Text.Mod_BackwardsLevels, Crash3_Text.Mod_BackwardsLevelsDesc));
             AddOption(RandomBackwardsLevels, new ModOption(Crash3_Text.Rand_BackwardsLevels, Crash3_Text.Rand_BackwardsLevelsDesc));
             AddOption(RandomizeCrateContents, new ModOption(Crash3_Text.Rand_CrateContents, Crash3_Text.Rand_CrateContentsDesc));
             AddOption(RandomizeBoxCount, new ModOption(Crash3_Text.Rand_CrateCounter, Crash3_Text.Rand_CrateCounterDesc));
-            AddOption(RandomizeFlyingLevels, new ModOption(Crash3_Text.Rand_FlyingLevels, Crash3_Text.Rand_FlyingLevelsDesc));
+            //AddOption(RandomizeFlyingLevels, new ModOption(Crash3_Text.Rand_FlyingLevels, Crash3_Text.Rand_FlyingLevelsDesc)); //unfinished
             //AddOption(RandomizeBikeLevels, new ModOption("Randomize Bike Levels"));
             //AddOption(RandomizeBosses, new ModOption("Randomize Final Boss Level"));
             //AddOption(MirroredWorld, new ModOption("Mirrored World"));

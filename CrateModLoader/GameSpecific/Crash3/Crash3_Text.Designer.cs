@@ -124,7 +124,7 @@ namespace CrateModLoader.GameSpecific.Crash3 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Most levels start at the end and end at the start. There are minimal design changes to ensure levels are beatable. The game is 100% completable..
+        ///   Looks up a localized string similar to Most levels start at the end and end at the start. There are minimal design changes to ensure levels are beatable. The game is NOT 105% completable..
         /// </summary>
         internal static string Mod_BackwardsLevelsDesc {
             get {

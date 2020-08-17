@@ -145,7 +145,6 @@ API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)
 ### Features:  
 - All Crates Are Blank
 - All Crates Are Wumpa
-- Randomize Warp Room
 - Backwards Levels
 - Random Levels Are Backwards
 - Randomize Crate Contents
