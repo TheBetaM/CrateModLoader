@@ -483,7 +483,7 @@ namespace CrateModLoader
                 ISOcreatorProcess.Start();
                 ISOcreatorProcess.WaitForExit();
             }
-            else if (ModLoaderGlobals.Console == ConsoleMode.XBOX)
+            else if (ModLoaderGlobals.Console == ConsoleMode.XBOX || ModLoaderGlobals.Console == ConsoleMode.XBOX360)
             {
                 // TODO: add free space checks
                 string args = "-x ";
@@ -920,10 +920,14 @@ namespace CrateModLoader
                         using (StreamReader sr = new StreamReader(ModLoaderGlobals.InputPath + @"sys/boot.bin"))
                         {
                             string titleID = sr.ReadLine().Substring(0, 6);
-                            SetGameType(titleID, ConsoleMode.GCN);
-                            if (Modder != null)
+
+                            if (titleID.StartsWith("G"))
                             {
-                                ModLoaderGlobals.ProductCode = titleID;
+                                SetGameType(titleID, ConsoleMode.GCN);
+                                if (Modder != null)
+                                {
+                                    ModLoaderGlobals.ProductCode = titleID;
+                                }
                             }
                             else
                             {
@@ -1018,10 +1022,13 @@ namespace CrateModLoader
 
                         if (!string.IsNullOrWhiteSpace(titleID))
                         {
-                            SetGameType(titleID, ConsoleMode.GCN);
-                            if (Modder != null)
+                            if (titleID.StartsWith("G"))
                             {
-                                ModLoaderGlobals.ProductCode = titleID;
+                                SetGameType(titleID, ConsoleMode.GCN);
+                                if (Modder != null)
+                                {
+                                    ModLoaderGlobals.ProductCode = titleID;
+                                }
                             }
                             else
                             {
@@ -1035,7 +1042,7 @@ namespace CrateModLoader
                         }
                     }
                 }
-                if (Modder == null && (OpenROM_Selection == OpenROM_SelectionType.AutomaticOnly || OpenROM_Selection == OpenROM_SelectionType.Any))
+                if (!ConsoleDetected && Modder == null && (OpenROM_Selection == OpenROM_SelectionType.AutomaticOnly || OpenROM_Selection == OpenROM_SelectionType.Any))
                 {
 
                     DeleteTempFiles();
@@ -1156,7 +1163,7 @@ namespace CrateModLoader
 
                     DeleteTempFiles();
                 }
-                if (Modder == null && (OpenROM_Selection == OpenROM_SelectionType.AutomaticOnly || OpenROM_Selection == OpenROM_SelectionType.Any))
+                if (!ConsoleDetected && Modder == null && (OpenROM_Selection == OpenROM_SelectionType.AutomaticOnly || OpenROM_Selection == OpenROM_SelectionType.Any))
                 {
                     try
                     {
@@ -1450,9 +1457,10 @@ namespace CrateModLoader
             {
                 button_modMenu.Visible = true;
                 button_modMenu.Enabled = false;
-                button_modCrateMenu.Enabled = button_modCrateMenu.Visible = button_modTools.Visible = button_modTools.Enabled = true;
+                button_modCrateMenu.Enabled = button_modCrateMenu.Visible = button_modTools.Visible = true;
                 button_randomize.Enabled = button_randomize.Visible = button_modMenu.Visible = button_modMenu.Enabled = button_downloadMods.Enabled = button_downloadMods.Visible = false;
                 textbox_rando_seed.Enabled = textbox_rando_seed.Visible = false;
+                button_modTools.Enabled = false;
 
                 text_gameType.Text = ModLoaderText.UnsupportedGameTitle + " (" + cons_mod + ")";
                 text_apiLabel.Text = string.Empty;
@@ -1471,11 +1479,12 @@ namespace CrateModLoader
                 button_modMenu.Enabled = Modder.ModMenuEnabled;
                 button_modCrateMenu.Visible = true;
                 button_modCrateMenu.Enabled = Modder.Game.ModCratesSupported;
-                button_randomize.Enabled = button_randomize.Visible = button_modTools.Enabled = button_modTools.Visible = button_downloadMods.Visible = true;
+                button_randomize.Enabled = button_randomize.Visible = button_modTools.Visible = button_downloadMods.Visible = true;
                 textbox_rando_seed.Enabled = textbox_rando_seed.Visible = true;
                 text_optionDescLabel.Text = string.Empty;
                 text_optionDescLabel.Visible = false;
                 panel_optionDesc.Visible = false;
+                button_modTools.Enabled = false;
 
                 if (string.IsNullOrWhiteSpace(region_mod))
                 {

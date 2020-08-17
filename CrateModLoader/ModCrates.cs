@@ -174,6 +174,7 @@ namespace CrateModLoader
                 ListName += " ";
                 ListName += SupportedMods[i].Version;
 
+                /*
                 uint ModLoaderVer;
                 if (uint.TryParse(SupportedMods[i].CML_Version, out ModLoaderVer))
                 {
@@ -188,6 +189,7 @@ namespace CrateModLoader
                     ListName += " ";
                     ListName += "(*)";
                 }
+                */
 
                 CheckedList_Mods.Items.Add(ListName);
                 if (SupportedMods[i].IsActivated)

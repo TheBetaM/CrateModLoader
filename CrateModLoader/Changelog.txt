@@ -7,7 +7,6 @@ General:
 - Console/Region specific options will not appear on unsupported versions anymore.  
 - The window will now flash when the process is complete.  
 - Options now show a description when selected.  
-- Base files can now be extracted on their own with any game from the Mod Tools menu.
 - Mod Menus have been implemented. Variables can be edited in the menu, loaded from a text file or Mod Crate, and saved to a text file or Mod Crate.
 - Mod Crate metadata now supports localization. Set Name-xx and Description-xx with a valid ISO 639-1 country code for it to be displayed in that language. (ex. Name-de (German), Name-es (Spanish) etc.)
 (language switching is planned to be added in the future, right now it will honor the system default)
@@ -25,7 +24,6 @@ Crash Bandicoot, Crash Bandicoot 2: Cortex Strikes Back, Crash Bandicoot: WARPED
 - New feature: Randomize Crate Contents
 - New feature: Randomize Boss Levels (Crash 1 & 2) (Where possible)
 - New feature: Randomize Crate Counter (Crash 2 & WARPED)
-- New feature: Randomize Flying Levels (Crash WARPED)
 - New feature: Wider Camera Field-Of-View
 - New feature: Randomize Camera Field-Of-View
 - New feature: Randomize World Colors

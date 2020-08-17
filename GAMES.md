@@ -55,7 +55,7 @@ API by NeoKesha, Smartkin, ManDude and Marko. (https://github.com/Smartkin/twins
 - Enable Double Jump for Cortex  
 - Enable Double Jump for Nina  
 - Enable Unused Enemies  
-- Switch Charactes At Will  
+- Switch Characters At Will  
 - Version, seed and settings visible in the Autosave Disabled screen  
 </details>
   
@@ -150,7 +150,6 @@ API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)
 - Random Levels Are Backwards
 - Randomize Crate Contents
 - Randomize Crate Counter
-- Randomize Flying Levels
 - Wider Camera Field-Of-View
 - Randomize Camera Field-Of-View
 - Randomize World Colors

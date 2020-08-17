@@ -1,5 +1,49 @@
 # Crate Mod Loader Changelog  
   
+## 1.2.0
+
+General:  
+- Added support for Xbox 360 ROMs and directories (can only output to folder).  
+- Improved Xbox ROM detection speed.  
+- Added a warning if the program fails to verify a Mod Crate.  
+- Console/Region specific options will not appear on unsupported versions anymore.  
+- The window will now flash when the process is complete.  
+- Options now show a description when selected.  
+- Mod Menus have been implemented. Variables can be edited in the menu, loaded from a text file or Mod Crate, and saved to a text file or Mod Crate.  
+- Mod Crate metadata now supports localization. Set Name-xx and Description-xx with a valid ISO 639-1 country code for it to be displayed in that language. (ex. Name-de (German), Name-es (Spanish) etc.)  
+(language switching is planned to be added in the future, right now it will honor the system default)  
+  
+Mod Menu updates:  
+- Crash Nitro Kart - Added Mod Menu  
+- Crash Twinsanity - Added Mod Menu  
+  
+Crash Bandicoot, Crash Bandicoot 2: Cortex Strikes Back, Crash Bandicoot: WARPED:  
+- New feature: All Crates Are Blank  
+- New feature: All Crates Are Wumpa  
+- New feature: Randomize Warp Room Exits (Crash 2)  
+- New feature: Backwards Levels (Where possible: Crash 1 - Complete; Crash 2/WARPED - Beta state, not all levels)  
+- New feature: Random Levels Are Backwards  
+- New feature: Randomize Crate Contents  
+- New feature: Randomize Boss Levels (Crash 1 & 2) (Where possible)  
+- New feature: Randomize Crate Counter (Crash 2 & WARPED)  
+- New feature: Wider Camera Field-Of-View  
+- New feature: Randomize Camera Field-Of-View  
+- New feature: Randomize World Colors  
+- New feature: Randomize World Palette  
+- New feature: Greyscale World (Crash 2 & WARPED)  
+- New feature: Untextured World (Crash 2 & WARPED)  
+- Crate Mod Loader info is now displayed ingame. (Crash 1 - Main menu, Crash 2/WARPED - Pause menu in the Warp Room) (English only)  
+- Added region detection for Mod Crates.  
+  
+Crash Twinsanity:  
+- New feature: Switch Characters At Will  
+  
+Crash Tag Team Racing:   
+- Mod layer 1 now supports repacking of Movies.rcf files  
+  
+Crash of the Titans, Crash Mind Over Mutant:  
+- Added support for the Xbox 360 version.    
+  
 ## 1.1.0  
   
 General:  
