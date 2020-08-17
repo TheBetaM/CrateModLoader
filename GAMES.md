@@ -55,6 +55,7 @@ API by NeoKesha, Smartkin, ManDude and Marko. (https://github.com/Smartkin/twins
 - Enable Double Jump for Cortex  
 - Enable Double Jump for Nina  
 - Enable Unused Enemies  
+- Switch Charactes At Will  
 - Version, seed and settings visible in the Autosave Disabled screen  
 </details>
   

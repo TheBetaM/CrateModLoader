@@ -199,7 +199,7 @@ namespace CrateModLoader
         private void button2_Click(object sender, EventArgs e)
         {
             saveFileDialog1.InitialDirectory = ModLoaderGlobals.ModDirectory;
-            saveFileDialog1.Filter = string.Format("{0} (*.zip)|*.zip|{1} (*.txt)|*.txt|{2} (*.txt)|*.txt", ModLoaderText.ModMenuSaveAs_ModCrate, ModLoaderText.ModMenuSaveAs_SettingFileFull, ModLoaderText.ModMenuSaveAs_SettingFile);
+            saveFileDialog1.Filter = string.Format("{0} (*.zip)|*.zip|{1} (*.txt)|*.txt|{2} (*.txt)|*.txt", ModLoaderText.ModMenuSaveAs_ModCrate, ModLoaderText.ModMenuSaveAs_SettingFile, ModLoaderText.ModMenuSaveAs_SettingFileFull);
             saveFileDialog1.FileName = "";
 
 

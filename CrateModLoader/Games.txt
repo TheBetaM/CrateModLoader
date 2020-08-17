@@ -36,6 +36,7 @@ Features:
 - Enable Double Jump for Cortex  
 - Enable Double Jump for Nina  
 - Enable Some Unused Enemies  
+- Switch Characters At Will
 - Version, seed and settings visible in the Autosave Disabled screen  
   
 Crash Tag Team Racing

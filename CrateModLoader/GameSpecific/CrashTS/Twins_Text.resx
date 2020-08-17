@@ -183,4 +183,10 @@
   <data name="Rand_MusicDesc" xml:space="preserve">
     <value>Randomize the music tracks of each level.</value>
   </data>
+  <data name="Mod_SwitchCharacters" xml:space="preserve">
+    <value>Switch Characters At Will</value>
+  </data>
+  <data name="Mod_SwitchCharactersDesc" xml:space="preserve">
+    <value>Switch between Crash and Cortex when near them using L1/R1 buttons. Use with caution - it's easy to softlock!</value>
+  </data>
 </root>

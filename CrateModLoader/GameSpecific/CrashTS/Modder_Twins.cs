@@ -91,6 +91,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
         internal const int ModDoubleJumpCortex      = 7;
         internal const int ModDoubleJumpNina        = 8;
         internal const int ModEnableUnusedEnemies   = 9;
+        internal const int ModSwitchCharacters = 12;
 
         public Modder_Twins()
         {
@@ -153,6 +154,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
             AddOption(ModDoubleJumpCortex, new ModOption(Twins_Text.Mod_CortexDoubleJump, Twins_Text.Mod_CortexDoubleJumpDesc));
             AddOption(ModDoubleJumpNina, new ModOption(Twins_Text.Mod_NinaDoubleJump, Twins_Text.Mod_NinaDoubleJumpDesc));
             AddOption(ModEnableUnusedEnemies, new ModOption(Twins_Text.Mod_UnusedEnemies, Twins_Text.Mod_UnusedEnemiesDesc));
+            AddOption(ModSwitchCharacters, new ModOption(Twins_Text.Mod_SwitchCharacters, Twins_Text.Mod_SwitchCharactersDesc));
 
         }
 
@@ -170,6 +172,8 @@ namespace CrateModLoader.GameSpecific.CrashTS
         internal List<ObjectID> EnemyInsertList = new List<ObjectID>();
         internal bool[] levelEdited;
         internal bool Edit_AllCharacters = false;
+        internal Script StrafeLeft = null;
+        internal Script StrafeRight = null;
         
 
         public override void StartModProcess()
@@ -405,7 +409,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 Twins_Edit_AllLevels = true;
             }
 
-            if (GetOption(ModFlyingKick) || GetOption(ModStompKick) || GetOption(ModDoubleJumpCortex) || GetOption(ModDoubleJumpNina))// || GetOption(RandomizeEnemies))
+            if (GetOption(ModFlyingKick) || GetOption(ModStompKick) || GetOption(ModDoubleJumpCortex) || GetOption(ModDoubleJumpNina) || GetOption(ModSwitchCharacters))// || GetOption(RandomizeEnemies))
             {
                 Twins_Edit_AllLevels = true;
 
@@ -426,6 +430,31 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 Twins_Data.allScripts.Sort((x, y) => x.ID.CompareTo(y.ID));
                 Twins_Data.allObjects.Sort((x, y) => x.ID.CompareTo(y.ID));
 
+
+                if (GetOption(ModSwitchCharacters))
+                {
+                    StrafeLeft = Twins_Data.GetScriptByID(ScriptID.COM_GENERIC_CHARACTER_STRAFE_LEFT);
+                    StrafeRight = Twins_Data.GetScriptByID(ScriptID.COM_GENERIC_CHARACTER_STRAFE_RIGHT);
+
+                    Script.MainScriptStruct.SupportType4 SwitchToCrashCommand = new Script.MainScriptStruct.SupportType4();
+                    Script.MainScriptStruct.SupportType4 SwitchToCortexCommand = new Script.MainScriptStruct.SupportType4();
+                    Script.MainScriptStruct.SupportType4 SwitchToNinaCommand = new Script.MainScriptStruct.SupportType4();
+                    Script.MainScriptStruct.SupportType4 SwitchToMechaCommand = new Script.MainScriptStruct.SupportType4();
+                    SwitchToCrashCommand.VTableIndex = 625;
+                    SwitchToCortexCommand.VTableIndex = 625;
+                    SwitchToNinaCommand.VTableIndex = 625;
+                    SwitchToMechaCommand.VTableIndex = 625;
+                    SwitchToCrashCommand.byteArray = new byte[] { 0xEF, 0xDF, 0xCD, 0xCD, 0x00, 0x00, 0x00, 0x00 };
+                    SwitchToCortexCommand.byteArray = new byte[] { 0xEF, 0xDF, 0xCD, 0xCD, 0x01, 0x00, 0x00, 0x00 };
+                    SwitchToNinaCommand.byteArray = new byte[] { 0xEF, 0xDF, 0xCD, 0xCD, 0x03, 0x00, 0x00, 0x00 };
+                    SwitchToMechaCommand.byteArray = new byte[] { 0x6F, 0xDF, 0xCD, 0xCD, 0x06, 0x00, 0x00, 0x00 };
+
+                    //StrafeLeft.MainScript.linkedScript1.type2.type4Count++;
+                    StrafeLeft.MainScript.linkedScript1.type2.type4 = SwitchToCrashCommand;
+                    //StrafeRight.MainScript.linkedScript1.type2.type4Count++;
+                    StrafeRight.MainScript.linkedScript1.type2.type4 = SwitchToCortexCommand;
+
+                }
                 
                 /*
                 if (GetOption(RandomizeEnemies))
@@ -697,6 +726,11 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 Twins_Mods.RM_CharacterMod_DoubleJumpNina(RM_Archive);
             if (GetOption(ModEnableUnusedEnemies))
                 Twins_Mods.RM_EnableUnusedEnemies(RM_Archive);
+
+            if (GetOption(ModSwitchCharacters))
+            {
+                Twins_Mods.RM_SwitchCharactersMod(RM_Archive, StrafeLeft, StrafeRight);
+            }
 
             RM_Archive.SaveFile(path);
         }

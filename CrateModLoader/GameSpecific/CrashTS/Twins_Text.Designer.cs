@@ -151,6 +151,24 @@ namespace CrateModLoader.GameSpecific.CrashTS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Switch Characters At Will.
+        /// </summary>
+        internal static string Mod_SwitchCharacters {
+            get {
+                return ResourceManager.GetString("Mod_SwitchCharacters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Switch between Crash and Cortex when near them using L1/R1 buttons. Use with caution - it&apos;s easy to softlock!.
+        /// </summary>
+        internal static string Mod_SwitchCharactersDesc {
+            get {
+                return ResourceManager.GetString("Mod_SwitchCharactersDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enable Unused Enemies.
         /// </summary>
         internal static string Mod_UnusedEnemies {
