@@ -13,6 +13,11 @@ Visit the [Releases](https://github.com/TheBetaM/CrateModLoader/releases) sectio
 See [this list](./GAMES.md) for supported games and their features in the current build.  
 See [this list](./CONSOLES.md) for supported consoles in the current build.  
 
+# Contributors
+
+- [BetaM](https://www.youtube.com/channel/UCL-EwV5XqypMUJ5zVHaBjAw) (Creator) <a href='https://ko-fi.com/N4N51DUX0' target='_blank'><img height='24' style='border:0px;height:24px;' src='https://az743702.vo.msecnd.net/cdn/kofi2.png?v=2' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+- [ManDude](https://github.com/ManDude)  
+
 # Mod Crates
 
 Place Mod Crates in the "Mods" folder for them to appear in the list.  
@@ -38,10 +43,7 @@ In order for a game to be included in a future release it must have at least two
 - A fully implemented mod layer (extraction + packing)  
 - Crate Mod Loader metadata edited into easily accessible text ingame  
 
-# Contributors
-
-- [BetaM](https://www.youtube.com/channel/UCL-EwV5XqypMUJ5zVHaBjAw) (Creator) <a href='https://ko-fi.com/N4N51DUX0' target='_blank'><img height='24' style='border:0px;height:24px;' src='https://az743702.vo.msecnd.net/cdn/kofi2.png?v=2' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
-- [ManDude](https://github.com/ManDude)  
+Features are generally expected to be stable, unless otherwise stated in the feature's description.
 
 # License
 
