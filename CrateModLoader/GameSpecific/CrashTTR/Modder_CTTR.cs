@@ -615,17 +615,20 @@ namespace CrateModLoader.GameSpecific.CrashTTR
             */
 
 
-            /*
+            
             Pure3D.File CrashOnfootAnim1 = new Pure3D.File();
             CrashOnfootAnim1.Load(ModLoaderGlobals.ToolsPath + "file.p3d");
             PrintHierarchy(CrashOnfootAnim1.RootChunk, 0);
 
-            GameSpecific.CTTR.Pure3D.ModelExporter.AddSkinnedModelWithAnimations(ref CrashOnfootAnim1.RootChunk.GetChildren<Skin>()[0], ref CrashOnfootAnim1.RootChunk.GetChildren<SkeletonCTTR>()[0], ref shaders);
-            GameSpecific.CTTR.Pure3D.ModelExporter.ExportModel(ModLoaderGlobals.ToolsPath + "out.dae");
+            Shader[] shaders = CrashOnfootAnim1.RootChunk.GetChildren<Shader>();
+            ModelExporter.AddSkinnedModelWithAnimations(ref CrashOnfootAnim1.RootChunk.GetChildren<Skin>()[0], ref CrashOnfootAnim1.RootChunk.GetChildren<SkeletonCTTR>()[0], ref shaders);
+            ModelExporter.ExportModel(ModLoaderGlobals.ToolsPath + "out.dae");
 
+            /*
             Console.WriteLine("\nNow saving...\n");
             CrashOnfootAnim1.Save(ModLoaderGlobals.ToolsPath + "file1.p3d");
             */
+            
 
         }
 

@@ -46,7 +46,7 @@ namespace Pure3D.Chunks
             {
                 SkeletonParentName = "Root";
             }
-            return $"Skeleton Joint CTTR: {Name} SkeletonParent { SkeletonParent }, SkeletonParentName { SkeletonParentName } ";
+            return $"Skeleton Joint CTTR: {Name} ParentID { SkeletonParent }, ParentName { SkeletonParentName } ";
         }
     }
 }

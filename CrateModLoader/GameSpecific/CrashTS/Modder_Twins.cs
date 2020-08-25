@@ -292,11 +292,11 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 Twins_Data.ExportGameObject(ref cortexlevelArchive, ObjectID.AMMOCRATESMALL,ref exportList);
                 exportList.Clear();
 
-                Twins_Data.cachedGameObjects[0].mainObject.Scripts[(uint)GameObjectScriptOrder.OnPhysicsCollision] = 65535;
-                Twins_Data.cachedGameObjects[0].mainObject.Scripts[(uint)GameObjectScriptOrder.OnTouch] = 65535;
-                Twins_Data.cachedGameObjects[0].mainObject.Scripts[(uint)GameObjectScriptOrder.OnTrigger] = (ushort)ScriptID.HEAD_COM_GENERIC_CRATE_TRIGGER_NEXT;
-                Twins_Data.cachedGameObjects[0].mainObject.Scripts[(uint)GameObjectScriptOrder.OnDamage] = (ushort)ScriptID.HEAD_COM_AMMO_CRATE_SMALL_TOUCHED;
-                Twins_Data.cachedGameObjects[0].mainObject.Scripts[(uint)GameObjectScriptOrder.OnLand] = (ushort)ScriptID.HEAD_COM_BASIC_CRATE_LANDED_ON;
+                Twins_Data.cachedGameObjects[0].mainObject.Scripts[(ushort)GameObjectScriptOrder.OnPhysicsCollision] = 65535;
+                Twins_Data.cachedGameObjects[0].mainObject.Scripts[(ushort)GameObjectScriptOrder.OnTouch] = 65535;
+                Twins_Data.cachedGameObjects[0].mainObject.Scripts[(ushort)GameObjectScriptOrder.OnTrigger] = (ushort)ScriptID.HEAD_COM_GENERIC_CRATE_TRIGGER_NEXT;
+                Twins_Data.cachedGameObjects[0].mainObject.Scripts[(ushort)GameObjectScriptOrder.OnDamage] = (ushort)ScriptID.HEAD_COM_AMMO_CRATE_SMALL_TOUCHED;
+                Twins_Data.cachedGameObjects[0].mainObject.Scripts[(ushort)GameObjectScriptOrder.OnLand] = (ushort)ScriptID.HEAD_COM_BASIC_CRATE_LANDED_ON;
 
                 TwinsFile mainArchive = new TwinsFile();
                 mainArchive.LoadFile(bdPath + @"Startup\Default.rm" + extensionMod, rmType);
@@ -436,23 +436,21 @@ namespace CrateModLoader.GameSpecific.CrashTS
                     StrafeLeft = Twins_Data.GetScriptByID(ScriptID.COM_GENERIC_CHARACTER_STRAFE_LEFT);
                     StrafeRight = Twins_Data.GetScriptByID(ScriptID.COM_GENERIC_CHARACTER_STRAFE_RIGHT);
 
-                    Script.MainScriptStruct.SupportType4 SwitchToCrashCommand = new Script.MainScriptStruct.SupportType4();
-                    Script.MainScriptStruct.SupportType4 SwitchToCortexCommand = new Script.MainScriptStruct.SupportType4();
-                    Script.MainScriptStruct.SupportType4 SwitchToNinaCommand = new Script.MainScriptStruct.SupportType4();
-                    Script.MainScriptStruct.SupportType4 SwitchToMechaCommand = new Script.MainScriptStruct.SupportType4();
-                    SwitchToCrashCommand.VTableIndex = 625;
-                    SwitchToCortexCommand.VTableIndex = 625;
-                    SwitchToNinaCommand.VTableIndex = 625;
-                    SwitchToMechaCommand.VTableIndex = 625;
-                    SwitchToCrashCommand.byteArray = new byte[] { 0xEF, 0xDF, 0xCD, 0xCD, 0x00, 0x00, 0x00, 0x00 };
-                    SwitchToCortexCommand.byteArray = new byte[] { 0xEF, 0xDF, 0xCD, 0xCD, 0x01, 0x00, 0x00, 0x00 };
-                    SwitchToNinaCommand.byteArray = new byte[] { 0xEF, 0xDF, 0xCD, 0xCD, 0x03, 0x00, 0x00, 0x00 };
-                    SwitchToMechaCommand.byteArray = new byte[] { 0x6F, 0xDF, 0xCD, 0xCD, 0x06, 0x00, 0x00, 0x00 };
+                    Script.MainScript.ScriptCommand SwitchToCrashCommand = new Script.MainScript.ScriptCommand();
+                    Script.MainScript.ScriptCommand SwitchToCortexCommand = new Script.MainScript.ScriptCommand();
+                    Script.MainScript.ScriptCommand SwitchToNinaCommand = new Script.MainScript.ScriptCommand();
+                    Script.MainScript.ScriptCommand SwitchToMechaCommand = new Script.MainScript.ScriptCommand();
+                    SwitchToCrashCommand.VTableIndex = (ushort)DefaultEnums.CommandID.SwitchCharacter;
+                    SwitchToCortexCommand.VTableIndex = (ushort)DefaultEnums.CommandID.SwitchCharacter;
+                    SwitchToNinaCommand.VTableIndex = (ushort)DefaultEnums.CommandID.SwitchCharacter;
+                    SwitchToMechaCommand.VTableIndex = (ushort)DefaultEnums.CommandID.SwitchCharacter;
+                    SwitchToCrashCommand.arguments[1] = 0;
+                    SwitchToCortexCommand.arguments[1] = 1;
+                    SwitchToNinaCommand.arguments[1] = 3;
+                    SwitchToMechaCommand.arguments[1] = 6;
 
-                    //StrafeLeft.MainScript.linkedScript1.type2.type4Count++;
-                    StrafeLeft.MainScript.linkedScript1.type2.type4 = SwitchToCrashCommand;
-                    //StrafeRight.MainScript.linkedScript1.type2.type4Count++;
-                    StrafeRight.MainScript.linkedScript1.type2.type4 = SwitchToCortexCommand;
+                    StrafeLeft.Main.scriptState1.scriptStateBody.command = SwitchToCrashCommand;
+                    StrafeRight.Main.scriptState1.scriptStateBody.command = SwitchToCortexCommand;
 
                 }
                 

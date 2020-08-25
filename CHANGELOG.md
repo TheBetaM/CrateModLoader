@@ -1,5 +1,10 @@
 # Crate Mod Loader Changelog  
   
+## 1.2.1
+
+Crash Twinsanity:
+- Fixed processing errors in some versions of the game  
+  
 ## 1.2.0
 
 General:  

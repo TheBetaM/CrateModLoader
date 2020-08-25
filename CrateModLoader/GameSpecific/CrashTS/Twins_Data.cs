@@ -1254,7 +1254,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
             }
             objectsExported.Add(objectID);
 
-            ushort[] animList = targetObject.cAnims;
+            List<ushort> animList = targetObject.cAnims;
             List<ushort> export_anim = GetValidIDs(ref animList);
 
             for (int i = 0; i < anim_section.Records.Count; i++)
@@ -1269,7 +1269,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 }
             }
 
-            ushort[] objList = targetObject.cObjects;
+            List<ushort> objList = targetObject.cObjects;
             List<ushort> export_objects = GetValidIDs(ref objList);
             for (int i = 0; i < object_section.Records.Count; i++)
             {
@@ -1291,7 +1291,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 }
             }
 
-            ushort[] ogiList = targetObject.cOGIs;
+            List<ushort> ogiList = targetObject.cOGIs;
             List<ushort> export_ogi = GetValidIDs(ref ogiList);
 
             for (int i = 0; i < ogi_section.Records.Count; i++)
@@ -1306,7 +1306,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 }
             }
 
-            ushort[] scriptList = targetObject.cScripts;
+            List<ushort> scriptList = targetObject.cScripts;
             List<ushort> export_script = GetValidIDs(ref scriptList);
 
             for (int i = 0; i < script_section.Records.Count; i++)
@@ -1321,7 +1321,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 }
             }
 
-            ushort[] codemodelList = targetObject.cCM;
+            List<ushort> codemodelList = targetObject.cCM;
             List<ushort> export_comdl = GetValidIDs(ref codemodelList);
 
             for (int i = 0; i < comdl_section.Records.Count; i++)
@@ -1679,6 +1679,20 @@ namespace CrateModLoader.GameSpecific.CrashTS
             List<ushort> validItems = new List<ushort>();
 
             for (int i = 0; i < itemList.Length; i++)
+            {
+                if (itemList[i] != 65535 && !validItems.Contains(itemList[i]))
+                {
+                    validItems.Add(itemList[i]);
+                }
+            }
+
+            return validItems;
+        }
+        public static List<ushort> GetValidIDs(ref List<ushort> itemList)
+        {
+            List<ushort> validItems = new List<ushort>();
+
+            for (int i = 0; i < itemList.Count; i++)
             {
                 if (itemList[i] != 65535 && !validItems.Contains(itemList[i]))
                 {

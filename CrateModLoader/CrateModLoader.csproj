@@ -148,6 +148,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CTTR_Text.resx</DependentUpon>
     </Compile>
+    <Compile Include="GameSpecific\CrashTTR\ModelExporter.cs" />
     <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunk.cs" />
     <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\Animation.cs" />
     <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\AnimationChannelCount.cs" />

@@ -43,7 +43,7 @@ Tools/API by BetaM, ManDude and eezstreet.
 Supported: All PS2 versions (.ISO format), All XBOX versions (.ISO format)    
 Mod abbreviation: CrashTS  
 Mod Menu enabled.  
-API by NeoKesha, Smartkin, ManDude and Marko. (https://github.com/Smartkin/twinsanity-editor)  
+API by NeoKesha, Smartkin, ManDude, BetaM and Marko. (https://github.com/Smartkin/twinsanity-editor)  
 ### Features:  
 - Randomize Crate Types  
 - Randomize Individual Crates
