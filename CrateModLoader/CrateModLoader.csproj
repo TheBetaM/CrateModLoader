@@ -25,7 +25,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.2.1.%2a</ApplicationVersion>
+    <ApplicationVersion>1.3.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -266,7 +266,6 @@
     <Compile Include="GameSpecific\CrashTWOC\TWOC_File_CRT.cs" />
     <Compile Include="GameSpecific\MarioSunshine\Modder_MarioSunshine.cs" />
     <Compile Include="GameSpecific\CrashMoM\Modder_MoM.cs" />
-    <Compile Include="GameSpecific\Rayman2\Modder_Rayman2.cs" />
     <Compile Include="GameSpecific\Rayman3\Modder_Rayman3.cs" />
     <Compile Include="GameSpecific\Rayman3\Rayman3_Text.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -276,8 +275,6 @@
     <Compile Include="GameSpecific\Rayman3\TBFtool\BitmapHelper.cs" />
     <Compile Include="GameSpecific\Rayman3\TBFtool\TBFtool.cs" />
     <Compile Include="GameSpecific\Rayman3\TBFtool\PS2ImageHelper.cs" />
-    <Compile Include="GameSpecific\RaymanM\Modder_RaymanM.cs" />
-    <Compile Include="GameSpecific\SonicAdventure\Modder_SonicAdventure.cs" />
     <Compile Include="GameSpecific\CrashTitans\Modder_Titans.cs" />
     <Compile Include="GameSpecific\CrashTS\Modder_Twins.cs" />
     <Compile Include="GameSpecific\CrashTTR\Modder_CTTR.cs" />

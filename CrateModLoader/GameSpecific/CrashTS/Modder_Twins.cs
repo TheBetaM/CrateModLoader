@@ -697,6 +697,8 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 }
             }
 
+            //Console.WriteLine(chunkType);
+
             TwinsFile RM_Archive = new TwinsFile();
             RM_Archive.LoadFile(path, rmType);
 

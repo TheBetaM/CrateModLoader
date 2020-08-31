@@ -1727,12 +1727,19 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
                 {
                     file.Delete();
                 }
-                foreach (DirectoryInfo dir in di.EnumerateDirectories())
+                try
                 {
-                    dir.Delete(true);
+                    foreach (DirectoryInfo dir in di.EnumerateDirectories())
+                    {
+                        dir.Delete(true);
+                    }
+                    Directory.Delete(path_gob_extracted);
                 }
+                catch
+                {
 
-                Directory.Delete(path_gob_extracted);
+                }
+                
             }
             
         }
