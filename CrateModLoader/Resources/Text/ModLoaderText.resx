@@ -123,6 +123,9 @@
   <data name="Button_ModTools" xml:space="preserve">
     <value>Mod Tools</value>
   </data>
+  <data name="Changelog" xml:space="preserve">
+    <value>Changelog</value>
+  </data>
   <data name="DefaultOutputFileName" xml:space="preserve">
     <value>ModdedGame</value>
   </data>
@@ -159,6 +162,9 @@
   <data name="GameHasNoAPI" xml:space="preserve">
     <value>No API available</value>
   </data>
+  <data name="GamesFeatureList" xml:space="preserve">
+    <value>Games</value>
+  </data>
   <data name="InputBrowse" xml:space="preserve">
     <value>(1) Browse...</value>
   </data>
@@ -169,7 +175,7 @@
     <value>As Folder</value>
   </data>
   <data name="InputInstruction" xml:space="preserve">
-    <value>1. Click "Browse" to select the game or drag &amp; drop it here.</value>
+    <value>1. Click "Browse" to select the game.</value>
   </data>
   <data name="KeepTempFiles" xml:space="preserve">
     <value>Keep Temp Files</value>
@@ -290,7 +296,7 @@
     <value>To Folder</value>
   </data>
   <data name="OutputInstruction" xml:space="preserve">
-    <value>2. Click "Browse" to choose the output path.</value>
+    <value>2. Click "Browse" to set the output path.</value>
   </data>
   <data name="ProcessReady" xml:space="preserve">
     <value>Ready!</value>
@@ -322,6 +328,9 @@
   <data name="Process_Step3_ROM" xml:space="preserve">
     <value>Building game...</value>
   </data>
+  <data name="ProgramCredits" xml:space="preserve">
+    <value>About</value>
+  </data>
   <data name="ProgramTitle" xml:space="preserve">
     <value>Crate Mod Loader</value>
   </data>
@@ -329,7 +338,7 @@
     <value>Randomize Seed</value>
   </data>
   <data name="StartProcessButton" xml:space="preserve">
-    <value>Start!</value>
+    <value>Start</value>
   </data>
   <data name="Step1Text" xml:space="preserve">
     <value>Waiting for input (1) ...</value>

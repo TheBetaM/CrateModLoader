@@ -1,6 +1,7 @@
 1.3.0
 
-
+General:
+- PS2 building is now internally supported (Thanks to Smartkin). Folder mode is now supported.  
 
 1.2.1
 

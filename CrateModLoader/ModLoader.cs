@@ -10,6 +10,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using CrateModLoader.Resources.Text;
+using CrateModLoader.Tools;
 
 namespace CrateModLoader
 {
@@ -39,8 +40,7 @@ namespace CrateModLoader
         public NumericUpDown textbox_rando_seed;
         public Button button_modMenu;
         public Button button_modCrateMenu;
-        public CheckBox checkbox_fromFolder;
-        public CheckBox checkbox_toFolder;
+        public Timer asyncTimer;
         public IntPtr formHandle;
 
         [DllImport("user32.dll")]
@@ -59,6 +59,7 @@ namespace CrateModLoader
         public bool outputDirectoryMode = false;
         public bool processActive = false;
         public bool isCDimage = false; //as opposed to DVD image
+        public bool asyncBuild = false;
         public Modder Modder;
         private Process ISOcreatorProcess;
         public BackgroundWorker asyncWorker;
@@ -67,6 +68,8 @@ namespace CrateModLoader
         // Builds the ISO
         void CreateISO()
         {
+            asyncBuild = false;
+
             if (outputDirectoryMode)
             {
                 //Directory Mode
@@ -109,7 +112,7 @@ namespace CrateModLoader
             }
             else if (ModLoaderGlobals.Console == ConsoleMode.PS2 && !isCDimage)
             {
-                //Use ImgBurn
+                //Use PS2ImageMaker
                 DirectoryInfo di = new DirectoryInfo(ModLoaderGlobals.TempPath);
                 foreach (DirectoryInfo dir in di.EnumerateDirectories())
                 {
@@ -123,88 +126,12 @@ namespace CrateModLoader
                 {
                     file.MoveTo(file.FullName);
                 }
-                
-                string args = "";
-                args += "/MODE BUILD ";
-                args += "/BUILDINPUTMODE STANDARD ";
-                args += "/BUILDOUTPUTMODE IMAGEFILE ";
-                args += "/SRC \"";
-                foreach (DirectoryInfo dir in di.EnumerateDirectories())
-                {
-                    args += dir.FullName;
-                    args += "|";
-                }
-                foreach (FileInfo file in di.EnumerateFiles())
-                {
-                    args += file.FullName;
-                    args += "|";
-                }
-                args += "\" ";
-                args += "/DEST " + ModLoaderGlobals.OutputPath + " ";
-                args += "/FILESYSTEM \"ISO9660 + UDF\" ";
-                args += "/UDFREVISION \"1.02\" ";
-                args += "/VOLUMELABEL \"" + ModLoaderGlobals.ISO_Label + "\" ";
-                args += "/OVERWRITE YES ";
-                args += "/START ";
-                args += "/CLOSE ";
-                args += "/PRESERVEFULLPATHNAMES NO ";
-                args += "/RECURSESUBDIRECTORIES YES ";
-                args += "/NOIMAGEDETAILS ";
-                args += "/NOSAVELOG ";
-                args += "/PORTABLE ";
-                args += "/NOSAVESETTINGS ";
 
-                ISOcreatorProcess = new Process();
-                ISOcreatorProcess.StartInfo.FileName = ModLoaderGlobals.ToolsPath + "ImgBurn.exe";
-                ISOcreatorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
-                ISOcreatorProcess.StartInfo.Arguments = args;
-                ISOcreatorProcess.Start();
-                ISOcreatorProcess.WaitForExit();
-                
+                asyncBuild = true;
+                PS2ImageMaker.StartPacking(ModLoaderGlobals.TempPath, ModLoaderGlobals.OutputPath);
+                asyncTimer.Enabled = true;
+                asyncTimer.Start();
 
-                /* TODO: Figure out how to make it work with CDBuilder
-                CDBuilder isoBuild = new CDBuilder();
-                isoBuild.UseJoliet = true;
-                isoBuild.UpdateIsolinuxBootTable = false;
-                isoBuild.VolumeIdentifier = ISO_label;
-
-                HashSet<FileStream> files = new HashSet<FileStream>();
-
-                foreach (FileInfo file in di.GetFiles())
-                {
-                    if (file.Name.ToUpper() == "SYSTEM.CNF")
-                    {
-                        AddFile(isoBuild, file, string.Empty, files);
-                    }
-                }
-                foreach (FileInfo file in di.GetFiles())
-                {
-                    if (file.Name.ToUpper() == PS2_executable_name)
-                    {
-                        AddFile(isoBuild, file, string.Empty, files);
-                    }
-                }
-
-                foreach (DirectoryInfo dir in di.GetDirectories())
-                {
-                    isoBuild.AddDirectory(dir.Name);
-                    Recursive_AddDirs(isoBuild, dir, dir.Name + @"\", files);
-                }
-                foreach (FileInfo file in di.GetFiles())
-                {
-                    if (file.Name.ToUpper() != PS2_executable_name && file.Name.ToUpper() != "SYSTEM.CNF")
-                    {
-                        AddFile(isoBuild, file, string.Empty, files);
-                    }
-                }
-
-                isoBuild.Build(ModLoaderGlobals.OutputPath);
-
-                foreach (FileStream file in files)
-                {
-                    file.Close();
-                }
-                */
             }
             else if (ModLoaderGlobals.Console == ConsoleMode.PSP)
             {
@@ -413,8 +340,8 @@ namespace CrateModLoader
 
             if (inputDirectoryMode && !outputDirectoryMode)
             {
-                // To fix: PS1, PS2 require ISO label; PSP requires ISO file; GCN: Incorrect paths because of product code folder
-                if (ModLoaderGlobals.Console == ConsoleMode.PS1 || ModLoaderGlobals.Console == ConsoleMode.PS2 || ModLoaderGlobals.Console == ConsoleMode.PSP || ModLoaderGlobals.Console == ConsoleMode.GCN)
+                // To fix: PS1, PSP requires the original file; GCN: Incorrect paths because of product code folder
+                if (ModLoaderGlobals.Console == ConsoleMode.PS1 || ModLoaderGlobals.Console == ConsoleMode.PSP || ModLoaderGlobals.Console == ConsoleMode.GCN)
                 {
                     throw new Exception(ModLoaderText.Error_FolderToROMNotSupported);
                 }
@@ -644,11 +571,36 @@ namespace CrateModLoader
             BackgroundWorker a = sender as BackgroundWorker;
 
             a.ReportProgress(0);
+
             LoadISO();
+
             a.ReportProgress(50);
+
             EditGameContent();
+
             a.ReportProgress(75);
-            FinishISO();
+
+            CreateISO();
+
+            if (asyncBuild)
+            {
+                while (asyncBuild)
+                {
+                    Application.DoEvents();
+                }
+            }
+
+            a.ReportProgress(90);
+            if (!keepTempFiles)
+            {
+                DeleteTempFiles();
+            }
+
+        }
+
+        public void Async_BuildFinished()
+        {
+            asyncBuild = false;
         }
 
         public void EditGameContent()
@@ -667,16 +619,6 @@ namespace CrateModLoader
                     Modder.InstallCrateSettings();
                 }
                 Modder.StartModProcess();
-            }
-        }
-
-        public void FinishISO()
-        {
-            CreateISO();
-
-            if (!keepTempFiles)
-            {
-                DeleteTempFiles();
             }
         }
 
@@ -773,6 +715,10 @@ namespace CrateModLoader
                 {
                     processText.Text = ModLoaderText.Process_Step3_ROM;
                 }
+            }
+            else if (e.ProgressPercentage == 90)
+            {
+                processText.Text = "Removing temporary files...";
             }
         }
 
@@ -1460,7 +1406,7 @@ namespace CrateModLoader
                 button_modCrateMenu.Enabled = button_modCrateMenu.Visible = button_modTools.Visible = true;
                 button_randomize.Enabled = button_randomize.Visible = button_modMenu.Visible = button_modMenu.Enabled = button_downloadMods.Enabled = button_downloadMods.Visible = false;
                 textbox_rando_seed.Enabled = textbox_rando_seed.Visible = false;
-                button_modTools.Enabled = false;
+                button_modTools.Enabled = true;
 
                 text_gameType.Text = ModLoaderText.UnsupportedGameTitle + " (" + cons_mod + ")";
                 text_apiLabel.Text = string.Empty;
@@ -1484,7 +1430,7 @@ namespace CrateModLoader
                 text_optionDescLabel.Text = string.Empty;
                 text_optionDescLabel.Visible = false;
                 panel_optionDesc.Visible = false;
-                button_modTools.Enabled = false;
+                button_modTools.Enabled = true;
 
                 if (string.IsNullOrWhiteSpace(region_mod))
                 {
@@ -1569,7 +1515,7 @@ namespace CrateModLoader
                     //list_modOptions.Items.Add("No options available", false);
                 }
             }
-            int height = 295 + 45 + (list_modOptions.Items.Count * 15);
+            int height = 295 + 45 + (list_modOptions.Items.Count * 17);
             list_modOptions.Visible = list_modOptions.Enabled = list_modOptions.Items.Count > 0;
             if (main_form.Size.Height < height)
             {
@@ -1612,6 +1558,28 @@ namespace CrateModLoader
             //Modder.OpenModMenu();
         }
 
+        public void ShowText_Changelog()
+        {
+            TextDisplayForm textForm = new TextDisplayForm(TextDisplayForm.TextDisplayType.Changelog);
+
+            textForm.Owner = Program.ModProgramForm;
+            textForm.Show();
+        }
+        public void ShowText_Games()
+        {
+            TextDisplayForm textForm = new TextDisplayForm(TextDisplayForm.TextDisplayType.Games);
+
+            textForm.Owner = Program.ModProgramForm;
+            textForm.Show();
+        }
+        public void ShowText_Credits()
+        {
+            TextDisplayForm textForm = new TextDisplayForm(TextDisplayForm.TextDisplayType.Credits);
+
+            textForm.Owner = Program.ModProgramForm;
+            textForm.Show();
+        }
+
         public void DisableInteraction()
         {
             startButton.Enabled = false;
@@ -1624,8 +1592,6 @@ namespace CrateModLoader
             textbox_rando_seed.Enabled = false;
             button_modMenu.Enabled = false;
             button_modCrateMenu.Enabled = false;
-            checkbox_fromFolder.Enabled = false;
-            checkbox_toFolder.Enabled = false;
             text_apiLabel.Enabled = false;
             text_titleLabel.Enabled = false;
             button_modTools.Enabled = false;
@@ -1651,8 +1617,6 @@ namespace CrateModLoader
             button_modTools.Enabled = true;
             //button_downloadMods.Enabled = true;
 
-            checkbox_fromFolder.Enabled = true;
-            checkbox_toFolder.Enabled = true;
             if (Modder != null && !string.IsNullOrWhiteSpace(Modder.Game.API_Link))
             {
                 text_apiLabel.Enabled = true;
@@ -1661,9 +1625,9 @@ namespace CrateModLoader
             processActive = false;
         }
 
-        public void UpdateInputSetting()
+        public void UpdateInputSetting(bool state)
         {
-            inputDirectoryMode = checkbox_fromFolder.Checked;
+            inputDirectoryMode = state;
 
             processText.Text = ModLoaderText.Step1Text;
             textbox_input_path.Text = "";
@@ -1671,9 +1635,9 @@ namespace CrateModLoader
 
             ResetGameSpecific(true, false);
         }
-        public void UpdateOutputSetting()
+        public void UpdateOutputSetting(bool state)
         {
-            outputDirectoryMode = checkbox_toFolder.Checked;
+            outputDirectoryMode = state;
 
             textbox_output_path.Text = "";
             ModLoaderGlobals.OutputPath = "";

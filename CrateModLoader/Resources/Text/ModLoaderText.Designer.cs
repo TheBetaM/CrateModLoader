@@ -79,6 +79,15 @@ namespace CrateModLoader.Resources.Text {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Changelog.
+        /// </summary>
+        public static string Changelog {
+            get {
+                return ResourceManager.GetString("Changelog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ModdedGame.
         /// </summary>
         public static string DefaultOutputFileName {
@@ -187,6 +196,15 @@ namespace CrateModLoader.Resources.Text {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Games.
+        /// </summary>
+        public static string GamesFeatureList {
+            get {
+                return ResourceManager.GetString("GamesFeatureList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to (1) Browse....
         /// </summary>
         public static string InputBrowse {
@@ -214,7 +232,7 @@ namespace CrateModLoader.Resources.Text {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 1. Click &quot;Browse&quot; to select the game or drag &amp; drop it here..
+        ///   Looks up a localized string similar to 1. Click &quot;Browse&quot; to select the game..
         /// </summary>
         public static string InputInstruction {
             get {
@@ -574,7 +592,7 @@ namespace CrateModLoader.Resources.Text {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 2. Click &quot;Browse&quot; to choose the output path..
+        ///   Looks up a localized string similar to 2. Click &quot;Browse&quot; to set the output path..
         /// </summary>
         public static string OutputInstruction {
             get {
@@ -673,6 +691,15 @@ namespace CrateModLoader.Resources.Text {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to About.
+        /// </summary>
+        public static string ProgramCredits {
+            get {
+                return ResourceManager.GetString("ProgramCredits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Crate Mod Loader.
         /// </summary>
         public static string ProgramTitle {
@@ -691,7 +718,7 @@ namespace CrateModLoader.Resources.Text {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Start!.
+        ///   Looks up a localized string similar to Start.
         /// </summary>
         public static string StartProcessButton {
             get {

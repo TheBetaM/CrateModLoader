@@ -91,7 +91,10 @@ namespace CrateModLoader.GameSpecific.CrashTS
         internal const int ModDoubleJumpCortex      = 7;
         internal const int ModDoubleJumpNina        = 8;
         internal const int ModEnableUnusedEnemies   = 9;
-        internal const int ModSwitchCharacters = 12;
+        internal const int ModSwitchCharacters      = 12;
+        internal const int ModClassicExplosions     = 13;
+        internal const int ModClassicHealth         = 14;
+        internal const int ModClassicCrates         = 15;
 
         public Modder_Twins()
         {
@@ -155,6 +158,9 @@ namespace CrateModLoader.GameSpecific.CrashTS
             AddOption(ModDoubleJumpNina, new ModOption(Twins_Text.Mod_NinaDoubleJump, Twins_Text.Mod_NinaDoubleJumpDesc));
             AddOption(ModEnableUnusedEnemies, new ModOption(Twins_Text.Mod_UnusedEnemies, Twins_Text.Mod_UnusedEnemiesDesc));
             AddOption(ModSwitchCharacters, new ModOption(Twins_Text.Mod_SwitchCharacters, Twins_Text.Mod_SwitchCharactersDesc));
+            AddOption(ModClassicHealth, new ModOption("Classic Health", "Spawn without a mask."));
+            AddOption(ModClassicExplosions, new ModOption("Classic Explosion Damage", "Explosions only take away a mask if you have one."));
+            AddOption(ModClassicCrates, new ModOption("Classic Crate Persistence", "Broken crates don't respawn after a death."));
 
         }
 

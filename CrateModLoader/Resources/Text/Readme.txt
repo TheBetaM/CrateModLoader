@@ -5,7 +5,10 @@ In addition, it allows for standalone "Mod Crates" to be installed seamlessly in
 
 Website: https://github.com/TheBetaM/CrateModLoader/
 
-Check the included Games.txt for a list of supported games and features.  
+Contributors:
+
+-BetaM (https://www.youtube.com/BetaM) (Creator) (Support development: https://ko-fi.com/thebetam)
+-ManDude (https://github.com/ManDude) 
 
 Mod Crates
 
@@ -18,12 +21,17 @@ Mod Crates can be folders or standard .zip files with these contents: (only ModC
 - "layer0" folder - any files and folders inside will replace or add to the base extracted contents of the game ROM
 - "layer1" "layer2" etc. folders - supported games allow for replacement and/or addition of files in different game archives (check compatibility in Games.txt)
 
-Contributors
+Tools Credits
 
--BetaM (https://www.youtube.com/channel/UCL-EwV5XqypMUJ5zVHaBjAw) (Creator)
--ManDude (https://github.com/ManDude) 
+DiscUtils (https://github.com/DiscUtils/DiscUtils) (MIT license) 
+PS2ImageMaker (https://github.com/Smartkin/PS2ImageMaker) (GPL-3.0 licensee)  
+WQSG_UMD_kkMod (https://github.com/KyousukeKyaa/WQSG_UMD_kkMod) (GPL-2.0 license)  
+extract-xiso (https://github.com/XboxDev/extract-xiso) (license included)  
+xextool (http://xorloser.com/blog/?p=395) (freeware)  
+Wiims ISO Tools (https://wit.wiimm.de/) (GPL-2.0 license)  
+Gamecube ISO Tool (http://www.wiibackupmanager.co.uk/gcit.html) (freeware)
 
-License Information
+License Information (for more information check /Tools/License.txt)
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

@@ -22,7 +22,7 @@ namespace CrateModLoader.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace CrateModLoader.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("CrateModLoader.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace CrateModLoader.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,9 +61,35 @@ namespace CrateModLoader.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 1.3.0
+        ///
+        ///General:
+        ///- PS2 building is now internally supported (Thanks to Smartkin). Folder mode is now supported.  
+        ///
+        ///1.2.1
+        ///
+        ///Crash Twinsanity:
+        ///- Fixed processing errors in some versions of the game
+        ///
+        ///1.2.0
+        ///
+        ///General:  
+        ///- Added support for Xbox 360 ROMs and directories (can only output to folder).  
+        ///- Improved Xbox ROM detection speed.  
+        ///- Added a warning if the program fails to verify a Mod Crate.  
+        ///- Console/Region specific options will not appear on unsupported versions anymore.  
+        ///- The window  [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string Changelog {
+            get {
+                return ResourceManager.GetString("Changelog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap cml_icon {
+        public static System.Drawing.Bitmap cml_icon {
             get {
                 object obj = ResourceManager.GetObject("cml_icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -71,9 +97,34 @@ namespace CrateModLoader.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Crate Mod Loader Supported Games
+        ///  
+        ///Crash Nitro Kart
+        ///Supported: All PS2 versions (.ISO format), All GC versions (.ISO format), All XBOX versions (.ISO format)  
+        ///Mod abbreviation: CrashNK  
+        ///Mod Menu enabled.
+        ///Mod layers: 1 - ASSETS.GOB contents
+        ///Tools/API by BetaM, ManDude and eezstreet.  
+        ///Features:  
+        ///- Randomize Adventure  
+        ///- Randomize Character Stats
+        ///- Randomize Kart Stats
+        ///- Randomize Powerup Effects
+        ///- Randomize Drivers  
+        ///- Randomize Karts  
+        ///- Disable Fadeout/Flash Overlay
+        ///- Disable Unlock Po [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string Games {
+            get {
+                return ResourceManager.GetString("Games", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap icon_crash1 {
+        public static System.Drawing.Bitmap icon_crash1 {
             get {
                 object obj = ResourceManager.GetObject("icon_crash1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -83,7 +134,7 @@ namespace CrateModLoader.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap icon_crash2 {
+        public static System.Drawing.Bitmap icon_crash2 {
             get {
                 object obj = ResourceManager.GetObject("icon_crash2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -93,7 +144,7 @@ namespace CrateModLoader.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap icon_crash3 {
+        public static System.Drawing.Bitmap icon_crash3 {
             get {
                 object obj = ResourceManager.GetObject("icon_crash3", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -103,7 +154,7 @@ namespace CrateModLoader.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap icon_crashbash {
+        public static System.Drawing.Bitmap icon_crashbash {
             get {
                 object obj = ResourceManager.GetObject("icon_crashbash", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -113,7 +164,7 @@ namespace CrateModLoader.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap icon_crashmom {
+        public static System.Drawing.Bitmap icon_crashmom {
             get {
                 object obj = ResourceManager.GetObject("icon_crashmom", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -123,7 +174,7 @@ namespace CrateModLoader.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap icon_crashnk {
+        public static System.Drawing.Bitmap icon_crashnk {
             get {
                 object obj = ResourceManager.GetObject("icon_crashnk", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -133,7 +184,7 @@ namespace CrateModLoader.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap icon_crashtitans {
+        public static System.Drawing.Bitmap icon_crashtitans {
             get {
                 object obj = ResourceManager.GetObject("icon_crashtitans", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -143,7 +194,7 @@ namespace CrateModLoader.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap icon_crashtr {
+        public static System.Drawing.Bitmap icon_crashtr {
             get {
                 object obj = ResourceManager.GetObject("icon_crashtr", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -153,7 +204,7 @@ namespace CrateModLoader.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap icon_crashts {
+        public static System.Drawing.Bitmap icon_crashts {
             get {
                 object obj = ResourceManager.GetObject("icon_crashts", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -163,7 +214,7 @@ namespace CrateModLoader.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap icon_crashttr {
+        public static System.Drawing.Bitmap icon_crashttr {
             get {
                 object obj = ResourceManager.GetObject("icon_crashttr", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -173,7 +224,7 @@ namespace CrateModLoader.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap icon_crashtwoc {
+        public static System.Drawing.Bitmap icon_crashtwoc {
             get {
                 object obj = ResourceManager.GetObject("icon_crashtwoc", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -183,10 +234,31 @@ namespace CrateModLoader.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap icon_ray3 {
+        public static System.Drawing.Bitmap icon_ray3 {
             get {
                 object obj = ResourceManager.GetObject("icon_ray3", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Crate Mod Loader v1.3.0
+        ///The all-in-one Randomizer and Mod Loader for console games.  
+        ///It detects, extracts, modifies and rebuilds disc image files and directories in an easy to setup way.  
+        ///In addition, it allows for standalone &quot;Mod Crates&quot; to be installed seamlessly into games.
+        ///
+        ///Website: https://github.com/TheBetaM/CrateModLoader/
+        ///
+        ///Check the included Games.txt for a list of supported games and features.  
+        ///
+        ///Mod Crates
+        ///
+        ///Place Mod Crates in the &quot;Mods&quot; folder for them to appear in the list.
+        ///An exam [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string Readme {
+            get {
+                return ResourceManager.GetString("Readme", resourceCulture);
             }
         }
     }

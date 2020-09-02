@@ -22,5 +22,14 @@ namespace CrateModLoader.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("en-US")]
+        public string Language {
+            get {
+                return ((string)(this["Language"]));
+            }
+        }
     }
 }

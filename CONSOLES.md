@@ -5,7 +5,7 @@ ISO/BIN extraction and packing handled by [DiscUtils](https://github.com/DiscUti
   
 ## PS2
 ISO extraction handled by [DiscUtils](https://github.com/DiscUtils/DiscUtils). (MIT license)  
-ISO packing handled by [ImgBurn](https://www.imgburn.com/). (freeware)  
+ISO packing handled by [PS2ImageMaker](https://github.com/Smartkin/PS2ImageMaker). (GPL-3.0 licensee)  
   
 ## PSP
 ISO extraction handled by [DiscUtils](https://github.com/DiscUtils/DiscUtils). (MIT license)  

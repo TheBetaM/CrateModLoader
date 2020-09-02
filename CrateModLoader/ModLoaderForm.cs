@@ -4,6 +4,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Diagnostics;
 using CrateModLoader.Resources.Text;
+using CrateModLoader.Tools;
 
 namespace CrateModLoader
 {
@@ -32,13 +33,9 @@ namespace CrateModLoader
             button1.Text = ModLoaderText.InputBrowse;
             button2.Text = ModLoaderText.OutputBrowse;
             button3.Text = ModLoaderText.StartProcessButton;
-            checkBox_loadFromFolder.Text = ModLoaderText.InputFolder;
-            checkBox_saveToFolder.Text = ModLoaderText.OutputFolder;
-            checkBox1.Text = ModLoaderText.KeepTempFiles;
+
             Size = new System.Drawing.Size(MinimumSize.Width, MinimumSize.Height);
 
-            toolTip1.SetToolTip(checkBox_loadFromFolder, ModLoaderText.Tooltip_Checkbox_LoadFromFolder);
-            toolTip1.SetToolTip(checkBox_saveToFolder, ModLoaderText.Tooltip_Checkbox_SaveToFolder);
             toolTip1.SetToolTip(linkLabel2, ModLoaderText.Tooltip_Label_Version);
             toolTip1.SetToolTip(linkLabel1, ModLoaderText.Tooltip_Label_API);
             toolTip1.SetToolTip(numericUpDown1, ModLoaderText.Tooltip_Numeric_Seed);
@@ -69,9 +66,10 @@ namespace CrateModLoader
             Program.ModProgram.textbox_rando_seed = numericUpDown1;
             Program.ModProgram.button_modMenu = button_openModMenu;
             Program.ModProgram.button_modCrateMenu = button_modCrateMenu;
-            Program.ModProgram.checkbox_fromFolder = checkBox_loadFromFolder;
-            Program.ModProgram.checkbox_toFolder = checkBox_saveToFolder;
             Program.ModProgram.asyncWorker = backgroundWorker1;
+            Program.ModProgram.asyncTimer = timer1;
+            timer1.Enabled = false;
+            timer1.Interval = 500;
             Program.ModProgram.formHandle = this.Handle;
 
             progressBar1.Minimum = 0;
@@ -198,11 +196,6 @@ namespace CrateModLoader
             }
         }
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-            Program.ModProgram.keepTempFiles = checkBox1.Checked;
-        }
-
         private void button_modCrateMenu_Click(object sender, EventArgs e)
         {
             Program.ModProgram.OpenModCrateManager();
@@ -264,15 +257,13 @@ namespace CrateModLoader
                         if (Directory.Exists(fileList[0]))
                         {
                             Program.ModProgram.inputDirectoryMode = true;
-                            checkBox_loadFromFolder.Checked = true;
-                            Program.ModProgram.UpdateInputSetting();
+                            Program.ModProgram.UpdateInputSetting(true);
                             ModLoaderGlobals.InputPath = fileList[0] + @"\";
                         }
                         else
                         {
                             Program.ModProgram.inputDirectoryMode = false;
-                            checkBox_loadFromFolder.Checked = false;
-                            Program.ModProgram.UpdateInputSetting();
+                            Program.ModProgram.UpdateInputSetting(false);
                             ModLoaderGlobals.InputPath = fileList[0];
                         }
                         Program.ModProgram.OpenROM_Selection = ModLoader.OpenROM_SelectionType.Any;
@@ -308,14 +299,77 @@ namespace CrateModLoader
             Process.Start("https://github.com/TheBetaM/CrateModLoader");
         }
 
-        private void checkBox_loadFromFolder_CheckedChanged(object sender, EventArgs e)
+        private bool IO_Delay = false;
+        private void timer1_Tick(object sender, EventArgs e)
         {
-            Program.ModProgram.UpdateInputSetting();
+            if (IO_Delay)
+            {
+                timer1.Enabled = false;
+                Program.ModProgram.Async_BuildFinished();
+                return;
+            }
+            var progress = PS2ImageMaker.PollProgress();
+            //Progress.Value = (int)(progress.ProgressPercentage * 100);
+            switch (progress.ProgressS)
+            {
+                default:
+                    break;
+                case PS2ImageMaker.ProgressState.FAILED:
+                    IO_Delay = true;
+                    Console.WriteLine("Error: PS2 Image Build failed!");
+                    break;
+                case PS2ImageMaker.ProgressState.FINISHED:
+                    IO_Delay = true;
+                    break;
+            }
         }
 
-        private void checkBox_saveToFolder_CheckedChanged(object sender, EventArgs e)
+        private void toolStripMenuItem_showCredits_Click(object sender, EventArgs e)
         {
-            Program.ModProgram.UpdateOutputSetting();
+            Program.ModProgram.ShowText_Credits();
+        }
+
+        private void toolStripMenuItem_showGames_Click(object sender, EventArgs e)
+        {
+            Program.ModProgram.ShowText_Games();
+        }
+
+        private void toolStripMenuItem_showChangelog_Click(object sender, EventArgs e)
+        {
+            Program.ModProgram.ShowText_Changelog();
+        }
+
+        private void toolStripMenuItem_loadROM_Click(object sender, EventArgs e)
+        {
+            Program.ModProgram.inputDirectoryMode = false;
+            Program.ModProgram.UpdateInputSetting(false);
+            button1_Click(null, null);
+        }
+
+        private void toolStripMenuItem_loadFolder_Click(object sender, EventArgs e)
+        {
+            Program.ModProgram.inputDirectoryMode = true;
+            Program.ModProgram.UpdateInputSetting(true);
+            button1_Click(null, null);
+        }
+
+        private void toolStripMenuItem_saveROM_Click(object sender, EventArgs e)
+        {
+            Program.ModProgram.outputDirectoryMode = false;
+            Program.ModProgram.UpdateOutputSetting(false);
+            button2_Click(null, null);
+        }
+
+        private void toolStripMenuItem_saveFolder_Click(object sender, EventArgs e)
+        {
+            Program.ModProgram.outputDirectoryMode = true;
+            Program.ModProgram.UpdateOutputSetting(true);
+            button2_Click(null, null);
+        }
+
+        private void toolStripMenuItem_keepTempFiles_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.ModProgram.keepTempFiles = toolStripMenuItem_keepTempFiles.Checked;
         }
     }
 }
