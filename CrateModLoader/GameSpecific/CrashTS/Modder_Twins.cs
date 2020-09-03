@@ -95,6 +95,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
         internal const int ModClassicExplosions     = 13;
         internal const int ModClassicHealth         = 14;
         internal const int ModClassicCrates         = 15;
+        internal const int ModSkipCutscenes         = 16;
 
         public Modder_Twins()
         {
@@ -161,7 +162,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
             AddOption(ModClassicHealth, new ModOption(Twins_Text.Mod_ClassicHealth, Twins_Text.Mod_ClassicHealthDesc));
             AddOption(ModClassicExplosions, new ModOption(Twins_Text.Mod_ClassicExplosionDaamge, Twins_Text.Mod_ClassicExplosionDamageDesc));
             //AddOption(ModClassicCrates, new ModOption(Twins_Text.Mod_ClassicCratePersistence, Twins_Text.Mod_ClassicCratePersistenceDesc));
-
+            AddOption(ModSkipCutscenes, new ModOption("Skip Cutscenes","Skips all non-video cutscenes after entering."));
         }
 
         internal string bdPath = "";
@@ -452,23 +453,35 @@ namespace CrateModLoader.GameSpecific.CrashTS
                     Script.MainScript.ScriptCommand SwitchToCrashCommand = new Script.MainScript.ScriptCommand(scriptVer)
                     {
                         VTableIndex = (ushort)DefaultEnums.CommandID.SwitchCharacter,
-                        arguments = new List<uint>() { 3452821487, 0 },
+                        arguments = new List<uint>() { 0xCDCDDFEF, 0 },
                     };
                     Script.MainScript.ScriptCommand SwitchToCortexCommand = new Script.MainScript.ScriptCommand(scriptVer)
                     {
                         VTableIndex = (ushort)DefaultEnums.CommandID.SwitchCharacter,
-                        arguments = new List<uint>() { 3452821487, 1 },
+                        arguments = new List<uint>() { 0xCDCDDFEF, 1 },
                     };
                     Script.MainScript.ScriptCommand SwitchToNinaCommand = new Script.MainScript.ScriptCommand(scriptVer)
                     {
                         VTableIndex = (ushort)DefaultEnums.CommandID.SwitchCharacter,
-                        arguments = new List<uint>() { 3452821487, 3 },
+                        arguments = new List<uint>() { 0xCDCDDFEF, 3 },
                     };
                     Script.MainScript.ScriptCommand SwitchToMechaCommand = new Script.MainScript.ScriptCommand(scriptVer)
                     {
                         VTableIndex = (ushort)DefaultEnums.CommandID.SwitchCharacter,
-                        arguments = new List<uint>() { 3452821359, 6 },
+                        arguments = new List<uint>() { 0xCDCDDF6F, 6 },
                     };
+                    /*
+                    Script.MainScript.ScriptCommand TestCommand = new Script.MainScript.ScriptCommand(scriptVer)
+                    {
+                        VTableIndex = 517,
+                        arguments = new List<uint>() {  },
+                    };
+                    Script.MainScript.ScriptCommand TestCommand2 = new Script.MainScript.ScriptCommand(scriptVer)
+                    {
+                        VTableIndex = 519,
+                        arguments = new List<uint>() {  },
+                    };
+                    */
 
                     StrafeLeft.Main.scriptState1.scriptStateBody.command = SwitchToCrashCommand;
                     StrafeRight.Main.scriptState1.scriptStateBody.command = SwitchToCortexCommand;

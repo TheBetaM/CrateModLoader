@@ -6,7 +6,7 @@ General:
 Crash Twinsanity:
 - New feature: Classic Health
 - New feature: Classic Explosion Damage
-- Fixed not being able to set character health values to 1
+- Fixed default values for character health
 
 1.2.1
 
