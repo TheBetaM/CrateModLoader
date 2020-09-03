@@ -241,7 +241,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
 
         public static ModPropNamedUIntArray CharInts_SpawnHealth = new ModPropNamedUIntArray(new uint[]
         {
-            1, 1, 1, 1, 1, 1
+            2, 2, 2, 2, 2, 2
         }, CharacterNames);
 
 

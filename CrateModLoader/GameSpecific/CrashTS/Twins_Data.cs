@@ -180,6 +180,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
         AltEarth_Core_PreTreas = 131,
         AltEarth_Core_Throne = 132,
         AltEarth_Core_Treasure = 133,
+        Default = 134,
     }
     public enum GemID
     {

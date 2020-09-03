@@ -3,6 +3,11 @@
 General:
 - PS2 building is now internally supported (Thanks to Smartkin). Folder mode is now supported.  
 
+Crash Twinsanity:
+- New feature: Classic Health
+- New feature: Classic Explosion Damage
+- Fixed not being able to set character health values to 1
+
 1.2.1
 
 Crash Twinsanity:

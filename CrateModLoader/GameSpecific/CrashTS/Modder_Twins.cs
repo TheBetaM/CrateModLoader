@@ -158,9 +158,9 @@ namespace CrateModLoader.GameSpecific.CrashTS
             AddOption(ModDoubleJumpNina, new ModOption(Twins_Text.Mod_NinaDoubleJump, Twins_Text.Mod_NinaDoubleJumpDesc));
             AddOption(ModEnableUnusedEnemies, new ModOption(Twins_Text.Mod_UnusedEnemies, Twins_Text.Mod_UnusedEnemiesDesc));
             AddOption(ModSwitchCharacters, new ModOption(Twins_Text.Mod_SwitchCharacters, Twins_Text.Mod_SwitchCharactersDesc));
-            AddOption(ModClassicHealth, new ModOption("Classic Health", "Spawn without a mask."));
-            AddOption(ModClassicExplosions, new ModOption("Classic Explosion Damage", "Explosions only take away a mask if you have one."));
-            AddOption(ModClassicCrates, new ModOption("Classic Crate Persistence", "Broken crates don't respawn after a death."));
+            AddOption(ModClassicHealth, new ModOption(Twins_Text.Mod_ClassicHealth, Twins_Text.Mod_ClassicHealthDesc));
+            AddOption(ModClassicExplosions, new ModOption(Twins_Text.Mod_ClassicExplosionDaamge, Twins_Text.Mod_ClassicExplosionDamageDesc));
+            //AddOption(ModClassicCrates, new ModOption(Twins_Text.Mod_ClassicCratePersistence, Twins_Text.Mod_ClassicCratePersistenceDesc));
 
         }
 
@@ -180,6 +180,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
         internal bool Edit_AllCharacters = false;
         internal Script StrafeLeft = null;
         internal Script StrafeRight = null;
+        internal Script GenericCrateExplode = null;
         
 
         public override void StartModProcess()
@@ -415,7 +416,8 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 Twins_Edit_AllLevels = true;
             }
 
-            if (GetOption(ModFlyingKick) || GetOption(ModStompKick) || GetOption(ModDoubleJumpCortex) || GetOption(ModDoubleJumpNina) || GetOption(ModSwitchCharacters))// || GetOption(RandomizeEnemies))
+            if (GetOption(ModFlyingKick) || GetOption(ModStompKick) || GetOption(ModDoubleJumpCortex) || GetOption(ModDoubleJumpNina) 
+                || GetOption(ModSwitchCharacters) || GetOption(ModClassicExplosions))// || GetOption(RandomizeEnemies))
             {
                 Twins_Edit_AllLevels = true;
 
@@ -436,27 +438,58 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 Twins_Data.allScripts.Sort((x, y) => x.ID.CompareTo(y.ID));
                 Twins_Data.allObjects.Sort((x, y) => x.ID.CompareTo(y.ID));
 
+                int scriptVer = 0;
+                if (ModLoaderGlobals.Console == ConsoleMode.XBOX)
+                {
+                    scriptVer = 1;
+                }
 
                 if (GetOption(ModSwitchCharacters))
                 {
                     StrafeLeft = Twins_Data.GetScriptByID(ScriptID.COM_GENERIC_CHARACTER_STRAFE_LEFT);
                     StrafeRight = Twins_Data.GetScriptByID(ScriptID.COM_GENERIC_CHARACTER_STRAFE_RIGHT);
 
-                    Script.MainScript.ScriptCommand SwitchToCrashCommand = new Script.MainScript.ScriptCommand();
-                    Script.MainScript.ScriptCommand SwitchToCortexCommand = new Script.MainScript.ScriptCommand();
-                    Script.MainScript.ScriptCommand SwitchToNinaCommand = new Script.MainScript.ScriptCommand();
-                    Script.MainScript.ScriptCommand SwitchToMechaCommand = new Script.MainScript.ScriptCommand();
-                    SwitchToCrashCommand.VTableIndex = (ushort)DefaultEnums.CommandID.SwitchCharacter;
-                    SwitchToCortexCommand.VTableIndex = (ushort)DefaultEnums.CommandID.SwitchCharacter;
-                    SwitchToNinaCommand.VTableIndex = (ushort)DefaultEnums.CommandID.SwitchCharacter;
-                    SwitchToMechaCommand.VTableIndex = (ushort)DefaultEnums.CommandID.SwitchCharacter;
-                    SwitchToCrashCommand.arguments[1] = 0;
-                    SwitchToCortexCommand.arguments[1] = 1;
-                    SwitchToNinaCommand.arguments[1] = 3;
-                    SwitchToMechaCommand.arguments[1] = 6;
+                    Script.MainScript.ScriptCommand SwitchToCrashCommand = new Script.MainScript.ScriptCommand(scriptVer)
+                    {
+                        VTableIndex = (ushort)DefaultEnums.CommandID.SwitchCharacter,
+                        arguments = new List<uint>() { 3452821487, 0 },
+                    };
+                    Script.MainScript.ScriptCommand SwitchToCortexCommand = new Script.MainScript.ScriptCommand(scriptVer)
+                    {
+                        VTableIndex = (ushort)DefaultEnums.CommandID.SwitchCharacter,
+                        arguments = new List<uint>() { 3452821487, 1 },
+                    };
+                    Script.MainScript.ScriptCommand SwitchToNinaCommand = new Script.MainScript.ScriptCommand(scriptVer)
+                    {
+                        VTableIndex = (ushort)DefaultEnums.CommandID.SwitchCharacter,
+                        arguments = new List<uint>() { 3452821487, 3 },
+                    };
+                    Script.MainScript.ScriptCommand SwitchToMechaCommand = new Script.MainScript.ScriptCommand(scriptVer)
+                    {
+                        VTableIndex = (ushort)DefaultEnums.CommandID.SwitchCharacter,
+                        arguments = new List<uint>() { 3452821359, 6 },
+                    };
 
                     StrafeLeft.Main.scriptState1.scriptStateBody.command = SwitchToCrashCommand;
                     StrafeRight.Main.scriptState1.scriptStateBody.command = SwitchToCortexCommand;
+
+                }
+
+                if (GetOption(ModClassicExplosions))
+                {
+                    GenericCrateExplode = Twins_Data.GetScriptByID(ScriptID.COM_GENERIC_CRATE_EXPLODE);
+
+                    Script.MainScript.ScriptState state = GenericCrateExplode.Main.scriptState1;
+                    for (int s = 0; s < 3; s++)
+                    {
+                        state = state.nextState;
+                    }
+                    Script.MainScript.ScriptCommand command = state.scriptStateBody.command;
+                    while (command.VTableIndex != (ushort)DefaultEnums.CommandID.CreateDamageZone)
+                    {
+                        command = command.nextCommand;
+                    }
+                    command.arguments[7] = 8;
 
                 }
                 
@@ -606,6 +639,8 @@ namespace CrateModLoader.GameSpecific.CrashTS
             {
                 levelEdited = new bool[140];
 
+                RM_EditDefault();
+
                 DirectoryInfo di = new DirectoryInfo(bdPath + "/Levels/");
                 foreach (DirectoryInfo dir in di.EnumerateDirectories())
                 {
@@ -682,6 +717,16 @@ namespace CrateModLoader.GameSpecific.CrashTS
             EndModProcess();
         }
 
+        void RM_EditDefault()
+        {
+            TwinsFile RM_Archive = new TwinsFile();
+            RM_Archive.LoadFile(bdPath + @"Startup\Default.rm" + extensionMod, rmType);
+
+            if (GetOption(ModClassicExplosions))
+                Twins_Mods.RM_Mod_ClassicExplosions(RM_Archive, GenericCrateExplode);
+
+            RM_Archive.SaveFile(bdPath + @"Startup\Default.rm" + extensionMod);
+        }
 
         void RM_EditLevel(string path)
         {
@@ -732,11 +777,12 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 Twins_Mods.RM_CharacterMod_DoubleJumpNina(RM_Archive);
             if (GetOption(ModEnableUnusedEnemies))
                 Twins_Mods.RM_EnableUnusedEnemies(RM_Archive);
-
             if (GetOption(ModSwitchCharacters))
-            {
                 Twins_Mods.RM_SwitchCharactersMod(RM_Archive, StrafeLeft, StrafeRight);
-            }
+            if (GetOption(ModClassicHealth))
+                Twins_Mods.RM_Mod_ClassicHealth(RM_Archive);
+            if (GetOption(ModClassicExplosions))
+                Twins_Mods.RM_Mod_ClassicExplosions(RM_Archive, GenericCrateExplode);
 
             RM_Archive.SaveFile(path);
         }

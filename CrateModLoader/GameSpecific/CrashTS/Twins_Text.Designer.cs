@@ -79,6 +79,60 @@ namespace CrateModLoader.GameSpecific.CrashTS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Classic Crate Persistence.
+        /// </summary>
+        internal static string Mod_ClassicCratePersistence {
+            get {
+                return ResourceManager.GetString("Mod_ClassicCratePersistence", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Broken crates don&apos;t respawn after a death..
+        /// </summary>
+        internal static string Mod_ClassicCratePersistenceDesc {
+            get {
+                return ResourceManager.GetString("Mod_ClassicCratePersistenceDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Classic Explosion Damage.
+        /// </summary>
+        internal static string Mod_ClassicExplosionDaamge {
+            get {
+                return ResourceManager.GetString("Mod_ClassicExplosionDaamge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Explosions only take away a mask..
+        /// </summary>
+        internal static string Mod_ClassicExplosionDamageDesc {
+            get {
+                return ResourceManager.GetString("Mod_ClassicExplosionDamageDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Classic Health.
+        /// </summary>
+        internal static string Mod_ClassicHealth {
+            get {
+                return ResourceManager.GetString("Mod_ClassicHealth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spawn without a mask..
+        /// </summary>
+        internal static string Mod_ClassicHealthDesc {
+            get {
+                return ResourceManager.GetString("Mod_ClassicHealthDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enable Double Jump for Cortex.
         /// </summary>
         internal static string Mod_CortexDoubleJump {

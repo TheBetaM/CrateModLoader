@@ -189,4 +189,22 @@
   <data name="Mod_SwitchCharactersDesc" xml:space="preserve">
     <value>Switch between Crash and Cortex when near them using L1/R1 buttons. Use with caution - it's easy to softlock!</value>
   </data>
+  <data name="Mod_ClassicCratePersistence" xml:space="preserve">
+    <value>Classic Crate Persistence</value>
+  </data>
+  <data name="Mod_ClassicCratePersistenceDesc" xml:space="preserve">
+    <value>Broken crates don't respawn after a death.</value>
+  </data>
+  <data name="Mod_ClassicExplosionDaamge" xml:space="preserve">
+    <value>Classic Explosion Damage</value>
+  </data>
+  <data name="Mod_ClassicExplosionDamageDesc" xml:space="preserve">
+    <value>Explosions only take away a mask.</value>
+  </data>
+  <data name="Mod_ClassicHealth" xml:space="preserve">
+    <value>Classic Health</value>
+  </data>
+  <data name="Mod_ClassicHealthDesc" xml:space="preserve">
+    <value>Spawn without a mask.</value>
+  </data>
 </root>
