@@ -183,4 +183,1876 @@
   <data name="Rand_PowerupEffectsDesc" xml:space="preserve">
     <value>Randomizes visuals, speed and collision of certain powerups.</value>
   </data>
+  <data name="BowlingBomb_m_Acceleration" xml:space="preserve">
+    <value>Bowling Bomb: Acceleration</value>
+  </data>
+  <data name="BowlingBomb_m_AccelerationDesc" xml:space="preserve">
+    <value>Acceleration</value>
+  </data>
+  <data name="BowlingBomb_m_AccelerationJuiced" xml:space="preserve">
+    <value>Bowling Bomb: Acceleration Juiced</value>
+  </data>
+  <data name="BowlingBomb_m_AccelerationJuicedDesc" xml:space="preserve">
+    <value>Acceleration</value>
+  </data>
+  <data name="BowlingBomb_m_AirGravity" xml:space="preserve">
+    <value>Bowling Bomb: Air Gravity</value>
+  </data>
+  <data name="BowlingBomb_m_AirGravityDesc" xml:space="preserve">
+    <value>Gravity in the air normally</value>
+  </data>
+  <data name="BowlingBomb_m_AirGravityMaglev" xml:space="preserve">
+    <value>Bowling Bomb: Air Gravity Maglev</value>
+  </data>
+  <data name="BowlingBomb_m_AirGravityMaglevDesc" xml:space="preserve">
+    <value>Gravity in the air on maglev surfaces</value>
+  </data>
+  <data name="BowlingBomb_m_BackSpeed" xml:space="preserve">
+    <value>Bowling Bomb: Back Speed</value>
+  </data>
+  <data name="BowlingBomb_m_BackSpeedDesc" xml:space="preserve">
+    <value>Speed of the bowling bomb when shot backwards</value>
+  </data>
+  <data name="BowlingBomb_m_DragCoef" xml:space="preserve">
+    <value>Bowling Bomb: Drag Coef</value>
+  </data>
+  <data name="BowlingBomb_m_DragCoefDesc" xml:space="preserve">
+    <value>How much drag from the "wind"</value>
+  </data>
+  <data name="BowlingBomb_m_EasyLatFriction" xml:space="preserve">
+    <value>Bowling Bomb: Easy Lat Friction</value>
+  </data>
+  <data name="BowlingBomb_m_EasyLatFrictionDesc" xml:space="preserve">
+    <value>Friction that helps when turning</value>
+  </data>
+  <data name="BowlingBomb_m_EasyLongFriction" xml:space="preserve">
+    <value>Bowling Bomb: Easy Long Friction</value>
+  </data>
+  <data name="BowlingBomb_m_EasyLongFrictionDesc" xml:space="preserve">
+    <value>Friction that slows the bomb down</value>
+  </data>
+  <data name="BowlingBomb_m_ExplosionBlastRadius" xml:space="preserve">
+    <value>Bowling Bomb: Explosion Blast Radius</value>
+  </data>
+  <data name="BowlingBomb_m_ExplosionBlastRadiusDesc" xml:space="preserve">
+    <value>Blast Radius of Explosion</value>
+  </data>
+  <data name="BowlingBomb_m_ExplosionBlastRadiusJuiced" xml:space="preserve">
+    <value>Bowling Bomb: Explosion Blast Radius Juiced</value>
+  </data>
+  <data name="BowlingBomb_m_ExplosionBlastRadiusJuicedDesc" xml:space="preserve">
+    <value>Blast Radius of Explosion Juiced</value>
+  </data>
+  <data name="BowlingBomb_m_ExplScale" xml:space="preserve">
+    <value>Bowling Bomb: Expl Scale</value>
+  </data>
+  <data name="BowlingBomb_m_ExplScaleDesc" xml:space="preserve">
+    <value>Scale of explosion normal</value>
+  </data>
+  <data name="BowlingBomb_m_ExplScaleJuiced" xml:space="preserve">
+    <value>Bowling Bomb: Expl Scale Juiced</value>
+  </data>
+  <data name="BowlingBomb_m_ExplScaleJuicedDesc" xml:space="preserve">
+    <value>Scale of explosion juiced</value>
+  </data>
+  <data name="BowlingBomb_m_GroundGravity" xml:space="preserve">
+    <value>Bowling Bomb: Ground Gravity</value>
+  </data>
+  <data name="BowlingBomb_m_GroundGravityDesc" xml:space="preserve">
+    <value>Gravity on the ground normally</value>
+  </data>
+  <data name="BowlingBomb_m_GroundGravityMaglev" xml:space="preserve">
+    <value>Bowling Bomb: Ground Gravity Maglev</value>
+  </data>
+  <data name="BowlingBomb_m_GroundGravityMaglevDesc" xml:space="preserve">
+    <value>Gravity on the ground on maglev surfaces</value>
+  </data>
+  <data name="BowlingBomb_m_HardLatFriction" xml:space="preserve">
+    <value>Bowling Bomb: Hard Lat Friction</value>
+  </data>
+  <data name="BowlingBomb_m_HardLatFrictionDesc" xml:space="preserve">
+    <value>Friction that helps when turning</value>
+  </data>
+  <data name="BowlingBomb_m_HardLongFriction" xml:space="preserve">
+    <value>Bowling Bomb: Hard Long Friction</value>
+  </data>
+  <data name="BowlingBomb_m_HardLongFrictionDesc" xml:space="preserve">
+    <value>Friction that slows the bomb down</value>
+  </data>
+  <data name="BowlingBomb_m_JuicedWumpaLoss" xml:space="preserve">
+    <value>Bowling Bomb: Juiced Wumpa Loss</value>
+  </data>
+  <data name="BowlingBomb_m_JuicedWumpaLossDesc" xml:space="preserve">
+    <value>How much wumpa fruit victim loses</value>
+  </data>
+  <data name="BowlingBomb_m_Mass" xml:space="preserve">
+    <value>Bowling Bomb: Mass</value>
+  </data>
+  <data name="BowlingBomb_m_MassDesc" xml:space="preserve">
+    <value>Mass of bomb</value>
+  </data>
+  <data name="BowlingBomb_m_NormalWumpaLoss" xml:space="preserve">
+    <value>Bowling Bomb: Normal Wumpa Loss</value>
+  </data>
+  <data name="BowlingBomb_m_NormalWumpaLossDesc" xml:space="preserve">
+    <value>How much wumpa fruit victim loses</value>
+  </data>
+  <data name="BowlingBomb_m_Radius" xml:space="preserve">
+    <value>Bowling Bomb: Radius</value>
+  </data>
+  <data name="BowlingBomb_m_RadiusDesc" xml:space="preserve">
+    <value>Radius of bomb</value>
+  </data>
+  <data name="BowlingBomb_m_RangeInFront" xml:space="preserve">
+    <value>Bowling Bomb: Range In Front</value>
+  </data>
+  <data name="BowlingBomb_m_RangeInFrontDesc" xml:space="preserve">
+    <value>Targeting range target must be in</value>
+  </data>
+  <data name="BowlingBomb_m_Speed" xml:space="preserve">
+    <value>Bowling Bomb: Speed</value>
+  </data>
+  <data name="BowlingBomb_m_SpeedDesc" xml:space="preserve">
+    <value>Speed of the bowling bomb</value>
+  </data>
+  <data name="BowlingBomb_m_TurnSpeed" xml:space="preserve">
+    <value>Bowling Bomb: Turn Speed</value>
+  </data>
+  <data name="BowlingBomb_m_TurnSpeedDesc" xml:space="preserve">
+    <value>How fast it turns</value>
+  </data>
+  <data name="BowlingBomb_m_TurnSpeedJuiced" xml:space="preserve">
+    <value>Bowling Bomb: Turn Speed Juiced</value>
+  </data>
+  <data name="BowlingBomb_m_TurnSpeedJuicedDesc" xml:space="preserve">
+    <value>How fast does it turn (juiced)</value>
+  </data>
+  <data name="BowlingBomb_m_ViewRange" xml:space="preserve">
+    <value>Bowling Bomb: View Range</value>
+  </data>
+  <data name="BowlingBomb_m_ViewRangeDesc" xml:space="preserve">
+    <value>Targeting range target must be in</value>
+  </data>
+  <data name="c_AccelerationGainNormal" xml:space="preserve">
+    <value>Acceleration Gain Normal</value>
+  </data>
+  <data name="c_AccelerationGainWumpa" xml:space="preserve">
+    <value>Acceleration Gain Wumpa</value>
+  </data>
+  <data name="c_BoostInfo_eBOOST_AKU_DROP" xml:space="preserve">
+    <value>Boost Info: BOOST AKU DROP</value>
+  </data>
+  <data name="c_BoostInfo_eBOOST_AKU_DROPDesc" xml:space="preserve">
+    <value>speed / time / wheelie</value>
+  </data>
+  <data name="c_BoostInfo_eBOOST_JUMP_LARGE" xml:space="preserve">
+    <value>Boost Info: BOOST JUMP LARGE</value>
+  </data>
+  <data name="c_BoostInfo_eBOOST_JUMP_LARGEDesc" xml:space="preserve">
+    <value>speed / time / wheelie</value>
+  </data>
+  <data name="c_BoostInfo_eBOOST_JUMP_MEDIUM" xml:space="preserve">
+    <value>Boost Info: BOOST JUMP MEDIUM</value>
+  </data>
+  <data name="c_BoostInfo_eBOOST_JUMP_MEDIUMDesc" xml:space="preserve">
+    <value>speed / time / wheelie</value>
+  </data>
+  <data name="c_BoostInfo_eBOOST_JUMP_SMALL" xml:space="preserve">
+    <value>Boost Info: BOOST JUMP SMALL</value>
+  </data>
+  <data name="c_BoostInfo_eBOOST_JUMP_SMALLDesc" xml:space="preserve">
+    <value>speed / time / wheelie</value>
+  </data>
+  <data name="c_BoostInfo_eBOOST_PAD" xml:space="preserve">
+    <value>Boost Info: BOOST PAD</value>
+  </data>
+  <data name="c_BoostInfo_eBOOST_PADDesc" xml:space="preserve">
+    <value>speed / time / wheelie</value>
+  </data>
+  <data name="c_BoostInfo_eBOOST_SLIDE_1" xml:space="preserve">
+    <value>Boost Info: BOOST SLIDE 1</value>
+  </data>
+  <data name="c_BoostInfo_eBOOST_SLIDE_1Desc" xml:space="preserve">
+    <value>speed / time / wheelie</value>
+  </data>
+  <data name="c_BoostInfo_eBOOST_SLIDE_2" xml:space="preserve">
+    <value>Boost Info: BOOST SLIDE 2</value>
+  </data>
+  <data name="c_BoostInfo_eBOOST_SLIDE_2Desc" xml:space="preserve">
+    <value>speed / time / wheelie</value>
+  </data>
+  <data name="c_BoostInfo_eBOOST_SLIDE_3" xml:space="preserve">
+    <value>Boost Info: BOOST SLIDE 3</value>
+  </data>
+  <data name="c_BoostInfo_eBOOST_SLIDE_3Desc" xml:space="preserve">
+    <value>speed / time / wheelie</value>
+  </data>
+  <data name="c_BoostInfo_eBOOST_START" xml:space="preserve">
+    <value>Boost Info: BOOST START</value>
+  </data>
+  <data name="c_BoostInfo_eBOOST_STARTDesc" xml:space="preserve">
+    <value>speed / time / wheelie</value>
+  </data>
+  <data name="c_BoostInfo_eBOOST_SUPER_ENGINE" xml:space="preserve">
+    <value>Boost Info: BOOST SUPER ENGINE</value>
+  </data>
+  <data name="c_BoostInfo_eBOOST_SUPER_ENGINEDesc" xml:space="preserve">
+    <value>speed / time / wheelie</value>
+  </data>
+  <data name="c_BoostInfo_eBOOST_TURBOBOOST" xml:space="preserve">
+    <value>Boost Info: BOOST TURBOBOOST</value>
+  </data>
+  <data name="c_BoostInfo_eBOOST_TURBOBOOSTDesc" xml:space="preserve">
+    <value>speed / time / wheelie</value>
+  </data>
+  <data name="c_BoostInfo_eBOOST_TURBOBOOST_JUICED" xml:space="preserve">
+    <value>Boost Info: BOOST TURBOBOOST JUICED</value>
+  </data>
+  <data name="c_BoostInfo_eBOOST_TURBOBOOST_JUICEDDesc" xml:space="preserve">
+    <value>speed / time / wheelie</value>
+  </data>
+  <data name="c_BoostMaxImpulsePerSecond" xml:space="preserve">
+    <value>Boost Max Impulse Per Second</value>
+  </data>
+  <data name="c_BoostSlidePushAngle" xml:space="preserve">
+    <value>Boost Slide Push Angle</value>
+  </data>
+  <data name="c_BoostSlidePushTime" xml:space="preserve">
+    <value>Boost Slide Push Time</value>
+  </data>
+  <data name="c_BrakeForce" xml:space="preserve">
+    <value>Brake Force</value>
+  </data>
+  <data name="c_HiTurnFriction" xml:space="preserve">
+    <value>Hi Turn Friction</value>
+  </data>
+  <data name="c_HiTurnFrictionDesc" xml:space="preserve">
+    <value>lat / long / lat 2 long</value>
+  </data>
+  <data name="c_HiTurnStartAngle" xml:space="preserve">
+    <value>Hi Turn Start Angle</value>
+  </data>
+  <data name="c_InAirTurnRateNormal" xml:space="preserve">
+    <value>In Air Turn Rate Normal</value>
+  </data>
+  <data name="c_InAirTurnRateWumpa" xml:space="preserve">
+    <value>In Air Turn Rate Wumpa</value>
+  </data>
+  <data name="c_MaxForwardSpeedNormal" xml:space="preserve">
+    <value>Max Forward Speed Normal</value>
+  </data>
+  <data name="c_MaxForwardSpeedWumpa" xml:space="preserve">
+    <value>Max Forward Speed Wumpa</value>
+  </data>
+  <data name="c_NormalFriction" xml:space="preserve">
+    <value>Normal Friction</value>
+  </data>
+  <data name="c_NormalFrictionDesc" xml:space="preserve">
+    <value>lat / long / lat 2 long</value>
+  </data>
+  <data name="c_SlideFrictionHigh" xml:space="preserve">
+    <value>Slide Friction High</value>
+  </data>
+  <data name="c_SlideFrictionHighDesc" xml:space="preserve">
+    <value>lat / long / lat 2 long</value>
+  </data>
+  <data name="c_SlideFrictionLow" xml:space="preserve">
+    <value>Slide Friction Low</value>
+  </data>
+  <data name="c_SlideFrictionLowDesc" xml:space="preserve">
+    <value>lat / long / lat 2 long</value>
+  </data>
+  <data name="c_SlideFrictionNorm" xml:space="preserve">
+    <value>Slide Friction Norm</value>
+  </data>
+  <data name="c_SlideFrictionNormDesc" xml:space="preserve">
+    <value>lat / long / lat 2 long</value>
+  </data>
+  <data name="c_SlideMaxAngle" xml:space="preserve">
+    <value>Slide Max Angle</value>
+  </data>
+  <data name="c_SlideMinAngle" xml:space="preserve">
+    <value>Slide Min Angle</value>
+  </data>
+  <data name="c_SlideTurnRateAwayFromSlide" xml:space="preserve">
+    <value>Slide Turn Rate Away From Slide</value>
+  </data>
+  <data name="c_SlideTurnRateInToSlide" xml:space="preserve">
+    <value>Slide Turn Rate In To Slide</value>
+  </data>
+  <data name="c_TurnDecellForce" xml:space="preserve">
+    <value>Turn Decell Force</value>
+  </data>
+  <data name="c_TurnDecellForceMax" xml:space="preserve">
+    <value>Turn Decell Force Max</value>
+  </data>
+  <data name="c_TurnDecellSpeed" xml:space="preserve">
+    <value>Turn Decell Speed</value>
+  </data>
+  <data name="c_TurnRateAccel" xml:space="preserve">
+    <value>Turn Rate Accel</value>
+  </data>
+  <data name="c_TurnRateBrake" xml:space="preserve">
+    <value>Turn Rate Brake</value>
+  </data>
+  <data name="c_TurnRateNormal" xml:space="preserve">
+    <value>Turn Rate Normal</value>
+  </data>
+  <data name="c_TurnRateWumpa" xml:space="preserve">
+    <value>Turn Rate Wumpa</value>
+  </data>
+  <data name="c_UIStats_Acceleration" xml:space="preserve">
+    <value>UI Stats Acceleration</value>
+  </data>
+  <data name="c_UIStats_MaxValue" xml:space="preserve">
+    <value>UI Stats Max Value</value>
+  </data>
+  <data name="c_UIStats_Speed" xml:space="preserve">
+    <value>UI Stats Speed</value>
+  </data>
+  <data name="c_UIStats_Turn" xml:space="preserve">
+    <value>UI Stats Turn</value>
+  </data>
+  <data name="FreezingMine_m_BlastRadius" xml:space="preserve">
+    <value>Freezing Mine: Blast Radius</value>
+  </data>
+  <data name="FreezingMine_m_BlastRadiusDesc" xml:space="preserve">
+    <value />
+  </data>
+  <data name="FreezingMine_m_BlastRadiusJuiced" xml:space="preserve">
+    <value>Freezing Mine: Blast Radius Juiced</value>
+  </data>
+  <data name="FreezingMine_m_BlastRadiusJuicedDesc" xml:space="preserve">
+    <value />
+  </data>
+  <data name="FreezingMine_m_ExplScale" xml:space="preserve">
+    <value>Freezing Mine: Expl Scale</value>
+  </data>
+  <data name="FreezingMine_m_ExplScaleDesc" xml:space="preserve">
+    <value>1=7m</value>
+  </data>
+  <data name="FreezingMine_m_ExplScaleJuiced" xml:space="preserve">
+    <value>Freezing Mine: Expl Scale Juiced</value>
+  </data>
+  <data name="FreezingMine_m_ExplScaleJuicedDesc" xml:space="preserve">
+    <value>1=7m</value>
+  </data>
+  <data name="FreezingMine_m_JuicedFreezeTime" xml:space="preserve">
+    <value>Freezing Mine: Juiced Freeze Time</value>
+  </data>
+  <data name="FreezingMine_m_JuicedFreezeTimeDesc" xml:space="preserve">
+    <value>How long effect lasts with a juiced mine</value>
+  </data>
+  <data name="FreezingMine_m_JuicedWumpaFruitLost" xml:space="preserve">
+    <value>Freezing Mine: Juiced Wumpa Fruit Lost</value>
+  </data>
+  <data name="FreezingMine_m_JuicedWumpaFruitLostDesc" xml:space="preserve">
+    <value>How much wumpa fruit victim loses (juiced)</value>
+  </data>
+  <data name="FreezingMine_m_NormalFreezeTime" xml:space="preserve">
+    <value>Freezing Mine: Normal Freeze Time</value>
+  </data>
+  <data name="FreezingMine_m_NormalFreezeTimeDesc" xml:space="preserve">
+    <value>How long effect lasts with a normal mine</value>
+  </data>
+  <data name="FreezingMine_m_NormalWumpaFruitLost" xml:space="preserve">
+    <value>Freezing Mine: Normal Wumpa Fruit Lost</value>
+  </data>
+  <data name="FreezingMine_m_NormalWumpaFruitLostDesc" xml:space="preserve">
+    <value>How much wumpa fruit victim loses</value>
+  </data>
+  <data name="FreezingMine_m_ThrowDistance" xml:space="preserve">
+    <value>Freezing Mine: Throw Distance</value>
+  </data>
+  <data name="FreezingMine_m_ThrowDistanceDesc" xml:space="preserve">
+    <value>How far to throw freeze mine</value>
+  </data>
+  <data name="FreezingMine_m_ThrowSpeedFactor" xml:space="preserve">
+    <value>Freezing Mine: Throw Speed Factor</value>
+  </data>
+  <data name="FreezingMine_m_ThrowSpeedFactorDesc" xml:space="preserve">
+    <value>This number is multiplied by currentspeed and added to the throw distance</value>
+  </data>
+  <data name="HomingMissle_m_Acceleration" xml:space="preserve">
+    <value>Homing Missle: Acceleration</value>
+  </data>
+  <data name="HomingMissle_m_AccelerationDesc" xml:space="preserve">
+    <value>How fast it accelerates, note the reason this is so high is because of the long. friction</value>
+  </data>
+  <data name="HomingMissle_m_AccelerationJuiced" xml:space="preserve">
+    <value>Homing Missle: Acceleration Juiced</value>
+  </data>
+  <data name="HomingMissle_m_AccelerationJuicedDesc" xml:space="preserve">
+    <value>How fast it accelerates juiced, note the reason this is so high is because of the long. friction</value>
+  </data>
+  <data name="HomingMissle_m_AirGravityMaglev" xml:space="preserve">
+    <value>Homing Missle: Air Gravity Maglev</value>
+  </data>
+  <data name="HomingMissle_m_AirGravityMaglevDesc" xml:space="preserve">
+    <value>Gravity in the air, when on maglev</value>
+  </data>
+  <data name="HomingMissle_m_AirGravityNormal" xml:space="preserve">
+    <value>Homing Missle: Air Gravity Normal</value>
+  </data>
+  <data name="HomingMissle_m_AirGravityNormalDesc" xml:space="preserve">
+    <value>Gravity in the air</value>
+  </data>
+  <data name="HomingMissle_m_DecayMin" xml:space="preserve">
+    <value>Homing Missle: Decay Min</value>
+  </data>
+  <data name="HomingMissle_m_DecayMinDesc" xml:space="preserve">
+    <value>Min value for velocity</value>
+  </data>
+  <data name="HomingMissle_m_DecaySpeed" xml:space="preserve">
+    <value>Homing Missle: Decay Speed</value>
+  </data>
+  <data name="HomingMissle_m_DecaySpeedDesc" xml:space="preserve">
+    <value>How fast velocity decays (in meteres/sec)</value>
+  </data>
+  <data name="HomingMissle_m_DecayTime" xml:space="preserve">
+    <value>Homing Missle: Decay Time</value>
+  </data>
+  <data name="HomingMissle_m_DecayTimeDesc" xml:space="preserve">
+    <value>How long before decay starts</value>
+  </data>
+  <data name="HomingMissle_m_DelayTrackingUpdate" xml:space="preserve">
+    <value>Homing Missle: Delay Tracking Update</value>
+  </data>
+  <data name="HomingMissle_m_DelayTrackingUpdateDesc" xml:space="preserve">
+    <value>Delay between updates of tracking</value>
+  </data>
+  <data name="HomingMissle_m_DragCoef" xml:space="preserve">
+    <value>Homing Missle: Drag Coef</value>
+  </data>
+  <data name="HomingMissle_m_DragCoefDesc" xml:space="preserve">
+    <value>How much drag force applied to missile</value>
+  </data>
+  <data name="HomingMissle_m_EasyLatFriction" xml:space="preserve">
+    <value>Homing Missle: Easy Lat Friction</value>
+  </data>
+  <data name="HomingMissle_m_EasyLatFrictionDesc" xml:space="preserve">
+    <value>Lateral friction, helps when turning (higher the better you turn)</value>
+  </data>
+  <data name="HomingMissle_m_EasyLongFriction" xml:space="preserve">
+    <value>Homing Missle: Easy Long Friction</value>
+  </data>
+  <data name="HomingMissle_m_EasyLongFrictionDesc" xml:space="preserve">
+    <value>Long. Friction, friction working against missile, this force the acceleration to be much higher than normal</value>
+  </data>
+  <data name="HomingMissle_m_ExplosionBlastRadius" xml:space="preserve">
+    <value>Homing Missle: Explosion Blast Radius</value>
+  </data>
+  <data name="HomingMissle_m_ExplosionBlastRadiusDesc" xml:space="preserve">
+    <value>Blast Radius of Explosion</value>
+  </data>
+  <data name="HomingMissle_m_ExplosionBlastRadiusJuiced" xml:space="preserve">
+    <value>Homing Missle: Explosion Blast Radius Juiced</value>
+  </data>
+  <data name="HomingMissle_m_ExplosionBlastRadiusJuicedDesc" xml:space="preserve">
+    <value>Blast Radius of Explosion Juiced</value>
+  </data>
+  <data name="HomingMissle_m_ExplScale" xml:space="preserve">
+    <value>Homing Missle: Expl Scale</value>
+  </data>
+  <data name="HomingMissle_m_ExplScaleDesc" xml:space="preserve">
+    <value>Scale of explosion normal</value>
+  </data>
+  <data name="HomingMissle_m_ExplScaleJuiced" xml:space="preserve">
+    <value>Homing Missle: Expl Scale Juiced</value>
+  </data>
+  <data name="HomingMissle_m_ExplScaleJuicedDesc" xml:space="preserve">
+    <value>Scale of explosion juiced</value>
+  </data>
+  <data name="HomingMissle_m_GroundGravityMaglev" xml:space="preserve">
+    <value>Homing Missle: Ground Gravity Maglev</value>
+  </data>
+  <data name="HomingMissle_m_GroundGravityMaglevDesc" xml:space="preserve">
+    <value>Gravity on the ground, when on maglev, should be high(there are sharp changes in curvature of ground in maglev)</value>
+  </data>
+  <data name="HomingMissle_m_GroundGravityNormal" xml:space="preserve">
+    <value>Homing Missle: Ground Gravity Normal</value>
+  </data>
+  <data name="HomingMissle_m_GroundGravityNormalDesc" xml:space="preserve">
+    <value>Gravity on the ground</value>
+  </data>
+  <data name="HomingMissle_m_HardLatFriction" xml:space="preserve">
+    <value>Homing Missle: Hard Lat Friction</value>
+  </data>
+  <data name="HomingMissle_m_HardLatFrictionDesc" xml:space="preserve">
+    <value>Same as above, except when making a tight turn</value>
+  </data>
+  <data name="HomingMissle_m_HardLongFriction" xml:space="preserve">
+    <value>Homing Missle: Hard Long Friction</value>
+  </data>
+  <data name="HomingMissle_m_HardLongFrictionDesc" xml:space="preserve">
+    <value>Same as above, except when making a tight turn</value>
+  </data>
+  <data name="HomingMissle_m_JuicedWumpaLoss" xml:space="preserve">
+    <value>Homing Missle: Juiced Wumpa Loss</value>
+  </data>
+  <data name="HomingMissle_m_JuicedWumpaLossDesc" xml:space="preserve">
+    <value>How much wumpa fruit victim loses</value>
+  </data>
+  <data name="HomingMissle_m_Mass" xml:space="preserve">
+    <value>Homing Missle: Mass</value>
+  </data>
+  <data name="HomingMissle_m_MassDesc" xml:space="preserve">
+    <value>Mass of missile</value>
+  </data>
+  <data name="HomingMissle_m_MaxSpeed" xml:space="preserve">
+    <value>Homing Missle: Max Speed</value>
+  </data>
+  <data name="HomingMissle_m_MaxSpeedDesc" xml:space="preserve">
+    <value>Max speed of homing missile</value>
+  </data>
+  <data name="HomingMissle_m_MaxSpeedJuiced" xml:space="preserve">
+    <value>Homing Missle: Max Speed Juiced</value>
+  </data>
+  <data name="HomingMissle_m_MaxSpeedJuicedDesc" xml:space="preserve">
+    <value>Max speed of homing missile (juiced)</value>
+  </data>
+  <data name="HomingMissle_m_NormalWumpaLoss" xml:space="preserve">
+    <value>Homing Missle: Normal Wumpa Loss</value>
+  </data>
+  <data name="HomingMissle_m_NormalWumpaLossDesc" xml:space="preserve">
+    <value>How much wumpa fruit victim loses</value>
+  </data>
+  <data name="HomingMissle_m_Radius" xml:space="preserve">
+    <value>Homing Missle: Radius</value>
+  </data>
+  <data name="HomingMissle_m_RadiusDesc" xml:space="preserve">
+    <value>Radius of missile (for collision)</value>
+  </data>
+  <data name="HomingMissle_m_RangeInBack" xml:space="preserve">
+    <value>Homing Missle: Range In Back</value>
+  </data>
+  <data name="HomingMissle_m_RangeInBackDesc" xml:space="preserve">
+    <value>How far to the back will the missile track of the user kart</value>
+  </data>
+  <data name="HomingMissle_m_RangeInFront" xml:space="preserve">
+    <value>Homing Missle: Range In Front</value>
+  </data>
+  <data name="HomingMissle_m_RangeInFrontDesc" xml:space="preserve">
+    <value>How far will the missile track in front of user kart</value>
+  </data>
+  <data name="HomingMissle_m_TimeLimit" xml:space="preserve">
+    <value>Homing Missle: Time Limit</value>
+  </data>
+  <data name="HomingMissle_m_TimeLimitDesc" xml:space="preserve">
+    <value>How long will missile last in ms</value>
+  </data>
+  <data name="HomingMissle_m_TrackingFrontDistance" xml:space="preserve">
+    <value>Homing Missle: Tracking Front Distance</value>
+  </data>
+  <data name="HomingMissle_m_TrackingFrontDistanceDesc" xml:space="preserve">
+    <value>How man times farther will the missile target someone who is in front of them, rather than in back</value>
+  </data>
+  <data name="HomingMissle_m_TurnSpeed" xml:space="preserve">
+    <value>Homing Missle: Turn Speed</value>
+  </data>
+  <data name="HomingMissle_m_TurnSpeedDesc" xml:space="preserve">
+    <value>How fast homing missile turns (radians / sec)</value>
+  </data>
+  <data name="HomingMissle_m_TurnSpeedJuiced" xml:space="preserve">
+    <value>Homing Missle: Turn Speed Juiced</value>
+  </data>
+  <data name="HomingMissle_m_TurnSpeedJuicedDesc" xml:space="preserve">
+    <value>How fast homing missile turns (radians / sec)(juiced)</value>
+  </data>
+  <data name="HomingMissle_m_ViewRange" xml:space="preserve">
+    <value>Homing Missle: View Range</value>
+  </data>
+  <data name="HomingMissle_m_ViewRangeDesc" xml:space="preserve">
+    <value>Range of view the homing missile targets, if 0, then targets everything infront of him, 1 is exactly in front of him</value>
+  </data>
+  <data name="InvincMask_m_ColRadius" xml:space="preserve">
+    <value>Invinc Mask: Collision Radius</value>
+  </data>
+  <data name="InvincMask_m_ColRadiusDesc" xml:space="preserve">
+    <value>Collision Radius</value>
+  </data>
+  <data name="InvincMask_m_ExplScale" xml:space="preserve">
+    <value>Invinc Mask: Expl Scale</value>
+  </data>
+  <data name="InvincMask_m_ExplScaleDesc" xml:space="preserve">
+    <value>Scale of explosion normal</value>
+  </data>
+  <data name="InvincMask_m_ExplScaleJuiced" xml:space="preserve">
+    <value>Invinc Mask: Expl Scale Juiced</value>
+  </data>
+  <data name="InvincMask_m_ExplScaleJuicedDesc" xml:space="preserve">
+    <value>Scale of explosion juiced</value>
+  </data>
+  <data name="InvincMask_m_JuicedTime" xml:space="preserve">
+    <value>Invinc Mask: Juiced Time</value>
+  </data>
+  <data name="InvincMask_m_JuicedTimeDesc" xml:space="preserve">
+    <value>How long effect lasts when juiced</value>
+  </data>
+  <data name="InvincMask_m_JuicedTimeTeamed" xml:space="preserve">
+    <value>Invinc Mask: Juiced Time Teamed</value>
+  </data>
+  <data name="InvincMask_m_JuicedTimeTeamedDesc" xml:space="preserve">
+    <value>When Teamed and Juiced</value>
+  </data>
+  <data name="InvincMask_m_JuicedWumpaLoss" xml:space="preserve">
+    <value>Invinc Mask: Juiced Wumpa Loss</value>
+  </data>
+  <data name="InvincMask_m_JuicedWumpaLossDesc" xml:space="preserve">
+    <value>How much wumpa fruit lost by victim</value>
+  </data>
+  <data name="InvincMask_m_NormalTime" xml:space="preserve">
+    <value>Invinc Mask: Normal Time</value>
+  </data>
+  <data name="InvincMask_m_NormalTimeDesc" xml:space="preserve">
+    <value>How long effect lasts</value>
+  </data>
+  <data name="InvincMask_m_NormalTimeTeamed" xml:space="preserve">
+    <value>Invinc Mask: Normal Time Teamed</value>
+  </data>
+  <data name="InvincMask_m_NormalTimeTeamedDesc" xml:space="preserve">
+    <value>When Teamed</value>
+  </data>
+  <data name="InvincMask_m_NormalWumpaLoss" xml:space="preserve">
+    <value>Invinc Mask: Normal Wumpa Loss</value>
+  </data>
+  <data name="InvincMask_m_NormalWumpaLossDesc" xml:space="preserve">
+    <value>How much wumpa fruit lost by victim</value>
+  </data>
+  <data name="InvincMask_m_TeamBlastRange" xml:space="preserve">
+    <value>Invinc Mask: Team Blast Range</value>
+  </data>
+  <data name="InvincMask_m_TeamBlastRangeDesc" xml:space="preserve">
+    <value>How big explosion is for team effect</value>
+  </data>
+  <data name="InvincMask_m_TeamMeterFull" xml:space="preserve">
+    <value>Invinc Mask: Team Meter Full</value>
+  </data>
+  <data name="InvincMask_m_TeamMeterFullDesc" xml:space="preserve">
+    <value>How full does the buddy meter need to be before explosion</value>
+  </data>
+  <data name="InvincMask_m_TeamSpeed" xml:space="preserve">
+    <value>Invinc Mask: Team Speed</value>
+  </data>
+  <data name="InvincMask_m_TeamSpeedDesc" xml:space="preserve">
+    <value>How fast mask travels to buddy from buddy</value>
+  </data>
+  <data name="m_AccelerationGainNormal" xml:space="preserve">
+    <value>Acceleration Gain Normal</value>
+  </data>
+  <data name="m_AccelerationGainNormalDesc" xml:space="preserve">
+    <value>The NORMAL ACCELERATION GAIN of the kart (m/sec)</value>
+  </data>
+  <data name="m_AccelerationGainWumpa" xml:space="preserve">
+    <value>Acceleration Gain Wumpa</value>
+  </data>
+  <data name="m_AccelerationGainWumpaDesc" xml:space="preserve">
+    <value>The WUMPA ACCELERATION GAIN of the kart (m/sec)</value>
+  </data>
+  <data name="m_AkuDropHeight" xml:space="preserve">
+    <value>Aku Drop Height</value>
+  </data>
+  <data name="m_AkuDropHeightDesc" xml:space="preserve">
+    <value>The HEIGHT to drop from (m)</value>
+  </data>
+  <data name="m_AkuDropSpeed" xml:space="preserve">
+    <value>Aku Drop Speed</value>
+  </data>
+  <data name="m_AkuDropSpeedDesc" xml:space="preserve">
+    <value>The SPEED we drop at (m/sec)</value>
+  </data>
+  <data name="m_AkuDropTime" xml:space="preserve">
+    <value>Aku Drop Time</value>
+  </data>
+  <data name="m_AkuDropTimeDesc" xml:space="preserve">
+    <value>The TOTAL TIME to stay in AKU-DROP state (sec)</value>
+  </data>
+  <data name="m_AkuDropTS_m_CancelMinPercent" xml:space="preserve">
+    <value>Aku Drop: Cancel Min Percent</value>
+  </data>
+  <data name="m_AkuDropTS_m_CancelMinPercentDesc" xml:space="preserve">
+    <value>While we are less than this percent the we don't enforce wait time for repress and also clear the hold time</value>
+  </data>
+  <data name="m_AkuDropTS_m_DecHoldTime" xml:space="preserve">
+    <value>Aku Drop: Dec Hold Time</value>
+  </data>
+  <data name="m_AkuDropTS_m_DecHoldTimeDesc" xml:space="preserve">
+    <value>The time we start to decrement the turbo start from</value>
+  </data>
+  <data name="m_AkuDropTS_m_DecSpeed" xml:space="preserve">
+    <value>Aku Drop: Dec Speed</value>
+  </data>
+  <data name="m_AkuDropTS_m_DecSpeedDesc" xml:space="preserve">
+    <value>The speed we decrement the counter at (1.0 / seconds)</value>
+  </data>
+  <data name="m_AkuDropTS_m_IncSpeed" xml:space="preserve">
+    <value>Aku Drop: Inc Speed</value>
+  </data>
+  <data name="m_AkuDropTS_m_IncSpeedDesc" xml:space="preserve">
+    <value>The speed we increment the counter at (1.0 / seconds)</value>
+  </data>
+  <data name="m_AkuDropTS_m_MaxHoldTime" xml:space="preserve">
+    <value>Aku Drop: Max Hold Time</value>
+  </data>
+  <data name="m_AkuDropTS_m_MaxHoldTimeDesc" xml:space="preserve">
+    <value>The time we can hold the accelerator for before we stop increasing the counter</value>
+  </data>
+  <data name="m_AkuDropTS_m_MaxRepressTime" xml:space="preserve">
+    <value>Aku Drop: Max Repress Time</value>
+  </data>
+  <data name="m_AkuDropTS_m_MaxRepressTimeDesc" xml:space="preserve">
+    <value>The time we wait between presses / when we run out from on press before a new press can take effect</value>
+  </data>
+  <data name="m_AkuDropTS_m_Quadratic" xml:space="preserve">
+    <value>Aku Drop: Quadratic</value>
+  </data>
+  <data name="m_AkuDropTS_m_QuadraticDesc" xml:space="preserve">
+    <value>Turbo start boost quadratic inputs (Note: You MUST make sure that invalid values are not entered here!)</value>
+  </data>
+  <data name="m_BoostInARowTimeTol" xml:space="preserve">
+    <value>Boost In A Row Time Tolerance</value>
+  </data>
+  <data name="m_BoostInARowTimeTolDesc" xml:space="preserve">
+    <value>The tolerance between 'boosts in a row' that we allow (sec)</value>
+  </data>
+  <data name="m_BoostInfo_eBOOST_AKU_DROP" xml:space="preserve">
+    <value>Boost Info: BOOST AKU DROP</value>
+  </data>
+  <data name="m_BoostInfo_eBOOST_AKU_DROPDesc" xml:space="preserve">
+    <value>speed / time / wheelie | All the BOOST information</value>
+  </data>
+  <data name="m_BoostInfo_eBOOST_JUMP_LARGE" xml:space="preserve">
+    <value>Boost Info: BOOST JUMP LARGE</value>
+  </data>
+  <data name="m_BoostInfo_eBOOST_JUMP_LARGEDesc" xml:space="preserve">
+    <value>speed / time / wheelie | All the BOOST information</value>
+  </data>
+  <data name="m_BoostInfo_eBOOST_JUMP_MEDIUM" xml:space="preserve">
+    <value>Boost Info: BOOST JUMP MEDIUM</value>
+  </data>
+  <data name="m_BoostInfo_eBOOST_JUMP_MEDIUMDesc" xml:space="preserve">
+    <value>speed / time / wheelie | All the BOOST information</value>
+  </data>
+  <data name="m_BoostInfo_eBOOST_JUMP_SMALL" xml:space="preserve">
+    <value>Boost Info: BOOST JUMP SMALL</value>
+  </data>
+  <data name="m_BoostInfo_eBOOST_JUMP_SMALLDesc" xml:space="preserve">
+    <value>speed / time / wheelie | All the BOOST information</value>
+  </data>
+  <data name="m_BoostInfo_eBOOST_PAD" xml:space="preserve">
+    <value>Boost Info: BOOST PAD</value>
+  </data>
+  <data name="m_BoostInfo_eBOOST_PADDesc" xml:space="preserve">
+    <value>speed / time / wheelie | All the BOOST information</value>
+  </data>
+  <data name="m_BoostInfo_eBOOST_SLIDE_1" xml:space="preserve">
+    <value>Boost Info: BOOST SLIDE 1</value>
+  </data>
+  <data name="m_BoostInfo_eBOOST_SLIDE_1Desc" xml:space="preserve">
+    <value>speed / time / wheelie | All the BOOST information</value>
+  </data>
+  <data name="m_BoostInfo_eBOOST_SLIDE_2" xml:space="preserve">
+    <value>Boost Info: BOOST SLIDE 2</value>
+  </data>
+  <data name="m_BoostInfo_eBOOST_SLIDE_2Desc" xml:space="preserve">
+    <value>speed / time / wheelie | All the BOOST information</value>
+  </data>
+  <data name="m_BoostInfo_eBOOST_SLIDE_3" xml:space="preserve">
+    <value>Boost Info: BOOST SLIDE 3</value>
+  </data>
+  <data name="m_BoostInfo_eBOOST_SLIDE_3Desc" xml:space="preserve">
+    <value>speed / time / wheelie | All the BOOST information</value>
+  </data>
+  <data name="m_BoostInfo_eBOOST_START" xml:space="preserve">
+    <value>Boost Info: BOOST START</value>
+  </data>
+  <data name="m_BoostInfo_eBOOST_STARTDesc" xml:space="preserve">
+    <value>speed / time / wheelie | All the BOOST information</value>
+  </data>
+  <data name="m_BoostInfo_eBOOST_SUPER_ENGINE" xml:space="preserve">
+    <value>Boost Info: BOOST SUPER ENGINE</value>
+  </data>
+  <data name="m_BoostInfo_eBOOST_SUPER_ENGINEDesc" xml:space="preserve">
+    <value>speed / time / wheelie | All the BOOST information</value>
+  </data>
+  <data name="m_BoostInfo_eBOOST_TURBOBOOST" xml:space="preserve">
+    <value>Boost Info: BOOST TURBOBOOST</value>
+  </data>
+  <data name="m_BoostInfo_eBOOST_TURBOBOOSTDesc" xml:space="preserve">
+    <value>speed / time / wheelie | All the BOOST information</value>
+  </data>
+  <data name="m_BoostInfo_eBOOST_TURBOBOOST_JUICED" xml:space="preserve">
+    <value>Boost Info: BOOST TURBOBOOST JUICED</value>
+  </data>
+  <data name="m_BoostInfo_eBOOST_TURBOBOOST_JUICEDDesc" xml:space="preserve">
+    <value>speed / time / wheelie | All the BOOST information</value>
+  </data>
+  <data name="m_BoostMaxImpulsePerSecond" xml:space="preserve">
+    <value>Boost Max Impulse Per Second</value>
+  </data>
+  <data name="m_BoostMaxImpulsePerSecondDesc" xml:space="preserve">
+    <value>This is the maximum amount of boost we could ever gain in a second</value>
+  </data>
+  <data name="m_BoostMaxTimeCap" xml:space="preserve">
+    <value>Boost Max Time Cap</value>
+  </data>
+  <data name="m_BoostMaxTimeCapDesc" xml:space="preserve">
+    <value>The maximum time we can EVER accumulate from boosts (sec)</value>
+  </data>
+  <data name="m_BoostSlidePushAngle" xml:space="preserve">
+    <value>Boost Slide Push Angle</value>
+  </data>
+  <data name="m_BoostSlidePushAngleDesc" xml:space="preserve">
+    <value>Inner, Neutral, Outer | The angle that we apply the boost from the KART VELOCITY direction. This is interpolated down to 0 over time</value>
+  </data>
+  <data name="m_BoostSlidePushTime" xml:space="preserve">
+    <value>Boost Slide Push Time</value>
+  </data>
+  <data name="m_BoostSlidePushTimeDesc" xml:space="preserve">
+    <value>The amount of time we FORCE a SLIDE BOOST to be pushed in a direction</value>
+  </data>
+  <data name="m_BrakeForce" xml:space="preserve">
+    <value>Brake Force</value>
+  </data>
+  <data name="m_BrakeForceDesc" xml:space="preserve">
+    <value>The maximum REVERSE SPEED of the kart (m/sec)</value>
+  </data>
+  <data name="m_CollisionRadius" xml:space="preserve">
+    <value>Collision Radius</value>
+  </data>
+  <data name="m_CollisionRadiusDesc" xml:space="preserve">
+    <value>The collision sphere radius for the kart (m)</value>
+  </data>
+  <data name="m_CollisionSphereOffset" xml:space="preserve">
+    <value>Collision Sphere Offset</value>
+  </data>
+  <data name="m_CollisionSphereOffsetDesc" xml:space="preserve">
+    <value>X, Y, Z | The collision sphere offset position from the kart (m)</value>
+  </data>
+  <data name="m_CtfFlagMaxForwardSpeed" xml:space="preserve">
+    <value>Ctf Flag Max Forward Speed</value>
+  </data>
+  <data name="m_CtfFlagMaxForwardSpeedDesc" xml:space="preserve">
+    <value>Max Forward / Accel Gain / Turn Rate | CTF config (percentage increate on wumpa level, i.e. use 0.9 for loss)</value>
+  </data>
+  <data name="m_CursedMaxForwardSpeed" xml:space="preserve">
+    <value>Cursed Max Forward Speed</value>
+  </data>
+  <data name="m_CursedMaxForwardSpeedDesc" xml:space="preserve">
+    <value>Max Forward / Accel Gain / Turn Rate | Cursed config (percentage increate on wumpa level, i.e. use 0.9 for loss)</value>
+  </data>
+  <data name="m_DonutFriction" xml:space="preserve">
+    <value>Donut Friction</value>
+  </data>
+  <data name="m_DonutFrictionDesc" xml:space="preserve">
+    <value>lat / long / lat 2 long | Friction parameter when in a donut</value>
+  </data>
+  <data name="m_DonutMinMaxSpeed" xml:space="preserve">
+    <value>Donut Min Max Speed</value>
+  </data>
+  <data name="m_DonutMinMaxSpeedDesc" xml:space="preserve">
+    <value>The speed bracket we must be between before we can start a donut</value>
+  </data>
+  <data name="m_DonutTurnRateMax" xml:space="preserve">
+    <value>Donut Turn Rate Max</value>
+  </data>
+  <data name="m_DonutTurnRateMaxDesc" xml:space="preserve">
+    <value>The maximum turn-rate when in a donut (r/sec) } Similar to the spin-out these</value>
+  </data>
+  <data name="m_DonutTurnRateMin" xml:space="preserve">
+    <value>Donut Turn Rate Min</value>
+  </data>
+  <data name="m_DonutTurnRateMinDesc" xml:space="preserve">
+    <value>The minimum turn-rate when in a donut (r/sec) } are interpolated between</value>
+  </data>
+  <data name="m_DonutTurnTotal" xml:space="preserve">
+    <value>Donut Turn Total</value>
+  </data>
+  <data name="m_DonutTurnTotalDesc" xml:space="preserve">
+    <value>Total amount we turn when we initiate a donut (rad)</value>
+  </data>
+  <data name="m_DownforceGround" xml:space="preserve">
+    <value>Downforce Ground</value>
+  </data>
+  <data name="m_DownforceGroundDesc" xml:space="preserve">
+    <value>The amount of DOWNFORCE when on GROUND (x times gravity)</value>
+  </data>
+  <data name="m_DownforceInAirMagLev" xml:space="preserve">
+    <value>Downforce In Air MagLev</value>
+  </data>
+  <data name="m_DownforceInAirMagLevDesc" xml:space="preserve">
+    <value>The amount of DOWNFORCE when in MAGLEV and IN AIR (x times gravity) (Note: This is ONLY applied after we have gained air for m_DownforceMagLevAirTime seconds)</value>
+  </data>
+  <data name="m_DownforceMagLev" xml:space="preserve">
+    <value>Downforce MagLev</value>
+  </data>
+  <data name="m_DownforceMagLevAirTime" xml:space="preserve">
+    <value>Downforce MagLev Air Time</value>
+  </data>
+  <data name="m_DownforceMagLevAirTimeDesc" xml:space="preserve">
+    <value>The time we allow in AIR before we apply m_DownforceMagLevInAir</value>
+  </data>
+  <data name="m_DownforceMagLevDesc" xml:space="preserve">
+    <value>The amount of DOWNFORCE when in MAGLEV (x times gravity)</value>
+  </data>
+  <data name="m_DragMaxStrength" xml:space="preserve">
+    <value>Drag Max Strength</value>
+  </data>
+  <data name="m_DragMaxStrengthDesc" xml:space="preserve">
+    <value>Maximum drag strength</value>
+  </data>
+  <data name="m_DragStrength" xml:space="preserve">
+    <value>Drag Strength</value>
+  </data>
+  <data name="m_DragStrengthDesc" xml:space="preserve">
+    <value>Drag strength per meter</value>
+  </data>
+  <data name="m_GravityAir" xml:space="preserve">
+    <value>Gravity Air</value>
+  </data>
+  <data name="m_GravityAirDesc" xml:space="preserve">
+    <value>The amount of GRAVITY when in AIR (x times gravity)</value>
+  </data>
+  <data name="m_GravityGround" xml:space="preserve">
+    <value>Gravity Ground</value>
+  </data>
+  <data name="m_GravityGroundDesc" xml:space="preserve">
+    <value>The amount of GRAVITY when on GROUND (x times gravity)</value>
+  </data>
+  <data name="m_HeightForBigAir" xml:space="preserve">
+    <value>Height For Big Air</value>
+  </data>
+  <data name="m_HeightForBigAirDesc" xml:space="preserve">
+    <value>Height we need to obtain before getting BIG AIR</value>
+  </data>
+  <data name="m_HitByMissileFriction" xml:space="preserve">
+    <value>Hit By Missile Friction</value>
+  </data>
+  <data name="m_HitByMissileFrictionDesc" xml:space="preserve">
+    <value>This is the lat / long friction when we are hit by a missile</value>
+  </data>
+  <data name="m_HitSlowdownSpeedForce" xml:space="preserve">
+    <value>Hit Slowdown Speed Force</value>
+  </data>
+  <data name="m_HitSlowdownSpeedForceDesc" xml:space="preserve">
+    <value>The slowdown force we apply when going forwards (m/sec)</value>
+  </data>
+  <data name="m_HitSlowdownSpeedForceRev" xml:space="preserve">
+    <value>Hit Slowdown Speed Force Rev</value>
+  </data>
+  <data name="m_HitSlowdownSpeedForceRevDesc" xml:space="preserve">
+    <value>The slowdown force we apply when going backwards (m/sec)</value>
+  </data>
+  <data name="m_HitSlowdownSpeedMin" xml:space="preserve">
+    <value>Hit Slowdown Speed Min</value>
+  </data>
+  <data name="m_HitSlowdownSpeedMinDesc" xml:space="preserve">
+    <value>The minimum speed we must be going before we apply any slowdown force (m/sec)</value>
+  </data>
+  <data name="m_HitStopAngle" xml:space="preserve">
+    <value>Hit Stop Angle</value>
+  </data>
+  <data name="m_HitStopAngleDesc" xml:space="preserve">
+    <value>When we hit a plane at less than this cos(angle)</value>
+  </data>
+  <data name="m_HitStopSpeed" xml:space="preserve">
+    <value>Hit Stop Speed</value>
+  </data>
+  <data name="m_HitStopSpeedDesc" xml:space="preserve">
+    <value>and also at this speed, we will stop</value>
+  </data>
+  <data name="m_HitUpSlideTol" xml:space="preserve">
+    <value>Hit Up Slide Tolerance</value>
+  </data>
+  <data name="m_HitUpSlideTolDesc" xml:space="preserve">
+    <value>When we are sliding and hit a plane if the cos(angle) is &gt; this then we will drop out of our slide</value>
+  </data>
+  <data name="m_HiTurnLatFriction" xml:space="preserve">
+    <value>Hi Turn Lat Friction</value>
+  </data>
+  <data name="m_HiTurnLatFrictionDesc" xml:space="preserve">
+    <value>lat / long / lat 2 long | GROUND hi-turn friction parameters</value>
+  </data>
+  <data name="m_HiTurnStartAngle" xml:space="preserve">
+    <value>Hi Turn Start Angle</value>
+  </data>
+  <data name="m_HiTurnStartAngleDesc" xml:space="preserve">
+    <value>The angle from AT.VEL that we consider ourselves to be hard turning (rad)</value>
+  </data>
+  <data name="m_HitWallLatFricLoss" xml:space="preserve">
+    <value>Hit Wall Lat Fric Loss</value>
+  </data>
+  <data name="m_HitWallLatFricLossDesc" xml:space="preserve">
+    <value>Friction loss (percentage) when at full angle with the wall, this is linearly interpolated from 0 -&gt; value.</value>
+  </data>
+  <data name="m_HitWallLatMaxAng" xml:space="preserve">
+    <value>Hit Wall Lat Max Ang</value>
+  </data>
+  <data name="m_HitWallLatMaxAngDesc" xml:space="preserve">
+    <value>&gt;= No lateral friction loss we be applied</value>
+  </data>
+  <data name="m_HitWallLatMinAng" xml:space="preserve">
+    <value>Hit Wall Lat Min Ang</value>
+  </data>
+  <data name="m_HitWallLatMinAngDesc" xml:space="preserve">
+    <value>Less or equal Full lateral friction loss we be applied</value>
+  </data>
+  <data name="m_InAirFriction" xml:space="preserve">
+    <value>In Air Friction</value>
+  </data>
+  <data name="m_InAirFrictionDesc" xml:space="preserve">
+    <value>Friction while in air, the long is removed when we are less or equal the above speed</value>
+  </data>
+  <data name="m_InAirMinSpeed" xml:space="preserve">
+    <value>In Air Min Speed</value>
+  </data>
+  <data name="m_InAirMinSpeedDesc" xml:space="preserve">
+    <value>If we are &gt; this speed then long friction is applied to the kart</value>
+  </data>
+  <data name="m_InAirTurnRateNormal" xml:space="preserve">
+    <value>In Air Turn Rate Normal</value>
+  </data>
+  <data name="m_InAirTurnRateNormalDesc" xml:space="preserve">
+    <value>The NORMAL kart turn rate in air (r/sec)</value>
+  </data>
+  <data name="m_InAirTurnRateWumpa" xml:space="preserve">
+    <value>In Air Turn Rate Wumpa</value>
+  </data>
+  <data name="m_InAirTurnRateWumpaDesc" xml:space="preserve">
+    <value>The WUMPAed kart turn rate in air (r/sec)</value>
+  </data>
+  <data name="m_InvincibiliyMaxForwardSpeed" xml:space="preserve">
+    <value>Invincibility Max Forward Speed</value>
+  </data>
+  <data name="m_InvincibiliyMaxForwardSpeedDesc" xml:space="preserve">
+    <value>Max Forward / Accel Gain / Turn Rate | Invincibility pickup config (percentage increase on wumpa level, i.e. use 1.1 for gain)</value>
+  </data>
+  <data name="m_JumpAirTolerance" xml:space="preserve">
+    <value>Jump Air Tolerance</value>
+  </data>
+  <data name="m_JumpAirToleranceDesc" xml:space="preserve">
+    <value>The time in air (without jumping to initiate) we allow the user to still activate a jump</value>
+  </data>
+  <data name="m_JumpBeforeAirTimeTol" xml:space="preserve">
+    <value>Jump Before Air Time Tolerance</value>
+  </data>
+  <data name="m_JumpBeforeAirTimeTolDesc" xml:space="preserve">
+    <value>Tollerance for jump before air timer</value>
+  </data>
+  <data name="m_JumpImpulseBase" xml:space="preserve">
+    <value>Jump Impulse Base</value>
+  </data>
+  <data name="m_JumpImpulseBaseDesc" xml:space="preserve">
+    <value>The base impulse for air (hop)</value>
+  </data>
+  <data name="m_JumpImpulseBaseMagLev" xml:space="preserve">
+    <value>Jump Impulse Base MagLev</value>
+  </data>
+  <data name="m_JumpImpulseBaseMagLevDesc" xml:space="preserve">
+    <value>The base impulse for air (When in MAG-LEV mode)</value>
+  </data>
+  <data name="m_JumpImpulseUpMax" xml:space="preserve">
+    <value>Jump Impulse Up Max</value>
+  </data>
+  <data name="m_JumpImpulseUpMaxDesc" xml:space="preserve">
+    <value>The maximum UP that we add to the JUMP IMPULSE</value>
+  </data>
+  <data name="m_JumpImpulseUpMin" xml:space="preserve">
+    <value>Jump Impulse Up Min</value>
+  </data>
+  <data name="m_JumpImpulseUpMinDesc" xml:space="preserve">
+    <value>The minimum UP (z-axis) before we start using it for addition JUMP IMPULSE</value>
+  </data>
+  <data name="m_JumpImpulseUpPercent" xml:space="preserve">
+    <value>Jump Impulse Up Percent</value>
+  </data>
+  <data name="m_JumpImpulseUpPercentDesc" xml:space="preserve">
+    <value>The modifier for the above values</value>
+  </data>
+  <data name="m_JumpMaxUpVelocity" xml:space="preserve">
+    <value>Jump Max Up Velocity</value>
+  </data>
+  <data name="m_JumpMaxUpVelocityDesc" xml:space="preserve">
+    <value>The maximum UP velocity the kart can have (caps the jump impulse)</value>
+  </data>
+  <data name="m_JumpTimeInAirBoost" xml:space="preserve">
+    <value>Jump Time In Air Boost</value>
+  </data>
+  <data name="m_JumpTimeInAirBoostDesc" xml:space="preserve">
+    <value>Time in air after jumping before we get a boost (SMALL / MED / LARGE)</value>
+  </data>
+  <data name="m_LowSpeed" xml:space="preserve">
+    <value>Low Speed</value>
+  </data>
+  <data name="m_LowSpeedDesc" xml:space="preserve">
+    <value>Speed to determine when we are in low speed driving model (m/sec)</value>
+  </data>
+  <data name="m_MaxForwardSpeedNormal" xml:space="preserve">
+    <value>Max Forward Speed Normal</value>
+  </data>
+  <data name="m_MaxForwardSpeedNormalDesc" xml:space="preserve">
+    <value>The NORMAL maximum FORWARD SPEED of the kart (m/sec)</value>
+  </data>
+  <data name="m_MaxForwardSpeedWumpa" xml:space="preserve">
+    <value>Max Forward Speed Wumpa</value>
+  </data>
+  <data name="m_MaxForwardSpeedWumpaDesc" xml:space="preserve">
+    <value>The WUMPA maximum FORWARD SPEED of the kart (m/sec)</value>
+  </data>
+  <data name="m_MaxLinearVelXY" xml:space="preserve">
+    <value>Max Linear Velocity XY</value>
+  </data>
+  <data name="m_MaxLinearVelXYDesc" xml:space="preserve">
+    <value>The maximum we will allow our XY velocity to get. | 40 (Trying to limit aberrant behavior.)</value>
+  </data>
+  <data name="m_MaxLinearVelZ" xml:space="preserve">
+    <value>Max Linear Velocity Z</value>
+  </data>
+  <data name="m_MaxLinearVelZDesc" xml:space="preserve">
+    <value>The maximum we will allow our Z velocity to get</value>
+  </data>
+  <data name="m_MaxReverseSpeed" xml:space="preserve">
+    <value>Max Reverse Speed</value>
+  </data>
+  <data name="m_MaxReverseSpeedDesc" xml:space="preserve">
+    <value>The maximum REVERSE SPEED of the kart (m/sec)</value>
+  </data>
+  <data name="m_MinHeightForAirNoJump" xml:space="preserve">
+    <value>Min Height For Air No Jump</value>
+  </data>
+  <data name="m_MinHeightForAirNoJumpDesc" xml:space="preserve">
+    <value>The minimum height we need to get without jumping before we set the in-air state (Note: This is from the center of the collision sphere!!!)</value>
+  </data>
+  <data name="m_NormalFriction" xml:space="preserve">
+    <value>Normal Friction</value>
+  </data>
+  <data name="m_NormalFrictionDesc" xml:space="preserve">
+    <value>lat / long / lat 2 long | GROUND normal friction parameters</value>
+  </data>
+  <data name="m_ResetGravStrength" xml:space="preserve">
+    <value>Reset Grav Strength</value>
+  </data>
+  <data name="m_ResetGravStrengthDesc" xml:space="preserve">
+    <value>The gravity strength for dropping the kart</value>
+  </data>
+  <data name="m_ResetMaxTime" xml:space="preserve">
+    <value>Reset Max Time</value>
+  </data>
+  <data name="m_ResetMaxTimeDesc" xml:space="preserve">
+    <value>The maximum time we stay in the RESET state for</value>
+  </data>
+  <data name="m_ResetWaitBeforeDrop" xml:space="preserve">
+    <value>Reset Wait Before Drop</value>
+  </data>
+  <data name="m_ResetWaitBeforeDropDesc" xml:space="preserve">
+    <value>The time we wait before dropping the kart with gravity</value>
+  </data>
+  <data name="m_ReverseGain" xml:space="preserve">
+    <value>Reverse Gain</value>
+  </data>
+  <data name="m_ReverseGainDesc" xml:space="preserve">
+    <value>The REVERSE ACCELERATION GAIN of the kart (m/sec)</value>
+  </data>
+  <data name="m_ShockedMaxForwardSpeed" xml:space="preserve">
+    <value>Shocked Max Forward Speed</value>
+  </data>
+  <data name="m_ShockedMaxForwardSpeedDesc" xml:space="preserve">
+    <value>Max Forward / Accel Gain / Turn Rate | Shocked config (percentage increate on wumpa level, i.e. use 0.9 for loss)</value>
+  </data>
+  <data name="m_SlideBoostQuadratic" xml:space="preserve">
+    <value>Slide Boost Quadratic</value>
+  </data>
+  <data name="m_SlideBoostQuadraticDesc" xml:space="preserve">
+    <value>Slide boost quadratic inputs (Note: You MUST make sure that invalid values are not entered here!)</value>
+  </data>
+  <data name="m_SlideBoostTime" xml:space="preserve">
+    <value>Slide Boost Time</value>
+  </data>
+  <data name="m_SlideBoostTimeDesc" xml:space="preserve">
+    <value>This is the optimum time for boost, any time after will not allow us to boost</value>
+  </data>
+  <data name="m_SlideEaseInSpeed" xml:space="preserve">
+    <value>Slide Ease In Speed</value>
+  </data>
+  <data name="m_SlideEaseInSpeedDesc" xml:space="preserve">
+    <value>Ease in speed for turning (r/sec) (Note: This is on top of m_SlideTurnRateInToSlide or m_SlideTurnRateAwayFromSlide depending on the interpolation direction)</value>
+  </data>
+  <data name="m_SlideEaseOutPercentBetween" xml:space="preserve">
+    <value>Slide Ease Out Percent Between</value>
+  </data>
+  <data name="m_SlideEaseOutPercentBetweenDesc" xml:space="preserve">
+    <value>Ease out percentage of angle between VEL and AT (Inner, Neutral, Outer)</value>
+  </data>
+  <data name="m_SlideEaseOutRotVelSpeed" xml:space="preserve">
+    <value>Slide Ease Out Rot Vel Speed</value>
+  </data>
+  <data name="m_SlideEaseOutRotVelSpeedDesc" xml:space="preserve">
+    <value>Rotate out speed for velocity rotation          (Inner, Neutral, Outer)</value>
+  </data>
+  <data name="m_SlideEaseOutSpeed" xml:space="preserve">
+    <value>Slide Ease Out Speed</value>
+  </data>
+  <data name="m_SlideEaseOutSpeedDesc" xml:space="preserve">
+    <value>Ease out speed for turning (r/sec)</value>
+  </data>
+  <data name="m_SlideEndMaxTime" xml:space="preserve">
+    <value>Slide End Max Time</value>
+  </data>
+  <data name="m_SlideEndMaxTimeDesc" xml:space="preserve">
+    <value>When our accumulated SlideEndTime reaches +- this figure we end sliding.  Which can end in a spin-out depending on which way our steering ended.</value>
+  </data>
+  <data name="m_SlideEndReduceTime" xml:space="preserve">
+    <value>Slide End Reduce Time</value>
+  </data>
+  <data name="m_SlideEndReduceTimeDesc" xml:space="preserve">
+    <value>This is the percentage of the TimeStep we reduce the SlideEndCurrTime when no steering is applied</value>
+  </data>
+  <data name="m_SlideFrictionHigh" xml:space="preserve">
+    <value>Slide Friction High</value>
+  </data>
+  <data name="m_SlideFrictionHighDesc" xml:space="preserve">
+    <value>lat / long / lat 2 long | Friction param when we are steering away from the slide</value>
+  </data>
+  <data name="m_SlideFrictionLow" xml:space="preserve">
+    <value>Slide Friction Low</value>
+  </data>
+  <data name="m_SlideFrictionLowDesc" xml:space="preserve">
+    <value>lat / long / lat 2 long | Friction params when we are steering in to the slide</value>
+  </data>
+  <data name="m_SlideFrictionNorm" xml:space="preserve">
+    <value>Slide Friction Norm</value>
+  </data>
+  <data name="m_SlideFrictionNormDesc" xml:space="preserve">
+    <value>lat / long / lat 2 long | Friction params when we aren't steering</value>
+  </data>
+  <data name="m_SlideMaxAngle" xml:space="preserve">
+    <value>Slide Max Angle</value>
+  </data>
+  <data name="m_SlideMaxAngleDesc" xml:space="preserve">
+    <value>The maximum angle the kart can get from the velocity direction (rad)</value>
+  </data>
+  <data name="m_SlideMaxBoostCount" xml:space="preserve">
+    <value>Slide Max Boost Count</value>
+  </data>
+  <data name="m_SlideMaxBoostCountDesc" xml:space="preserve">
+    <value>If we exceed this number then no more boosts are given</value>
+  </data>
+  <data name="m_SlideMinAngle" xml:space="preserve">
+    <value>Slide Min Angle</value>
+  </data>
+  <data name="m_SlideMinAngleDesc" xml:space="preserve">
+    <value>The minimum angle the kart can get from the velocity direction (rad)</value>
+  </data>
+  <data name="m_SlideMinimumSpeed" xml:space="preserve">
+    <value>Slide Minimum Speed</value>
+  </data>
+  <data name="m_SlideMinimumSpeedDesc" xml:space="preserve">
+    <value>The minimum speed we can be going to maintain our slide</value>
+  </data>
+  <data name="m_SlideStartMinSteer" xml:space="preserve">
+    <value>Slide Start Min Steer</value>
+  </data>
+  <data name="m_SlideStartMinSteerDesc" xml:space="preserve">
+    <value>The minimum we must be steering to initiate a slide on landing from air</value>
+  </data>
+  <data name="m_SlideTurnRateAwayFromSlide" xml:space="preserve">
+    <value>Slide Turn Rate Away From Slide</value>
+  </data>
+  <data name="m_SlideTurnRateAwayFromSlideDesc" xml:space="preserve">
+    <value>The speed we turn the kart away from the slide (r/sec)</value>
+  </data>
+  <data name="m_SlideTurnRateInToSlide" xml:space="preserve">
+    <value>Slide Turn Rate In To Slide</value>
+  </data>
+  <data name="m_SlideTurnRateInToSlideDesc" xml:space="preserve">
+    <value>The speed we turn the kart into the slide (r/sec)</value>
+  </data>
+  <data name="m_SlopeAccelExtra" xml:space="preserve">
+    <value>Slope Accel Extra</value>
+  </data>
+  <data name="m_SlopeAccelExtraDesc" xml:space="preserve">
+    <value>The acceleration increase (percent)</value>
+  </data>
+  <data name="m_SlopeMaxAngle" xml:space="preserve">
+    <value>Slope Max Angle</value>
+  </data>
+  <data name="m_SlopeMaxAngleDesc" xml:space="preserve">
+    <value>The maximum angle where we achieve full extra (r)</value>
+  </data>
+  <data name="m_SlopeMinAngle" xml:space="preserve">
+    <value>Slope Min Angle</value>
+  </data>
+  <data name="m_SlopeMinAngleDesc" xml:space="preserve">
+    <value>The minimum angle that this kicks in (r)</value>
+  </data>
+  <data name="m_SpikeyFruitMaxForwardSpeed" xml:space="preserve">
+    <value>Spikey Fruit Max Forward Speed</value>
+  </data>
+  <data name="m_SpikeyFruitMaxForwardSpeedDesc" xml:space="preserve">
+    <value>Max Forward / Accel Gain / Turn Rate | Spikey-Fruit config (percentage increate on wumpa level, i.e. use 0.9 for loss)</value>
+  </data>
+  <data name="m_SpinOutFriction" xml:space="preserve">
+    <value>Spin Out Friction</value>
+  </data>
+  <data name="m_SpinOutFrictionDesc" xml:space="preserve">
+    <value>Lat/Long friction applied during SPIN-OUT</value>
+  </data>
+  <data name="m_SpinOutTotalLarge" xml:space="preserve">
+    <value>Spin Out Total Large</value>
+  </data>
+  <data name="m_SpinOutTotalLargeDesc" xml:space="preserve">
+    <value>The total amount we large spin out in radians</value>
+  </data>
+  <data name="m_SpinOutTotalNormal" xml:space="preserve">
+    <value>Spin Out Total Normal</value>
+  </data>
+  <data name="m_SpinOutTotalNormalDesc" xml:space="preserve">
+    <value>The total amount we normal spin out in radians</value>
+  </data>
+  <data name="m_SpinOutTurnRateMax" xml:space="preserve">
+    <value>Spin Out Turn Rate Max</value>
+  </data>
+  <data name="m_SpinOutTurnRateMaxDesc" xml:space="preserve">
+    <value>The speed we spin out (rad / sec) } between these numbers</value>
+  </data>
+  <data name="m_SpinOutTurnRateMin" xml:space="preserve">
+    <value>Spin Out Turn Rate Min</value>
+  </data>
+  <data name="m_SpinOutTurnRateMinDesc" xml:space="preserve">
+    <value>The speed we spin out (rad / sec) } Real amount interpolated</value>
+  </data>
+  <data name="m_SquashedMaxForwardSpeed" xml:space="preserve">
+    <value>Squashed Max Forward Speed</value>
+  </data>
+  <data name="m_SquashedMaxForwardSpeedDesc" xml:space="preserve">
+    <value>Max Forward / Accel Gain / Turn Rate | Squashed config (percentage increate on wumpa level, i.e. use 0.9 for loss)</value>
+  </data>
+  <data name="m_StartLineTS_m_CancelMinPercent" xml:space="preserve">
+    <value>Start Line Boost: Cancel Min Percent</value>
+  </data>
+  <data name="m_StartLineTS_m_CancelMinPercentDesc" xml:space="preserve">
+    <value>While we are less than this percent the we don't enforce wait time for repress and also clear the hold time</value>
+  </data>
+  <data name="m_StartLineTS_m_DecHoldTime" xml:space="preserve">
+    <value>Start Line Boost: Dec Hold Time</value>
+  </data>
+  <data name="m_StartLineTS_m_DecHoldTimeDesc" xml:space="preserve">
+    <value>The time we start to decrement the turbo start from</value>
+  </data>
+  <data name="m_StartLineTS_m_DecSpeed" xml:space="preserve">
+    <value>Start Line Boost: Dec Speed</value>
+  </data>
+  <data name="m_StartLineTS_m_DecSpeedDesc" xml:space="preserve">
+    <value>The speed we decrement the counter at (1.0 / seconds)</value>
+  </data>
+  <data name="m_StartLineTS_m_IncSpeed" xml:space="preserve">
+    <value>Start Line Boost: Inc Speed</value>
+  </data>
+  <data name="m_StartLineTS_m_IncSpeedDesc" xml:space="preserve">
+    <value>The speed we increment the counter at (1.0 / seconds)</value>
+  </data>
+  <data name="m_StartLineTS_m_MaxHoldTime" xml:space="preserve">
+    <value>Start Line Boost: Max Hold Time</value>
+  </data>
+  <data name="m_StartLineTS_m_MaxHoldTimeDesc" xml:space="preserve">
+    <value>The time we can hold the accelerator for before we stop increasing the counter</value>
+  </data>
+  <data name="m_StartLineTS_m_MaxRepressTime" xml:space="preserve">
+    <value>Start Line Boost: Max Repress Time</value>
+  </data>
+  <data name="m_StartLineTS_m_MaxRepressTimeDesc" xml:space="preserve">
+    <value>The time we wait between presses / when we run out from on press before a new press can take effect</value>
+  </data>
+  <data name="m_StartLineTS_m_Quadratic" xml:space="preserve">
+    <value>Start Line Boost: Quadratic</value>
+  </data>
+  <data name="m_StartLineTS_m_QuadraticDesc" xml:space="preserve">
+    <value>Turbo start boost quadratic inputs (Note: You MUST make sure that invalid values are not entered here!)</value>
+  </data>
+  <data name="m_TimeBubbleMaxForwardSpeed" xml:space="preserve">
+    <value>Time Bubble Max Forward Speed</value>
+  </data>
+  <data name="m_TimeBubbleMaxForwardSpeedDesc" xml:space="preserve">
+    <value>Max Forward / Accel Gain / Turn Rate | Time Bubble config (percentage increate on wumpa level, i.e. use 0.9 for loss)</value>
+  </data>
+  <data name="m_TropyClocksMaxForwardSpeed" xml:space="preserve">
+    <value>Tropy Clocks Max Forward Speed</value>
+  </data>
+  <data name="m_TropyClocksMaxForwardSpeedDesc" xml:space="preserve">
+    <value>Max Forward / Accel Gain / Turn Rate | Tropy-clocks config (percentage increate on wumpa level, i.e. use 0.9 for loss)</value>
+  </data>
+  <data name="m_TurnDecellForce" xml:space="preserve">
+    <value>Turn Decell Force</value>
+  </data>
+  <data name="m_TurnDecellForceDesc" xml:space="preserve">
+    <value>The turn decell force (m/sec) (Formula is (Speed-m_TurnDecellSpeed) * m_TurnDecellForce)</value>
+  </data>
+  <data name="m_TurnDecellForceMax" xml:space="preserve">
+    <value>Turn Decell Force Max</value>
+  </data>
+  <data name="m_TurnDecellForceMaxDesc" xml:space="preserve">
+    <value>The maximum the turn decelleration force can be (m/sec)</value>
+  </data>
+  <data name="m_TurnDecellSpeed" xml:space="preserve">
+    <value>Turn Decell Speed</value>
+  </data>
+  <data name="m_TurnDecellSpeedDesc" xml:space="preserve">
+    <value>The speed where turn decelleration effect kicks in (m/sec)</value>
+  </data>
+  <data name="m_TurnRateAccel" xml:space="preserve">
+    <value>Turn Rate Accel</value>
+  </data>
+  <data name="m_TurnRateAccelDesc" xml:space="preserve">
+    <value>The kart additional turn rate when accelerator and not brake is pressed (r/sec)</value>
+  </data>
+  <data name="m_TurnRateBrake" xml:space="preserve">
+    <value>Turn Rate Brake</value>
+  </data>
+  <data name="m_TurnRateBrakeDesc" xml:space="preserve">
+    <value>The kart additional turn rate when brake is pressed (r/sec)</value>
+  </data>
+  <data name="m_TurnRateNormal" xml:space="preserve">
+    <value>Turn Rate Normal</value>
+  </data>
+  <data name="m_TurnRateNormalDesc" xml:space="preserve">
+    <value>The NORMAL kart turn rate (r/sec)</value>
+  </data>
+  <data name="m_TurnRateWumpa" xml:space="preserve">
+    <value>Turn Rate Wumpa</value>
+  </data>
+  <data name="m_TurnRateWumpaDesc" xml:space="preserve">
+    <value>The WUMPA kart turn rate (r/sec)</value>
+  </data>
+  <data name="m_WaitBeforeBrakeReverses" xml:space="preserve">
+    <value>Wait Before Brake Reverses</value>
+  </data>
+  <data name="m_WaitBeforeBrakeReversesDesc" xml:space="preserve">
+    <value>This is the amount of time to pause before the brake button makes the kart reverse</value>
+  </data>
+  <data name="m_WheelieMinTime" xml:space="preserve">
+    <value>Wheelie Min Time</value>
+  </data>
+  <data name="m_WheelieMinTimeDesc" xml:space="preserve">
+    <value>The minimum amount of time spent in a wheelie</value>
+  </data>
+  <data name="m_WheelieSlideBoostMinPercent" xml:space="preserve">
+    <value>Wheelie Slide Boost Min Percent</value>
+  </data>
+  <data name="m_WheelieSlideBoostMinPercentDesc" xml:space="preserve">
+    <value>The minimum percentage we must obtain before we get a slide boost wheelie</value>
+  </data>
+  <data name="PowerShield_m_ColorJuiced" xml:space="preserve">
+    <value>Power Shield: Color Juiced</value>
+  </data>
+  <data name="PowerShield_m_ColorNonJuiced" xml:space="preserve">
+    <value>Power Shield: Color Non Juiced</value>
+  </data>
+  <data name="PowerShield_m_ColRadius" xml:space="preserve">
+    <value>Power Shield: Collision Radius</value>
+  </data>
+  <data name="PowerShield_m_RangeForZapping" xml:space="preserve">
+    <value>Power Shield: Range For Zapping</value>
+  </data>
+  <data name="PowerShield_m_Time" xml:space="preserve">
+    <value>Power Shield: Time</value>
+  </data>
+  <data name="PowerShield_m_ZapSpeed" xml:space="preserve">
+    <value>Power Shield: Zap Speed</value>
+  </data>
+  <data name="PropCategory_Adventure" xml:space="preserve">
+    <value>Adventure</value>
+  </data>
+  <data name="PropCategory_DriverStats" xml:space="preserve">
+    <value>Driver Stats</value>
+  </data>
+  <data name="PropCategory_KartStats" xml:space="preserve">
+    <value>Kart Stats</value>
+  </data>
+  <data name="PropCategory_Powerups" xml:space="preserve">
+    <value>Powerups</value>
+  </data>
+  <data name="PropCategory_Surfaces" xml:space="preserve">
+    <value>Surfaces</value>
+  </data>
+  <data name="RedEye_Acceleration" xml:space="preserve">
+    <value>Red Eye: Acceleration</value>
+  </data>
+  <data name="RedEye_Deceleration" xml:space="preserve">
+    <value>Red Eye: Deceleration</value>
+  </data>
+  <data name="RedEye_Explosion_Radius" xml:space="preserve">
+    <value>Red Eye: Explosion Radius</value>
+  </data>
+  <data name="RedEye_Explosion_Radius_Juiced" xml:space="preserve">
+    <value>Red Eye: Explosion Radius Juiced</value>
+  </data>
+  <data name="RedEye_Expl_Scale" xml:space="preserve">
+    <value>Red Eye: Expl Scale</value>
+  </data>
+  <data name="RedEye_Expl_Scale_Juiced" xml:space="preserve">
+    <value>Red Eye: Expl Scale Juiced</value>
+  </data>
+  <data name="RedEye_FullSpeedTurnSlowdown" xml:space="preserve">
+    <value>Red Eye: Full Speed Turn Slowdown</value>
+  </data>
+  <data name="RedEye_FullSpeedTurnSlowdownDesc" xml:space="preserve">
+    <value>(at min speed drop turn angle by 0, at full speed drop turn angle by this number - and it interpolates in between)</value>
+  </data>
+  <data name="RedEye_MaxSpeed" xml:space="preserve">
+    <value>Red Eye: Max Speed</value>
+  </data>
+  <data name="RedEye_TurnSpeed" xml:space="preserve">
+    <value>Red Eye: Turn Speed</value>
+  </data>
+  <data name="RedEye_TurnSpeedJuiced" xml:space="preserve">
+    <value>Red Eye: Turn Speed Juiced</value>
+  </data>
+  <data name="StaticShock_m_DistanceForHome" xml:space="preserve">
+    <value>Static Shock: Distance For Home</value>
+  </data>
+  <data name="StaticShock_m_DistanceForHomeDesc" xml:space="preserve">
+    <value>How close to kart, before start homing</value>
+  </data>
+  <data name="StaticShock_m_HomingSpeed" xml:space="preserve">
+    <value>Static Shock: Homing Speed</value>
+  </data>
+  <data name="StaticShock_m_HomingSpeedDesc" xml:space="preserve">
+    <value>How fast does it move when its homing in on someone</value>
+  </data>
+  <data name="StaticShock_m_JuicedTime" xml:space="preserve">
+    <value>Static Shock: Juiced Time</value>
+  </data>
+  <data name="StaticShock_m_JuicedTimeDesc" xml:space="preserve">
+    <value>How long effect lasts when it is juiced</value>
+  </data>
+  <data name="StaticShock_m_JuicedWumpaLoss" xml:space="preserve">
+    <value>Static Shock: Juiced Wumpa Loss</value>
+  </data>
+  <data name="StaticShock_m_JuicedWumpaLossDesc" xml:space="preserve">
+    <value>How much wumpa you lose when hit</value>
+  </data>
+  <data name="StaticShock_m_NormalTime" xml:space="preserve">
+    <value>Static Shock: Normal Time</value>
+  </data>
+  <data name="StaticShock_m_NormalTimeDesc" xml:space="preserve">
+    <value>How long effect lasts when not juiced</value>
+  </data>
+  <data name="StaticShock_m_NormalWumpaLoss" xml:space="preserve">
+    <value>Static Shock: Normal Wumpa Loss</value>
+  </data>
+  <data name="StaticShock_m_NormalWumpaLossDesc" xml:space="preserve">
+    <value>How much wumpa you lose when hit</value>
+  </data>
+  <data name="Surface_m_BrakeLossPercent" xml:space="preserve">
+    <value>Brake Loss Percent</value>
+  </data>
+  <data name="Surface_m_BrakeLossPercentDesc" xml:space="preserve">
+    <value>The percentage of braking force we loose</value>
+  </data>
+  <data name="Surface_m_KartHeightOffset" xml:space="preserve">
+    <value>Kart Height Offset</value>
+  </data>
+  <data name="Surface_m_KartHeightOffsetDesc" xml:space="preserve">
+    <value>Kart height offset for the surface</value>
+  </data>
+  <data name="Surface_m_LatFrictionLossPercent" xml:space="preserve">
+    <value>Lateral Friction Loss Percent</value>
+  </data>
+  <data name="Surface_m_LatFrictionLossPercentDesc" xml:space="preserve">
+    <value>Lat friction reduction percent | Note: When in a slide this number is ignored</value>
+  </data>
+  <data name="Surface_m_LongFrictionLossPercent" xml:space="preserve">
+    <value>Longitudinal Friction Loss Percent</value>
+  </data>
+  <data name="Surface_m_LongFrictionLossPercentDesc" xml:space="preserve">
+    <value>Long friction reduction percent | Note: When in a slide this number is ignored</value>
+  </data>
+  <data name="Surface_m_MinSpeedPercent" xml:space="preserve">
+    <value>Minimum Speed Percent</value>
+  </data>
+  <data name="Surface_m_MinSpeedPercentDesc" xml:space="preserve">
+    <value>Percentage of m_MaxForwardSpeedNormal | Note : this also affects the boost speed</value>
+  </data>
+  <data name="Surface_m_SlideFrictionLossPercent" xml:space="preserve">
+    <value>Slide Friction Loss Percent</value>
+  </data>
+  <data name="Surface_m_SlideFrictionLossPercentDesc" xml:space="preserve">
+    <value>Slide friction reduction percent | Note: This is only when sliding and is an all round reduction loss</value>
+  </data>
+  <data name="Surface_m_SlowDownAccelPercent" xml:space="preserve">
+    <value>Slowdown Accel Percent</value>
+  </data>
+  <data name="Surface_m_SlowDownAccelPercentDesc" xml:space="preserve">
+    <value>Percentage of m_AccelerationGainNormal we slowdown per second</value>
+  </data>
+  <data name="Surface_m_SlowDownBoostPercent" xml:space="preserve">
+    <value>Slowdown Boost Percent</value>
+  </data>
+  <data name="Surface_m_SlowDownBoostPercentDesc" xml:space="preserve">
+    <value>Percentage of Current Boost speed lost while on this surface</value>
+  </data>
+  <data name="Surface_m_SlowDownLongPercent" xml:space="preserve">
+    <value>Slowdown Long Percent</value>
+  </data>
+  <data name="Surface_m_SlowDownLongPercentDesc" xml:space="preserve">
+    <value>Percentage of m_NormalLongFriction we slowdown per second</value>
+  </data>
+  <data name="Surface_m_SpeedAccelIncreasePercent" xml:space="preserve">
+    <value>Speed Acceleration Increase Percent</value>
+  </data>
+  <data name="Surface_m_SpeedAccelIncreasePercentDesc" xml:space="preserve">
+    <value>Speed and Acceleration Increase | Note: This is mainly for mag-lev to get a speed inc</value>
+  </data>
+  <data name="Surface_m_SpeedBoostIncreasePercent" xml:space="preserve">
+    <value>Speed Boost Increase Percent</value>
+  </data>
+  <data name="Surface_m_SpeedBoostIncreasePercentDesc" xml:space="preserve">
+    <value>Percentage of Current Boost speed gained while on this surface</value>
+  </data>
+  <data name="TNT_m_ExplosionBlastRadius" xml:space="preserve">
+    <value>TNT: Explosion Blast Radius</value>
+  </data>
+  <data name="TNT_m_ExplosionBlastRadiusDesc" xml:space="preserve">
+    <value>Blast Radius of Explosion</value>
+  </data>
+  <data name="TNT_m_ExplScale" xml:space="preserve">
+    <value>TNT: Expl Scale</value>
+  </data>
+  <data name="TNT_m_ExplScaleDesc" xml:space="preserve">
+    <value>Scale of explosion normal</value>
+  </data>
+  <data name="TNT_m_ExplScaleJuiced" xml:space="preserve">
+    <value>TNT: Expl Scale Juiced</value>
+  </data>
+  <data name="TNT_m_ExplScaleJuicedDesc" xml:space="preserve">
+    <value>Scale of explosion juiced (nitro crate)</value>
+  </data>
+  <data name="TNT_m_JuicedWumpaLoss" xml:space="preserve">
+    <value>TNT: Juiced Wumpa Loss</value>
+  </data>
+  <data name="TNT_m_JuicedWumpaLossDesc" xml:space="preserve">
+    <value>How much wumpa victim loses</value>
+  </data>
+  <data name="TNT_m_NormalWumpaLoss" xml:space="preserve">
+    <value>TNT: Normal Wumpa Loss</value>
+  </data>
+  <data name="TNT_m_NormalWumpaLossDesc" xml:space="preserve">
+    <value>How much wumpa victim loses</value>
+  </data>
+  <data name="TNT_m_Time" xml:space="preserve">
+    <value>TNT: Time</value>
+  </data>
+  <data name="TNT_m_TimeBeforeHiddenChar" xml:space="preserve">
+    <value>TNT: Time Before Hidden Char</value>
+  </data>
+  <data name="TNT_m_TimeBeforeHiddenCharDesc" xml:space="preserve">
+    <value>How long before the character hides</value>
+  </data>
+  <data name="TNT_m_TimeDesc" xml:space="preserve">
+    <value>How long effect lasts</value>
+  </data>
+  <data name="TNT_m_TimeHiddenChar" xml:space="preserve">
+    <value>TNT: Time Hidden Char</value>
+  </data>
+  <data name="TNT_m_TimeHiddenCharDesc" xml:space="preserve">
+    <value>Time when character comes out from hiding</value>
+  </data>
+  <data name="Tornado_m_Acceleration" xml:space="preserve">
+    <value>Tornado: Acceleration</value>
+  </data>
+  <data name="Tornado_m_AccelerationDesc" xml:space="preserve">
+    <value>How fast it accelerates(20/s/s)</value>
+  </data>
+  <data name="Tornado_m_AccelerationJuiced" xml:space="preserve">
+    <value>Tornado: Acceleration Juiced</value>
+  </data>
+  <data name="Tornado_m_AccelerationJuicedDesc" xml:space="preserve">
+    <value>How fast it accelerates(20/s/s)</value>
+  </data>
+  <data name="Tornado_m_AirGravity" xml:space="preserve">
+    <value>Tornado: Air Gravity</value>
+  </data>
+  <data name="Tornado_m_AirGravityDesc" xml:space="preserve">
+    <value>Gravity in the air</value>
+  </data>
+  <data name="Tornado_m_AirGravityMaglev" xml:space="preserve">
+    <value>Tornado: Air Gravity Maglev</value>
+  </data>
+  <data name="Tornado_m_AirGravityMaglevDesc" xml:space="preserve">
+    <value>Gravity in the air on maglev surface</value>
+  </data>
+  <data name="Tornado_m_DelayTrackingUpdate" xml:space="preserve">
+    <value>Tornado: Delay Tracking Update</value>
+  </data>
+  <data name="Tornado_m_DelayTrackingUpdateDesc" xml:space="preserve">
+    <value>NO USE | Delay between updates of tracking</value>
+  </data>
+  <data name="Tornado_m_DragCoef" xml:space="preserve">
+    <value>Tornado: Drag Coef</value>
+  </data>
+  <data name="Tornado_m_DragCoefDesc" xml:space="preserve">
+    <value>How much drag (from "wind")</value>
+  </data>
+  <data name="Tornado_m_EasyLatFriction" xml:space="preserve">
+    <value>Tornado: Easy Lat Friction</value>
+  </data>
+  <data name="Tornado_m_EasyLatFrictionDesc" xml:space="preserve">
+    <value>Friction that helps with turning</value>
+  </data>
+  <data name="Tornado_m_EasyLongFriction" xml:space="preserve">
+    <value>Tornado: Easy Long Friction</value>
+  </data>
+  <data name="Tornado_m_EasyLongFrictionDesc" xml:space="preserve">
+    <value>Friction that slows the missile down</value>
+  </data>
+  <data name="Tornado_m_FizzleTime" xml:space="preserve">
+    <value>Tornado: Fizzle Time</value>
+  </data>
+  <data name="Tornado_m_FizzleTimeDesc" xml:space="preserve">
+    <value>How long before it fizzles once its messed with its final target</value>
+  </data>
+  <data name="Tornado_m_GroundGravity" xml:space="preserve">
+    <value>Tornado: Ground Gravity</value>
+  </data>
+  <data name="Tornado_m_GroundGravityDesc" xml:space="preserve">
+    <value>Gravity on the ground</value>
+  </data>
+  <data name="Tornado_m_GroundGravityMaglev" xml:space="preserve">
+    <value>Tornado: Ground Gravity Maglev</value>
+  </data>
+  <data name="Tornado_m_GroundGravityMaglevDesc" xml:space="preserve">
+    <value>Gravity on the ground on maglev surface</value>
+  </data>
+  <data name="Tornado_m_HardLatFriction" xml:space="preserve">
+    <value>Tornado: Hard Lat Friction</value>
+  </data>
+  <data name="Tornado_m_HardLatFrictionDesc" xml:space="preserve">
+    <value>Friction that helps with turning</value>
+  </data>
+  <data name="Tornado_m_HardLongFriction" xml:space="preserve">
+    <value>Tornado: Hard Long Friction</value>
+  </data>
+  <data name="Tornado_m_HardLongFrictionDesc" xml:space="preserve">
+    <value>Friction that slows the missile down</value>
+  </data>
+  <data name="Tornado_m_JuicedWumpaLoss" xml:space="preserve">
+    <value>Tornado: Juiced Wumpa Loss</value>
+  </data>
+  <data name="Tornado_m_JuicedWumpaLossDesc" xml:space="preserve">
+    <value>How much wumpa fruit victim loses</value>
+  </data>
+  <data name="Tornado_m_LiftForce" xml:space="preserve">
+    <value>Tornado: Lift Force</value>
+  </data>
+  <data name="Tornado_m_LiftForceDesc" xml:space="preserve">
+    <value>How much force upon lifting the player</value>
+  </data>
+  <data name="Tornado_m_LiftTime" xml:space="preserve">
+    <value>Tornado: Lift Time</value>
+  </data>
+  <data name="Tornado_m_LiftTimeDesc" xml:space="preserve">
+    <value>How long to lift a caught player</value>
+  </data>
+  <data name="Tornado_m_Mass" xml:space="preserve">
+    <value>Tornado: Mass</value>
+  </data>
+  <data name="Tornado_m_MassDesc" xml:space="preserve">
+    <value>Mass of missile</value>
+  </data>
+  <data name="Tornado_m_MaxSpeed" xml:space="preserve">
+    <value>Tornado: Max Speed</value>
+  </data>
+  <data name="Tornado_m_MaxSpeedDesc" xml:space="preserve">
+    <value>Max speed of tornado</value>
+  </data>
+  <data name="Tornado_m_MaxSpeedJuiced" xml:space="preserve">
+    <value>Tornado: Max Speed Juiced</value>
+  </data>
+  <data name="Tornado_m_MaxSpeedJuicedDesc" xml:space="preserve">
+    <value>Max speed of tornado(juiced)</value>
+  </data>
+  <data name="Tornado_m_MaxSpeedWithKart" xml:space="preserve">
+    <value>Tornado: Max Speed With Kart</value>
+  </data>
+  <data name="Tornado_m_MaxSpeedWithKartDesc" xml:space="preserve">
+    <value>Max speed, when tornado has picked up a kart</value>
+  </data>
+  <data name="Tornado_m_NormalWumpaLoss" xml:space="preserve">
+    <value>Tornado: Normal Wumpa Loss</value>
+  </data>
+  <data name="Tornado_m_NormalWumpaLossDesc" xml:space="preserve">
+    <value>How much wumpa fruit victim loses</value>
+  </data>
+  <data name="Tornado_m_Radius" xml:space="preserve">
+    <value>Tornado: Radius</value>
+  </data>
+  <data name="Tornado_m_RadiusDesc" xml:space="preserve">
+    <value>Radius of missile(for collision)</value>
+  </data>
+  <data name="Tornado_m_RangeInBack" xml:space="preserve">
+    <value>Tornado: Range In Back</value>
+  </data>
+  <data name="Tornado_m_RangeInBackDesc" xml:space="preserve">
+    <value>DO NOT USE | How far to the back will the tornado track of the user kart</value>
+  </data>
+  <data name="Tornado_m_RangeInFront" xml:space="preserve">
+    <value>Tornado: Range In Front</value>
+  </data>
+  <data name="Tornado_m_RangeInFrontDesc" xml:space="preserve">
+    <value>DO NOT USE | How far will the tornado track in front of user kart</value>
+  </data>
+  <data name="Tornado_m_TargetAllDistance" xml:space="preserve">
+    <value>Tornado: Target All Distance</value>
+  </data>
+  <data name="Tornado_m_TargetAllDistanceDesc" xml:space="preserve">
+    <value>If juiced, what is the distance a kart needs to be from tornado for it to start targeting it on its way to victim</value>
+  </data>
+  <data name="Tornado_m_TimeLimit" xml:space="preserve">
+    <value>Tornado: Time Limit</value>
+  </data>
+  <data name="Tornado_m_TimeLimitDesc" xml:space="preserve">
+    <value>How long will tornado last in ms</value>
+  </data>
+  <data name="Tornado_m_TrackingFrontDistance" xml:space="preserve">
+    <value>Tornado: Tracking Front Distance</value>
+  </data>
+  <data name="Tornado_m_TrackingFrontDistanceDesc" xml:space="preserve">
+    <value>NO USE | How man times farther will the missile target someone who is in front of them, rather than in back</value>
+  </data>
+  <data name="Tornado_m_TurnSpeed" xml:space="preserve">
+    <value>Tornado: Turn Speed</value>
+  </data>
+  <data name="Tornado_m_TurnSpeedDesc" xml:space="preserve">
+    <value>How fast tornado turns (radians / sec)</value>
+  </data>
+  <data name="Tornado_m_TurnSpeedJuiced" xml:space="preserve">
+    <value>Tornado: Turn Speed Juiced</value>
+  </data>
+  <data name="Tornado_m_TurnSpeedJuicedDesc" xml:space="preserve">
+    <value>How fast tornado turns (radians / sec)(juiced)</value>
+  </data>
+  <data name="Tornado_m_ViewRange" xml:space="preserve">
+    <value>Tornado: View Range</value>
+  </data>
+  <data name="Tornado_m_ViewRangeDesc" xml:space="preserve">
+    <value>DO NOT USE | Range of view the tornado targets, if 0, then targets everything infront of him, 1 is exactly in front of him</value>
+  </data>
+  <data name="Tornado_m_ViewRangleOfTarget" xml:space="preserve">
+    <value>Tornado: View Range Of Target</value>
+  </data>
+  <data name="Tornado_m_ViewRangleOfTargetDesc" xml:space="preserve">
+    <value>If juiced, what range does target kart have to be in for tornado to target it on the way to victim</value>
+  </data>
+  <data name="TurboBoost_m_JuicedTime" xml:space="preserve">
+    <value>Turbo Boost: Juiced Time</value>
+  </data>
+  <data name="TurboBoost_m_JuicedTimeDesc" xml:space="preserve">
+    <value>How long effect lasts when juiced</value>
+  </data>
+  <data name="TurboBoost_m_NormalTime" xml:space="preserve">
+    <value>Turbo Boost: Normal Time</value>
+  </data>
+  <data name="TurboBoost_m_NormalTimeDesc" xml:space="preserve">
+    <value>How long effect lasts</value>
+  </data>
 </root>

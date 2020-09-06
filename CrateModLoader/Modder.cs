@@ -29,10 +29,17 @@ namespace CrateModLoader
         public Dictionary<int,ModOption> Options { get; } = new Dictionary<int,ModOption>();
 
         public List<ModPropertyBase> Props = new List<ModPropertyBase>();
-        public Dictionary<int, string> PropCategories = new Dictionary<int, string>();
 
         public Modder()
         {
+            // moved to ModLoader.cs because of localization being loaded by constructor, also for speed I guess
+            //PopulateProperties();
+        }
+
+        public void PopulateProperties()
+        {
+            Props.Clear();
+
             // Populate property list automatically from namespace
             Assembly asm = Assembly.GetExecutingAssembly();
 
@@ -49,7 +56,7 @@ namespace CrateModLoader
                             Props.Add((ModPropertyBase)field.GetValue(null));
 
                             Props[Props.Count - 1].ResetToDefault();
-                            
+
                             if (Props[Props.Count - 1].Category == null)
                             {
                                 ModCategory chunkAttr = (ModCategory)field.GetCustomAttribute(typeof(ModCategory), false);
@@ -75,12 +82,25 @@ namespace CrateModLoader
                             {
                                 Props[Props.Count - 1].Name = field.Name;
                             }
+                            if (Game.TextClass != null)
+                            {
+                                foreach (MethodInfo text in Game.TextClass.GetRuntimeMethods())
+                                {
+                                    if (text.Name == "get_" + field.Name)
+                                    {
+                                        Props[Props.Count - 1].Name = (string)text.Invoke(null, null);
+                                    }
+                                    else if (text.Name == "get_" + field.Name + "Desc")
+                                    {
+                                        Props[Props.Count - 1].Description = (string)text.Invoke(null, null);
+                                    }
+                                }
+                            }
                             Props[Props.Count - 1].CodeName = field.Name;
                         }
                     }
                 }
             }
-
         }
 
         public bool ModMenuEnabled => Props.Count > 0;

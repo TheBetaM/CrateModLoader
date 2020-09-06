@@ -70,11 +70,4385 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bowling Bomb: Acceleration.
+        /// </summary>
+        internal static string BowlingBomb_m_Acceleration {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_Acceleration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Acceleration.
+        /// </summary>
+        internal static string BowlingBomb_m_AccelerationDesc {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_AccelerationDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bowling Bomb: Acceleration Juiced.
+        /// </summary>
+        internal static string BowlingBomb_m_AccelerationJuiced {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_AccelerationJuiced", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Acceleration.
+        /// </summary>
+        internal static string BowlingBomb_m_AccelerationJuicedDesc {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_AccelerationJuicedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bowling Bomb: Air Gravity.
+        /// </summary>
+        internal static string BowlingBomb_m_AirGravity {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_AirGravity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gravity in the air normally.
+        /// </summary>
+        internal static string BowlingBomb_m_AirGravityDesc {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_AirGravityDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bowling Bomb: Air Gravity Maglev.
+        /// </summary>
+        internal static string BowlingBomb_m_AirGravityMaglev {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_AirGravityMaglev", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gravity in the air on maglev surfaces.
+        /// </summary>
+        internal static string BowlingBomb_m_AirGravityMaglevDesc {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_AirGravityMaglevDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bowling Bomb: Back Speed.
+        /// </summary>
+        internal static string BowlingBomb_m_BackSpeed {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_BackSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Speed of the bowling bomb when shot backwards.
+        /// </summary>
+        internal static string BowlingBomb_m_BackSpeedDesc {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_BackSpeedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bowling Bomb: Drag Coef.
+        /// </summary>
+        internal static string BowlingBomb_m_DragCoef {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_DragCoef", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How much drag from the &quot;wind&quot;.
+        /// </summary>
+        internal static string BowlingBomb_m_DragCoefDesc {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_DragCoefDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bowling Bomb: Easy Lat Friction.
+        /// </summary>
+        internal static string BowlingBomb_m_EasyLatFriction {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_EasyLatFriction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Friction that helps when turning.
+        /// </summary>
+        internal static string BowlingBomb_m_EasyLatFrictionDesc {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_EasyLatFrictionDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bowling Bomb: Easy Long Friction.
+        /// </summary>
+        internal static string BowlingBomb_m_EasyLongFriction {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_EasyLongFriction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Friction that slows the bomb down.
+        /// </summary>
+        internal static string BowlingBomb_m_EasyLongFrictionDesc {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_EasyLongFrictionDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bowling Bomb: Explosion Blast Radius.
+        /// </summary>
+        internal static string BowlingBomb_m_ExplosionBlastRadius {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_ExplosionBlastRadius", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Blast Radius of Explosion.
+        /// </summary>
+        internal static string BowlingBomb_m_ExplosionBlastRadiusDesc {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_ExplosionBlastRadiusDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bowling Bomb: Explosion Blast Radius Juiced.
+        /// </summary>
+        internal static string BowlingBomb_m_ExplosionBlastRadiusJuiced {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_ExplosionBlastRadiusJuiced", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Blast Radius of Explosion Juiced.
+        /// </summary>
+        internal static string BowlingBomb_m_ExplosionBlastRadiusJuicedDesc {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_ExplosionBlastRadiusJuicedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bowling Bomb: Expl Scale.
+        /// </summary>
+        internal static string BowlingBomb_m_ExplScale {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_ExplScale", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scale of explosion normal.
+        /// </summary>
+        internal static string BowlingBomb_m_ExplScaleDesc {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_ExplScaleDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bowling Bomb: Expl Scale Juiced.
+        /// </summary>
+        internal static string BowlingBomb_m_ExplScaleJuiced {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_ExplScaleJuiced", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scale of explosion juiced.
+        /// </summary>
+        internal static string BowlingBomb_m_ExplScaleJuicedDesc {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_ExplScaleJuicedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bowling Bomb: Ground Gravity.
+        /// </summary>
+        internal static string BowlingBomb_m_GroundGravity {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_GroundGravity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gravity on the ground normally.
+        /// </summary>
+        internal static string BowlingBomb_m_GroundGravityDesc {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_GroundGravityDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bowling Bomb: Ground Gravity Maglev.
+        /// </summary>
+        internal static string BowlingBomb_m_GroundGravityMaglev {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_GroundGravityMaglev", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gravity on the ground on maglev surfaces.
+        /// </summary>
+        internal static string BowlingBomb_m_GroundGravityMaglevDesc {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_GroundGravityMaglevDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bowling Bomb: Hard Lat Friction.
+        /// </summary>
+        internal static string BowlingBomb_m_HardLatFriction {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_HardLatFriction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Friction that helps when turning.
+        /// </summary>
+        internal static string BowlingBomb_m_HardLatFrictionDesc {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_HardLatFrictionDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bowling Bomb: Hard Long Friction.
+        /// </summary>
+        internal static string BowlingBomb_m_HardLongFriction {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_HardLongFriction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Friction that slows the bomb down.
+        /// </summary>
+        internal static string BowlingBomb_m_HardLongFrictionDesc {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_HardLongFrictionDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bowling Bomb: Juiced Wumpa Loss.
+        /// </summary>
+        internal static string BowlingBomb_m_JuicedWumpaLoss {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_JuicedWumpaLoss", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How much wumpa fruit victim loses.
+        /// </summary>
+        internal static string BowlingBomb_m_JuicedWumpaLossDesc {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_JuicedWumpaLossDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bowling Bomb: Mass.
+        /// </summary>
+        internal static string BowlingBomb_m_Mass {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_Mass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mass of bomb.
+        /// </summary>
+        internal static string BowlingBomb_m_MassDesc {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_MassDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bowling Bomb: Normal Wumpa Loss.
+        /// </summary>
+        internal static string BowlingBomb_m_NormalWumpaLoss {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_NormalWumpaLoss", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How much wumpa fruit victim loses.
+        /// </summary>
+        internal static string BowlingBomb_m_NormalWumpaLossDesc {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_NormalWumpaLossDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bowling Bomb: Radius.
+        /// </summary>
+        internal static string BowlingBomb_m_Radius {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_Radius", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Radius of bomb.
+        /// </summary>
+        internal static string BowlingBomb_m_RadiusDesc {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_RadiusDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bowling Bomb: Range In Front.
+        /// </summary>
+        internal static string BowlingBomb_m_RangeInFront {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_RangeInFront", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Targeting range target must be in.
+        /// </summary>
+        internal static string BowlingBomb_m_RangeInFrontDesc {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_RangeInFrontDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bowling Bomb: Speed.
+        /// </summary>
+        internal static string BowlingBomb_m_Speed {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_Speed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Speed of the bowling bomb.
+        /// </summary>
+        internal static string BowlingBomb_m_SpeedDesc {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_SpeedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bowling Bomb: Turn Speed.
+        /// </summary>
+        internal static string BowlingBomb_m_TurnSpeed {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_TurnSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How fast it turns.
+        /// </summary>
+        internal static string BowlingBomb_m_TurnSpeedDesc {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_TurnSpeedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bowling Bomb: Turn Speed Juiced.
+        /// </summary>
+        internal static string BowlingBomb_m_TurnSpeedJuiced {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_TurnSpeedJuiced", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How fast does it turn (juiced).
+        /// </summary>
+        internal static string BowlingBomb_m_TurnSpeedJuicedDesc {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_TurnSpeedJuicedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bowling Bomb: View Range.
+        /// </summary>
+        internal static string BowlingBomb_m_ViewRange {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_ViewRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Targeting range target must be in.
+        /// </summary>
+        internal static string BowlingBomb_m_ViewRangeDesc {
+            get {
+                return ResourceManager.GetString("BowlingBomb_m_ViewRangeDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Acceleration Gain Normal.
+        /// </summary>
+        internal static string c_AccelerationGainNormal {
+            get {
+                return ResourceManager.GetString("c_AccelerationGainNormal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Acceleration Gain Wumpa.
+        /// </summary>
+        internal static string c_AccelerationGainWumpa {
+            get {
+                return ResourceManager.GetString("c_AccelerationGainWumpa", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Boost Info: BOOST AKU DROP.
+        /// </summary>
+        internal static string c_BoostInfo_eBOOST_AKU_DROP {
+            get {
+                return ResourceManager.GetString("c_BoostInfo_eBOOST_AKU_DROP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to speed / time / wheelie.
+        /// </summary>
+        internal static string c_BoostInfo_eBOOST_AKU_DROPDesc {
+            get {
+                return ResourceManager.GetString("c_BoostInfo_eBOOST_AKU_DROPDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Boost Info: BOOST JUMP LARGE.
+        /// </summary>
+        internal static string c_BoostInfo_eBOOST_JUMP_LARGE {
+            get {
+                return ResourceManager.GetString("c_BoostInfo_eBOOST_JUMP_LARGE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to speed / time / wheelie.
+        /// </summary>
+        internal static string c_BoostInfo_eBOOST_JUMP_LARGEDesc {
+            get {
+                return ResourceManager.GetString("c_BoostInfo_eBOOST_JUMP_LARGEDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Boost Info: BOOST JUMP MEDIUM.
+        /// </summary>
+        internal static string c_BoostInfo_eBOOST_JUMP_MEDIUM {
+            get {
+                return ResourceManager.GetString("c_BoostInfo_eBOOST_JUMP_MEDIUM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to speed / time / wheelie.
+        /// </summary>
+        internal static string c_BoostInfo_eBOOST_JUMP_MEDIUMDesc {
+            get {
+                return ResourceManager.GetString("c_BoostInfo_eBOOST_JUMP_MEDIUMDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Boost Info: BOOST JUMP SMALL.
+        /// </summary>
+        internal static string c_BoostInfo_eBOOST_JUMP_SMALL {
+            get {
+                return ResourceManager.GetString("c_BoostInfo_eBOOST_JUMP_SMALL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to speed / time / wheelie.
+        /// </summary>
+        internal static string c_BoostInfo_eBOOST_JUMP_SMALLDesc {
+            get {
+                return ResourceManager.GetString("c_BoostInfo_eBOOST_JUMP_SMALLDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Boost Info: BOOST PAD.
+        /// </summary>
+        internal static string c_BoostInfo_eBOOST_PAD {
+            get {
+                return ResourceManager.GetString("c_BoostInfo_eBOOST_PAD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to speed / time / wheelie.
+        /// </summary>
+        internal static string c_BoostInfo_eBOOST_PADDesc {
+            get {
+                return ResourceManager.GetString("c_BoostInfo_eBOOST_PADDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Boost Info: BOOST SLIDE 1.
+        /// </summary>
+        internal static string c_BoostInfo_eBOOST_SLIDE_1 {
+            get {
+                return ResourceManager.GetString("c_BoostInfo_eBOOST_SLIDE_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to speed / time / wheelie.
+        /// </summary>
+        internal static string c_BoostInfo_eBOOST_SLIDE_1Desc {
+            get {
+                return ResourceManager.GetString("c_BoostInfo_eBOOST_SLIDE_1Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Boost Info: BOOST SLIDE 2.
+        /// </summary>
+        internal static string c_BoostInfo_eBOOST_SLIDE_2 {
+            get {
+                return ResourceManager.GetString("c_BoostInfo_eBOOST_SLIDE_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to speed / time / wheelie.
+        /// </summary>
+        internal static string c_BoostInfo_eBOOST_SLIDE_2Desc {
+            get {
+                return ResourceManager.GetString("c_BoostInfo_eBOOST_SLIDE_2Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Boost Info: BOOST SLIDE 3.
+        /// </summary>
+        internal static string c_BoostInfo_eBOOST_SLIDE_3 {
+            get {
+                return ResourceManager.GetString("c_BoostInfo_eBOOST_SLIDE_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to speed / time / wheelie.
+        /// </summary>
+        internal static string c_BoostInfo_eBOOST_SLIDE_3Desc {
+            get {
+                return ResourceManager.GetString("c_BoostInfo_eBOOST_SLIDE_3Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Boost Info: BOOST START.
+        /// </summary>
+        internal static string c_BoostInfo_eBOOST_START {
+            get {
+                return ResourceManager.GetString("c_BoostInfo_eBOOST_START", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to speed / time / wheelie.
+        /// </summary>
+        internal static string c_BoostInfo_eBOOST_STARTDesc {
+            get {
+                return ResourceManager.GetString("c_BoostInfo_eBOOST_STARTDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Boost Info: BOOST SUPER ENGINE.
+        /// </summary>
+        internal static string c_BoostInfo_eBOOST_SUPER_ENGINE {
+            get {
+                return ResourceManager.GetString("c_BoostInfo_eBOOST_SUPER_ENGINE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to speed / time / wheelie.
+        /// </summary>
+        internal static string c_BoostInfo_eBOOST_SUPER_ENGINEDesc {
+            get {
+                return ResourceManager.GetString("c_BoostInfo_eBOOST_SUPER_ENGINEDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Boost Info: BOOST TURBOBOOST.
+        /// </summary>
+        internal static string c_BoostInfo_eBOOST_TURBOBOOST {
+            get {
+                return ResourceManager.GetString("c_BoostInfo_eBOOST_TURBOBOOST", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Boost Info: BOOST TURBOBOOST JUICED.
+        /// </summary>
+        internal static string c_BoostInfo_eBOOST_TURBOBOOST_JUICED {
+            get {
+                return ResourceManager.GetString("c_BoostInfo_eBOOST_TURBOBOOST_JUICED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to speed / time / wheelie.
+        /// </summary>
+        internal static string c_BoostInfo_eBOOST_TURBOBOOST_JUICEDDesc {
+            get {
+                return ResourceManager.GetString("c_BoostInfo_eBOOST_TURBOBOOST_JUICEDDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to speed / time / wheelie.
+        /// </summary>
+        internal static string c_BoostInfo_eBOOST_TURBOBOOSTDesc {
+            get {
+                return ResourceManager.GetString("c_BoostInfo_eBOOST_TURBOBOOSTDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Boost Max Impulse Per Second.
+        /// </summary>
+        internal static string c_BoostMaxImpulsePerSecond {
+            get {
+                return ResourceManager.GetString("c_BoostMaxImpulsePerSecond", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Boost Slide Push Angle.
+        /// </summary>
+        internal static string c_BoostSlidePushAngle {
+            get {
+                return ResourceManager.GetString("c_BoostSlidePushAngle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Boost Slide Push Time.
+        /// </summary>
+        internal static string c_BoostSlidePushTime {
+            get {
+                return ResourceManager.GetString("c_BoostSlidePushTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Brake Force.
+        /// </summary>
+        internal static string c_BrakeForce {
+            get {
+                return ResourceManager.GetString("c_BrakeForce", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hi Turn Friction.
+        /// </summary>
+        internal static string c_HiTurnFriction {
+            get {
+                return ResourceManager.GetString("c_HiTurnFriction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to lat / long / lat 2 long.
+        /// </summary>
+        internal static string c_HiTurnFrictionDesc {
+            get {
+                return ResourceManager.GetString("c_HiTurnFrictionDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hi Turn Start Angle.
+        /// </summary>
+        internal static string c_HiTurnStartAngle {
+            get {
+                return ResourceManager.GetString("c_HiTurnStartAngle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In Air Turn Rate Normal.
+        /// </summary>
+        internal static string c_InAirTurnRateNormal {
+            get {
+                return ResourceManager.GetString("c_InAirTurnRateNormal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In Air Turn Rate Wumpa.
+        /// </summary>
+        internal static string c_InAirTurnRateWumpa {
+            get {
+                return ResourceManager.GetString("c_InAirTurnRateWumpa", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max Forward Speed Normal.
+        /// </summary>
+        internal static string c_MaxForwardSpeedNormal {
+            get {
+                return ResourceManager.GetString("c_MaxForwardSpeedNormal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max Forward Speed Wumpa.
+        /// </summary>
+        internal static string c_MaxForwardSpeedWumpa {
+            get {
+                return ResourceManager.GetString("c_MaxForwardSpeedWumpa", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Normal Friction.
+        /// </summary>
+        internal static string c_NormalFriction {
+            get {
+                return ResourceManager.GetString("c_NormalFriction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to lat / long / lat 2 long.
+        /// </summary>
+        internal static string c_NormalFrictionDesc {
+            get {
+                return ResourceManager.GetString("c_NormalFrictionDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slide Friction High.
+        /// </summary>
+        internal static string c_SlideFrictionHigh {
+            get {
+                return ResourceManager.GetString("c_SlideFrictionHigh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to lat / long / lat 2 long.
+        /// </summary>
+        internal static string c_SlideFrictionHighDesc {
+            get {
+                return ResourceManager.GetString("c_SlideFrictionHighDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slide Friction Low.
+        /// </summary>
+        internal static string c_SlideFrictionLow {
+            get {
+                return ResourceManager.GetString("c_SlideFrictionLow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to lat / long / lat 2 long.
+        /// </summary>
+        internal static string c_SlideFrictionLowDesc {
+            get {
+                return ResourceManager.GetString("c_SlideFrictionLowDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slide Friction Norm.
+        /// </summary>
+        internal static string c_SlideFrictionNorm {
+            get {
+                return ResourceManager.GetString("c_SlideFrictionNorm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to lat / long / lat 2 long.
+        /// </summary>
+        internal static string c_SlideFrictionNormDesc {
+            get {
+                return ResourceManager.GetString("c_SlideFrictionNormDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slide Max Angle.
+        /// </summary>
+        internal static string c_SlideMaxAngle {
+            get {
+                return ResourceManager.GetString("c_SlideMaxAngle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slide Min Angle.
+        /// </summary>
+        internal static string c_SlideMinAngle {
+            get {
+                return ResourceManager.GetString("c_SlideMinAngle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slide Turn Rate Away From Slide.
+        /// </summary>
+        internal static string c_SlideTurnRateAwayFromSlide {
+            get {
+                return ResourceManager.GetString("c_SlideTurnRateAwayFromSlide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slide Turn Rate In To Slide.
+        /// </summary>
+        internal static string c_SlideTurnRateInToSlide {
+            get {
+                return ResourceManager.GetString("c_SlideTurnRateInToSlide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turn Decell Force.
+        /// </summary>
+        internal static string c_TurnDecellForce {
+            get {
+                return ResourceManager.GetString("c_TurnDecellForce", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turn Decell Force Max.
+        /// </summary>
+        internal static string c_TurnDecellForceMax {
+            get {
+                return ResourceManager.GetString("c_TurnDecellForceMax", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turn Decell Speed.
+        /// </summary>
+        internal static string c_TurnDecellSpeed {
+            get {
+                return ResourceManager.GetString("c_TurnDecellSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turn Rate Accel.
+        /// </summary>
+        internal static string c_TurnRateAccel {
+            get {
+                return ResourceManager.GetString("c_TurnRateAccel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turn Rate Brake.
+        /// </summary>
+        internal static string c_TurnRateBrake {
+            get {
+                return ResourceManager.GetString("c_TurnRateBrake", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turn Rate Normal.
+        /// </summary>
+        internal static string c_TurnRateNormal {
+            get {
+                return ResourceManager.GetString("c_TurnRateNormal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turn Rate Wumpa.
+        /// </summary>
+        internal static string c_TurnRateWumpa {
+            get {
+                return ResourceManager.GetString("c_TurnRateWumpa", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UI Stats Acceleration.
+        /// </summary>
+        internal static string c_UIStats_Acceleration {
+            get {
+                return ResourceManager.GetString("c_UIStats_Acceleration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UI Stats Max Value.
+        /// </summary>
+        internal static string c_UIStats_MaxValue {
+            get {
+                return ResourceManager.GetString("c_UIStats_MaxValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UI Stats Speed.
+        /// </summary>
+        internal static string c_UIStats_Speed {
+            get {
+                return ResourceManager.GetString("c_UIStats_Speed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UI Stats Turn.
+        /// </summary>
+        internal static string c_UIStats_Turn {
+            get {
+                return ResourceManager.GetString("c_UIStats_Turn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Freezing Mine: Blast Radius.
+        /// </summary>
+        internal static string FreezingMine_m_BlastRadius {
+            get {
+                return ResourceManager.GetString("FreezingMine_m_BlastRadius", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string FreezingMine_m_BlastRadiusDesc {
+            get {
+                return ResourceManager.GetString("FreezingMine_m_BlastRadiusDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Freezing Mine: Blast Radius Juiced.
+        /// </summary>
+        internal static string FreezingMine_m_BlastRadiusJuiced {
+            get {
+                return ResourceManager.GetString("FreezingMine_m_BlastRadiusJuiced", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string FreezingMine_m_BlastRadiusJuicedDesc {
+            get {
+                return ResourceManager.GetString("FreezingMine_m_BlastRadiusJuicedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Freezing Mine: Expl Scale.
+        /// </summary>
+        internal static string FreezingMine_m_ExplScale {
+            get {
+                return ResourceManager.GetString("FreezingMine_m_ExplScale", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1=7m.
+        /// </summary>
+        internal static string FreezingMine_m_ExplScaleDesc {
+            get {
+                return ResourceManager.GetString("FreezingMine_m_ExplScaleDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Freezing Mine: Expl Scale Juiced.
+        /// </summary>
+        internal static string FreezingMine_m_ExplScaleJuiced {
+            get {
+                return ResourceManager.GetString("FreezingMine_m_ExplScaleJuiced", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1=7m.
+        /// </summary>
+        internal static string FreezingMine_m_ExplScaleJuicedDesc {
+            get {
+                return ResourceManager.GetString("FreezingMine_m_ExplScaleJuicedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Freezing Mine: Juiced Freeze Time.
+        /// </summary>
+        internal static string FreezingMine_m_JuicedFreezeTime {
+            get {
+                return ResourceManager.GetString("FreezingMine_m_JuicedFreezeTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How long effect lasts with a juiced mine.
+        /// </summary>
+        internal static string FreezingMine_m_JuicedFreezeTimeDesc {
+            get {
+                return ResourceManager.GetString("FreezingMine_m_JuicedFreezeTimeDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Freezing Mine: Juiced Wumpa Fruit Lost.
+        /// </summary>
+        internal static string FreezingMine_m_JuicedWumpaFruitLost {
+            get {
+                return ResourceManager.GetString("FreezingMine_m_JuicedWumpaFruitLost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How much wumpa fruit victim loses (juiced).
+        /// </summary>
+        internal static string FreezingMine_m_JuicedWumpaFruitLostDesc {
+            get {
+                return ResourceManager.GetString("FreezingMine_m_JuicedWumpaFruitLostDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Freezing Mine: Normal Freeze Time.
+        /// </summary>
+        internal static string FreezingMine_m_NormalFreezeTime {
+            get {
+                return ResourceManager.GetString("FreezingMine_m_NormalFreezeTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How long effect lasts with a normal mine.
+        /// </summary>
+        internal static string FreezingMine_m_NormalFreezeTimeDesc {
+            get {
+                return ResourceManager.GetString("FreezingMine_m_NormalFreezeTimeDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Freezing Mine: Normal Wumpa Fruit Lost.
+        /// </summary>
+        internal static string FreezingMine_m_NormalWumpaFruitLost {
+            get {
+                return ResourceManager.GetString("FreezingMine_m_NormalWumpaFruitLost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How much wumpa fruit victim loses.
+        /// </summary>
+        internal static string FreezingMine_m_NormalWumpaFruitLostDesc {
+            get {
+                return ResourceManager.GetString("FreezingMine_m_NormalWumpaFruitLostDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Freezing Mine: Throw Distance.
+        /// </summary>
+        internal static string FreezingMine_m_ThrowDistance {
+            get {
+                return ResourceManager.GetString("FreezingMine_m_ThrowDistance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How far to throw freeze mine.
+        /// </summary>
+        internal static string FreezingMine_m_ThrowDistanceDesc {
+            get {
+                return ResourceManager.GetString("FreezingMine_m_ThrowDistanceDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Freezing Mine: Throw Speed Factor.
+        /// </summary>
+        internal static string FreezingMine_m_ThrowSpeedFactor {
+            get {
+                return ResourceManager.GetString("FreezingMine_m_ThrowSpeedFactor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This number is multiplied by currentspeed and added to the throw distance.
+        /// </summary>
+        internal static string FreezingMine_m_ThrowSpeedFactorDesc {
+            get {
+                return ResourceManager.GetString("FreezingMine_m_ThrowSpeedFactorDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Crash Nitro Kart.
         /// </summary>
         internal static string GameTitle {
             get {
                 return ResourceManager.GetString("GameTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Homing Missle: Acceleration.
+        /// </summary>
+        internal static string HomingMissle_m_Acceleration {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_Acceleration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How fast it accelerates, note the reason this is so high is because of the long. friction.
+        /// </summary>
+        internal static string HomingMissle_m_AccelerationDesc {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_AccelerationDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Homing Missle: Acceleration Juiced.
+        /// </summary>
+        internal static string HomingMissle_m_AccelerationJuiced {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_AccelerationJuiced", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How fast it accelerates juiced, note the reason this is so high is because of the long. friction.
+        /// </summary>
+        internal static string HomingMissle_m_AccelerationJuicedDesc {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_AccelerationJuicedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Homing Missle: Air Gravity Maglev.
+        /// </summary>
+        internal static string HomingMissle_m_AirGravityMaglev {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_AirGravityMaglev", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gravity in the air, when on maglev.
+        /// </summary>
+        internal static string HomingMissle_m_AirGravityMaglevDesc {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_AirGravityMaglevDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Homing Missle: Air Gravity Normal.
+        /// </summary>
+        internal static string HomingMissle_m_AirGravityNormal {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_AirGravityNormal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gravity in the air.
+        /// </summary>
+        internal static string HomingMissle_m_AirGravityNormalDesc {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_AirGravityNormalDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Homing Missle: Decay Min.
+        /// </summary>
+        internal static string HomingMissle_m_DecayMin {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_DecayMin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Min value for velocity.
+        /// </summary>
+        internal static string HomingMissle_m_DecayMinDesc {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_DecayMinDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Homing Missle: Decay Speed.
+        /// </summary>
+        internal static string HomingMissle_m_DecaySpeed {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_DecaySpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How fast velocity decays (in meteres/sec).
+        /// </summary>
+        internal static string HomingMissle_m_DecaySpeedDesc {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_DecaySpeedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Homing Missle: Decay Time.
+        /// </summary>
+        internal static string HomingMissle_m_DecayTime {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_DecayTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How long before decay starts.
+        /// </summary>
+        internal static string HomingMissle_m_DecayTimeDesc {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_DecayTimeDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Homing Missle: Delay Tracking Update.
+        /// </summary>
+        internal static string HomingMissle_m_DelayTrackingUpdate {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_DelayTrackingUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delay between updates of tracking.
+        /// </summary>
+        internal static string HomingMissle_m_DelayTrackingUpdateDesc {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_DelayTrackingUpdateDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Homing Missle: Drag Coef.
+        /// </summary>
+        internal static string HomingMissle_m_DragCoef {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_DragCoef", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How much drag force applied to missile.
+        /// </summary>
+        internal static string HomingMissle_m_DragCoefDesc {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_DragCoefDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Homing Missle: Easy Lat Friction.
+        /// </summary>
+        internal static string HomingMissle_m_EasyLatFriction {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_EasyLatFriction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lateral friction, helps when turning (higher the better you turn).
+        /// </summary>
+        internal static string HomingMissle_m_EasyLatFrictionDesc {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_EasyLatFrictionDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Homing Missle: Easy Long Friction.
+        /// </summary>
+        internal static string HomingMissle_m_EasyLongFriction {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_EasyLongFriction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Long. Friction, friction working against missile, this force the acceleration to be much higher than normal.
+        /// </summary>
+        internal static string HomingMissle_m_EasyLongFrictionDesc {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_EasyLongFrictionDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Homing Missle: Explosion Blast Radius.
+        /// </summary>
+        internal static string HomingMissle_m_ExplosionBlastRadius {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_ExplosionBlastRadius", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Blast Radius of Explosion.
+        /// </summary>
+        internal static string HomingMissle_m_ExplosionBlastRadiusDesc {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_ExplosionBlastRadiusDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Homing Missle: Explosion Blast Radius Juiced.
+        /// </summary>
+        internal static string HomingMissle_m_ExplosionBlastRadiusJuiced {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_ExplosionBlastRadiusJuiced", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Blast Radius of Explosion Juiced.
+        /// </summary>
+        internal static string HomingMissle_m_ExplosionBlastRadiusJuicedDesc {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_ExplosionBlastRadiusJuicedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Homing Missle: Expl Scale.
+        /// </summary>
+        internal static string HomingMissle_m_ExplScale {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_ExplScale", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scale of explosion normal.
+        /// </summary>
+        internal static string HomingMissle_m_ExplScaleDesc {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_ExplScaleDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Homing Missle: Expl Scale Juiced.
+        /// </summary>
+        internal static string HomingMissle_m_ExplScaleJuiced {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_ExplScaleJuiced", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scale of explosion juiced.
+        /// </summary>
+        internal static string HomingMissle_m_ExplScaleJuicedDesc {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_ExplScaleJuicedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Homing Missle: Ground Gravity Maglev.
+        /// </summary>
+        internal static string HomingMissle_m_GroundGravityMaglev {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_GroundGravityMaglev", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gravity on the ground, when on maglev, should be high(there are sharp changes in curvature of ground in maglev).
+        /// </summary>
+        internal static string HomingMissle_m_GroundGravityMaglevDesc {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_GroundGravityMaglevDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Homing Missle: Ground Gravity Normal.
+        /// </summary>
+        internal static string HomingMissle_m_GroundGravityNormal {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_GroundGravityNormal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gravity on the ground.
+        /// </summary>
+        internal static string HomingMissle_m_GroundGravityNormalDesc {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_GroundGravityNormalDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Homing Missle: Hard Lat Friction.
+        /// </summary>
+        internal static string HomingMissle_m_HardLatFriction {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_HardLatFriction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Same as above, except when making a tight turn.
+        /// </summary>
+        internal static string HomingMissle_m_HardLatFrictionDesc {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_HardLatFrictionDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Homing Missle: Hard Long Friction.
+        /// </summary>
+        internal static string HomingMissle_m_HardLongFriction {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_HardLongFriction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Same as above, except when making a tight turn.
+        /// </summary>
+        internal static string HomingMissle_m_HardLongFrictionDesc {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_HardLongFrictionDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Homing Missle: Juiced Wumpa Loss.
+        /// </summary>
+        internal static string HomingMissle_m_JuicedWumpaLoss {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_JuicedWumpaLoss", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How much wumpa fruit victim loses.
+        /// </summary>
+        internal static string HomingMissle_m_JuicedWumpaLossDesc {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_JuicedWumpaLossDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Homing Missle: Mass.
+        /// </summary>
+        internal static string HomingMissle_m_Mass {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_Mass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mass of missile.
+        /// </summary>
+        internal static string HomingMissle_m_MassDesc {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_MassDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Homing Missle: Max Speed.
+        /// </summary>
+        internal static string HomingMissle_m_MaxSpeed {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_MaxSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max speed of homing missile.
+        /// </summary>
+        internal static string HomingMissle_m_MaxSpeedDesc {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_MaxSpeedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Homing Missle: Max Speed Juiced.
+        /// </summary>
+        internal static string HomingMissle_m_MaxSpeedJuiced {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_MaxSpeedJuiced", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max speed of homing missile (juiced).
+        /// </summary>
+        internal static string HomingMissle_m_MaxSpeedJuicedDesc {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_MaxSpeedJuicedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Homing Missle: Normal Wumpa Loss.
+        /// </summary>
+        internal static string HomingMissle_m_NormalWumpaLoss {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_NormalWumpaLoss", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How much wumpa fruit victim loses.
+        /// </summary>
+        internal static string HomingMissle_m_NormalWumpaLossDesc {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_NormalWumpaLossDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Homing Missle: Radius.
+        /// </summary>
+        internal static string HomingMissle_m_Radius {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_Radius", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Radius of missile (for collision).
+        /// </summary>
+        internal static string HomingMissle_m_RadiusDesc {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_RadiusDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Homing Missle: Range In Back.
+        /// </summary>
+        internal static string HomingMissle_m_RangeInBack {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_RangeInBack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How far to the back will the missile track of the user kart.
+        /// </summary>
+        internal static string HomingMissle_m_RangeInBackDesc {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_RangeInBackDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Homing Missle: Range In Front.
+        /// </summary>
+        internal static string HomingMissle_m_RangeInFront {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_RangeInFront", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How far will the missile track in front of user kart.
+        /// </summary>
+        internal static string HomingMissle_m_RangeInFrontDesc {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_RangeInFrontDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Homing Missle: Time Limit.
+        /// </summary>
+        internal static string HomingMissle_m_TimeLimit {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_TimeLimit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How long will missile last in ms.
+        /// </summary>
+        internal static string HomingMissle_m_TimeLimitDesc {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_TimeLimitDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Homing Missle: Tracking Front Distance.
+        /// </summary>
+        internal static string HomingMissle_m_TrackingFrontDistance {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_TrackingFrontDistance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How man times farther will the missile target someone who is in front of them, rather than in back.
+        /// </summary>
+        internal static string HomingMissle_m_TrackingFrontDistanceDesc {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_TrackingFrontDistanceDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Homing Missle: Turn Speed.
+        /// </summary>
+        internal static string HomingMissle_m_TurnSpeed {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_TurnSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How fast homing missile turns (radians / sec).
+        /// </summary>
+        internal static string HomingMissle_m_TurnSpeedDesc {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_TurnSpeedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Homing Missle: Turn Speed Juiced.
+        /// </summary>
+        internal static string HomingMissle_m_TurnSpeedJuiced {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_TurnSpeedJuiced", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How fast homing missile turns (radians / sec)(juiced).
+        /// </summary>
+        internal static string HomingMissle_m_TurnSpeedJuicedDesc {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_TurnSpeedJuicedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Homing Missle: View Range.
+        /// </summary>
+        internal static string HomingMissle_m_ViewRange {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_ViewRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Range of view the homing missile targets, if 0, then targets everything infront of him, 1 is exactly in front of him.
+        /// </summary>
+        internal static string HomingMissle_m_ViewRangeDesc {
+            get {
+                return ResourceManager.GetString("HomingMissle_m_ViewRangeDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invinc Mask: Collision Radius.
+        /// </summary>
+        internal static string InvincMask_m_ColRadius {
+            get {
+                return ResourceManager.GetString("InvincMask_m_ColRadius", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Collision Radius.
+        /// </summary>
+        internal static string InvincMask_m_ColRadiusDesc {
+            get {
+                return ResourceManager.GetString("InvincMask_m_ColRadiusDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invinc Mask: Expl Scale.
+        /// </summary>
+        internal static string InvincMask_m_ExplScale {
+            get {
+                return ResourceManager.GetString("InvincMask_m_ExplScale", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scale of explosion normal.
+        /// </summary>
+        internal static string InvincMask_m_ExplScaleDesc {
+            get {
+                return ResourceManager.GetString("InvincMask_m_ExplScaleDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invinc Mask: Expl Scale Juiced.
+        /// </summary>
+        internal static string InvincMask_m_ExplScaleJuiced {
+            get {
+                return ResourceManager.GetString("InvincMask_m_ExplScaleJuiced", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scale of explosion juiced.
+        /// </summary>
+        internal static string InvincMask_m_ExplScaleJuicedDesc {
+            get {
+                return ResourceManager.GetString("InvincMask_m_ExplScaleJuicedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invinc Mask: Juiced Time.
+        /// </summary>
+        internal static string InvincMask_m_JuicedTime {
+            get {
+                return ResourceManager.GetString("InvincMask_m_JuicedTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How long effect lasts when juiced.
+        /// </summary>
+        internal static string InvincMask_m_JuicedTimeDesc {
+            get {
+                return ResourceManager.GetString("InvincMask_m_JuicedTimeDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invinc Mask: Juiced Time Teamed.
+        /// </summary>
+        internal static string InvincMask_m_JuicedTimeTeamed {
+            get {
+                return ResourceManager.GetString("InvincMask_m_JuicedTimeTeamed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When Teamed and Juiced.
+        /// </summary>
+        internal static string InvincMask_m_JuicedTimeTeamedDesc {
+            get {
+                return ResourceManager.GetString("InvincMask_m_JuicedTimeTeamedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invinc Mask: Juiced Wumpa Loss.
+        /// </summary>
+        internal static string InvincMask_m_JuicedWumpaLoss {
+            get {
+                return ResourceManager.GetString("InvincMask_m_JuicedWumpaLoss", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How much wumpa fruit lost by victim.
+        /// </summary>
+        internal static string InvincMask_m_JuicedWumpaLossDesc {
+            get {
+                return ResourceManager.GetString("InvincMask_m_JuicedWumpaLossDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invinc Mask: Normal Time.
+        /// </summary>
+        internal static string InvincMask_m_NormalTime {
+            get {
+                return ResourceManager.GetString("InvincMask_m_NormalTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How long effect lasts.
+        /// </summary>
+        internal static string InvincMask_m_NormalTimeDesc {
+            get {
+                return ResourceManager.GetString("InvincMask_m_NormalTimeDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invinc Mask: Normal Time Teamed.
+        /// </summary>
+        internal static string InvincMask_m_NormalTimeTeamed {
+            get {
+                return ResourceManager.GetString("InvincMask_m_NormalTimeTeamed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When Teamed.
+        /// </summary>
+        internal static string InvincMask_m_NormalTimeTeamedDesc {
+            get {
+                return ResourceManager.GetString("InvincMask_m_NormalTimeTeamedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invinc Mask: Normal Wumpa Loss.
+        /// </summary>
+        internal static string InvincMask_m_NormalWumpaLoss {
+            get {
+                return ResourceManager.GetString("InvincMask_m_NormalWumpaLoss", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How much wumpa fruit lost by victim.
+        /// </summary>
+        internal static string InvincMask_m_NormalWumpaLossDesc {
+            get {
+                return ResourceManager.GetString("InvincMask_m_NormalWumpaLossDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invinc Mask: Team Blast Range.
+        /// </summary>
+        internal static string InvincMask_m_TeamBlastRange {
+            get {
+                return ResourceManager.GetString("InvincMask_m_TeamBlastRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How big explosion is for team effect.
+        /// </summary>
+        internal static string InvincMask_m_TeamBlastRangeDesc {
+            get {
+                return ResourceManager.GetString("InvincMask_m_TeamBlastRangeDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invinc Mask: Team Meter Full.
+        /// </summary>
+        internal static string InvincMask_m_TeamMeterFull {
+            get {
+                return ResourceManager.GetString("InvincMask_m_TeamMeterFull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How full does the buddy meter need to be before explosion.
+        /// </summary>
+        internal static string InvincMask_m_TeamMeterFullDesc {
+            get {
+                return ResourceManager.GetString("InvincMask_m_TeamMeterFullDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invinc Mask: Team Speed.
+        /// </summary>
+        internal static string InvincMask_m_TeamSpeed {
+            get {
+                return ResourceManager.GetString("InvincMask_m_TeamSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How fast mask travels to buddy from buddy.
+        /// </summary>
+        internal static string InvincMask_m_TeamSpeedDesc {
+            get {
+                return ResourceManager.GetString("InvincMask_m_TeamSpeedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Acceleration Gain Normal.
+        /// </summary>
+        internal static string m_AccelerationGainNormal {
+            get {
+                return ResourceManager.GetString("m_AccelerationGainNormal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The NORMAL ACCELERATION GAIN of the kart (m/sec).
+        /// </summary>
+        internal static string m_AccelerationGainNormalDesc {
+            get {
+                return ResourceManager.GetString("m_AccelerationGainNormalDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Acceleration Gain Wumpa.
+        /// </summary>
+        internal static string m_AccelerationGainWumpa {
+            get {
+                return ResourceManager.GetString("m_AccelerationGainWumpa", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The WUMPA ACCELERATION GAIN of the kart (m/sec).
+        /// </summary>
+        internal static string m_AccelerationGainWumpaDesc {
+            get {
+                return ResourceManager.GetString("m_AccelerationGainWumpaDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aku Drop Height.
+        /// </summary>
+        internal static string m_AkuDropHeight {
+            get {
+                return ResourceManager.GetString("m_AkuDropHeight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The HEIGHT to drop from (m).
+        /// </summary>
+        internal static string m_AkuDropHeightDesc {
+            get {
+                return ResourceManager.GetString("m_AkuDropHeightDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aku Drop Speed.
+        /// </summary>
+        internal static string m_AkuDropSpeed {
+            get {
+                return ResourceManager.GetString("m_AkuDropSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The SPEED we drop at (m/sec).
+        /// </summary>
+        internal static string m_AkuDropSpeedDesc {
+            get {
+                return ResourceManager.GetString("m_AkuDropSpeedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aku Drop Time.
+        /// </summary>
+        internal static string m_AkuDropTime {
+            get {
+                return ResourceManager.GetString("m_AkuDropTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The TOTAL TIME to stay in AKU-DROP state (sec).
+        /// </summary>
+        internal static string m_AkuDropTimeDesc {
+            get {
+                return ResourceManager.GetString("m_AkuDropTimeDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aku Drop: Cancel Min Percent.
+        /// </summary>
+        internal static string m_AkuDropTS_m_CancelMinPercent {
+            get {
+                return ResourceManager.GetString("m_AkuDropTS_m_CancelMinPercent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to While we are less than this percent the we don&apos;t enforce wait time for repress and also clear the hold time.
+        /// </summary>
+        internal static string m_AkuDropTS_m_CancelMinPercentDesc {
+            get {
+                return ResourceManager.GetString("m_AkuDropTS_m_CancelMinPercentDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aku Drop: Dec Hold Time.
+        /// </summary>
+        internal static string m_AkuDropTS_m_DecHoldTime {
+            get {
+                return ResourceManager.GetString("m_AkuDropTS_m_DecHoldTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The time we start to decrement the turbo start from.
+        /// </summary>
+        internal static string m_AkuDropTS_m_DecHoldTimeDesc {
+            get {
+                return ResourceManager.GetString("m_AkuDropTS_m_DecHoldTimeDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aku Drop: Dec Speed.
+        /// </summary>
+        internal static string m_AkuDropTS_m_DecSpeed {
+            get {
+                return ResourceManager.GetString("m_AkuDropTS_m_DecSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The speed we decrement the counter at (1.0 / seconds).
+        /// </summary>
+        internal static string m_AkuDropTS_m_DecSpeedDesc {
+            get {
+                return ResourceManager.GetString("m_AkuDropTS_m_DecSpeedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aku Drop: Inc Speed.
+        /// </summary>
+        internal static string m_AkuDropTS_m_IncSpeed {
+            get {
+                return ResourceManager.GetString("m_AkuDropTS_m_IncSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The speed we increment the counter at (1.0 / seconds).
+        /// </summary>
+        internal static string m_AkuDropTS_m_IncSpeedDesc {
+            get {
+                return ResourceManager.GetString("m_AkuDropTS_m_IncSpeedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aku Drop: Max Hold Time.
+        /// </summary>
+        internal static string m_AkuDropTS_m_MaxHoldTime {
+            get {
+                return ResourceManager.GetString("m_AkuDropTS_m_MaxHoldTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The time we can hold the accelerator for before we stop increasing the counter.
+        /// </summary>
+        internal static string m_AkuDropTS_m_MaxHoldTimeDesc {
+            get {
+                return ResourceManager.GetString("m_AkuDropTS_m_MaxHoldTimeDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aku Drop: Max Repress Time.
+        /// </summary>
+        internal static string m_AkuDropTS_m_MaxRepressTime {
+            get {
+                return ResourceManager.GetString("m_AkuDropTS_m_MaxRepressTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The time we wait between presses / when we run out from on press before a new press can take effect.
+        /// </summary>
+        internal static string m_AkuDropTS_m_MaxRepressTimeDesc {
+            get {
+                return ResourceManager.GetString("m_AkuDropTS_m_MaxRepressTimeDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aku Drop: Quadratic.
+        /// </summary>
+        internal static string m_AkuDropTS_m_Quadratic {
+            get {
+                return ResourceManager.GetString("m_AkuDropTS_m_Quadratic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turbo start boost quadratic inputs (Note: You MUST make sure that invalid values are not entered here!).
+        /// </summary>
+        internal static string m_AkuDropTS_m_QuadraticDesc {
+            get {
+                return ResourceManager.GetString("m_AkuDropTS_m_QuadraticDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Boost In A Row Time Tolerance.
+        /// </summary>
+        internal static string m_BoostInARowTimeTol {
+            get {
+                return ResourceManager.GetString("m_BoostInARowTimeTol", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The tolerance between &apos;boosts in a row&apos; that we allow (sec).
+        /// </summary>
+        internal static string m_BoostInARowTimeTolDesc {
+            get {
+                return ResourceManager.GetString("m_BoostInARowTimeTolDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Boost Info: BOOST AKU DROP.
+        /// </summary>
+        internal static string m_BoostInfo_eBOOST_AKU_DROP {
+            get {
+                return ResourceManager.GetString("m_BoostInfo_eBOOST_AKU_DROP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to speed / time / wheelie | All the BOOST information.
+        /// </summary>
+        internal static string m_BoostInfo_eBOOST_AKU_DROPDesc {
+            get {
+                return ResourceManager.GetString("m_BoostInfo_eBOOST_AKU_DROPDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Boost Info: BOOST JUMP LARGE.
+        /// </summary>
+        internal static string m_BoostInfo_eBOOST_JUMP_LARGE {
+            get {
+                return ResourceManager.GetString("m_BoostInfo_eBOOST_JUMP_LARGE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to speed / time / wheelie | All the BOOST information.
+        /// </summary>
+        internal static string m_BoostInfo_eBOOST_JUMP_LARGEDesc {
+            get {
+                return ResourceManager.GetString("m_BoostInfo_eBOOST_JUMP_LARGEDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Boost Info: BOOST JUMP MEDIUM.
+        /// </summary>
+        internal static string m_BoostInfo_eBOOST_JUMP_MEDIUM {
+            get {
+                return ResourceManager.GetString("m_BoostInfo_eBOOST_JUMP_MEDIUM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to speed / time / wheelie | All the BOOST information.
+        /// </summary>
+        internal static string m_BoostInfo_eBOOST_JUMP_MEDIUMDesc {
+            get {
+                return ResourceManager.GetString("m_BoostInfo_eBOOST_JUMP_MEDIUMDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Boost Info: BOOST JUMP SMALL.
+        /// </summary>
+        internal static string m_BoostInfo_eBOOST_JUMP_SMALL {
+            get {
+                return ResourceManager.GetString("m_BoostInfo_eBOOST_JUMP_SMALL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to speed / time / wheelie | All the BOOST information.
+        /// </summary>
+        internal static string m_BoostInfo_eBOOST_JUMP_SMALLDesc {
+            get {
+                return ResourceManager.GetString("m_BoostInfo_eBOOST_JUMP_SMALLDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Boost Info: BOOST PAD.
+        /// </summary>
+        internal static string m_BoostInfo_eBOOST_PAD {
+            get {
+                return ResourceManager.GetString("m_BoostInfo_eBOOST_PAD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to speed / time / wheelie | All the BOOST information.
+        /// </summary>
+        internal static string m_BoostInfo_eBOOST_PADDesc {
+            get {
+                return ResourceManager.GetString("m_BoostInfo_eBOOST_PADDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Boost Info: BOOST SLIDE 1.
+        /// </summary>
+        internal static string m_BoostInfo_eBOOST_SLIDE_1 {
+            get {
+                return ResourceManager.GetString("m_BoostInfo_eBOOST_SLIDE_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to speed / time / wheelie | All the BOOST information.
+        /// </summary>
+        internal static string m_BoostInfo_eBOOST_SLIDE_1Desc {
+            get {
+                return ResourceManager.GetString("m_BoostInfo_eBOOST_SLIDE_1Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Boost Info: BOOST SLIDE 2.
+        /// </summary>
+        internal static string m_BoostInfo_eBOOST_SLIDE_2 {
+            get {
+                return ResourceManager.GetString("m_BoostInfo_eBOOST_SLIDE_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to speed / time / wheelie | All the BOOST information.
+        /// </summary>
+        internal static string m_BoostInfo_eBOOST_SLIDE_2Desc {
+            get {
+                return ResourceManager.GetString("m_BoostInfo_eBOOST_SLIDE_2Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Boost Info: BOOST SLIDE 3.
+        /// </summary>
+        internal static string m_BoostInfo_eBOOST_SLIDE_3 {
+            get {
+                return ResourceManager.GetString("m_BoostInfo_eBOOST_SLIDE_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to speed / time / wheelie | All the BOOST information.
+        /// </summary>
+        internal static string m_BoostInfo_eBOOST_SLIDE_3Desc {
+            get {
+                return ResourceManager.GetString("m_BoostInfo_eBOOST_SLIDE_3Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Boost Info: BOOST START.
+        /// </summary>
+        internal static string m_BoostInfo_eBOOST_START {
+            get {
+                return ResourceManager.GetString("m_BoostInfo_eBOOST_START", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to speed / time / wheelie | All the BOOST information.
+        /// </summary>
+        internal static string m_BoostInfo_eBOOST_STARTDesc {
+            get {
+                return ResourceManager.GetString("m_BoostInfo_eBOOST_STARTDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Boost Info: BOOST SUPER ENGINE.
+        /// </summary>
+        internal static string m_BoostInfo_eBOOST_SUPER_ENGINE {
+            get {
+                return ResourceManager.GetString("m_BoostInfo_eBOOST_SUPER_ENGINE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to speed / time / wheelie | All the BOOST information.
+        /// </summary>
+        internal static string m_BoostInfo_eBOOST_SUPER_ENGINEDesc {
+            get {
+                return ResourceManager.GetString("m_BoostInfo_eBOOST_SUPER_ENGINEDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Boost Info: BOOST TURBOBOOST.
+        /// </summary>
+        internal static string m_BoostInfo_eBOOST_TURBOBOOST {
+            get {
+                return ResourceManager.GetString("m_BoostInfo_eBOOST_TURBOBOOST", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Boost Info: BOOST TURBOBOOST JUICED.
+        /// </summary>
+        internal static string m_BoostInfo_eBOOST_TURBOBOOST_JUICED {
+            get {
+                return ResourceManager.GetString("m_BoostInfo_eBOOST_TURBOBOOST_JUICED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to speed / time / wheelie | All the BOOST information.
+        /// </summary>
+        internal static string m_BoostInfo_eBOOST_TURBOBOOST_JUICEDDesc {
+            get {
+                return ResourceManager.GetString("m_BoostInfo_eBOOST_TURBOBOOST_JUICEDDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to speed / time / wheelie | All the BOOST information.
+        /// </summary>
+        internal static string m_BoostInfo_eBOOST_TURBOBOOSTDesc {
+            get {
+                return ResourceManager.GetString("m_BoostInfo_eBOOST_TURBOBOOSTDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Boost Max Impulse Per Second.
+        /// </summary>
+        internal static string m_BoostMaxImpulsePerSecond {
+            get {
+                return ResourceManager.GetString("m_BoostMaxImpulsePerSecond", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This is the maximum amount of boost we could ever gain in a second.
+        /// </summary>
+        internal static string m_BoostMaxImpulsePerSecondDesc {
+            get {
+                return ResourceManager.GetString("m_BoostMaxImpulsePerSecondDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Boost Max Time Cap.
+        /// </summary>
+        internal static string m_BoostMaxTimeCap {
+            get {
+                return ResourceManager.GetString("m_BoostMaxTimeCap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The maximum time we can EVER accumulate from boosts (sec).
+        /// </summary>
+        internal static string m_BoostMaxTimeCapDesc {
+            get {
+                return ResourceManager.GetString("m_BoostMaxTimeCapDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Boost Slide Push Angle.
+        /// </summary>
+        internal static string m_BoostSlidePushAngle {
+            get {
+                return ResourceManager.GetString("m_BoostSlidePushAngle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inner, Neutral, Outer | The angle that we apply the boost from the KART VELOCITY direction. This is interpolated down to 0 over time.
+        /// </summary>
+        internal static string m_BoostSlidePushAngleDesc {
+            get {
+                return ResourceManager.GetString("m_BoostSlidePushAngleDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Boost Slide Push Time.
+        /// </summary>
+        internal static string m_BoostSlidePushTime {
+            get {
+                return ResourceManager.GetString("m_BoostSlidePushTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The amount of time we FORCE a SLIDE BOOST to be pushed in a direction.
+        /// </summary>
+        internal static string m_BoostSlidePushTimeDesc {
+            get {
+                return ResourceManager.GetString("m_BoostSlidePushTimeDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Brake Force.
+        /// </summary>
+        internal static string m_BrakeForce {
+            get {
+                return ResourceManager.GetString("m_BrakeForce", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The maximum REVERSE SPEED of the kart (m/sec).
+        /// </summary>
+        internal static string m_BrakeForceDesc {
+            get {
+                return ResourceManager.GetString("m_BrakeForceDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Collision Radius.
+        /// </summary>
+        internal static string m_CollisionRadius {
+            get {
+                return ResourceManager.GetString("m_CollisionRadius", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The collision sphere radius for the kart (m).
+        /// </summary>
+        internal static string m_CollisionRadiusDesc {
+            get {
+                return ResourceManager.GetString("m_CollisionRadiusDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Collision Sphere Offset.
+        /// </summary>
+        internal static string m_CollisionSphereOffset {
+            get {
+                return ResourceManager.GetString("m_CollisionSphereOffset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to X, Y, Z | The collision sphere offset position from the kart (m).
+        /// </summary>
+        internal static string m_CollisionSphereOffsetDesc {
+            get {
+                return ResourceManager.GetString("m_CollisionSphereOffsetDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ctf Flag Max Forward Speed.
+        /// </summary>
+        internal static string m_CtfFlagMaxForwardSpeed {
+            get {
+                return ResourceManager.GetString("m_CtfFlagMaxForwardSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max Forward / Accel Gain / Turn Rate | CTF config (percentage increate on wumpa level, i.e. use 0.9 for loss).
+        /// </summary>
+        internal static string m_CtfFlagMaxForwardSpeedDesc {
+            get {
+                return ResourceManager.GetString("m_CtfFlagMaxForwardSpeedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cursed Max Forward Speed.
+        /// </summary>
+        internal static string m_CursedMaxForwardSpeed {
+            get {
+                return ResourceManager.GetString("m_CursedMaxForwardSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max Forward / Accel Gain / Turn Rate | Cursed config (percentage increate on wumpa level, i.e. use 0.9 for loss).
+        /// </summary>
+        internal static string m_CursedMaxForwardSpeedDesc {
+            get {
+                return ResourceManager.GetString("m_CursedMaxForwardSpeedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Donut Friction.
+        /// </summary>
+        internal static string m_DonutFriction {
+            get {
+                return ResourceManager.GetString("m_DonutFriction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to lat / long / lat 2 long | Friction parameter when in a donut.
+        /// </summary>
+        internal static string m_DonutFrictionDesc {
+            get {
+                return ResourceManager.GetString("m_DonutFrictionDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Donut Min Max Speed.
+        /// </summary>
+        internal static string m_DonutMinMaxSpeed {
+            get {
+                return ResourceManager.GetString("m_DonutMinMaxSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The speed bracket we must be between before we can start a donut.
+        /// </summary>
+        internal static string m_DonutMinMaxSpeedDesc {
+            get {
+                return ResourceManager.GetString("m_DonutMinMaxSpeedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Donut Turn Rate Max.
+        /// </summary>
+        internal static string m_DonutTurnRateMax {
+            get {
+                return ResourceManager.GetString("m_DonutTurnRateMax", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The maximum turn-rate when in a donut (r/sec) } Similar to the spin-out these.
+        /// </summary>
+        internal static string m_DonutTurnRateMaxDesc {
+            get {
+                return ResourceManager.GetString("m_DonutTurnRateMaxDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Donut Turn Rate Min.
+        /// </summary>
+        internal static string m_DonutTurnRateMin {
+            get {
+                return ResourceManager.GetString("m_DonutTurnRateMin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The minimum turn-rate when in a donut (r/sec) } are interpolated between.
+        /// </summary>
+        internal static string m_DonutTurnRateMinDesc {
+            get {
+                return ResourceManager.GetString("m_DonutTurnRateMinDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Donut Turn Total.
+        /// </summary>
+        internal static string m_DonutTurnTotal {
+            get {
+                return ResourceManager.GetString("m_DonutTurnTotal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total amount we turn when we initiate a donut (rad).
+        /// </summary>
+        internal static string m_DonutTurnTotalDesc {
+            get {
+                return ResourceManager.GetString("m_DonutTurnTotalDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Downforce Ground.
+        /// </summary>
+        internal static string m_DownforceGround {
+            get {
+                return ResourceManager.GetString("m_DownforceGround", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The amount of DOWNFORCE when on GROUND (x times gravity).
+        /// </summary>
+        internal static string m_DownforceGroundDesc {
+            get {
+                return ResourceManager.GetString("m_DownforceGroundDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Downforce In Air MagLev.
+        /// </summary>
+        internal static string m_DownforceInAirMagLev {
+            get {
+                return ResourceManager.GetString("m_DownforceInAirMagLev", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The amount of DOWNFORCE when in MAGLEV and IN AIR (x times gravity) (Note: This is ONLY applied after we have gained air for m_DownforceMagLevAirTime seconds).
+        /// </summary>
+        internal static string m_DownforceInAirMagLevDesc {
+            get {
+                return ResourceManager.GetString("m_DownforceInAirMagLevDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Downforce MagLev.
+        /// </summary>
+        internal static string m_DownforceMagLev {
+            get {
+                return ResourceManager.GetString("m_DownforceMagLev", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Downforce MagLev Air Time.
+        /// </summary>
+        internal static string m_DownforceMagLevAirTime {
+            get {
+                return ResourceManager.GetString("m_DownforceMagLevAirTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The time we allow in AIR before we apply m_DownforceMagLevInAir.
+        /// </summary>
+        internal static string m_DownforceMagLevAirTimeDesc {
+            get {
+                return ResourceManager.GetString("m_DownforceMagLevAirTimeDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The amount of DOWNFORCE when in MAGLEV (x times gravity).
+        /// </summary>
+        internal static string m_DownforceMagLevDesc {
+            get {
+                return ResourceManager.GetString("m_DownforceMagLevDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Drag Max Strength.
+        /// </summary>
+        internal static string m_DragMaxStrength {
+            get {
+                return ResourceManager.GetString("m_DragMaxStrength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maximum drag strength.
+        /// </summary>
+        internal static string m_DragMaxStrengthDesc {
+            get {
+                return ResourceManager.GetString("m_DragMaxStrengthDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Drag Strength.
+        /// </summary>
+        internal static string m_DragStrength {
+            get {
+                return ResourceManager.GetString("m_DragStrength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Drag strength per meter.
+        /// </summary>
+        internal static string m_DragStrengthDesc {
+            get {
+                return ResourceManager.GetString("m_DragStrengthDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gravity Air.
+        /// </summary>
+        internal static string m_GravityAir {
+            get {
+                return ResourceManager.GetString("m_GravityAir", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The amount of GRAVITY when in AIR (x times gravity).
+        /// </summary>
+        internal static string m_GravityAirDesc {
+            get {
+                return ResourceManager.GetString("m_GravityAirDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gravity Ground.
+        /// </summary>
+        internal static string m_GravityGround {
+            get {
+                return ResourceManager.GetString("m_GravityGround", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The amount of GRAVITY when on GROUND (x times gravity).
+        /// </summary>
+        internal static string m_GravityGroundDesc {
+            get {
+                return ResourceManager.GetString("m_GravityGroundDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Height For Big Air.
+        /// </summary>
+        internal static string m_HeightForBigAir {
+            get {
+                return ResourceManager.GetString("m_HeightForBigAir", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Height we need to obtain before getting BIG AIR.
+        /// </summary>
+        internal static string m_HeightForBigAirDesc {
+            get {
+                return ResourceManager.GetString("m_HeightForBigAirDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hit By Missile Friction.
+        /// </summary>
+        internal static string m_HitByMissileFriction {
+            get {
+                return ResourceManager.GetString("m_HitByMissileFriction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This is the lat / long friction when we are hit by a missile.
+        /// </summary>
+        internal static string m_HitByMissileFrictionDesc {
+            get {
+                return ResourceManager.GetString("m_HitByMissileFrictionDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hit Slowdown Speed Force.
+        /// </summary>
+        internal static string m_HitSlowdownSpeedForce {
+            get {
+                return ResourceManager.GetString("m_HitSlowdownSpeedForce", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The slowdown force we apply when going forwards (m/sec).
+        /// </summary>
+        internal static string m_HitSlowdownSpeedForceDesc {
+            get {
+                return ResourceManager.GetString("m_HitSlowdownSpeedForceDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hit Slowdown Speed Force Rev.
+        /// </summary>
+        internal static string m_HitSlowdownSpeedForceRev {
+            get {
+                return ResourceManager.GetString("m_HitSlowdownSpeedForceRev", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The slowdown force we apply when going backwards (m/sec).
+        /// </summary>
+        internal static string m_HitSlowdownSpeedForceRevDesc {
+            get {
+                return ResourceManager.GetString("m_HitSlowdownSpeedForceRevDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hit Slowdown Speed Min.
+        /// </summary>
+        internal static string m_HitSlowdownSpeedMin {
+            get {
+                return ResourceManager.GetString("m_HitSlowdownSpeedMin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The minimum speed we must be going before we apply any slowdown force (m/sec).
+        /// </summary>
+        internal static string m_HitSlowdownSpeedMinDesc {
+            get {
+                return ResourceManager.GetString("m_HitSlowdownSpeedMinDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hit Stop Angle.
+        /// </summary>
+        internal static string m_HitStopAngle {
+            get {
+                return ResourceManager.GetString("m_HitStopAngle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When we hit a plane at less than this cos(angle).
+        /// </summary>
+        internal static string m_HitStopAngleDesc {
+            get {
+                return ResourceManager.GetString("m_HitStopAngleDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hit Stop Speed.
+        /// </summary>
+        internal static string m_HitStopSpeed {
+            get {
+                return ResourceManager.GetString("m_HitStopSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to and also at this speed, we will stop.
+        /// </summary>
+        internal static string m_HitStopSpeedDesc {
+            get {
+                return ResourceManager.GetString("m_HitStopSpeedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hit Up Slide Tolerance.
+        /// </summary>
+        internal static string m_HitUpSlideTol {
+            get {
+                return ResourceManager.GetString("m_HitUpSlideTol", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When we are sliding and hit a plane if the cos(angle) is &gt; this then we will drop out of our slide.
+        /// </summary>
+        internal static string m_HitUpSlideTolDesc {
+            get {
+                return ResourceManager.GetString("m_HitUpSlideTolDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hi Turn Lat Friction.
+        /// </summary>
+        internal static string m_HiTurnLatFriction {
+            get {
+                return ResourceManager.GetString("m_HiTurnLatFriction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to lat / long / lat 2 long | GROUND hi-turn friction parameters.
+        /// </summary>
+        internal static string m_HiTurnLatFrictionDesc {
+            get {
+                return ResourceManager.GetString("m_HiTurnLatFrictionDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hi Turn Start Angle.
+        /// </summary>
+        internal static string m_HiTurnStartAngle {
+            get {
+                return ResourceManager.GetString("m_HiTurnStartAngle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The angle from AT.VEL that we consider ourselves to be hard turning (rad).
+        /// </summary>
+        internal static string m_HiTurnStartAngleDesc {
+            get {
+                return ResourceManager.GetString("m_HiTurnStartAngleDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hit Wall Lat Fric Loss.
+        /// </summary>
+        internal static string m_HitWallLatFricLoss {
+            get {
+                return ResourceManager.GetString("m_HitWallLatFricLoss", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Friction loss (percentage) when at full angle with the wall, this is linearly interpolated from 0 -&gt; value..
+        /// </summary>
+        internal static string m_HitWallLatFricLossDesc {
+            get {
+                return ResourceManager.GetString("m_HitWallLatFricLossDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hit Wall Lat Max Ang.
+        /// </summary>
+        internal static string m_HitWallLatMaxAng {
+            get {
+                return ResourceManager.GetString("m_HitWallLatMaxAng", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &gt;= No lateral friction loss we be applied.
+        /// </summary>
+        internal static string m_HitWallLatMaxAngDesc {
+            get {
+                return ResourceManager.GetString("m_HitWallLatMaxAngDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hit Wall Lat Min Ang.
+        /// </summary>
+        internal static string m_HitWallLatMinAng {
+            get {
+                return ResourceManager.GetString("m_HitWallLatMinAng", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Less or equal Full lateral friction loss we be applied.
+        /// </summary>
+        internal static string m_HitWallLatMinAngDesc {
+            get {
+                return ResourceManager.GetString("m_HitWallLatMinAngDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In Air Friction.
+        /// </summary>
+        internal static string m_InAirFriction {
+            get {
+                return ResourceManager.GetString("m_InAirFriction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Friction while in air, the long is removed when we are less or equal the above speed.
+        /// </summary>
+        internal static string m_InAirFrictionDesc {
+            get {
+                return ResourceManager.GetString("m_InAirFrictionDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In Air Min Speed.
+        /// </summary>
+        internal static string m_InAirMinSpeed {
+            get {
+                return ResourceManager.GetString("m_InAirMinSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If we are &gt; this speed then long friction is applied to the kart.
+        /// </summary>
+        internal static string m_InAirMinSpeedDesc {
+            get {
+                return ResourceManager.GetString("m_InAirMinSpeedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In Air Turn Rate Normal.
+        /// </summary>
+        internal static string m_InAirTurnRateNormal {
+            get {
+                return ResourceManager.GetString("m_InAirTurnRateNormal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The NORMAL kart turn rate in air (r/sec).
+        /// </summary>
+        internal static string m_InAirTurnRateNormalDesc {
+            get {
+                return ResourceManager.GetString("m_InAirTurnRateNormalDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In Air Turn Rate Wumpa.
+        /// </summary>
+        internal static string m_InAirTurnRateWumpa {
+            get {
+                return ResourceManager.GetString("m_InAirTurnRateWumpa", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The WUMPAed kart turn rate in air (r/sec).
+        /// </summary>
+        internal static string m_InAirTurnRateWumpaDesc {
+            get {
+                return ResourceManager.GetString("m_InAirTurnRateWumpaDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invincibility Max Forward Speed.
+        /// </summary>
+        internal static string m_InvincibiliyMaxForwardSpeed {
+            get {
+                return ResourceManager.GetString("m_InvincibiliyMaxForwardSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max Forward / Accel Gain / Turn Rate | Invincibility pickup config (percentage increase on wumpa level, i.e. use 1.1 for gain).
+        /// </summary>
+        internal static string m_InvincibiliyMaxForwardSpeedDesc {
+            get {
+                return ResourceManager.GetString("m_InvincibiliyMaxForwardSpeedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Jump Air Tolerance.
+        /// </summary>
+        internal static string m_JumpAirTolerance {
+            get {
+                return ResourceManager.GetString("m_JumpAirTolerance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The time in air (without jumping to initiate) we allow the user to still activate a jump.
+        /// </summary>
+        internal static string m_JumpAirToleranceDesc {
+            get {
+                return ResourceManager.GetString("m_JumpAirToleranceDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Jump Before Air Time Tolerance.
+        /// </summary>
+        internal static string m_JumpBeforeAirTimeTol {
+            get {
+                return ResourceManager.GetString("m_JumpBeforeAirTimeTol", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tollerance for jump before air timer.
+        /// </summary>
+        internal static string m_JumpBeforeAirTimeTolDesc {
+            get {
+                return ResourceManager.GetString("m_JumpBeforeAirTimeTolDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Jump Impulse Base.
+        /// </summary>
+        internal static string m_JumpImpulseBase {
+            get {
+                return ResourceManager.GetString("m_JumpImpulseBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The base impulse for air (hop).
+        /// </summary>
+        internal static string m_JumpImpulseBaseDesc {
+            get {
+                return ResourceManager.GetString("m_JumpImpulseBaseDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Jump Impulse Base MagLev.
+        /// </summary>
+        internal static string m_JumpImpulseBaseMagLev {
+            get {
+                return ResourceManager.GetString("m_JumpImpulseBaseMagLev", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The base impulse for air (When in MAG-LEV mode).
+        /// </summary>
+        internal static string m_JumpImpulseBaseMagLevDesc {
+            get {
+                return ResourceManager.GetString("m_JumpImpulseBaseMagLevDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Jump Impulse Up Max.
+        /// </summary>
+        internal static string m_JumpImpulseUpMax {
+            get {
+                return ResourceManager.GetString("m_JumpImpulseUpMax", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The maximum UP that we add to the JUMP IMPULSE.
+        /// </summary>
+        internal static string m_JumpImpulseUpMaxDesc {
+            get {
+                return ResourceManager.GetString("m_JumpImpulseUpMaxDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Jump Impulse Up Min.
+        /// </summary>
+        internal static string m_JumpImpulseUpMin {
+            get {
+                return ResourceManager.GetString("m_JumpImpulseUpMin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The minimum UP (z-axis) before we start using it for addition JUMP IMPULSE.
+        /// </summary>
+        internal static string m_JumpImpulseUpMinDesc {
+            get {
+                return ResourceManager.GetString("m_JumpImpulseUpMinDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Jump Impulse Up Percent.
+        /// </summary>
+        internal static string m_JumpImpulseUpPercent {
+            get {
+                return ResourceManager.GetString("m_JumpImpulseUpPercent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The modifier for the above values.
+        /// </summary>
+        internal static string m_JumpImpulseUpPercentDesc {
+            get {
+                return ResourceManager.GetString("m_JumpImpulseUpPercentDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Jump Max Up Velocity.
+        /// </summary>
+        internal static string m_JumpMaxUpVelocity {
+            get {
+                return ResourceManager.GetString("m_JumpMaxUpVelocity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The maximum UP velocity the kart can have (caps the jump impulse).
+        /// </summary>
+        internal static string m_JumpMaxUpVelocityDesc {
+            get {
+                return ResourceManager.GetString("m_JumpMaxUpVelocityDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Jump Time In Air Boost.
+        /// </summary>
+        internal static string m_JumpTimeInAirBoost {
+            get {
+                return ResourceManager.GetString("m_JumpTimeInAirBoost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Time in air after jumping before we get a boost (SMALL / MED / LARGE).
+        /// </summary>
+        internal static string m_JumpTimeInAirBoostDesc {
+            get {
+                return ResourceManager.GetString("m_JumpTimeInAirBoostDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Low Speed.
+        /// </summary>
+        internal static string m_LowSpeed {
+            get {
+                return ResourceManager.GetString("m_LowSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Speed to determine when we are in low speed driving model (m/sec).
+        /// </summary>
+        internal static string m_LowSpeedDesc {
+            get {
+                return ResourceManager.GetString("m_LowSpeedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max Forward Speed Normal.
+        /// </summary>
+        internal static string m_MaxForwardSpeedNormal {
+            get {
+                return ResourceManager.GetString("m_MaxForwardSpeedNormal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The NORMAL maximum FORWARD SPEED of the kart (m/sec).
+        /// </summary>
+        internal static string m_MaxForwardSpeedNormalDesc {
+            get {
+                return ResourceManager.GetString("m_MaxForwardSpeedNormalDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max Forward Speed Wumpa.
+        /// </summary>
+        internal static string m_MaxForwardSpeedWumpa {
+            get {
+                return ResourceManager.GetString("m_MaxForwardSpeedWumpa", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The WUMPA maximum FORWARD SPEED of the kart (m/sec).
+        /// </summary>
+        internal static string m_MaxForwardSpeedWumpaDesc {
+            get {
+                return ResourceManager.GetString("m_MaxForwardSpeedWumpaDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max Linear Velocity XY.
+        /// </summary>
+        internal static string m_MaxLinearVelXY {
+            get {
+                return ResourceManager.GetString("m_MaxLinearVelXY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The maximum we will allow our XY velocity to get. | 40 (Trying to limit aberrant behavior.).
+        /// </summary>
+        internal static string m_MaxLinearVelXYDesc {
+            get {
+                return ResourceManager.GetString("m_MaxLinearVelXYDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max Linear Velocity Z.
+        /// </summary>
+        internal static string m_MaxLinearVelZ {
+            get {
+                return ResourceManager.GetString("m_MaxLinearVelZ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The maximum we will allow our Z velocity to get.
+        /// </summary>
+        internal static string m_MaxLinearVelZDesc {
+            get {
+                return ResourceManager.GetString("m_MaxLinearVelZDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max Reverse Speed.
+        /// </summary>
+        internal static string m_MaxReverseSpeed {
+            get {
+                return ResourceManager.GetString("m_MaxReverseSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The maximum REVERSE SPEED of the kart (m/sec).
+        /// </summary>
+        internal static string m_MaxReverseSpeedDesc {
+            get {
+                return ResourceManager.GetString("m_MaxReverseSpeedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Min Height For Air No Jump.
+        /// </summary>
+        internal static string m_MinHeightForAirNoJump {
+            get {
+                return ResourceManager.GetString("m_MinHeightForAirNoJump", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The minimum height we need to get without jumping before we set the in-air state (Note: This is from the center of the collision sphere!!!).
+        /// </summary>
+        internal static string m_MinHeightForAirNoJumpDesc {
+            get {
+                return ResourceManager.GetString("m_MinHeightForAirNoJumpDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Normal Friction.
+        /// </summary>
+        internal static string m_NormalFriction {
+            get {
+                return ResourceManager.GetString("m_NormalFriction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to lat / long / lat 2 long | GROUND normal friction parameters.
+        /// </summary>
+        internal static string m_NormalFrictionDesc {
+            get {
+                return ResourceManager.GetString("m_NormalFrictionDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset Grav Strength.
+        /// </summary>
+        internal static string m_ResetGravStrength {
+            get {
+                return ResourceManager.GetString("m_ResetGravStrength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The gravity strength for dropping the kart.
+        /// </summary>
+        internal static string m_ResetGravStrengthDesc {
+            get {
+                return ResourceManager.GetString("m_ResetGravStrengthDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset Max Time.
+        /// </summary>
+        internal static string m_ResetMaxTime {
+            get {
+                return ResourceManager.GetString("m_ResetMaxTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The maximum time we stay in the RESET state for.
+        /// </summary>
+        internal static string m_ResetMaxTimeDesc {
+            get {
+                return ResourceManager.GetString("m_ResetMaxTimeDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset Wait Before Drop.
+        /// </summary>
+        internal static string m_ResetWaitBeforeDrop {
+            get {
+                return ResourceManager.GetString("m_ResetWaitBeforeDrop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The time we wait before dropping the kart with gravity.
+        /// </summary>
+        internal static string m_ResetWaitBeforeDropDesc {
+            get {
+                return ResourceManager.GetString("m_ResetWaitBeforeDropDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reverse Gain.
+        /// </summary>
+        internal static string m_ReverseGain {
+            get {
+                return ResourceManager.GetString("m_ReverseGain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The REVERSE ACCELERATION GAIN of the kart (m/sec).
+        /// </summary>
+        internal static string m_ReverseGainDesc {
+            get {
+                return ResourceManager.GetString("m_ReverseGainDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shocked Max Forward Speed.
+        /// </summary>
+        internal static string m_ShockedMaxForwardSpeed {
+            get {
+                return ResourceManager.GetString("m_ShockedMaxForwardSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max Forward / Accel Gain / Turn Rate | Shocked config (percentage increate on wumpa level, i.e. use 0.9 for loss).
+        /// </summary>
+        internal static string m_ShockedMaxForwardSpeedDesc {
+            get {
+                return ResourceManager.GetString("m_ShockedMaxForwardSpeedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slide Boost Quadratic.
+        /// </summary>
+        internal static string m_SlideBoostQuadratic {
+            get {
+                return ResourceManager.GetString("m_SlideBoostQuadratic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slide boost quadratic inputs (Note: You MUST make sure that invalid values are not entered here!).
+        /// </summary>
+        internal static string m_SlideBoostQuadraticDesc {
+            get {
+                return ResourceManager.GetString("m_SlideBoostQuadraticDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slide Boost Time.
+        /// </summary>
+        internal static string m_SlideBoostTime {
+            get {
+                return ResourceManager.GetString("m_SlideBoostTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This is the optimum time for boost, any time after will not allow us to boost.
+        /// </summary>
+        internal static string m_SlideBoostTimeDesc {
+            get {
+                return ResourceManager.GetString("m_SlideBoostTimeDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slide Ease In Speed.
+        /// </summary>
+        internal static string m_SlideEaseInSpeed {
+            get {
+                return ResourceManager.GetString("m_SlideEaseInSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ease in speed for turning (r/sec) (Note: This is on top of m_SlideTurnRateInToSlide or m_SlideTurnRateAwayFromSlide depending on the interpolation direction).
+        /// </summary>
+        internal static string m_SlideEaseInSpeedDesc {
+            get {
+                return ResourceManager.GetString("m_SlideEaseInSpeedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slide Ease Out Percent Between.
+        /// </summary>
+        internal static string m_SlideEaseOutPercentBetween {
+            get {
+                return ResourceManager.GetString("m_SlideEaseOutPercentBetween", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ease out percentage of angle between VEL and AT (Inner, Neutral, Outer).
+        /// </summary>
+        internal static string m_SlideEaseOutPercentBetweenDesc {
+            get {
+                return ResourceManager.GetString("m_SlideEaseOutPercentBetweenDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slide Ease Out Rot Vel Speed.
+        /// </summary>
+        internal static string m_SlideEaseOutRotVelSpeed {
+            get {
+                return ResourceManager.GetString("m_SlideEaseOutRotVelSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rotate out speed for velocity rotation          (Inner, Neutral, Outer).
+        /// </summary>
+        internal static string m_SlideEaseOutRotVelSpeedDesc {
+            get {
+                return ResourceManager.GetString("m_SlideEaseOutRotVelSpeedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slide Ease Out Speed.
+        /// </summary>
+        internal static string m_SlideEaseOutSpeed {
+            get {
+                return ResourceManager.GetString("m_SlideEaseOutSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ease out speed for turning (r/sec).
+        /// </summary>
+        internal static string m_SlideEaseOutSpeedDesc {
+            get {
+                return ResourceManager.GetString("m_SlideEaseOutSpeedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slide End Max Time.
+        /// </summary>
+        internal static string m_SlideEndMaxTime {
+            get {
+                return ResourceManager.GetString("m_SlideEndMaxTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When our accumulated SlideEndTime reaches +- this figure we end sliding.  Which can end in a spin-out depending on which way our steering ended..
+        /// </summary>
+        internal static string m_SlideEndMaxTimeDesc {
+            get {
+                return ResourceManager.GetString("m_SlideEndMaxTimeDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slide End Reduce Time.
+        /// </summary>
+        internal static string m_SlideEndReduceTime {
+            get {
+                return ResourceManager.GetString("m_SlideEndReduceTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This is the percentage of the TimeStep we reduce the SlideEndCurrTime when no steering is applied.
+        /// </summary>
+        internal static string m_SlideEndReduceTimeDesc {
+            get {
+                return ResourceManager.GetString("m_SlideEndReduceTimeDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slide Friction High.
+        /// </summary>
+        internal static string m_SlideFrictionHigh {
+            get {
+                return ResourceManager.GetString("m_SlideFrictionHigh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to lat / long / lat 2 long | Friction param when we are steering away from the slide.
+        /// </summary>
+        internal static string m_SlideFrictionHighDesc {
+            get {
+                return ResourceManager.GetString("m_SlideFrictionHighDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slide Friction Low.
+        /// </summary>
+        internal static string m_SlideFrictionLow {
+            get {
+                return ResourceManager.GetString("m_SlideFrictionLow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to lat / long / lat 2 long | Friction params when we are steering in to the slide.
+        /// </summary>
+        internal static string m_SlideFrictionLowDesc {
+            get {
+                return ResourceManager.GetString("m_SlideFrictionLowDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slide Friction Norm.
+        /// </summary>
+        internal static string m_SlideFrictionNorm {
+            get {
+                return ResourceManager.GetString("m_SlideFrictionNorm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to lat / long / lat 2 long | Friction params when we aren&apos;t steering.
+        /// </summary>
+        internal static string m_SlideFrictionNormDesc {
+            get {
+                return ResourceManager.GetString("m_SlideFrictionNormDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slide Max Angle.
+        /// </summary>
+        internal static string m_SlideMaxAngle {
+            get {
+                return ResourceManager.GetString("m_SlideMaxAngle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The maximum angle the kart can get from the velocity direction (rad).
+        /// </summary>
+        internal static string m_SlideMaxAngleDesc {
+            get {
+                return ResourceManager.GetString("m_SlideMaxAngleDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slide Max Boost Count.
+        /// </summary>
+        internal static string m_SlideMaxBoostCount {
+            get {
+                return ResourceManager.GetString("m_SlideMaxBoostCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If we exceed this number then no more boosts are given.
+        /// </summary>
+        internal static string m_SlideMaxBoostCountDesc {
+            get {
+                return ResourceManager.GetString("m_SlideMaxBoostCountDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slide Min Angle.
+        /// </summary>
+        internal static string m_SlideMinAngle {
+            get {
+                return ResourceManager.GetString("m_SlideMinAngle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The minimum angle the kart can get from the velocity direction (rad).
+        /// </summary>
+        internal static string m_SlideMinAngleDesc {
+            get {
+                return ResourceManager.GetString("m_SlideMinAngleDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slide Minimum Speed.
+        /// </summary>
+        internal static string m_SlideMinimumSpeed {
+            get {
+                return ResourceManager.GetString("m_SlideMinimumSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The minimum speed we can be going to maintain our slide.
+        /// </summary>
+        internal static string m_SlideMinimumSpeedDesc {
+            get {
+                return ResourceManager.GetString("m_SlideMinimumSpeedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slide Start Min Steer.
+        /// </summary>
+        internal static string m_SlideStartMinSteer {
+            get {
+                return ResourceManager.GetString("m_SlideStartMinSteer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The minimum we must be steering to initiate a slide on landing from air.
+        /// </summary>
+        internal static string m_SlideStartMinSteerDesc {
+            get {
+                return ResourceManager.GetString("m_SlideStartMinSteerDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slide Turn Rate Away From Slide.
+        /// </summary>
+        internal static string m_SlideTurnRateAwayFromSlide {
+            get {
+                return ResourceManager.GetString("m_SlideTurnRateAwayFromSlide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The speed we turn the kart away from the slide (r/sec).
+        /// </summary>
+        internal static string m_SlideTurnRateAwayFromSlideDesc {
+            get {
+                return ResourceManager.GetString("m_SlideTurnRateAwayFromSlideDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slide Turn Rate In To Slide.
+        /// </summary>
+        internal static string m_SlideTurnRateInToSlide {
+            get {
+                return ResourceManager.GetString("m_SlideTurnRateInToSlide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The speed we turn the kart into the slide (r/sec).
+        /// </summary>
+        internal static string m_SlideTurnRateInToSlideDesc {
+            get {
+                return ResourceManager.GetString("m_SlideTurnRateInToSlideDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slope Accel Extra.
+        /// </summary>
+        internal static string m_SlopeAccelExtra {
+            get {
+                return ResourceManager.GetString("m_SlopeAccelExtra", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The acceleration increase (percent).
+        /// </summary>
+        internal static string m_SlopeAccelExtraDesc {
+            get {
+                return ResourceManager.GetString("m_SlopeAccelExtraDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slope Max Angle.
+        /// </summary>
+        internal static string m_SlopeMaxAngle {
+            get {
+                return ResourceManager.GetString("m_SlopeMaxAngle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The maximum angle where we achieve full extra (r).
+        /// </summary>
+        internal static string m_SlopeMaxAngleDesc {
+            get {
+                return ResourceManager.GetString("m_SlopeMaxAngleDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slope Min Angle.
+        /// </summary>
+        internal static string m_SlopeMinAngle {
+            get {
+                return ResourceManager.GetString("m_SlopeMinAngle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The minimum angle that this kicks in (r).
+        /// </summary>
+        internal static string m_SlopeMinAngleDesc {
+            get {
+                return ResourceManager.GetString("m_SlopeMinAngleDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spikey Fruit Max Forward Speed.
+        /// </summary>
+        internal static string m_SpikeyFruitMaxForwardSpeed {
+            get {
+                return ResourceManager.GetString("m_SpikeyFruitMaxForwardSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max Forward / Accel Gain / Turn Rate | Spikey-Fruit config (percentage increate on wumpa level, i.e. use 0.9 for loss).
+        /// </summary>
+        internal static string m_SpikeyFruitMaxForwardSpeedDesc {
+            get {
+                return ResourceManager.GetString("m_SpikeyFruitMaxForwardSpeedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spin Out Friction.
+        /// </summary>
+        internal static string m_SpinOutFriction {
+            get {
+                return ResourceManager.GetString("m_SpinOutFriction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lat/Long friction applied during SPIN-OUT.
+        /// </summary>
+        internal static string m_SpinOutFrictionDesc {
+            get {
+                return ResourceManager.GetString("m_SpinOutFrictionDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spin Out Total Large.
+        /// </summary>
+        internal static string m_SpinOutTotalLarge {
+            get {
+                return ResourceManager.GetString("m_SpinOutTotalLarge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The total amount we large spin out in radians.
+        /// </summary>
+        internal static string m_SpinOutTotalLargeDesc {
+            get {
+                return ResourceManager.GetString("m_SpinOutTotalLargeDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spin Out Total Normal.
+        /// </summary>
+        internal static string m_SpinOutTotalNormal {
+            get {
+                return ResourceManager.GetString("m_SpinOutTotalNormal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The total amount we normal spin out in radians.
+        /// </summary>
+        internal static string m_SpinOutTotalNormalDesc {
+            get {
+                return ResourceManager.GetString("m_SpinOutTotalNormalDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spin Out Turn Rate Max.
+        /// </summary>
+        internal static string m_SpinOutTurnRateMax {
+            get {
+                return ResourceManager.GetString("m_SpinOutTurnRateMax", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The speed we spin out (rad / sec) } between these numbers.
+        /// </summary>
+        internal static string m_SpinOutTurnRateMaxDesc {
+            get {
+                return ResourceManager.GetString("m_SpinOutTurnRateMaxDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spin Out Turn Rate Min.
+        /// </summary>
+        internal static string m_SpinOutTurnRateMin {
+            get {
+                return ResourceManager.GetString("m_SpinOutTurnRateMin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The speed we spin out (rad / sec) } Real amount interpolated.
+        /// </summary>
+        internal static string m_SpinOutTurnRateMinDesc {
+            get {
+                return ResourceManager.GetString("m_SpinOutTurnRateMinDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Squashed Max Forward Speed.
+        /// </summary>
+        internal static string m_SquashedMaxForwardSpeed {
+            get {
+                return ResourceManager.GetString("m_SquashedMaxForwardSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max Forward / Accel Gain / Turn Rate | Squashed config (percentage increate on wumpa level, i.e. use 0.9 for loss).
+        /// </summary>
+        internal static string m_SquashedMaxForwardSpeedDesc {
+            get {
+                return ResourceManager.GetString("m_SquashedMaxForwardSpeedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start Line Boost: Cancel Min Percent.
+        /// </summary>
+        internal static string m_StartLineTS_m_CancelMinPercent {
+            get {
+                return ResourceManager.GetString("m_StartLineTS_m_CancelMinPercent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to While we are less than this percent the we don&apos;t enforce wait time for repress and also clear the hold time.
+        /// </summary>
+        internal static string m_StartLineTS_m_CancelMinPercentDesc {
+            get {
+                return ResourceManager.GetString("m_StartLineTS_m_CancelMinPercentDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start Line Boost: Dec Hold Time.
+        /// </summary>
+        internal static string m_StartLineTS_m_DecHoldTime {
+            get {
+                return ResourceManager.GetString("m_StartLineTS_m_DecHoldTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The time we start to decrement the turbo start from.
+        /// </summary>
+        internal static string m_StartLineTS_m_DecHoldTimeDesc {
+            get {
+                return ResourceManager.GetString("m_StartLineTS_m_DecHoldTimeDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start Line Boost: Dec Speed.
+        /// </summary>
+        internal static string m_StartLineTS_m_DecSpeed {
+            get {
+                return ResourceManager.GetString("m_StartLineTS_m_DecSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The speed we decrement the counter at (1.0 / seconds).
+        /// </summary>
+        internal static string m_StartLineTS_m_DecSpeedDesc {
+            get {
+                return ResourceManager.GetString("m_StartLineTS_m_DecSpeedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start Line Boost: Inc Speed.
+        /// </summary>
+        internal static string m_StartLineTS_m_IncSpeed {
+            get {
+                return ResourceManager.GetString("m_StartLineTS_m_IncSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The speed we increment the counter at (1.0 / seconds).
+        /// </summary>
+        internal static string m_StartLineTS_m_IncSpeedDesc {
+            get {
+                return ResourceManager.GetString("m_StartLineTS_m_IncSpeedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start Line Boost: Max Hold Time.
+        /// </summary>
+        internal static string m_StartLineTS_m_MaxHoldTime {
+            get {
+                return ResourceManager.GetString("m_StartLineTS_m_MaxHoldTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The time we can hold the accelerator for before we stop increasing the counter.
+        /// </summary>
+        internal static string m_StartLineTS_m_MaxHoldTimeDesc {
+            get {
+                return ResourceManager.GetString("m_StartLineTS_m_MaxHoldTimeDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start Line Boost: Max Repress Time.
+        /// </summary>
+        internal static string m_StartLineTS_m_MaxRepressTime {
+            get {
+                return ResourceManager.GetString("m_StartLineTS_m_MaxRepressTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The time we wait between presses / when we run out from on press before a new press can take effect.
+        /// </summary>
+        internal static string m_StartLineTS_m_MaxRepressTimeDesc {
+            get {
+                return ResourceManager.GetString("m_StartLineTS_m_MaxRepressTimeDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start Line Boost: Quadratic.
+        /// </summary>
+        internal static string m_StartLineTS_m_Quadratic {
+            get {
+                return ResourceManager.GetString("m_StartLineTS_m_Quadratic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turbo start boost quadratic inputs (Note: You MUST make sure that invalid values are not entered here!).
+        /// </summary>
+        internal static string m_StartLineTS_m_QuadraticDesc {
+            get {
+                return ResourceManager.GetString("m_StartLineTS_m_QuadraticDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Time Bubble Max Forward Speed.
+        /// </summary>
+        internal static string m_TimeBubbleMaxForwardSpeed {
+            get {
+                return ResourceManager.GetString("m_TimeBubbleMaxForwardSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max Forward / Accel Gain / Turn Rate | Time Bubble config (percentage increate on wumpa level, i.e. use 0.9 for loss).
+        /// </summary>
+        internal static string m_TimeBubbleMaxForwardSpeedDesc {
+            get {
+                return ResourceManager.GetString("m_TimeBubbleMaxForwardSpeedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tropy Clocks Max Forward Speed.
+        /// </summary>
+        internal static string m_TropyClocksMaxForwardSpeed {
+            get {
+                return ResourceManager.GetString("m_TropyClocksMaxForwardSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max Forward / Accel Gain / Turn Rate | Tropy-clocks config (percentage increate on wumpa level, i.e. use 0.9 for loss).
+        /// </summary>
+        internal static string m_TropyClocksMaxForwardSpeedDesc {
+            get {
+                return ResourceManager.GetString("m_TropyClocksMaxForwardSpeedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turn Decell Force.
+        /// </summary>
+        internal static string m_TurnDecellForce {
+            get {
+                return ResourceManager.GetString("m_TurnDecellForce", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The turn decell force (m/sec) (Formula is (Speed-m_TurnDecellSpeed) * m_TurnDecellForce).
+        /// </summary>
+        internal static string m_TurnDecellForceDesc {
+            get {
+                return ResourceManager.GetString("m_TurnDecellForceDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turn Decell Force Max.
+        /// </summary>
+        internal static string m_TurnDecellForceMax {
+            get {
+                return ResourceManager.GetString("m_TurnDecellForceMax", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The maximum the turn decelleration force can be (m/sec).
+        /// </summary>
+        internal static string m_TurnDecellForceMaxDesc {
+            get {
+                return ResourceManager.GetString("m_TurnDecellForceMaxDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turn Decell Speed.
+        /// </summary>
+        internal static string m_TurnDecellSpeed {
+            get {
+                return ResourceManager.GetString("m_TurnDecellSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The speed where turn decelleration effect kicks in (m/sec).
+        /// </summary>
+        internal static string m_TurnDecellSpeedDesc {
+            get {
+                return ResourceManager.GetString("m_TurnDecellSpeedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turn Rate Accel.
+        /// </summary>
+        internal static string m_TurnRateAccel {
+            get {
+                return ResourceManager.GetString("m_TurnRateAccel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The kart additional turn rate when accelerator and not brake is pressed (r/sec).
+        /// </summary>
+        internal static string m_TurnRateAccelDesc {
+            get {
+                return ResourceManager.GetString("m_TurnRateAccelDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turn Rate Brake.
+        /// </summary>
+        internal static string m_TurnRateBrake {
+            get {
+                return ResourceManager.GetString("m_TurnRateBrake", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The kart additional turn rate when brake is pressed (r/sec).
+        /// </summary>
+        internal static string m_TurnRateBrakeDesc {
+            get {
+                return ResourceManager.GetString("m_TurnRateBrakeDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turn Rate Normal.
+        /// </summary>
+        internal static string m_TurnRateNormal {
+            get {
+                return ResourceManager.GetString("m_TurnRateNormal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The NORMAL kart turn rate (r/sec).
+        /// </summary>
+        internal static string m_TurnRateNormalDesc {
+            get {
+                return ResourceManager.GetString("m_TurnRateNormalDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turn Rate Wumpa.
+        /// </summary>
+        internal static string m_TurnRateWumpa {
+            get {
+                return ResourceManager.GetString("m_TurnRateWumpa", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The WUMPA kart turn rate (r/sec).
+        /// </summary>
+        internal static string m_TurnRateWumpaDesc {
+            get {
+                return ResourceManager.GetString("m_TurnRateWumpaDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wait Before Brake Reverses.
+        /// </summary>
+        internal static string m_WaitBeforeBrakeReverses {
+            get {
+                return ResourceManager.GetString("m_WaitBeforeBrakeReverses", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This is the amount of time to pause before the brake button makes the kart reverse.
+        /// </summary>
+        internal static string m_WaitBeforeBrakeReversesDesc {
+            get {
+                return ResourceManager.GetString("m_WaitBeforeBrakeReversesDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wheelie Min Time.
+        /// </summary>
+        internal static string m_WheelieMinTime {
+            get {
+                return ResourceManager.GetString("m_WheelieMinTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The minimum amount of time spent in a wheelie.
+        /// </summary>
+        internal static string m_WheelieMinTimeDesc {
+            get {
+                return ResourceManager.GetString("m_WheelieMinTimeDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wheelie Slide Boost Min Percent.
+        /// </summary>
+        internal static string m_WheelieSlideBoostMinPercent {
+            get {
+                return ResourceManager.GetString("m_WheelieSlideBoostMinPercent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The minimum percentage we must obtain before we get a slide boost wheelie.
+        /// </summary>
+        internal static string m_WheelieSlideBoostMinPercentDesc {
+            get {
+                return ResourceManager.GetString("m_WheelieSlideBoostMinPercentDesc", resourceCulture);
             }
         }
         
@@ -147,6 +4521,105 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart {
         internal static string Mod_SpeedUpMaskHintDesc {
             get {
                 return ResourceManager.GetString("Mod_SpeedUpMaskHintDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Power Shield: Color Juiced.
+        /// </summary>
+        internal static string PowerShield_m_ColorJuiced {
+            get {
+                return ResourceManager.GetString("PowerShield_m_ColorJuiced", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Power Shield: Color Non Juiced.
+        /// </summary>
+        internal static string PowerShield_m_ColorNonJuiced {
+            get {
+                return ResourceManager.GetString("PowerShield_m_ColorNonJuiced", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Power Shield: Collision Radius.
+        /// </summary>
+        internal static string PowerShield_m_ColRadius {
+            get {
+                return ResourceManager.GetString("PowerShield_m_ColRadius", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Power Shield: Range For Zapping.
+        /// </summary>
+        internal static string PowerShield_m_RangeForZapping {
+            get {
+                return ResourceManager.GetString("PowerShield_m_RangeForZapping", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Power Shield: Time.
+        /// </summary>
+        internal static string PowerShield_m_Time {
+            get {
+                return ResourceManager.GetString("PowerShield_m_Time", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Power Shield: Zap Speed.
+        /// </summary>
+        internal static string PowerShield_m_ZapSpeed {
+            get {
+                return ResourceManager.GetString("PowerShield_m_ZapSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adventure.
+        /// </summary>
+        internal static string PropCategory_Adventure {
+            get {
+                return ResourceManager.GetString("PropCategory_Adventure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Driver Stats.
+        /// </summary>
+        internal static string PropCategory_DriverStats {
+            get {
+                return ResourceManager.GetString("PropCategory_DriverStats", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kart Stats.
+        /// </summary>
+        internal static string PropCategory_KartStats {
+            get {
+                return ResourceManager.GetString("PropCategory_KartStats", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Powerups.
+        /// </summary>
+        internal static string PropCategory_Powerups {
+            get {
+                return ResourceManager.GetString("PropCategory_Powerups", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Surfaces.
+        /// </summary>
+        internal static string PropCategory_Surfaces {
+            get {
+                return ResourceManager.GetString("PropCategory_Surfaces", resourceCulture);
             }
         }
         
@@ -255,6 +4728,1149 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart {
         internal static string Rand_PowerupEffectsDesc {
             get {
                 return ResourceManager.GetString("Rand_PowerupEffectsDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Red Eye: Acceleration.
+        /// </summary>
+        internal static string RedEye_Acceleration {
+            get {
+                return ResourceManager.GetString("RedEye_Acceleration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Red Eye: Deceleration.
+        /// </summary>
+        internal static string RedEye_Deceleration {
+            get {
+                return ResourceManager.GetString("RedEye_Deceleration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Red Eye: Expl Scale.
+        /// </summary>
+        internal static string RedEye_Expl_Scale {
+            get {
+                return ResourceManager.GetString("RedEye_Expl_Scale", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Red Eye: Expl Scale Juiced.
+        /// </summary>
+        internal static string RedEye_Expl_Scale_Juiced {
+            get {
+                return ResourceManager.GetString("RedEye_Expl_Scale_Juiced", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Red Eye: Explosion Radius.
+        /// </summary>
+        internal static string RedEye_Explosion_Radius {
+            get {
+                return ResourceManager.GetString("RedEye_Explosion_Radius", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Red Eye: Explosion Radius Juiced.
+        /// </summary>
+        internal static string RedEye_Explosion_Radius_Juiced {
+            get {
+                return ResourceManager.GetString("RedEye_Explosion_Radius_Juiced", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Red Eye: Full Speed Turn Slowdown.
+        /// </summary>
+        internal static string RedEye_FullSpeedTurnSlowdown {
+            get {
+                return ResourceManager.GetString("RedEye_FullSpeedTurnSlowdown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (at min speed drop turn angle by 0, at full speed drop turn angle by this number - and it interpolates in between).
+        /// </summary>
+        internal static string RedEye_FullSpeedTurnSlowdownDesc {
+            get {
+                return ResourceManager.GetString("RedEye_FullSpeedTurnSlowdownDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Red Eye: Max Speed.
+        /// </summary>
+        internal static string RedEye_MaxSpeed {
+            get {
+                return ResourceManager.GetString("RedEye_MaxSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Red Eye: Turn Speed.
+        /// </summary>
+        internal static string RedEye_TurnSpeed {
+            get {
+                return ResourceManager.GetString("RedEye_TurnSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Red Eye: Turn Speed Juiced.
+        /// </summary>
+        internal static string RedEye_TurnSpeedJuiced {
+            get {
+                return ResourceManager.GetString("RedEye_TurnSpeedJuiced", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Static Shock: Distance For Home.
+        /// </summary>
+        internal static string StaticShock_m_DistanceForHome {
+            get {
+                return ResourceManager.GetString("StaticShock_m_DistanceForHome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How close to kart, before start homing.
+        /// </summary>
+        internal static string StaticShock_m_DistanceForHomeDesc {
+            get {
+                return ResourceManager.GetString("StaticShock_m_DistanceForHomeDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Static Shock: Homing Speed.
+        /// </summary>
+        internal static string StaticShock_m_HomingSpeed {
+            get {
+                return ResourceManager.GetString("StaticShock_m_HomingSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How fast does it move when its homing in on someone.
+        /// </summary>
+        internal static string StaticShock_m_HomingSpeedDesc {
+            get {
+                return ResourceManager.GetString("StaticShock_m_HomingSpeedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Static Shock: Juiced Time.
+        /// </summary>
+        internal static string StaticShock_m_JuicedTime {
+            get {
+                return ResourceManager.GetString("StaticShock_m_JuicedTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How long effect lasts when it is juiced.
+        /// </summary>
+        internal static string StaticShock_m_JuicedTimeDesc {
+            get {
+                return ResourceManager.GetString("StaticShock_m_JuicedTimeDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Static Shock: Juiced Wumpa Loss.
+        /// </summary>
+        internal static string StaticShock_m_JuicedWumpaLoss {
+            get {
+                return ResourceManager.GetString("StaticShock_m_JuicedWumpaLoss", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How much wumpa you lose when hit.
+        /// </summary>
+        internal static string StaticShock_m_JuicedWumpaLossDesc {
+            get {
+                return ResourceManager.GetString("StaticShock_m_JuicedWumpaLossDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Static Shock: Normal Time.
+        /// </summary>
+        internal static string StaticShock_m_NormalTime {
+            get {
+                return ResourceManager.GetString("StaticShock_m_NormalTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How long effect lasts when not juiced.
+        /// </summary>
+        internal static string StaticShock_m_NormalTimeDesc {
+            get {
+                return ResourceManager.GetString("StaticShock_m_NormalTimeDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Static Shock: Normal Wumpa Loss.
+        /// </summary>
+        internal static string StaticShock_m_NormalWumpaLoss {
+            get {
+                return ResourceManager.GetString("StaticShock_m_NormalWumpaLoss", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How much wumpa you lose when hit.
+        /// </summary>
+        internal static string StaticShock_m_NormalWumpaLossDesc {
+            get {
+                return ResourceManager.GetString("StaticShock_m_NormalWumpaLossDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Brake Loss Percent.
+        /// </summary>
+        internal static string Surface_m_BrakeLossPercent {
+            get {
+                return ResourceManager.GetString("Surface_m_BrakeLossPercent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The percentage of braking force we loose.
+        /// </summary>
+        internal static string Surface_m_BrakeLossPercentDesc {
+            get {
+                return ResourceManager.GetString("Surface_m_BrakeLossPercentDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kart Height Offset.
+        /// </summary>
+        internal static string Surface_m_KartHeightOffset {
+            get {
+                return ResourceManager.GetString("Surface_m_KartHeightOffset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kart height offset for the surface.
+        /// </summary>
+        internal static string Surface_m_KartHeightOffsetDesc {
+            get {
+                return ResourceManager.GetString("Surface_m_KartHeightOffsetDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lateral Friction Loss Percent.
+        /// </summary>
+        internal static string Surface_m_LatFrictionLossPercent {
+            get {
+                return ResourceManager.GetString("Surface_m_LatFrictionLossPercent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lat friction reduction percent | Note: When in a slide this number is ignored.
+        /// </summary>
+        internal static string Surface_m_LatFrictionLossPercentDesc {
+            get {
+                return ResourceManager.GetString("Surface_m_LatFrictionLossPercentDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Longitudinal Friction Loss Percent.
+        /// </summary>
+        internal static string Surface_m_LongFrictionLossPercent {
+            get {
+                return ResourceManager.GetString("Surface_m_LongFrictionLossPercent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Long friction reduction percent | Note: When in a slide this number is ignored.
+        /// </summary>
+        internal static string Surface_m_LongFrictionLossPercentDesc {
+            get {
+                return ResourceManager.GetString("Surface_m_LongFrictionLossPercentDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minimum Speed Percent.
+        /// </summary>
+        internal static string Surface_m_MinSpeedPercent {
+            get {
+                return ResourceManager.GetString("Surface_m_MinSpeedPercent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Percentage of m_MaxForwardSpeedNormal | Note : this also affects the boost speed.
+        /// </summary>
+        internal static string Surface_m_MinSpeedPercentDesc {
+            get {
+                return ResourceManager.GetString("Surface_m_MinSpeedPercentDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slide Friction Loss Percent.
+        /// </summary>
+        internal static string Surface_m_SlideFrictionLossPercent {
+            get {
+                return ResourceManager.GetString("Surface_m_SlideFrictionLossPercent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slide friction reduction percent | Note: This is only when sliding and is an all round reduction loss.
+        /// </summary>
+        internal static string Surface_m_SlideFrictionLossPercentDesc {
+            get {
+                return ResourceManager.GetString("Surface_m_SlideFrictionLossPercentDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slowdown Accel Percent.
+        /// </summary>
+        internal static string Surface_m_SlowDownAccelPercent {
+            get {
+                return ResourceManager.GetString("Surface_m_SlowDownAccelPercent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Percentage of m_AccelerationGainNormal we slowdown per second.
+        /// </summary>
+        internal static string Surface_m_SlowDownAccelPercentDesc {
+            get {
+                return ResourceManager.GetString("Surface_m_SlowDownAccelPercentDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slowdown Boost Percent.
+        /// </summary>
+        internal static string Surface_m_SlowDownBoostPercent {
+            get {
+                return ResourceManager.GetString("Surface_m_SlowDownBoostPercent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Percentage of Current Boost speed lost while on this surface.
+        /// </summary>
+        internal static string Surface_m_SlowDownBoostPercentDesc {
+            get {
+                return ResourceManager.GetString("Surface_m_SlowDownBoostPercentDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slowdown Long Percent.
+        /// </summary>
+        internal static string Surface_m_SlowDownLongPercent {
+            get {
+                return ResourceManager.GetString("Surface_m_SlowDownLongPercent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Percentage of m_NormalLongFriction we slowdown per second.
+        /// </summary>
+        internal static string Surface_m_SlowDownLongPercentDesc {
+            get {
+                return ResourceManager.GetString("Surface_m_SlowDownLongPercentDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Speed Acceleration Increase Percent.
+        /// </summary>
+        internal static string Surface_m_SpeedAccelIncreasePercent {
+            get {
+                return ResourceManager.GetString("Surface_m_SpeedAccelIncreasePercent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Speed and Acceleration Increase | Note: This is mainly for mag-lev to get a speed inc.
+        /// </summary>
+        internal static string Surface_m_SpeedAccelIncreasePercentDesc {
+            get {
+                return ResourceManager.GetString("Surface_m_SpeedAccelIncreasePercentDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Speed Boost Increase Percent.
+        /// </summary>
+        internal static string Surface_m_SpeedBoostIncreasePercent {
+            get {
+                return ResourceManager.GetString("Surface_m_SpeedBoostIncreasePercent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Percentage of Current Boost speed gained while on this surface.
+        /// </summary>
+        internal static string Surface_m_SpeedBoostIncreasePercentDesc {
+            get {
+                return ResourceManager.GetString("Surface_m_SpeedBoostIncreasePercentDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TNT: Explosion Blast Radius.
+        /// </summary>
+        internal static string TNT_m_ExplosionBlastRadius {
+            get {
+                return ResourceManager.GetString("TNT_m_ExplosionBlastRadius", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Blast Radius of Explosion.
+        /// </summary>
+        internal static string TNT_m_ExplosionBlastRadiusDesc {
+            get {
+                return ResourceManager.GetString("TNT_m_ExplosionBlastRadiusDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TNT: Expl Scale.
+        /// </summary>
+        internal static string TNT_m_ExplScale {
+            get {
+                return ResourceManager.GetString("TNT_m_ExplScale", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scale of explosion normal.
+        /// </summary>
+        internal static string TNT_m_ExplScaleDesc {
+            get {
+                return ResourceManager.GetString("TNT_m_ExplScaleDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TNT: Expl Scale Juiced.
+        /// </summary>
+        internal static string TNT_m_ExplScaleJuiced {
+            get {
+                return ResourceManager.GetString("TNT_m_ExplScaleJuiced", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scale of explosion juiced (nitro crate).
+        /// </summary>
+        internal static string TNT_m_ExplScaleJuicedDesc {
+            get {
+                return ResourceManager.GetString("TNT_m_ExplScaleJuicedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TNT: Juiced Wumpa Loss.
+        /// </summary>
+        internal static string TNT_m_JuicedWumpaLoss {
+            get {
+                return ResourceManager.GetString("TNT_m_JuicedWumpaLoss", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How much wumpa victim loses.
+        /// </summary>
+        internal static string TNT_m_JuicedWumpaLossDesc {
+            get {
+                return ResourceManager.GetString("TNT_m_JuicedWumpaLossDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TNT: Normal Wumpa Loss.
+        /// </summary>
+        internal static string TNT_m_NormalWumpaLoss {
+            get {
+                return ResourceManager.GetString("TNT_m_NormalWumpaLoss", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How much wumpa victim loses.
+        /// </summary>
+        internal static string TNT_m_NormalWumpaLossDesc {
+            get {
+                return ResourceManager.GetString("TNT_m_NormalWumpaLossDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TNT: Time.
+        /// </summary>
+        internal static string TNT_m_Time {
+            get {
+                return ResourceManager.GetString("TNT_m_Time", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TNT: Time Before Hidden Char.
+        /// </summary>
+        internal static string TNT_m_TimeBeforeHiddenChar {
+            get {
+                return ResourceManager.GetString("TNT_m_TimeBeforeHiddenChar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How long before the character hides.
+        /// </summary>
+        internal static string TNT_m_TimeBeforeHiddenCharDesc {
+            get {
+                return ResourceManager.GetString("TNT_m_TimeBeforeHiddenCharDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How long effect lasts.
+        /// </summary>
+        internal static string TNT_m_TimeDesc {
+            get {
+                return ResourceManager.GetString("TNT_m_TimeDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TNT: Time Hidden Char.
+        /// </summary>
+        internal static string TNT_m_TimeHiddenChar {
+            get {
+                return ResourceManager.GetString("TNT_m_TimeHiddenChar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Time when character comes out from hiding.
+        /// </summary>
+        internal static string TNT_m_TimeHiddenCharDesc {
+            get {
+                return ResourceManager.GetString("TNT_m_TimeHiddenCharDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tornado: Acceleration.
+        /// </summary>
+        internal static string Tornado_m_Acceleration {
+            get {
+                return ResourceManager.GetString("Tornado_m_Acceleration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How fast it accelerates(20/s/s).
+        /// </summary>
+        internal static string Tornado_m_AccelerationDesc {
+            get {
+                return ResourceManager.GetString("Tornado_m_AccelerationDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tornado: Acceleration Juiced.
+        /// </summary>
+        internal static string Tornado_m_AccelerationJuiced {
+            get {
+                return ResourceManager.GetString("Tornado_m_AccelerationJuiced", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How fast it accelerates(20/s/s).
+        /// </summary>
+        internal static string Tornado_m_AccelerationJuicedDesc {
+            get {
+                return ResourceManager.GetString("Tornado_m_AccelerationJuicedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tornado: Air Gravity.
+        /// </summary>
+        internal static string Tornado_m_AirGravity {
+            get {
+                return ResourceManager.GetString("Tornado_m_AirGravity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gravity in the air.
+        /// </summary>
+        internal static string Tornado_m_AirGravityDesc {
+            get {
+                return ResourceManager.GetString("Tornado_m_AirGravityDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tornado: Air Gravity Maglev.
+        /// </summary>
+        internal static string Tornado_m_AirGravityMaglev {
+            get {
+                return ResourceManager.GetString("Tornado_m_AirGravityMaglev", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gravity in the air on maglev surface.
+        /// </summary>
+        internal static string Tornado_m_AirGravityMaglevDesc {
+            get {
+                return ResourceManager.GetString("Tornado_m_AirGravityMaglevDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tornado: Delay Tracking Update.
+        /// </summary>
+        internal static string Tornado_m_DelayTrackingUpdate {
+            get {
+                return ResourceManager.GetString("Tornado_m_DelayTrackingUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NO USE | Delay between updates of tracking.
+        /// </summary>
+        internal static string Tornado_m_DelayTrackingUpdateDesc {
+            get {
+                return ResourceManager.GetString("Tornado_m_DelayTrackingUpdateDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tornado: Drag Coef.
+        /// </summary>
+        internal static string Tornado_m_DragCoef {
+            get {
+                return ResourceManager.GetString("Tornado_m_DragCoef", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How much drag (from &quot;wind&quot;).
+        /// </summary>
+        internal static string Tornado_m_DragCoefDesc {
+            get {
+                return ResourceManager.GetString("Tornado_m_DragCoefDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tornado: Easy Lat Friction.
+        /// </summary>
+        internal static string Tornado_m_EasyLatFriction {
+            get {
+                return ResourceManager.GetString("Tornado_m_EasyLatFriction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Friction that helps with turning.
+        /// </summary>
+        internal static string Tornado_m_EasyLatFrictionDesc {
+            get {
+                return ResourceManager.GetString("Tornado_m_EasyLatFrictionDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tornado: Easy Long Friction.
+        /// </summary>
+        internal static string Tornado_m_EasyLongFriction {
+            get {
+                return ResourceManager.GetString("Tornado_m_EasyLongFriction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Friction that slows the missile down.
+        /// </summary>
+        internal static string Tornado_m_EasyLongFrictionDesc {
+            get {
+                return ResourceManager.GetString("Tornado_m_EasyLongFrictionDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tornado: Fizzle Time.
+        /// </summary>
+        internal static string Tornado_m_FizzleTime {
+            get {
+                return ResourceManager.GetString("Tornado_m_FizzleTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How long before it fizzles once its messed with its final target.
+        /// </summary>
+        internal static string Tornado_m_FizzleTimeDesc {
+            get {
+                return ResourceManager.GetString("Tornado_m_FizzleTimeDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tornado: Ground Gravity.
+        /// </summary>
+        internal static string Tornado_m_GroundGravity {
+            get {
+                return ResourceManager.GetString("Tornado_m_GroundGravity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gravity on the ground.
+        /// </summary>
+        internal static string Tornado_m_GroundGravityDesc {
+            get {
+                return ResourceManager.GetString("Tornado_m_GroundGravityDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tornado: Ground Gravity Maglev.
+        /// </summary>
+        internal static string Tornado_m_GroundGravityMaglev {
+            get {
+                return ResourceManager.GetString("Tornado_m_GroundGravityMaglev", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gravity on the ground on maglev surface.
+        /// </summary>
+        internal static string Tornado_m_GroundGravityMaglevDesc {
+            get {
+                return ResourceManager.GetString("Tornado_m_GroundGravityMaglevDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tornado: Hard Lat Friction.
+        /// </summary>
+        internal static string Tornado_m_HardLatFriction {
+            get {
+                return ResourceManager.GetString("Tornado_m_HardLatFriction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Friction that helps with turning.
+        /// </summary>
+        internal static string Tornado_m_HardLatFrictionDesc {
+            get {
+                return ResourceManager.GetString("Tornado_m_HardLatFrictionDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tornado: Hard Long Friction.
+        /// </summary>
+        internal static string Tornado_m_HardLongFriction {
+            get {
+                return ResourceManager.GetString("Tornado_m_HardLongFriction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Friction that slows the missile down.
+        /// </summary>
+        internal static string Tornado_m_HardLongFrictionDesc {
+            get {
+                return ResourceManager.GetString("Tornado_m_HardLongFrictionDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tornado: Juiced Wumpa Loss.
+        /// </summary>
+        internal static string Tornado_m_JuicedWumpaLoss {
+            get {
+                return ResourceManager.GetString("Tornado_m_JuicedWumpaLoss", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How much wumpa fruit victim loses.
+        /// </summary>
+        internal static string Tornado_m_JuicedWumpaLossDesc {
+            get {
+                return ResourceManager.GetString("Tornado_m_JuicedWumpaLossDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tornado: Lift Force.
+        /// </summary>
+        internal static string Tornado_m_LiftForce {
+            get {
+                return ResourceManager.GetString("Tornado_m_LiftForce", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How much force upon lifting the player.
+        /// </summary>
+        internal static string Tornado_m_LiftForceDesc {
+            get {
+                return ResourceManager.GetString("Tornado_m_LiftForceDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tornado: Lift Time.
+        /// </summary>
+        internal static string Tornado_m_LiftTime {
+            get {
+                return ResourceManager.GetString("Tornado_m_LiftTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How long to lift a caught player.
+        /// </summary>
+        internal static string Tornado_m_LiftTimeDesc {
+            get {
+                return ResourceManager.GetString("Tornado_m_LiftTimeDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tornado: Mass.
+        /// </summary>
+        internal static string Tornado_m_Mass {
+            get {
+                return ResourceManager.GetString("Tornado_m_Mass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mass of missile.
+        /// </summary>
+        internal static string Tornado_m_MassDesc {
+            get {
+                return ResourceManager.GetString("Tornado_m_MassDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tornado: Max Speed.
+        /// </summary>
+        internal static string Tornado_m_MaxSpeed {
+            get {
+                return ResourceManager.GetString("Tornado_m_MaxSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max speed of tornado.
+        /// </summary>
+        internal static string Tornado_m_MaxSpeedDesc {
+            get {
+                return ResourceManager.GetString("Tornado_m_MaxSpeedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tornado: Max Speed Juiced.
+        /// </summary>
+        internal static string Tornado_m_MaxSpeedJuiced {
+            get {
+                return ResourceManager.GetString("Tornado_m_MaxSpeedJuiced", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max speed of tornado(juiced).
+        /// </summary>
+        internal static string Tornado_m_MaxSpeedJuicedDesc {
+            get {
+                return ResourceManager.GetString("Tornado_m_MaxSpeedJuicedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tornado: Max Speed With Kart.
+        /// </summary>
+        internal static string Tornado_m_MaxSpeedWithKart {
+            get {
+                return ResourceManager.GetString("Tornado_m_MaxSpeedWithKart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max speed, when tornado has picked up a kart.
+        /// </summary>
+        internal static string Tornado_m_MaxSpeedWithKartDesc {
+            get {
+                return ResourceManager.GetString("Tornado_m_MaxSpeedWithKartDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tornado: Normal Wumpa Loss.
+        /// </summary>
+        internal static string Tornado_m_NormalWumpaLoss {
+            get {
+                return ResourceManager.GetString("Tornado_m_NormalWumpaLoss", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How much wumpa fruit victim loses.
+        /// </summary>
+        internal static string Tornado_m_NormalWumpaLossDesc {
+            get {
+                return ResourceManager.GetString("Tornado_m_NormalWumpaLossDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tornado: Radius.
+        /// </summary>
+        internal static string Tornado_m_Radius {
+            get {
+                return ResourceManager.GetString("Tornado_m_Radius", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Radius of missile(for collision).
+        /// </summary>
+        internal static string Tornado_m_RadiusDesc {
+            get {
+                return ResourceManager.GetString("Tornado_m_RadiusDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tornado: Range In Back.
+        /// </summary>
+        internal static string Tornado_m_RangeInBack {
+            get {
+                return ResourceManager.GetString("Tornado_m_RangeInBack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DO NOT USE | How far to the back will the tornado track of the user kart.
+        /// </summary>
+        internal static string Tornado_m_RangeInBackDesc {
+            get {
+                return ResourceManager.GetString("Tornado_m_RangeInBackDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tornado: Range In Front.
+        /// </summary>
+        internal static string Tornado_m_RangeInFront {
+            get {
+                return ResourceManager.GetString("Tornado_m_RangeInFront", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DO NOT USE | How far will the tornado track in front of user kart.
+        /// </summary>
+        internal static string Tornado_m_RangeInFrontDesc {
+            get {
+                return ResourceManager.GetString("Tornado_m_RangeInFrontDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tornado: Target All Distance.
+        /// </summary>
+        internal static string Tornado_m_TargetAllDistance {
+            get {
+                return ResourceManager.GetString("Tornado_m_TargetAllDistance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If juiced, what is the distance a kart needs to be from tornado for it to start targeting it on its way to victim.
+        /// </summary>
+        internal static string Tornado_m_TargetAllDistanceDesc {
+            get {
+                return ResourceManager.GetString("Tornado_m_TargetAllDistanceDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tornado: Time Limit.
+        /// </summary>
+        internal static string Tornado_m_TimeLimit {
+            get {
+                return ResourceManager.GetString("Tornado_m_TimeLimit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How long will tornado last in ms.
+        /// </summary>
+        internal static string Tornado_m_TimeLimitDesc {
+            get {
+                return ResourceManager.GetString("Tornado_m_TimeLimitDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tornado: Tracking Front Distance.
+        /// </summary>
+        internal static string Tornado_m_TrackingFrontDistance {
+            get {
+                return ResourceManager.GetString("Tornado_m_TrackingFrontDistance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NO USE | How man times farther will the missile target someone who is in front of them, rather than in back.
+        /// </summary>
+        internal static string Tornado_m_TrackingFrontDistanceDesc {
+            get {
+                return ResourceManager.GetString("Tornado_m_TrackingFrontDistanceDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tornado: Turn Speed.
+        /// </summary>
+        internal static string Tornado_m_TurnSpeed {
+            get {
+                return ResourceManager.GetString("Tornado_m_TurnSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How fast tornado turns (radians / sec).
+        /// </summary>
+        internal static string Tornado_m_TurnSpeedDesc {
+            get {
+                return ResourceManager.GetString("Tornado_m_TurnSpeedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tornado: Turn Speed Juiced.
+        /// </summary>
+        internal static string Tornado_m_TurnSpeedJuiced {
+            get {
+                return ResourceManager.GetString("Tornado_m_TurnSpeedJuiced", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How fast tornado turns (radians / sec)(juiced).
+        /// </summary>
+        internal static string Tornado_m_TurnSpeedJuicedDesc {
+            get {
+                return ResourceManager.GetString("Tornado_m_TurnSpeedJuicedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tornado: View Range.
+        /// </summary>
+        internal static string Tornado_m_ViewRange {
+            get {
+                return ResourceManager.GetString("Tornado_m_ViewRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DO NOT USE | Range of view the tornado targets, if 0, then targets everything infront of him, 1 is exactly in front of him.
+        /// </summary>
+        internal static string Tornado_m_ViewRangeDesc {
+            get {
+                return ResourceManager.GetString("Tornado_m_ViewRangeDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tornado: View Range Of Target.
+        /// </summary>
+        internal static string Tornado_m_ViewRangleOfTarget {
+            get {
+                return ResourceManager.GetString("Tornado_m_ViewRangleOfTarget", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If juiced, what range does target kart have to be in for tornado to target it on the way to victim.
+        /// </summary>
+        internal static string Tornado_m_ViewRangleOfTargetDesc {
+            get {
+                return ResourceManager.GetString("Tornado_m_ViewRangleOfTargetDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turbo Boost: Juiced Time.
+        /// </summary>
+        internal static string TurboBoost_m_JuicedTime {
+            get {
+                return ResourceManager.GetString("TurboBoost_m_JuicedTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How long effect lasts when juiced.
+        /// </summary>
+        internal static string TurboBoost_m_JuicedTimeDesc {
+            get {
+                return ResourceManager.GetString("TurboBoost_m_JuicedTimeDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turbo Boost: Normal Time.
+        /// </summary>
+        internal static string TurboBoost_m_NormalTime {
+            get {
+                return ResourceManager.GetString("TurboBoost_m_NormalTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How long effect lasts.
+        /// </summary>
+        internal static string TurboBoost_m_NormalTimeDesc {
+            get {
+                return ResourceManager.GetString("TurboBoost_m_NormalTimeDesc", resourceCulture);
             }
         }
     }

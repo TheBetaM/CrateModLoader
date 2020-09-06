@@ -207,4 +207,358 @@
   <data name="Mod_ClassicHealthDesc" xml:space="preserve">
     <value>Spawn without a mask.</value>
   </data>
+  <data name="CharFloats_AirGravity" xml:space="preserve">
+    <value>Air Gravity</value>
+  </data>
+  <data name="CharFloats_AirGravityDesc" xml:space="preserve">
+    <value>Object gravity while not grounded</value>
+  </data>
+  <data name="CharFloats_BaseGravity" xml:space="preserve">
+    <value>Base Gravity</value>
+  </data>
+  <data name="CharFloats_BaseGravityDesc" xml:space="preserve">
+    <value>Object gravity on the ground</value>
+  </data>
+  <data name="CharFloats_BodyslamGravityForce" xml:space="preserve">
+    <value>Bodyslam Gravity Force</value>
+  </data>
+  <data name="CharFloats_BodyslamGravityForceDesc" xml:space="preserve">
+    <value>How much the bodyslam slams downward after it's done flying upward</value>
+  </data>
+  <data name="CharFloats_BodyslamHangTime" xml:space="preserve">
+    <value>Bodyslam Hang Time</value>
+  </data>
+  <data name="CharFloats_BodyslamHangTimeDesc" xml:space="preserve">
+    <value>Set to 0 to disable bodyslam</value>
+  </data>
+  <data name="CharFloats_BodyslamUpwardForce" xml:space="preserve">
+    <value>Bodyslam Upward Force</value>
+  </data>
+  <data name="CharFloats_BodyslamUpwardForceDesc" xml:space="preserve">
+    <value>How much the bodyslam flies upward after it starts</value>
+  </data>
+  <data name="CharFloats_CrawlSpeed" xml:space="preserve">
+    <value>Crawl Speed</value>
+  </data>
+  <data name="CharFloats_CrawlSpeedDesc" xml:space="preserve">
+    <value>Speed of crawling</value>
+  </data>
+  <data name="CharFloats_CrawlTimeFromStand" xml:space="preserve">
+    <value>Crawl Time From Stand</value>
+  </data>
+  <data name="CharFloats_CrawlTimeFromStandDesc" xml:space="preserve">
+    <value>Time from standing to crouched, Set to 0 to disable crawl from standing</value>
+  </data>
+  <data name="CharFloats_CrawlTimeToRun" xml:space="preserve">
+    <value>Crawl Time To Run</value>
+  </data>
+  <data name="CharFloats_CrawlTimeToRunDesc" xml:space="preserve">
+    <value>Time from crawling to running</value>
+  </data>
+  <data name="CharFloats_CrawlTimeToStand" xml:space="preserve">
+    <value>Crawl Time To Stand</value>
+  </data>
+  <data name="CharFloats_CrawlTimeToStandDesc" xml:space="preserve">
+    <value>Time from crouched to standing</value>
+  </data>
+  <data name="CharFloats_DoubleJumpArcUnk" xml:space="preserve">
+    <value>Double Jump Arc Unknown Value</value>
+  </data>
+  <data name="CharFloats_DoubleJumpArcUnkDesc" xml:space="preserve">
+    <value>Mandatory for double jump to work</value>
+  </data>
+  <data name="CharFloats_DoubleJumpHeight" xml:space="preserve">
+    <value>Double Jump Height</value>
+  </data>
+  <data name="CharFloats_DoubleJumpHeightDesc" xml:space="preserve">
+    <value>Set to 0 to disable double jump, non-zero to enable double jump</value>
+  </data>
+  <data name="CharFloats_DoubleJumpUnk22" xml:space="preserve">
+    <value>Double Jump Unknown Value 22</value>
+  </data>
+  <data name="CharFloats_DoubleJumpUnk22Desc" xml:space="preserve">
+    <value>Mandatory for double jump to work</value>
+  </data>
+  <data name="CharFloats_FlyingKickForwardSpeed" xml:space="preserve">
+    <value>Flying Kick Forward Speed</value>
+  </data>
+  <data name="CharFloats_FlyingKickForwardSpeedDesc" xml:space="preserve">
+    <value>How fast the flying kick is</value>
+  </data>
+  <data name="CharFloats_FlyingKickGravity" xml:space="preserve">
+    <value>Flying Kick Gravity</value>
+  </data>
+  <data name="CharFloats_FlyingKickGravityDesc" xml:space="preserve">
+    <value>Fall gravity after the flying kick ends (only applies when walking off edges for some reason)</value>
+  </data>
+  <data name="CharFloats_FlyingKickHangTime" xml:space="preserve">
+    <value>Flying Kick Hang Time</value>
+  </data>
+  <data name="CharFloats_FlyingKickHangTimeDesc" xml:space="preserve">
+    <value>How long the Flying Kick lasts, Set to 0 to disable flying kick, unused move, replaces bodyslam of the single jump (not double jump)</value>
+  </data>
+  <data name="CharFloats_GunButtonHoldTimeToStartCharging" xml:space="preserve">
+    <value>Gun Button Hold Time To Start Charging</value>
+  </data>
+  <data name="CharFloats_GunButtonHoldTimeToStartChargingDesc" xml:space="preserve">
+    <value>How long should the firing button be held to start charging</value>
+  </data>
+  <data name="CharFloats_GunChargeTime" xml:space="preserve">
+    <value>Gun Charge Time</value>
+  </data>
+  <data name="CharFloats_GunChargeTimeDesc" xml:space="preserve">
+    <value>How long the gun charges the shot</value>
+  </data>
+  <data name="CharFloats_GunTimeBetweenChargedShots" xml:space="preserve">
+    <value>Gun Time Between Charged Shots</value>
+  </data>
+  <data name="CharFloats_GunTimeBetweenChargedShotsDesc" xml:space="preserve">
+    <value>How long until the next charged shot fires while still holding the firing button</value>
+  </data>
+  <data name="CharFloats_GunTimeBetweenShots" xml:space="preserve">
+    <value>Gun Time Between Shots</value>
+  </data>
+  <data name="CharFloats_GunTimeBetweenShotsDesc" xml:space="preserve">
+    <value>How fast can regular shots be fired</value>
+  </data>
+  <data name="CharFloats_JumpAirSpeed" xml:space="preserve">
+    <value>Jump Air Speed</value>
+  </data>
+  <data name="CharFloats_JumpAirSpeedDesc" xml:space="preserve">
+    <value>Speed while in mid-air</value>
+  </data>
+  <data name="CharFloats_JumpArcUnk18" xml:space="preserve">
+    <value>Jump Arc Unknown Value 18</value>
+  </data>
+  <data name="CharFloats_JumpArcUnk18Desc" xml:space="preserve">
+    <value>Jump arc variable</value>
+  </data>
+  <data name="CharFloats_JumpArcUnk19" xml:space="preserve">
+    <value>Jump Arc Unknown Value 19</value>
+  </data>
+  <data name="CharFloats_JumpArcUnk19Desc" xml:space="preserve">
+    <value>Jump arc variable</value>
+  </data>
+  <data name="CharFloats_JumpEdgeSpeed" xml:space="preserve">
+    <value>Jump Edge Speed</value>
+  </data>
+  <data name="CharFloats_JumpEdgeSpeedDesc" xml:space="preserve">
+    <value>Jump speed off of edge (when long jump and flying kick aren't stored)</value>
+  </data>
+  <data name="CharFloats_JumpHeight" xml:space="preserve">
+    <value>Jump Height</value>
+  </data>
+  <data name="CharFloats_JumpHeightDesc" xml:space="preserve">
+    <value>Single jump height</value>
+  </data>
+  <data name="CharFloats_RadialBlastChargeTime" xml:space="preserve">
+    <value>Radial Blast Charge Time</value>
+  </data>
+  <data name="CharFloats_RadialBlastChargeTimeDesc" xml:space="preserve">
+    <value>How long the radial blast charges while in mid-air</value>
+  </data>
+  <data name="CharFloats_RadialBlastTimeToStart" xml:space="preserve">
+    <value>Radial Blast Time To Start</value>
+  </data>
+  <data name="CharFloats_RadialBlastTimeToStartDesc" xml:space="preserve">
+    <value>Set to 0 to disable radial blast, radial blast replaces single jump bodyslam</value>
+  </data>
+  <data name="CharFloats_RadialBlastUnk39" xml:space="preserve">
+    <value>Radial Blast Unknown Value 39</value>
+  </data>
+  <data name="CharFloats_RadialBlastUnk39Desc" xml:space="preserve">
+    <value>Radial blast velocity value</value>
+  </data>
+  <data name="CharFloats_RadialBlastUnk40" xml:space="preserve">
+    <value>Radial Blast Unknown Value 40</value>
+  </data>
+  <data name="CharFloats_RadialBlastUnk40Desc" xml:space="preserve">
+    <value>Radial blast velocity value</value>
+  </data>
+  <data name="CharFloats_RunSpeed" xml:space="preserve">
+    <value>Run Speed</value>
+  </data>
+  <data name="CharFloats_RunSpeedDesc" xml:space="preserve">
+    <value>Runninng speed on the ground</value>
+  </data>
+  <data name="CharFloats_SlideJumpUnk24" xml:space="preserve">
+    <value>Slide Jump Unknown Value 24</value>
+  </data>
+  <data name="CharFloats_SlideJumpUnk24Desc" xml:space="preserve">
+    <value>Slide jump speed</value>
+  </data>
+  <data name="CharFloats_SlideJumpUnk25" xml:space="preserve">
+    <value>Slide Jump Unknown Value 25</value>
+  </data>
+  <data name="CharFloats_SlideJumpUnk25Desc" xml:space="preserve">
+    <value>Slide jump variable</value>
+  </data>
+  <data name="CharFloats_SlideJumpUnk26" xml:space="preserve">
+    <value>Slide Jump Unknown Value 26</value>
+  </data>
+  <data name="CharFloats_SlideJumpUnk26Desc" xml:space="preserve">
+    <value>Slide jump variable</value>
+  </data>
+  <data name="CharFloats_SlideJumpUnk27" xml:space="preserve">
+    <value>Slide Jump Unknown Value 27</value>
+  </data>
+  <data name="CharFloats_SlideJumpUnk27Desc" xml:space="preserve">
+    <value>Slide jump arc variable</value>
+  </data>
+  <data name="CharFloats_SlideSlowdownTime" xml:space="preserve">
+    <value>Slide Slowdown Time</value>
+  </data>
+  <data name="CharFloats_SlideSlowdownTime2" xml:space="preserve">
+    <value>Slide Slowdown Time 2</value>
+  </data>
+  <data name="CharFloats_SlideSlowdownTime2Desc" xml:space="preserve">
+    <value>Slide variable</value>
+  </data>
+  <data name="CharFloats_SlideSlowdownTime3" xml:space="preserve">
+    <value>Slide Slowdown Time 3</value>
+  </data>
+  <data name="CharFloats_SlideSlowdownTime3Desc" xml:space="preserve">
+    <value>Slide variable</value>
+  </data>
+  <data name="CharFloats_SlideSlowdownTimeDesc" xml:space="preserve">
+    <value>Slide variable</value>
+  </data>
+  <data name="CharFloats_SlideSpeed" xml:space="preserve">
+    <value>Slide Speed</value>
+  </data>
+  <data name="CharFloats_SlideSpeedDesc" xml:space="preserve">
+    <value>Set to 0 to disable slide</value>
+  </data>
+  <data name="CharFloats_SlideUnk49" xml:space="preserve">
+    <value>Slide Unknown Value 49</value>
+  </data>
+  <data name="CharFloats_SlideUnk49Desc" xml:space="preserve">
+    <value>Slide variable</value>
+  </data>
+  <data name="CharFloats_SlideUnk50" xml:space="preserve">
+    <value>Slide Unknown Value 50</value>
+  </data>
+  <data name="CharFloats_SlideUnk50Desc" xml:space="preserve">
+    <value>Slide variable</value>
+  </data>
+  <data name="CharFloats_SpinDelay" xml:space="preserve">
+    <value>Spin Delay</value>
+  </data>
+  <data name="CharFloats_SpinDelayDesc" xml:space="preserve">
+    <value>Delay between spins</value>
+  </data>
+  <data name="CharFloats_SpinLength" xml:space="preserve">
+    <value>Spin Length</value>
+  </data>
+  <data name="CharFloats_SpinLengthDesc" xml:space="preserve">
+    <value>Length of spinning time</value>
+  </data>
+  <data name="CharFloats_SpinThrowForwardForce" xml:space="preserve">
+    <value>Spin Throw Forward Force</value>
+  </data>
+  <data name="CharFloats_SpinThrowForwardForceDesc" xml:space="preserve">
+    <value>Forward force after starting a spin throw</value>
+  </data>
+  <data name="CharFloats_Static1" xml:space="preserve">
+    <value>Static Value 1</value>
+  </data>
+  <data name="CharFloats_Static15" xml:space="preserve">
+    <value>Unknown Value 15</value>
+  </data>
+  <data name="CharFloats_Static15Desc" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="CharFloats_Static1Desc" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="CharFloats_Static6" xml:space="preserve">
+    <value>Static Value 6</value>
+  </data>
+  <data name="CharFloats_Static6Desc" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="CharFloats_StrafingSpeed" xml:space="preserve">
+    <value>Strafing Speed</value>
+  </data>
+  <data name="CharFloats_StrafingSpeedDesc" xml:space="preserve">
+    <value>Set to 0 to disable strafing, non-zero to enable strafing</value>
+  </data>
+  <data name="CharFloats_Unk13" xml:space="preserve">
+    <value>Unknown Value 13</value>
+  </data>
+  <data name="CharFloats_Unk13Desc" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="CharFloats_Unk14" xml:space="preserve">
+    <value>Unknown Value 14</value>
+  </data>
+  <data name="CharFloats_Unk14Desc" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="CharFloats_Unk28" xml:space="preserve">
+    <value>Unknown Value 28</value>
+  </data>
+  <data name="CharFloats_Unk28Desc" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="CharFloats_Unk29" xml:space="preserve">
+    <value>Unknown Value 29</value>
+  </data>
+  <data name="CharFloats_Unk29Desc" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="CharFloats_Unk3" xml:space="preserve">
+    <value>Unknown Value 3</value>
+  </data>
+  <data name="CharFloats_Unk30" xml:space="preserve">
+    <value>Unknown Value 30</value>
+  </data>
+  <data name="CharFloats_Unk30Desc" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="CharFloats_Unk31" xml:space="preserve">
+    <value>Unknown Value 31</value>
+  </data>
+  <data name="CharFloats_Unk31Desc" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="CharFloats_Unk3Desc" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="CharFloats_Unk55" xml:space="preserve">
+    <value>Unknown Value 55</value>
+  </data>
+  <data name="CharFloats_Unk55Desc" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="CharFloats_WalkSpeed" xml:space="preserve">
+    <value>Walk Speed</value>
+  </data>
+  <data name="CharFloats_WalkSpeedDesc" xml:space="preserve">
+    <value>Walking speed on the ground</value>
+  </data>
+  <data name="CharFloats_WalkSpeedPercentage" xml:space="preserve">
+    <value>Walk Speed Percentage</value>
+  </data>
+  <data name="CharFloats_WalkSpeedPercentageDesc" xml:space="preserve">
+    <value>Percentage of run speed as integer? Walk-to-run speed scaling?</value>
+  </data>
+  <data name="CharInts_SpawnHealth" xml:space="preserve">
+    <value>Spawn Health</value>
+  </data>
+  <data name="CharInts_SpawnHealthDesc" xml:space="preserve">
+    <value>How much health characters spawn with (1 - no mask, 2 - one mask, 3 - two masks)</value>
+  </data>
+  <data name="StartingChunk" xml:space="preserve">
+    <value>Starting Chunk</value>
+  </data>
+  <data name="StartingChunkDesc" xml:space="preserve">
+    <value>The chunk name that the game starts in (must have a player object or else it will not load)</value>
+  </data>
+  <data name="UnsafeStartingChunk" xml:space="preserve">
+    <value>Starting Chunk (Unsafe)</value>
+  </data>
+  <data name="UnsafeStartingChunkDesc" xml:space="preserve">
+    <value>Allows for a longer starting chunk name at the expense of the game crashing after the credits (due to overwriting the post-credits chunk)</value>
+  </data>
 </root>

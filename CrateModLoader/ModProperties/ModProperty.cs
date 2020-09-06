@@ -50,7 +50,18 @@ namespace CrateModLoader.ModProperties
                 }
             }
 
-            ParentForm = (ModMenuForm)page.Parent.Parent;
+            Control parent = page;
+            Control target = page;
+            while (parent != null)
+            {
+                parent = parent.Parent;
+                if (parent != null)
+                {
+                    target = parent;
+                }
+            }
+
+            ParentForm = (ModMenuForm)target;
 
         }
 

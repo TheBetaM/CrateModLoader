@@ -314,6 +314,8 @@
       <DependentUpon>ModMenuForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ModOption.cs" />
+    <Compile Include="ModPipelines\ModPipeline.cs" />
+    <Compile Include="ModPipelines\ModPipeline_PS2.cs" />
     <Compile Include="ModProperties\ModCategory.cs" />
     <Compile Include="ModProperties\ModPropertyBase.cs" />
     <Compile Include="ModProperties\ModPropBool.cs" />

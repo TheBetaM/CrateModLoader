@@ -27,7 +27,6 @@ namespace CrateModLoader
             button4.Text = ModLoaderText.ModMenu_Button_ResetToDefault;
             button5.Text = ModLoaderText.ModMenu_Button_Publish;
             button_modbit.Text = ModLoaderText.ModMenu_Label_ModBit;
-            button_copymodbit.Text = ModLoaderText.ModMenu_Button_ModBitCopy;
             Text = ModLoaderText.ModMenuTitle;
 
             mod = modder;
@@ -52,9 +51,9 @@ namespace CrateModLoader
             {
                 if (!Pages.ContainsKey((int)prop.Category))
                 {
-                    if (mod.PropCategories.ContainsKey((int)prop.Category))
+                    if (mod.Game.PropertyCategories != null && mod.Game.PropertyCategories.ContainsKey((int)prop.Category))
                     {
-                        Pages.Add((int)prop.Category, mod.PropCategories[(int)prop.Category]);
+                        Pages.Add((int)prop.Category, mod.Game.PropertyCategories[(int)prop.Category]);
                     }
                     else
                     {

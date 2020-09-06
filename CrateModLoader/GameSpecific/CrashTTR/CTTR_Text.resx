@@ -129,6 +129,12 @@
   <data name="Mod_PreventSkipsDesc" xml:space="preserve">
     <value>Zone transitions in the Midway will not work without using a gem key first. Getting gem keys will not work without unlocking them first.</value>
   </data>
+  <data name="RaceLaps" xml:space="preserve">
+    <value>Race Laps</value>
+  </data>
+  <data name="RaceLapsDesc" xml:space="preserve">
+    <value>Set the lap count in the Race gamemode.</value>
+  </data>
   <data name="Rand_Minigames" xml:space="preserve">
     <value>Randomize Minigames</value>
   </data>

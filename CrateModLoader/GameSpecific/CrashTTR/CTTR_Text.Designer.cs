@@ -97,6 +97,24 @@ namespace CrateModLoader.GameSpecific.CrashTTR {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Race Laps.
+        /// </summary>
+        internal static string RaceLaps {
+            get {
+                return ResourceManager.GetString("RaceLaps", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set the lap count in the Race gamemode..
+        /// </summary>
+        internal static string RaceLapsDesc {
+            get {
+                return ResourceManager.GetString("RaceLapsDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Randomize Minigames.
         /// </summary>
         internal static string Rand_Minigames {

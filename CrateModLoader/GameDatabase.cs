@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace CrateModLoader
@@ -19,6 +20,10 @@ namespace CrateModLoader
         public Image Icon;
         /// <summary> Set to true to enable mod crates. </summary>
         public bool ModCratesSupported;
+        /// <summary> Text resource class used for mod menu property localization. </summary>
+        public Type TextClass;
+        /// <summary> Dictionary of mod menu property categories. </summary>
+        public Dictionary<int, string> PropertyCategories;
         /// <summary> List of region identifiers for PS1 games. </summary>
         public RegionCode[] RegionID_PS1;
         /// <summary> List of region identifiers for PS2 games. </summary>

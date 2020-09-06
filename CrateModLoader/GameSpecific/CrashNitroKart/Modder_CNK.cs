@@ -60,6 +60,7 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
                 API_Credit = CNK_Text.API_Credit,
                 API_Link = string.Empty,
                 Icon = Properties.Resources.icon_crashnk,
+                TextClass = typeof(CNK_Text),
                 ModCratesSupported = true,
                 RegionID_PS2 = new RegionCode[] {
                     new RegionCode() {
@@ -99,13 +100,15 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
                     Region = RegionType.PAL,
                     RegionNumber = 4, },
                 },
+                PropertyCategories = new Dictionary<int, string>()
+                {
+                    [(int)ModProps.KartStats] = CNK_Text.PropCategory_KartStats,
+                    [(int)ModProps.DriverStats] = CNK_Text.PropCategory_DriverStats,
+                    [(int)ModProps.Surfaces] = CNK_Text.PropCategory_Surfaces,
+                    [(int)ModProps.Powerups] = CNK_Text.PropCategory_Powerups,
+                    [(int)ModProps.Adventure] = CNK_Text.PropCategory_Adventure,
+                }
             };
-
-            PropCategories.Add((int)ModProps.KartStats, "Kart Stats");
-            PropCategories.Add((int)ModProps.DriverStats, "Driver Stats");
-            PropCategories.Add((int)ModProps.Surfaces, "Surfaces");
-            PropCategories.Add((int)ModProps.Powerups, "Powerups");
-            PropCategories.Add((int)ModProps.Adventure, "Adventure");
 
             AddOption(RandomizeAdventure, new ModOption(CNK_Text.Rand_Adventure, CNK_Text.Rand_AdventureDesc));
             AddOption(RandomizeCharacterStats, new ModOption(CNK_Text.Rand_CharacterStats, CNK_Text.Rand_CharacterStatsDesc));
@@ -124,7 +127,7 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
             AddOption(DisablePopups, new ModOption(CNK_Text.Mod_DisableUnlockPopups, CNK_Text.Mod_DisableUnlockPopupsDesc));
             AddOption(SpeedUpMaskHints, new ModOption(CNK_Text.Mod_SpeedUpMaskHint, CNK_Text.Mod_SpeedUpMaskHintDesc));
             AddOption(NoAlchemyIntro, new ModOption(CNK_Text.Mod_RemoveIntroVideos, CNK_Text.Mod_RemoveIntroVideosDesc, true));
-
+            
         }
 
         internal string path_gob_extracted = "";

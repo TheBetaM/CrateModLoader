@@ -1418,6 +1418,7 @@ namespace CrateModLoader
             }
             else
             {
+                Modder.PopulateProperties();
                 Image gameIcon = Modder.Game.Icon;
 
                 //button_modMenu.Enabled = button_modMenu.Visible = Modder.Game.ModMenuEnabled;

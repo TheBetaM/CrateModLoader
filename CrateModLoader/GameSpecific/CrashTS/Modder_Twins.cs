@@ -111,6 +111,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 API_Credit = Twins_Text.API_Credit,
                 API_Link = "https://github.com/Smartkin/twinsanity-editor",
                 Icon = Properties.Resources.icon_crashts,
+                TextClass = typeof(Twins_Text),
                 ModCratesSupported = true,
                 RegionID_PS2 = new RegionCode[] {
                     new RegionCode() {
@@ -141,10 +142,12 @@ namespace CrateModLoader.GameSpecific.CrashTS
                     RegionNumber = 4,
                     ExecName = "default.xbe" },
                 },
+                PropertyCategories = new Dictionary<int, string>()
+                {
+                    [(int)ModProps.Misc] = "Misc.",
+                    [(int)ModProps.Character] = "Character",
+                }
             };
-
-            PropCategories.Add((int)ModProps.Misc, "Misc.");
-            PropCategories.Add((int)ModProps.Character, "Character");
 
             AddOption(RandomizeCrateTypes, new ModOption(Twins_Text.Rand_CrateTypes, Twins_Text.Rand_CrateTypesDesc)); // TODO: Make this a toggle between CrateTypes/AllCrates in the mod menu?
             AddOption(RandomizeAllCrates, new ModOption(Twins_Text.Rand_Crates, Twins_Text.Rand_CratesDesc));
@@ -162,7 +165,8 @@ namespace CrateModLoader.GameSpecific.CrashTS
             AddOption(ModClassicHealth, new ModOption(Twins_Text.Mod_ClassicHealth, Twins_Text.Mod_ClassicHealthDesc));
             AddOption(ModClassicExplosions, new ModOption(Twins_Text.Mod_ClassicExplosionDaamge, Twins_Text.Mod_ClassicExplosionDamageDesc));
             //AddOption(ModClassicCrates, new ModOption(Twins_Text.Mod_ClassicCratePersistence, Twins_Text.Mod_ClassicCratePersistenceDesc));
-            AddOption(ModSkipCutscenes, new ModOption("Skip Cutscenes","Skips all non-video cutscenes after entering."));
+            //AddOption(ModSkipCutscenes, new ModOption("Classic Boss Health", "Start boss fights with 2 masks."));
+            //AddOption(ModSkipCutscenes, new ModOption("Skip Cutscenes","Skips all non-video cutscenes after entering."));
         }
 
         internal string bdPath = "";
