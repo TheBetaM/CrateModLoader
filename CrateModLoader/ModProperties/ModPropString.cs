@@ -25,24 +25,26 @@ namespace CrateModLoader.ModProperties
             MaxLength = maxLen;
         }
 
-        public override void GenerateUI(TabPage page, ref int offset)
+        public override void GenerateUI(Control parent, ref int offset)
         {
             
-            base.GenerateUI(page, ref offset);
+            base.GenerateUI(parent, ref offset);
 
-            //offset += 20;
             TextBox textBox = new TextBox();
             textBox.Text = Value;
-            textBox.Parent = page;
-            textBox.Location = new System.Drawing.Point(245, offset);
-            textBox.Anchor = AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Left;
-            textBox.Size = new System.Drawing.Size(page.Width - 250, textBox.Size.Height);
+            textBox.Parent = parent;
+            textBox.Dock = DockStyle.Fill;
             textBox.TextChanged += ValueChange;
             textBox.MouseEnter += FocusUI;
             if (MaxLength != int.MaxValue)
             {
                 textBox.MaxLength = MaxLength;
             }
+
+            TableLayoutPanel table = (TableLayoutPanel)parent;
+
+            table.SetColumn(textBox, 1);
+            table.SetRow(textBox, offset);
 
         }
 

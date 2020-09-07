@@ -31,21 +31,18 @@ namespace CrateModLoader.ModProperties
 
         private List<NumericUpDown> nums = new List<NumericUpDown>();
 
-        public override void GenerateUI(TabPage page, ref int offset)
+        public override void GenerateUI(Control parent, ref int offset)
         {
-            base.GenerateUI(page, ref offset);
+            base.GenerateUI(parent, ref offset);
 
             nums.Clear();
 
-            offset += 20;
-
             TabControl tabControl = new TabControl();
             tabControl.TabPages.Clear();
-            tabControl.Parent = page;
+            tabControl.Parent = parent;
             //tabControl.Multiline = true;
-            tabControl.Location = new Point(10, offset);
-            tabControl.Size = new Size(page.Width - 20, 50);
-            tabControl.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            tabControl.Dock = DockStyle.Fill;
+            tabControl.MouseEnter += FocusUI;
 
             int x_offset = 10;
             int size = 150;
@@ -63,9 +60,7 @@ namespace CrateModLoader.ModProperties
 
                 num.Value = (decimal)Value[i];
                 num.Parent = tabControl.TabPages[tabControl.TabPages.Count - 1];
-                num.Location = new Point(0, 2);
-                num.Anchor = AnchorStyles.Top | AnchorStyles.Left;
-                num.Size = new Size(size, num.Size.Height);
+                num.Dock = DockStyle.Fill;
                 num.ValueChanged += ValueChange;
                 num.MouseCaptureChanged += FocusUI;
 
@@ -73,7 +68,11 @@ namespace CrateModLoader.ModProperties
 
             }
 
-            offset += 30;
+            TableLayoutPanel table = (TableLayoutPanel)parent;
+            table.RowStyles[offset] = new RowStyle(SizeType.Absolute, 56);
+
+            table.SetColumn(tabControl, 1);
+            table.SetRow(tabControl, offset);
 
         }
 

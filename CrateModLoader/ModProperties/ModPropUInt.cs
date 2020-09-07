@@ -15,11 +15,10 @@ namespace CrateModLoader.ModProperties
 
         }
 
-        public override void GenerateUI(TabPage page, ref int offset)
+        public override void GenerateUI(Control parent, ref int offset)
         {
-            base.GenerateUI(page, ref offset);
+            base.GenerateUI(parent, ref offset);
 
-            //offset += 20;
             NumericUpDown num = new NumericUpDown();
 
             num.DecimalPlaces = 0;
@@ -27,12 +26,15 @@ namespace CrateModLoader.ModProperties
             num.Maximum = uint.MaxValue;
 
             num.Value = Value;
-            num.Parent = page;
-            num.Location = new System.Drawing.Point(245, offset - 3);
-            num.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            num.Size = new System.Drawing.Size(230, num.Size.Height);
+            num.Parent = parent;
+            num.Dock = DockStyle.Fill;
             num.ValueChanged += ValueChange;
             num.MouseCaptureChanged += FocusUI;
+
+            TableLayoutPanel table = (TableLayoutPanel)parent;
+
+            table.SetColumn(num, 1);
+            table.SetRow(num, offset);
 
         }
 

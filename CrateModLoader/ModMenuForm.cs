@@ -41,8 +41,9 @@ namespace CrateModLoader
         {
             label1.Text = "";
 
-            int initOffset = 10;
-            int offset = initOffset;
+            int initOffset = 0;
+            int offset = 0;
+            int initRowSize = 30;
 
             int itemsPerPage = 40; // to reduce lag
 
@@ -66,6 +67,7 @@ namespace CrateModLoader
 
             int curItem = 0;
             int curPage = 1;
+            TableLayoutPanel tableLayout = null;
 
             foreach (KeyValuePair<int, string> pair in Pages)
             {
@@ -75,6 +77,7 @@ namespace CrateModLoader
 
                 curItem = 0;
                 curPage = 1;
+                tableLayout = null;
 
                 foreach (ModPropertyBase prop in mod.Props)
                 {
@@ -87,32 +90,58 @@ namespace CrateModLoader
                         curPage++;
                         tabControl1.TabPages.Add(string.Format("{0} {1} {2}", pair.Value, ModLoaderText.ModMenuPage, curPage));
                         tabControl1.TabPages[tabControl1.TabPages.Count - 1].AutoScroll = true;
+
                         curItem = 0;
                         offset = initOffset;
                     }
                     if (prop.Category == pair.Key)
                     {
-                        prop.GenerateUI(tabControl1.TabPages[tabControl1.TabPages.Count - 1], ref offset);
-                        offset += 25;
+                        if (curItem == 0)
+                        {
+                            if (tableLayout != null)
+                            {
+                                int newSize = -initRowSize;
+                                foreach (RowStyle row in tableLayout.RowStyles)
+                                {
+                                    newSize += (int)row.Height;
+                                }
+                                tableLayout.Size = new Size(tabControl1.TabPages[tabControl1.TabPages.Count - 1].Width, newSize);
+                            }
+
+                            tableLayout = new TableLayoutPanel();
+                            tableLayout.Parent = tabControl1.TabPages[tabControl1.TabPages.Count - 1];
+                            //tableLayout.Dock = DockStyle.Fill;
+
+                            tableLayout.Location = new Point(0, 0);
+                            tableLayout.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
+                            tableLayout.AutoSize = false;
+                            tableLayout.Size = new Size(tabControl1.TabPages[tabControl1.TabPages.Count - 1].Width, 300);
+
+                            tableLayout.RowCount = 1;
+                            tableLayout.ColumnCount = 1;
+                            tableLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f));
+                            tableLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, initRowSize));
+
+                        }
+
+                        //prop.GenerateUI(tabControl1.TabPages[tabControl1.TabPages.Count - 1], ref offset);
+                        prop.GenerateUI(tableLayout, ref offset);
+                        tableLayout.RowCount++;
+                        tableLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, initRowSize));
+                        offset += 1;
                         curItem++;
                     }
                 }
-                
-                /*
-                VScrollBar vscroll = new VScrollBar();
-                vscroll.Parent = tabControl1.TabPages[tabControl1.TabPages.Count - 1];
-                vscroll.Anchor = AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
-                vscroll.Height = tabControl1.TabPages[tabControl1.TabPages.Count - 1].Height;
-                vscroll.Location = new Point(tabControl1.TabPages[tabControl1.TabPages.Count - 1].Width - 10, 0);
-                vscroll.Scroll += VScroll_Scroll;
-                vscroll.Minimum = 0;
-                vscroll.Maximum = offset + initOffset;
-                tabControl1.TabPages[tabControl1.TabPages.Count - 1].Scroll += VScroll_Scroll;
-                tabControl1.TabPages[tabControl1.TabPages.Count - 1].VerticalScroll.Minimum = 0;
-                tabControl1.TabPages[tabControl1.TabPages.Count - 1].VerticalScroll.Maximum = offset + initOffset;
 
-                tabControl1.TabPages[tabControl1.TabPages.Count - 1].Height = offset + initOffset;
-                */
+                if (tableLayout != null)
+                {
+                    int newSize = -initRowSize;
+                    foreach (RowStyle row in tableLayout.RowStyles)
+                    {
+                        newSize += (int)row.Height;
+                    }
+                    tableLayout.Size = new Size(tabControl1.TabPages[tabControl1.TabPages.Count - 1].Width, newSize);
+                }
 
                 offset = initOffset;
             }

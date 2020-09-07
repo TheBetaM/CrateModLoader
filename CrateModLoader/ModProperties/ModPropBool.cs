@@ -16,7 +16,7 @@ namespace CrateModLoader.ModProperties
 
         }
 
-        public override void GenerateUI(TabPage page, ref int offset)
+        public override void GenerateUI(Control parent, ref int offset)
         {
             //base.GenerateUI(page, ref offset);
             
@@ -24,10 +24,8 @@ namespace CrateModLoader.ModProperties
             checkBox.Text = Name;
             checkBox.BackColor = Color.FromKnownColor(KnownColor.Transparent);
             checkBox.Checked = Value;
-            checkBox.Parent = page;
-            checkBox.Location = new Point(10, offset);
-            checkBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            checkBox.Size = new Size(page.Width - 30, checkBox.Size.Height);
+            checkBox.Parent = parent;
+            checkBox.Dock = DockStyle.Fill;
             checkBox.CheckedChanged += ValueChange;
             checkBox.MouseEnter += FocusUI;
 

@@ -37,21 +37,18 @@ namespace CrateModLoader.ModProperties
 
         private List<NumericUpDown> nums = new List<NumericUpDown>();
 
-        public override void GenerateUI(TabPage page, ref int offset)
+        public override void GenerateUI(Control parent, ref int offset)
         {
-            base.GenerateUI(page, ref offset);
+            base.GenerateUI(parent, ref offset);
 
             nums.Clear();
 
-            offset += 20;
-
             TabControl tabControl = new TabControl();
             tabControl.TabPages.Clear();
-            tabControl.Parent = page;
+            tabControl.Parent = parent;
             //tabControl.Multiline = true;
-            tabControl.Location = new Point(10, offset);
-            tabControl.Size = new Size(page.Width - 20, 50);
-            tabControl.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            tabControl.Dock = DockStyle.Fill;
+            tabControl.MouseEnter += FocusUI;
 
             int x_offset = 0;
             int size = 130;
@@ -86,7 +83,11 @@ namespace CrateModLoader.ModProperties
 
             }
 
-            offset += 30;
+            TableLayoutPanel table = (TableLayoutPanel)parent;
+            table.RowStyles[offset] = new RowStyle(SizeType.Absolute, 56);
+
+            table.SetColumn(tabControl, 1);
+            table.SetRow(tabControl, offset);
 
         }
 

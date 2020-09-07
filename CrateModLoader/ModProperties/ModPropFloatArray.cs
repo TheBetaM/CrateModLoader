@@ -26,20 +26,13 @@ namespace CrateModLoader.ModProperties
 
         private List<NumericUpDown> nums = new List<NumericUpDown>();
 
-        public override void GenerateUI(TabPage page, ref int offset)
+        public override void GenerateUI(Control parent, ref int offset)
         {
-            base.GenerateUI(page, ref offset);
+            base.GenerateUI(parent, ref offset);
 
             nums.Clear();
-
-            //offset += 20;
-
-            int x_offset = 245;
-            int size = 130;
-            if (Value.Length > 5)
-            {
-                size = 65;
-            }
+            TableLayoutPanel table = (TableLayoutPanel)parent;
+            int Count = 2;
 
             foreach (float f in Value)
             {
@@ -50,18 +43,25 @@ namespace CrateModLoader.ModProperties
                 num.Maximum = decimal.MaxValue;
 
                 num.Value = (decimal)f;
-                num.Parent = page;
-                num.Location = new System.Drawing.Point(x_offset, offset - 3);
-                num.Anchor = AnchorStyles.Top | AnchorStyles.Left;
-                num.Size = new System.Drawing.Size(size, num.Size.Height);
+                num.Parent = parent;
+                num.Dock = DockStyle.Fill;
                 num.ValueChanged += ValueChange;
                 num.MouseCaptureChanged += FocusUI;
 
                 nums.Add(num);
 
-                x_offset += size + 20;
-            }
+                if (table.ColumnCount < Count)
+                {
+                    table.ColumnCount++;
+                    table.ColumnStyles[1] = new ColumnStyle(SizeType.Percent, 20f);
+                    table.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20f));
+                }
 
+                table.SetColumn(num, Count - 1);
+                table.SetRow(num, offset);
+                Count++;
+
+            }
         }
 
         public override void ValueChange(object sender, EventArgs e)

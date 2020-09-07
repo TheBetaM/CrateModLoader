@@ -13,7 +13,7 @@ namespace CrateModLoader
         public int? Category = null;
         public bool HasChanged = false;
 
-        public abstract void GenerateUI(TabPage page, ref int offset);
+        public abstract void GenerateUI(Control parent, ref int offset);
 
         public abstract void ValueChange(object sender, System.EventArgs e);
 

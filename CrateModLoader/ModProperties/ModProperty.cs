@@ -37,9 +37,9 @@ namespace CrateModLoader.ModProperties
             DefaultValue = o;
         }
 
-        public override void GenerateUI(TabPage page, ref int offset)
+        public override void GenerateUI(Control parent, ref int offset)
         {
-            GenerateTitle(page, ref offset);
+            GenerateTitle(parent, ref offset);
 
             // Changed values show a * next to the name
             if (HasChanged && TitleLabel != null)
@@ -50,14 +50,14 @@ namespace CrateModLoader.ModProperties
                 }
             }
 
-            Control parent = page;
-            Control target = page;
-            while (parent != null)
+            Control oparent = parent;
+            Control target = parent;
+            while (oparent != null)
             {
-                parent = parent.Parent;
-                if (parent != null)
+                oparent = oparent.Parent;
+                if (oparent != null)
                 {
-                    target = parent;
+                    target = oparent;
                 }
             }
 
@@ -96,17 +96,33 @@ namespace CrateModLoader.ModProperties
 
         }
 
-        void GenerateTitle(TabPage page, ref int offset)
+        void GenerateTitle(Control parent, ref int offset)
         {
+            TableLayoutPanel table = (TableLayoutPanel)parent;
+            if (table.ColumnCount < 2)
+            {
+                table.ColumnCount++;
+            }
+
             TitleLabel = new Label();
             TitleLabel.Text = Name;
-            TitleLabel.Parent = page;
-            TitleLabel.Location = new Point(5, offset);
+            TitleLabel.Parent = parent;
+            //TitleLabel.Location = new Point(5, offset);
             TitleLabel.AutoSize = false;
-            TitleLabel.Size = new Size(240, 20);
-            TitleLabel.TextAlign = ContentAlignment.TopRight;
+            //TitleLabel.Size = new Size(240, 20);
+            TitleLabel.Dock = DockStyle.Fill;
+            TitleLabel.TextAlign = ContentAlignment.MiddleRight;
             TitleLabel.BackColor = Color.FromKnownColor(KnownColor.Transparent);
             TitleLabel.MouseEnter += FocusUI;
+
+            table.ColumnStyles[0] = new ColumnStyle(SizeType.Percent, 25f);
+            if (table.ColumnStyles.Count < 2)
+            {
+                table.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 75f));
+            }
+
+            table.SetColumn(TitleLabel, 0);
+            table.SetRow(TitleLabel, offset);
         }
 
         public override void FocusUI(object sender, object e)
