@@ -13,24 +13,23 @@ namespace CrateModLoader.GameSpecific.CrashMoM
 {
     public sealed class Modder_MoM : Modder
     {
-        public Modder_MoM()
+
+        public override Game Game => new Game()
         {
-            Game = new Game()
-            {
-                Name = "Crash Mind Over Mutant",
-                ShortName = "CrashMOM",
-                Consoles = new List<ConsoleMode>
+            Name = "Crash Mind Over Mutant",
+            ShortName = "CrashMOM",
+            Consoles = new List<ConsoleMode>
                 {
                     ConsoleMode.PS2,
                     ConsoleMode.PSP,
                     ConsoleMode.WII,
                     ConsoleMode.XBOX360,
                 },
-                API_Credit = "API by NeoKesha and BetaM",
-                API_Link = string.Empty,
-                Icon = Properties.Resources.icon_crashmom,
-                ModCratesSupported = true,
-                RegionID_PS2 = new RegionCode[] {
+            API_Credit = "API by NeoKesha and BetaM",
+            API_Link = string.Empty,
+            Icon = Properties.Resources.icon_crashmom,
+            ModCratesSupported = true,
+            RegionID_PS2 = new RegionCode[] {
                     new RegionCode() {
                     Name = @"SLUS_217.28",
                     Region = RegionType.NTSC_U,
@@ -42,7 +41,7 @@ namespace CrateModLoader.GameSpecific.CrashMoM
                     ExecName = "SLES_552.04",
                     CodeName = "SLES_55204", },
                 },
-                RegionID_PSP = new RegionCode[] {
+            RegionID_PSP = new RegionCode[] {
                     new RegionCode() {
                     Name = "ULUS-10377",
                     Region = RegionType.NTSC_U },
@@ -50,7 +49,7 @@ namespace CrateModLoader.GameSpecific.CrashMoM
                     Name = "ULES-01171",
                     Region = RegionType.PAL },
                 },
-                RegionID_WII = new RegionCode[] {
+            RegionID_WII = new RegionCode[] {
                     new RegionCode() {
                     Name = "RC8E7D",
                     Region = RegionType.NTSC_U },
@@ -61,13 +60,17 @@ namespace CrateModLoader.GameSpecific.CrashMoM
                     Name = "RC8X7D",
                     Region = RegionType.PAL },
                 },
-                RegionID_XBOX360 = new RegionCode[]
+            RegionID_XBOX360 = new RegionCode[]
                 {
                     new RegionCode() {
                         Name = "Crash Mind Over Mutant",
                         Region = RegionType.Global, }
                 },
-            };
+        };
+
+        public Modder_MoM()
+        {
+            
         }
 
         internal string basePath = "";

@@ -35,21 +35,19 @@ namespace CrateModLoader.GameSpecific.Crash1
         internal const int RandomizeBosses = 21;
         internal const int BackwardsHogLevels = 22;
 
-        public Modder_Crash1()
+        public override Game Game => new Game()
         {
-            Game = new Game()
-            {
-                Name = Crash1_Text.GameTitle,
-                ShortName = "Crash1",
-                Consoles = new List<ConsoleMode>
+            Name = Crash1_Text.GameTitle,
+            ShortName = "Crash1",
+            Consoles = new List<ConsoleMode>
                 {
                     ConsoleMode.PS1
                 },
-                API_Credit = Crash1_Text.API_Credit,
-                API_Link = "https://github.com/cbhacks/CrashEdit",
-                Icon = Properties.Resources.icon_crash1,
-                ModCratesSupported = true,
-                RegionID_PS1 = new RegionCode[] {
+            API_Credit = Crash1_Text.API_Credit,
+            API_Link = "https://github.com/cbhacks/CrashEdit",
+            Icon = Properties.Resources.icon_crash1,
+            ModCratesSupported = true,
+            RegionID_PS1 = new RegionCode[] {
                     new RegionCode() {
                     Name = @"SCUS_949.00",
                     Region = RegionType.NTSC_U,
@@ -66,7 +64,10 @@ namespace CrateModLoader.GameSpecific.Crash1
                     ExecName = "SCPS_100.31",
                     CodeName = "SCPS_10031", },
                 },
-            };
+        };
+
+        public Modder_Crash1()
+        {
             ModCratesManualInstall = true;
 
             AddOption(RandomizeCratesIntoWood, new ModOption(Crash1_Text.Mod_AllCratesBlank, Crash1_Text.Mod_AllCratesBlankDesc));

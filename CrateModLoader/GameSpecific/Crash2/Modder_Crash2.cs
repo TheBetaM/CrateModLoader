@@ -35,21 +35,19 @@ namespace CrateModLoader.GameSpecific.Crash2
         internal const int RandomizeBosses = 21;
         internal const int RandomizeBoxCount = 24;
 
-        public Modder_Crash2()
+        public override Game Game => new Game()
         {
-            Game = new Game()
-            {
-                Name = Crash2_Text.GameTitle,
-                ShortName = "Crash2",
-                Consoles = new List<ConsoleMode>
+            Name = Crash2_Text.GameTitle,
+            ShortName = "Crash2",
+            Consoles = new List<ConsoleMode>
                 {
                     ConsoleMode.PS1
                 },
-                API_Credit = Crash2_Text.API_Credit,
-                API_Link = "https://github.com/cbhacks/CrashEdit",
-                Icon = Properties.Resources.icon_crash2,
-                ModCratesSupported = true,
-                RegionID_PS1 = new RegionCode[] {
+            API_Credit = Crash2_Text.API_Credit,
+            API_Link = "https://github.com/cbhacks/CrashEdit",
+            Icon = Properties.Resources.icon_crash2,
+            ModCratesSupported = true,
+            RegionID_PS1 = new RegionCode[] {
                     new RegionCode() {
                     Name = @"SCUS_941.54",
                     Region = RegionType.NTSC_U,
@@ -66,7 +64,10 @@ namespace CrateModLoader.GameSpecific.Crash2
                     ExecName = "SCPS_100.47",
                     CodeName = "SCPS_10047", },
                 },
-            };
+        };
+
+        public Modder_Crash2()
+        {
             ModCratesManualInstall = true;
 
             AddOption(RandomizeCratesIntoWood, new ModOption(Crash2_Text.Mod_AllCratesBlank, Crash2_Text.Mod_AllCratesBlankDesc));

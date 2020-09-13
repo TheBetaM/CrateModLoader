@@ -11,23 +11,21 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
         internal const int RandomizeCrates = 1;
         internal const int RandomizeMusic = 2;
 
-        public Modder_TWOC()
+        public override Game Game => new Game()
         {
-            Game = new Game()
-            {
-                Name = "Crash Bandicoot: The Wrath of Cortex",
-                ShortName = "CrashTWOC",
-                Consoles = new List<ConsoleMode>
+            Name = "Crash Bandicoot: The Wrath of Cortex",
+            ShortName = "CrashTWOC",
+            Consoles = new List<ConsoleMode>
                 {
                     ConsoleMode.PS2,
                     //ConsoleMode.GCN,
                     ConsoleMode.XBOX,
                 },
-                API_Credit = string.Empty,
-                API_Link = string.Empty,
-                Icon = Properties.Resources.icon_crashtwoc,
-                ModCratesSupported = true,
-                RegionID_PS2 = new RegionCode[] {
+            API_Credit = string.Empty,
+            API_Link = string.Empty,
+            Icon = Properties.Resources.icon_crashtwoc,
+            ModCratesSupported = true,
+            RegionID_PS2 = new RegionCode[] {
                     new RegionCode() {
                     Name = @"SLUS_202.38",
                     Region = RegionType.NTSC_U,
@@ -44,7 +42,7 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
                     ExecName = "SLPM_740.03",
                     CodeName = "SLPM_74003", },
                 },
-                RegionID_GCN = new RegionCode[] {
+            RegionID_GCN = new RegionCode[] {
                     new RegionCode() {
                     Name = "GCBE7D",
                     Region = RegionType.NTSC_U },
@@ -55,7 +53,7 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
                     Name = "GCBJA4",
                     Region = RegionType.NTSC_J },
                 },
-                RegionID_XBOX = new RegionCode[]
+            RegionID_XBOX = new RegionCode[]
                 {
                     new RegionCode() {
                         Name = "Crash Bandicoot: tWoC",
@@ -70,7 +68,10 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
                         Region = RegionType.PAL,
                         RegionNumber = 4, },
                 },
-            };
+        };
+
+        public Modder_TWOC()
+        {
 
             //AddOption(RandomizeCrates, new ModOption("Randomize Crates"));
             //AddOption(RandomizeLevelOrder, new ModOption("Randomize Level Order")); //doesn't work yet

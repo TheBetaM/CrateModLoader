@@ -12,24 +12,23 @@ namespace CrateModLoader.GameSpecific.CrashTitans
 {
     public sealed class Modder_Titans : Modder
     {
-        public Modder_Titans()
+
+        public override Game Game => new Game()
         {
-            Game = new Game()
-            {
-                Name = "Crash of the Titans",
-                ShortName = "CrashTitans",
-                Consoles = new List<ConsoleMode>
+            Name = "Crash of the Titans",
+            ShortName = "CrashTitans",
+            Consoles = new List<ConsoleMode>
                 {
                     ConsoleMode.PS2,
                     ConsoleMode.PSP,
                     ConsoleMode.WII,
                     ConsoleMode.XBOX360,
                 },
-                API_Credit = "API by NeoKesha and BetaM",
-                API_Link = string.Empty,
-                Icon = Properties.Resources.icon_crashtitans,
-                ModCratesSupported = true,
-                RegionID_PS2 = new RegionCode[] {
+            API_Credit = "API by NeoKesha and BetaM",
+            API_Link = string.Empty,
+            Icon = Properties.Resources.icon_crashtitans,
+            ModCratesSupported = true,
+            RegionID_PS2 = new RegionCode[] {
                     new RegionCode() {
                     Name = @"SLUS_215.83",
                     Region = RegionType.NTSC_U,
@@ -41,7 +40,7 @@ namespace CrateModLoader.GameSpecific.CrashTitans
                     ExecName = "SLES_548.41",
                     CodeName = "SLES_54841", },
                 },
-                RegionID_PSP = new RegionCode[] {
+            RegionID_PSP = new RegionCode[] {
                     new RegionCode() {
                     Name = "ULUS-10304",
                     Region = RegionType.NTSC_U },
@@ -49,7 +48,7 @@ namespace CrateModLoader.GameSpecific.CrashTitans
                     Name = "ULES-00917",
                     Region = RegionType.PAL },
                 },
-                RegionID_WII = new RegionCode[] {
+            RegionID_WII = new RegionCode[] {
                     new RegionCode() {
                     Name = "RQJE7D",
                     Region = RegionType.NTSC_U },
@@ -60,13 +59,17 @@ namespace CrateModLoader.GameSpecific.CrashTitans
                     Name = "RQJX7D",
                     Region = RegionType.PAL },
                 },
-                RegionID_XBOX360 = new RegionCode[]
+            RegionID_XBOX360 = new RegionCode[]
                 {
                     new RegionCode() {
                         Name = "Crash Of The Titans",
                         Region = RegionType.Global, }
                 }
-            };
+        };
+
+        public Modder_Titans()
+        {
+            
 
             AddOption(TestMod, new ModOption("Test Mod: Wide camera angle in Episode 1"));
         }

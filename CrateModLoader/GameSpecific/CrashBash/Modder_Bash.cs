@@ -4,21 +4,19 @@ namespace CrateModLoader.GameSpecific.CrashBash
 {
     public sealed class Modder_Bash : Modder
     {
-        public Modder_Bash()
+        public override Game Game => new Game()
         {
-            Game = new Game()
-            {
-                Name = "Crash Bash",
-                ShortName = "CrashBash",
-                Consoles = new List<ConsoleMode>
+            Name = "Crash Bash",
+            ShortName = "CrashBash",
+            Consoles = new List<ConsoleMode>
                 {
                     ConsoleMode.PS1
                 },
-                API_Credit = string.Empty,
-                API_Link = string.Empty,
-                Icon = Properties.Resources.icon_crashbash,
-                ModCratesSupported = true,
-                RegionID_PS1 = new RegionCode[] {
+            API_Credit = string.Empty,
+            API_Link = string.Empty,
+            Icon = Properties.Resources.icon_crashbash,
+            ModCratesSupported = true,
+            RegionID_PS1 = new RegionCode[] {
                     new RegionCode() {
                     Name = @"SCUS_945.70",
                     Region = RegionType.NTSC_U,
@@ -35,7 +33,11 @@ namespace CrateModLoader.GameSpecific.CrashBash
                     ExecName = "SCPS_101.40",
                     CodeName = "SCPS_10140", },
                 },
-            };
+        };
+
+        public Modder_Bash()
+        {
+            
         }
 
         public override void StartModProcess()

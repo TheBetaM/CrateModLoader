@@ -34,6 +34,7 @@ namespace CrateModLoader.ModProperties
             textBox.Text = Value;
             textBox.Parent = parent;
             textBox.Dock = DockStyle.Fill;
+            textBox.Multiline = true;
             textBox.TextChanged += ValueChange;
             textBox.MouseEnter += FocusUI;
             if (MaxLength != int.MaxValue)

@@ -97,23 +97,21 @@ namespace CrateModLoader.GameSpecific.CrashTS
         internal const int ModClassicCrates         = 15;
         internal const int ModSkipCutscenes         = 16;
 
-        public Modder_Twins()
+        public override Game Game => new Game()
         {
-            Game = new Game()
-            {
-                Name = Twins_Text.GameTitle,
-                ShortName = "CrashTS",
-                Consoles = new List<ConsoleMode>
+            Name = Twins_Text.GameTitle,
+            ShortName = "CrashTS",
+            Consoles = new List<ConsoleMode>
                 {
                     ConsoleMode.PS2,
                     ConsoleMode.XBOX,
                 },
-                API_Credit = Twins_Text.API_Credit,
-                API_Link = "https://github.com/Smartkin/twinsanity-editor",
-                Icon = Properties.Resources.icon_crashts,
-                TextClass = typeof(Twins_Text),
-                ModCratesSupported = true,
-                RegionID_PS2 = new RegionCode[] {
+            API_Credit = Twins_Text.API_Credit,
+            API_Link = "https://github.com/Smartkin/twinsanity-editor",
+            Icon = Properties.Resources.icon_crashts,
+            TextClass = typeof(Twins_Text),
+            ModCratesSupported = true,
+            RegionID_PS2 = new RegionCode[] {
                     new RegionCode() {
                     Name = @"SLUS_209.09",
                     Region = RegionType.NTSC_U,
@@ -130,7 +128,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
                     ExecName = "SLPM_658.01",
                     CodeName = "SLPM_65801", },
                 },
-                RegionID_XBOX = new RegionCode[] {
+            RegionID_XBOX = new RegionCode[] {
                     new RegionCode() {
                     Name = "Crash Twinsanity",
                     Region = RegionType.NTSC_U,
@@ -142,12 +140,17 @@ namespace CrateModLoader.GameSpecific.CrashTS
                     RegionNumber = 4,
                     ExecName = "default.xbe" },
                 },
-                PropertyCategories = new Dictionary<int, string>()
-                {
-                    [(int)ModProps.Misc] = "Misc.",
-                    [(int)ModProps.Character] = "Character",
-                }
-            };
+            PropertyCategories = new Dictionary<int, string>()
+            {
+                [(int)ModProps.Misc] = "Misc.",
+                [(int)ModProps.Character] = "Character",
+            }
+        }
+        ;
+
+        public Modder_Twins()
+        {
+            
 
             AddOption(RandomizeCrateTypes, new ModOption(Twins_Text.Rand_CrateTypes, Twins_Text.Rand_CrateTypesDesc)); // TODO: Make this a toggle between CrateTypes/AllCrates in the mod menu?
             AddOption(RandomizeAllCrates, new ModOption(Twins_Text.Rand_Crates, Twins_Text.Rand_CratesDesc));

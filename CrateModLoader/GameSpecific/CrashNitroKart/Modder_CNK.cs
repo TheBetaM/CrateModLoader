@@ -45,24 +45,22 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
         internal const int NoMask                         = 17;
         internal const int NoAlchemyIntro                 = 18;
 
-        public Modder_CNK()
+        public override Game Game => new Game()
         {
-            Game = new Game()
-            {
-                Name = CNK_Text.GameTitle,
-                ShortName = "CrashNK",
-                Consoles = new List<ConsoleMode>
+            Name = CNK_Text.GameTitle,
+            ShortName = "CrashNK",
+            Consoles = new List<ConsoleMode>
                 {
                     ConsoleMode.PS2,
                     ConsoleMode.GCN,
                     ConsoleMode.XBOX
                 },
-                API_Credit = CNK_Text.API_Credit,
-                API_Link = string.Empty,
-                Icon = Properties.Resources.icon_crashnk,
-                TextClass = typeof(CNK_Text),
-                ModCratesSupported = true,
-                RegionID_PS2 = new RegionCode[] {
+            API_Credit = CNK_Text.API_Credit,
+            API_Link = string.Empty,
+            Icon = Properties.Resources.icon_crashnk,
+            TextClass = typeof(CNK_Text),
+            ModCratesSupported = true,
+            RegionID_PS2 = new RegionCode[] {
                     new RegionCode() {
                     Name = @"SLUS_206.49",
                     Region = RegionType.NTSC_U,
@@ -79,7 +77,7 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
                     ExecName = "SLPM_660.67",
                     CodeName = "SLPM_66067", },
                 },
-                RegionID_GCN = new RegionCode[] {
+            RegionID_GCN = new RegionCode[] {
                     new RegionCode() {
                     Name = "GCNE7D",
                     Region = RegionType.NTSC_U },
@@ -90,7 +88,7 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
                     Name = "GC8JA4",
                     Region = RegionType.NTSC_J },
                 },
-                RegionID_XBOX = new RegionCode[] {
+            RegionID_XBOX = new RegionCode[] {
                     new RegionCode() {
                     Name = "Crash Nitro Kart",
                     Region = RegionType.NTSC_U,
@@ -100,15 +98,18 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
                     Region = RegionType.PAL,
                     RegionNumber = 4, },
                 },
-                PropertyCategories = new Dictionary<int, string>()
-                {
-                    [(int)ModProps.KartStats] = CNK_Text.PropCategory_KartStats,
-                    [(int)ModProps.DriverStats] = CNK_Text.PropCategory_DriverStats,
-                    [(int)ModProps.Surfaces] = CNK_Text.PropCategory_Surfaces,
-                    [(int)ModProps.Powerups] = CNK_Text.PropCategory_Powerups,
-                    [(int)ModProps.Adventure] = CNK_Text.PropCategory_Adventure,
-                }
-            };
+            PropertyCategories = new Dictionary<int, string>()
+            {
+                [(int)ModProps.KartStats] = CNK_Text.PropCategory_KartStats,
+                [(int)ModProps.DriverStats] = CNK_Text.PropCategory_DriverStats,
+                [(int)ModProps.Surfaces] = CNK_Text.PropCategory_Surfaces,
+                [(int)ModProps.Powerups] = CNK_Text.PropCategory_Powerups,
+                [(int)ModProps.Adventure] = CNK_Text.PropCategory_Adventure,
+            }
+        };
+
+        public Modder_CNK()
+        {
 
             AddOption(RandomizeAdventure, new ModOption(CNK_Text.Rand_Adventure, CNK_Text.Rand_AdventureDesc));
             AddOption(RandomizeCharacterStats, new ModOption(CNK_Text.Rand_CharacterStats, CNK_Text.Rand_CharacterStatsDesc));

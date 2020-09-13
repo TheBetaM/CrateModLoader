@@ -8,24 +8,22 @@ namespace CrateModLoader.GameSpecific.Rayman3
 {
     public sealed class Modder_Rayman3 : Modder
     {
-        public Modder_Rayman3()
+        public override Game Game => new Game()
         {
-            Game = new Game()
-            {
-                Name = Rayman3_Text.GameTitle,
-                ShortName = "Rayman3",
-                Consoles = new List<ConsoleMode>
+            Name = Rayman3_Text.GameTitle,
+            ShortName = "Rayman3",
+            Consoles = new List<ConsoleMode>
                 {
                     ConsoleMode.GCN,
                     ConsoleMode.PS2,
                     ConsoleMode.XBOX,
                     //ConsoleMode.PC,
                 },
-                API_Credit = string.Empty,
-                API_Link = string.Empty,
-                Icon = Properties.Resources.icon_ray3,
-                ModCratesSupported = true,
-                RegionID_PS2 = new RegionCode[] {
+            API_Credit = string.Empty,
+            API_Link = string.Empty,
+            Icon = Properties.Resources.icon_ray3,
+            ModCratesSupported = true,
+            RegionID_PS2 = new RegionCode[] {
                     new RegionCode() {
                     Name = "SLUS_206.01",
                     Region = RegionType.NTSC_U,
@@ -37,7 +35,7 @@ namespace CrateModLoader.GameSpecific.Rayman3
                     ExecName = "SLES_512.22",
                     CodeName = "SLES_51222", },
                 },
-                RegionID_GCN = new RegionCode[] {
+            RegionID_GCN = new RegionCode[] {
                     new RegionCode() {
                     Name = "GRHE",
                     Region = RegionType.NTSC_U },
@@ -45,7 +43,7 @@ namespace CrateModLoader.GameSpecific.Rayman3
                     Name = "GRHP",
                     Region = RegionType.PAL },
                 },
-                RegionID_XBOX = new RegionCode[] {
+            RegionID_XBOX = new RegionCode[] {
                     new RegionCode() {
                     Name = "Rayman 3",
                     Region = RegionType.NTSC_U,
@@ -55,23 +53,27 @@ namespace CrateModLoader.GameSpecific.Rayman3
                     Region = RegionType.PAL,
                     RegionNumber = 4, },
                 },
-                /*
-                RegionID_PC = new RegionCode[] {
-                    new RegionCode() {
-                    Name = "Rayman3.exe",
-                    Region = RegionType.Global },
-                    new RegionCode() {
-                    Name = "rayman3.exe",
-                    Region = RegionType.Global },
-                     new RegionCode() {
-                    Name = "RAYMAN3.EXE",
-                    Region = RegionType.Global },
-                    new RegionCode() {
-                    Name = "Rayman3.EXE",
-                    Region = RegionType.Global },
-                },
-                */
-            };
+            /*
+            RegionID_PC = new RegionCode[] {
+                new RegionCode() {
+                Name = "Rayman3.exe",
+                Region = RegionType.Global },
+                new RegionCode() {
+                Name = "rayman3.exe",
+                Region = RegionType.Global },
+                 new RegionCode() {
+                Name = "RAYMAN3.EXE",
+                Region = RegionType.Global },
+                new RegionCode() {
+                Name = "Rayman3.EXE",
+                Region = RegionType.Global },
+            },
+            */
+        };
+
+        public Modder_Rayman3()
+        {
+            
 
             //AddOption(RandomizeLevelOrder, new ModOption(Rayman3_Text.Rand_LevelOrder2, Rayman3_Text.Rand_LevelOrder2Desc));
             AddOption(RandomizeLevelOrderAlt, new ModOption(Rayman3_Text.Rand_LevelOrder, Rayman3_Text.Rand_LevelOrderDesc));

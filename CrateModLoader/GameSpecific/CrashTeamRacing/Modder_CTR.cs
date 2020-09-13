@@ -17,21 +17,19 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
     {
         internal const int RandomizeAdvCharacters = 0;
 
-        public Modder_CTR()
+        public override Game Game => new Game()
         {
-            Game = new Game()
-            {
-                Name = "Crash Team Racing",
-                ShortName = "CrashTR",
-                Consoles = new List<ConsoleMode>
+            Name = "Crash Team Racing",
+            ShortName = "CrashTR",
+            Consoles = new List<ConsoleMode>
                 {
                     ConsoleMode.PS1
                 },
-                API_Credit = "API by DCxDemo",
-                API_Link = "https://github.com/DCxDemo/CTR-tools",
-                Icon = Properties.Resources.icon_crashtr,
-                ModCratesSupported = true,
-                RegionID_PS1 = new RegionCode[] {
+            API_Credit = "API by DCxDemo",
+            API_Link = "https://github.com/DCxDemo/CTR-tools",
+            Icon = Properties.Resources.icon_crashtr,
+            ModCratesSupported = true,
+            RegionID_PS1 = new RegionCode[] {
                     new RegionCode() {
                     Name = @"SCUS_944.26",
                     Region = RegionType.NTSC_U,
@@ -48,7 +46,10 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
                     ExecName = "SCPS_101.18",
                     CodeName = "SCPS_10118", },
                 },
-            };
+        };
+
+        public Modder_CTR()
+        {
 
             //AddOption(RandomizeAdvCharacters, new ModOption("Randomize adventure mode characters"));
         }

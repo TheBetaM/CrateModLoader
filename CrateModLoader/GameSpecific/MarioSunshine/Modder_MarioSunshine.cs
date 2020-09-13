@@ -4,21 +4,20 @@ namespace CrateModLoader.GameSpecific.MarioSunshine
 {
     public sealed class Modder_MarioSunshine : Modder
     {
-        public Modder_MarioSunshine()
+
+        public override Game Game => new Game()
         {
-            Game = new Game()
-            {
-                Name = "Super Mario Sunshine",
-                ShortName = "MarioSunshine",
-                Consoles = new List<ConsoleMode>
+            Name = "Super Mario Sunshine",
+            ShortName = "MarioSunshine",
+            Consoles = new List<ConsoleMode>
                 {
                     ConsoleMode.GCN
                 },
-                API_Credit = string.Empty,
-                API_Link = string.Empty,
-                Icon = null,
-                ModCratesSupported = true,
-                RegionID_GCN = new RegionCode[] {
+            API_Credit = string.Empty,
+            API_Link = string.Empty,
+            Icon = null,
+            ModCratesSupported = true,
+            RegionID_GCN = new RegionCode[] {
                     new RegionCode() {
                     Name = "GMSE",
                     Region = RegionType.NTSC_U },
@@ -29,7 +28,11 @@ namespace CrateModLoader.GameSpecific.MarioSunshine
                     Name = "GMSJ",
                     Region = RegionType.NTSC_J },
                 },
-            };
+        };
+
+        public Modder_MarioSunshine()
+        {
+
         }
 
         public override void StartModProcess()

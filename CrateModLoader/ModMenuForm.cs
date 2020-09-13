@@ -43,9 +43,9 @@ namespace CrateModLoader
 
             int initOffset = 0;
             int offset = 0;
-            int initRowSize = 30;
+            int initRowSize = 25;
 
-            int itemsPerPage = 40; // to reduce lag
+            int itemsPerPage = 45; // to reduce lag
 
             SortedDictionary<int, string> Pages = new SortedDictionary<int, string>();
             foreach (ModPropertyBase prop in mod.Props)

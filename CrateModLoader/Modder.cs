@@ -14,7 +14,7 @@ namespace CrateModLoader
      * Adding a game:
      * 1. Make a new modder class that inherits this abstract class.
      * 2. Fill its Game member with the appropriate info in the class constructor. (ensure that the namespace is CrateModLoader.GameSpecific.??? to avoid bugs)
-     * 3. Override StartModProcess (at least, there are more modding functions that can be overriden but are optional).
+     * 3. Override Game and StartModProcess (at least, there are more modding functions that can be overriden but are optional).
      * (optional) 4. Localize game title, API credit, and options using text resources.
      * (optional) 5. Create ModProperty variables for automatic Mod Menu setup.
      * 6. Done.
@@ -335,6 +335,7 @@ namespace CrateModLoader
             MessageBox.Show(ModLoaderText.ModMenuMissingErrorPopup, ModLoaderText.ErrorPopupTitle, MessageBoxButtons.OK);
         }
 
-        public Game Game { get; protected set; }
+        public abstract Game Game { get; }
+
     }
 }

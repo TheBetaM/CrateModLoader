@@ -84,7 +84,7 @@ namespace CrateModLoader.ModProperties
             }
 
             TableLayoutPanel table = (TableLayoutPanel)parent;
-            table.RowStyles[offset] = new RowStyle(SizeType.Absolute, 56);
+            table.RowStyles[offset] = new RowStyle(SizeType.Absolute, 54);
 
             table.SetColumn(tabControl, 1);
             table.SetRow(tabControl, offset);

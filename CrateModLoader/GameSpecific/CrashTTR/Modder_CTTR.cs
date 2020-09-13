@@ -81,25 +81,23 @@ namespace CrateModLoader.GameSpecific.CrashTTR
         internal const int AddPowerupsTimeTrial         = 18;
         internal const int ReplaceCrashinatorConeAttack = 19;
 
-        public Modder_CTTR()
+        public override Game Game => new Game()
         {
-            Game = new Game()
-            {
-                Name = CTTR_Text.GameTitle,
-                ShortName = "CrashTTR",
-                Consoles = new List<ConsoleMode>
+            Name = CTTR_Text.GameTitle,
+            ShortName = "CrashTTR",
+            Consoles = new List<ConsoleMode>
                 {
                     ConsoleMode.PS2,
                     ConsoleMode.GCN,
                     ConsoleMode.PSP,
                     ConsoleMode.XBOX,
                 },
-                API_Credit = CTTR_Text.API_Credit,
-                API_Link = string.Empty,
-                Icon = Properties.Resources.icon_crashttr,
-                TextClass = typeof(CTTR_Text),
-                ModCratesSupported = true,
-                RegionID_PS2 = new RegionCode[] {
+            API_Credit = CTTR_Text.API_Credit,
+            API_Link = string.Empty,
+            Icon = Properties.Resources.icon_crashttr,
+            TextClass = typeof(CTTR_Text),
+            ModCratesSupported = true,
+            RegionID_PS2 = new RegionCode[] {
                     new RegionCode() {
                     Name = @"SLUS_211.91",
                     Region = RegionType.NTSC_U,
@@ -116,7 +114,7 @@ namespace CrateModLoader.GameSpecific.CrashTTR
                     ExecName = "SLPM_660.90",
                     CodeName = "SLPM_66090", },
                 },
-                RegionID_GCN = new RegionCode[] {
+            RegionID_GCN = new RegionCode[] {
                     new RegionCode() {
                     Name = "G9RE",
                     Region = RegionType.NTSC_U },
@@ -136,7 +134,7 @@ namespace CrateModLoader.GameSpecific.CrashTTR
                     Name = "G9RP",
                     Region = RegionType.PAL },
                 },
-                RegionID_PSP = new RegionCode[] {
+            RegionID_PSP = new RegionCode[] {
                     new RegionCode() {
                     Name = "ULUS-10044",
                     Region = RegionType.NTSC_U },
@@ -147,7 +145,7 @@ namespace CrateModLoader.GameSpecific.CrashTTR
                     Name = "ULJM-05036",
                     Region = RegionType.NTSC_J },
                 },
-                RegionID_XBOX = new RegionCode[] {
+            RegionID_XBOX = new RegionCode[] {
                     new RegionCode() {
                     Name = "Crash Tag Team Racing",
                     Region = RegionType.NTSC_U,
@@ -157,7 +155,10 @@ namespace CrateModLoader.GameSpecific.CrashTTR
                     Region = RegionType.PAL,
                     RegionNumber = 4, },
                 },
-            };
+        };
+
+        public Modder_CTTR()
+        {
 
             AddOption(RandomizeCharacters, new ModOption(CTTR_Text.Rand_PlatformingCharacter, CTTR_Text.Rand_PlatformingCharacterDesc)); // todo: change missions to unlock crash and cortex if they're not in the starting pool
             //AddOption(RandomizeHubs, new ModOption("Randomize Hub Entrances")); // todo: gem keys in missionobjectives_x and platforming_objects, unlock failure message, key missions
