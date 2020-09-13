@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Reflection;
 using System.IO;
@@ -246,7 +245,7 @@ namespace CrateModLoader
 
             if (Settings.Count == 0)
             {
-                MessageBox.Show(ModLoaderText.ModMenuLoad_Error);
+                //MessageBox.Show(ModLoaderText.ModMenuLoad_Error);
                 return;
             }
 
@@ -330,10 +329,7 @@ namespace CrateModLoader
         protected virtual void ModProcess() { }
         protected virtual void EndModProcess() { }
 
-        public virtual void OpenModMenu()
-        {
-            MessageBox.Show(ModLoaderText.ModMenuMissingErrorPopup, ModLoaderText.ErrorPopupTitle, MessageBoxButtons.OK);
-        }
+        public virtual void OpenModMenu() { }
 
         public abstract Game Game { get; }
 

@@ -36,6 +36,9 @@ namespace CrateModLoader
     public static class ModLoaderGlobals
     {
 
+        /// <summary> Global access to the main ModLoader class </summary>
+        public static ModLoader ModProgram;
+
         /// <summary> Global Randomizer Seed, can be modified during modding. Max length - 10 characters </summary>
         public static int RandomizerSeed = 0;
 

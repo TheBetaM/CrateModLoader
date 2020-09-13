@@ -16,13 +16,15 @@ namespace CrateModLoader
 
         private ModCrate crate;
         private Modder mod;
+        private Game Game;
         private string path;
 
-        public ModCrateMakerForm(Modder inmod, string outpath)
+        public ModCrateMakerForm(Modder inmod, Game ingame, string outpath)
         {
             InitializeComponent();
 
             mod = inmod;
+            Game = ingame;
             path = outpath;
 
             button_save.Text = ModLoaderText.ModCrateMaker_Button_Save;
@@ -43,7 +45,7 @@ namespace CrateModLoader
             textBox_version.Text = crate.Version;
 
             crate.Icon = null;
-            crate.TargetGame = mod.Game.ShortName;
+            crate.TargetGame = Game.ShortName;
             crate.HasSettings = true;
             crate.IsFolder = false;
 

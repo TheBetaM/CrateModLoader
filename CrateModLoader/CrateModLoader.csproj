@@ -300,6 +300,7 @@
     <Compile Include="ModCrates.cs" />
     <Compile Include="Modder.cs" />
     <Compile Include="ModLoader.cs" />
+    <Compile Include="ModLoaderCLI.cs" />
     <Compile Include="ModLoaderForm.cs">
       <SubType>Form</SubType>
     </Compile>

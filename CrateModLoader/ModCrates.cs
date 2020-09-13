@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.IO.Compression;
-using System.Windows.Forms;
 using CrateModLoader.Resources.Text;
 using System.Globalization;
 
@@ -39,7 +38,6 @@ namespace CrateModLoader
         public const string Prop_CML_Version = "ModLoaderVersion";
         public const string Prop_Game = "Game";
 
-        //public static List<ModCrate> ModList;
         public static List<ModCrate> SupportedMods = new List<ModCrate>();
         public static int ModsActiveAmount
         {
@@ -55,18 +53,15 @@ namespace CrateModLoader
             }
         }
 
-        public static CheckedListBox CheckedList_Mods;
-
         public static void PopulateModList()
         {
-            CheckedList_Mods.Items.Clear();
 
             bool SupportAll = false;
-            if (Program.ModProgram.Modder == null)
+            if (ModLoaderGlobals.ModProgram.Modder == null)
             {
                 SupportAll = true;
             }
-            else if (string.IsNullOrEmpty(Program.ModProgram.Modder.Game.ShortName))
+            else if (string.IsNullOrEmpty(ModLoaderGlobals.ModProgram.Game.ShortName))
             {
                 Console.WriteLine("WARN: Target game is missing short name!");
                 SupportAll = true;
@@ -93,7 +88,7 @@ namespace CrateModLoader
                             }
                             else
                             {
-                                if (Crate.TargetGame == Program.ModProgram.Modder.Game.ShortName || Crate.TargetGame == AllGamesShortName)
+                                if (Crate.TargetGame == ModLoaderGlobals.ModProgram.Game.ShortName || Crate.TargetGame == AllGamesShortName)
                                 {
                                     ModList.Add(Crate);
                                 }
@@ -102,7 +97,7 @@ namespace CrateModLoader
                     }
                     catch
                     {
-                        MessageBox.Show(ModLoaderText.ModCrateErrorPopup + " " + file.FullName);
+                        //MessageBox.Show(ModLoaderText.ModCrateErrorPopup + " " + file.FullName);
                     }
                 }
             }
@@ -124,7 +119,7 @@ namespace CrateModLoader
                             }
                             else
                             {
-                                if (Crate.TargetGame == Program.ModProgram.Modder.Game.ShortName || Crate.TargetGame == AllGamesShortName)
+                                if (Crate.TargetGame == ModLoaderGlobals.ModProgram.Game.ShortName || Crate.TargetGame == AllGamesShortName)
                                 {
                                     ModList.Add(Crate);
                                 }
@@ -133,7 +128,7 @@ namespace CrateModLoader
                     }
                     catch
                     {
-                        MessageBox.Show(ModLoaderText.ModCrateErrorPopup + " " + dir.FullName);
+                        //MessageBox.Show(ModLoaderText.ModCrateErrorPopup + " " + dir.FullName);
                     }
                 }
             }
@@ -162,45 +157,7 @@ namespace CrateModLoader
             }
             // todo: if a mod has been removed externally, the list won't update that
 
-            if (SupportedMods.Count <= 0)
-            {
-                // 404: Mods Not Found
-                return;
-            }
 
-            for (int i = 0; i < SupportedMods.Count; i++)
-            {
-                string ListName = SupportedMods[i].Name;
-                ListName += " ";
-                ListName += SupportedMods[i].Version;
-
-                /*
-                uint ModLoaderVer;
-                if (uint.TryParse(SupportedMods[i].CML_Version, out ModLoaderVer))
-                {
-                    if (ModLoaderVer != ModLoaderGlobals.ProgramVersionSimple)
-                    {
-                        ListName += " ";
-                        ListName += "(*)";
-                    }
-                }
-                else
-                {
-                    ListName += " ";
-                    ListName += "(*)";
-                }
-                */
-
-                CheckedList_Mods.Items.Add(ListName);
-                if (SupportedMods[i].IsActivated)
-                {
-                    CheckedList_Mods.SetItemCheckState(i, CheckState.Checked);
-                }
-                else
-                {
-                    CheckedList_Mods.SetItemCheckState(i, CheckState.Unchecked);
-                }
-            }
         }
 
         public static void UpdateModSelection(int index, bool value)

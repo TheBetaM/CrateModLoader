@@ -16,8 +16,9 @@ namespace CrateModLoader
     {
 
         private Modder mod;
+        private Game Game;
 
-        public ModMenuForm(Modder modder)
+        public ModMenuForm(Modder modder, Game g)
         {
             InitializeComponent();
 
@@ -30,6 +31,7 @@ namespace CrateModLoader
             Text = ModLoaderText.ModMenuTitle;
 
             mod = modder;
+            Game = g;
 
             //todo: generate Mod Bit
 
@@ -52,9 +54,9 @@ namespace CrateModLoader
             {
                 if (!Pages.ContainsKey((int)prop.Category))
                 {
-                    if (mod.Game.PropertyCategories != null && mod.Game.PropertyCategories.ContainsKey((int)prop.Category))
+                    if (Game.PropertyCategories != null && Game.PropertyCategories.ContainsKey((int)prop.Category))
                     {
-                        Pages.Add((int)prop.Category, mod.Game.PropertyCategories[(int)prop.Category]);
+                        Pages.Add((int)prop.Category, Game.PropertyCategories[(int)prop.Category]);
                     }
                     else
                     {
@@ -124,7 +126,6 @@ namespace CrateModLoader
 
                         }
 
-                        //prop.GenerateUI(tabControl1.TabPages[tabControl1.TabPages.Count - 1], ref offset);
                         prop.GenerateUI(tableLayout, ref offset);
                         tableLayout.RowCount++;
                         tableLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, initRowSize));
@@ -187,11 +188,11 @@ namespace CrateModLoader
 
             if (HasChanged)
             {
-                Program.ModProgram.button_modMenu.Text = ModLoaderText.ModMenuButton + "*";
+                ModLoaderGlobals.ModProgram.button_modMenu.Text = ModLoaderText.ModMenuButton + "*";
             }
             else
             {
-                Program.ModProgram.button_modMenu.Text = ModLoaderText.ModMenuButton;
+                ModLoaderGlobals.ModProgram.button_modMenu.Text = ModLoaderText.ModMenuButton;
             }
         }
 
@@ -252,7 +253,7 @@ namespace CrateModLoader
             {
                 if (saveFileDialog1.FilterIndex == 1)
                 {
-                    ModCrateMakerForm modMenu = new ModCrateMakerForm(mod, saveFileDialog1.FileName);
+                    ModCrateMakerForm modMenu = new ModCrateMakerForm(mod, Game, saveFileDialog1.FileName);
 
                     modMenu.Owner = this;
                     modMenu.Show();

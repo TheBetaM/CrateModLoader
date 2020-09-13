@@ -45,32 +45,32 @@ namespace CrateModLoader
             toolTip1.SetToolTip(button_modTools, ModLoaderText.Tooltip_Button_ModTools);
             toolTip1.SetToolTip(button4, ModLoaderText.Tooltip_Button_RandomizeSeed);
 
-            Program.ModProgram.panel_optionDesc = panel_desc;
-            Program.ModProgram.text_optionDescLabel = linkLabel_optionDesc;
-            Program.ModProgram.processText = label6;
-            Program.ModProgram.progressBar = progressBar1;
-            Program.ModProgram.startButton = button3;
-            Program.ModProgram.text_gameType = label7;
-            Program.ModProgram.text_titleLabel = linkLabel2;
-            Program.ModProgram.text_apiLabel = linkLabel1;
-            Program.ModProgram.list_modOptions = checkedListBox1;
-            Program.ModProgram.main_form = this;
-            Program.ModProgram.image_gameIcon = pictureBox1;
-            Program.ModProgram.button_browse1 = button1;
-            Program.ModProgram.button_browse2 = button2;
-            Program.ModProgram.button_randomize = button4;
-            Program.ModProgram.button_modTools = button_modTools;
-            Program.ModProgram.button_downloadMods = button_downloadMods;
-            Program.ModProgram.textbox_input_path = textBox1;
-            Program.ModProgram.textbox_output_path = textBox2;
-            Program.ModProgram.textbox_rando_seed = numericUpDown1;
-            Program.ModProgram.button_modMenu = button_openModMenu;
-            Program.ModProgram.button_modCrateMenu = button_modCrateMenu;
-            Program.ModProgram.asyncWorker = backgroundWorker1;
-            Program.ModProgram.asyncTimer = timer1;
+            ModLoaderGlobals.ModProgram.panel_optionDesc = panel_desc;
+            ModLoaderGlobals.ModProgram.text_optionDescLabel = linkLabel_optionDesc;
+            ModLoaderGlobals.ModProgram.processText = label6;
+            ModLoaderGlobals.ModProgram.progressBar = progressBar1;
+            ModLoaderGlobals.ModProgram.startButton = button3;
+            ModLoaderGlobals.ModProgram.text_gameType = label7;
+            ModLoaderGlobals.ModProgram.text_titleLabel = linkLabel2;
+            ModLoaderGlobals.ModProgram.text_apiLabel = linkLabel1;
+            ModLoaderGlobals.ModProgram.list_modOptions = checkedListBox1;
+            ModLoaderGlobals.ModProgram.main_form = this;
+            ModLoaderGlobals.ModProgram.image_gameIcon = pictureBox1;
+            ModLoaderGlobals.ModProgram.button_browse1 = button1;
+            ModLoaderGlobals.ModProgram.button_browse2 = button2;
+            ModLoaderGlobals.ModProgram.button_randomize = button4;
+            ModLoaderGlobals.ModProgram.button_modTools = button_modTools;
+            ModLoaderGlobals.ModProgram.button_downloadMods = button_downloadMods;
+            ModLoaderGlobals.ModProgram.textbox_input_path = textBox1;
+            ModLoaderGlobals.ModProgram.textbox_output_path = textBox2;
+            ModLoaderGlobals.ModProgram.textbox_rando_seed = numericUpDown1;
+            ModLoaderGlobals.ModProgram.button_modMenu = button_openModMenu;
+            ModLoaderGlobals.ModProgram.button_modCrateMenu = button_modCrateMenu;
+            ModLoaderGlobals.ModProgram.asyncWorker = backgroundWorker1;
+            ModLoaderGlobals.ModProgram.asyncTimer = timer1;
             timer1.Enabled = false;
             timer1.Interval = 500;
-            Program.ModProgram.formHandle = this.Handle;
+            ModLoaderGlobals.ModProgram.formHandle = this.Handle;
 
             progressBar1.Minimum = 0;
             progressBar1.Maximum = 100;
@@ -86,13 +86,13 @@ namespace CrateModLoader
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (Program.ModProgram.inputDirectoryMode)
+            if (ModLoaderGlobals.ModProgram.inputDirectoryMode)
             {
                 if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
                 {
-                    Program.ModProgram.OpenROM_Selection = ModLoader.OpenROM_SelectionType.Any;
+                    ModLoaderGlobals.ModProgram.OpenROM_Selection = ModLoader.OpenROM_SelectionType.Any;
                     ModLoaderGlobals.InputPath = folderBrowserDialog1.SelectedPath + @"\";
-                    Program.ModProgram.CheckISO();
+                    ModLoaderGlobals.ModProgram.CheckISO();
                     textBox1.Text = ModLoaderGlobals.InputPath;
                 }
             }
@@ -103,9 +103,9 @@ namespace CrateModLoader
 
                 if (openFileDialog1.ShowDialog() == DialogResult.OK)
                 {
-                    Program.ModProgram.OpenROM_Selection = (ModLoader.OpenROM_SelectionType)openFileDialog1.FilterIndex;
+                    ModLoaderGlobals.ModProgram.OpenROM_Selection = (ModLoader.OpenROM_SelectionType)openFileDialog1.FilterIndex;
                     ModLoaderGlobals.InputPath = openFileDialog1.FileName;
-                    Program.ModProgram.CheckISO();
+                    ModLoaderGlobals.ModProgram.CheckISO();
                     textBox1.Text = ModLoaderGlobals.InputPath;
                 }
             }
@@ -114,14 +114,14 @@ namespace CrateModLoader
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (Program.ModProgram.outputDirectoryMode)
+            if (ModLoaderGlobals.ModProgram.outputDirectoryMode)
             {
                 if (folderBrowserDialog2.ShowDialog() == DialogResult.OK)
                 {
                     ModLoaderGlobals.OutputPath = folderBrowserDialog2.SelectedPath + @"\";
                     textBox2.Text = ModLoaderGlobals.OutputPath;
-                    Program.ModProgram.outputPathSet = true;
-                    if (Program.ModProgram.loadedISO && Program.ModProgram.outputPathSet)
+                    ModLoaderGlobals.ModProgram.outputPathSet = true;
+                    if (ModLoaderGlobals.ModProgram.loadedISO && ModLoaderGlobals.ModProgram.outputPathSet)
                     {
                         button3.Enabled = true;
                         label6.Text = ModLoaderText.ProcessReady;
@@ -158,8 +158,8 @@ namespace CrateModLoader
         {
             ModLoaderGlobals.OutputPath = saveFileDialog1.FileName;
             textBox2.Text = ModLoaderGlobals.OutputPath;
-            Program.ModProgram.outputPathSet = true;
-            if (Program.ModProgram.loadedISO && Program.ModProgram.outputPathSet)
+            ModLoaderGlobals.ModProgram.outputPathSet = true;
+            if (ModLoaderGlobals.ModProgram.loadedISO && ModLoaderGlobals.ModProgram.outputPathSet)
             {
                 button3.Enabled = true;
                 label6.Text = ModLoaderText.ProcessReady;
@@ -177,33 +177,50 @@ namespace CrateModLoader
 
         private void button3_Click(object sender, EventArgs e)
         {
-            Program.ModProgram.DisableInteraction();
+            ModLoaderGlobals.ModProgram.DisableInteraction();
 
             if (checkedListBox1.CheckedItems.Count <= 0 && ModCrates.ModsActiveAmount <= 0 && !button_openModMenu.Text.EndsWith("*"))
             {
                 if (MessageBox.Show(ModLoaderText.NoOptionsSelectedPopup, ModLoaderText.NoOptionsSelectedTitle, MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    Program.ModProgram.StartButtonPressed();
+                    ModLoaderGlobals.ModProgram.StartButtonPressed();
                 }
                 else
                 {
-                    Program.ModProgram.EnableInteraction();
+                    ModLoaderGlobals.ModProgram.EnableInteraction();
                 }
             }
             else
             {
-                Program.ModProgram.StartButtonPressed();
+                ModLoaderGlobals.ModProgram.StartButtonPressed();
             }
         }
 
         private void button_modCrateMenu_Click(object sender, EventArgs e)
         {
-            Program.ModProgram.OpenModCrateManager();
+            // Mod Crate Manager Window: 
+            // Either a checkbox list of .zip files in a mod directory OR
+            // A list with a button that lets you manually add .zip files
+            // Set availability in the respective modder's Game struct (ModCratesSupported variable) 
+
+            ModCrateManagerForm modCrateManagerMenu = new ModCrateManagerForm();
+
+            modCrateManagerMenu.Owner = this;
+            modCrateManagerMenu.Show();
         }
 
         private void button_openModMenu_Click(object sender, EventArgs e)
         {
-            Program.ModProgram.OpenModMenu();
+            // Individual Game Mod Menu
+            // Detailed settings UI for mod properties
+            // Automatically generated for any ModProperty in the modder class' namespace
+
+            ModMenuForm modMenu = new ModMenuForm(ModLoaderGlobals.ModProgram.Modder, ModLoaderGlobals.ModProgram.Game);
+
+            modMenu.Owner = this;
+            modMenu.Show();
+
+            //ModLoaderGlobals.ModProgram.Modder.OpenModMenu();
         }
 
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -237,7 +254,7 @@ namespace CrateModLoader
         {
             try
             {
-                Program.ModProgram.API_Link_Clicked();
+                ModLoaderGlobals.ModProgram.API_Link_Clicked();
             }
             catch
             {
@@ -247,7 +264,7 @@ namespace CrateModLoader
 
         private void ModLoaderForm_DragDrop(object sender, DragEventArgs e)
         {
-            if (!Program.ModProgram.processActive)
+            if (!ModLoaderGlobals.ModProgram.processActive)
             {
                 try
                 {
@@ -256,18 +273,18 @@ namespace CrateModLoader
                     {
                         if (Directory.Exists(fileList[0]))
                         {
-                            Program.ModProgram.inputDirectoryMode = true;
-                            Program.ModProgram.UpdateInputSetting(true);
+                            ModLoaderGlobals.ModProgram.inputDirectoryMode = true;
+                            ModLoaderGlobals.ModProgram.UpdateInputSetting(true);
                             ModLoaderGlobals.InputPath = fileList[0] + @"\";
                         }
                         else
                         {
-                            Program.ModProgram.inputDirectoryMode = false;
-                            Program.ModProgram.UpdateInputSetting(false);
+                            ModLoaderGlobals.ModProgram.inputDirectoryMode = false;
+                            ModLoaderGlobals.ModProgram.UpdateInputSetting(false);
                             ModLoaderGlobals.InputPath = fileList[0];
                         }
-                        Program.ModProgram.OpenROM_Selection = ModLoader.OpenROM_SelectionType.Any;
-                        Program.ModProgram.CheckISO();
+                        ModLoaderGlobals.ModProgram.OpenROM_Selection = ModLoader.OpenROM_SelectionType.Any;
+                        ModLoaderGlobals.ModProgram.CheckISO();
                         textBox1.Text = ModLoaderGlobals.InputPath;
                     }
                 }
@@ -280,7 +297,7 @@ namespace CrateModLoader
 
         private void ModLoaderForm_DragEnter(object sender, DragEventArgs e)
         {
-            if (!Program.ModProgram.processActive)
+            if (!ModLoaderGlobals.ModProgram.processActive)
             {
                 if (e.Data.GetDataPresent(DataFormats.FileDrop))
                 {
@@ -305,7 +322,7 @@ namespace CrateModLoader
             if (IO_Delay)
             {
                 timer1.Enabled = false;
-                Program.ModProgram.Async_BuildFinished();
+                ModLoaderGlobals.ModProgram.Async_BuildFinished();
                 return;
             }
             var progress = PS2ImageMaker.PollProgress();
@@ -326,50 +343,59 @@ namespace CrateModLoader
 
         private void toolStripMenuItem_showCredits_Click(object sender, EventArgs e)
         {
-            Program.ModProgram.ShowText_Credits();
+            TextDisplayForm textForm = new TextDisplayForm(TextDisplayForm.TextDisplayType.Credits);
+
+            textForm.Owner = this;
+            textForm.Show();
         }
 
         private void toolStripMenuItem_showGames_Click(object sender, EventArgs e)
         {
-            Program.ModProgram.ShowText_Games();
+            TextDisplayForm textForm = new TextDisplayForm(TextDisplayForm.TextDisplayType.Games);
+
+            textForm.Owner = this;
+            textForm.Show();
         }
 
         private void toolStripMenuItem_showChangelog_Click(object sender, EventArgs e)
         {
-            Program.ModProgram.ShowText_Changelog();
+            TextDisplayForm textForm = new TextDisplayForm(TextDisplayForm.TextDisplayType.Changelog);
+
+            textForm.Owner = this;
+            textForm.Show();
         }
 
         private void toolStripMenuItem_loadROM_Click(object sender, EventArgs e)
         {
-            Program.ModProgram.inputDirectoryMode = false;
-            Program.ModProgram.UpdateInputSetting(false);
+            ModLoaderGlobals.ModProgram.inputDirectoryMode = false;
+            ModLoaderGlobals.ModProgram.UpdateInputSetting(false);
             button1_Click(null, null);
         }
 
         private void toolStripMenuItem_loadFolder_Click(object sender, EventArgs e)
         {
-            Program.ModProgram.inputDirectoryMode = true;
-            Program.ModProgram.UpdateInputSetting(true);
+            ModLoaderGlobals.ModProgram.inputDirectoryMode = true;
+            ModLoaderGlobals.ModProgram.UpdateInputSetting(true);
             button1_Click(null, null);
         }
 
         private void toolStripMenuItem_saveROM_Click(object sender, EventArgs e)
         {
-            Program.ModProgram.outputDirectoryMode = false;
-            Program.ModProgram.UpdateOutputSetting(false);
+            ModLoaderGlobals.ModProgram.outputDirectoryMode = false;
+            ModLoaderGlobals.ModProgram.UpdateOutputSetting(false);
             button2_Click(null, null);
         }
 
         private void toolStripMenuItem_saveFolder_Click(object sender, EventArgs e)
         {
-            Program.ModProgram.outputDirectoryMode = true;
-            Program.ModProgram.UpdateOutputSetting(true);
+            ModLoaderGlobals.ModProgram.outputDirectoryMode = true;
+            ModLoaderGlobals.ModProgram.UpdateOutputSetting(true);
             button2_Click(null, null);
         }
 
         private void toolStripMenuItem_keepTempFiles_CheckedChanged(object sender, EventArgs e)
         {
-            Program.ModProgram.keepTempFiles = toolStripMenuItem_keepTempFiles.Checked;
+            ModLoaderGlobals.ModProgram.keepTempFiles = toolStripMenuItem_keepTempFiles.Checked;
         }
     }
 }

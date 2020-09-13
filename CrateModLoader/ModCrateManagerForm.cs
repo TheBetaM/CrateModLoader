@@ -9,7 +9,48 @@ namespace CrateModLoader
         public ModCrateManagerForm()
         {
             InitializeComponent();
-            ModCrates.CheckedList_Mods = checkedListBox_mods;
+
+            checkedListBox_mods.Items.Clear();
+
+            ModCrates.PopulateModList();
+
+            if (ModCrates.SupportedMods.Count > 0)
+            {
+                for (int i = 0; i < ModCrates.SupportedMods.Count; i++)
+                {
+                    string ListName = ModCrates.SupportedMods[i].Name;
+                    ListName += " ";
+                    ListName += ModCrates.SupportedMods[i].Version;
+
+                    /*
+                    uint ModLoaderVer;
+                    if (uint.TryParse(SupportedMods[i].CML_Version, out ModLoaderVer))
+                    {
+                        if (ModLoaderVer != ModLoaderGlobals.ProgramVersionSimple)
+                        {
+                            ListName += " ";
+                            ListName += "(*)";
+                        }
+                    }
+                    else
+                    {
+                        ListName += " ";
+                        ListName += "(*)";
+                    }
+                    */
+
+                    checkedListBox_mods.Items.Add(ListName);
+                    if (ModCrates.SupportedMods[i].IsActivated)
+                    {
+                        checkedListBox_mods.SetItemCheckState(i, CheckState.Checked);
+                    }
+                    else
+                    {
+                        checkedListBox_mods.SetItemCheckState(i, CheckState.Unchecked);
+                    }
+                }
+            }
+
             label_author.Text = "";
             label_desc.Text = "";
             button_confirm.Text = ModLoaderText.ModCrateManagerConfirmButton;
@@ -39,10 +80,10 @@ namespace CrateModLoader
             string CratesActive = ModLoaderText.ModCratesButton;
             if (ModCrates.ModsActiveAmount > 0)
             {
-                CratesActive += " (" + ModCrates.ModsActiveAmount + "x)";
+                CratesActive += $" ({ ModCrates.ModsActiveAmount }x)";
             }
 
-            Program.ModProgram.button_modCrateMenu.Text = CratesActive;
+            ModLoaderGlobals.ModProgram.button_modCrateMenu.Text = CratesActive;
         }
 
         private void checkedListBox_mods_ItemCheck(object sender, ItemCheckEventArgs e)

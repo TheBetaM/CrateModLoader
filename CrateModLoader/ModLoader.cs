@@ -21,25 +21,27 @@ namespace CrateModLoader
         // UI elements
         public Label processText;
         public ProgressBar progressBar;
-        public Button startButton;
         public Label text_gameType;
-        public LinkLabel text_titleLabel;
         public LinkLabel text_apiLabel;
         public LinkLabel text_optionDescLabel;
-        public Panel panel_optionDesc;
         public PictureBox image_gameIcon;
         public CheckedListBox list_modOptions;
         public Form main_form;
-        public Button button_browse1;
-        public Button button_browse2;
-        public Button button_randomize;
-        public Button button_modTools;
-        public Button button_downloadMods;
         public TextBox textbox_input_path;
         public TextBox textbox_output_path;
         public NumericUpDown textbox_rando_seed;
         public Button button_modMenu;
         public Button button_modCrateMenu;
+
+        public Button startButton;
+        public LinkLabel text_titleLabel;
+        public Panel panel_optionDesc;
+        public Button button_browse1;
+        public Button button_browse2;
+        public Button button_randomize;
+        public Button button_modTools;
+        public Button button_downloadMods;
+
         public Timer asyncTimer;
         public IntPtr formHandle;
 
@@ -61,6 +63,7 @@ namespace CrateModLoader
         public bool isCDimage = false; //as opposed to DVD image
         public bool asyncBuild = false;
         public Modder Modder;
+        public Game Game;
         private Process ISOcreatorProcess;
         public BackgroundWorker asyncWorker;
         public OpenROM_SelectionType OpenROM_Selection = OpenROM_SelectionType.AutomaticOnly;
@@ -744,7 +747,7 @@ namespace CrateModLoader
                                 SetGameType(titleID, ConsoleMode.PS2);
                                 if (Modder != null)
                                 {
-                                    foreach (var rc in Modder.Game.RegionID_PS2)
+                                    foreach (var rc in Game.RegionID_PS2)
                                         if (rc.Region == ModLoaderGlobals.Region)
                                             ModLoaderGlobals.ProductCode = rc.CodeName;
                                 }
@@ -754,7 +757,7 @@ namespace CrateModLoader
                                 SetGameType(titleID, ConsoleMode.PS1);
                                 if (Modder != null)
                                 {
-                                    foreach (var rc in Modder.Game.RegionID_PS1)
+                                    foreach (var rc in Game.RegionID_PS1)
                                         if (rc.Region == ModLoaderGlobals.Region)
                                             ModLoaderGlobals.ProductCode = rc.CodeName;
                                 }
@@ -1151,7 +1154,7 @@ namespace CrateModLoader
                                         SetGameType(titleID, ConsoleMode.PS2);
                                         if (Modder != null)
                                         {
-                                            foreach (var rc in Modder.Game.RegionID_PS2)
+                                            foreach (var rc in Game.RegionID_PS2)
                                                 if (rc.Region == ModLoaderGlobals.Region)
                                                     ModLoaderGlobals.ProductCode = rc.CodeName;
                                         }
@@ -1161,7 +1164,7 @@ namespace CrateModLoader
                                         SetGameType(titleID, ConsoleMode.PS1);
                                         if (Modder != null)
                                         {
-                                            foreach (var rc in Modder.Game.RegionID_PS1)
+                                            foreach (var rc in Game.RegionID_PS1)
                                                 if (rc.Region == ModLoaderGlobals.Region)
                                                     ModLoaderGlobals.ProductCode = rc.CodeName;
                                         }
@@ -1299,17 +1302,18 @@ namespace CrateModLoader
                 if (type.IsAbstract || !typeof(Modder).IsAssignableFrom(type)) // only get non-abstract modders
                     continue;
                 Modder modder = (Modder)Activator.CreateInstance(type);
-                if (!modder.Game.Consoles.Contains(console))
+                Game game = modder.Game;
+                if (!game.Consoles.Contains(console))
                     continue;
                 RegionCode[] codelist =
-                      console == ConsoleMode.PS2 ? modder.Game.RegionID_PS2
-                    : console == ConsoleMode.PS1 ? modder.Game.RegionID_PS1
-                    : console == ConsoleMode.PSP ? modder.Game.RegionID_PSP
-                    : console == ConsoleMode.GCN ? modder.Game.RegionID_GCN
-                    : console == ConsoleMode.WII ? modder.Game.RegionID_WII
-                    : console == ConsoleMode.XBOX ? modder.Game.RegionID_XBOX
-                    : console == ConsoleMode.XBOX360 ? modder.Game.RegionID_XBOX360
-                    : console == ConsoleMode.PC ? modder.Game.RegionID_PC
+                      console == ConsoleMode.PS2 ? game.RegionID_PS2
+                    : console == ConsoleMode.PS1 ? game.RegionID_PS1
+                    : console == ConsoleMode.PSP ? game.RegionID_PSP
+                    : console == ConsoleMode.GCN ? game.RegionID_GCN
+                    : console == ConsoleMode.WII ? game.RegionID_WII
+                    : console == ConsoleMode.XBOX ? game.RegionID_XBOX
+                    : console == ConsoleMode.XBOX360 ? game.RegionID_XBOX360
+                    : console == ConsoleMode.PC ? game.RegionID_PC
                     : null;
                 foreach (var r in codelist)
                 {
@@ -1322,6 +1326,7 @@ namespace CrateModLoader
                                 ModLoaderGlobals.Region = r.Region;
                                 RegionNotSupported = false;
                                 Modder = modder;
+                                Game = game;
                                 if (!string.IsNullOrEmpty(r.ExecName))
                                 {
                                     ModLoaderGlobals.ExecutableName = r.ExecName;
@@ -1337,6 +1342,7 @@ namespace CrateModLoader
                         {
                             ModLoaderGlobals.Region = r.Region;
                             Modder = modder;
+                            Game = game;
                             RegionNotSupported = false;
                             if (!string.IsNullOrEmpty(r.ExecName))
                             {
@@ -1355,6 +1361,7 @@ namespace CrateModLoader
                         {
                             ModLoaderGlobals.Region = RegionType.Undefined;
                             Modder = modder;
+                            Game = game;
                             if (!string.IsNullOrEmpty(r.ExecName))
                             {
                                 ModLoaderGlobals.ExecutableName = r.ExecName;
@@ -1419,13 +1426,13 @@ namespace CrateModLoader
             else
             {
                 Modder.PopulateProperties();
-                Image gameIcon = Modder.Game.Icon;
+                Image gameIcon = Game.Icon;
 
-                //button_modMenu.Enabled = button_modMenu.Visible = Modder.Game.ModMenuEnabled;
+                //button_modMenu.Enabled = button_modMenu.Visible = Game.ModMenuEnabled;
                 button_modMenu.Visible = true;
                 button_modMenu.Enabled = Modder.ModMenuEnabled;
                 button_modCrateMenu.Visible = true;
-                button_modCrateMenu.Enabled = Modder.Game.ModCratesSupported;
+                button_modCrateMenu.Enabled = Game.ModCratesSupported;
                 button_randomize.Enabled = button_randomize.Visible = button_modTools.Visible = button_downloadMods.Visible = true;
                 textbox_rando_seed.Enabled = textbox_rando_seed.Visible = true;
                 text_optionDescLabel.Text = string.Empty;
@@ -1435,17 +1442,17 @@ namespace CrateModLoader
 
                 if (string.IsNullOrWhiteSpace(region_mod))
                 {
-                    text_gameType.Text = string.Format("{0}\n({1})", Modder.Game.Name, cons_mod);
+                    text_gameType.Text = string.Format("{0}\n({1})", Game.Name, cons_mod);
                 }
                 else
                 {
-                    text_gameType.Text = string.Format("{0}\n({1} {2})", Modder.Game.Name, region_mod, cons_mod);
+                    text_gameType.Text = string.Format("{0}\n({1} {2})", Game.Name, region_mod, cons_mod);
                 }
                 
-                if (!string.IsNullOrWhiteSpace(Modder.Game.API_Credit))
+                if (!string.IsNullOrWhiteSpace(Game.API_Credit))
                 {
-                    text_apiLabel.Text = Modder.Game.API_Credit;
-                    if (!string.IsNullOrWhiteSpace(Modder.Game.API_Link))
+                    text_apiLabel.Text = Game.API_Credit;
+                    if (!string.IsNullOrWhiteSpace(Game.API_Link))
                     {
                         text_apiLabel.Enabled = true;
                     }
@@ -1530,57 +1537,6 @@ namespace CrateModLoader
             }
         }
 
-        public void OpenModCrateManager()
-        {
-            // Mod Crate Manager Window: 
-            // Either a checkbox list of .zip files in a mod directory OR
-            // A list with a button that lets you manually add .zip files
-            // Set availability in the respective modder's Game struct (ModCratesSupported variable) 
-
-            ModCrateManagerForm modCrateManagerMenu = new ModCrateManagerForm();
-
-            ModCrates.PopulateModList();
-
-            modCrateManagerMenu.Owner = Program.ModProgramForm;
-            modCrateManagerMenu.Show();
-        }
-
-        public void OpenModMenu()
-        {
-            // Individual Game Mod Menu
-            // Detailed settings UI for mod properties
-            // Automatically generated for any ModProperty in the modder class' namespace
-
-            ModMenuForm modMenu = new ModMenuForm(Modder);
-
-            modMenu.Owner = Program.ModProgramForm;
-            modMenu.Show();
-
-            //Modder.OpenModMenu();
-        }
-
-        public void ShowText_Changelog()
-        {
-            TextDisplayForm textForm = new TextDisplayForm(TextDisplayForm.TextDisplayType.Changelog);
-
-            textForm.Owner = Program.ModProgramForm;
-            textForm.Show();
-        }
-        public void ShowText_Games()
-        {
-            TextDisplayForm textForm = new TextDisplayForm(TextDisplayForm.TextDisplayType.Games);
-
-            textForm.Owner = Program.ModProgramForm;
-            textForm.Show();
-        }
-        public void ShowText_Credits()
-        {
-            TextDisplayForm textForm = new TextDisplayForm(TextDisplayForm.TextDisplayType.Credits);
-
-            textForm.Owner = Program.ModProgramForm;
-            textForm.Show();
-        }
-
         public void DisableInteraction()
         {
             startButton.Enabled = false;
@@ -1611,14 +1567,14 @@ namespace CrateModLoader
             textbox_rando_seed.Enabled = true;
             button_modCrateMenu.Enabled = true;
 
-            if (Modder != null)
+            if (ModLoaderGlobals.ModProgram.Modder != null)
             {
                 button_modMenu.Enabled = Modder.ModMenuEnabled;
             }
             button_modTools.Enabled = true;
             //button_downloadMods.Enabled = true;
 
-            if (Modder != null && !string.IsNullOrWhiteSpace(Modder.Game.API_Link))
+            if (ModLoaderGlobals.ModProgram.Modder != null && !string.IsNullOrWhiteSpace(ModLoaderGlobals.ModProgram.Game.API_Link))
             {
                 text_apiLabel.Enabled = true;
             }
@@ -1653,10 +1609,10 @@ namespace CrateModLoader
 
         public void API_Link_Clicked()
         {
-            if (Modder != null && Modder.Game.API_Credit != null && Modder.Game.API_Link != null && Modder.Game.API_Link != "" && Modder.Game.API_Link != string.Empty)
+            if (Modder != null && !string.IsNullOrWhiteSpace(Game.API_Credit) && !string.IsNullOrWhiteSpace(Game.API_Link))
             {
                 text_apiLabel.LinkVisited = true;
-                Process.Start(Modder.Game.API_Link);
+                Process.Start(Game.API_Link);
             }
         }
 
