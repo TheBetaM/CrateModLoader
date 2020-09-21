@@ -314,7 +314,6 @@
     <Compile Include="ModMenuForm.Designer.cs">
       <DependentUpon>ModMenuForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ModOption.cs" />
     <Compile Include="ModPipelines\ModPipeline.cs" />
     <Compile Include="ModPipelines\ModPipeline_PS2.cs" />
     <Compile Include="ModProperties\ModCategory.cs" />
@@ -326,6 +325,7 @@
     <Compile Include="ModProperties\ModPropNamedFloatArray.cs" />
     <Compile Include="ModProperties\ModPropNamedFloatArray2.cs" />
     <Compile Include="ModProperties\ModPropNamedUIntArray.cs" />
+    <Compile Include="ModProperties\ModPropOption.cs" />
     <Compile Include="ModProperties\ModPropString.cs" />
     <Compile Include="ModProperties\ModProperty.cs" />
     <Compile Include="ModProperties\ModPropUInt.cs" />

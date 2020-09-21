@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using CrateModLoader.GameSpecific.CrashTTR;
+using CrateModLoader.ModProperties;
 //RCF API by NeoKesha
 /* Mod Layers:
  * 1: Default.RCF contents (only replace files)
@@ -64,17 +65,19 @@ namespace CrateModLoader.GameSpecific.CrashTitans
                     new RegionCode() {
                         Name = "Crash Of The Titans",
                         Region = RegionType.Global, }
-                }
+                },
+            PropertyCategories = new Dictionary<int, string>()
+            {
+                [0] = "Options",
+            },
         };
+
+        public static ModPropOption Option_TestMod = new ModPropOption("Test Mod: Wide camera angle in Episode 1", "");
 
         public Modder_Titans()
         {
-            
 
-            AddOption(TestMod, new ModOption("Test Mod: Wide camera angle in Episode 1"));
         }
-
-        internal const int TestMod = 0;
 
         private string basePath = "";
 
@@ -103,7 +106,7 @@ namespace CrateModLoader.GameSpecific.CrashTitans
 
             ModCrates.InstallLayerMods(path_extr, 1);
 
-            if (GetOption(TestMod))
+            if (Option_TestMod.Enabled)
             {
                 // Proof of concept mod increasing gameplay FOV in Episode 1
                 string[] frontend_lines = File.ReadAllLines(path_extr + @"levels\L1_E1\cameraoverrides.blua");

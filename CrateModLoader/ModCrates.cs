@@ -36,6 +36,7 @@ namespace CrateModLoader
         public const string Prop_Author = "Author";
         public const string Prop_Version = "Version";
         public const string Prop_CML_Version = "ModLoaderVersion";
+        public const string Prop_Plugin = "Plugin";
         public const string Prop_Game = "Game";
 
         public static List<ModCrate> SupportedMods = new List<ModCrate>();
@@ -289,6 +290,8 @@ namespace CrateModLoader
                 NewCrate.Version = NewCrate.Meta[Prop_Version];
             if (NewCrate.Meta.ContainsKey(Prop_CML_Version))
                 NewCrate.CML_Version = NewCrate.Meta[Prop_CML_Version];
+            if (NewCrate.Meta.ContainsKey(Prop_Plugin))
+                NewCrate.Plugin = NewCrate.Meta[Prop_Plugin];
             if (NewCrate.Meta.ContainsKey(Prop_Game))
                 NewCrate.TargetGame = NewCrate.Meta[Prop_Game];
             if (NewCrate.Meta.ContainsKey(Prop_Name + "-" + CultureInfo.CurrentCulture.Name))
@@ -400,6 +403,8 @@ namespace CrateModLoader
                 NewCrate.Version = NewCrate.Meta[Prop_Version];
             if (NewCrate.Meta.ContainsKey(Prop_CML_Version))
                 NewCrate.CML_Version = NewCrate.Meta[Prop_CML_Version];
+            if (NewCrate.Meta.ContainsKey(Prop_Plugin))
+                NewCrate.Plugin = NewCrate.Meta[Prop_Plugin];
             if (NewCrate.Meta.ContainsKey(Prop_Game))
                 NewCrate.TargetGame = NewCrate.Meta[Prop_Game];
             if (NewCrate.Meta.ContainsKey(Prop_Name + "-" + CultureInfo.CurrentCulture.Name))
@@ -525,6 +530,7 @@ namespace CrateModLoader
         public string Version = "v1.0";
         public string CML_Version = ModLoaderGlobals.ProgramVersionSimple.ToString();
         public string TargetGame = ModCrates.AllGamesShortName;
+        public string Plugin;
         public bool IsActivated = false;
         public bool HasSettings = false;
         public bool IsFolder = false;

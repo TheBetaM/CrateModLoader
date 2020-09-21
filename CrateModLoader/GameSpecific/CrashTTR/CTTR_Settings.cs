@@ -5,6 +5,7 @@ using CrateModLoader.ModProperties;
 
 namespace CrateModLoader.GameSpecific.CrashTTR
 {
+    [ModCategory(1)]
     static class CTTR_Settings
     {
 

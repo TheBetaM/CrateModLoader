@@ -11,12 +11,13 @@ namespace CrateModLoader
 {
     /*
      * Adding a game:
-     * 1. Make a new modder class that inherits this abstract class.
-     * 2. Fill its Game member with the appropriate info in the class constructor. (ensure that the namespace is CrateModLoader.GameSpecific.??? to avoid bugs)
-     * 3. Override Game and StartModProcess (at least, there are more modding functions that can be overriden but are optional).
+     * 1. Make a new modder class that inherits this abstract class. (ensure that the modder's namespace is CrateModLoader.GameSpecific.??? to avoid bugs)
+     * 2. Override its Game member with the appropriate info in the getter. 
+     * 3. Override StartModProcess (at least, there are more modding functions that can be overriden but are optional).
      * (optional) 4. Localize game title, API credit, and options using text resources.
      * (optional) 5. Create ModProperty variables for automatic Mod Menu setup.
-     * 6. Done.
+     * (optional) 6. Add ModPropOption variables for quick options in the main window.
+     * 7. Done.
      * 
      */
 
@@ -25,7 +26,6 @@ namespace CrateModLoader
     /// </summary>
     public abstract class Modder
     {
-        public Dictionary<int,ModOption> Options { get; } = new Dictionary<int,ModOption>();
 
         public List<ModPropertyBase> Props = new List<ModPropertyBase>();
 
@@ -103,69 +103,6 @@ namespace CrateModLoader
         }
 
         public bool ModMenuEnabled => Props.Count > 0;
-
-        // Use this instead of Options.Add!
-        /// <summary>
-        /// Adds an option to the dictionary if the region and console is allowed for it.
-        /// </summary>
-        /// <param name="id">Option ID in dictionary</param>
-        /// <param name="option">Option constructor</param>
-        public virtual void AddOption(int id, ModOption option)
-        {
-            if (option.AllowedConsoles.Count > 0 && !option.AllowedConsoles.Contains(ModLoaderGlobals.Console))
-            {
-                return;
-            }
-            if (option.AllowedRegions.Count > 0 && !option.AllowedRegions.Contains(ModLoaderGlobals.Region))
-            {
-                return;
-            }
-            Options.Add(id, option);
-        }
-
-        // Use this! Mostly for error handling and when options may be missing.
-        /// <summary>
-        /// Gets the enabled state of the mod option (false if option doesn't exist)
-        /// </summary>
-        /// <param name="id">Option ID in dictionary</param>
-        public virtual bool GetOption(int id)
-        {
-            if (Options.ContainsKey(id) && Options[id].Enabled)
-            {
-                return true;
-            }
-            return false;
-        }
-
-        /// <summary> Hexadecimal display of which quick options were selected (automatically adjusts according the amount of quick options) - MSB is first option from the top </summary>
-        public virtual string OptionsSelectedString
-        {
-            get
-            {
-                string str = string.Empty;
-                if (Options != null && Options.Count > 0)
-                {
-                    for (int l = 0; l < (Options.Count + 31) / 32; ++l)
-                    {
-                        int val = 0;
-                        for (int i = 0, s = Math.Min(32, Options.Count - l * 32); i < s; ++i)
-                        {
-                            if (Options.ContainsKey(l * 32 + i) && Options[l * 32 + i] is ModOption o)
-                            {
-                                if (o.Enabled)
-                                    val |= 1 << (31 - i);
-                            }
-                        }
-                        str += val.ToString("X08");
-                    }
-                }
-                else
-                {
-                    str = "00000000";
-                }
-                return str;
-            }
-        }
 
         public void InstallCrateSettings()
         {

@@ -4,9 +4,9 @@ using System.IO;
 using Pure3D;
 using Pure3D.Chunks;
 using CrateModLoader.GameSpecific.CrashTTR;
+using CrateModLoader.ModProperties;
 //RCF API by NeoKesha
 //Pure3D API by BetaM (based on https://github.com/handsomematt/Pure3D)
-//Version number, seed and options are displayed in the Credits accessible from the main menu.
 /* 
  * Mod Layers:
  * 1: All .RCF file contents (only replace files)
@@ -59,27 +59,6 @@ namespace CrateModLoader.GameSpecific.CrashTTR
         internal string path_RCF_english = "";
         internal string path_RCF_movies = "";
         internal string basePath = "";
-
-        internal const int RandomizeCharacters          = 0;
-        internal const int RandomizeHubs                = 1;
-        internal const int RandomizeTracks              = 2;
-        internal const int RandomizeMinigames           = 3;
-        internal const int RandomizeMissions            = 4;
-        internal const int RandomizeCarStats            = 5;
-        internal const int RandomizeRaceLaps            = 6;
-        internal const int RandomizeBattleKOs           = 7;
-        internal const int RandomizeCrashinator         = 8;
-        internal const int RandomizeRunAndGun           = 9;
-        internal const int RandomizeStuntArena          = 10;
-        internal const int RandomizeSurfaceParams       = 11;
-        internal const int RandomizePowerupDistribution = 12;
-        internal const int RandomizePowerupEffects      = 13;
-        internal const int RandomizeWeapons             = 14;
-        internal const int AddUnusedCutscenes           = 15;
-        internal const int PreventSequenceBreaks        = 16;
-        internal const int RandomizeNPCs                = 17;
-        internal const int AddPowerupsTimeTrial         = 18;
-        internal const int ReplaceCrashinatorConeAttack = 19;
 
         public override Game Game => new Game()
         {
@@ -155,28 +134,34 @@ namespace CrateModLoader.GameSpecific.CrashTTR
                     Region = RegionType.PAL,
                     RegionNumber = 4, },
                 },
+            PropertyCategories = new Dictionary<int, string>()
+            {
+                [0] = "Options",
+                [1] = "Misc.",
+            },
         };
+
+        public static ModPropOption Option_RandCharacters = new ModPropOption(CTTR_Text.Rand_PlatformingCharacter, CTTR_Text.Rand_PlatformingCharacterDesc);// todo: change missions to unlock crash and cortex if they're not in the starting pool
+        public static ModPropOption Option_RandTrackEntrances = new ModPropOption(CTTR_Text.Rand_TrackEntrances, CTTR_Text.Rand_TrackEntrancesDesc); // todo: arenas
+        public static ModPropOption Option_RandMinigames = new ModPropOption(CTTR_Text.Rand_Minigames, CTTR_Text.Rand_MinigamesDesc); // todo: minigame challenges aswell
+        public static ModPropOption Option_RandRaceLaps = new ModPropOption(CTTR_Text.Rand_RaceLaps, CTTR_Text.Rand_RaceLapsDesc);
+        public static ModPropOption Option_NoSequenceBreaks = new ModPropOption(CTTR_Text.Mod_PreventSkips, CTTR_Text.Mod_PreventSkipsDesc);
+
+        public static ModPropOption Option_RandHubEntrances = new ModPropOption("Randomize Hub Entrances", "") { Hidden = true }; // todo: gem keys in missionobjectives_x and platforming_objects, unlock failure message, key missions
+        public static ModPropOption Option_RandMissions = new ModPropOption("Randomize Missions", "") { Hidden = true }; // todo, genericobjectives, missionobjectives_x, level NIS+NPC
+        public static ModPropOption Option_RandCarStats = new ModPropOption("Randomize Car Stats", "") { Hidden = true }; // todo: vehicles, levels/common for speed tier values
+        public static ModPropOption Option_RandBattleKOs = new ModPropOption("Randomize Battle KO's", "") { Hidden = true }; // doesn't work?
+        public static ModPropOption Option_RandCrashinator = new ModPropOption("Randomize Crashinator", "") { Hidden = true }; // todo: kamikaze
+        public static ModPropOption Option_RandRunAndGun = new ModPropOption("Randomize Run & Gun", "") { Hidden = true }; // todo: railshooter
+        public static ModPropOption Option_RandStuntArena = new ModPropOption("Randomize Stunt Arena", "") { Hidden = true }; //todo: permanent_objects, stunt_objects
+        public static ModPropOption Option_RandSurfParams = new ModPropOption("Randomize Surface Parameters", "") { Hidden = true }; //todo: car_effect_objects
+        public static ModPropOption Option_RandPowerupDist = new ModPropOption("Randomize Powerup Distribution", "") { Hidden = true }; // todo: driving_objects
+        public static ModPropOption Option_RandPowerupEffects = new ModPropOption("Randomize Powerup Effects", "") { Hidden = true }; //todo: driving_objects
+        public static ModPropOption Option_RandWeapons = new ModPropOption("Randomize Weapons", "") { Hidden = true }; // todo: turretmotifs
+        public static ModPropOption Option_RandNPCLocations = new ModPropOption("Randomize NPC Locations", "") { Hidden = true }; // todo: NPC - locator list
 
         public Modder_CTTR()
         {
-
-            AddOption(RandomizeCharacters, new ModOption(CTTR_Text.Rand_PlatformingCharacter, CTTR_Text.Rand_PlatformingCharacterDesc)); // todo: change missions to unlock crash and cortex if they're not in the starting pool
-            //AddOption(RandomizeHubs, new ModOption("Randomize Hub Entrances")); // todo: gem keys in missionobjectives_x and platforming_objects, unlock failure message, key missions
-            AddOption(RandomizeTracks, new ModOption(CTTR_Text.Rand_TrackEntrances, CTTR_Text.Rand_TrackEntrancesDesc)); // todo: arenas
-            AddOption(RandomizeMinigames, new ModOption(CTTR_Text.Rand_Minigames, CTTR_Text.Rand_MinigamesDesc)); // todo: minigame challenges aswell
-            //AddOption(RandomizeMissions, new ModOption("Randomize Missions"));// todo, genericobjectives, missionobjectives_x, level NIS+NPC
-            //AddOption(RandomizeCarStats, new ModOption("Randomize Car Stats")); // todo: vehicles, levels/common for speed tier values
-            AddOption(RandomizeRaceLaps, new ModOption(CTTR_Text.Rand_RaceLaps, CTTR_Text.Rand_RaceLapsDesc));
-            //AddOption(RandomizeBattleKOs, new ModOption("Randomize Battle KO's")); // doesn't work?
-            //AddOption(RandomizeCrashinator, new ModOption("Randomize Crashinator")); // todo: kamikaze
-            //AddOption(RandomizeRunAndGun, new ModOption("Randomize Run & Gun")); // todo: railshooter
-            //AddOption(RandomizeStuntArena, new ModOption("Randomize Stunt Arena")); //todo: permament_objects, stunt_objects
-            //AddOption(RandomizeSurfaceParams, new ModOption("Randomize Surface Parameters")); //todo: car_effect_objects
-            //AddOption(RandomizePowerupDistribution, new ModOption("Randomize Powerup Distribution")); // todo: driving_objects
-            //AddOption(RandomizePowerupEffects, new ModOption("Randomize Powerup Effects")); //todo: driving_objects
-            //AddOption(RandomizeWeapons, new ModOption("Randomize Weapons")); // todo: turretmotifs
-            //AddOption(RandomizeNPCs, new ModOption("Randomize NPC Locations")); // todo: NPC - locator list
-            AddOption(PreventSequenceBreaks, new ModOption(CTTR_Text.Mod_PreventSkips, CTTR_Text.Mod_PreventSkipsDesc));
 
         }
 
@@ -401,7 +386,7 @@ namespace CrateModLoader.GameSpecific.CrashTTR
         void EditDefaultAndCommon()
         {
             randChars = new List<int>();
-            if (GetOption(RandomizeCharacters))
+            if (Option_RandCharacters.Enabled)
             {
                 int maxPlayableCharacters = 2;
 
@@ -458,7 +443,7 @@ namespace CrateModLoader.GameSpecific.CrashTTR
             */
             randTracks = new List<int>();
             randMinigames = new List<int>();
-            if (GetOption(RandomizeTracks))
+            if (Option_RandTrackEntrances.Enabled)
             {
                 List<int> possibleTracks = new List<int>();
 
@@ -488,7 +473,7 @@ namespace CrateModLoader.GameSpecific.CrashTTR
                 }
             }
             randLaps = new List<int>();
-            if (GetOption(RandomizeRaceLaps))
+            if (Option_RandRaceLaps.Enabled)
             {
                 for (int i = 0; i < 15; i++)
                 {
@@ -569,7 +554,7 @@ namespace CrateModLoader.GameSpecific.CrashTTR
 
             CTTR_Settings.ParseSettings(path_extr);
 
-            if (GetOption(RandomizeCharacters))
+            if (Option_RandCharacters.Enabled)
             {
                 CTTR_Randomizers.Randomize_Characters(path_extr, randChars);
             }
@@ -579,15 +564,15 @@ namespace CrateModLoader.GameSpecific.CrashTTR
                 CTTR_Randomizers.Randomize_Hubs(path_extr, randHubs, randGems);
             }
             */
-            if (GetOption(RandomizeTracks))
+            if (Option_RandTrackEntrances.Enabled)
             {
                 CTTR_Randomizers.Randomize_Tracks(path_extr, randTracks);
             }
-            if (GetOption(RandomizeMinigames))
+            if (Option_RandMinigames.Enabled)
             {
                 CTTR_Randomizers.Randomize_Minigames(path_extr, randMinigames);
             }
-            if (GetOption(RandomizeRaceLaps))
+            if (Option_RandRaceLaps.Enabled)
             {
                 CTTR_Randomizers.Randomize_Race_Laps(path_extr, randLaps);
             }
@@ -597,7 +582,7 @@ namespace CrateModLoader.GameSpecific.CrashTTR
                 CTTR_Randomizers.Randomize_Battle_KOs(path_extr, randKOs);
             }
             */
-            if (GetOption(PreventSequenceBreaks))
+            if (Option_NoSequenceBreaks.Enabled)
             {
                 CTTR_Mods.Mod_PreventSequenceBreaks(path_extr);
             }

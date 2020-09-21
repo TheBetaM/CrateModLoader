@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Diagnostics;
+using CrateModLoader.ModProperties;
 using tbftool;
 
 namespace CrateModLoader.GameSpecific.Rayman3
@@ -53,6 +54,10 @@ namespace CrateModLoader.GameSpecific.Rayman3
                     Region = RegionType.PAL,
                     RegionNumber = 4, },
                 },
+            PropertyCategories = new Dictionary<int, string>()
+            {
+                [0] = "Options",
+            },
             /*
             RegionID_PC = new RegionCode[] {
                 new RegionCode() {
@@ -71,23 +76,20 @@ namespace CrateModLoader.GameSpecific.Rayman3
             */
         };
 
+        public static ModPropOption Option_RandLevelOrderAll = new ModPropOption(Rayman3_Text.Rand_LevelOrder2, Rayman3_Text.Rand_LevelOrder2Desc)
+        { Hidden = true, };
+        public static ModPropOption Option_RandLevelOrder = new ModPropOption(Rayman3_Text.Rand_LevelOrder, Rayman3_Text.Rand_LevelOrderDesc);
+        public static ModPropOption Option_RandOutfitColors = new ModPropOption(Rayman3_Text.Rand_OutfitColors, Rayman3_Text.Rand_OutfitColorsDesc)
+        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
+        public static ModPropOption Option_NewGameNightmare = new ModPropOption(Rayman3_Text.Mod_NewGameNightmare, Rayman3_Text.Mod_NewGameNightmareDesc)
+        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
+        public static ModPropOption Option_RemoveIntroVideos = new ModPropOption(1, Rayman3_Text.Mod_RemoveIntroVideo, Rayman3_Text.Mod_RemoveIntroVideoDesc)
+        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
+
         public Modder_Rayman3()
         {
-            
-
-            //AddOption(RandomizeLevelOrder, new ModOption(Rayman3_Text.Rand_LevelOrder2, Rayman3_Text.Rand_LevelOrder2Desc));
-            AddOption(RandomizeLevelOrderAlt, new ModOption(Rayman3_Text.Rand_LevelOrder, Rayman3_Text.Rand_LevelOrderDesc));
-            AddOption(RandomizeOutfitColors, new ModOption(Rayman3_Text.Rand_OutfitColors, Rayman3_Text.Rand_OutfitColorsDesc, new List<ConsoleMode>() { ConsoleMode.GCN })); //todo: PS2/Xbox/PC
-            AddOption(NewGameNightmare, new ModOption(Rayman3_Text.Mod_NewGameNightmare, Rayman3_Text.Mod_NewGameNightmareDesc, new List<ConsoleMode>() { ConsoleMode.GCN }));
-            AddOption(RemoveIntroVideos, new ModOption(Rayman3_Text.Mod_RemoveIntroVideo, Rayman3_Text.Mod_RemoveIntroVideoDesc, new List<ConsoleMode>() { ConsoleMode.GCN }, true));
 
         }
-
-        internal const int RandomizeLevelOrder = 0;
-        internal const int RandomizeLevelOrderAlt = 1;
-        internal const int RandomizeOutfitColors = 2;
-        internal const int NewGameNightmare = 3;
-        internal const int RemoveIntroVideos = 4;
 
         internal string basePath = "";
 
@@ -115,28 +117,26 @@ namespace CrateModLoader.GameSpecific.Rayman3
 
             randState = new Random(ModLoaderGlobals.RandomizerSeed);
 
-            /*
-            if (GetOption(RandomizeLevelOrder))
+            if (Option_RandLevelOrderAll.Enabled)
             {
                 Randomize_Level_Order(false);
             }
-            */
-            if (GetOption(RandomizeLevelOrderAlt))
+            else if (Option_RandLevelOrder.Enabled)
             {
                 Randomize_Level_Order(true);
             }
 
-            if (GetOption(RemoveIntroVideos))
+            if (Option_RemoveIntroVideos.Enabled)
             {
                 Remove_Intro_Videos();
             }
 
-            if (GetOption(RandomizeOutfitColors))
+            if (Option_RandOutfitColors.Enabled)
             {
                 Randomize_Outfit_Colors();
             }
 
-            if (GetOption(NewGameNightmare))
+            if (Option_NewGameNightmare.Enabled)
             {
                 Replace_Intro_With_Nightmare();
             }
@@ -180,7 +180,7 @@ namespace CrateModLoader.GameSpecific.Rayman3
             }
         }
 
-        void Randomize_Level_Order(bool isAlt)
+        void Randomize_Level_Order(bool anyLevels)
         {
             int minLevel = 0;
             int maxLevel = 46;
@@ -189,7 +189,7 @@ namespace CrateModLoader.GameSpecific.Rayman3
             List<int> LevelsReplacing = new List<int>();
             string sourceLevel, targetLevel;
 
-            if (isAlt)
+            if (anyLevels)
             {
                 for (int i = minLevel; i <= maxLevel; i++)
                 {

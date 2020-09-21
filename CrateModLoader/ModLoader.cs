@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using CrateModLoader.Resources.Text;
 using CrateModLoader.Tools;
+using CrateModLoader.ModProperties;
 
 namespace CrateModLoader
 {
@@ -67,6 +68,11 @@ namespace CrateModLoader
         private Process ISOcreatorProcess;
         public BackgroundWorker asyncWorker;
         public OpenROM_SelectionType OpenROM_Selection = OpenROM_SelectionType.AutomaticOnly;
+
+        public ModLoader()
+        {
+            CacheSupportedGames();
+        }
 
         // Builds the ISO
         void CreateISO()
@@ -1287,6 +1293,23 @@ namespace CrateModLoader
             }
         }
 
+        void CacheSupportedGames()
+        {
+            ModLoaderGlobals.SupportedGames = new List<Game>();
+
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            foreach (Type type in assembly.GetTypes())
+            {
+                if (type.IsAbstract || !typeof(Modder).IsAssignableFrom(type)) // only get non-abstract modders
+                    continue;
+                Modder modder = (Modder)Activator.CreateInstance(type);
+                Game game = modder.Game;
+                game.ModderClass = type;
+
+                ModLoaderGlobals.SupportedGames.Add(game);
+            }
+        }
+
         void SetGameType(string serial, ConsoleMode console, uint RegionID = 0)
         {
             bool RegionNotSupported = true;
@@ -1296,15 +1319,17 @@ namespace CrateModLoader
 
             ModLoaderGlobals.Console = console;
 
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            foreach (Type type in assembly.GetTypes())
+            if (ModLoaderGlobals.SupportedGames.Count <= 0)
             {
-                if (type.IsAbstract || !typeof(Modder).IsAssignableFrom(type)) // only get non-abstract modders
-                    continue;
-                Modder modder = (Modder)Activator.CreateInstance(type);
-                Game game = modder.Game;
+                Console.WriteLine("ERROR: No games supported!");
+                return; 
+            }
+
+            foreach (Game game in ModLoaderGlobals.SupportedGames)
+            {
                 if (!game.Consoles.Contains(console))
                     continue;
+
                 RegionCode[] codelist =
                       console == ConsoleMode.PS2 ? game.RegionID_PS2
                     : console == ConsoleMode.PS1 ? game.RegionID_PS1
@@ -1315,35 +1340,21 @@ namespace CrateModLoader
                     : console == ConsoleMode.XBOX360 ? game.RegionID_XBOX360
                     : console == ConsoleMode.PC ? game.RegionID_PC
                     : null;
+
                 foreach (var r in codelist)
                 {
                     if (serial.Contains(r.Name))
                     {
-                        if (console == ConsoleMode.XBOX)
+                        if (console == ConsoleMode.XBOX && RegionID != r.RegionNumber)
                         {
-                            if (RegionID == r.RegionNumber)
-                            {
-                                ModLoaderGlobals.Region = r.Region;
-                                RegionNotSupported = false;
-                                Modder = modder;
-                                Game = game;
-                                if (!string.IsNullOrEmpty(r.ExecName))
-                                {
-                                    ModLoaderGlobals.ExecutableName = r.ExecName;
-                                }
-                                break;
-                            }
-                            else
-                            {
-                                RegionNotSupported = true;
-                            }
+                            RegionNotSupported = true;
                         }
                         else
                         {
-                            ModLoaderGlobals.Region = r.Region;
-                            Modder = modder;
-                            Game = game;
                             RegionNotSupported = false;
+                            ModLoaderGlobals.Region = r.Region;
+                            Modder = (Modder)Activator.CreateInstance(game.ModderClass);
+                            Game = game;
                             if (!string.IsNullOrEmpty(r.ExecName))
                             {
                                 ModLoaderGlobals.ExecutableName = r.ExecName;
@@ -1360,7 +1371,7 @@ namespace CrateModLoader
                         if (serial.Contains(r.Name))
                         {
                             ModLoaderGlobals.Region = RegionType.Undefined;
-                            Modder = modder;
+                            Modder = (Modder)Activator.CreateInstance(game.ModderClass);
                             Game = game;
                             if (!string.IsNullOrEmpty(r.ExecName))
                             {
@@ -1405,6 +1416,7 @@ namespace CrateModLoader
                 default: region_mod = "(" + ModLoaderText.UnknownRegion + ")"; break;
             }
 
+            // UI stuff
             list_modOptions.Items.Clear();
             if (Modder == null)
             {
@@ -1510,17 +1522,15 @@ namespace CrateModLoader
                     image_gameIcon.Visible = false;
                 }
 
-                if (Modder.Options.Count > 0)
+                if (Modder.Props.Count > 0)
                 {
-                    foreach (var option in Modder.Options.Values)
+                    foreach (var prop in Modder.Props)
                     {
-                        list_modOptions.Items.Add(option, option.Enabled);
+                        if (prop is ModPropOption option && option.Allowed())
+                        {
+                            list_modOptions.Items.Add(option, option.Value != 0);
+                        }
                     }
-                }
-                else
-                {
-                    // probably no longer needed
-                    //list_modOptions.Items.Add("No options available", false);
                 }
             }
             int height = 295 + 45 + (list_modOptions.Items.Count * 17);

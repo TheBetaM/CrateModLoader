@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 // Global variables to be accessed in Modders
 namespace CrateModLoader
@@ -130,6 +131,9 @@ namespace CrateModLoader
 
         /// <summary> Product code used as a folder name after extracting (for GC). Usually no need to access this - use ExtractedPath instead! </summary>
         public static string ProductCode = "";
+
+        /// <summary> Supported game list automatically populated on boot.  </summary>
+        public static List<Game> SupportedGames;
 
     }
 }

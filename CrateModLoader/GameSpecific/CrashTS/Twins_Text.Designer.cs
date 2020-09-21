@@ -1285,7 +1285,7 @@ namespace CrateModLoader.GameSpecific.CrashTS {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Randomize Individual Crates.
+        ///   Looks up a localized string similar to Randomize Crates.
         /// </summary>
         internal static string Rand_Crates {
             get {

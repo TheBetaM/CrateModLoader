@@ -2,38 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using CrateModLoader.GameSpecific;
 using CrateModLoader.GameSpecific.Crash1;
+using CrateModLoader.ModProperties;
 //Crash 1 API by chekwob and ManDude (https://github.com/cbhacks/CrashEdit)
-//Version number and seed are displayed in the main menu.
 
 namespace CrateModLoader.GameSpecific.Crash1
 {
     public sealed class Modder_Crash1 : Modder
     {
-        internal const int RandomizeADIO = 0;
-        internal const int RandomizeCratesIntoWood = 1;
-        internal const int TurnCratesIntoWumpa = 2;
-        internal const int RandomizeLevelOrder = 3;
-        internal const int SceneryGreyscale = 4;
-        internal const int SceneryRainbow = 5;
-        internal const int SceneryColorSwizzle = 6;
-        internal const int SceneryUntextured = 7;
-        internal const int ZoneCloseCamera = 8;
-        internal const int RandomizeMusic = 9;
-        internal const int RandomizeMusicTracks = 10;
-        internal const int RandomzieMusicInstruments = 11;
-        internal const int BackwardsLevels = 12;
-        internal const int RandomBackwardsLevels = 13;
-        internal const int CameraBiggerFOV = 14;
-        internal const int RandomizeCameraFOV = 15;
-        internal const int VehicleLevelsOnFoot = 16;
-        internal const int MirroredWorld = 17;
-        internal const int RandomLevelsMirrored = 18;
-        internal const int RandomizeMap = 19;
-        internal const int RandomizeCrateContents = 20;
-        internal const int RandomizeBosses = 21;
-        internal const int BackwardsHogLevels = 22;
 
         public override Game Game => new Game()
         {
@@ -64,33 +40,38 @@ namespace CrateModLoader.GameSpecific.Crash1
                     ExecName = "SCPS_100.31",
                     CodeName = "SCPS_10031", },
                 },
+            PropertyCategories = new Dictionary<int, string>()
+            {
+                [0] = "Options",
+            },
         };
+
+        public static ModPropOption Option_AllCratesBlank = new ModPropOption(Crash1_Text.Mod_AllCratesBlank, Crash1_Text.Mod_AllCratesBlankDesc);
+        public static ModPropOption Option_AllCratesWumpa = new ModPropOption(Crash1_Text.Mod_AllCratesWumpa, Crash1_Text.Mod_AllCratesWumpaDesc);
+        public static ModPropOption Option_BackwardsLevels = new ModPropOption(Crash1_Text.Mod_BackwardsLevels, Crash1_Text.Mod_BackwardsLevelsDesc);
+        public static ModPropOption Option_RandBackwardsLevels = new ModPropOption(Crash1_Text.Mod_BackwardsLevels, Crash1_Text.Mod_BackwardsLevelsDesc);
+        public static ModPropOption Option_BackwardsHogLevels = new ModPropOption(Crash1_Text.Mod_BackwardsHogLevels, Crash1_Text.Mod_BackwardsHogLevelsDesc);
+        public static ModPropOption Option_RandCrateContents = new ModPropOption(Crash1_Text.Rand_CrateContents, Crash1_Text.Rand_CrateContentsDesc);
+        public static ModPropOption Option_RandBosses = new ModPropOption(Crash1_Text.Rand_BossLevels, Crash1_Text.Rand_BossLevelsDesc);
+        public static ModPropOption Option_CameraBigFOV = new ModPropOption(Crash1_Text.Mod_CameraWideFOV, Crash1_Text.Mod_CameraWideFOVDesc);
+        public static ModPropOption Option_RandCameraFOV = new ModPropOption(Crash1_Text.Rand_CameraFOV, Crash1_Text.Rand_CameraFOVDesc);
+        public static ModPropOption Option_RandSounds = new ModPropOption(Crash1_Text.Rand_SFX, Crash1_Text.Rand_SFXDesc);
+        public static ModPropOption Option_RandWorldColors = new ModPropOption(Crash1_Text.Rand_WorldColors, Crash1_Text.Rand_WorldColorsDesc);
+        public static ModPropOption Option_RandWorldPalette = new ModPropOption(Crash1_Text.Rand_WorldPalette, Crash1_Text.Rand_WorldPaletteDesc);
+
+        public static ModPropOption Option_RandMap = new ModPropOption("Randomize Map", "") { Hidden = true };
+        public static ModPropOption Option_HogLevelsOnFoot = new ModPropOption("Hog Levels On Foot", "") { Hidden = true };
+        public static ModPropOption Option_MirroredWorld = new ModPropOption("Mirrored World", "") { Hidden = true };
+        public static ModPropOption Option_RandMirroredWorld = new ModPropOption("Random Levels Are Mirrored", "") { Hidden = true };
+        public static ModPropOption Option_RandMusic = new ModPropOption("Randomize Music", "") { Hidden = true }; //shuffle tracks from different levels (must be identical to vanilla playback, just in a different level)
+        public static ModPropOption Option_RandMusicTracks = new ModPropOption("Randomize Music Tracks", "") { Hidden = true }; //only swap midis
+        public static ModPropOption Option_RandMusicInstruments = new ModPropOption("Randomize Music Instruments", "") { Hidden = true }; //only swap wavebanks
+        public static ModPropOption Option_GreyscaleWorld = new ModPropOption("Greyscale World", "") { Hidden = true };
+        public static ModPropOption Option_UntexturedWorld = new ModPropOption("Untextured/Greyscale World", "") { Hidden = true };
 
         public Modder_Crash1()
         {
             ModCratesManualInstall = true;
-
-            AddOption(RandomizeCratesIntoWood, new ModOption(Crash1_Text.Mod_AllCratesBlank, Crash1_Text.Mod_AllCratesBlankDesc));
-            AddOption(TurnCratesIntoWumpa, new ModOption(Crash1_Text.Mod_AllCratesWumpa, Crash1_Text.Mod_AllCratesWumpaDesc));
-            //AddOption(RandomizeMap, new ModOption("Randomize Map"));
-            AddOption(BackwardsLevels, new ModOption(Crash1_Text.Mod_BackwardsLevels, Crash1_Text.Mod_BackwardsLevelsDesc));
-            AddOption(RandomBackwardsLevels, new ModOption(Crash1_Text.Rand_BackwardsLevels, Crash1_Text.Rand_BackwardsLevelsDesc));
-            AddOption(BackwardsHogLevels, new ModOption(Crash1_Text.Mod_BackwardsHogLevels, Crash1_Text.Mod_BackwardsHogLevelsDesc));
-            AddOption(RandomizeCrateContents, new ModOption(Crash1_Text.Rand_CrateContents, Crash1_Text.Rand_CrateContentsDesc));
-            AddOption(RandomizeBosses, new ModOption(Crash1_Text.Rand_BossLevels, Crash1_Text.Rand_BossLevelsDesc));
-            //AddOption(VehicleLevelsOnFoot, new ModOption("Hog Levels On Foot"));
-            //AddOption(MirroredWorld, new ModOption("Mirrored World"));
-            //AddOption(RandomLevelsMirrored, new ModOption("Random Levels Are Mirrored"));
-            AddOption(CameraBiggerFOV, new ModOption(Crash1_Text.Mod_CameraWideFOV, Crash1_Text.Mod_CameraWideFOVDesc));
-            AddOption(RandomizeCameraFOV, new ModOption(Crash1_Text.Rand_CameraFOV, Crash1_Text.Rand_CameraFOVDesc));
-            AddOption(RandomizeADIO, new ModOption(Crash1_Text.Rand_SFX, Crash1_Text.Rand_SFXDesc));
-            //AddOption(RandomizeMusic, new ModOption("Randomize Music")); //shuffle tracks from different levels (must be identical to vanilla playback, just in a different level)
-            //AddOption(RandomizeMusicTracks, new ModOption("Randomize Music Tracks")); //only swap midis
-            //AddOption(RandomzieMusicInstruments, new ModOption("Randomize Music Instruments")); //only swap wavebanks
-            AddOption(SceneryRainbow, new ModOption(Crash1_Text.Rand_WorldColors, Crash1_Text.Rand_WorldColorsDesc));
-            AddOption(SceneryColorSwizzle, new ModOption(Crash1_Text.Rand_WorldPalette, Crash1_Text.Rand_WorldPaletteDesc));
-            //AddOption(SceneryGreyscale, new ModOption("Greyscale World")); 
-            //AddOption(SceneryUntextured, new ModOption("Untextured/Greyscale World")); //todo
         }
 
         public override void StartModProcess()
@@ -152,24 +133,23 @@ namespace CrateModLoader.GameSpecific.Crash1
                 
                 if (CachingPass)
                 {
-                    if (GetOption(VehicleLevelsOnFoot)) 
+                    if (Option_HogLevelsOnFoot.Enabled) 
                         Crash1_Mods.Cache_NormalCrashData(nsf, nsd, NSF_Level);
                 }
                 else
                 {
-                    if (GetOption(TurnCratesIntoWumpa)) Crash1_Mods.Mod_TurnCratesIntoWumpa(nsf, rand, NSF_Level);
-                    if (GetOption(BackwardsLevels) || GetOption(RandomBackwardsLevels)) Crash1_Mods.Mod_BackwardsLevels(nsf, nsd, NSF_Level, GetOption(RandomBackwardsLevels), rand);
-                    if (GetOption(BackwardsHogLevels)) Crash1_Mods.Mod_HogLevelsBackwards(nsf, nsd, NSF_Level);
-                    if (GetOption(CameraBiggerFOV) || GetOption(RandomizeCameraFOV)) Crash1_Mods.Mod_CameraFOV(nsf, rand, GetOption(RandomizeCameraFOV));
-                    if (GetOption(RandomizeADIO)) Mod_RandomizeADIO(nsf, nsd, rand);
-                    if (GetOption(RandomizeCratesIntoWood)) Crash1_Mods.Mod_RandomWoodCrates(nsf, rand, NSF_Level);
-                    if (GetOption(RandomizeCrateContents)) Crash1_Mods.Mod_RandomCrateContents(nsf, rand, NSF_Level);
-                    if (GetOption(RandomizeBosses)) Crash1_Mods.Mod_RandomizeBosses(nsf, nsd, NSF_Level, rand, false);
-                    if (GetOption(SceneryColorSwizzle)) CrashTri_Common.Mod_Scenery_Swizzle(nsf, rand);
-                    if (GetOption(SceneryGreyscale)) CrashTri_Common.Mod_Scenery_Greyscale(nsf);
-                    if (GetOption(SceneryRainbow)) CrashTri_Common.Mod_Scenery_Rainbow(nsf, rand);
-                    if (GetOption(SceneryUntextured)) CrashTri_Common.Mod_Scenery_Untextured(nsf);
-                    if (GetOption(ZoneCloseCamera)) CrashTri_Common.Mod_Camera_Closeup(nsf);
+                    if (Option_AllCratesWumpa.Enabled) Crash1_Mods.Mod_TurnCratesIntoWumpa(nsf, rand, NSF_Level);
+                    if (Option_BackwardsLevels.Enabled || Option_RandBackwardsLevels.Enabled) Crash1_Mods.Mod_BackwardsLevels(nsf, nsd, NSF_Level, Option_RandBackwardsLevels.Enabled, rand);
+                    if (Option_BackwardsHogLevels.Enabled) Crash1_Mods.Mod_HogLevelsBackwards(nsf, nsd, NSF_Level);
+                    if (Option_CameraBigFOV.Enabled || Option_RandCameraFOV.Enabled) Crash1_Mods.Mod_CameraFOV(nsf, rand, Option_RandCameraFOV.Enabled);
+                    if (Option_RandSounds.Enabled) Mod_RandomizeADIO(nsf, nsd, rand);
+                    if (Option_AllCratesBlank.Enabled) Crash1_Mods.Mod_RandomWoodCrates(nsf, rand, NSF_Level);
+                    if (Option_RandCrateContents.Enabled) Crash1_Mods.Mod_RandomCrateContents(nsf, rand, NSF_Level);
+                    if (Option_RandBosses.Enabled) Crash1_Mods.Mod_RandomizeBosses(nsf, nsd, NSF_Level, rand, false);
+                    if (Option_RandWorldPalette.Enabled) CrashTri_Common.Mod_Scenery_Swizzle(nsf, rand);
+                    if (Option_GreyscaleWorld.Enabled) CrashTri_Common.Mod_Scenery_Greyscale(nsf);
+                    if (Option_RandWorldColors.Enabled) CrashTri_Common.Mod_Scenery_Rainbow(nsf, rand);
+                    if (Option_UntexturedWorld.Enabled) CrashTri_Common.Mod_Scenery_Untextured(nsf);
 
                     Crash1_Mods.Mod_Metadata(nsf, nsd, NSF_Level);
                 }

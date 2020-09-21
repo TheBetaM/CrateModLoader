@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using CrateModLoader.Resources.Text;
 using CrateModLoader.Tools;
+using CrateModLoader.ModProperties;
 
 namespace CrateModLoader
 {
@@ -215,7 +216,7 @@ namespace CrateModLoader
             // Detailed settings UI for mod properties
             // Automatically generated for any ModProperty in the modder class' namespace
 
-            ModMenuForm modMenu = new ModMenuForm(ModLoaderGlobals.ModProgram.Modder, ModLoaderGlobals.ModProgram.Game);
+            ModMenuForm modMenu = new ModMenuForm(this, ModLoaderGlobals.ModProgram.Modder, ModLoaderGlobals.ModProgram.Game);
 
             modMenu.Owner = this;
             modMenu.Show();
@@ -228,14 +229,22 @@ namespace CrateModLoader
             CheckedListBox c = sender as CheckedListBox;
             for (int i = 0; i < c.Items.Count; ++i)
             {
-                if (c.Items[i] is ModOption o)
+                if (c.Items[i] is ModPropOption option)
                 {
-                    o.Enabled = c.GetItemChecked(i);
                     if (c.SelectedIndex == i)
                     {
-                        if (!string.IsNullOrEmpty(o.Description))
+                        if (c.GetItemChecked(i) == false)
                         {
-                            linkLabel_optionDesc.Text = o.Description;
+                            option.Value = 0;
+                        }
+                        else
+                        {
+                            option.Value = 1;
+                        }
+                        option.HasChanged = true;
+                        if (!string.IsNullOrEmpty(option.Description))
+                        {
+                            linkLabel_optionDesc.Text = option.Description;
                             linkLabel_optionDesc.Visible = true;
                             panel_desc.Visible = true;
                         }
@@ -245,6 +254,25 @@ namespace CrateModLoader
                             linkLabel_optionDesc.Visible = false;
                             panel_desc.Visible = false;
                         }
+                    }
+                }
+            }
+        }
+        public void UpdateOptionList()
+        {
+            CheckedListBox c = checkedListBox1;
+            c.SelectedIndex = -1;
+            for (int i = 0; i < c.Items.Count; ++i)
+            {
+                if (c.Items[i] is ModPropOption option)
+                {
+                    if (option.Value == 0)
+                    {
+                        c.SetItemChecked(i, false);
+                    }
+                    else
+                    {
+                        c.SetItemChecked(i, true);
                     }
                 }
             }

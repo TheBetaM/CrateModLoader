@@ -4,8 +4,8 @@ using System.Text;
 using System.Collections.Generic;
 using System.IO;
 using Twinsanity;
+using CrateModLoader.ModProperties;
 //Twinsanity API by NeoKesha, Smartkin, ManDude and Marko (https://github.com/Smartkin/twinsanity-editor)
-//Version number, seed and options are displayed in the Autosave Disabled screen accessible by starting a new game without saving or just disabling autosave.
 /* 
  * Mod Layers:
  * 1: Extracted BD/BH archive files (PS2 only, same as layer 0 on XBOX)
@@ -73,29 +73,13 @@ namespace CrateModLoader.GameSpecific.CrashTS
 
     public enum ModProps : int
     {
-        Misc = 0,
-        Character = 1,
+        Options = 0,
+        Misc = 1,
+        Character = 2,
     }
 
     public sealed class Modder_Twins : Modder
     {
-        internal const int RandomizeAllCrates       = 0;
-        internal const int RandomizeCrateTypes      = 10;
-        internal const int RandomizeGemLocations    = 1;
-        internal const int RandomizeEnemies         = 2;
-        internal const int RandomizeMusic           = 3;
-        internal const int RandomizeCharParams      = 4;
-        internal const int RandomizeStartingChunk   = 11;
-        internal const int ModFlyingKick            = 5;
-        internal const int ModStompKick             = 6;
-        internal const int ModDoubleJumpCortex      = 7;
-        internal const int ModDoubleJumpNina        = 8;
-        internal const int ModEnableUnusedEnemies   = 9;
-        internal const int ModSwitchCharacters      = 12;
-        internal const int ModClassicExplosions     = 13;
-        internal const int ModClassicHealth         = 14;
-        internal const int ModClassicCrates         = 15;
-        internal const int ModSkipCutscenes         = 16;
 
         public override Game Game => new Game()
         {
@@ -142,34 +126,44 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 },
             PropertyCategories = new Dictionary<int, string>()
             {
+                [(int)ModProps.Options] = "Options",
                 [(int)ModProps.Misc] = "Misc.",
                 [(int)ModProps.Character] = "Character",
             }
-        }
-        ;
+        };
+
+        public static ModPropOption Option_RandCrates = new ModPropOption(Twins_Text.Rand_Crates, Twins_Text.Rand_CratesDesc)
+        {
+            Items = new List<string>() {
+                "Off", "All Crates", "Types Only", },
+            ItemsDesc = new List<string>() {
+                "", "Individual crates are randomized.", "Only crate types are switched around.", },
+        };
+        public static ModPropOption Option_RandGemLocations = new ModPropOption(Twins_Text.Rand_GemLocations, Twins_Text.Rand_GemLocationsDesc);
+        public static ModPropOption Option_RandEnemies = new ModPropOption("Randomize Enemies (Soundless)", "") // not stable enough
+        { Hidden = true, };
+        public static ModPropOption Option_RandomizeMusic = new ModPropOption(Twins_Text.Rand_Music, Twins_Text.Rand_MusicDesc);
+        public static ModPropOption Option_RandCharacterParams = new ModPropOption(Twins_Text.Rand_CharParams, Twins_Text.Rand_CharParamsDesc);
+        public static ModPropOption Option_RandStartingChunk = new ModPropOption("Randomize Starting Chunk", "") // TODO
+        { Hidden = true, };
+        public static ModPropOption Option_FlyingKick = new ModPropOption(Twins_Text.Mod_FlyingKick, Twins_Text.Mod_FlyingKickDesc);
+        public static ModPropOption Option_StompKick = new ModPropOption(Twins_Text.Mod_StompKick, Twins_Text.Mod_StompKickDesc);
+        public static ModPropOption Option_DoubleJumpCortex = new ModPropOption(Twins_Text.Mod_CortexDoubleJump, Twins_Text.Mod_CortexDoubleJumpDesc);
+        public static ModPropOption Option_DoubleJumpNina = new ModPropOption(Twins_Text.Mod_NinaDoubleJump, Twins_Text.Mod_NinaDoubleJumpDesc);
+        public static ModPropOption Option_UnusedEnemies = new ModPropOption(Twins_Text.Mod_UnusedEnemies, Twins_Text.Mod_UnusedEnemiesDesc);
+        public static ModPropOption Option_SwitchCharacters = new ModPropOption(Twins_Text.Mod_SwitchCharacters, Twins_Text.Mod_SwitchCharactersDesc);
+        public static ModPropOption Option_ClassicHealth = new ModPropOption(Twins_Text.Mod_ClassicHealth, Twins_Text.Mod_ClassicHealthDesc);
+        public static ModPropOption Option_ClassicExplosions = new ModPropOption(Twins_Text.Mod_ClassicExplosionDaamge, Twins_Text.Mod_ClassicExplosionDamageDesc);
+        public static ModPropOption Option_ClassicCrates = new ModPropOption(Twins_Text.Mod_ClassicCratePersistence, Twins_Text.Mod_ClassicCratePersistenceDesc) // TODO
+        { Hidden = true, };
+        public static ModPropOption Option_ClassicBossHealth = new ModPropOption("Classic Boss Health", "Start boss fights with 2 masks.") // TODO
+        { Hidden = true, };
+        public static ModPropOption Option_SkipCutscenes = new ModPropOption("Skip Cutscenes", "Skips all non-video cutscenes after entering.") // TODO
+        { Hidden = true, };
 
         public Modder_Twins()
         {
-            
 
-            AddOption(RandomizeCrateTypes, new ModOption(Twins_Text.Rand_CrateTypes, Twins_Text.Rand_CrateTypesDesc)); // TODO: Make this a toggle between CrateTypes/AllCrates in the mod menu?
-            AddOption(RandomizeAllCrates, new ModOption(Twins_Text.Rand_Crates, Twins_Text.Rand_CratesDesc));
-            AddOption(RandomizeGemLocations, new ModOption(Twins_Text.Rand_GemLocations, Twins_Text.Rand_GemLocationsDesc));
-            //AddOption(RandomizeEnemies, new ModOption("Randomize Enemies (Soundless)")); // not stable enough
-            AddOption(RandomizeMusic, new ModOption(Twins_Text.Rand_Music, Twins_Text.Rand_MusicDesc));
-            AddOption(RandomizeCharParams, new ModOption(Twins_Text.Rand_CharParams, Twins_Text.Rand_CharParamsDesc));
-            //AddOption(RandomizeStartingChunk, new ModOption("Randomize Starting Chunk")); // TODO
-            AddOption(ModFlyingKick, new ModOption(Twins_Text.Mod_FlyingKick, Twins_Text.Mod_FlyingKickDesc));
-            AddOption(ModStompKick, new ModOption(Twins_Text.Mod_StompKick, Twins_Text.Mod_StompKickDesc));
-            AddOption(ModDoubleJumpCortex, new ModOption(Twins_Text.Mod_CortexDoubleJump, Twins_Text.Mod_CortexDoubleJumpDesc));
-            AddOption(ModDoubleJumpNina, new ModOption(Twins_Text.Mod_NinaDoubleJump, Twins_Text.Mod_NinaDoubleJumpDesc));
-            AddOption(ModEnableUnusedEnemies, new ModOption(Twins_Text.Mod_UnusedEnemies, Twins_Text.Mod_UnusedEnemiesDesc));
-            AddOption(ModSwitchCharacters, new ModOption(Twins_Text.Mod_SwitchCharacters, Twins_Text.Mod_SwitchCharactersDesc));
-            AddOption(ModClassicHealth, new ModOption(Twins_Text.Mod_ClassicHealth, Twins_Text.Mod_ClassicHealthDesc));
-            AddOption(ModClassicExplosions, new ModOption(Twins_Text.Mod_ClassicExplosionDaamge, Twins_Text.Mod_ClassicExplosionDamageDesc));
-            //AddOption(ModClassicCrates, new ModOption(Twins_Text.Mod_ClassicCratePersistence, Twins_Text.Mod_ClassicCratePersistenceDesc));
-            //AddOption(ModSkipCutscenes, new ModOption("Classic Boss Health", "Start boss fights with 2 masks."));
-            //AddOption(ModSkipCutscenes, new ModOption("Skip Cutscenes","Skips all non-video cutscenes after entering."));
         }
 
         internal string bdPath = "";
@@ -245,7 +239,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 }
             }
 
-            if (GetOption(RandomizeCrateTypes))
+            if (Option_RandCrates.Value == 2)
             {
                 TwinsFile mainArchive = new TwinsFile();
                 mainArchive.LoadFile(bdPath + @"Startup\Default.rm" + extensionMod, rmType);
@@ -297,7 +291,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
 
                 mainArchive.SaveFile(bdPath + "/Startup/Default.rm" + extensionMod);
             }
-            if (GetOption(RandomizeAllCrates))
+            if (Option_RandCrates.Value == 1)
             {
                 //Importing ammo crate
                 TwinsFile cortexlevelArchive = new TwinsFile();
@@ -322,7 +316,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 mainArchive.SaveFile(bdPath + "/Startup/Default.rm" + extensionMod);
             }
 
-            if (GetOption(RandomizeAllCrates))
+            if (Option_RandCrates.Value == 1)
             {
 
                 // Crates to insert
@@ -358,7 +352,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 Twins_Edit_AllLevels = true;
             }
 
-            if (GetOption(RandomizeGemLocations))
+            if (Option_RandGemLocations.Enabled)
             {
                 Twins_Data.Twins_Randomize_Gems(ref randState);
 
@@ -373,7 +367,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 Twins_Edit_AllLevels = true;
             }
 
-            if (GetOption(RandomizeMusic))
+            if (Option_RandomizeMusic.Enabled)
             {
                 List<uint> temp_musicList = new List<uint>();
 
@@ -424,8 +418,8 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 Twins_Edit_AllLevels = true;
             }
 
-            if (GetOption(ModFlyingKick) || GetOption(ModStompKick) || GetOption(ModDoubleJumpCortex) || GetOption(ModDoubleJumpNina) 
-                || GetOption(ModSwitchCharacters) || GetOption(ModClassicExplosions))// || GetOption(RandomizeEnemies))
+            if (Option_FlyingKick.Enabled || Option_StompKick.Enabled || Option_DoubleJumpCortex.Enabled || Option_DoubleJumpNina.Enabled 
+                || Option_SwitchCharacters.Enabled || Option_ClassicExplosions.Enabled || Option_RandEnemies.Enabled)
             {
                 Twins_Edit_AllLevels = true;
 
@@ -452,7 +446,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
                     scriptVer = 1;
                 }
 
-                if (GetOption(ModSwitchCharacters))
+                if (Option_SwitchCharacters.Enabled)
                 {
                     StrafeLeft = Twins_Data.GetScriptByID(ScriptID.COM_GENERIC_CHARACTER_STRAFE_LEFT);
                     StrafeRight = Twins_Data.GetScriptByID(ScriptID.COM_GENERIC_CHARACTER_STRAFE_RIGHT);
@@ -495,7 +489,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
 
                 }
 
-                if (GetOption(ModClassicExplosions))
+                if (Option_ClassicExplosions.Enabled)
                 {
                     GenericCrateExplode = Twins_Data.GetScriptByID(ScriptID.COM_GENERIC_CRATE_EXPLODE);
 
@@ -513,8 +507,8 @@ namespace CrateModLoader.GameSpecific.CrashTS
 
                 }
                 
-                /*
-                if (GetOption(RandomizeEnemies))
+                
+                if (Option_RandEnemies.Enabled)
                 {
                     EnemyReplaceList.Add(ObjectID.GLOBAL_MONKEY);
                     EnemyReplaceList.Add(ObjectID.GLOBAL_CHICKEN);
@@ -584,16 +578,16 @@ namespace CrateModLoader.GameSpecific.CrashTS
                     for (int i = 0; i < Twins_Data.cachedGameObjects.Count; i++)
                     {
                         //soundless objects - temporary workaround because sound import/export is broken
-                        if (Twins_Data.cachedGameObjects[i].mainObject.cSounds.Length > 0)
+                        if (Twins_Data.cachedGameObjects[i].mainObject.cSounds.Count > 0)
                         {
-                            for (int a = 0; a < Twins_Data.cachedGameObjects[i].mainObject.cSounds.Length; a++)
+                            for (int a = 0; a < Twins_Data.cachedGameObjects[i].mainObject.cSounds.Count; a++)
                             {
                                 Twins_Data.cachedGameObjects[i].mainObject.cSounds[a] = 20 ;
                             }
                         }
-                        if (Twins_Data.cachedGameObjects[i].mainObject.Sounds.Length > 0)
+                        if (Twins_Data.cachedGameObjects[i].mainObject.Sounds.Count > 0)
                         {
-                            for (int s = 0; s < Twins_Data.cachedGameObjects[i].mainObject.Sounds.Length; s++)
+                            for (int s = 0; s < Twins_Data.cachedGameObjects[i].mainObject.Sounds.Count; s++)
                             {
                                 Twins_Data.cachedGameObjects[i].mainObject.Sounds[s] = 65535;
                             }
@@ -639,15 +633,15 @@ namespace CrateModLoader.GameSpecific.CrashTS
                         }
                     }
                 }
-                */
+                
             }
             
 
-            if (GetOption(ModEnableUnusedEnemies))
+            if (Option_UnusedEnemies.Enabled)
             {
                 Twins_Edit_AllLevels = true;
             }
-            if (GetOption(RandomizeCharParams))
+            if (Option_RandCharacterParams.Enabled)
             {
                 Twins_Data_Characters.Twins_Randomize_Character((int)CharacterID.Crash, ref randState);
                 Twins_Data_Characters.Twins_Randomize_Character((int)CharacterID.Cortex, ref randState);
@@ -698,7 +692,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 {
                     if (CodeText_LineList[i] == "to enable autosave,~return to the pause menu~and re-save the game.")
                     {
-                        CodeText_LineList[i] = "to enable autosave,~return to the pause menu~and re-save the game.~crate mod loader " + ModLoaderGlobals.ProgramVersion.ToLower() + "~" + "seed: " + ModLoaderGlobals.RandomizerSeed + "~" + "options: " + OptionsSelectedString.ToLower() + "";
+                        CodeText_LineList[i] = "to enable autosave,~return to the pause menu~and re-save the game.~crate mod loader " + ModLoaderGlobals.ProgramVersion.ToLower() + "~" + "seed: " + ModLoaderGlobals.RandomizerSeed + "";
                     }
                     else if (CodeText_LineList[i] == "autosave disabled")
                     {
@@ -710,7 +704,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
                     }
                     else if (i == 40 && ModLoaderGlobals.Region == RegionType.NTSC_J)
                     {
-                        CodeText_LineList[i] += "~" + ModLoaderGlobals.ProgramVersion.ToLower() + "~" + "" + ModLoaderGlobals.RandomizerSeed + "~" + "" + OptionsSelectedString.ToLower() + "";
+                        CodeText_LineList[i] += "~" + ModLoaderGlobals.ProgramVersion.ToLower() + "~" + "" + ModLoaderGlobals.RandomizerSeed + "";
                     }
                 }
 
@@ -742,7 +736,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
             TwinsFile RM_Archive = new TwinsFile();
             RM_Archive.LoadFile(bdPath + @"Startup\Default.rm" + extensionMod, rmType);
 
-            if (GetOption(ModClassicExplosions))
+            if (Option_ClassicExplosions.Enabled)
                 Twins_Mods.RM_Mod_ClassicExplosions(RM_Archive, GenericCrateExplode);
 
             RM_Archive.SaveFile(bdPath + @"Startup\Default.rm" + extensionMod);
@@ -773,35 +767,33 @@ namespace CrateModLoader.GameSpecific.CrashTS
             TwinsFile RM_Archive = new TwinsFile();
             RM_Archive.LoadFile(path, rmType);
 
-            if (GetOption(RandomizeAllCrates))
+            if (Option_RandCrates.Value == 1)
                 Twins_Randomizers.RM_Randomize_Crates(RM_Archive, chunkType, ref randState, ref CrateReplaceList, ref randCrateList);
-            if (GetOption(RandomizeGemLocations))
+            if (Option_RandGemLocations.Enabled)
                 Twins_Randomizers.RM_Randomize_Gems(RM_Archive, chunkType, ref gemObjectList);
-            if (GetOption(RandomizeMusic))
+            if (Option_RandomizeMusic.Enabled)
                 Twins_Randomizers.RM_Randomize_Music(RM_Archive, ref musicTypes, ref randMusicList);
-            if (GetOption(RandomizeCharParams) || Edit_AllCharacters)
+            if (Option_RandCharacterParams.Enabled || Edit_AllCharacters)
                 Twins_Randomizers.RM_Randomize_CharacterInstanceStats(RM_Archive);
-
-            /*
-            if (GetOption(RandomizeEnemies))
+            if (Option_RandEnemies.Enabled)
                 Twins_Randomizers.RM_Randomize_Enemies(RM_Archive, chunkType, ref randState, ref EnemyReplaceList, ref EnemyInsertList);
-            */
+            
 
-            if (GetOption(ModStompKick))
+            if (Option_StompKick.Enabled)
                 Twins_Mods.RM_CharacterObjectMod(RM_Archive);
-            if (GetOption(ModFlyingKick) || GetOption(ModStompKick))
+            if (Option_FlyingKick.Enabled || Option_StompKick.Enabled)
                 Twins_Mods.RM_CharacterMod_EnableFlyingKick(RM_Archive);
-            if (GetOption(ModDoubleJumpCortex))
+            if (Option_DoubleJumpCortex.Enabled)
                 Twins_Mods.RM_CharacterMod_DoubleJumpCortex(RM_Archive);
-            if (GetOption(ModDoubleJumpNina))
+            if (Option_DoubleJumpNina.Enabled)
                 Twins_Mods.RM_CharacterMod_DoubleJumpNina(RM_Archive);
-            if (GetOption(ModEnableUnusedEnemies))
+            if (Option_UnusedEnemies.Enabled)
                 Twins_Mods.RM_EnableUnusedEnemies(RM_Archive);
-            if (GetOption(ModSwitchCharacters))
+            if (Option_SwitchCharacters.Enabled)
                 Twins_Mods.RM_SwitchCharactersMod(RM_Archive, StrafeLeft, StrafeRight);
-            if (GetOption(ModClassicHealth))
+            if (Option_ClassicHealth.Enabled)
                 Twins_Mods.RM_Mod_ClassicHealth(RM_Archive);
-            if (GetOption(ModClassicExplosions))
+            if (Option_ClassicExplosions.Enabled)
                 Twins_Mods.RM_Mod_ClassicExplosions(RM_Archive, GenericCrateExplode);
 
             RM_Archive.SaveFile(path);

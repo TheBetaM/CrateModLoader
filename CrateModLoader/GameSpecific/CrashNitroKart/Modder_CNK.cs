@@ -3,8 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using CrateModLoader.ModProperties;
 //CNK Tools/API by BetaM, ManDude and eezstreet.
-//Version number, seed and options are displayed in the Credits accessible from the main menu.
 /* 
  * Mod Layers:
  * 1: ASSETS.GOB contents
@@ -23,27 +23,6 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
 
     public sealed class Modder_CNK : Modder
     {
-        // these values can be anything, as long as they're unique, otherwise an argument exception may be thrown when adding options
-        // constants get transformed into their respective values at compile time
-        internal const int RandomizeAdventure             = 0;
-        internal const int RandomizeAdventureRequirements = 1;
-        internal const int RandomizeCharacterStats        = 2;
-        internal const int RandomizeKartStats             = 3;
-        internal const int RandomizeAIKartStats           = 4;
-        internal const int RandomizeSurfaceParameters     = 5;
-        internal const int RandomizeWeaponPools           = 6;
-        internal const int RandomizeWeapons               = 7;
-        internal const int RandomizeCharacters            = 8;
-        internal const int RandomizeKarts                 = 9;
-        internal const int DisableFadeout                 = 10;
-        internal const int DisablePopups                  = 11;
-        internal const int SpeedUpMaskHints               = 12;
-        internal const int RandomizeWumpaCrate            = 13;
-        internal const int RandomizeObstacles             = 14;
-        internal const int RandomizeCupPoints             = 15;
-        internal const int RandomizeMusic                 = 16;
-        internal const int NoMask                         = 17;
-        internal const int NoAlchemyIntro                 = 18;
 
         public override Game Game => new Game()
         {
@@ -100,6 +79,7 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
                 },
             PropertyCategories = new Dictionary<int, string>()
             {
+                [0] = "Options",
                 [(int)ModProps.KartStats] = CNK_Text.PropCategory_KartStats,
                 [(int)ModProps.DriverStats] = CNK_Text.PropCategory_DriverStats,
                 [(int)ModProps.Surfaces] = CNK_Text.PropCategory_Surfaces,
@@ -108,26 +88,26 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
             }
         };
 
+        public static ModPropOption Option_RandAdventure = new ModPropOption(CNK_Text.Rand_Adventure, CNK_Text.Rand_AdventureDesc);
+        public static ModPropOption Option_RandCharStats = new ModPropOption(CNK_Text.Rand_CharacterStats, CNK_Text.Rand_CharacterStatsDesc);
+        public static ModPropOption Option_RandKartStats = new ModPropOption(CNK_Text.Rand_KartStats, CNK_Text.Rand_KartStatsDesc);
+        public static ModPropOption Option_RandWumpaCrate = new ModPropOption() { Hidden = true };  //TODO dda
+        public static ModPropOption Option_RandObstacles = new ModPropOption() { Hidden = true };  //TODO obstacles
+        public static ModPropOption Option_RandCupPoints = new ModPropOption() { Hidden = true };  //Maybe? gameprogression
+        public static ModPropOption Option_RandSurfParams = new ModPropOption() { Hidden = true }; // TODO: later version
+        public static ModPropOption Option_RandWeaponPools = new ModPropOption() { Hidden = true }; // TODO: later version
+        public static ModPropOption Option_RandWeaponEffects = new ModPropOption(CNK_Text.Rand_PowerupEffects, CNK_Text.Rand_PowerupEffectsDesc);
+        public static ModPropOption Option_RandCharacters = new ModPropOption(CNK_Text.Rand_Drivers, CNK_Text.Rand_DriversDesc); //TODO: later version: icon replacement, name replacement, main menu model replacement, adventure character select model
+        public static ModPropOption Option_RandKarts = new ModPropOption(CNK_Text.Rand_Karts, CNK_Text.Rand_KartsDesc);
+        public static ModPropOption Option_RandMusic = new ModPropOption() { Hidden = true }; //TODO music.csv
+        public static ModPropOption Option_NoMaskHints = new ModPropOption() { Hidden = true }; //TODO, hinthistory.csv
+        public static ModPropOption Option_DisableFadeout = new ModPropOption(CNK_Text.Mod_DisableFadeout, CNK_Text.Mod_DisableFadeoutDesc);
+        public static ModPropOption Option_DisablePopups = new ModPropOption(CNK_Text.Mod_DisableUnlockPopups, CNK_Text.Mod_DisableUnlockPopupsDesc);
+        public static ModPropOption Option_SpeedUpMaskHints = new ModPropOption(CNK_Text.Mod_SpeedUpMaskHint, CNK_Text.Mod_SpeedUpMaskHintDesc);
+        public static ModPropOption Option_NoIntro = new ModPropOption(1, CNK_Text.Mod_RemoveIntroVideos, CNK_Text.Mod_RemoveIntroVideosDesc);
+
         public Modder_CNK()
         {
-
-            AddOption(RandomizeAdventure, new ModOption(CNK_Text.Rand_Adventure, CNK_Text.Rand_AdventureDesc));
-            AddOption(RandomizeCharacterStats, new ModOption(CNK_Text.Rand_CharacterStats, CNK_Text.Rand_CharacterStatsDesc));
-            AddOption(RandomizeKartStats, new ModOption(CNK_Text.Rand_KartStats, CNK_Text.Rand_KartStatsDesc));
-            //AddOption(RandomizeWumpaCrate, new ModOption()); //TODO dda
-            //AddOption(RandomizeObstacles, new ModOption()); //TODO obstacles
-            //AddOption(RandomizeCupPoints, new ModOption()); // Maybe? gameprogression
-            //AddOption(RandomizeSurfaceParameters, new ModOption("Randomize Surface Parameters")); // TODO: later version
-            //AddOption(RandomizeWeaponPools, new ModOption("Randomize Powerup Distribution")); // TODO: later version
-            AddOption(RandomizeWeapons, new ModOption(CNK_Text.Rand_PowerupEffects, CNK_Text.Rand_PowerupEffectsDesc));
-            AddOption(RandomizeCharacters, new ModOption(CNK_Text.Rand_Drivers, CNK_Text.Rand_DriversDesc)); //TODO: later version: icon replacement, name replacement, main menu model replacement, adventure character select model
-            AddOption(RandomizeKarts, new ModOption(CNK_Text.Rand_Karts, CNK_Text.Rand_KartsDesc));
-            //AddOption(RandomizeMusic, new ModOption()); //TODO music.csv
-            //AddOption(NoMask, new ModOption()); //TODO, hinthistory.csv
-            AddOption(DisableFadeout, new ModOption(CNK_Text.Mod_DisableFadeout, CNK_Text.Mod_DisableFadeoutDesc));
-            AddOption(DisablePopups, new ModOption(CNK_Text.Mod_DisableUnlockPopups, CNK_Text.Mod_DisableUnlockPopupsDesc));
-            AddOption(SpeedUpMaskHints, new ModOption(CNK_Text.Mod_SpeedUpMaskHint, CNK_Text.Mod_SpeedUpMaskHintDesc));
-            AddOption(NoAlchemyIntro, new ModOption(CNK_Text.Mod_RemoveIntroVideos, CNK_Text.Mod_RemoveIntroVideosDesc, true));
             
         }
 
@@ -241,7 +221,7 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
             }
 
 
-            if (GetOption(NoAlchemyIntro))
+            if (Option_NoIntro.Enabled)
             {
                 if (ModLoaderGlobals.Console == ConsoleMode.PS2)
                 {
@@ -343,15 +323,15 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
                         File.Delete(ModLoaderGlobals.ExtractedPath + "video/intro/scospa.sfd");
                 }
             }
-            if (GetOption(RandomizeCharacters))
+            if (Option_RandCharacters.Enabled)
             {
                 Mod_Randomize_Characters(randState);
             }
-            if (GetOption(RandomizeKarts))
+            if (Option_RandKarts.Enabled)
             {
                 Mod_Randomize_Karts(randState);
             }
-            if (GetOption(RandomizeAdventure))
+            if (Option_RandAdventure.Enabled)
             {
                 Editing_CSV_WarpPadInfo = true;
                 Editing_CSV_AdventureCup = true;
@@ -360,12 +340,12 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
                 CNK_Data_Adventure.CNK_Randomize_WarpPads(randState);
                 CNK_Data_Adventure.CNK_Randomize_ReqsRewards(randState);
             }
-            if (GetOption(RandomizeKartStats))
+            if (Option_RandKartStats.Enabled)
             {
                 Editing_CSV_KartPhysicsBase = true;
                 CNK_Data_KartStats.CNK_Randomize_KartStats(randState);
             }
-            if (GetOption(RandomizeCharacterStats))
+            if (Option_RandCharacters.Enabled)
             {
                 Editing_CSV_CharacterPhysics = true;
                 for (int i = 0; i < 16; i++)
@@ -380,7 +360,7 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
                 CNK_Data.CNK_Randomize_SufParams(randState);
             }
             */
-            if (GetOption(RandomizeWeapons))
+            if (Option_RandWeaponEffects.Enabled)
             {
                 Editing_CSV_PowerShield = true;
                 Editing_CSV_FreezingMine = true;
@@ -410,11 +390,11 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
                 Editing_CSV_PlayerWeaponSelection_Boss = true;
             }
             */
-            if (GetOption(DisablePopups))
+            if (Option_DisablePopups.Enabled)
             {
                 Editing_CSV_Unlockables = true;
             }
-            if (GetOption(SpeedUpMaskHints))
+            if (Option_SpeedUpMaskHints.Enabled)
             {
                 Editing_CSV_HintsConfig = true;
             }
@@ -673,7 +653,7 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
                 
             }
 
-            if (GetOption(RandomizeKartStats))
+            if (Option_RandKartStats.Enabled)
             {
                 Editing_CSV_AI_KartPhysicsBase = true;
                 CNK_Data_KartStats.CNK_Randomize_KartStats(randState);
@@ -1484,7 +1464,7 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
                 File.WriteAllLines(path_gob_extracted + "common/hints/config.csv", csv_HintsConfig);
             }
 
-            if (GetOption(DisableFadeout))
+            if (Option_DisableFadeout.Enabled)
             {
                 DirectoryInfo dir_hud = new DirectoryInfo(path_gob_extracted + "common/hud/");
                 foreach (FileInfo file in dir_hud.EnumerateFiles())
@@ -1555,14 +1535,12 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
                 {
                     csv_Credits_LineList.Add("Crate Mod Loader " + ModLoaderGlobals.ProgramVersion + ",AlphaDance,1.25,C,4294950912,0,40");
                     csv_Credits_LineList.Add("Seed: " + ModLoaderGlobals.RandomizerSeed + ",AlphaDance,1.25,C,4294950912,0,40");
-                    csv_Credits_LineList.Add("Options: " + OptionsSelectedString + ",AlphaDance,1.25,C,4294950912,0,40");
                     csv_Credits_LineList.Add("Crash Nitro Kart,AlphaDance,1.25,C,4279304191,0,80");
                 }
                 else
                 {
                     csv_Credits_LineList.Add("Crate Mod Loader " + ModLoaderGlobals.ProgramVersion + ",AlphaDance,1.25,C,0xFF10FFFF,0,40");
                     csv_Credits_LineList.Add("Seed: " + ModLoaderGlobals.RandomizerSeed + ",AlphaDance,1.25,C,0xFF10FFFF,0,40");
-                    csv_Credits_LineList.Add("Options: " + OptionsSelectedString + ",AlphaDance,1.25,C,0xFF10FFFF,0,40");
                     csv_Credits_LineList.Add("Crash Nitro Kart,AlphaDance,1.25,C,0xFF10FFFF,0,80");
                 }
 

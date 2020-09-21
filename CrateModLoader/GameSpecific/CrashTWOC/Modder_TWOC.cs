@@ -1,15 +1,12 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
+using CrateModLoader.ModProperties;
 
 namespace CrateModLoader.GameSpecific.CrashTWOC
 {
     public sealed class Modder_TWOC : Modder
     {
-
-        internal const int RandomizeLevelOrder = 0;
-        internal const int RandomizeCrates = 1;
-        internal const int RandomizeMusic = 2;
 
         public override Game Game => new Game()
         {
@@ -68,15 +65,22 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
                         Region = RegionType.PAL,
                         RegionNumber = 4, },
                 },
+            PropertyCategories = new Dictionary<int, string>()
+            {
+                [0] = "Options",
+            },
         };
+
+        public static ModPropOption Option_RandCrates = new ModPropOption("Randomize Crates", "")
+        { Hidden = true, };
+        public static ModPropOption Option_RandLevelOrder = new ModPropOption("Randomize Level Order", "") //doesn't work yet
+        { Hidden = true, };
+        public static ModPropOption Option_RandMusic = new ModPropOption("Randomize Music", "") //not tested
+        { Hidden = true, AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN, ConsoleMode.XBOX }, };
 
         public Modder_TWOC()
         {
 
-            //AddOption(RandomizeCrates, new ModOption("Randomize Crates"));
-            //AddOption(RandomizeLevelOrder, new ModOption("Randomize Level Order")); //doesn't work yet
-            //AddOption(RandomizeMusic, new ModOption("Randomize Music", new List<ConsoleMode>() { ConsoleMode.GCN, ConsoleMode.XBOX })); //not tested
-            
         }
 
         public override void StartModProcess()
@@ -94,15 +98,15 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
         {
             Random rand = new Random(ModLoaderGlobals.RandomizerSeed);
 
-            if (GetOption(RandomizeCrates))
+            if (Option_RandCrates.Enabled)
             {
                 Mod_RandomizeCrates(rand);
             }
-            if (GetOption(RandomizeLevelOrder))
+            if (Option_RandLevelOrder.Enabled)
             {
                 Mod_RandomizeLevelOrder(rand);
             }
-            if (GetOption(RandomizeMusic))
+            if (Option_RandMusic.Enabled)
             {
                 Mod_RandomizeMusic(rand);
             }

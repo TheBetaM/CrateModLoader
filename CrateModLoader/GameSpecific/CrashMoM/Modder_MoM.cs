@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using CrateModLoader.GameSpecific.CrashTTR;
 //RCF API by NeoKesha
-//Version number, seed and options are displayed in the Credits accessible from the main menu.
 /* Mod Layers:
  * 1: Default.RCF contents (only replace files)
  */
@@ -66,6 +65,10 @@ namespace CrateModLoader.GameSpecific.CrashMoM
                         Name = "Crash Mind Over Mutant",
                         Region = RegionType.Global, }
                 },
+            PropertyCategories = new Dictionary<int, string>()
+            {
+                [0] = "Options",
+            },
         };
 
         public Modder_MoM()
@@ -105,7 +108,6 @@ namespace CrateModLoader.GameSpecific.CrashMoM
 
             credits_LineList.Add("false        \"Crate Mod Loader " + ModLoaderGlobals.ProgramVersion + "\"                 false           false");
             credits_LineList.Add("false        \"Seed: " + ModLoaderGlobals.RandomizerSeed + "\"                 false           false");
-            credits_LineList.Add("false        \"Options: " + OptionsSelectedString + "\"                 false           false");
 
             for (int i = 1; i < credits_lines.Length; i++)
             {

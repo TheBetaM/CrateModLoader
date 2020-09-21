@@ -17,8 +17,9 @@ namespace CrateModLoader
 
         private Modder mod;
         private Game Game;
+        private ModLoaderForm parentForm;
 
-        public ModMenuForm(Modder modder, Game g)
+        public ModMenuForm(ModLoaderForm parent, Modder modder, Game g)
         {
             InitializeComponent();
 
@@ -32,6 +33,7 @@ namespace CrateModLoader
 
             mod = modder;
             Game = g;
+            parentForm = parent;
 
             //todo: generate Mod Bit
 
@@ -83,6 +85,10 @@ namespace CrateModLoader
 
                 foreach (ModPropertyBase prop in mod.Props)
                 {
+                    if (prop.Hidden)
+                    {
+                        continue;
+                    }
                     if (curItem == itemsPerPage)
                     {
                         if (curPage == 1)
@@ -174,6 +180,8 @@ namespace CrateModLoader
         private void ModMenuForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             Owner.Enabled = true;
+
+            parentForm.UpdateOptionList();
 
             bool HasChanged = false;
 

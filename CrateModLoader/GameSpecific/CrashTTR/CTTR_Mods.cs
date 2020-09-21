@@ -104,7 +104,7 @@ namespace CrateModLoader.GameSpecific.CrashTTR
                     {
                         frontend_lines[i + 1] = "screen.AddLine(\"Crate Mod Loader " + ModLoaderGlobals.ProgramVersion + "\",0,\"\")";
                         frontend_lines[i + 2] = "screen.AddLine(\"Seed: " + ModLoaderGlobals.RandomizerSeed + "\",0,\"\")";
-                        frontend_lines[i + 3] = "screen.AddLine(\"Options: " + ModLoaderGlobals.ModProgram.Modder.OptionsSelectedString + "\",0,\"\")";
+                        frontend_lines[i + 3] = "screen.AddLine(\"\",0,\"\")";
                         frontend_lines[i + 4] = "screen.AddLineSpecial(\"creditscttr\",0,104,104,255,1.2,true)";
                         break;
                     }

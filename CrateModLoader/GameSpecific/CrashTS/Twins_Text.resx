@@ -160,7 +160,7 @@
     <value>Randomizes each characters parameters like speed and jump height.</value>
   </data>
   <data name="Rand_Crates" xml:space="preserve">
-    <value>Randomize Individual Crates</value>
+    <value>Randomize Crates</value>
   </data>
   <data name="Rand_CratesDesc" xml:space="preserve">
     <value>Each individual regular crate's type is randomized.</value>
