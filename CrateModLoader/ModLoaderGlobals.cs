@@ -135,5 +135,8 @@ namespace CrateModLoader
         /// <summary> Supported game list automatically populated on boot.  </summary>
         public static List<Game> SupportedGames;
 
+        /// <summary> Supported pipeline list automatically populated on boot. </summary>
+        public static Dictionary<ModPipelineInfo, Type> SupportedConsoles;
+
     }
 }

@@ -6,9 +6,16 @@ namespace CrateModLoader
     public abstract class ModPipeline
     {
 
-        public bool CanExtractROM = true;
-        public bool CanBuildROMfromROM = true;
-        public bool CanBuildROMfromFolder = true;
+        public abstract ModPipelineInfo Metadata { get; }
+
+        public virtual bool DetectROM(string inputPath)
+        {
+            return false;
+        }
+        public virtual bool DetectFolder(string inputPath)
+        {
+            return false;
+        }
 
         public abstract void Extract(string inputPath, string outputPath);
 
@@ -16,16 +23,14 @@ namespace CrateModLoader
 
     }
 
-    public class ModPipelineID : Attribute
+    public class ModPipelineInfo
     {
-        public ConsoleMode ID { get; set; }
+        public ConsoleMode Console { get; set; }
         public int Layer { get; set; }
 
-        public ModPipelineID(ConsoleMode CategoryID, int LayerID)
-        {
-            ID = CategoryID;
-            Layer = LayerID;
-        }
-
+        public bool NeedsDetection = false;
+        public bool CanExtractROM = true;
+        public bool CanBuildROMfromROM = true;
+        public bool CanBuildROMfromFolder = true;
     }
 }

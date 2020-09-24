@@ -15,7 +15,7 @@ namespace CrateModLoader.ModProperties
 
         }
 
-        public override void GenerateUI(Control parent, ref int offset)
+        public override void GenerateUI(object parent, ref int offset)
         {
             base.GenerateUI(parent, ref offset);
 
@@ -26,7 +26,7 @@ namespace CrateModLoader.ModProperties
             num.Maximum = int.MaxValue;
 
             num.Value = Value;
-            num.Parent = parent;
+            num.Parent = (Control)parent;
             num.Dock = DockStyle.Fill;
             num.ValueChanged += ValueChange;
 
@@ -36,7 +36,7 @@ namespace CrateModLoader.ModProperties
             table.SetRow(num, offset);
         }
 
-        public override void ValueChange(object sender, EventArgs e)
+        public override void ValueChange(object sender, object e)
         {
             base.ValueChange(sender, e);
 

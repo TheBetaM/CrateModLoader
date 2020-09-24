@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.IO.Compression;
 using CrateModLoader.Resources.Text;
@@ -8,6 +7,30 @@ using System.Globalization;
 
 namespace CrateModLoader
 {
+    public class ModCrate
+    {
+        public Dictionary<string, string> Meta = new Dictionary<string, string>();
+        public Dictionary<string, string> Settings = new Dictionary<string, string>();
+        public string Path;
+        public string Name = "Unnamed Mod";
+        public string Desc = "(No Description)";
+        public string Author = "(Not credited)";
+        public string Version = "v1.0";
+        public string CML_Version = ModLoaderGlobals.ProgramVersionSimple.ToString();
+        public string TargetGame = ModCrates.AllGamesShortName;
+        public string Plugin;
+        public bool IsActivated = false;
+        public bool HasSettings = false;
+        public bool IsFolder = false;
+        public bool HasIcon = false;
+        // for importing icons in ModCrateMaker
+        public string IconPath = "";
+        // A workaround for nested folders
+        public string NestedPath = "";
+
+        public bool[] LayersModded = new bool[1] { false };
+    }
+
     static class ModCrates
     {
 
@@ -220,7 +243,8 @@ namespace CrateModLoader
                     }
                     else if (entry.Name.ToLower() == IconFileName)
                     {
-                        NewCrate.Icon = Image.FromStream(entry.Open());
+                        //NewCrate.Icon = Image.FromStream(entry.Open());
+                        NewCrate.HasIcon = true;
                     }
                 }
                 if (HasInfo)
@@ -348,7 +372,8 @@ namespace CrateModLoader
                 }
                 else if (file.Name.ToLower() == IconFileName)
                 {
-                    NewCrate.Icon = Image.FromFile(file.FullName);
+                    //NewCrate.Icon = Image.FromFile(file.FullName);
+                    NewCrate.HasIcon = true;
                 }
             }
             if (dir.GetDirectories().Length > 0)
@@ -517,27 +542,5 @@ namespace CrateModLoader
             return false;
         }
 
-    }
-
-    public class ModCrate
-    {
-        public Dictionary<string, string> Meta = new Dictionary<string, string>();
-        public Dictionary<string, string> Settings = new Dictionary<string, string>();
-        public string Path;
-        public string Name = "Unnamed Mod";
-        public string Desc = "(No Description)";
-        public string Author = "(Not credited)";
-        public string Version = "v1.0";
-        public string CML_Version = ModLoaderGlobals.ProgramVersionSimple.ToString();
-        public string TargetGame = ModCrates.AllGamesShortName;
-        public string Plugin;
-        public bool IsActivated = false;
-        public bool HasSettings = false;
-        public bool IsFolder = false;
-        public Image Icon = null;
-        // A workaround for nested folders
-        public string NestedPath = "";
-
-        public bool[] LayersModded = new bool[1] { false };
     }
 }

@@ -31,7 +31,7 @@ namespace CrateModLoader.ModProperties
 
         private List<NumericUpDown> nums = new List<NumericUpDown>();
 
-        public override void GenerateUI(Control parent, ref int offset)
+        public override void GenerateUI(object parent, ref int offset)
         {
             base.GenerateUI(parent, ref offset);
 
@@ -39,7 +39,7 @@ namespace CrateModLoader.ModProperties
 
             TabControl tabControl = new TabControl();
             tabControl.TabPages.Clear();
-            tabControl.Parent = parent;
+            tabControl.Parent = (Control)parent;
             //tabControl.Multiline = true;
             tabControl.Dock = DockStyle.Fill;
             tabControl.MouseEnter += FocusUI;
@@ -76,7 +76,7 @@ namespace CrateModLoader.ModProperties
 
         }
 
-        public override void ValueChange(object sender, EventArgs e)
+        public override void ValueChange(object sender, object e)
         {
             base.ValueChange(sender, e);
 

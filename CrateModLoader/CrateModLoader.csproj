@@ -91,7 +91,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameDatabase.cs" />
+    <Compile Include="Game.cs" />
     <Compile Include="GameSpecific\Crash1\Crash1_Mods.cs" />
     <Compile Include="GameSpecific\Crash1\Crash1_Text.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -315,7 +315,13 @@
       <DependentUpon>ModMenuForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ModPipelines\ModPipeline.cs" />
+    <Compile Include="ModPipelines\ModPipeline_GCN.cs" />
+    <Compile Include="ModPipelines\ModPipeline_PS1.cs" />
     <Compile Include="ModPipelines\ModPipeline_PS2.cs" />
+    <Compile Include="ModPipelines\ModPipeline_PSP.cs" />
+    <Compile Include="ModPipelines\ModPipeline_WII.cs" />
+    <Compile Include="ModPipelines\ModPipeline_XBOX.cs" />
+    <Compile Include="ModPipelines\ModPipeline_XBOX360.cs" />
     <Compile Include="ModProperties\ModCategory.cs" />
     <Compile Include="ModProperties\ModPropertyBase.cs" />
     <Compile Include="ModProperties\ModPropBool.cs" />

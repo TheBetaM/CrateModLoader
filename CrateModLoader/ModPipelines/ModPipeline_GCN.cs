@@ -3,19 +3,19 @@
 namespace CrateModLoader.ModPipelines
 {
 
-    public class ModPipeline_PS2 : ModPipeline
+    public class ModPipeline_GCN : ModPipeline
     {
 
         public override ModPipelineInfo Metadata => new ModPipelineInfo()
         {
-            Console = ConsoleMode.PS2,
+            Console = ConsoleMode.GCN,
             Layer = 0,
             NeedsDetection = true,
         };
 
-        public ModPipeline_PS2()
+        public ModPipeline_GCN()
         {
-            
+
         }
 
         public override bool DetectROM(string inputPath)

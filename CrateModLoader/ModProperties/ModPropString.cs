@@ -25,14 +25,14 @@ namespace CrateModLoader.ModProperties
             MaxLength = maxLen;
         }
 
-        public override void GenerateUI(Control parent, ref int offset)
+        public override void GenerateUI(object parent, ref int offset)
         {
             
             base.GenerateUI(parent, ref offset);
 
             TextBox textBox = new TextBox();
             textBox.Text = Value;
-            textBox.Parent = parent;
+            textBox.Parent = (Control)parent;
             textBox.Dock = DockStyle.Fill;
             textBox.Multiline = true;
             textBox.TextChanged += ValueChange;
@@ -49,7 +49,7 @@ namespace CrateModLoader.ModProperties
 
         }
 
-        public override void ValueChange(object sender, EventArgs e)
+        public override void ValueChange(object sender, object e)
         {
             base.ValueChange(sender, e);
 

@@ -65,6 +65,7 @@ namespace CrateModLoader
         public bool asyncBuild = false;
         public Modder Modder;
         public Game Game;
+        public ModPipeline Pipeline;
         private Process ISOcreatorProcess;
         public BackgroundWorker asyncWorker;
         public OpenROM_SelectionType OpenROM_Selection = OpenROM_SelectionType.AutomaticOnly;
@@ -72,6 +73,7 @@ namespace CrateModLoader
         public ModLoader()
         {
             CacheSupportedGames();
+            CachePipelines();
         }
 
         // Builds the ISO
@@ -1307,6 +1309,21 @@ namespace CrateModLoader
                 game.ModderClass = type;
 
                 ModLoaderGlobals.SupportedGames.Add(game);
+            }
+        }
+
+        void CachePipelines()
+        {
+            ModLoaderGlobals.SupportedConsoles = new Dictionary<ModPipelineInfo, Type>();
+
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            foreach (Type type in assembly.GetTypes())
+            {
+                if (type.IsAbstract || !typeof(ModPipeline).IsAssignableFrom(type)) // only get non-abstract modders
+                    continue;
+                ModPipeline pipeline = (ModPipeline)Activator.CreateInstance(type);
+
+                ModLoaderGlobals.SupportedConsoles.Add(pipeline.Metadata, type);
             }
         }
 

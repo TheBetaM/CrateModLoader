@@ -37,48 +37,6 @@ namespace CrateModLoader.ModProperties
             DefaultValue = o;
         }
 
-        public override void GenerateUI(Control parent, ref int offset)
-        {
-            GenerateTitle(parent, ref offset);
-
-            // Changed values show a * next to the name
-            if (HasChanged && TitleLabel != null)
-            {
-                if (TitleLabel.Text[TitleLabel.Text.Length - 1] != '*')
-                {
-                    TitleLabel.Text += '*';
-                }
-            }
-
-            Control oparent = parent;
-            Control target = parent;
-            while (oparent != null)
-            {
-                oparent = oparent.Parent;
-                if (oparent != null)
-                {
-                    target = oparent;
-                }
-            }
-
-            ParentForm = (ModMenuForm)target;
-
-        }
-
-        public override void ValueChange(object sender, System.EventArgs e)
-        {
-            HasChanged = true;
-
-            // Changed values show a * next to the name
-            if (TitleLabel != null)
-            {
-                if (TitleLabel.Text[TitleLabel.Text.Length - 1] != '*')
-                {
-                    TitleLabel.Text += '*';
-                }
-            }
-        }
-
         public override void ResetToDefault()
         {
             Value = DefaultValue;
@@ -93,6 +51,48 @@ namespace CrateModLoader.ModProperties
 
         public override void DeSerialize(string input)
         {
+
+        }
+
+        public override void ValueChange(object sender, object e)
+        {
+            HasChanged = true;
+
+            // Changed values show a * next to the name
+            if (TitleLabel != null)
+            {
+                if (TitleLabel.Text[TitleLabel.Text.Length - 1] != '*')
+                {
+                    TitleLabel.Text += '*';
+                }
+            }
+        }
+
+        public override void GenerateUI(object parent, ref int offset)
+        {
+            GenerateTitle((Control)parent, ref offset);
+
+            // Changed values show a * next to the name
+            if (HasChanged && TitleLabel != null)
+            {
+                if (TitleLabel.Text[TitleLabel.Text.Length - 1] != '*')
+                {
+                    TitleLabel.Text += '*';
+                }
+            }
+
+            Control oparent = (Control)parent;
+            Control target = (Control)parent;
+            while (oparent != null)
+            {
+                oparent = oparent.Parent;
+                if (oparent != null)
+                {
+                    target = oparent;
+                }
+            }
+
+            ParentForm = (ModMenuForm)target;
 
         }
 

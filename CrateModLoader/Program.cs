@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 
 namespace CrateModLoader
 {
+    //CML Windows Forms Program variant
     static class Program
     {
         [DllImport("kernel32.dll")]

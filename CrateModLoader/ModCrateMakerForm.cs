@@ -44,7 +44,7 @@ namespace CrateModLoader
             textBox_name.Text = crate.Name;
             textBox_version.Text = crate.Version;
 
-            crate.Icon = null;
+            crate.HasIcon = false;
             crate.TargetGame = Game.ShortName;
             crate.HasSettings = true;
             crate.IsFolder = false;
@@ -71,7 +71,9 @@ namespace CrateModLoader
 
                 if (img != null)
                 {
-                    crate.Icon = img;
+                    crate.HasIcon = true;
+                    crate.IconPath = openFileDialog1.FileName;
+                    //crate.Icon = img;
                     pictureBox1.Image = img;
                 }
 

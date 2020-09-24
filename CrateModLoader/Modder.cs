@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.IO;
 using System.IO.Compression;
-using System.Drawing;
 using CrateModLoader.Resources.Text;
 using CrateModLoader.ModProperties;
 
@@ -232,9 +231,10 @@ namespace CrateModLoader
 
             SaveSettingsToFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ModCrates.SettingsFileName), false);
 
-            if (crate.Icon != null)
+            if (crate.HasIcon)
             {
-                crate.Icon.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ModCrates.IconFileName));
+                File.Copy(crate.IconPath, Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ModCrates.IconFileName));
+                //crate.Icon.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ModCrates.IconFileName));
             }
 
             using (FileStream fileStream = new FileStream(path, FileMode.Create))
@@ -243,17 +243,17 @@ namespace CrateModLoader
                 {
                     zip.CreateEntryFromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ModCrates.InfoFileName), ModCrates.InfoFileName);
                     zip.CreateEntryFromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ModCrates.SettingsFileName), ModCrates.SettingsFileName);
-                    if (crate.Icon != null)
+                    if (crate.HasIcon)
                     {
                         zip.CreateEntryFromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ModCrates.IconFileName), ModCrates.IconFileName);
-                    }
+                    } 
                 }
             }
 
             //cleanup
             File.Delete(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ModCrates.InfoFileName));
             File.Delete(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ModCrates.SettingsFileName));
-            if (crate.Icon != null)
+            if (crate.HasIcon)
             {
                 File.Delete(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ModCrates.IconFileName));
             }
