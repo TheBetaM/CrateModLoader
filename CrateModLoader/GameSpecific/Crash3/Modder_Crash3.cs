@@ -24,8 +24,10 @@ namespace CrateModLoader.GameSpecific.Crash3
             API_Credit = Crash3_Text.API_Credit,
             API_Link = "https://github.com/cbhacks/CrashEdit",
             Icon = Properties.Resources.icon_crash3,
-            ModCratesSupported = true,
-            RegionID_PS1 = new RegionCode[] {
+            RegionID = new Dictionary<ConsoleMode, RegionCode[]>()
+            {
+                [ConsoleMode.PS1] = new RegionCode[]
+                {
                     new RegionCode() {
                     Name = @"SCUS_942.44",
                     Region = RegionType.NTSC_U,
@@ -42,6 +44,7 @@ namespace CrateModLoader.GameSpecific.Crash3
                     ExecName = "SCPS_100.73",
                     CodeName = "SCPS_10073", },
                 },
+            },
             PropertyCategories = new Dictionary<int, string>()
             {
                 [0] = "Options",

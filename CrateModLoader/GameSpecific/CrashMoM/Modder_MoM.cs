@@ -27,8 +27,10 @@ namespace CrateModLoader.GameSpecific.CrashMoM
             API_Credit = "API by NeoKesha and BetaM",
             API_Link = string.Empty,
             Icon = Properties.Resources.icon_crashmom,
-            ModCratesSupported = true,
-            RegionID_PS2 = new RegionCode[] {
+            RegionID = new Dictionary<ConsoleMode, RegionCode[]>()
+            {
+                [ConsoleMode.PS2] = new RegionCode[]
+                {
                     new RegionCode() {
                     Name = @"SLUS_217.28",
                     Region = RegionType.NTSC_U,
@@ -40,7 +42,8 @@ namespace CrateModLoader.GameSpecific.CrashMoM
                     ExecName = "SLES_552.04",
                     CodeName = "SLES_55204", },
                 },
-            RegionID_PSP = new RegionCode[] {
+                [ConsoleMode.PSP] = new RegionCode[]
+                {
                     new RegionCode() {
                     Name = "ULUS-10377",
                     Region = RegionType.NTSC_U },
@@ -48,7 +51,8 @@ namespace CrateModLoader.GameSpecific.CrashMoM
                     Name = "ULES-01171",
                     Region = RegionType.PAL },
                 },
-            RegionID_WII = new RegionCode[] {
+                [ConsoleMode.WII] = new RegionCode[]
+                {
                     new RegionCode() {
                     Name = "RC8E7D",
                     Region = RegionType.NTSC_U },
@@ -59,12 +63,13 @@ namespace CrateModLoader.GameSpecific.CrashMoM
                     Name = "RC8X7D",
                     Region = RegionType.PAL },
                 },
-            RegionID_XBOX360 = new RegionCode[]
+                [ConsoleMode.XBOX360] = new RegionCode[]
                 {
                     new RegionCode() {
                         Name = "Crash Mind Over Mutant",
                         Region = RegionType.Global, }
                 },
+            },
             PropertyCategories = new Dictionary<int, string>()
             {
                 [0] = "Options",

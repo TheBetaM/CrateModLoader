@@ -21,8 +21,10 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
             API_Credit = string.Empty,
             API_Link = string.Empty,
             Icon = Properties.Resources.icon_crashtwoc,
-            ModCratesSupported = true,
-            RegionID_PS2 = new RegionCode[] {
+            RegionID = new Dictionary<ConsoleMode, RegionCode[]>()
+            {
+                [ConsoleMode.PS2] = new RegionCode[]
+                {
                     new RegionCode() {
                     Name = @"SLUS_202.38",
                     Region = RegionType.NTSC_U,
@@ -39,7 +41,8 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
                     ExecName = "SLPM_740.03",
                     CodeName = "SLPM_74003", },
                 },
-            RegionID_GCN = new RegionCode[] {
+                [ConsoleMode.GCN] = new RegionCode[]
+                {
                     new RegionCode() {
                     Name = "GCBE7D",
                     Region = RegionType.NTSC_U },
@@ -50,7 +53,7 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
                     Name = "GCBJA4",
                     Region = RegionType.NTSC_J },
                 },
-            RegionID_XBOX = new RegionCode[]
+                [ConsoleMode.XBOX] = new RegionCode[]
                 {
                     new RegionCode() {
                         Name = "Crash Bandicoot: tWoC",
@@ -65,6 +68,7 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
                         Region = RegionType.PAL,
                         RegionNumber = 4, },
                 },
+            },
             PropertyCategories = new Dictionary<int, string>()
             {
                 [0] = "Options",

@@ -755,7 +755,7 @@ namespace CrateModLoader
                                 SetGameType(titleID, ConsoleMode.PS2);
                                 if (Modder != null)
                                 {
-                                    foreach (var rc in Game.RegionID_PS2)
+                                    foreach (var rc in Game.RegionID[ConsoleMode.PS2])
                                         if (rc.Region == ModLoaderGlobals.Region)
                                             ModLoaderGlobals.ProductCode = rc.CodeName;
                                 }
@@ -765,7 +765,7 @@ namespace CrateModLoader
                                 SetGameType(titleID, ConsoleMode.PS1);
                                 if (Modder != null)
                                 {
-                                    foreach (var rc in Game.RegionID_PS1)
+                                    foreach (var rc in Game.RegionID[ConsoleMode.PS1])
                                         if (rc.Region == ModLoaderGlobals.Region)
                                             ModLoaderGlobals.ProductCode = rc.CodeName;
                                 }
@@ -1162,7 +1162,7 @@ namespace CrateModLoader
                                         SetGameType(titleID, ConsoleMode.PS2);
                                         if (Modder != null)
                                         {
-                                            foreach (var rc in Game.RegionID_PS2)
+                                            foreach (var rc in Game.RegionID[ConsoleMode.PS2])
                                                 if (rc.Region == ModLoaderGlobals.Region)
                                                     ModLoaderGlobals.ProductCode = rc.CodeName;
                                         }
@@ -1172,7 +1172,7 @@ namespace CrateModLoader
                                         SetGameType(titleID, ConsoleMode.PS1);
                                         if (Modder != null)
                                         {
-                                            foreach (var rc in Game.RegionID_PS1)
+                                            foreach (var rc in Game.RegionID[ConsoleMode.PS1])
                                                 if (rc.Region == ModLoaderGlobals.Region)
                                                     ModLoaderGlobals.ProductCode = rc.CodeName;
                                         }
@@ -1347,16 +1347,17 @@ namespace CrateModLoader
                 if (!game.Consoles.Contains(console))
                     continue;
 
-                RegionCode[] codelist =
-                      console == ConsoleMode.PS2 ? game.RegionID_PS2
-                    : console == ConsoleMode.PS1 ? game.RegionID_PS1
-                    : console == ConsoleMode.PSP ? game.RegionID_PSP
-                    : console == ConsoleMode.GCN ? game.RegionID_GCN
-                    : console == ConsoleMode.WII ? game.RegionID_WII
-                    : console == ConsoleMode.XBOX ? game.RegionID_XBOX
-                    : console == ConsoleMode.XBOX360 ? game.RegionID_XBOX360
-                    : console == ConsoleMode.PC ? game.RegionID_PC
-                    : null;
+                RegionCode[] codelist;
+
+                if (game.RegionID.ContainsKey(console))
+                {
+                    codelist = game.RegionID[console];
+                }
+                else
+                {
+                    codelist = null;
+                    Console.WriteLine("ERROR: Missing RegionID for game " + game.Name);
+                }
 
                 foreach (var r in codelist)
                 {
@@ -1406,21 +1407,8 @@ namespace CrateModLoader
             string cons_mod = "";
             switch (console)
             {
-                default:
+                default: cons_mod = console.ToString(); break;
                 case ConsoleMode.Undefined: cons_mod = "(" + ModLoaderText.UnknownConsole + ")"; break;
-                case ConsoleMode.PSP: cons_mod = "PSP"; break;
-                case ConsoleMode.PS2: cons_mod = "PS2"; break;
-                case ConsoleMode.GCN: cons_mod = "GC"; break;
-                case ConsoleMode.XBOX: cons_mod = "XBOX"; break;
-                case ConsoleMode.PS1: cons_mod = "PS1"; break;
-                case ConsoleMode.WII: cons_mod = "Wii"; break;
-                case ConsoleMode.XBOX360: cons_mod = "360"; break;
-                case ConsoleMode.DC: cons_mod = "DC"; break;
-                case ConsoleMode.PC: cons_mod = "PC"; break;
-                case ConsoleMode.Android: cons_mod = "Android"; break;
-                case ConsoleMode.N3DS: cons_mod = "3DS"; break;
-                case ConsoleMode.N64: cons_mod = "N64"; break;
-                case ConsoleMode.NDS: cons_mod = "DS"; break;
             }
 
             string region_mod = "";
@@ -1461,7 +1449,7 @@ namespace CrateModLoader
                 button_modMenu.Visible = true;
                 button_modMenu.Enabled = Modder.ModMenuEnabled;
                 button_modCrateMenu.Visible = true;
-                button_modCrateMenu.Enabled = Game.ModCratesSupported;
+                button_modCrateMenu.Enabled = !Game.ModCratesDisabled;
                 button_randomize.Enabled = button_randomize.Visible = button_modTools.Visible = button_downloadMods.Visible = true;
                 textbox_rando_seed.Enabled = textbox_rando_seed.Visible = true;
                 text_optionDescLabel.Text = string.Empty;

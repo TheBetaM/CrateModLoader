@@ -38,8 +38,10 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
             API_Link = string.Empty,
             Icon = Properties.Resources.icon_crashnk,
             TextClass = typeof(CNK_Text),
-            ModCratesSupported = true,
-            RegionID_PS2 = new RegionCode[] {
+            RegionID = new Dictionary<ConsoleMode, RegionCode[]>()
+            {
+                [ConsoleMode.PS2] = new RegionCode[]
+                {
                     new RegionCode() {
                     Name = @"SLUS_206.49",
                     Region = RegionType.NTSC_U,
@@ -56,7 +58,8 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
                     ExecName = "SLPM_660.67",
                     CodeName = "SLPM_66067", },
                 },
-            RegionID_GCN = new RegionCode[] {
+                [ConsoleMode.GCN] = new RegionCode[]
+                {
                     new RegionCode() {
                     Name = "GCNE7D",
                     Region = RegionType.NTSC_U },
@@ -67,7 +70,8 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
                     Name = "GC8JA4",
                     Region = RegionType.NTSC_J },
                 },
-            RegionID_XBOX = new RegionCode[] {
+                [ConsoleMode.XBOX] = new RegionCode[]
+                {
                     new RegionCode() {
                     Name = "Crash Nitro Kart",
                     Region = RegionType.NTSC_U,
@@ -77,6 +81,7 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
                     Region = RegionType.PAL,
                     RegionNumber = 4, },
                 },
+            },
             PropertyCategories = new Dictionary<int, string>()
             {
                 [0] = "Options",

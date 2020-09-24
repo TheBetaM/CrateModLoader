@@ -94,8 +94,10 @@ namespace CrateModLoader.GameSpecific.CrashTS
             API_Link = "https://github.com/Smartkin/twinsanity-editor",
             Icon = Properties.Resources.icon_crashts,
             TextClass = typeof(Twins_Text),
-            ModCratesSupported = true,
-            RegionID_PS2 = new RegionCode[] {
+            RegionID = new Dictionary<ConsoleMode, RegionCode[]>()
+            {
+                [ConsoleMode.PS2] = new RegionCode[]
+                {
                     new RegionCode() {
                     Name = @"SLUS_209.09",
                     Region = RegionType.NTSC_U,
@@ -112,7 +114,8 @@ namespace CrateModLoader.GameSpecific.CrashTS
                     ExecName = "SLPM_658.01",
                     CodeName = "SLPM_65801", },
                 },
-            RegionID_XBOX = new RegionCode[] {
+                [ConsoleMode.XBOX] = new RegionCode[]
+                {
                     new RegionCode() {
                     Name = "Crash Twinsanity",
                     Region = RegionType.NTSC_U,
@@ -124,6 +127,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
                     RegionNumber = 4,
                     ExecName = "default.xbe" },
                 },
+            },
             PropertyCategories = new Dictionary<int, string>()
             {
                 [(int)ModProps.Options] = "Options",

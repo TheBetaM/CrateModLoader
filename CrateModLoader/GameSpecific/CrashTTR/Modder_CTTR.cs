@@ -75,8 +75,10 @@ namespace CrateModLoader.GameSpecific.CrashTTR
             API_Link = string.Empty,
             Icon = Properties.Resources.icon_crashttr,
             TextClass = typeof(CTTR_Text),
-            ModCratesSupported = true,
-            RegionID_PS2 = new RegionCode[] {
+            RegionID = new Dictionary<ConsoleMode, RegionCode[]>()
+            {
+                [ConsoleMode.PS2] = new RegionCode[]
+                {
                     new RegionCode() {
                     Name = @"SLUS_211.91",
                     Region = RegionType.NTSC_U,
@@ -93,7 +95,8 @@ namespace CrateModLoader.GameSpecific.CrashTTR
                     ExecName = "SLPM_660.90",
                     CodeName = "SLPM_66090", },
                 },
-            RegionID_GCN = new RegionCode[] {
+                [ConsoleMode.GCN] = new RegionCode[]
+                {
                     new RegionCode() {
                     Name = "G9RE",
                     Region = RegionType.NTSC_U },
@@ -113,7 +116,8 @@ namespace CrateModLoader.GameSpecific.CrashTTR
                     Name = "G9RP",
                     Region = RegionType.PAL },
                 },
-            RegionID_PSP = new RegionCode[] {
+                [ConsoleMode.PSP] = new RegionCode[]
+                {
                     new RegionCode() {
                     Name = "ULUS-10044",
                     Region = RegionType.NTSC_U },
@@ -124,7 +128,8 @@ namespace CrateModLoader.GameSpecific.CrashTTR
                     Name = "ULJM-05036",
                     Region = RegionType.NTSC_J },
                 },
-            RegionID_XBOX = new RegionCode[] {
+                [ConsoleMode.XBOX] = new RegionCode[]
+                {
                     new RegionCode() {
                     Name = "Crash Tag Team Racing",
                     Region = RegionType.NTSC_U,
@@ -134,6 +139,7 @@ namespace CrateModLoader.GameSpecific.CrashTTR
                     Region = RegionType.PAL,
                     RegionNumber = 4, },
                 },
+            },
             PropertyCategories = new Dictionary<int, string>()
             {
                 [0] = "Options",

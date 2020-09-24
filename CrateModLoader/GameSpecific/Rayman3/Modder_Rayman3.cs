@@ -23,8 +23,10 @@ namespace CrateModLoader.GameSpecific.Rayman3
             API_Credit = string.Empty,
             API_Link = string.Empty,
             Icon = Properties.Resources.icon_ray3,
-            ModCratesSupported = true,
-            RegionID_PS2 = new RegionCode[] {
+            RegionID = new Dictionary<ConsoleMode, RegionCode[]>()
+            {
+                [ConsoleMode.PS2] = new RegionCode[]
+                {
                     new RegionCode() {
                     Name = "SLUS_206.01",
                     Region = RegionType.NTSC_U,
@@ -36,7 +38,8 @@ namespace CrateModLoader.GameSpecific.Rayman3
                     ExecName = "SLES_512.22",
                     CodeName = "SLES_51222", },
                 },
-            RegionID_GCN = new RegionCode[] {
+                [ConsoleMode.GCN] = new RegionCode[]
+                {
                     new RegionCode() {
                     Name = "GRHE",
                     Region = RegionType.NTSC_U },
@@ -44,7 +47,8 @@ namespace CrateModLoader.GameSpecific.Rayman3
                     Name = "GRHP",
                     Region = RegionType.PAL },
                 },
-            RegionID_XBOX = new RegionCode[] {
+                [ConsoleMode.XBOX] = new RegionCode[]
+                {
                     new RegionCode() {
                     Name = "Rayman 3",
                     Region = RegionType.NTSC_U,
@@ -54,26 +58,26 @@ namespace CrateModLoader.GameSpecific.Rayman3
                     Region = RegionType.PAL,
                     RegionNumber = 4, },
                 },
+                [ConsoleMode.PC] = new RegionCode[]
+                {
+                    new RegionCode() {
+                    Name = "Rayman3.exe",
+                    Region = RegionType.Global },
+                    new RegionCode() {
+                    Name = "rayman3.exe",
+                    Region = RegionType.Global },
+                    new RegionCode() {
+                    Name = "RAYMAN3.EXE",
+                    Region = RegionType.Global },
+                    new RegionCode() {
+                    Name = "Rayman3.EXE",
+                    Region = RegionType.Global },
+                },
+            },
             PropertyCategories = new Dictionary<int, string>()
             {
                 [0] = "Options",
             },
-            /*
-            RegionID_PC = new RegionCode[] {
-                new RegionCode() {
-                Name = "Rayman3.exe",
-                Region = RegionType.Global },
-                new RegionCode() {
-                Name = "rayman3.exe",
-                Region = RegionType.Global },
-                 new RegionCode() {
-                Name = "RAYMAN3.EXE",
-                Region = RegionType.Global },
-                new RegionCode() {
-                Name = "Rayman3.EXE",
-                Region = RegionType.Global },
-            },
-            */
         };
 
         public static ModPropOption Option_RandLevelOrderAll = new ModPropOption(Rayman3_Text.Rand_LevelOrder2, Rayman3_Text.Rand_LevelOrder2Desc)

@@ -8,30 +8,30 @@ namespace CrateModLoader
     public enum ConsoleMode
     {
         Undefined = -1,
-        PSP = 0, // PlayStation Portable
-        PS2 = 1, // PlayStation 2
-        XBOX = 2, // Xbox
-        GCN = 3, // Gamecube
-        PS1 = 4, // PlayStation
-        WII = 5, // Wii
-        XBOX360 = 6,  // Xbox 360
-        PC = 7, // PC CDROM/DVDROM, being considered
-        DC = 8, // Dreamcast, not supported yet
-        PS3 = 9, // PlayStation 3, just for reference
-        Android = 10, // Android, being considered
-        NDS = 11, // DS, not supported yet
-        N3DS = 12, // 3DS, not supported yet
-        N64 = 13, // N64, being considered
+        PSP, // PlayStation Portable
+        PS2, // PlayStation 2
+        XBOX, // Xbox
+        GCN, // Gamecube
+        PS1, // PlayStation
+        WII, // Wii
+        XBOX360,  // Xbox 360
+        PC, // PC CDROM/DVDROM, being considered
+        DC, // Dreamcast, not supported yet
+        PS3, // PlayStation 3, just for reference
+        Android, // Android, being considered
+        NDS, // DS, not supported yet
+        N3DS, // 3DS, not supported yet
+        N64, // N64, being considered
     }
 
     // Region types
     public enum RegionType
     {
         Undefined = -1,
-        NTSC_U = 0, // ex. North America
-        PAL = 1, // ex. Europe
-        NTSC_J = 2, // ex. Japan
-        Global = 3, // Region-free or region-less
+        NTSC_U, // ex. North America
+        PAL, // ex. Europe
+        NTSC_J, // ex. Japan
+        Global, // Region-free or region-less
     }
 
     public static class ModLoaderGlobals

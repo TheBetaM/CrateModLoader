@@ -15,8 +15,10 @@ namespace CrateModLoader.GameSpecific.CrashBash
             API_Credit = string.Empty,
             API_Link = string.Empty,
             Icon = Properties.Resources.icon_crashbash,
-            ModCratesSupported = true,
-            RegionID_PS1 = new RegionCode[] {
+            RegionID = new Dictionary<ConsoleMode, RegionCode[]>()
+            {
+                [ConsoleMode.PS1] = new RegionCode[]
+                {
                     new RegionCode() {
                     Name = @"SCUS_945.70",
                     Region = RegionType.NTSC_U,
@@ -33,6 +35,7 @@ namespace CrateModLoader.GameSpecific.CrashBash
                     ExecName = "SCPS_101.40",
                     CodeName = "SCPS_10140", },
                 },
+            },
         };
 
         public Modder_Bash()

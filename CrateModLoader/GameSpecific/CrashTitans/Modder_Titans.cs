@@ -28,8 +28,10 @@ namespace CrateModLoader.GameSpecific.CrashTitans
             API_Credit = "API by NeoKesha and BetaM",
             API_Link = string.Empty,
             Icon = Properties.Resources.icon_crashtitans,
-            ModCratesSupported = true,
-            RegionID_PS2 = new RegionCode[] {
+            RegionID = new Dictionary<ConsoleMode, RegionCode[]>()
+            {
+                [ConsoleMode.PS2] = new RegionCode[]
+                {
                     new RegionCode() {
                     Name = @"SLUS_215.83",
                     Region = RegionType.NTSC_U,
@@ -41,7 +43,8 @@ namespace CrateModLoader.GameSpecific.CrashTitans
                     ExecName = "SLES_548.41",
                     CodeName = "SLES_54841", },
                 },
-            RegionID_PSP = new RegionCode[] {
+                [ConsoleMode.PSP] = new RegionCode[]
+                {
                     new RegionCode() {
                     Name = "ULUS-10304",
                     Region = RegionType.NTSC_U },
@@ -49,7 +52,8 @@ namespace CrateModLoader.GameSpecific.CrashTitans
                     Name = "ULES-00917",
                     Region = RegionType.PAL },
                 },
-            RegionID_WII = new RegionCode[] {
+                [ConsoleMode.WII] = new RegionCode[]
+                {
                     new RegionCode() {
                     Name = "RQJE7D",
                     Region = RegionType.NTSC_U },
@@ -60,12 +64,13 @@ namespace CrateModLoader.GameSpecific.CrashTitans
                     Name = "RQJX7D",
                     Region = RegionType.PAL },
                 },
-            RegionID_XBOX360 = new RegionCode[]
+                [ConsoleMode.XBOX360] = new RegionCode[]
                 {
                     new RegionCode() {
                         Name = "Crash Of The Titans",
                         Region = RegionType.Global, }
                 },
+            },
             PropertyCategories = new Dictionary<int, string>()
             {
                 [0] = "Options",

@@ -16,8 +16,10 @@ namespace CrateModLoader.GameSpecific.MarioSunshine
             API_Credit = string.Empty,
             API_Link = string.Empty,
             Icon = null,
-            ModCratesSupported = true,
-            RegionID_GCN = new RegionCode[] {
+            RegionID = new Dictionary<ConsoleMode, RegionCode[]>()
+            {
+                [ConsoleMode.GCN] = new RegionCode[]
+                {
                     new RegionCode() {
                     Name = "GMSE",
                     Region = RegionType.NTSC_U },
@@ -28,6 +30,7 @@ namespace CrateModLoader.GameSpecific.MarioSunshine
                     Name = "GMSJ",
                     Region = RegionType.NTSC_J },
                 },
+            },
         };
 
         public Modder_MarioSunshine()

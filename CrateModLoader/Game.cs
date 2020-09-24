@@ -18,44 +18,22 @@ namespace CrateModLoader
         public string API_Link;
         /// <summary> Display an icon or set to null to not display one. </summary>
         public Image Icon;
-        /// <summary> Set to true to enable mod crates. </summary>
-        public bool ModCratesSupported;
+        /// <summary> Set to true to disable mod crates. </summary>
+        public bool ModCratesDisabled;
         /// <summary> Text resource class used for mod menu property localization. </summary>
         public Type TextClass;
         /// <summary> Modder class (automatically set at runtime) </summary>
         public Type ModderClass;
         /// <summary> Dictionary of mod menu property categories. </summary>
         public Dictionary<int, string> PropertyCategories;
-        /// <summary> Dictionary of mod layers. </summary>
-        public Dictionary<int, string> ModLayers;
-        /// <summary> List of region identifiers for PS1 games. </summary>
-        public RegionCode[] RegionID_PS1;
-        /// <summary> List of region identifiers for PS2 games. </summary>
-        public RegionCode[] RegionID_PS2;
-        /// <summary> List of region identifiers for PSP games. </summary>
-        public RegionCode[] RegionID_PSP;
-        /// <summary> List of region identifiers for GCN games. </summary>
-        public RegionCode[] RegionID_GCN;
-        /// <summary> List of region identifiers for WII games. </summary>
-        public RegionCode[] RegionID_WII;
-        /// <summary> List of region identifiers for XBOX games. </summary>
-        public RegionCode[] RegionID_XBOX;
-        /// <summary> List of region identifiers for XBOX 360 games. </summary>
-        public RegionCode[] RegionID_XBOX360;
-        /// <summary> List of region identifiers for PC games. </summary>
-        public RegionCode[] RegionID_PC;
-        /// <summary> List of region identifiers for DC games. </summary>
-        public RegionCode[] RegionID_DC;
-        /// <summary> List of region identifiers for NDS games. </summary>
-        public RegionCode[] RegionID_NDS;
-        /// <summary> List of region identifiers for 3DS games. </summary>
-        public RegionCode[] RegionID_N3DS;
+        /// <summary> Dictionary of region identifiers. </summary>
+        public Dictionary<ConsoleMode, RegionCode[]> RegionID;
     }
 
     public struct RegionCode
     {
-        public string Name;
         public RegionType Region;
+        public string Name;
         public string ExecName;
         public string CodeName;
         public int RegionNumber;
