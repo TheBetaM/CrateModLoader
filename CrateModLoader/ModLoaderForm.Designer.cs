@@ -34,18 +34,16 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.button_browseInput = new System.Windows.Forms.Button();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.textBox2 = new System.Windows.Forms.TextBox();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.button_browseOutput = new System.Windows.Forms.Button();
+            this.button_startProcess = new System.Windows.Forms.Button();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.button4 = new System.Windows.Forms.Button();
+            this.button_randomizeSeed = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.button_openModMenu = new System.Windows.Forms.Button();
             this.button_modCrateMenu = new System.Windows.Forms.Button();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.label7 = new System.Windows.Forms.Label();
             this.folderBrowserDialog2 = new System.Windows.Forms.FolderBrowserDialog();
@@ -76,7 +74,6 @@
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel_desc.SuspendLayout();
             this.panel2.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -124,18 +121,18 @@
             this.textBox1.TabIndex = 1;
             this.textBox1.Text = "1. Click \"Browse\" to select the game.";
             // 
-            // button1
+            // button_browseInput
             // 
-            this.button1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button1.Location = new System.Drawing.Point(348, 0);
-            this.button1.Margin = new System.Windows.Forms.Padding(0);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(116, 23);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "(1) Browse...";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button_browseInput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button_browseInput.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button_browseInput.Location = new System.Drawing.Point(348, 0);
+            this.button_browseInput.Margin = new System.Windows.Forms.Padding(0);
+            this.button_browseInput.Name = "button_browseInput";
+            this.button_browseInput.Size = new System.Drawing.Size(116, 23);
+            this.button_browseInput.TabIndex = 2;
+            this.button_browseInput.Text = "(1) Browse...";
+            this.button_browseInput.UseVisualStyleBackColor = true;
+            this.button_browseInput.Click += new System.EventHandler(this.button1_Click);
             // 
             // progressBar1
             // 
@@ -160,33 +157,33 @@
             this.textBox2.Text = "2. Click \"Browse\" to set the output path.";
             this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
-            // button2
+            // button_browseOutput
             // 
-            this.button2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button2.Location = new System.Drawing.Point(348, 23);
-            this.button2.Margin = new System.Windows.Forms.Padding(0);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(116, 23);
-            this.button2.TabIndex = 7;
-            this.button2.Text = "(2) Browse...";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.button_browseOutput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button_browseOutput.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button_browseOutput.Location = new System.Drawing.Point(348, 23);
+            this.button_browseOutput.Margin = new System.Windows.Forms.Padding(0);
+            this.button_browseOutput.Name = "button_browseOutput";
+            this.button_browseOutput.Size = new System.Drawing.Size(116, 23);
+            this.button_browseOutput.TabIndex = 7;
+            this.button_browseOutput.Text = "(2) Browse...";
+            this.button_browseOutput.UseVisualStyleBackColor = true;
+            this.button_browseOutput.Click += new System.EventHandler(this.button2_Click);
             // 
-            // button3
+            // button_startProcess
             // 
-            this.tableLayoutPanel4.SetColumnSpan(this.button3, 2);
-            this.button3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button3.Enabled = false;
-            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button3.Location = new System.Drawing.Point(0, 69);
-            this.button3.Margin = new System.Windows.Forms.Padding(0);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(464, 23);
-            this.button3.TabIndex = 11;
-            this.button3.Text = "Start!";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.tableLayoutPanel4.SetColumnSpan(this.button_startProcess, 2);
+            this.button_startProcess.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button_startProcess.Enabled = false;
+            this.button_startProcess.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button_startProcess.Location = new System.Drawing.Point(0, 69);
+            this.button_startProcess.Margin = new System.Windows.Forms.Padding(0);
+            this.button_startProcess.Name = "button_startProcess";
+            this.button_startProcess.Size = new System.Drawing.Size(464, 23);
+            this.button_startProcess.TabIndex = 11;
+            this.button_startProcess.Text = "Start!";
+            this.button_startProcess.UseVisualStyleBackColor = true;
+            this.button_startProcess.Click += new System.EventHandler(this.button3_Click);
             // 
             // numericUpDown1
             // 
@@ -214,49 +211,37 @@
             this.numericUpDown1.Visible = false;
             this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
             // 
-            // button4
+            // button_randomizeSeed
             // 
-            this.button4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button4.Enabled = false;
-            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button4.Location = new System.Drawing.Point(154, 26);
-            this.button4.Margin = new System.Windows.Forms.Padding(0);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(154, 26);
-            this.button4.TabIndex = 13;
-            this.button4.Text = "Randomize Seed";
-            this.toolTip1.SetToolTip(this.button4, "Randomize the seed to the right of this button.");
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Visible = false;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.button_randomizeSeed.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button_randomizeSeed.Enabled = false;
+            this.button_randomizeSeed.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button_randomizeSeed.Location = new System.Drawing.Point(154, 26);
+            this.button_randomizeSeed.Margin = new System.Windows.Forms.Padding(0);
+            this.button_randomizeSeed.Name = "button_randomizeSeed";
+            this.button_randomizeSeed.Size = new System.Drawing.Size(154, 26);
+            this.button_randomizeSeed.TabIndex = 13;
+            this.button_randomizeSeed.Text = "Randomize Seed";
+            this.toolTip1.SetToolTip(this.button_randomizeSeed, "Randomize the seed to the right of this button.");
+            this.button_randomizeSeed.UseVisualStyleBackColor = true;
+            this.button_randomizeSeed.Visible = false;
+            this.button_randomizeSeed.Click += new System.EventHandler(this.button4_Click);
             // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.BackColor = System.Drawing.Color.Transparent;
+            this.tableLayoutPanel3.SetColumnSpan(this.label6, 2);
             this.label6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label6.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.label6.Location = new System.Drawing.Point(3, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(382, 22);
+            this.label6.Size = new System.Drawing.Size(458, 22);
             this.label6.TabIndex = 15;
             this.label6.Text = "ProgressInfo The process info may be very long, but only if there\'s an error. Tex" +
     "t overflow is rare.";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox1.Location = new System.Drawing.Point(391, 3);
-            this.pictureBox1.Name = "pictureBox1";
-            this.tableLayoutPanel3.SetRowSpan(this.pictureBox1, 3);
-            this.pictureBox1.Size = new System.Drawing.Size(70, 70);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 16;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Visible = false;
             // 
             // button_openModMenu
             // 
@@ -291,20 +276,17 @@
             this.button_modCrateMenu.Visible = false;
             this.button_modCrateMenu.Click += new System.EventHandler(this.button_modCrateMenu_Click);
             // 
-            // backgroundWorker1
-            // 
-            this.backgroundWorker1.WorkerReportsProgress = true;
-            // 
             // label7
             // 
             this.label7.BackColor = System.Drawing.Color.Transparent;
+            this.tableLayoutPanel3.SetColumnSpan(this.label7, 2);
             this.label7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label7.ForeColor = System.Drawing.SystemColors.ControlText;
             this.label7.Location = new System.Drawing.Point(3, 22);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(382, 33);
+            this.label7.Size = new System.Drawing.Size(458, 33);
             this.label7.TabIndex = 28;
             this.label7.Text = "Game Name\r\n(Region Console)";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -312,11 +294,12 @@
             // linkLabel1
             // 
             this.linkLabel1.BackColor = System.Drawing.Color.Transparent;
+            this.tableLayoutPanel3.SetColumnSpan(this.linkLabel1, 2);
             this.linkLabel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.linkLabel1.Enabled = false;
             this.linkLabel1.Location = new System.Drawing.Point(3, 55);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(382, 21);
+            this.linkLabel1.Size = new System.Drawing.Size(458, 21);
             this.linkLabel1.TabIndex = 29;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "API Credit Text which is very long probably";
@@ -389,7 +372,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel1.Controls.Add(this.numericUpDown1, 2, 1);
-            this.tableLayoutPanel1.Controls.Add(this.button4, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.button_randomizeSeed, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.button_modTools, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.button_downloadMods, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.button_modCrateMenu, 0, 0);
@@ -582,7 +565,6 @@
             this.tableLayoutPanel3.ColumnCount = 2;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 76F));
-            this.tableLayoutPanel3.Controls.Add(this.pictureBox1, 1, 0);
             this.tableLayoutPanel3.Controls.Add(this.linkLabel1, 0, 2);
             this.tableLayoutPanel3.Controls.Add(this.label7, 0, 1);
             this.tableLayoutPanel3.Controls.Add(this.label6, 0, 0);
@@ -604,12 +586,12 @@
             this.tableLayoutPanel4.ColumnCount = 2;
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 75F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel4.Controls.Add(this.button3, 0, 3);
+            this.tableLayoutPanel4.Controls.Add(this.button_startProcess, 0, 3);
             this.tableLayoutPanel4.Controls.Add(this.progressBar1, 0, 2);
             this.tableLayoutPanel4.Controls.Add(this.textBox1, 0, 0);
             this.tableLayoutPanel4.Controls.Add(this.textBox2, 0, 1);
-            this.tableLayoutPanel4.Controls.Add(this.button1, 1, 0);
-            this.tableLayoutPanel4.Controls.Add(this.button2, 1, 1);
+            this.tableLayoutPanel4.Controls.Add(this.button_browseInput, 1, 0);
+            this.tableLayoutPanel4.Controls.Add(this.button_browseOutput, 1, 1);
             this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 24);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 4;
@@ -641,7 +623,6 @@
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.ModLoaderForm_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.ModLoaderForm_DragEnter);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel_desc.ResumeLayout(false);
             this.panel_desc.PerformLayout();
             this.panel2.ResumeLayout(false);
@@ -664,18 +645,16 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button_browseInput;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button_browseOutput;
+        private System.Windows.Forms.Button button_startProcess;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button_randomizeSeed;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button button_openModMenu;
         private System.Windows.Forms.Button button_modCrateMenu;
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog2;

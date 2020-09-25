@@ -64,21 +64,18 @@ namespace CrateModLoader.Properties {
         ///   Looks up a localized string similar to 1.3.0
         ///
         ///General:
-        ///- PS2 building is now internally supported (Thanks to Smartkin). Folder mode is now supported.  
+        ///- PS2 ROM building is now supported internally (Thanks to Smartkin). Folder mode is now supported.  
+        ///- Options are now handled the same as Mod Menu properties allowing them to be set by Mod Crates and enabling variations and choices like difficulty settings in Mod Menus.  
+        ///
+        ///Crash Twinsanity:
+        ///- New feature: Classic Health
+        ///- New feature: Classic Explosion Damage
+        ///- Fixed default values for character health
         ///
         ///1.2.1
         ///
         ///Crash Twinsanity:
-        ///- Fixed processing errors in some versions of the game
-        ///
-        ///1.2.0
-        ///
-        ///General:  
-        ///- Added support for Xbox 360 ROMs and directories (can only output to folder).  
-        ///- Improved Xbox ROM detection speed.  
-        ///- Added a warning if the program fails to verify a Mod Crate.  
-        ///- Console/Region specific options will not appear on unsupported versions anymore.  
-        ///- The window  [rest of string was truncated]&quot;;.
+        ///- Fixed processing errors in some versions of the [rest of string was truncated]&quot;;.
         /// </summary>
         public static string Changelog {
             get {
@@ -122,126 +119,6 @@ namespace CrateModLoader.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap icon_crash1 {
-            get {
-                object obj = ResourceManager.GetObject("icon_crash1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap icon_crash2 {
-            get {
-                object obj = ResourceManager.GetObject("icon_crash2", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap icon_crash3 {
-            get {
-                object obj = ResourceManager.GetObject("icon_crash3", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap icon_crashbash {
-            get {
-                object obj = ResourceManager.GetObject("icon_crashbash", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap icon_crashmom {
-            get {
-                object obj = ResourceManager.GetObject("icon_crashmom", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap icon_crashnk {
-            get {
-                object obj = ResourceManager.GetObject("icon_crashnk", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap icon_crashtitans {
-            get {
-                object obj = ResourceManager.GetObject("icon_crashtitans", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap icon_crashtr {
-            get {
-                object obj = ResourceManager.GetObject("icon_crashtr", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap icon_crashts {
-            get {
-                object obj = ResourceManager.GetObject("icon_crashts", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap icon_crashttr {
-            get {
-                object obj = ResourceManager.GetObject("icon_crashttr", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap icon_crashtwoc {
-            get {
-                object obj = ResourceManager.GetObject("icon_crashtwoc", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap icon_ray3 {
-            get {
-                object obj = ResourceManager.GetObject("icon_ray3", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Crate Mod Loader v1.3.0
         ///The all-in-one Randomizer and Mod Loader for console games.  
         ///It detects, extracts, modifies and rebuilds disc image files and directories in an easy to setup way.  
@@ -249,12 +126,12 @@ namespace CrateModLoader.Properties {
         ///
         ///Website: https://github.com/TheBetaM/CrateModLoader/
         ///
-        ///Check the included Games.txt for a list of supported games and features.  
+        ///Contributors:
         ///
-        ///Mod Crates
+        ///-BetaM (https://www.youtube.com/BetaM) (Creator) (Support development: https://ko-fi.com/thebetam)
+        ///-ManDude (https://github.com/ManDude) 
         ///
-        ///Place Mod Crates in the &quot;Mods&quot; folder for them to appear in the list.
-        ///An exam [rest of string was truncated]&quot;;.
+        ///Mod Crates        /// [rest of string was truncated]&quot;;.
         /// </summary>
         public static string Readme {
             get {

@@ -21,6 +21,7 @@ namespace CrateModLoader
                 Application.SetCompatibleTextRenderingDefault(false);
                 using (ModLoaderForm ModProgramForm = new ModLoaderForm())
                 {
+                    ModLoaderGlobals.ModProgram.main_form = ModProgramForm;
                     Application.Run(ModProgramForm);
                 }
             }

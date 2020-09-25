@@ -23,7 +23,6 @@ namespace CrateModLoader.GameSpecific.Crash2
                 },
             API_Credit = Crash2_Text.API_Credit,
             API_Link = "https://github.com/cbhacks/CrashEdit",
-            Icon = Properties.Resources.icon_crash2,
             RegionID = new Dictionary<ConsoleMode, RegionCode[]>()
             {
                 [ConsoleMode.PS1] = new RegionCode[]

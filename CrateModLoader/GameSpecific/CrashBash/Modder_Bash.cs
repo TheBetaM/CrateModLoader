@@ -14,7 +14,6 @@ namespace CrateModLoader.GameSpecific.CrashBash
                 },
             API_Credit = string.Empty,
             API_Link = string.Empty,
-            Icon = Properties.Resources.icon_crashbash,
             RegionID = new Dictionary<ConsoleMode, RegionCode[]>()
             {
                 [ConsoleMode.PS1] = new RegionCode[]

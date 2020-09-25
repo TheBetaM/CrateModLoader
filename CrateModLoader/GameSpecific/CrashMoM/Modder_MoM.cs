@@ -26,7 +26,6 @@ namespace CrateModLoader.GameSpecific.CrashMoM
                 },
             API_Credit = "API by NeoKesha and BetaM",
             API_Link = string.Empty,
-            Icon = Properties.Resources.icon_crashmom,
             RegionID = new Dictionary<ConsoleMode, RegionCode[]>()
             {
                 [ConsoleMode.PS2] = new RegionCode[]

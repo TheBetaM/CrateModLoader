@@ -22,7 +22,6 @@ namespace CrateModLoader.GameSpecific.Rayman3
                 },
             API_Credit = string.Empty,
             API_Link = string.Empty,
-            Icon = Properties.Resources.icon_ray3,
             RegionID = new Dictionary<ConsoleMode, RegionCode[]>()
             {
                 [ConsoleMode.PS2] = new RegionCode[]

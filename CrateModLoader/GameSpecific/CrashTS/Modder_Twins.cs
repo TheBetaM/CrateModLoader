@@ -92,7 +92,6 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 },
             API_Credit = Twins_Text.API_Credit,
             API_Link = "https://github.com/Smartkin/twinsanity-editor",
-            Icon = Properties.Resources.icon_crashts,
             TextClass = typeof(Twins_Text),
             RegionID = new Dictionary<ConsoleMode, RegionCode[]>()
             {

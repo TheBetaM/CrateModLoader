@@ -194,14 +194,7 @@ namespace CrateModLoader
                 }
             }
 
-            if (HasChanged)
-            {
-                ModLoaderGlobals.ModProgram.button_modMenu.Text = ModLoaderText.ModMenuButton + "*";
-            }
-            else
-            {
-                ModLoaderGlobals.ModProgram.button_modMenu.Text = ModLoaderText.ModMenuButton;
-            }
+            ModLoaderGlobals.ModProgram.UpdateModMenuChangedState(HasChanged);
         }
 
         private void ModMenuForm_Load(object sender, EventArgs e)

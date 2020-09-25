@@ -20,7 +20,6 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
                 },
             API_Credit = string.Empty,
             API_Link = string.Empty,
-            Icon = Properties.Resources.icon_crashtwoc,
             RegionID = new Dictionary<ConsoleMode, RegionCode[]>()
             {
                 [ConsoleMode.PS2] = new RegionCode[]

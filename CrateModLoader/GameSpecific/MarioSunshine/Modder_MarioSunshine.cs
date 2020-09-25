@@ -15,7 +15,6 @@ namespace CrateModLoader.GameSpecific.MarioSunshine
                 },
             API_Credit = string.Empty,
             API_Link = string.Empty,
-            Icon = null,
             RegionID = new Dictionary<ConsoleMode, RegionCode[]>()
             {
                 [ConsoleMode.GCN] = new RegionCode[]

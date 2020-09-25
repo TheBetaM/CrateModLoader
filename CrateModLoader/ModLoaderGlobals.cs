@@ -43,6 +43,9 @@ namespace CrateModLoader
         /// <summary> Global Randomizer Seed, can be modified during modding. Max length - 10 characters </summary>
         public static int RandomizerSeed = 0;
 
+        /// <summary> Do not access this, UI related. </summary>
+        public static int RandomizerSeedBase = 0;
+
         /// <summary> String used to show which version of CML the modded game was built with. Should be under 10 characters. </summary>
         public static string ProgramVersion = "v1.3.0";
         public static uint ProgramVersionSimple = 6;

@@ -3,15 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
-using System.Media;
 using System.Reflection;
-using System.Windows.Forms;
-using System.Runtime.InteropServices;
 using CrateModLoader.Resources.Text;
 using CrateModLoader.Tools;
-using CrateModLoader.ModProperties;
 
 namespace CrateModLoader
 {
@@ -20,34 +15,7 @@ namespace CrateModLoader
     {
 
         // UI elements
-        public Label processText;
-        public ProgressBar progressBar;
-        public Label text_gameType;
-        public LinkLabel text_apiLabel;
-        public LinkLabel text_optionDescLabel;
-        public PictureBox image_gameIcon;
-        public CheckedListBox list_modOptions;
-        public Form main_form;
-        public TextBox textbox_input_path;
-        public TextBox textbox_output_path;
-        public NumericUpDown textbox_rando_seed;
-        public Button button_modMenu;
-        public Button button_modCrateMenu;
-
-        public Button startButton;
-        public LinkLabel text_titleLabel;
-        public Panel panel_optionDesc;
-        public Button button_browse1;
-        public Button button_browse2;
-        public Button button_randomize;
-        public Button button_modTools;
-        public Button button_downloadMods;
-
-        public Timer asyncTimer;
-        public IntPtr formHandle;
-
-        [DllImport("user32.dll")]
-        public static extern int FlashWindow(IntPtr Hwnd, bool Revert);
+        public ModLoaderForm main_form;
 
         // Active settings
         public enum OpenROM_SelectionType
@@ -74,6 +42,9 @@ namespace CrateModLoader
         {
             CacheSupportedGames();
             CachePipelines();
+
+            asyncWorker = new BackgroundWorker();
+            asyncWorker.WorkerReportsProgress = true;
         }
 
         // Builds the ISO
@@ -140,9 +111,7 @@ namespace CrateModLoader
 
                 asyncBuild = true;
                 PS2ImageMaker.StartPacking(ModLoaderGlobals.TempPath, ModLoaderGlobals.OutputPath);
-                asyncTimer.Enabled = true;
-                asyncTimer.Start();
-
+                main_form.StartAsyncTimer();
             }
             else if (ModLoaderGlobals.Console == ConsoleMode.PSP)
             {
@@ -597,7 +566,7 @@ namespace CrateModLoader
             {
                 while (asyncBuild)
                 {
-                    Application.DoEvents();
+                    //Application.DoEvents();
                 }
             }
 
@@ -617,7 +586,7 @@ namespace CrateModLoader
         public void EditGameContent()
         {
             //To make sure the seed matches
-            ModLoaderGlobals.RandomizerSeed = int.Parse(textbox_rando_seed.Text);
+            ModLoaderGlobals.RandomizerSeed = ModLoaderGlobals.RandomizerSeedBase;
 
             if (ModCrates.ModsActiveAmount > 0 && (Modder == null || !Modder.ModCratesManualInstall))
             {
@@ -670,23 +639,21 @@ namespace CrateModLoader
 
         private void asyncWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            progressBar.Value = 100;
-            FlashWindow(formHandle, false);
+            main_form.UpdateProcessProgress(100);
+            main_form.Notify_ProcessFinished();
             if (e.Error != null)
             {
-                progressBar.Value = progressBar.Minimum;
-                SystemSounds.Beep.Play();
-                processText.Text = ModLoaderText.Process_Error + " " + e.Error.Message;
+                main_form.ResetProcessProgress();
+                main_form.UpdateProcessText(ModLoaderText.Process_Error + " " + e.Error.Message);
             }
             else if (!e.Cancelled)
             {
-                processText.Text = ModLoaderText.Process_Finished;
-                SystemSounds.Beep.Play();
+                main_form.UpdateProcessText(ModLoaderText.Process_Finished);
             }
             else
             {
-                progressBar.Value = progressBar.Minimum;
-                processText.Text = ModLoaderText.Process_Cancelled;
+                main_form.ResetProcessProgress();
+                main_form.UpdateProcessText(ModLoaderText.Process_Cancelled);
             }
             EnableInteraction();
             asyncWorker.DoWork -= asyncWorker_DoWork;
@@ -696,40 +663,40 @@ namespace CrateModLoader
 
         private void asyncWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            progressBar.Value = e.ProgressPercentage;
+            main_form.UpdateProcessProgress(e.ProgressPercentage);
             if (e.ProgressPercentage == 0)
             {
-                processText.Text = ModLoaderText.Process_Step0;
+                main_form.UpdateProcessText(ModLoaderText.Process_Step0);
             }
             else if (e.ProgressPercentage == 25)
             {
                 if (inputDirectoryMode)
                 {
-                    processText.Text = ModLoaderText.Process_Step1_Folder;
+                    main_form.UpdateProcessText(ModLoaderText.Process_Step1_Folder);
                 }
                 else
                 {
-                    processText.Text = ModLoaderText.Process_Step1_ROM;
+                    main_form.UpdateProcessText(ModLoaderText.Process_Step1_ROM);
                 }
             }
             else if (e.ProgressPercentage == 50)
             {
-                processText.Text = ModLoaderText.Process_Step2;
+                main_form.UpdateProcessText(ModLoaderText.Process_Step2);
             }
             else if (e.ProgressPercentage == 75)
             {
                 if (outputDirectoryMode)
                 {
-                    processText.Text = ModLoaderText.Process_Step3_Folder;
+                    main_form.UpdateProcessText(ModLoaderText.Process_Step3_Folder);
                 }
                 else
                 {
-                    processText.Text = ModLoaderText.Process_Step3_ROM;
+                    main_form.UpdateProcessText(ModLoaderText.Process_Step3_ROM);
                 }
             }
             else if (e.ProgressPercentage == 90)
             {
-                processText.Text = "Removing temporary files...";
+                main_form.UpdateProcessText("Removing temporary files...");
             }
         }
 
@@ -944,7 +911,7 @@ namespace CrateModLoader
                 }
                 catch
                 {
-                    text_gameType.Text = ModLoaderText.Error_UnableToOpenGameFolder;
+                    main_form.UpdateGameTitleText(ModLoaderText.Error_UnableToOpenGameFolder);
                     loadedISO = false;
                     ResetGameSpecific(false, true);
                     return;
@@ -1115,7 +1082,7 @@ namespace CrateModLoader
                     }
                     else
                     {
-                        processText.Text = ModLoaderText.Step1Text;
+                        main_form.UpdateProcessText(ModLoaderText.Step1Text);
                     }
 
                     DeleteTempFiles();
@@ -1140,10 +1107,10 @@ namespace CrateModLoader
                             }
                             else if (!CDReader.Detect(isoStream))
                             {
-                                text_gameType.Text = ModLoaderText.Error_UnknownAutoGameROM;
+                                main_form.UpdateGameTitleText(ModLoaderText.Error_UnknownAutoGameROM);
                                 loadedISO = false;
-                                startButton.Enabled = false;
-                                processText.Text = ModLoaderText.Step1Text;
+                                main_form.SetProcessStartAllowed(false);
+                                main_form.UpdateProcessText(ModLoaderText.Step1Text);
                                 ResetGameSpecific(false, true);
 
                                 return;
@@ -1248,7 +1215,7 @@ namespace CrateModLoader
                     }
                     catch
                     {
-                        text_gameType.Text = ModLoaderText.Error_UnableToOpenROM;
+                        main_form.UpdateGameTitleText(ModLoaderText.Error_UnableToOpenROM);
                         loadedISO = false;
                         ResetGameSpecific(false, true);
                         return;
@@ -1260,11 +1227,11 @@ namespace CrateModLoader
             {
                 if (OpenROM_Selection == OpenROM_SelectionType.AutomaticOnly)
                 {
-                    text_gameType.Text = ModLoaderText.Error_UnknownAutoGameROM;
+                    main_form.UpdateGameTitleText(ModLoaderText.Error_UnknownAutoGameROM);
                 }
                 else
                 {
-                    text_gameType.Text = ModLoaderText.Error_UnknownGameROM;
+                    main_form.UpdateGameTitleText(ModLoaderText.Error_UnknownGameROM);
                 }
                 loadedISO = false;
             }
@@ -1275,20 +1242,20 @@ namespace CrateModLoader
 
             if (loadedISO && outputPathSet)
             {
-                startButton.Enabled = true;
-                processText.Text = ModLoaderText.ProcessReady;
+                main_form.SetProcessStartAllowed(true);
+                main_form.UpdateProcessText(ModLoaderText.ProcessReady);
             }
             else
             {
-                startButton.Enabled = false;
+                main_form.SetProcessStartAllowed(false);
 
                 if (loadedISO)
                 {
-                    processText.Text = ModLoaderText.Step2Text;
+                    main_form.UpdateProcessText(ModLoaderText.Step2Text);
                 }
                 else
                 {
-                    processText.Text = ModLoaderText.Step1Text;
+                    main_form.UpdateProcessText(ModLoaderText.Step1Text);
 
                     ResetGameSpecific(false, true);
                 }
@@ -1331,7 +1298,7 @@ namespace CrateModLoader
         {
             bool RegionNotSupported = true;
             Modder = null;
-            button_modCrateMenu.Text = ModLoaderText.ModCratesButton;
+
             ModCrates.ClearModLists();
 
             ModLoaderGlobals.Console = console;
@@ -1422,178 +1389,27 @@ namespace CrateModLoader
             }
 
             // UI stuff
-            list_modOptions.Items.Clear();
             if (Modder == null)
             {
-                button_modMenu.Visible = true;
-                button_modMenu.Enabled = false;
-                button_modCrateMenu.Enabled = button_modCrateMenu.Visible = button_modTools.Visible = true;
-                button_randomize.Enabled = button_randomize.Visible = button_modMenu.Visible = button_modMenu.Enabled = button_downloadMods.Enabled = button_downloadMods.Visible = false;
-                textbox_rando_seed.Enabled = textbox_rando_seed.Visible = false;
-                button_modTools.Enabled = true;
-
-                text_gameType.Text = ModLoaderText.UnsupportedGameTitle + " (" + cons_mod + ")";
-                text_apiLabel.Text = string.Empty;
-                text_optionDescLabel.Text = string.Empty;
-                text_optionDescLabel.Visible = false;
-                panel_optionDesc.Visible = false;
-
-                image_gameIcon.Visible = false;
+                main_form.SetLayoutUnsupportedGame(cons_mod);
             }
             else
             {
                 Modder.PopulateProperties();
-                Image gameIcon = Game.Icon;
-
-                //button_modMenu.Enabled = button_modMenu.Visible = Game.ModMenuEnabled;
-                button_modMenu.Visible = true;
-                button_modMenu.Enabled = Modder.ModMenuEnabled;
-                button_modCrateMenu.Visible = true;
-                button_modCrateMenu.Enabled = !Game.ModCratesDisabled;
-                button_randomize.Enabled = button_randomize.Visible = button_modTools.Visible = button_downloadMods.Visible = true;
-                textbox_rando_seed.Enabled = textbox_rando_seed.Visible = true;
-                text_optionDescLabel.Text = string.Empty;
-                text_optionDescLabel.Visible = false;
-                panel_optionDesc.Visible = false;
-                button_modTools.Enabled = true;
-
-                if (string.IsNullOrWhiteSpace(region_mod))
-                {
-                    text_gameType.Text = string.Format("{0}\n({1})", Game.Name, cons_mod);
-                }
-                else
-                {
-                    text_gameType.Text = string.Format("{0}\n({1} {2})", Game.Name, region_mod, cons_mod);
-                }
-                
-                if (!string.IsNullOrWhiteSpace(Game.API_Credit))
-                {
-                    text_apiLabel.Text = Game.API_Credit;
-                    if (!string.IsNullOrWhiteSpace(Game.API_Link))
-                    {
-                        text_apiLabel.Enabled = true;
-                    }
-                    else
-                    {
-                        text_apiLabel.Enabled = false;
-                    }
-                }
-                else
-                {
-                    text_apiLabel.Text = ModLoaderText.GameHasNoAPI;
-                    text_apiLabel.Enabled = false;
-                }
-
-                if (gameIcon != null)
-                {
-                    int offset_x = 4;
-                    int offset_y = 4;
-                    Bitmap bitmap_orig = new Bitmap(gameIcon);
-                    Bitmap bitmap = new Bitmap(gameIcon.Width + offset_x, gameIcon.Height + offset_y);
-
-                    for (int x = offset_x; x < bitmap.Width; x++)
-                    {
-                        for (int y = offset_y; y < bitmap.Height; y++)
-                        {
-                            Color bitColor = bitmap_orig.GetPixel(x - offset_x, y - offset_y);
-                            if (bitColor.A > 1)
-                            {
-                                bitmap.SetPixel(x, y, Color.FromArgb(128, 0, 0, 0));
-                            }
-                            else
-                            {
-                                bitmap.SetPixel(x, y, Color.FromArgb(0, 0, 0, 0));
-                            }
-                        }
-                    }
-                    for (int x = 0; x < bitmap_orig.Width; x++)
-                    {
-                        for (int y = 0; y < bitmap_orig.Height; y++)
-                        {
-                            Color bitColor = bitmap_orig.GetPixel(x, y);
-                            if (bitColor.A > 1)
-                            {
-                                bitmap.SetPixel(x, y, bitColor);
-                            }
-                        }
-                    }
-
-                    image_gameIcon.Image = bitmap;
-                    
-                    image_gameIcon.Visible = true;
-                }
-                else
-                {
-                    image_gameIcon.Visible = false;
-                }
-
-                if (Modder.Props.Count > 0)
-                {
-                    foreach (var prop in Modder.Props)
-                    {
-                        if (prop is ModPropOption option && option.Allowed())
-                        {
-                            list_modOptions.Items.Add(option, option.Value != 0);
-                        }
-                    }
-                }
-            }
-            int height = 295 + 45 + (list_modOptions.Items.Count * 17);
-            list_modOptions.Visible = list_modOptions.Enabled = list_modOptions.Items.Count > 0;
-            if (main_form.Size.Height < height)
-            {
-                //main_form.Size = new Size(main_form.MinimumSize.Width, height + 300);
-                main_form.Size = new Size(main_form.MinimumSize.Width, height);
-            }
-            main_form.MinimumSize = new Size(main_form.MinimumSize.Width, height);
-            if (main_form.Size.Height > height)
-            {
-                main_form.Size = new Size(main_form.MinimumSize.Width, height);
+                main_form.SetLayoutSupportedGame(Game, cons_mod, region_mod);
             }
         }
 
         public void DisableInteraction()
         {
-            startButton.Enabled = false;
-            list_modOptions.Enabled = false;
-            button_browse1.Enabled = false;
-            button_browse2.Enabled = false;
-            button_randomize.Enabled = false;
-            textbox_output_path.ReadOnly = true;
-            textbox_rando_seed.ReadOnly = true;
-            textbox_rando_seed.Enabled = false;
-            button_modMenu.Enabled = false;
-            button_modCrateMenu.Enabled = false;
-            text_apiLabel.Enabled = false;
-            text_titleLabel.Enabled = false;
-            button_modTools.Enabled = false;
-            button_downloadMods.Enabled = false;
+            main_form.DisableInteraction();
+
             processActive = true;
         }
         public void EnableInteraction()
         {
-            startButton.Enabled = true;
-            list_modOptions.Enabled = true;
-            button_browse1.Enabled = true;
-            button_browse2.Enabled = true;
-            button_randomize.Enabled = true;
-            textbox_output_path.ReadOnly = false;
-            textbox_rando_seed.ReadOnly = false;
-            textbox_rando_seed.Enabled = true;
-            button_modCrateMenu.Enabled = true;
+            main_form.EnableInteraction();
 
-            if (ModLoaderGlobals.ModProgram.Modder != null)
-            {
-                button_modMenu.Enabled = Modder.ModMenuEnabled;
-            }
-            button_modTools.Enabled = true;
-            //button_downloadMods.Enabled = true;
-
-            if (ModLoaderGlobals.ModProgram.Modder != null && !string.IsNullOrWhiteSpace(ModLoaderGlobals.ModProgram.Game.API_Link))
-            {
-                text_apiLabel.Enabled = true;
-            }
-            text_titleLabel.Enabled = true;
             processActive = false;
         }
 
@@ -1601,8 +1417,7 @@ namespace CrateModLoader
         {
             inputDirectoryMode = state;
 
-            processText.Text = ModLoaderText.Step1Text;
-            textbox_input_path.Text = "";
+            main_form.UpdateProcessText(ModLoaderText.Step1Text);
             ModLoaderGlobals.InputPath = "";
 
             ResetGameSpecific(true, false);
@@ -1610,67 +1425,38 @@ namespace CrateModLoader
         public void UpdateOutputSetting(bool state)
         {
             outputDirectoryMode = state;
-
-            textbox_output_path.Text = "";
             ModLoaderGlobals.OutputPath = "";
 
             if (loadedISO)
             {
-                processText.Text = ModLoaderText.Step2Text;
+                main_form.UpdateProcessText(ModLoaderText.Step2Text);
             }
-
-            startButton.Enabled = false;
         }
 
         public void API_Link_Clicked()
         {
             if (Modder != null && !string.IsNullOrWhiteSpace(Game.API_Credit) && !string.IsNullOrWhiteSpace(Game.API_Link))
             {
-                text_apiLabel.LinkVisited = true;
                 Process.Start(Game.API_Link);
             }
+        }
+
+        public void UpdateModMenuChangedState(bool change)
+        {
+            main_form.UpdateModMenuChangeState(change);
+        }
+        public void UpdateModCrateChangedState()
+        {
+            main_form.UpdateModCrateChangedState();
         }
 
         void ResetGameSpecific(bool ClearGameText = false, bool ExtendedWindow = false)
         {
             Modder = null;
-            button_modCrateMenu.Text = ModLoaderText.ModCratesButton;
-            button_modMenu.Text = ModLoaderText.ModMenuButton;
             ModCrates.ClearModLists();
             loadedISO = false;
 
-            startButton.Enabled = false;
-
-            button_modMenu.Enabled = button_modMenu.Visible = false;
-            button_modCrateMenu.Enabled = button_modCrateMenu.Visible = false;
-            button_randomize.Enabled = button_randomize.Visible = button_modTools.Visible = button_modTools.Enabled = button_downloadMods.Enabled = button_downloadMods.Visible = false;
-            textbox_rando_seed.Enabled = textbox_rando_seed.Visible = false;
-
-            text_apiLabel.Text = string.Empty;
-            text_apiLabel.LinkVisited = false;
-            if (ClearGameText)
-            {
-                text_gameType.Text = string.Empty;
-            }
-
-            image_gameIcon.Visible = false;
-            text_optionDescLabel.Text = string.Empty;
-            text_optionDescLabel.Visible = false;
-            panel_optionDesc.Visible = false;
-
-            list_modOptions.Visible = list_modOptions.Enabled = false;
-
-            int Height = 188;
-            if (ExtendedWindow)
-            {
-                Height = 220;
-            }
-
-            if (main_form.Size.Height > Height)
-            {
-                main_form.Size = new Size(main_form.Size.Width, Height);
-            }
-            main_form.MinimumSize = new Size(main_form.MinimumSize.Width, Height);
+            main_form.ResetGameSpecific(ClearGameText, ExtendedWindow);
         }
     }
 }

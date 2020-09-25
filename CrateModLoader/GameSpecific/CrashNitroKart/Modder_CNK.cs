@@ -36,7 +36,6 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
                 },
             API_Credit = CNK_Text.API_Credit,
             API_Link = string.Empty,
-            Icon = Properties.Resources.icon_crashnk,
             TextClass = typeof(CNK_Text),
             RegionID = new Dictionary<ConsoleMode, RegionCode[]>()
             {

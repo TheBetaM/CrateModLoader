@@ -436,9 +436,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\icon_crashttr.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Text\Changelog.txt" />
     <None Include="Resources\Text\Games.txt" />
     <Content Include="Tools\License.txt">
@@ -450,23 +447,12 @@
     <None Include="Resources\Text\Readme.txt" />
     <Content Include="Resources\cml_header.png" />
     <Content Include="Resources\cml_icon.png" />
-    <None Include="Resources\icon_crash2.png" />
-    <None Include="Resources\icon_crash3.png" />
-    <None Include="Resources\icon_crashbash.png" />
-    <None Include="Resources\icon_crashtr.png" />
-    <None Include="Resources\icon_crash1.png" />
-    <None Include="Resources\icon_crashtwoc.png" />
-    <None Include="Resources\icon_crashtitans.png" />
-    <None Include="Resources\icon_crashnk.png" />
-    <None Include="Resources\icon_crashts.png" />
-    <None Include="Resources\icon_crashmom.png" />
     <Content Include="Tools\PS2ImageMaker.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Tools\xextool.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Resources\icon_ray3.png" />
     <Content Include="Tools\CTR\filenames_pal.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -569,7 +555,6 @@
     <Content Include="Tools\WQSG_UMD.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Resources\icon_titans.png" />
     <Content Include="rando_icon.ico" />
   </ItemGroup>
   <ItemGroup>

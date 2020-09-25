@@ -16,8 +16,6 @@ namespace CrateModLoader
         public string API_Credit;
         /// <summary> Website link to the most relevant API. Leave as String.Empty if not applicable. </summary>
         public string API_Link;
-        /// <summary> Display an icon or set to null to not display one. </summary>
-        public Image Icon;
         /// <summary> Set to true to disable mod crates. </summary>
         public bool ModCratesDisabled;
         /// <summary> Text resource class used for mod menu property localization. </summary>

@@ -79,13 +79,7 @@ namespace CrateModLoader
         {
             Owner.Enabled = true;
 
-            string CratesActive = ModLoaderText.ModCratesButton;
-            if (ModCrates.ModsActiveAmount > 0)
-            {
-                CratesActive += $" ({ ModCrates.ModsActiveAmount }x)";
-            }
-
-            ModLoaderGlobals.ModProgram.button_modCrateMenu.Text = CratesActive;
+            ModLoaderGlobals.ModProgram.UpdateModCrateChangedState();
         }
 
         private void checkedListBox_mods_ItemCheck(object sender, ItemCheckEventArgs e)

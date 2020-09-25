@@ -1,6 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
 using System.IO;
+using System.Drawing;
+using System.Media;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Diagnostics;
 using CrateModLoader.Resources.Text;
@@ -18,7 +21,7 @@ namespace CrateModLoader
             label7.Text = "";
             linkLabel1.Text = "";
             label6.Text = ModLoaderText.Step1Text;
-            button3.Enabled = false;
+            button_startProcess.Enabled = false;
             linkLabel_optionDesc.Text = "";
             linkLabel_optionDesc.Enabled = true;
             linkLabel_optionDesc.Visible = false;
@@ -30,12 +33,12 @@ namespace CrateModLoader
             button_modCrateMenu.Text = ModLoaderText.ModCratesButton;
             button_modTools.Text = ModLoaderText.Button_ModTools;
             button_openModMenu.Text = ModLoaderText.ModMenuButton;
-            button4.Text = ModLoaderText.RandomizeSeedButton;
-            button1.Text = ModLoaderText.InputBrowse;
-            button2.Text = ModLoaderText.OutputBrowse;
-            button3.Text = ModLoaderText.StartProcessButton;
+            button_randomizeSeed.Text = ModLoaderText.RandomizeSeedButton;
+            button_browseInput.Text = ModLoaderText.InputBrowse;
+            button_browseOutput.Text = ModLoaderText.OutputBrowse;
+            button_startProcess.Text = ModLoaderText.StartProcessButton;
 
-            Size = new System.Drawing.Size(MinimumSize.Width, MinimumSize.Height);
+            Size = new Size(MinimumSize.Width, MinimumSize.Height);
 
             toolTip1.SetToolTip(linkLabel2, ModLoaderText.Tooltip_Label_Version);
             toolTip1.SetToolTip(linkLabel1, ModLoaderText.Tooltip_Label_API);
@@ -44,34 +47,10 @@ namespace CrateModLoader
             toolTip1.SetToolTip(button_modCrateMenu, ModLoaderText.Tooltip_Button_ModCrates);
             toolTip1.SetToolTip(button_openModMenu, ModLoaderText.Tooltip_Button_ModMenu);
             toolTip1.SetToolTip(button_modTools, ModLoaderText.Tooltip_Button_ModTools);
-            toolTip1.SetToolTip(button4, ModLoaderText.Tooltip_Button_RandomizeSeed);
+            toolTip1.SetToolTip(button_randomizeSeed, ModLoaderText.Tooltip_Button_RandomizeSeed);
 
-            ModLoaderGlobals.ModProgram.panel_optionDesc = panel_desc;
-            ModLoaderGlobals.ModProgram.text_optionDescLabel = linkLabel_optionDesc;
-            ModLoaderGlobals.ModProgram.processText = label6;
-            ModLoaderGlobals.ModProgram.progressBar = progressBar1;
-            ModLoaderGlobals.ModProgram.startButton = button3;
-            ModLoaderGlobals.ModProgram.text_gameType = label7;
-            ModLoaderGlobals.ModProgram.text_titleLabel = linkLabel2;
-            ModLoaderGlobals.ModProgram.text_apiLabel = linkLabel1;
-            ModLoaderGlobals.ModProgram.list_modOptions = checkedListBox1;
-            ModLoaderGlobals.ModProgram.main_form = this;
-            ModLoaderGlobals.ModProgram.image_gameIcon = pictureBox1;
-            ModLoaderGlobals.ModProgram.button_browse1 = button1;
-            ModLoaderGlobals.ModProgram.button_browse2 = button2;
-            ModLoaderGlobals.ModProgram.button_randomize = button4;
-            ModLoaderGlobals.ModProgram.button_modTools = button_modTools;
-            ModLoaderGlobals.ModProgram.button_downloadMods = button_downloadMods;
-            ModLoaderGlobals.ModProgram.textbox_input_path = textBox1;
-            ModLoaderGlobals.ModProgram.textbox_output_path = textBox2;
-            ModLoaderGlobals.ModProgram.textbox_rando_seed = numericUpDown1;
-            ModLoaderGlobals.ModProgram.button_modMenu = button_openModMenu;
-            ModLoaderGlobals.ModProgram.button_modCrateMenu = button_modCrateMenu;
-            ModLoaderGlobals.ModProgram.asyncWorker = backgroundWorker1;
-            ModLoaderGlobals.ModProgram.asyncTimer = timer1;
             timer1.Enabled = false;
             timer1.Interval = 500;
-            ModLoaderGlobals.ModProgram.formHandle = this.Handle;
 
             progressBar1.Minimum = 0;
             progressBar1.Maximum = 100;
@@ -81,6 +60,7 @@ namespace CrateModLoader
             int Seed = rand.Next(0, int.MaxValue);
             numericUpDown1.Value = Seed;
             ModLoaderGlobals.RandomizerSeed = Seed;
+            ModLoaderGlobals.RandomizerSeedBase = Seed;
 
             openFileDialog1.FileName = string.Empty;
         }
@@ -124,12 +104,12 @@ namespace CrateModLoader
                     ModLoaderGlobals.ModProgram.outputPathSet = true;
                     if (ModLoaderGlobals.ModProgram.loadedISO && ModLoaderGlobals.ModProgram.outputPathSet)
                     {
-                        button3.Enabled = true;
+                        button_startProcess.Enabled = true;
                         label6.Text = ModLoaderText.ProcessReady;
                     }
                     else
                     {
-                        button3.Enabled = false;
+                        button_startProcess.Enabled = false;
                     }
                 }
             }
@@ -145,6 +125,7 @@ namespace CrateModLoader
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
             ModLoaderGlobals.RandomizerSeed = int.Parse(numericUpDown1.Text);
+            ModLoaderGlobals.RandomizerSeedBase = ModLoaderGlobals.RandomizerSeed;
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -153,6 +134,7 @@ namespace CrateModLoader
             int Seed = rand.Next(0,int.MaxValue);
             numericUpDown1.Value = Seed;
             ModLoaderGlobals.RandomizerSeed = Seed;
+            ModLoaderGlobals.RandomizerSeedBase = Seed;
         }
 
         private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
@@ -162,12 +144,12 @@ namespace CrateModLoader
             ModLoaderGlobals.ModProgram.outputPathSet = true;
             if (ModLoaderGlobals.ModProgram.loadedISO && ModLoaderGlobals.ModProgram.outputPathSet)
             {
-                button3.Enabled = true;
+                button_startProcess.Enabled = true;
                 label6.Text = ModLoaderText.ProcessReady;
             }
             else
             {
-                button3.Enabled = false;
+                button_startProcess.Enabled = false;
             }
         }
 
@@ -282,6 +264,7 @@ namespace CrateModLoader
         {
             try
             {
+                linkLabel1.LinkVisited = true;
                 ModLoaderGlobals.ModProgram.API_Link_Clicked();
             }
             catch
@@ -299,6 +282,7 @@ namespace CrateModLoader
                     string[] fileList = (string[])e.Data.GetData(DataFormats.FileDrop, false);
                     if (fileList.Length == 1)
                     {
+                        textBox1.Text = "";
                         if (Directory.Exists(fileList[0]))
                         {
                             ModLoaderGlobals.ModProgram.inputDirectoryMode = true;
@@ -395,6 +379,7 @@ namespace CrateModLoader
 
         private void toolStripMenuItem_loadROM_Click(object sender, EventArgs e)
         {
+            textBox1.Text = "";
             ModLoaderGlobals.ModProgram.inputDirectoryMode = false;
             ModLoaderGlobals.ModProgram.UpdateInputSetting(false);
             button1_Click(null, null);
@@ -402,6 +387,7 @@ namespace CrateModLoader
 
         private void toolStripMenuItem_loadFolder_Click(object sender, EventArgs e)
         {
+            textBox1.Text = "";
             ModLoaderGlobals.ModProgram.inputDirectoryMode = true;
             ModLoaderGlobals.ModProgram.UpdateInputSetting(true);
             button1_Click(null, null);
@@ -409,6 +395,8 @@ namespace CrateModLoader
 
         private void toolStripMenuItem_saveROM_Click(object sender, EventArgs e)
         {
+            textBox2.Text = "";
+            button_startProcess.Enabled = false;
             ModLoaderGlobals.ModProgram.outputDirectoryMode = false;
             ModLoaderGlobals.ModProgram.UpdateOutputSetting(false);
             button2_Click(null, null);
@@ -416,6 +404,8 @@ namespace CrateModLoader
 
         private void toolStripMenuItem_saveFolder_Click(object sender, EventArgs e)
         {
+            textBox2.Text = "";
+            button_startProcess.Enabled = false;
             ModLoaderGlobals.ModProgram.outputDirectoryMode = true;
             ModLoaderGlobals.ModProgram.UpdateOutputSetting(true);
             button2_Click(null, null);
@@ -425,5 +415,239 @@ namespace CrateModLoader
         {
             ModLoaderGlobals.ModProgram.keepTempFiles = toolStripMenuItem_keepTempFiles.Checked;
         }
+
+        // UI-specific functions
+        public void AdjustSize(int height)
+        {
+            if (Size.Height < height)
+            {
+                //Size = new Size(mMinimumSize.Width, height + 300);
+                Size = new Size(MinimumSize.Width, height);
+            }
+            MinimumSize = new Size(MinimumSize.Width, height);
+            if (Size.Height > height)
+            {
+                Size = new Size(MinimumSize.Width, height);
+            }
+        }
+
+        public void DisableInteraction()
+        {
+            button_startProcess.Enabled = false;
+            checkedListBox1.Enabled = false;
+            button_browseInput.Enabled = false;
+            button_browseOutput.Enabled = false;
+            button_randomizeSeed.Enabled = false;
+            textBox2.ReadOnly = true;
+            numericUpDown1.ReadOnly = true;
+            numericUpDown1.Enabled = false;
+            button_openModMenu.Enabled = false;
+            button_modCrateMenu.Enabled = false;
+            linkLabel1.Enabled = false;
+            linkLabel2.Enabled = false;
+            button_modTools.Enabled = false;
+            button_downloadMods.Enabled = false;
+        }
+        public void EnableInteraction()
+        {
+            button_startProcess.Enabled = true;
+            checkedListBox1.Enabled = true;
+            button_browseInput.Enabled = true;
+            button_browseOutput.Enabled = true;
+            button_randomizeSeed.Enabled = true;
+            textBox2.ReadOnly = false;
+            numericUpDown1.ReadOnly = false;
+            numericUpDown1.Enabled = true;
+            button_modCrateMenu.Enabled = true;
+
+            if (ModLoaderGlobals.ModProgram.Modder != null)
+            {
+                button_openModMenu.Enabled = ModLoaderGlobals.ModProgram.Modder.ModMenuEnabled;
+            }
+            button_modTools.Enabled = true;
+            //button_downloadMods.Enabled = true;
+
+            if (ModLoaderGlobals.ModProgram.Modder != null && !string.IsNullOrWhiteSpace(ModLoaderGlobals.ModProgram.Game.API_Link))
+            {
+                linkLabel1.Enabled = true;
+            }
+            linkLabel2.Enabled = true;
+        }
+
+        public void ResetGameSpecific(bool ClearGameText = false, bool ExtendedWindow = false)
+        {
+            button_modCrateMenu.Text = ModLoaderText.ModCratesButton;
+            button_openModMenu.Text = ModLoaderText.ModMenuButton;
+
+            button_startProcess.Enabled = false;
+
+            button_openModMenu.Enabled = button_openModMenu.Visible = false;
+            button_modCrateMenu.Enabled = button_modCrateMenu.Visible = false;
+            button_randomizeSeed.Enabled = button_randomizeSeed.Visible = button_modTools.Visible = button_modTools.Enabled = button_downloadMods.Enabled = button_downloadMods.Visible = false;
+            numericUpDown1.Enabled = numericUpDown1.Visible = false;
+
+            linkLabel1.Text = string.Empty;
+            linkLabel1.LinkVisited = false;
+            if (ClearGameText)
+            {
+                label7.Text = string.Empty;
+            }
+
+            linkLabel_optionDesc.Text = string.Empty;
+            linkLabel_optionDesc.Visible = false;
+            panel_desc.Visible = false;
+
+            checkedListBox1.Visible = checkedListBox1.Enabled = false;
+
+            int Height = 188;
+            if (ExtendedWindow)
+            {
+                Height = 220;
+            }
+
+            AdjustSize(Height);
+        }
+
+        public void SetLayoutUnsupportedGame(string cons_mod)
+        {
+            button_modCrateMenu.Text = ModLoaderText.ModCratesButton;
+            checkedListBox1.Items.Clear();
+            button_openModMenu.Visible = true;
+            button_openModMenu.Enabled = false;
+            button_modCrateMenu.Enabled = button_modCrateMenu.Visible = button_modTools.Visible = true;
+            button_randomizeSeed.Enabled = button_randomizeSeed.Visible = button_openModMenu.Visible = button_openModMenu.Enabled = button_downloadMods.Enabled = button_downloadMods.Visible = false;
+            numericUpDown1.Enabled = numericUpDown1.Visible = false;
+            button_modTools.Enabled = true;
+
+            label7.Text = ModLoaderText.UnsupportedGameTitle + " (" + cons_mod + ")";
+            linkLabel1.Text = string.Empty;
+            linkLabel_optionDesc.Text = string.Empty;
+            linkLabel_optionDesc.Visible = false;
+            panel_desc.Visible = false;
+
+            int height = 295 + 45 + (checkedListBox1.Items.Count * 17);
+            checkedListBox1.Visible = checkedListBox1.Enabled = checkedListBox1.Items.Count > 0;
+            AdjustSize(height);
+        }
+        public void SetLayoutSupportedGame(Game game, string cons_mod, string region_mod)
+        {
+            button_modCrateMenu.Text = ModLoaderText.ModCratesButton;
+            checkedListBox1.Items.Clear();
+            button_openModMenu.Visible = true;
+            button_openModMenu.Enabled = ModLoaderGlobals.ModProgram.Modder.ModMenuEnabled;
+            button_modCrateMenu.Visible = true;
+            button_modCrateMenu.Enabled = !game.ModCratesDisabled;
+            button_randomizeSeed.Enabled = button_randomizeSeed.Visible = button_modTools.Visible = button_downloadMods.Visible = true;
+            numericUpDown1.Enabled = numericUpDown1.Visible = true;
+            linkLabel_optionDesc.Text = string.Empty;
+            linkLabel_optionDesc.Visible = false;
+            panel_desc.Visible = false;
+            button_modTools.Enabled = true;
+
+            if (string.IsNullOrWhiteSpace(region_mod))
+            {
+                label7.Text = string.Format("{0}\n({1})", game.Name, cons_mod);
+            }
+            else
+            {
+                label7.Text = string.Format("{0}\n({1} {2})", game.Name, region_mod, cons_mod);
+            }
+
+            if (!string.IsNullOrWhiteSpace(game.API_Credit))
+            {
+                linkLabel1.Text = game.API_Credit;
+                if (!string.IsNullOrWhiteSpace(game.API_Link))
+                {
+                    linkLabel1.Enabled = true;
+                }
+                else
+                {
+                    linkLabel1.Enabled = false;
+                }
+            }
+            else
+            {
+                linkLabel1.Text = ModLoaderText.GameHasNoAPI;
+                linkLabel1.Enabled = false;
+            }
+
+            if (ModLoaderGlobals.ModProgram.Modder.Props.Count > 0)
+            {
+                foreach (var prop in ModLoaderGlobals.ModProgram.Modder.Props)
+                {
+                    if (prop is ModPropOption option && option.Allowed())
+                    {
+                        checkedListBox1.Items.Add(option, option.Value != 0);
+                    }
+                }
+            }
+
+            int height = 295 + 45 + (checkedListBox1.Items.Count * 17);
+            checkedListBox1.Visible = checkedListBox1.Enabled = checkedListBox1.Items.Count > 0;
+            AdjustSize(height);
+        }
+
+        public void UpdateGameTitleText(string txt)
+        {
+            label7.Text = txt;
+        }
+        public void UpdateProcessText(string txt)
+        {
+            label6.Text = txt;
+        }
+
+        public void UpdateProcessProgress(int value)
+        {
+            progressBar1.Value = value;
+        }
+        public void ResetProcessProgress()
+        {
+            progressBar1.Value = progressBar1.Minimum;
+        }
+
+        public void SetProcessStartAllowed(bool allow)
+        {
+            button_startProcess.Enabled = allow;
+        }
+
+        public void UpdateModMenuChangeState(bool changed)
+        {
+            if (changed)
+            {
+                button_openModMenu.Text = ModLoaderText.ModMenuButton + "*";
+            }
+            else
+            {
+                button_openModMenu.Text = ModLoaderText.ModMenuButton;
+            }
+        }
+
+        public void UpdateModCrateChangedState()
+        {
+            string CratesActive = ModLoaderText.ModCratesButton;
+            if (ModCrates.ModsActiveAmount > 0)
+            {
+                CratesActive += $" ({ ModCrates.ModsActiveAmount }x)";
+            }
+
+            button_modCrateMenu.Text = CratesActive;
+        }
+
+        public void StartAsyncTimer()
+        {
+            timer1.Enabled = true;
+            timer1.Start();
+        }
+
+        [DllImport("user32.dll")]
+        public static extern int FlashWindow(IntPtr Hwnd, bool Revert);
+
+        public void Notify_ProcessFinished()
+        {
+            FlashWindow(Handle, false);
+            SystemSounds.Beep.Play();
+        }
+
+
     }
 }
