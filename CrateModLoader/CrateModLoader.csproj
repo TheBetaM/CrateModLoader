@@ -51,7 +51,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>rando_icon.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\rando_icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Crash, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -285,33 +285,33 @@
     <Compile Include="GameSpecific\CrashTS\Twins_Randomizers.cs" />
     <Compile Include="GameSpecific\CrashTS\Twins_Settings.cs" />
     <Compile Include="GameSpecific\CrashTWOC\Modder_TWOC.cs" />
-    <Compile Include="ModCrateMakerForm.cs">
+    <Compile Include="Forms\ModCrateMakerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ModCrateMakerForm.Designer.cs">
+    <Compile Include="Forms\ModCrateMakerForm.Designer.cs">
       <DependentUpon>ModCrateMakerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ModCrateManagerForm.cs">
+    <Compile Include="Forms\ModCrateManagerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ModCrateManagerForm.Designer.cs">
+    <Compile Include="Forms\ModCrateManagerForm.Designer.cs">
       <DependentUpon>ModCrateManagerForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ModCrates.cs" />
     <Compile Include="Modder.cs" />
     <Compile Include="ModLoader.cs" />
     <Compile Include="ModLoaderCLI.cs" />
-    <Compile Include="ModLoaderForm.cs">
+    <Compile Include="Forms\ModLoaderForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ModLoaderForm.Designer.cs">
+    <Compile Include="Forms\ModLoaderForm.Designer.cs">
       <DependentUpon>ModLoaderForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ModLoaderGlobals.cs" />
-    <Compile Include="ModMenuForm.cs">
+    <Compile Include="Forms\ModMenuForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ModMenuForm.Designer.cs">
+    <Compile Include="Forms\ModMenuForm.Designer.cs">
       <DependentUpon>ModMenuForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ModPipelines\ModPipeline.cs" />
@@ -335,10 +335,10 @@
     <Compile Include="ModProperties\ModPropString.cs" />
     <Compile Include="ModProperties\ModProperty.cs" />
     <Compile Include="ModProperties\ModPropUInt.cs" />
-    <Compile Include="ModToolsForm.cs">
+    <Compile Include="Forms\ModToolsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ModToolsForm.Designer.cs">
+    <Compile Include="Forms\ModToolsForm.Designer.cs">
       <DependentUpon>ModToolsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -353,14 +353,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModLoaderText.resx</DependentUpon>
     </Compile>
-    <Compile Include="TextDisplayForm.cs">
+    <Compile Include="Forms\TextDisplayForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="TextDisplayForm.Designer.cs">
+    <Compile Include="Forms\TextDisplayForm.Designer.cs">
       <DependentUpon>TextDisplayForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Tools\PS2ImageMaker.cs" />
-    <Compile Include="Tools\PSX2ISO.cs" />
+    <Compile Include="ModPipelines\PS2ImageMaker.cs" />
+    <Compile Include="ModPipelines\PSX2ISO.cs" />
     <EmbeddedResource Include="GameSpecific\Crash1\Crash1_Text.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Crash1_Text.Designer.cs</LastGenOutput>
@@ -389,19 +389,19 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Rayman3_Text.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="ModCrateMakerForm.resx">
+    <EmbeddedResource Include="Forms\ModCrateMakerForm.resx">
       <DependentUpon>ModCrateMakerForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ModCrateManagerForm.resx">
+    <EmbeddedResource Include="Forms\ModCrateManagerForm.resx">
       <DependentUpon>ModCrateManagerForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ModLoaderForm.resx">
+    <EmbeddedResource Include="Forms\ModLoaderForm.resx">
       <DependentUpon>ModLoaderForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ModMenuForm.resx">
+    <EmbeddedResource Include="Forms\ModMenuForm.resx">
       <DependentUpon>ModMenuForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ModToolsForm.resx">
+    <EmbeddedResource Include="Forms\ModToolsForm.resx">
       <DependentUpon>ModToolsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -413,7 +413,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ModLoaderText.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="TextDisplayForm.resx">
+    <EmbeddedResource Include="Forms\TextDisplayForm.resx">
       <DependentUpon>TextDisplayForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Mods\ExampleMod.zip">
@@ -555,7 +555,7 @@
     <Content Include="Tools\WQSG_UMD.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="rando_icon.ico" />
+    <Content Include="Resources\rando_icon.ico" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">

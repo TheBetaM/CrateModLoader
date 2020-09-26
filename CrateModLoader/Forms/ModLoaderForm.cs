@@ -73,7 +73,7 @@ namespace CrateModLoader
                 {
                     ModLoaderGlobals.ModProgram.OpenROM_Selection = ModLoader.OpenROM_SelectionType.Any;
                     ModLoaderGlobals.InputPath = folderBrowserDialog1.SelectedPath + @"\";
-                    ModLoaderGlobals.ModProgram.CheckISO();
+                    ModLoaderGlobals.ModProgram.DetectGame(ModLoaderGlobals.InputPath);
                     textBox_inputPath.Text = ModLoaderGlobals.InputPath;
                 }
             }
@@ -86,7 +86,7 @@ namespace CrateModLoader
                 {
                     ModLoaderGlobals.ModProgram.OpenROM_Selection = (ModLoader.OpenROM_SelectionType)openFileDialog1.FilterIndex;
                     ModLoaderGlobals.InputPath = openFileDialog1.FileName;
-                    ModLoaderGlobals.ModProgram.CheckISO();
+                    ModLoaderGlobals.ModProgram.DetectGame(ModLoaderGlobals.InputPath);
                     textBox_inputPath.Text = ModLoaderGlobals.InputPath;
                 }
             }
@@ -296,7 +296,7 @@ namespace CrateModLoader
                             ModLoaderGlobals.InputPath = fileList[0];
                         }
                         ModLoaderGlobals.ModProgram.OpenROM_Selection = ModLoader.OpenROM_SelectionType.Any;
-                        ModLoaderGlobals.ModProgram.CheckISO();
+                        ModLoaderGlobals.ModProgram.DetectGame(ModLoaderGlobals.InputPath);
                         textBox_inputPath.Text = ModLoaderGlobals.InputPath;
                     }
                 }

@@ -700,7 +700,10 @@ namespace CrateModLoader
             }
         }
 
-        public void CheckISO()
+        /// <summary>
+        /// Detects console and game from the given full path using cached ModPipeline and Game lists.
+        /// </summary>
+        public void DetectGame(string inputPath)
         {
             Modder = null;
             Pipeline = null;
@@ -717,7 +720,7 @@ namespace CrateModLoader
                 {
                     ModLoaderGlobals.Console = ConsoleMode.Undefined;
                     Pipeline = (ModPipeline)Activator.CreateInstance(pair.Value);
-                    bool DetectResult = Pipeline.Detect(inputDirectoryMode, ModLoaderGlobals.InputPath, out regionID, out regionNumber);
+                    bool DetectResult = Pipeline.Detect(inputDirectoryMode, inputPath, out regionID, out regionNumber);
                     if (DetectResult)
                     {
                         ConsoleDetected = true;
@@ -815,7 +818,7 @@ namespace CrateModLoader
             }
         }
 
-        void SetGameType(string serial, ConsoleMode console, uint RegionID = 0)
+        void SetGameType(string serial, ConsoleMode console, uint RegionID)
         {
             bool RegionNotSupported = true;
             Modder = null;
