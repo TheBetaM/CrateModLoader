@@ -8,14 +8,28 @@ namespace CrateModLoader
 
         public abstract ModPipelineInfo Metadata { get; }
 
-        public virtual bool DetectROM(string inputPath)
+        public virtual bool DetectROM(string inputPath, out string titleID, out uint regionID)
         {
+            titleID = null;
+            regionID = 0;
             return false;
         }
-        public virtual bool DetectFolder(string inputPath)
+
+        public virtual bool DetectFolder(string inputPath, out string titleID, out uint regionID)
         {
+            titleID = null;
+            regionID = 0;
             return false;
         }
+
+        public virtual bool Detect(bool directoryMode, string inputPath, out string titleID, out uint regionID)
+        {
+            if (directoryMode)
+                return DetectFolder(inputPath, out titleID, out regionID);
+            else
+                return DetectROM(inputPath, out titleID, out regionID);
+        }
+
 
         public abstract void Extract(string inputPath, string outputPath);
 

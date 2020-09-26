@@ -33,23 +33,23 @@
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBox_inputPath = new System.Windows.Forms.TextBox();
             this.button_browseInput = new System.Windows.Forms.Button();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBox_outputPath = new System.Windows.Forms.TextBox();
             this.button_browseOutput = new System.Windows.Forms.Button();
             this.button_startProcess = new System.Windows.Forms.Button();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.button_randomizeSeed = new System.Windows.Forms.Button();
-            this.label6 = new System.Windows.Forms.Label();
+            this.label_processText = new System.Windows.Forms.Label();
             this.button_openModMenu = new System.Windows.Forms.Button();
             this.button_modCrateMenu = new System.Windows.Forms.Button();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.label7 = new System.Windows.Forms.Label();
+            this.label_gameType = new System.Windows.Forms.Label();
             this.folderBrowserDialog2 = new System.Windows.Forms.FolderBrowserDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
-            this.linkLabel2 = new System.Windows.Forms.LinkLabel();
+            this.linkLabel_apiCredit = new System.Windows.Forms.LinkLabel();
+            this.linkLabel_programTitle = new System.Windows.Forms.LinkLabel();
             this.linkLabel_optionDesc = new System.Windows.Forms.LinkLabel();
             this.panel_desc = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -109,17 +109,17 @@
             // 
             this.saveFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog1_FileOk);
             // 
-            // textBox1
+            // textBox_inputPath
             // 
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.textBox1.Location = new System.Drawing.Point(0, 0);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(0);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(348, 22);
-            this.textBox1.TabIndex = 1;
-            this.textBox1.Text = "1. Click \"Browse\" to select the game.";
+            this.textBox_inputPath.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBox_inputPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.textBox_inputPath.Location = new System.Drawing.Point(0, 0);
+            this.textBox_inputPath.Margin = new System.Windows.Forms.Padding(0);
+            this.textBox_inputPath.Name = "textBox_inputPath";
+            this.textBox_inputPath.ReadOnly = true;
+            this.textBox_inputPath.Size = new System.Drawing.Size(348, 22);
+            this.textBox_inputPath.TabIndex = 1;
+            this.textBox_inputPath.Text = "1. Click \"Browse\" to select the game.";
             // 
             // button_browseInput
             // 
@@ -144,18 +144,18 @@
             this.progressBar1.Size = new System.Drawing.Size(464, 23);
             this.progressBar1.TabIndex = 4;
             // 
-            // textBox2
+            // textBox_outputPath
             // 
-            this.textBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.textBox2.Location = new System.Drawing.Point(0, 23);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(0);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.ReadOnly = true;
-            this.textBox2.Size = new System.Drawing.Size(348, 22);
-            this.textBox2.TabIndex = 6;
-            this.textBox2.Text = "2. Click \"Browse\" to set the output path.";
-            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+            this.textBox_outputPath.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBox_outputPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.textBox_outputPath.Location = new System.Drawing.Point(0, 23);
+            this.textBox_outputPath.Margin = new System.Windows.Forms.Padding(0);
+            this.textBox_outputPath.Name = "textBox_outputPath";
+            this.textBox_outputPath.ReadOnly = true;
+            this.textBox_outputPath.Size = new System.Drawing.Size(348, 22);
+            this.textBox_outputPath.TabIndex = 6;
+            this.textBox_outputPath.Text = "2. Click \"Browse\" to set the output path.";
+            this.textBox_outputPath.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // button_browseOutput
             // 
@@ -227,21 +227,21 @@
             this.button_randomizeSeed.Visible = false;
             this.button_randomizeSeed.Click += new System.EventHandler(this.button4_Click);
             // 
-            // label6
+            // label_processText
             // 
-            this.label6.AutoSize = true;
-            this.label6.BackColor = System.Drawing.Color.Transparent;
-            this.tableLayoutPanel3.SetColumnSpan(this.label6, 2);
-            this.label6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label6.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.label6.Location = new System.Drawing.Point(3, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(458, 22);
-            this.label6.TabIndex = 15;
-            this.label6.Text = "ProgressInfo The process info may be very long, but only if there\'s an error. Tex" +
+            this.label_processText.AutoSize = true;
+            this.label_processText.BackColor = System.Drawing.Color.Transparent;
+            this.tableLayoutPanel3.SetColumnSpan(this.label_processText, 2);
+            this.label_processText.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label_processText.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label_processText.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label_processText.Location = new System.Drawing.Point(3, 0);
+            this.label_processText.Name = "label_processText";
+            this.label_processText.Size = new System.Drawing.Size(458, 22);
+            this.label_processText.TabIndex = 15;
+            this.label_processText.Text = "ProgressInfo The process info may be very long, but only if there\'s an error. Tex" +
     "t overflow is rare.";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.label_processText.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // button_openModMenu
             // 
@@ -276,51 +276,51 @@
             this.button_modCrateMenu.Visible = false;
             this.button_modCrateMenu.Click += new System.EventHandler(this.button_modCrateMenu_Click);
             // 
-            // label7
+            // label_gameType
             // 
-            this.label7.BackColor = System.Drawing.Color.Transparent;
-            this.tableLayoutPanel3.SetColumnSpan(this.label7, 2);
-            this.label7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label7.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label7.Location = new System.Drawing.Point(3, 22);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(458, 33);
-            this.label7.TabIndex = 28;
-            this.label7.Text = "Game Name\r\n(Region Console)";
-            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label_gameType.BackColor = System.Drawing.Color.Transparent;
+            this.tableLayoutPanel3.SetColumnSpan(this.label_gameType, 2);
+            this.label_gameType.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label_gameType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.label_gameType.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label_gameType.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label_gameType.Location = new System.Drawing.Point(3, 22);
+            this.label_gameType.Name = "label_gameType";
+            this.label_gameType.Size = new System.Drawing.Size(458, 33);
+            this.label_gameType.TabIndex = 28;
+            this.label_gameType.Text = "Game Name\r\n(Region Console)";
+            this.label_gameType.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // linkLabel1
+            // linkLabel_apiCredit
             // 
-            this.linkLabel1.BackColor = System.Drawing.Color.Transparent;
-            this.tableLayoutPanel3.SetColumnSpan(this.linkLabel1, 2);
-            this.linkLabel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.linkLabel1.Enabled = false;
-            this.linkLabel1.Location = new System.Drawing.Point(3, 55);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(458, 21);
-            this.linkLabel1.TabIndex = 29;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "API Credit Text which is very long probably";
-            this.linkLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.toolTip1.SetToolTip(this.linkLabel1, "Click this to visit the relevant website of this game\'s mod support.");
-            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            this.linkLabel_apiCredit.BackColor = System.Drawing.Color.Transparent;
+            this.tableLayoutPanel3.SetColumnSpan(this.linkLabel_apiCredit, 2);
+            this.linkLabel_apiCredit.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.linkLabel_apiCredit.Enabled = false;
+            this.linkLabel_apiCredit.Location = new System.Drawing.Point(3, 55);
+            this.linkLabel_apiCredit.Name = "linkLabel_apiCredit";
+            this.linkLabel_apiCredit.Size = new System.Drawing.Size(458, 21);
+            this.linkLabel_apiCredit.TabIndex = 29;
+            this.linkLabel_apiCredit.TabStop = true;
+            this.linkLabel_apiCredit.Text = "API Credit Text which is very long probably";
+            this.linkLabel_apiCredit.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.toolTip1.SetToolTip(this.linkLabel_apiCredit, "Click this to visit the relevant website of this game\'s mod support.");
+            this.linkLabel_apiCredit.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
-            // linkLabel2
+            // linkLabel_programTitle
             // 
-            this.linkLabel2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.linkLabel2.Enabled = false;
-            this.linkLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.linkLabel2.Location = new System.Drawing.Point(260, 0);
-            this.linkLabel2.Name = "linkLabel2";
-            this.linkLabel2.Size = new System.Drawing.Size(206, 22);
-            this.linkLabel2.TabIndex = 30;
-            this.linkLabel2.TabStop = true;
-            this.linkLabel2.Text = "Crate Mod Loader v1.0.0";
-            this.linkLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.toolTip1.SetToolTip(this.linkLabel2, "Click this to visit the website of this tool.");
-            this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
+            this.linkLabel_programTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.linkLabel_programTitle.Enabled = false;
+            this.linkLabel_programTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.linkLabel_programTitle.Location = new System.Drawing.Point(260, 0);
+            this.linkLabel_programTitle.Name = "linkLabel_programTitle";
+            this.linkLabel_programTitle.Size = new System.Drawing.Size(206, 22);
+            this.linkLabel_programTitle.TabIndex = 30;
+            this.linkLabel_programTitle.TabStop = true;
+            this.linkLabel_programTitle.Text = "Crate Mod Loader v1.0.0";
+            this.linkLabel_programTitle.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolTip1.SetToolTip(this.linkLabel_programTitle, "Click this to visit the website of this tool.");
+            this.linkLabel_programTitle.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
             // 
             // linkLabel_optionDesc
             // 
@@ -565,9 +565,9 @@
             this.tableLayoutPanel3.ColumnCount = 2;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 76F));
-            this.tableLayoutPanel3.Controls.Add(this.linkLabel1, 0, 2);
-            this.tableLayoutPanel3.Controls.Add(this.label7, 0, 1);
-            this.tableLayoutPanel3.Controls.Add(this.label6, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.linkLabel_apiCredit, 0, 2);
+            this.tableLayoutPanel3.Controls.Add(this.label_gameType, 0, 1);
+            this.tableLayoutPanel3.Controls.Add(this.label_processText, 0, 0);
             this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 117);
             this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
@@ -588,8 +588,8 @@
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel4.Controls.Add(this.button_startProcess, 0, 3);
             this.tableLayoutPanel4.Controls.Add(this.progressBar1, 0, 2);
-            this.tableLayoutPanel4.Controls.Add(this.textBox1, 0, 0);
-            this.tableLayoutPanel4.Controls.Add(this.textBox2, 0, 1);
+            this.tableLayoutPanel4.Controls.Add(this.textBox_inputPath, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.textBox_outputPath, 0, 1);
             this.tableLayoutPanel4.Controls.Add(this.button_browseInput, 1, 0);
             this.tableLayoutPanel4.Controls.Add(this.button_browseOutput, 1, 1);
             this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 24);
@@ -613,7 +613,7 @@
             this.Controls.Add(this.tableLayoutPanel3);
             this.Controls.Add(this.tableLayoutPanel2);
             this.Controls.Add(this.panel2);
-            this.Controls.Add(this.linkLabel2);
+            this.Controls.Add(this.linkLabel_programTitle);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
@@ -644,23 +644,23 @@
         private System.Windows.Forms.CheckedListBox checkedListBox1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBox_inputPath;
         private System.Windows.Forms.Button button_browseInput;
         private System.Windows.Forms.ProgressBar progressBar1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBox_outputPath;
         private System.Windows.Forms.Button button_browseOutput;
         private System.Windows.Forms.Button button_startProcess;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Button button_randomizeSeed;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label_processText;
         private System.Windows.Forms.Button button_openModMenu;
         private System.Windows.Forms.Button button_modCrateMenu;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label_gameType;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog2;
         private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.LinkLabel linkLabel1;
-        private System.Windows.Forms.LinkLabel linkLabel2;
+        private System.Windows.Forms.LinkLabel linkLabel_apiCredit;
+        private System.Windows.Forms.LinkLabel linkLabel_programTitle;
         private System.Windows.Forms.LinkLabel linkLabel_optionDesc;
         private System.Windows.Forms.Panel panel_desc;
         private System.Windows.Forms.Panel panel2;

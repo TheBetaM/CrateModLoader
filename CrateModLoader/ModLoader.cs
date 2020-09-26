@@ -703,528 +703,75 @@ namespace CrateModLoader
         public void CheckISO()
         {
             Modder = null;
+            Pipeline = null;
             ModCrates.ClearModLists();
             bool ConsoleDetected = false;
+            string regionID;
+            uint regionNumber;
 
-            if (inputDirectoryMode)
+            DeleteTempFiles();
+
+            try
             {
-                try
+                foreach (KeyValuePair<ModPipelineInfo, Type> pair in ModLoaderGlobals.SupportedConsoles)
                 {
                     ModLoaderGlobals.Console = ConsoleMode.Undefined;
-
-                    if (File.Exists(ModLoaderGlobals.InputPath + @"SYSTEM.CNF"))
+                    Pipeline = (ModPipeline)Activator.CreateInstance(pair.Value);
+                    bool DetectResult = Pipeline.Detect(inputDirectoryMode, ModLoaderGlobals.InputPath, out regionID, out regionNumber);
+                    if (DetectResult)
                     {
-                        using (StreamReader sr = new StreamReader(ModLoaderGlobals.InputPath + @"SYSTEM.CNF"))
+                        ConsoleDetected = true;
+                        SetGameType(regionID, pair.Key.Console, regionNumber);
+                        if (Modder != null)
                         {
-                            string titleID = sr.ReadLine();
-                            if (titleID.Contains("BOOT2"))
-                            {
-                                SetGameType(titleID, ConsoleMode.PS2);
-                                if (Modder != null)
-                                {
-                                    foreach (var rc in Game.RegionID[ConsoleMode.PS2])
-                                        if (rc.Region == ModLoaderGlobals.Region)
-                                            ModLoaderGlobals.ProductCode = rc.CodeName;
-                                }
-                            }
-                            else
-                            {
-                                SetGameType(titleID, ConsoleMode.PS1);
-                                if (Modder != null)
-                                {
-                                    foreach (var rc in Game.RegionID[ConsoleMode.PS1])
-                                        if (rc.Region == ModLoaderGlobals.Region)
-                                            ModLoaderGlobals.ProductCode = rc.CodeName;
-                                }
-                            }
-                            ConsoleDetected = true;
+                            ModLoaderGlobals.ProductCode = regionID;
+                            ModLoaderGlobals.ISO_Label = regionID;
                         }
+                        break;
                     }
-                    else if (File.Exists(ModLoaderGlobals.InputPath + @"UMD_DATA.BIN"))
-                    {
-                        using (StreamReader sr = new StreamReader(ModLoaderGlobals.InputPath + @"UMD_DATA.BIN"))
-                        {
-                            string titleID = sr.ReadLine().Substring(0, 10);
-                            SetGameType(titleID, ConsoleMode.PSP);
-                            if (Modder != null)
-                            {
-                                ModLoaderGlobals.ProductCode = titleID;
-                            }
-                            ConsoleDetected = true;
-                        }
-                    }
-                    else if (File.Exists(ModLoaderGlobals.InputPath + @"default.xbe"))
-                    {
-                        ModLoaderGlobals.Console = ConsoleMode.XBOX;
-                        //Based on OpenXDK
-                        using (FileStream fileStream = new FileStream(ModLoaderGlobals.InputPath + @"default.xbe", FileMode.Open, FileAccess.Read, FileShare.Read))
-                        {
-                            fileStream.Seek(0x0118, SeekOrigin.Begin);
-                            BinaryReader reader = new BinaryReader(fileStream);
-                            uint CertOffset = reader.ReadUInt16();
-                            fileStream.Seek(CertOffset, SeekOrigin.Begin);
-                            fileStream.Seek(CertOffset + 0x0008, SeekOrigin.Begin);
-                            uint CertID = reader.ReadUInt32();
-                            fileStream.Seek(CertOffset + 0x000C, SeekOrigin.Begin);
-                            byte[] CertNameUnicode = new byte[2];
-                            string TitleName = "";
-                            for (int i = 0; i < 40; i++)
-                            {
-                                CertNameUnicode[0] = reader.ReadByte();
-                                CertNameUnicode[1] = reader.ReadByte();
-                                TitleName += System.Text.Encoding.Unicode.GetString(CertNameUnicode);
-                            }
-                            fileStream.Seek(CertOffset + 0x00A0, SeekOrigin.Begin);
-                            uint CertRegion = reader.ReadUInt32();
-                            fileStream.Seek(CertOffset + 0x00AC, SeekOrigin.Begin);
-                            uint CertVersion = reader.ReadUInt32();
-
-                            /*
-                            Console.WriteLine("Cert offset: " + CertOffset.ToString("X"));
-                            Console.WriteLine("Cert Title ID: " + CertID);
-                            Console.WriteLine("Cert Region: " + CertRegion);
-                            Console.WriteLine("Cert Version: " + CertVersion);
-                            Console.WriteLine("Cert Name: " + TitleName);
-                            */
-
-                            SetGameType(TitleName, ConsoleMode.XBOX, CertRegion);
-                            ConsoleDetected = true;
-                        }
-                    }
-                    else if (File.Exists(ModLoaderGlobals.InputPath + @"default.xex"))
-                    {
-                        ModLoaderGlobals.Console = ConsoleMode.XBOX360;
-
-                        string args = "-l ";
-                        args += "\"" + ModLoaderGlobals.InputPath + @"default.xex" + "\"";
-
-                        ISOcreatorProcess = new Process();
-                        ISOcreatorProcess.StartInfo.FileName = ModLoaderGlobals.ToolsPath + "xextool.exe";
-                        //ISOcreatorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
-                        ISOcreatorProcess.StartInfo.Arguments = args;
-                        ISOcreatorProcess.StartInfo.UseShellExecute = false;
-                        ISOcreatorProcess.StartInfo.RedirectStandardOutput = true;
-                        ISOcreatorProcess.StartInfo.CreateNoWindow = true;
-                        ISOcreatorProcess.Start();
-
-                        string outputMessage = ISOcreatorProcess.StandardOutput.ReadToEnd();
-                        //Console.WriteLine(outputMessage);
-
-                        ISOcreatorProcess.WaitForExit();
-
-                        if (outputMessage.Length > 200)
-                        {
-                            string[] outputLines = outputMessage.Split('\n');
-                            string titleID = "";
-
-                            for (int i = 0; i < outputLines.Length; i++)
-                            {
-                                if (outputLines[i].Contains("Xex Name: "))
-                                {
-                                    titleID = outputLines[i];
-                                    break;
-                                }
-                            }
-
-                            if (!string.IsNullOrWhiteSpace(titleID))
-                            {
-                                SetGameType(titleID, ConsoleMode.XBOX360);
-                                if (Modder != null)
-                                {
-                                    ModLoaderGlobals.ProductCode = titleID;
-                                }
-                                ConsoleDetected = true;
-                            }
-                        }
-                    }
-                    else if (File.Exists(ModLoaderGlobals.InputPath + @"sys/main.dol") && File.Exists(ModLoaderGlobals.InputPath + @"sys/boot.bin"))
-                    {
-                        ModLoaderGlobals.Console = ConsoleMode.GCN;
-
-                        using (StreamReader sr = new StreamReader(ModLoaderGlobals.InputPath + @"sys/boot.bin"))
-                        {
-                            string titleID = sr.ReadLine().Substring(0, 6);
-
-                            if (titleID.StartsWith("G"))
-                            {
-                                SetGameType(titleID, ConsoleMode.GCN);
-                                if (Modder != null)
-                                {
-                                    ModLoaderGlobals.ProductCode = titleID;
-                                }
-                            }
-                            else
-                            {
-                                SetGameType(titleID, ConsoleMode.WII);
-                                if (Modder != null)
-                                {
-                                    ModLoaderGlobals.ProductCode = titleID;
-                                }
-                            }
-                            ConsoleDetected = true;
-                        }
-                    }
-                    else if (Directory.GetFiles(ModLoaderGlobals.InputPath, "*.exe").Length > 0 || Directory.GetFiles(ModLoaderGlobals.InputPath, "*.EXE").Length > 0)
-                    {
-                        ModLoaderGlobals.Console = ConsoleMode.PC;
-
-                        string[] ExeFiles;
-                        if (Modder == null && Directory.GetFiles(ModLoaderGlobals.InputPath, "*.exe").Length > 0)
-                        {
-                            ExeFiles = Directory.GetFiles(ModLoaderGlobals.InputPath, "*.exe");
-                            for (int i = 0; i < ExeFiles.Length; i++)
-                            {
-                                if (Modder == null)
-                                {
-                                    SetGameType(ExeFiles[i], ConsoleMode.PC);
-                                    if (Modder != null)
-                                    {
-                                        ModLoaderGlobals.ProductCode = ExeFiles[i];
-                                    }
-                                    ConsoleDetected = true;
-                                }
-                            }
-                        }
-                        else if (Modder == null && Directory.GetFiles(ModLoaderGlobals.InputPath, "*.EXE").Length > 0)
-                        {
-                            ExeFiles = Directory.GetFiles(ModLoaderGlobals.InputPath, "*.EXE");
-                            for (int i = 0; i < ExeFiles.Length; i++)
-                            {
-                                if (Modder == null)
-                                {
-                                    SetGameType(ExeFiles[i], ConsoleMode.PC);
-                                    if (Modder != null)
-                                    {
-                                        ModLoaderGlobals.ProductCode = ExeFiles[i];
-                                    }
-                                    ConsoleDetected = true;
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        Modder = null;
-                        ModCrates.ClearModLists();
-                    }
-                    ModLoaderGlobals.ISO_Label = ModLoaderGlobals.ProductCode;
+                    DeleteTempFiles();
                 }
-                catch
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Detect Error: " + ex.Message);
+                if (inputDirectoryMode)
                 {
                     main_form.UpdateGameTitleText(ModLoaderText.Error_UnableToOpenGameFolder);
-                    loadedISO = false;
-                    ResetGameSpecific(false, true);
-                    return;
+                }
+                else
+                {
+                    main_form.UpdateGameTitleText(ModLoaderText.Error_UnableToOpenROM);
+                }
+                loadedISO = false;
+                ResetGameSpecific(false, true);
+                return;
+            }
+
+            DeleteTempFiles();
+
+            loadedISO = ConsoleDetected;
+            main_form.SetProcessStartAllowed(loadedISO && outputPathSet);
+
+            if (loadedISO)
+            {
+                if (outputPathSet)
+                {
+                    main_form.UpdateProcessText(ModLoaderText.ProcessReady);
+                }
+                else
+                {
+                    main_form.UpdateProcessText(ModLoaderText.Step2Text);
                 }
             }
             else
             {
-                if (OpenROM_Selection == OpenROM_SelectionType.AutomaticOnly || OpenROM_Selection == OpenROM_SelectionType.Any)
-                {
-                    // Gamecube/Wii ROMs
-
-                    string args = "ID6 ";
-                    args += "\"" + ModLoaderGlobals.InputPath + "\"";
-
-                    ISOcreatorProcess = new Process();
-                    ISOcreatorProcess.StartInfo.FileName = ModLoaderGlobals.ToolsPath + @"wit\wit.exe";
-                    //ISOcreatorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
-                    ISOcreatorProcess.StartInfo.Arguments = args;
-                    ISOcreatorProcess.StartInfo.UseShellExecute = false;
-                    ISOcreatorProcess.StartInfo.RedirectStandardOutput = true;
-                    ISOcreatorProcess.StartInfo.CreateNoWindow = true;
-                    ISOcreatorProcess.Start();
-
-                    string outputMessage = ISOcreatorProcess.StandardOutput.ReadToEnd();
-                    //Console.WriteLine(outputMessage);
-
-                    ISOcreatorProcess.WaitForExit();
-
-                    if (outputMessage.Length > 0 && outputMessage.Length <= 8)
-                    {
-                        string titleID = outputMessage.Substring(0, 6);
-
-                        if (!string.IsNullOrWhiteSpace(titleID))
-                        {
-                            if (titleID.StartsWith("G"))
-                            {
-                                SetGameType(titleID, ConsoleMode.GCN);
-                                if (Modder != null)
-                                {
-                                    ModLoaderGlobals.ProductCode = titleID;
-                                }
-                            }
-                            else
-                            {
-                                SetGameType(titleID, ConsoleMode.WII);
-                                if (Modder != null)
-                                {
-                                    ModLoaderGlobals.ProductCode = titleID;
-                                }
-                            }
-                            ConsoleDetected = true;
-                        }
-                    }
-                }
-                if (!ConsoleDetected && Modder == null && (OpenROM_Selection == OpenROM_SelectionType.AutomaticOnly || OpenROM_Selection == OpenROM_SelectionType.Any))
-                {
-
-                    DeleteTempFiles();
-
-                    string args = "-i -x ";
-                    args += "\"" + ModLoaderGlobals.InputPath + "\"";
-
-                    //Modified extract-xiso only extracts the executables to check
-
-                    ISOcreatorProcess = new Process();
-                    ISOcreatorProcess.StartInfo.FileName = ModLoaderGlobals.ToolsPath + "extract-xiso.exe";
-                    ISOcreatorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
-                    ISOcreatorProcess.StartInfo.Arguments = args;
-                    //ISOcreatorProcess.Start();
-
-                    ISOcreatorProcess.StartInfo.UseShellExecute = false;
-                    ISOcreatorProcess.StartInfo.RedirectStandardOutput = true;
-                    ISOcreatorProcess.StartInfo.CreateNoWindow = true;
-                    ISOcreatorProcess.Start();
-                    string outputMessage = ISOcreatorProcess.StandardOutput.ReadToEnd();
-                    Console.WriteLine(outputMessage);
-
-                    ISOcreatorProcess.WaitForExit();
-
-                    if (Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + @"\" + Path.GetFileNameWithoutExtension(ModLoaderGlobals.InputPath)))
-                    {
-                        Directory.Move(AppDomain.CurrentDomain.BaseDirectory + @"\" + Path.GetFileNameWithoutExtension(ModLoaderGlobals.InputPath), ModLoaderGlobals.TempPath);
-                    }
-
-                    if (Directory.Exists(ModLoaderGlobals.TempPath) && File.Exists(ModLoaderGlobals.TempPath + @"default.xbe"))
-                    {
-                        ModLoaderGlobals.Console = ConsoleMode.XBOX;
-                        //Based on OpenXDK
-                        using (FileStream fileStream = new FileStream(ModLoaderGlobals.TempPath + @"default.xbe", FileMode.Open, FileAccess.Read, FileShare.Read))
-                        {
-                            fileStream.Seek(0x0118, SeekOrigin.Begin);
-                            BinaryReader reader = new BinaryReader(fileStream);
-                            uint CertOffset = reader.ReadUInt16();
-                            fileStream.Seek(CertOffset, SeekOrigin.Begin);
-                            fileStream.Seek(CertOffset + 0x0008, SeekOrigin.Begin);
-                            uint CertID = reader.ReadUInt32();
-                            fileStream.Seek(CertOffset + 0x000C, SeekOrigin.Begin);
-                            byte[] CertNameUnicode = new byte[2];
-                            string TitleName = "";
-                            for (int i = 0; i < 40; i++)
-                            {
-                                CertNameUnicode[0] = reader.ReadByte();
-                                CertNameUnicode[1] = reader.ReadByte();
-                                TitleName += System.Text.Encoding.Unicode.GetString(CertNameUnicode);
-                            }
-                            fileStream.Seek(CertOffset + 0x00A0, SeekOrigin.Begin);
-                            uint CertRegion = reader.ReadUInt32();
-                            fileStream.Seek(CertOffset + 0x00AC, SeekOrigin.Begin);
-                            uint CertVersion = reader.ReadUInt32();
-
-                            /*
-                            Console.WriteLine("Cert offset: " + CertOffset.ToString("X"));
-                            Console.WriteLine("Cert Title ID: " + CertID);
-                            Console.WriteLine("Cert Region: " + CertRegion);
-                            Console.WriteLine("Cert Version: " + CertVersion);
-                            Console.WriteLine("Cert Name: " + TitleName);
-                            */
-
-                            SetGameType(TitleName, ConsoleMode.XBOX, CertRegion);
-                            ConsoleDetected = true;
-                        }
-                    }
-                    else if (Directory.Exists(ModLoaderGlobals.TempPath) && File.Exists(ModLoaderGlobals.TempPath + @"default.xex"))
-                    {
-                        ModLoaderGlobals.Console = ConsoleMode.XBOX360;
-
-                        string xargs = "-l ";
-                        xargs += "\"" + ModLoaderGlobals.TempPath + @"default.xex" + "\"";
-
-                        ISOcreatorProcess = new Process();
-                        ISOcreatorProcess.StartInfo.FileName = ModLoaderGlobals.ToolsPath + "xextool.exe";
-                        //ISOcreatorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
-                        ISOcreatorProcess.StartInfo.Arguments = xargs;
-                        ISOcreatorProcess.StartInfo.UseShellExecute = false;
-                        ISOcreatorProcess.StartInfo.RedirectStandardOutput = true;
-                        ISOcreatorProcess.StartInfo.CreateNoWindow = true;
-                        ISOcreatorProcess.Start();
-
-                        string xoutputMessage = ISOcreatorProcess.StandardOutput.ReadToEnd();
-                        //Console.WriteLine(outputMessage);
-
-                        ISOcreatorProcess.WaitForExit();
-
-                        if (xoutputMessage.Length > 200)
-                        {
-                            string[] outputLines = xoutputMessage.Split('\n');
-                            string titleID = "";
-
-                            for (int i = 0; i < outputLines.Length; i++)
-                            {
-                                if (outputLines[i].Contains("Xex Name: "))
-                                {
-                                    titleID = outputLines[i];
-                                    break;
-                                }
-                            }
-
-                            if (!string.IsNullOrWhiteSpace(titleID))
-                            {
-                                SetGameType(titleID, ConsoleMode.XBOX360);
-                                if (Modder != null)
-                                {
-                                    ModLoaderGlobals.ProductCode = titleID;
-                                }
-                                ConsoleDetected = true;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        main_form.UpdateProcessText(ModLoaderText.Step1Text);
-                    }
-
-                    DeleteTempFiles();
-                }
-                if (!ConsoleDetected && Modder == null && (OpenROM_Selection == OpenROM_SelectionType.AutomaticOnly || OpenROM_Selection == OpenROM_SelectionType.Any))
-                {
-                    try
-                    {
-                        using (FileStream isoStream = File.Open(ModLoaderGlobals.InputPath, FileMode.Open))
-                        {
-                            CDReader cd;
-                            FileStream tempbin = null;
-                            ModLoaderGlobals.Console = ConsoleMode.Undefined;
-
-                            if (Path.GetExtension(ModLoaderGlobals.InputPath).ToLower() == ".bin") // PS1/PS2 CD image
-                            {
-                                FileStream binconvout = new FileStream(AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso", FileMode.Create, FileAccess.Write);
-                                PSX2ISO.Run(isoStream, binconvout);
-                                binconvout.Close();
-                                tempbin = new FileStream(AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso", FileMode.Open, FileAccess.Read);
-                                cd = new CDReader(tempbin, true);
-                            }
-                            else if (!CDReader.Detect(isoStream))
-                            {
-                                main_form.UpdateGameTitleText(ModLoaderText.Error_UnknownAutoGameROM);
-                                loadedISO = false;
-                                main_form.SetProcessStartAllowed(false);
-                                main_form.UpdateProcessText(ModLoaderText.Step1Text);
-                                ResetGameSpecific(false, true);
-
-                                return;
-                            }
-                            else
-                            {
-                                cd = new CDReader(isoStream, true);
-                            }
-                            if (cd.FileExists(@"SYSTEM.CNF"))
-                            {
-                                using (StreamReader sr = new StreamReader(cd.OpenFile(@"SYSTEM.CNF", FileMode.Open)))
-                                {
-                                    string titleID = sr.ReadLine();
-                                    if (titleID.Contains("BOOT2"))
-                                    {
-                                        SetGameType(titleID, ConsoleMode.PS2);
-                                        if (Modder != null)
-                                        {
-                                            foreach (var rc in Game.RegionID[ConsoleMode.PS2])
-                                                if (rc.Region == ModLoaderGlobals.Region)
-                                                    ModLoaderGlobals.ProductCode = rc.CodeName;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        SetGameType(titleID, ConsoleMode.PS1);
-                                        if (Modder != null)
-                                        {
-                                            foreach (var rc in Game.RegionID[ConsoleMode.PS1])
-                                                if (rc.Region == ModLoaderGlobals.Region)
-                                                    ModLoaderGlobals.ProductCode = rc.CodeName;
-                                        }
-                                    }
-                                    ConsoleDetected = true;
-                                }
-                            }
-                            else if (cd.FileExists(@"UMD_DATA.BIN"))
-                            {
-                                using (StreamReader sr = new StreamReader(cd.OpenFile(@"UMD_DATA.BIN", FileMode.Open)))
-                                {
-                                    string titleID = sr.ReadLine().Substring(0, 10);
-                                    SetGameType(titleID, ConsoleMode.PSP);
-                                    if (Modder != null)
-                                    {
-                                        ModLoaderGlobals.ProductCode = titleID;
-                                    }
-                                    ConsoleDetected = true;
-                                }
-                            }
-                            else if (cd.FileExists(@"default.xbe"))
-                            {
-                                ModLoaderGlobals.Console = ConsoleMode.XBOX;
-                                //Based on OpenXDK
-                                using (FileStream fileStream = new FileStream(@"default.xbe", FileMode.Open, FileAccess.Read, FileShare.Read))
-                                {
-                                    fileStream.Seek(0x0118, SeekOrigin.Begin);
-                                    BinaryReader reader = new BinaryReader(fileStream);
-                                    uint CertOffset = reader.ReadUInt16();
-                                    fileStream.Seek(CertOffset, SeekOrigin.Begin);
-                                    fileStream.Seek(CertOffset + 0x0008, SeekOrigin.Begin);
-                                    uint CertID = reader.ReadUInt32();
-                                    fileStream.Seek(CertOffset + 0x000C, SeekOrigin.Begin);
-                                    byte[] CertNameUnicode = new byte[2];
-                                    string TitleName = "";
-                                    for (int i = 0; i < 40; i++)
-                                    {
-                                        CertNameUnicode[0] = reader.ReadByte();
-                                        CertNameUnicode[1] = reader.ReadByte();
-                                        TitleName += System.Text.Encoding.Unicode.GetString(CertNameUnicode);
-                                    }
-                                    fileStream.Seek(CertOffset + 0x00A0, SeekOrigin.Begin);
-                                    uint CertRegion = reader.ReadUInt32();
-                                    fileStream.Seek(CertOffset + 0x00AC, SeekOrigin.Begin);
-                                    uint CertVersion = reader.ReadUInt32();
-
-                                    /*
-                                    Console.WriteLine("Cert offset: " + CertOffset.ToString("X"));
-                                    Console.WriteLine("Cert Title ID: " + CertID);
-                                    Console.WriteLine("Cert Region: " + CertRegion);
-                                    Console.WriteLine("Cert Version: " + CertVersion);
-                                    Console.WriteLine("Cert Name: " + TitleName);
-                                    */
-
-                                    SetGameType(TitleName, ConsoleMode.XBOX, CertRegion);
-                                    ConsoleDetected = true;
-                                }
-                            }
-                            else
-                            {
-                                Modder = null;
-                                ModCrates.ClearModLists();
-                            }
-
-                            cd.Dispose();
-
-                            if (tempbin != null)
-                            {
-                                tempbin.Dispose();
-                                File.Delete(AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso");
-                            }
-                        }
-                    }
-                    catch
-                    {
-                        main_form.UpdateGameTitleText(ModLoaderText.Error_UnableToOpenROM);
-                        loadedISO = false;
-                        ResetGameSpecific(false, true);
-                        return;
-                    }
-                }
-            }
-
-            if (!ConsoleDetected)
-            {
+                ModLoaderGlobals.Console = ConsoleMode.Undefined;
+                Modder = null;
+                Pipeline = null;
+                ModCrates.ClearModLists();
+                main_form.UpdateProcessText(ModLoaderText.Step1Text);
+                ResetGameSpecific(false, true);
                 if (OpenROM_Selection == OpenROM_SelectionType.AutomaticOnly)
                 {
                     main_form.UpdateGameTitleText(ModLoaderText.Error_UnknownAutoGameROM);
@@ -1232,32 +779,6 @@ namespace CrateModLoader
                 else
                 {
                     main_form.UpdateGameTitleText(ModLoaderText.Error_UnknownGameROM);
-                }
-                loadedISO = false;
-            }
-            else
-            {
-                loadedISO = true;
-            }
-
-            if (loadedISO && outputPathSet)
-            {
-                main_form.SetProcessStartAllowed(true);
-                main_form.UpdateProcessText(ModLoaderText.ProcessReady);
-            }
-            else
-            {
-                main_form.SetProcessStartAllowed(false);
-
-                if (loadedISO)
-                {
-                    main_form.UpdateProcessText(ModLoaderText.Step2Text);
-                }
-                else
-                {
-                    main_form.UpdateProcessText(ModLoaderText.Step1Text);
-
-                    ResetGameSpecific(false, true);
                 }
             }
         }
