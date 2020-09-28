@@ -1,12 +1,10 @@
-﻿using DiscUtils.Iso9660;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using CrateModLoader.Resources.Text;
-using CrateModLoader.Tools;
+using CrateModLoader.Tools.IO;
 
 namespace CrateModLoader
 {
@@ -14,48 +12,32 @@ namespace CrateModLoader
     public class ModLoader
     {
 
-        // UI elements
         public ModLoaderForm main_form;
-
-        // Active settings
-        public enum OpenROM_SelectionType
-        {
-            AutomaticOnly = 1, //PSX/PS2/PSP/GC/WII/XBOX/360
-            Any = 2,
-        }
-        public bool loadedISO = false;
-        public bool outputPathSet = false;
-        public bool keepTempFiles = false;
-        public bool inputDirectoryMode = false;
-        public bool outputDirectoryMode = false;
-        public bool processActive = false;
-        public bool isCDimage = false; //as opposed to DVD image
         public bool asyncBuild = false;
         public Modder Modder;
         public Game Game;
         public ModPipeline Pipeline;
-        private Process ISOcreatorProcess;
-        public BackgroundWorker asyncWorker;
-        public OpenROM_SelectionType OpenROM_Selection = OpenROM_SelectionType.AutomaticOnly;
 
         public ModLoader()
         {
             CacheSupportedGames();
             CachePipelines();
-
-            asyncWorker = new BackgroundWorker();
-            asyncWorker.WorkerReportsProgress = true;
         }
 
-        // Builds the ISO
-        void CreateISO()
+        /// <summary>
+        /// Builds game ROM or copies game files to output path.
+        /// </summary>
+        /// <param name="inputPath">Input path of the game files</param>
+        /// <param name="outputPath">Output path to folder or file</param>
+        void BuildGame(string inputPath, string outputPath)
         {
+            bool directoryMode = IO_Common.PathIsFolder(outputPath);
             asyncBuild = false;
 
-            if (outputDirectoryMode)
+            if (directoryMode)
             {
-                //Directory Mode
-                DirectoryInfo di = new DirectoryInfo(ModLoaderGlobals.TempPath);
+                //Directory Mode - just copy files to output
+                DirectoryInfo di = new DirectoryInfo(inputPath);
                 if (ModLoaderGlobals.Console == ConsoleMode.PS2)
                 {
                     foreach (DirectoryInfo dir in di.EnumerateDirectories())
@@ -64,7 +46,7 @@ namespace CrateModLoader
                         {
                             file.MoveTo(file.FullName);
                         }
-                        Recursive_RenameFiles(dir);
+                        IO_Common.Recursive_RenameFiles(dir);
                     }
                     foreach (FileInfo file in di.EnumerateFiles())
                     {
@@ -72,12 +54,12 @@ namespace CrateModLoader
                     }
                 }
 
-                if (!Directory.Exists(ModLoaderGlobals.OutputPath))
+                if (!Directory.Exists(outputPath))
                 {
-                    Directory.CreateDirectory(ModLoaderGlobals.OutputPath);
+                    Directory.CreateDirectory(outputPath);
                 }
 
-                string pathparent = ModLoaderGlobals.OutputPath + @"\";
+                string pathparent = outputPath + @"\";
                 foreach (DirectoryInfo dir in di.EnumerateDirectories())
                 {
                     Directory.CreateDirectory(pathparent + dir.Name);
@@ -85,280 +67,45 @@ namespace CrateModLoader
                     {
                         file.CopyTo(pathparent + dir.Name + @"\" + file.Name);
                     }
-                    Recursive_CopyFiles(dir, pathparent + dir.Name + @"\");
+                    IO_Common.Recursive_CopyFiles(dir, pathparent + dir.Name + @"\");
                 }
                 foreach (FileInfo file in di.EnumerateFiles())
                 {
                     file.CopyTo(pathparent + file.Name);
                 }
             }
-            else if (ModLoaderGlobals.Console == ConsoleMode.PS2 && !isCDimage)
-            {
-                //Use PS2ImageMaker
-                DirectoryInfo di = new DirectoryInfo(ModLoaderGlobals.TempPath);
-                foreach (DirectoryInfo dir in di.EnumerateDirectories())
-                {
-                    foreach (FileInfo file in dir.EnumerateFiles())
-                    {
-                        file.MoveTo(file.FullName);
-                    }
-                    Recursive_RenameFiles(dir);
-                }
-                foreach (FileInfo file in di.EnumerateFiles())
-                {
-                    file.MoveTo(file.FullName);
-                }
-
-                asyncBuild = true;
-                PS2ImageMaker.StartPacking(ModLoaderGlobals.TempPath, ModLoaderGlobals.OutputPath);
-                main_form.StartAsyncTimer();
-            }
-            else if (ModLoaderGlobals.Console == ConsoleMode.PSP)
-            {
-                if (inputDirectoryMode)
-                {
-                    throw new Exception(ModLoaderText.Error_FolderToROMNotSupported);
-                }
-                // Use WQSG_UMD
-                File.Copy(ModLoaderGlobals.InputPath, ModLoaderGlobals.ToolsPath + "Game.iso");
-
-                string args = "";
-                args += @"--iso=";
-                args += "\"" + AppDomain.CurrentDomain.BaseDirectory + "/Tools/Game.iso\"";
-                args += " --file=\"";
-                args += ModLoaderGlobals.TempPath + "PSP_GAME\"";
-                //args += " --log";
-
-                ISOcreatorProcess = new Process();
-                ISOcreatorProcess.StartInfo.FileName = ModLoaderGlobals.ToolsPath + "WQSG_UMD.exe";
-                ISOcreatorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                ISOcreatorProcess.StartInfo.Arguments = args;
-                ISOcreatorProcess.Start();
-                ISOcreatorProcess.WaitForExit();
-
-                File.Move(ModLoaderGlobals.ToolsPath + "Game.iso", ModLoaderGlobals.OutputPath);
-            }
-            else if (ModLoaderGlobals.Console == ConsoleMode.GCN)
-            {
-                // Use GCIT (Wiims ISO Tool doesn't work for this?)
-
-                Directory.Move(ModLoaderGlobals.TempPath + @"\P-" + ModLoaderGlobals.ProductCode.Substring(0, 4) + @"\files\", ModLoaderGlobals.TempPath + @"\P-" + ModLoaderGlobals.ProductCode.Substring(0, 4) + @"\root\");
-
-                string args = "";
-                args += "\"" + ModLoaderGlobals.TempPath + @"\P-" + ModLoaderGlobals.ProductCode.Substring(0, 4) + "\" -q -d ";
-                args += "\"" + ModLoaderGlobals.OutputPath + "\" ";
-
-                ISOcreatorProcess = new Process();
-                ISOcreatorProcess.StartInfo.FileName = ModLoaderGlobals.ToolsPath + "gcit.exe";
-                ISOcreatorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
-                ISOcreatorProcess.StartInfo.Arguments = args;
-                //ISOcreatorProcess.StartInfo.UseShellExecute = false;
-                //ISOcreatorProcess.StartInfo.RedirectStandardOutput = true;
-                //ISOcreatorProcess.StartInfo.CreateNoWindow = true;
-                ISOcreatorProcess.Start();
-
-                //Console.WriteLine(ISOcreatorProcess.StandardOutput.ReadToEnd());
-
-                ISOcreatorProcess.WaitForExit();
-            }
-            else if (ModLoaderGlobals.Console == ConsoleMode.WII)
-            {
-                // Use Wiimms ISO Tool
-                string args = "copy ";
-                args += "\"" + ModLoaderGlobals.TempPath + "\" ";
-                if (ModLoaderGlobals.Console == ConsoleMode.GCN)
-                {
-                    args += "--ciso ";
-                }
-                args += "\"" + ModLoaderGlobals.OutputPath + "\" ";
-
-                ISOcreatorProcess = new Process();
-                ISOcreatorProcess.StartInfo.FileName = ModLoaderGlobals.ToolsPath + @"wit\wit.exe";
-                ISOcreatorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                ISOcreatorProcess.StartInfo.Arguments = args;
-                //ISOcreatorProcess.StartInfo.UseShellExecute = false;
-                //ISOcreatorProcess.StartInfo.RedirectStandardOutput = true;
-                //ISOcreatorProcess.StartInfo.CreateNoWindow = true;
-                ISOcreatorProcess.Start();
-
-                //Console.WriteLine(ISOcreatorProcess.StandardOutput.ReadToEnd());
-
-                ISOcreatorProcess.WaitForExit();
-            }
-            else if (ModLoaderGlobals.Console == ConsoleMode.XBOX)
-            {
-                //Use extract-xiso
-                string args = "-c ";
-                args += ModLoaderGlobals.TempPath + " ";
-                args += "\"" + ModLoaderGlobals.OutputPath + "\" ";
-
-                ISOcreatorProcess = new Process();
-                ISOcreatorProcess.StartInfo.FileName = ModLoaderGlobals.ToolsPath + "extract-xiso.exe";
-                ISOcreatorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
-                ISOcreatorProcess.StartInfo.Arguments = args;
-                ISOcreatorProcess.Start();
-
-                ISOcreatorProcess.WaitForExit();
-            }
             else
             {
-                // Otherwise, try CDBuilder
-                CDBuilder isoBuild = new CDBuilder();
-                isoBuild.UseJoliet = true;
-                isoBuild.VolumeIdentifier = ModLoaderGlobals.ISO_Label;
-
-                if (isCDimage)
+                Pipeline.Build(inputPath, outputPath);
+                if (Pipeline.AsyncBuild)
                 {
-                    DirectoryInfo dit = new DirectoryInfo(ModLoaderGlobals.TempPath);
-                    foreach (DirectoryInfo dir in dit.EnumerateDirectories())
-                    {
-                        foreach (FileInfo file in dir.EnumerateFiles())
-                        {
-                            file.MoveTo(file.FullName);
-                        }
-                        Recursive_RenameFiles(dir);
-                    }
-                    foreach (FileInfo file in dit.EnumerateFiles())
-                    {
-                        file.MoveTo(file.FullName);
-                    }
-                }
-
-                DirectoryInfo di = new DirectoryInfo(ModLoaderGlobals.TempPath);
-                HashSet<FileStream> files = new HashSet<FileStream>();
-
-                foreach (DirectoryInfo dir in di.GetDirectories())
-                {
-                    Recursive_AddDirs(isoBuild, dir, dir.Name + @"\", files);
-                }
-                foreach (FileInfo file in di.GetFiles())
-                {
-                    AddFile(isoBuild, file, string.Empty, files);
-                }
-
-                if (ModLoaderGlobals.Console == ConsoleMode.PS1 || ModLoaderGlobals.Console == ConsoleMode.PS2)
-                {
-                    using (FileStream output = new FileStream(ModLoaderGlobals.OutputPath, FileMode.Create, FileAccess.Write))
-                    using (Stream input = isoBuild.Build())
-                    {
-                        ISO2PSX.Run(input, output);
-                    }
-                }
-                else
-                {
-                    isoBuild.Build(ModLoaderGlobals.OutputPath);
-                }
-
-                foreach (FileStream file in files)
-                {
-                    file.Close();
+                    asyncBuild = true;
+                    main_form.StartAsyncTimer();
                 }
             }
+
         }
 
-        void Recursive_RenameFiles(DirectoryInfo di)
+        /// <summary>
+        /// Extracts or copies game files using the set ModPipeline from given input path to given output path.
+        /// </summary>
+        /// <param name="inputPath">Input path to Game folder or file</param>
+        /// <param name="outputPath">Output path of game files</param>
+        void ExtractGame(string inputPath, string outputPath)
         {
-            foreach (DirectoryInfo dir in di.EnumerateDirectories())
-            {
-                foreach (FileInfo file in dir.EnumerateFiles())
-                {
-                    file.MoveTo(file.FullName.Substring(0, file.FullName.Length - 2));
-                }
-                Recursive_RenameFiles(dir);
-            }
-        }
+            bool directoryMode = IO_Common.PathIsFolder(inputPath);
 
-        void Recursive_AddDirs(CDBuilder isoBuild, DirectoryInfo di, string sName, HashSet<FileStream> files)
-        {
-            foreach (DirectoryInfo dir in di.GetDirectories())
+            if (directoryMode)
             {
-                isoBuild.AddDirectory(sName + dir.Name);
-                Recursive_AddDirs(isoBuild, dir, sName + dir.Name + @"\", files);
-            }
-            foreach (FileInfo file in di.GetFiles())
-            {
-                AddFile(isoBuild, file, sName, files);
-            }
-        }
-
-        void Recursive_CopyFiles(DirectoryInfo di, string pathparent)
-        {
-            foreach (DirectoryInfo dir in di.EnumerateDirectories())
-            {
-                Directory.CreateDirectory(pathparent + dir.Name);
-                string pathchild = pathparent + dir.Name + @"\";
-                foreach (FileInfo file in dir.EnumerateFiles())
-                {
-                    file.CopyTo(pathchild + file.Name);
-                }
-                Recursive_CopyFiles(dir, pathchild);
-            }
-        }
-
-        void AddFile(CDBuilder isoBuild, FileInfo file, string sName, HashSet<FileStream> files)
-        {
-            var fstream = file.Open(FileMode.Open);
-            if (ModLoaderGlobals.Console == ConsoleMode.PS1 || ModLoaderGlobals.Console == ConsoleMode.PS2)
-            {
-                isoBuild.AddFile(sName + file.Name + ";1", fstream);
-            }
-            else
-            {
-                isoBuild.AddFile(sName + file.Name, fstream);
-            }
-            files.Add(fstream);
-        }
-
-        void LoadISO()
-        {
-
-            isCDimage = false;
-            if (Directory.Exists(ModLoaderGlobals.TempPath))
-            {
-                DeleteTempFiles();
-            }
-
-            if (inputDirectoryMode && !outputDirectoryMode)
-            {
-                // To fix: PS1, PSP requires the original file; GCN: Incorrect paths because of product code folder
-                if (ModLoaderGlobals.Console == ConsoleMode.PS1 || ModLoaderGlobals.Console == ConsoleMode.PSP || ModLoaderGlobals.Console == ConsoleMode.GCN)
-                {
-                    throw new Exception(ModLoaderText.Error_FolderToROMNotSupported);
-                }
-            }
-            if (outputDirectoryMode)
-            {
-                // To fix: Incorrect paths because of product code folder
-                if (ModLoaderGlobals.Console == ConsoleMode.GCN)
-                {
-                    throw new Exception(ModLoaderText.Error_GC_FolderNotSupported);
-                }
-            }
-            if (ModLoaderGlobals.Console == ConsoleMode.XBOX360 && !outputDirectoryMode)
-            {
-                throw new Exception(ModLoaderText.Error_360_ROMNotSupported);
-            }
-            if (ModLoaderGlobals.Console == ConsoleMode.PC)
-            {
-                if (!inputDirectoryMode || !outputDirectoryMode)
-                {
-                    throw new Exception(ModLoaderText.Error_PC_FolderOnly);
-                }
-            }
-
-            if (inputDirectoryMode)
-            {
-                DirectoryInfo di = new DirectoryInfo(ModLoaderGlobals.InputPath);
+                DirectoryInfo di = new DirectoryInfo(inputPath);
                 if (!di.Exists)
                 {
                     throw new IOException(ModLoaderText.Error_FolderNotAccessible);
                 }
 
-                Directory.CreateDirectory(ModLoaderGlobals.TempPath);
+                Directory.CreateDirectory(outputPath);
 
-                asyncWorker.ReportProgress(25);
-
-                string pathparent = ModLoaderGlobals.TempPath + @"\";
+                string pathparent = outputPath + @"\";
                 foreach (DirectoryInfo dir in di.EnumerateDirectories())
                 {
                     Directory.CreateDirectory(pathparent + dir.Name);
@@ -366,224 +113,76 @@ namespace CrateModLoader
                     {
                         file.CopyTo(pathparent + dir.Name + @"\" + file.Name);
                     }
-                    Recursive_CopyFiles(dir, pathparent + dir.Name + @"\");
+                    IO_Common.Recursive_CopyFiles(dir, pathparent + dir.Name + @"\");
                 }
                 foreach (FileInfo file in di.EnumerateFiles())
                 {
                     file.CopyTo(pathparent + file.Name);
                 }
             }
-            else if (ModLoaderGlobals.Console == ConsoleMode.GCN || ModLoaderGlobals.Console == ConsoleMode.WII)
-            {
-                // TODO: add free space checks
-
-                string args = "extract ";
-                args += "\"" + ModLoaderGlobals.InputPath + "\" ";
-                args += "\"" + ModLoaderGlobals.TempPath + "\" ";
-
-                asyncWorker.ReportProgress(25);
-
-                ISOcreatorProcess = new Process();
-                ISOcreatorProcess.StartInfo.FileName = ModLoaderGlobals.ToolsPath + @"wit\wit.exe";
-                ISOcreatorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                ISOcreatorProcess.StartInfo.Arguments = args;
-                ISOcreatorProcess.Start();
-                ISOcreatorProcess.WaitForExit();
-            }
-            else if (ModLoaderGlobals.Console == ConsoleMode.XBOX || ModLoaderGlobals.Console == ConsoleMode.XBOX360)
-            {
-                // TODO: add free space checks
-                string args = "-x ";
-                args += "\"" + ModLoaderGlobals.InputPath + "\" ";
-
-                asyncWorker.ReportProgress(25);
-
-                ISOcreatorProcess = new Process();
-                ISOcreatorProcess.StartInfo.FileName = ModLoaderGlobals.ToolsPath + "extract-xiso.exe";
-                ISOcreatorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
-                ISOcreatorProcess.StartInfo.Arguments = args;
-                ISOcreatorProcess.Start();
-                ISOcreatorProcess.WaitForExit();
-
-                Directory.Move(AppDomain.CurrentDomain.BaseDirectory + @"\" + Path.GetFileNameWithoutExtension(ModLoaderGlobals.InputPath), ModLoaderGlobals.TempPath);
-            }
             else
             {
-                using (FileStream isoStream = File.Open(ModLoaderGlobals.InputPath, FileMode.Open))
+                Pipeline.Extract(inputPath, outputPath);
+            }
+        }
+
+        /// <summary>
+        /// Detects console and game from the given full path using cached ModPipeline and Game lists.
+        /// </summary>
+        public void DetectGame(string inputPath)
+        {
+            bool directoryMode = IO_Common.PathIsFolder(inputPath);
+
+            Modder = null;
+            Pipeline = null;
+            ModCrates.ClearModLists();
+            bool ConsoleDetected = false;
+            string regionID;
+            uint regionNumber;
+
+            DeleteTempFiles();
+
+            try
+            {
+                foreach (KeyValuePair<ModPipelineInfo, Type> pair in ModLoaderGlobals.SupportedConsoles)
                 {
-                    FileInfo isoInfo = new FileInfo(ModLoaderGlobals.InputPath);
-                    CDReader cd;
-                    FileStream tempbin = null;
-                    if (Path.GetExtension(ModLoaderGlobals.InputPath).ToLower() == ".bin") // PS1/PS2 CD image
+                    ModLoaderGlobals.Console = ConsoleMode.Undefined;
+                    Pipeline = (ModPipeline)Activator.CreateInstance(pair.Value);
+                    bool DetectResult = Pipeline.Detect(directoryMode, inputPath, out regionID, out regionNumber);
+                    if (DetectResult)
                     {
-                        FileStream binconvout = new FileStream(AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso", FileMode.Create, FileAccess.Write);
-                        PSX2ISO.Run(isoStream, binconvout);
-                        binconvout.Close();
-                        tempbin = new FileStream(AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso", FileMode.Open, FileAccess.Read);
-                        cd = new CDReader(tempbin, true);
-                        isCDimage = true;
-                    }
-                    else
-                        cd = new CDReader(isoStream, true);
-                    ModLoaderGlobals.ISO_Label = cd.VolumeLabel;
-
-                    /* Sometimes doesn't work?
-                    if (isoInfo.Length * 2 > GetTotalFreeSpace(ModLoaderGlobals.TempPath.Substring(0, 3)))
-                    {
-                        cd.Dispose();
-                        throw new IOException("Extraction error: Not enough hard drive space where this program is!");
-                    }
-                    if (isoInfo.Length * 2 > GetTotalFreeSpace(ModLoaderGlobals.OutputPath.Substring(0, 3)))
-                    {
-                        cd.Dispose();
-                        throw new IOException("Extraction error: Not enough hard drive space in the output path!");
-                    }
-                    */
-
-                    asyncWorker.ReportProgress(25);
-                    //fileStream = cd.OpenFile(@"SYSTEM.CNF", FileMode.Open);
-
-                    if (!Directory.Exists(ModLoaderGlobals.TempPath))
-                    {
-                        Directory.CreateDirectory(ModLoaderGlobals.TempPath);
-                    }
-
-                    //Extracting ISO
-                    Stream fileStreamFrom = null;
-                    Stream fileStreamTo = null;
-                    if (cd.GetDirectories("").Length > 0)
-                    {
-                        foreach (string directory in cd.GetDirectories(""))
+                        ConsoleDetected = true;
+                        SetGameType(regionID, pair.Key.Console, regionNumber);
+                        if (Modder != null)
                         {
-                            Directory.CreateDirectory(ModLoaderGlobals.TempPath + directory);
-                            if (cd.GetDirectoryInfo(directory).GetFiles().Length > 0)
-                            {
-                                foreach (string file in cd.GetFiles(directory))
-                                {
-                                    fileStreamFrom = cd.OpenFile(file, FileMode.Open);
-                                    string filename = ModLoaderGlobals.TempPath + file;
-                                    filename = filename.Replace(";1", string.Empty);
-                                    fileStreamTo = File.Open(filename, FileMode.OpenOrCreate);
-                                    fileStreamFrom.CopyTo(fileStreamTo);
-                                    fileStreamFrom.Close();
-                                    fileStreamTo.Close();
-                                }
-                            }
-                            if (cd.GetDirectories(directory).Length > 0)
-                            {
-                                Recursive_CreateDirs(cd, directory, fileStreamFrom, fileStreamTo);
-                            }
+                            ModLoaderGlobals.ProductCode = regionID;
+                            ModLoaderGlobals.ISO_Label = regionID;
                         }
+                        break;
                     }
-                    if (cd.GetDirectoryInfo("").GetFiles().Length > 0)
-                    {
-                        foreach (string file in cd.GetFiles(""))
-                        {
-                            fileStreamFrom = cd.OpenFile(file, FileMode.Open);
-                            string filename = ModLoaderGlobals.TempPath + "/" + file;
-                            filename = filename.Replace(";1", string.Empty);
-                            fileStreamTo = File.Open(filename, FileMode.OpenOrCreate);
-                            fileStreamFrom.CopyTo(fileStreamTo);
-                            fileStreamFrom.Close();
-                            fileStreamTo.Close();
-                        }
-                    }
-
-                    cd.Dispose();
-
-                    if (tempbin != null)
-                    {
-                        tempbin.Dispose();
-                        File.Delete(AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso");
-                    }
+                    DeleteTempFiles();
                 }
             }
-        }
-
-        private void Recursive_CreateDirs(CDReader cd, string dir, Stream fileStreamFrom, Stream fileStreamTo)
-        {
-            foreach (string directory in cd.GetDirectories(dir))
+            catch (Exception ex)
             {
-                Directory.CreateDirectory(ModLoaderGlobals.TempPath + @"\" + directory);
-                if (cd.GetDirectoryInfo(directory).GetFiles().Length > 0)
-                {
-                    foreach (string file in cd.GetFiles(directory))
-                    {
-                        fileStreamFrom = cd.OpenFile(file, FileMode.Open);
-                        fileStreamTo = File.Open(ModLoaderGlobals.TempPath + @"\" + file, FileMode.OpenOrCreate);
-                        fileStreamFrom.CopyTo(fileStreamTo);
-                        fileStreamFrom.Close();
-                        fileStreamTo.Close();
-                    }
-                }
-                if (cd.GetDirectories(directory).Length > 0)
-                {
-                    Recursive_CreateDirs(cd, directory, fileStreamFrom, fileStreamTo);
-                }
+                Console.WriteLine("Detect Error: " + ex.Message);
+                main_form.UpdateGameTitleText(ModLoaderText.Error_UnableToOpenGame);
+                ResetGameSpecific(false, true);
+                return;
+            }
+
+            DeleteTempFiles();
+
+            main_form.SetProcessStartAllowed(ConsoleDetected);
+
+            if (!ConsoleDetected)
+            {
+                ResetGameSpecific(false, true);
+                main_form.UpdateGameTitleText(ModLoaderText.Error_UnknownGameROM);
             }
         }
 
-        private long GetTotalFreeSpace(string driveName)
-        {
-            foreach (DriveInfo drive in DriveInfo.GetDrives())
-            {
-                if (drive.IsReady && drive.Name == driveName)
-                {
-                    return drive.TotalFreeSpace;
-                }
-            }
-            return -1;
-        }
-
-        public void StartButtonPressed()
-        {
-            if (!asyncWorker.IsBusy)
-            {
-                asyncWorker.DoWork += new DoWorkEventHandler(asyncWorker_DoWork);
-                asyncWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(asyncWorker_RunWorkerCompleted);
-                asyncWorker.ProgressChanged += new ProgressChangedEventHandler(asyncWorker_ProgressChanged);
-                asyncWorker.RunWorkerAsync();
-            }
-        }
-
-        private void asyncWorker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            BackgroundWorker a = sender as BackgroundWorker;
-
-            a.ReportProgress(0);
-
-            LoadISO();
-
-            a.ReportProgress(50);
-
-            EditGameContent();
-
-            a.ReportProgress(75);
-
-            CreateISO();
-
-            if (asyncBuild)
-            {
-                while (asyncBuild)
-                {
-                    //Application.DoEvents();
-                }
-            }
-
-            a.ReportProgress(90);
-            if (!keepTempFiles)
-            {
-                DeleteTempFiles();
-            }
-
-        }
-
-        public void Async_BuildFinished()
-        {
-            asyncBuild = false;
-        }
-
-        public void EditGameContent()
+        public void EditGame()
         {
             //To make sure the seed matches
             ModLoaderGlobals.RandomizerSeed = ModLoaderGlobals.RandomizerSeedBase;
@@ -637,7 +236,62 @@ namespace CrateModLoader
             }
         }
 
-        private void asyncWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        public void StartProcess()
+        {
+            main_form.DisableInteraction();
+
+            BackgroundWorker asyncWorker = new BackgroundWorker();
+            asyncWorker.WorkerReportsProgress = true;
+            asyncWorker.DoWork += new DoWorkEventHandler(AsyncWorker_DoWork);
+            asyncWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(AsyncWorker_RunWorkerCompleted);
+            asyncWorker.ProgressChanged += new ProgressChangedEventHandler(AsyncWorker_ProgressChanged);
+            asyncWorker.RunWorkerAsync();
+        }
+
+        private void AsyncWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker a = sender as BackgroundWorker;
+            string inputPath = ModLoaderGlobals.InputPath;
+            string tempPath = ModLoaderGlobals.TempPath;
+            string outputPath = ModLoaderGlobals.OutputPath;
+            bool inputDirectoryMode = IO_Common.PathIsFolder(inputPath);
+            bool outputDirectoryMode = IO_Common.PathIsFolder(outputPath);
+
+            a.ReportProgress(0);
+
+            DeleteTempFiles();
+            Pipeline.PreStart(inputDirectoryMode, outputDirectoryMode);
+
+            a.ReportProgress(25);
+
+            ExtractGame(inputPath, tempPath);
+
+            a.ReportProgress(50);
+
+            EditGame();
+
+            a.ReportProgress(75);
+
+            BuildGame(tempPath, outputPath);
+
+            if (asyncBuild)
+            {
+                while (asyncBuild)
+                {
+                    main_form.AsyncUpdate();
+                }
+            }
+
+            a.ReportProgress(90);
+
+            if (!ModLoaderGlobals.KeepTempFiles)
+            {
+                DeleteTempFiles();
+            }
+
+        }
+
+        private void AsyncWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             main_form.UpdateProcessProgress(100);
             main_form.Notify_ProcessFinished();
@@ -655,13 +309,16 @@ namespace CrateModLoader
                 main_form.ResetProcessProgress();
                 main_form.UpdateProcessText(ModLoaderText.Process_Cancelled);
             }
-            EnableInteraction();
-            asyncWorker.DoWork -= asyncWorker_DoWork;
-            asyncWorker.RunWorkerCompleted -= asyncWorker_RunWorkerCompleted;
-            asyncWorker.ProgressChanged -= asyncWorker_ProgressChanged;
+
+            main_form.EnableInteraction();
+
+            BackgroundWorker a = sender as BackgroundWorker;
+            a.DoWork -= AsyncWorker_DoWork;
+            a.RunWorkerCompleted -= AsyncWorker_RunWorkerCompleted;
+            a.ProgressChanged -= AsyncWorker_ProgressChanged;
         }
 
-        private void asyncWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        private void AsyncWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             main_form.UpdateProcessProgress(e.ProgressPercentage);
             if (e.ProgressPercentage == 0)
@@ -670,14 +327,7 @@ namespace CrateModLoader
             }
             else if (e.ProgressPercentage == 25)
             {
-                if (inputDirectoryMode)
-                {
-                    main_form.UpdateProcessText(ModLoaderText.Process_Step1_Folder);
-                }
-                else
-                {
-                    main_form.UpdateProcessText(ModLoaderText.Process_Step1_ROM);
-                }
+                main_form.UpdateProcessText(ModLoaderText.Process_Step1_ROM);
             }
             else if (e.ProgressPercentage == 50)
             {
@@ -685,104 +335,11 @@ namespace CrateModLoader
             }
             else if (e.ProgressPercentage == 75)
             {
-                if (outputDirectoryMode)
-                {
-                    main_form.UpdateProcessText(ModLoaderText.Process_Step3_Folder);
-                }
-                else
-                {
-                    main_form.UpdateProcessText(ModLoaderText.Process_Step3_ROM);
-                }
+                main_form.UpdateProcessText(ModLoaderText.Process_Step3_ROM);
             }
             else if (e.ProgressPercentage == 90)
             {
                 main_form.UpdateProcessText("Removing temporary files...");
-            }
-        }
-
-        /// <summary>
-        /// Detects console and game from the given full path using cached ModPipeline and Game lists.
-        /// </summary>
-        public void DetectGame(string inputPath)
-        {
-            Modder = null;
-            Pipeline = null;
-            ModCrates.ClearModLists();
-            bool ConsoleDetected = false;
-            string regionID;
-            uint regionNumber;
-
-            DeleteTempFiles();
-
-            try
-            {
-                foreach (KeyValuePair<ModPipelineInfo, Type> pair in ModLoaderGlobals.SupportedConsoles)
-                {
-                    ModLoaderGlobals.Console = ConsoleMode.Undefined;
-                    Pipeline = (ModPipeline)Activator.CreateInstance(pair.Value);
-                    bool DetectResult = Pipeline.Detect(inputDirectoryMode, inputPath, out regionID, out regionNumber);
-                    if (DetectResult)
-                    {
-                        ConsoleDetected = true;
-                        SetGameType(regionID, pair.Key.Console, regionNumber);
-                        if (Modder != null)
-                        {
-                            ModLoaderGlobals.ProductCode = regionID;
-                            ModLoaderGlobals.ISO_Label = regionID;
-                        }
-                        break;
-                    }
-                    DeleteTempFiles();
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Detect Error: " + ex.Message);
-                if (inputDirectoryMode)
-                {
-                    main_form.UpdateGameTitleText(ModLoaderText.Error_UnableToOpenGameFolder);
-                }
-                else
-                {
-                    main_form.UpdateGameTitleText(ModLoaderText.Error_UnableToOpenROM);
-                }
-                loadedISO = false;
-                ResetGameSpecific(false, true);
-                return;
-            }
-
-            DeleteTempFiles();
-
-            loadedISO = ConsoleDetected;
-            main_form.SetProcessStartAllowed(loadedISO && outputPathSet);
-
-            if (loadedISO)
-            {
-                if (outputPathSet)
-                {
-                    main_form.UpdateProcessText(ModLoaderText.ProcessReady);
-                }
-                else
-                {
-                    main_form.UpdateProcessText(ModLoaderText.Step2Text);
-                }
-            }
-            else
-            {
-                ModLoaderGlobals.Console = ConsoleMode.Undefined;
-                Modder = null;
-                Pipeline = null;
-                ModCrates.ClearModLists();
-                main_form.UpdateProcessText(ModLoaderText.Step1Text);
-                ResetGameSpecific(false, true);
-                if (OpenROM_Selection == OpenROM_SelectionType.AutomaticOnly)
-                {
-                    main_form.UpdateGameTitleText(ModLoaderText.Error_UnknownAutoGameROM);
-                }
-                else
-                {
-                    main_form.UpdateGameTitleText(ModLoaderText.Error_UnknownGameROM);
-                }
             }
         }
 
@@ -924,45 +481,9 @@ namespace CrateModLoader
             }
         }
 
-        public void DisableInteraction()
+        public void Async_BuildFinished()
         {
-            main_form.DisableInteraction();
-
-            processActive = true;
-        }
-        public void EnableInteraction()
-        {
-            main_form.EnableInteraction();
-
-            processActive = false;
-        }
-
-        public void UpdateInputSetting(bool state)
-        {
-            inputDirectoryMode = state;
-
-            main_form.UpdateProcessText(ModLoaderText.Step1Text);
-            ModLoaderGlobals.InputPath = "";
-
-            ResetGameSpecific(true, false);
-        }
-        public void UpdateOutputSetting(bool state)
-        {
-            outputDirectoryMode = state;
-            ModLoaderGlobals.OutputPath = "";
-
-            if (loadedISO)
-            {
-                main_form.UpdateProcessText(ModLoaderText.Step2Text);
-            }
-        }
-
-        public void API_Link_Clicked()
-        {
-            if (Modder != null && !string.IsNullOrWhiteSpace(Game.API_Credit) && !string.IsNullOrWhiteSpace(Game.API_Link))
-            {
-                Process.Start(Game.API_Link);
-            }
+            asyncBuild = false;
         }
 
         public void UpdateModMenuChangedState(bool change)
@@ -974,11 +495,12 @@ namespace CrateModLoader
             main_form.UpdateModCrateChangedState();
         }
 
-        void ResetGameSpecific(bool ClearGameText = false, bool ExtendedWindow = false)
+        public void ResetGameSpecific(bool ClearGameText = false, bool ExtendedWindow = false)
         {
             Modder = null;
+            Pipeline = null;
+            ModLoaderGlobals.Console = ConsoleMode.Undefined;
             ModCrates.ClearModLists();
-            loadedISO = false;
 
             main_form.ResetGameSpecific(ClearGameText, ExtendedWindow);
         }

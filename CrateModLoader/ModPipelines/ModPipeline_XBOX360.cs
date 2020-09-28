@@ -13,6 +13,8 @@ namespace CrateModLoader.ModPipelines
             Console = ConsoleMode.XBOX360,
             Layer = 0,
             NeedsDetection = true,
+            CanBuildROMfromFolder = false,
+            CanBuildROMfromROM = false,
         };
 
         public ModPipeline_XBOX360()
@@ -129,11 +131,24 @@ namespace CrateModLoader.ModPipelines
         public override void Build(string inputPath, string outputPath)
         {
             //todo
+            throw new NotImplementedException();
         }
 
         public override void Extract(string inputPath, string outputPath)
         {
-            //todo
+            // TODO: add free space checks
+            string args = "-x ";
+            args += "\"" + inputPath + "\" ";
+
+            Process ExtractorProcess = new Process();
+            ExtractorProcess.StartInfo.FileName = ModLoaderGlobals.ToolsPath + "extract-xiso.exe";
+            ExtractorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
+            ExtractorProcess.StartInfo.Arguments = args;
+            ExtractorProcess.Start();
+            ExtractorProcess.WaitForExit();
+
+            // this may not work with an arbitrary output path, since it assumes it's on the same drive
+            Directory.Move(AppDomain.CurrentDomain.BaseDirectory + @"\" + Path.GetFileNameWithoutExtension(inputPath), outputPath);
         }
 
     }

@@ -13,6 +13,8 @@ namespace CrateModLoader.ModPipelines
             Console = ConsoleMode.GCN,
             Layer = 0,
             NeedsDetection = true,
+            CanBuildROMfromFolder = false, // to fix: Incorrect paths because of product code folder
+            CanBuildFolder = false, // to fix: incorrect paths
         };
 
         public ModPipeline_GCN()
@@ -78,12 +80,43 @@ namespace CrateModLoader.ModPipelines
 
         public override void Build(string inputPath, string outputPath)
         {
-            //todo
+            // Use GCIT (Wiims ISO Tool doesn't work for this)
+            string folderFix = ModLoaderGlobals.ProductCode.Substring(0, 4);
+
+            Directory.Move(inputPath + @"\P-" + folderFix + @"\files\", inputPath + @"\P-" + folderFix + @"\root\");
+
+            string args = "";
+            args += "\"" + inputPath + @"\P-" + folderFix + "\" -q -d ";
+            args += "\"" + outputPath + "\" ";
+
+            Process ISOcreatorProcess = new Process();
+            ISOcreatorProcess.StartInfo.FileName = ModLoaderGlobals.ToolsPath + "gcit.exe";
+            ISOcreatorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
+            ISOcreatorProcess.StartInfo.Arguments = args;
+            //ISOcreatorProcess.StartInfo.UseShellExecute = false;
+            //ISOcreatorProcess.StartInfo.RedirectStandardOutput = true;
+            //ISOcreatorProcess.StartInfo.CreateNoWindow = true;
+            ISOcreatorProcess.Start();
+
+            //Console.WriteLine(ISOcreatorProcess.StandardOutput.ReadToEnd());
+
+            ISOcreatorProcess.WaitForExit();
         }
 
         public override void Extract(string inputPath, string outputPath)
         {
-            //todo
+            // TODO: add free space checks
+
+            string args = "extract ";
+            args += "\"" + inputPath + "\" ";
+            args += "\"" + outputPath + "\" ";
+
+            Process ExtractorProcess = new Process();
+            ExtractorProcess.StartInfo.FileName = ModLoaderGlobals.ToolsPath + @"wit\wit.exe";
+            ExtractorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            ExtractorProcess.StartInfo.Arguments = args;
+            ExtractorProcess.Start();
+            ExtractorProcess.WaitForExit();
         }
 
     }

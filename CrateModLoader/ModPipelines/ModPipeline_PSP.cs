@@ -1,6 +1,8 @@
 ﻿using DiscUtils.Iso9660;
 using System;
 using System.IO;
+using System.Diagnostics;
+using CrateModLoader.Tools;
 
 namespace CrateModLoader.ModPipelines
 {
@@ -13,6 +15,7 @@ namespace CrateModLoader.ModPipelines
             Console = ConsoleMode.PSP,
             Layer = 0,
             NeedsDetection = true,
+            CanBuildROMfromFolder = false, // original file required for building
         };
 
         public ModPipeline_PSP()
@@ -67,12 +70,139 @@ namespace CrateModLoader.ModPipelines
 
         public override void Build(string inputPath, string outputPath)
         {
-            //todo
+            // Use WQSG_UMD (requires input ROM)
+            File.Copy(ModLoaderGlobals.InputPath, ModLoaderGlobals.ToolsPath + "Game.iso");
+
+            string args = "";
+            args += @"--iso=";
+            args += "\"" + AppDomain.CurrentDomain.BaseDirectory + "/Tools/Game.iso\"";
+            args += " --file=\"";
+            args += inputPath + "PSP_GAME\"";
+            //args += " --log";
+
+            Process ISOcreatorProcess = new Process();
+            ISOcreatorProcess.StartInfo.FileName = ModLoaderGlobals.ToolsPath + "WQSG_UMD.exe";
+            ISOcreatorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            ISOcreatorProcess.StartInfo.Arguments = args;
+            ISOcreatorProcess.Start();
+            ISOcreatorProcess.WaitForExit();
+
+            File.Move(ModLoaderGlobals.ToolsPath + "Game.iso", outputPath);
         }
 
         public override void Extract(string inputPath, string outputPath)
         {
-            //todo
+            using (FileStream isoStream = File.Open(inputPath, FileMode.Open))
+            {
+                FileInfo isoInfo = new FileInfo(inputPath);
+                CDReader cd;
+                FileStream tempbin = null;
+                if (Path.GetExtension(inputPath).ToLower() == ".bin")
+                {
+                    FileStream binconvout = new FileStream(AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso", FileMode.Create, FileAccess.Write);
+                    PSX2ISO.Run(isoStream, binconvout);
+                    binconvout.Close();
+                    tempbin = new FileStream(AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso", FileMode.Open, FileAccess.Read);
+                    cd = new CDReader(tempbin, true);
+                }
+                else
+                {
+                    cd = new CDReader(isoStream, true);
+                }
+                ModLoaderGlobals.ISO_Label = cd.VolumeLabel;
+
+                /* Sometimes doesn't work?
+                if (isoInfo.Length * 2 > GetTotalFreeSpace(ModLoaderGlobals.TempPath.Substring(0, 3)))
+                {
+                    cd.Dispose();
+                    throw new IOException("Extraction error: Not enough hard drive space where this program is!");
+                }
+                if (isoInfo.Length * 2 > GetTotalFreeSpace(ModLoaderGlobals.OutputPath.Substring(0, 3)))
+                {
+                    cd.Dispose();
+                    throw new IOException("Extraction error: Not enough hard drive space in the output path!");
+                }
+                */
+
+                //fileStream = cd.OpenFile(@"SYSTEM.CNF", FileMode.Open);
+
+                if (!Directory.Exists(outputPath))
+                {
+                    Directory.CreateDirectory(outputPath);
+                }
+
+                //Extracting ISO
+                Stream fileStreamFrom = null;
+                Stream fileStreamTo = null;
+                if (cd.GetDirectories("").Length > 0)
+                {
+                    foreach (string directory in cd.GetDirectories(""))
+                    {
+                        Directory.CreateDirectory(outputPath + directory);
+                        if (cd.GetDirectoryInfo(directory).GetFiles().Length > 0)
+                        {
+                            foreach (string file in cd.GetFiles(directory))
+                            {
+                                fileStreamFrom = cd.OpenFile(file, FileMode.Open);
+                                string filename = outputPath + file;
+                                filename = filename.Replace(";1", string.Empty);
+                                fileStreamTo = File.Open(filename, FileMode.OpenOrCreate);
+                                fileStreamFrom.CopyTo(fileStreamTo);
+                                fileStreamFrom.Close();
+                                fileStreamTo.Close();
+                            }
+                        }
+                        if (cd.GetDirectories(directory).Length > 0)
+                        {
+                            Recursive_CreateDirs(cd, directory, fileStreamFrom, fileStreamTo);
+                        }
+                    }
+                }
+                if (cd.GetDirectoryInfo("").GetFiles().Length > 0)
+                {
+                    foreach (string file in cd.GetFiles(""))
+                    {
+                        fileStreamFrom = cd.OpenFile(file, FileMode.Open);
+                        string filename = outputPath + "/" + file;
+                        filename = filename.Replace(";1", string.Empty);
+                        fileStreamTo = File.Open(filename, FileMode.OpenOrCreate);
+                        fileStreamFrom.CopyTo(fileStreamTo);
+                        fileStreamFrom.Close();
+                        fileStreamTo.Close();
+                    }
+                }
+
+                cd.Dispose();
+
+                if (tempbin != null)
+                {
+                    tempbin.Dispose();
+                    File.Delete(AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso");
+                }
+            }
+        }
+
+        private void Recursive_CreateDirs(CDReader cd, string dir, Stream fileStreamFrom, Stream fileStreamTo)
+        {
+            foreach (string directory in cd.GetDirectories(dir))
+            {
+                Directory.CreateDirectory(ModLoaderGlobals.TempPath + @"\" + directory);
+                if (cd.GetDirectoryInfo(directory).GetFiles().Length > 0)
+                {
+                    foreach (string file in cd.GetFiles(directory))
+                    {
+                        fileStreamFrom = cd.OpenFile(file, FileMode.Open);
+                        fileStreamTo = File.Open(ModLoaderGlobals.TempPath + @"\" + file, FileMode.OpenOrCreate);
+                        fileStreamFrom.CopyTo(fileStreamTo);
+                        fileStreamFrom.Close();
+                        fileStreamTo.Close();
+                    }
+                }
+                if (cd.GetDirectories(directory).Length > 0)
+                {
+                    Recursive_CreateDirs(cd, directory, fileStreamFrom, fileStreamTo);
+                }
+            }
         }
 
     }

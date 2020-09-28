@@ -138,12 +138,35 @@ namespace CrateModLoader.ModPipelines
 
         public override void Build(string inputPath, string outputPath)
         {
-            //todo
+            //Use extract-xiso
+            string args = "-c ";
+            args += inputPath + " ";
+            args += "\"" + outputPath + "\" ";
+
+            Process ISOcreatorProcess = new Process();
+            ISOcreatorProcess.StartInfo.FileName = ModLoaderGlobals.ToolsPath + "extract-xiso.exe";
+            ISOcreatorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
+            ISOcreatorProcess.StartInfo.Arguments = args;
+            ISOcreatorProcess.Start();
+
+            ISOcreatorProcess.WaitForExit();
         }
 
         public override void Extract(string inputPath, string outputPath)
         {
-            //todo
+            // TODO: add free space checks
+            string args = "-x ";
+            args += "\"" + inputPath + "\" ";
+
+            Process ExtractorProcess = new Process();
+            ExtractorProcess.StartInfo.FileName = ModLoaderGlobals.ToolsPath + "extract-xiso.exe";
+            ExtractorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
+            ExtractorProcess.StartInfo.Arguments = args;
+            ExtractorProcess.Start();
+            ExtractorProcess.WaitForExit();
+
+            // this may not work with an arbitrary output path, since it assumes it's on the same drive
+            Directory.Move(AppDomain.CurrentDomain.BaseDirectory + @"\" + Path.GetFileNameWithoutExtension(inputPath), outputPath);
         }
 
     }

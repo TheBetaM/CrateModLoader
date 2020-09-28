@@ -78,12 +78,39 @@ namespace CrateModLoader.ModPipelines
 
         public override void Build(string inputPath, string outputPath)
         {
-            //todo
+            // Use Wiimms ISO Tool
+            string args = "copy ";
+            args += "\"" + inputPath + "\" ";
+            args += "\"" + outputPath + "\" ";
+
+            Process ISOcreatorProcess = new Process();
+            ISOcreatorProcess.StartInfo.FileName = ModLoaderGlobals.ToolsPath + @"wit\wit.exe";
+            ISOcreatorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            ISOcreatorProcess.StartInfo.Arguments = args;
+            //ISOcreatorProcess.StartInfo.UseShellExecute = false;
+            //ISOcreatorProcess.StartInfo.RedirectStandardOutput = true;
+            //ISOcreatorProcess.StartInfo.CreateNoWindow = true;
+            ISOcreatorProcess.Start();
+
+            //Console.WriteLine(ISOcreatorProcess.StandardOutput.ReadToEnd());
+
+            ISOcreatorProcess.WaitForExit();
         }
 
         public override void Extract(string inputPath, string outputPath)
         {
-            //todo
+            // TODO: add free space checks
+
+            string args = "extract ";
+            args += "\"" + inputPath + "\" ";
+            args += "\"" + outputPath + "\" ";
+
+            Process ExtractorProcess = new Process();
+            ExtractorProcess.StartInfo.FileName = ModLoaderGlobals.ToolsPath + @"wit\wit.exe";
+            ExtractorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            ExtractorProcess.StartInfo.Arguments = args;
+            ExtractorProcess.Start();
+            ExtractorProcess.WaitForExit();
         }
 
     }

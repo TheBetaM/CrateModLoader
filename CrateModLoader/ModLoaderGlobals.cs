@@ -132,6 +132,8 @@ namespace CrateModLoader
             }
         }
 
+        public static bool KeepTempFiles = false;
+
         /// <summary> Product code used as a folder name after extracting (for GC). Usually no need to access this - use ExtractedPath instead! </summary>
         public static string ProductCode = "";
 

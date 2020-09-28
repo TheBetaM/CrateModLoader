@@ -147,6 +147,9 @@
   <data name="Error_PC_FolderOnly" xml:space="preserve">
     <value>PC games are only supported in Folder mode!</value>
   </data>
+  <data name="Error_UnableToOpenGame" xml:space="preserve">
+    <value>Could not open the game files!</value>
+  </data>
   <data name="Error_UnableToOpenGameFolder" xml:space="preserve">
     <value>Could not open the game directory!</value>
   </data>
@@ -317,10 +320,10 @@
     <value>Copying files...</value>
   </data>
   <data name="Process_Step1_ROM" xml:space="preserve">
-    <value>Extracting game...</value>
+    <value>Extracting game files...</value>
   </data>
   <data name="Process_Step2" xml:space="preserve">
-    <value>Modding game...</value>
+    <value>Modding game files...</value>
   </data>
   <data name="Process_Step3_Folder" xml:space="preserve">
     <value>Copying modded files...</value>

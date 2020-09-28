@@ -142,6 +142,15 @@ namespace CrateModLoader.Resources.Text {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Could not open the game files!.
+        /// </summary>
+        public static string Error_UnableToOpenGame {
+            get {
+                return ResourceManager.GetString("Error_UnableToOpenGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Could not open the game directory!.
         /// </summary>
         public static string Error_UnableToOpenGameFolder {
@@ -646,7 +655,7 @@ namespace CrateModLoader.Resources.Text {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Extracting game....
+        ///   Looks up a localized string similar to Extracting game files....
         /// </summary>
         public static string Process_Step1_ROM {
             get {
@@ -655,7 +664,7 @@ namespace CrateModLoader.Resources.Text {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Modding game....
+        ///   Looks up a localized string similar to Modding game files....
         /// </summary>
         public static string Process_Step2 {
             get {

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace CrateModLoader
 {
@@ -7,6 +6,8 @@ namespace CrateModLoader
     {
 
         public abstract ModPipelineInfo Metadata { get; }
+
+        public bool AsyncBuild { get; set; }
 
         public virtual bool DetectROM(string inputPath, out string titleID, out uint regionID)
         {
@@ -30,6 +31,27 @@ namespace CrateModLoader
                 return DetectROM(inputPath, out titleID, out regionID);
         }
 
+        public virtual void PreStart(bool inputDirectoryMode, bool outputDirectoryMode)
+        {
+            if (!outputDirectoryMode)
+            {
+                if (inputDirectoryMode)
+                {
+                    if (!Metadata.CanBuildROMfromFolder)
+                        throw new NotImplementedException();
+                }
+                else
+                {
+                    if (!Metadata.CanBuildROMfromROM)
+                        throw new NotImplementedException();
+                }
+            }
+            else
+            {
+                if (!Metadata.CanBuildFolder)
+                    throw new NotImplementedException();
+            }
+        }
 
         public abstract void Extract(string inputPath, string outputPath);
 
@@ -46,5 +68,6 @@ namespace CrateModLoader
         public bool CanExtractROM = true;
         public bool CanBuildROMfromROM = true;
         public bool CanBuildROMfromFolder = true;
+        public bool CanBuildFolder = true;
     }
 }

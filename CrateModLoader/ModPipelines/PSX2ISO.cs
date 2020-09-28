@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace CrateModLoader
+namespace CrateModLoader.Tools
 {
     public static class PSX2ISO
     {

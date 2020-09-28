@@ -314,6 +314,8 @@
     <Compile Include="Forms\ModMenuForm.Designer.cs">
       <DependentUpon>ModMenuForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ModPipelines\IO_Common.cs" />
+    <Compile Include="ModPipelines\ISO_Common.cs" />
     <Compile Include="ModPipelines\ModPipeline.cs" />
     <Compile Include="ModPipelines\ModPipeline_GCN.cs" />
     <Compile Include="ModPipelines\ModPipeline_PS1.cs" />

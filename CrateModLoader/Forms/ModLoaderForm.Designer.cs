@@ -496,7 +496,6 @@
             this.toolStripMenuItem_keepTempFiles.Size = new System.Drawing.Size(193, 22);
             this.toolStripMenuItem_keepTempFiles.Text = "Keep Extracted Files";
             this.toolStripMenuItem_keepTempFiles.Visible = false;
-            this.toolStripMenuItem_keepTempFiles.CheckedChanged += new System.EventHandler(this.toolStripMenuItem_keepTempFiles_CheckedChanged);
             // 
             // toolStripMenuItem_language
             // 
