@@ -1,5 +1,7 @@
 ﻿using DiscUtils.Iso9660;
 using System;
+using System.Threading;
+using System.ComponentModel;
 using System.IO;
 using System.Collections.Generic;
 using CrateModLoader.Tools;
@@ -24,7 +26,6 @@ namespace CrateModLoader.ModPipelines
         public ModPipeline_PS2()
         {
             isCDimage = false;
-            AsyncBuild = false;
         }
 
         public override bool DetectROM(string inputPath, out string titleID, out uint regionID)
@@ -99,11 +100,62 @@ namespace CrateModLoader.ModPipelines
             return found;
         }
 
+        private bool IO_Delay = false;
+        private string buildInputPath;
+        private string buildOutputPath;
+        private void Builder_DoWork(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker a = sender as BackgroundWorker;
+
+            PS2ImageMaker.StartPacking(buildInputPath, buildOutputPath);
+
+            int progress;
+            while (!Builder_CheckProgress(out progress))
+            {
+                a.ReportProgress(progress);
+                Thread.Sleep(100);
+            }
+            
+        }
+
+        bool Builder_CheckProgress(out int prog)
+        {
+            var progress = PS2ImageMaker.PollProgress();
+            int progPercent = (int)(progress.ProgressPercentage * 100);
+            prog = progPercent;
+            //progressBar1.Value = (int)((progPercent / 4f) + 75f); 
+            //UpdateProcessText($"{ModLoaderText.Process_Step3_ROM} {progPercent}%");
+            switch (progress.ProgressS)
+            {
+                default:
+                    return false;
+                case PS2ImageMaker.ProgressState.FAILED:
+                    Console.WriteLine("Error: PS2 Image Build failed!");
+                    return true;
+                case PS2ImageMaker.ProgressState.FINISHED:
+                    return true;
+            }
+        }
+
+        private void Builder_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            BackgroundWorker a = sender as BackgroundWorker;
+            a.DoWork -= Builder_DoWork;
+            a.RunWorkerCompleted -= Builder_RunWorkerCompleted;
+            a.ProgressChanged -= Builder_ProgressChanged;
+
+            AsyncWorker = null;
+        }
+
+        private void Builder_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            
+        }
+
         public override void Build(string inputPath, string outputPath)
         {
             if (!isCDimage)
             {
-                AsyncBuild = true;
                 //Use PS2ImageMaker
                 DirectoryInfo di = new DirectoryInfo(inputPath);
                 foreach (DirectoryInfo dir in di.EnumerateDirectories())
@@ -118,12 +170,19 @@ namespace CrateModLoader.ModPipelines
                 {
                     file.MoveTo(file.FullName);
                 }
-                
-                PS2ImageMaker.StartPacking(inputPath, outputPath);
+
+                buildInputPath = inputPath;
+                buildOutputPath = outputPath;
+
+                AsyncWorker = new BackgroundWorker();
+                AsyncWorker.WorkerReportsProgress = true;
+                AsyncWorker.DoWork += new DoWorkEventHandler(Builder_DoWork);
+                AsyncWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(Builder_RunWorkerCompleted);
+                AsyncWorker.ProgressChanged += new ProgressChangedEventHandler(Builder_ProgressChanged);
+                AsyncWorker.RunWorkerAsync();
             }
             else
             {
-                AsyncBuild = false;
                 // Use CDBuilder
                 CDBuilder isoBuild = new CDBuilder();
                 isoBuild.UseJoliet = true;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Threading;
 using System.Reflection;
 using CrateModLoader.Resources.Text;
 using CrateModLoader.Tools.IO;
@@ -13,7 +14,6 @@ namespace CrateModLoader
     {
 
         public ModLoaderForm main_form;
-        public bool asyncBuild = false;
         public Modder Modder;
         public Game Game;
         public ModPipeline Pipeline;
@@ -31,8 +31,13 @@ namespace CrateModLoader
         /// <param name="outputPath">Output path to folder or file</param>
         void BuildGame(string inputPath, string outputPath)
         {
+            if (Pipeline == null)
+            {
+                Console.WriteLine("Error: Pipeline not ready!");
+                return;
+            }
+
             bool directoryMode = IO_Common.PathIsFolder(outputPath);
-            asyncBuild = false;
 
             if (directoryMode)
             {
@@ -77,11 +82,6 @@ namespace CrateModLoader
             else
             {
                 Pipeline.Build(inputPath, outputPath);
-                if (Pipeline.AsyncBuild)
-                {
-                    asyncBuild = true;
-                    main_form.StartAsyncTimer();
-                }
             }
 
         }
@@ -93,6 +93,12 @@ namespace CrateModLoader
         /// <param name="outputPath">Output path of game files</param>
         void ExtractGame(string inputPath, string outputPath)
         {
+            if (Pipeline == null)
+            {
+                Console.WriteLine("Error: Pipeline not ready!");
+                return;
+            }
+
             bool directoryMode = IO_Common.PathIsFolder(inputPath);
 
             if (directoryMode)
@@ -187,16 +193,13 @@ namespace CrateModLoader
             //To make sure the seed matches
             ModLoaderGlobals.RandomizerSeed = ModLoaderGlobals.RandomizerSeedBase;
 
-            if (ModCrates.ModsActiveAmount > 0 && (Modder == null || !Modder.ModCratesManualInstall))
+            if (Modder == null || !Modder.ModCratesManualInstall)
             {
                 ModCrates.InstallLayerMods(ModLoaderGlobals.ExtractedPath, 0);
             }
             if (Modder != null)
             {
-                if (ModCrates.ModsActiveAmount > 0)
-                {
-                    Modder.InstallCrateSettings();
-                }
+                Modder.InstallCrateSettings();
                 Modder.StartModProcess();
             }
         }
@@ -265,6 +268,7 @@ namespace CrateModLoader
             a.ReportProgress(25);
 
             ExtractGame(inputPath, tempPath);
+            while (Pipeline.IsBusy) Thread.Sleep(100);
 
             a.ReportProgress(50);
 
@@ -273,14 +277,7 @@ namespace CrateModLoader
             a.ReportProgress(75);
 
             BuildGame(tempPath, outputPath);
-
-            if (asyncBuild)
-            {
-                while (asyncBuild)
-                {
-                    main_form.AsyncUpdate();
-                }
-            }
+            while (Pipeline.IsBusy) Thread.Sleep(100);
 
             a.ReportProgress(90);
 
@@ -288,7 +285,6 @@ namespace CrateModLoader
             {
                 DeleteTempFiles();
             }
-
         }
 
         private void AsyncWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -479,11 +475,6 @@ namespace CrateModLoader
                 Modder.PopulateProperties();
                 main_form.SetLayoutSupportedGame(Game, cons_mod, region_mod);
             }
-        }
-
-        public void Async_BuildFinished()
-        {
-            asyncBuild = false;
         }
 
         public void UpdateModMenuChangedState(bool change)

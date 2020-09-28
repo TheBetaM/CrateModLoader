@@ -7,7 +7,6 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Diagnostics;
 using CrateModLoader.Resources.Text;
-using CrateModLoader.Tools;
 using CrateModLoader.ModProperties;
 
 namespace CrateModLoader
@@ -48,9 +47,6 @@ namespace CrateModLoader
             toolTip1.SetToolTip(button_openModMenu, ModLoaderText.Tooltip_Button_ModMenu);
             toolTip1.SetToolTip(button_modTools, ModLoaderText.Tooltip_Button_ModTools);
             toolTip1.SetToolTip(button_randomizeSeed, ModLoaderText.Tooltip_Button_RandomizeSeed);
-
-            timer1.Enabled = false;
-            timer1.Interval = 500;
 
             progressBar1.Minimum = 0;
             progressBar1.Maximum = 100;
@@ -318,37 +314,6 @@ namespace CrateModLoader
             Process.Start("https://github.com/TheBetaM/CrateModLoader");
         }
 
-        private bool IO_Delay = false;
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            if (IO_Delay)
-            {
-                timer1.Enabled = false;
-                ModLoaderGlobals.ModProgram.Async_BuildFinished();
-                return;
-            }
-            var progress = PS2ImageMaker.PollProgress();
-            int progPercent = (int)(progress.ProgressPercentage * 100);
-            //progressBar1.Value = (int)((progPercent / 4f) + 75f); 
-            //UpdateProcessText($"{ModLoaderText.Process_Step3_ROM} {progPercent}%");
-            switch (progress.ProgressS)
-            {
-                default:
-                    break;
-                case PS2ImageMaker.ProgressState.FAILED:
-                    IO_Delay = true;
-                    Console.WriteLine("Error: PS2 Image Build failed!");
-                    break;
-                case PS2ImageMaker.ProgressState.FINISHED:
-                    IO_Delay = true;
-                    break;
-            }
-        }
-        public void AsyncUpdate()
-        {
-            Application.DoEvents();
-        }
-
         private void toolStripMenuItem_showCredits_Click(object sender, EventArgs e)
         {
             TextDisplayForm textForm = new TextDisplayForm(TextDisplayForm.TextDisplayType.Credits);
@@ -454,6 +419,8 @@ namespace CrateModLoader
             linkLabel_programTitle.Enabled = false;
             button_modTools.Enabled = false;
             button_downloadMods.Enabled = false;
+            toolStripMenuItem1.Enabled = false;
+            menuStrip1.Enabled = false;
             DragDrop -= ModLoaderForm_DragDrop;
             DragEnter -= ModLoaderForm_DragEnter;
         }
@@ -468,6 +435,7 @@ namespace CrateModLoader
             numericUpDown1.ReadOnly = false;
             numericUpDown1.Enabled = true;
             button_modCrateMenu.Enabled = true;
+            menuStrip1.Enabled = true;
             DragDrop += ModLoaderForm_DragDrop;
             DragEnter += ModLoaderForm_DragEnter;
 
@@ -653,12 +621,6 @@ namespace CrateModLoader
             }
 
             button_modCrateMenu.Text = CratesActive;
-        }
-
-        public void StartAsyncTimer()
-        {
-            timer1.Enabled = true;
-            timer1.Start();
         }
 
         [DllImport("user32.dll")]

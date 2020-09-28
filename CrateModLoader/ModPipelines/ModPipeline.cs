@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace CrateModLoader
 {
@@ -7,7 +8,8 @@ namespace CrateModLoader
 
         public abstract ModPipelineInfo Metadata { get; }
 
-        public bool AsyncBuild { get; set; }
+        public BackgroundWorker AsyncWorker = null;
+        public bool IsBusy { get { return AsyncWorker != null && AsyncWorker.IsBusy; } }
 
         public virtual bool DetectROM(string inputPath, out string titleID, out uint regionID)
         {

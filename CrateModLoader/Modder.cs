@@ -105,9 +105,6 @@ namespace CrateModLoader
 
         public void InstallCrateSettings()
         {
-            if (!ModMenuEnabled)
-                return;
-
             for (int mod = 0; mod < ModCrates.SupportedMods.Count; mod++)
             {
                 if (ModCrates.SupportedMods[mod].IsActivated && ModCrates.SupportedMods[mod].HasSettings)

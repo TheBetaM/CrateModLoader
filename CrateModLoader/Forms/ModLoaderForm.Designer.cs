@@ -56,7 +56,6 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.button_modTools = new System.Windows.Forms.Button();
             this.button_downloadMods = new System.Windows.Forms.Button();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem_loadROM = new System.Windows.Forms.ToolStripMenuItem();
@@ -415,10 +414,6 @@
             this.button_downloadMods.UseVisualStyleBackColor = true;
             this.button_downloadMods.Visible = false;
             // 
-            // timer1
-            // 
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
             // menuStrip1
             // 
             this.menuStrip1.BackColor = System.Drawing.SystemColors.Control;
@@ -450,7 +445,7 @@
             // 
             this.toolStripMenuItem_loadROM.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripMenuItem_loadROM.Name = "toolStripMenuItem_loadROM";
-            this.toolStripMenuItem_loadROM.Size = new System.Drawing.Size(170, 22);
+            this.toolStripMenuItem_loadROM.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItem_loadROM.Text = "Load ROM...";
             this.toolStripMenuItem_loadROM.Click += new System.EventHandler(this.toolStripMenuItem_loadROM_Click);
             // 
@@ -458,7 +453,7 @@
             // 
             this.toolStripMenuItem_loadFolder.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripMenuItem_loadFolder.Name = "toolStripMenuItem_loadFolder";
-            this.toolStripMenuItem_loadFolder.Size = new System.Drawing.Size(170, 22);
+            this.toolStripMenuItem_loadFolder.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItem_loadFolder.Text = "Load Folder...";
             this.toolStripMenuItem_loadFolder.Click += new System.EventHandler(this.toolStripMenuItem_loadFolder_Click);
             // 
@@ -466,7 +461,7 @@
             // 
             this.toolStripMenuItem_saveROM.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripMenuItem_saveROM.Name = "toolStripMenuItem_saveROM";
-            this.toolStripMenuItem_saveROM.Size = new System.Drawing.Size(170, 22);
+            this.toolStripMenuItem_saveROM.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItem_saveROM.Text = "Save as ROM...";
             this.toolStripMenuItem_saveROM.Click += new System.EventHandler(this.toolStripMenuItem_saveROM_Click);
             // 
@@ -474,7 +469,7 @@
             // 
             this.toolStripMenuItem_saveFolder.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripMenuItem_saveFolder.Name = "toolStripMenuItem_saveFolder";
-            this.toolStripMenuItem_saveFolder.Size = new System.Drawing.Size(170, 22);
+            this.toolStripMenuItem_saveFolder.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItem_saveFolder.Text = "Save as Folder...";
             this.toolStripMenuItem_saveFolder.Click += new System.EventHandler(this.toolStripMenuItem_saveFolder_Click);
             // 
@@ -665,7 +660,6 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button button_downloadMods;
         private System.Windows.Forms.Button button_modTools;
-        private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_loadROM;

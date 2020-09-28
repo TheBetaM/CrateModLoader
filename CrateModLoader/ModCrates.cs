@@ -454,10 +454,6 @@ namespace CrateModLoader
         /// </summary>
         public static void InstallLayerMods(string basePath, int layer)
         {
-            if (ModsActiveAmount <= 0)
-            {
-                return;
-            }
             for (int i = 0; i < SupportedMods.Count; i++)
             {
                 if (SupportedMods[i].IsActivated && SupportedMods[i].LayersModded.Length > layer && SupportedMods[i].LayersModded[layer])
@@ -528,10 +524,6 @@ namespace CrateModLoader
         /// </summary>
         public static bool HasLayerModsActive(int layer)
         {
-            if (ModsActiveAmount <= 0)
-            {
-                return false;
-            }
             for (int i = 0; i < SupportedMods.Count; i++)
             {
                 if (SupportedMods[i].IsActivated && SupportedMods[i].LayersModded.Length > layer && SupportedMods[i].LayersModded[layer])
