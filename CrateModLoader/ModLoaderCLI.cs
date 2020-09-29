@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using CrateModLoader.Resources.Text;
+using CrateModAPI.Resources.Text;
 
 namespace CrateModLoader
 {

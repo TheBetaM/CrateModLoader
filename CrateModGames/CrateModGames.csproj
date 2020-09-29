@@ -1,0 +1,305 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5F39B57C-59F7-4C68-91CB-928312A2AEBE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CrateModGames</RootNamespace>
+    <AssemblyName>CrateModGames</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Crash">
+      <HintPath>GameSpecific\Crash1\Crash.dll</HintPath>
+    </Reference>
+    <Reference Include="CTRFramework">
+      <HintPath>GameSpecific\CrashTeamRacing\CTRFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>GameSpecific\CrashTeamRacing\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Twinsanity">
+      <HintPath>GameSpecific\CrashTS\Twinsanity.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="GameSpecific\Crash1\Crash1_Mods.cs" />
+    <Compile Include="GameSpecific\Crash1\Crash1_Text.Designer.cs">
+      <DependentUpon>Crash1_Text.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="GameSpecific\Crash1\CrashTri_Common.cs" />
+    <Compile Include="GameSpecific\Crash1\CrateSettings_CrashTri.cs" />
+    <Compile Include="GameSpecific\Crash1\Modder_Crash1.cs" />
+    <Compile Include="GameSpecific\Crash2\Crash2_Mods.cs" />
+    <Compile Include="GameSpecific\Crash2\Crash2_Text.Designer.cs">
+      <DependentUpon>Crash2_Text.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="GameSpecific\Crash2\Modder_Crash2.cs" />
+    <Compile Include="GameSpecific\Crash3\Crash3_Mods.cs" />
+    <Compile Include="GameSpecific\Crash3\Crash3_Text.Designer.cs">
+      <DependentUpon>Crash3_Text.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="GameSpecific\Crash3\Modder_Crash3.cs" />
+    <Compile Include="GameSpecific\CrashBash\Modder_Bash.cs" />
+    <Compile Include="GameSpecific\CrashMoM\Modder_MoM.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\CNK_Data.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\CNK_Data_Adventure.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\CNK_Data_DriverStats.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\CNK_Data_KartStats.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\CNK_Data_Powerups.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\CNK_Data_Surfaces.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\CNK_Text.Designer.cs">
+      <DependentUpon>CNK_Text.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="GameSpecific\CrashNitroKart\Modder_CNK.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\BIG.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\CTRFile.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Modder_CTR.cs" />
+    <Compile Include="GameSpecific\CrashTitans\Modder_Titans.cs" />
+    <Compile Include="GameSpecific\CrashTS\Modder_Twins.cs" />
+    <Compile Include="GameSpecific\CrashTS\Twins_Data.cs" />
+    <Compile Include="GameSpecific\CrashTS\Twins_Data_Characters.cs" />
+    <Compile Include="GameSpecific\CrashTS\Twins_Data_Objects.cs" />
+    <Compile Include="GameSpecific\CrashTS\Twins_Data_Scripts.cs" />
+    <Compile Include="GameSpecific\CrashTS\Twins_Mods.cs" />
+    <Compile Include="GameSpecific\CrashTS\Twins_Randomizers.cs" />
+    <Compile Include="GameSpecific\CrashTS\Twins_Settings.cs" />
+    <Compile Include="GameSpecific\CrashTS\Twins_Text.Designer.cs">
+      <DependentUpon>Twins_Text.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="GameSpecific\CrashTTR\collada_schema_1_4.cs" />
+    <Compile Include="GameSpecific\CrashTTR\CTTR_Data.cs" />
+    <Compile Include="GameSpecific\CrashTTR\CTTR_Data_Text.cs" />
+    <Compile Include="GameSpecific\CrashTTR\CTTR_Mods.cs" />
+    <Compile Include="GameSpecific\CrashTTR\CTTR_Randomizers.cs" />
+    <Compile Include="GameSpecific\CrashTTR\CTTR_Settings.cs" />
+    <Compile Include="GameSpecific\CrashTTR\CTTR_Text.Designer.cs">
+      <DependentUpon>CTTR_Text.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="GameSpecific\CrashTTR\Modder_CTTR.cs" />
+    <Compile Include="GameSpecific\CrashTTR\ModelExporter.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunk.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\Animation.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\AnimationChannelCount.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\AnimationGroup.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\AnimationGroupList.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\AnimationHeader.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\AnimationSize.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\AnimationSyncFrame.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\BaseEmitter.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\BillboardDisplayInfo.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\BillboardPerspectiveInfo.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\BillboardQuad.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\BillboardQuadGroup.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\BillboardQuadGroupCTTR.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\BooleanChannel.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\BoundingBox.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\BoundingSphere.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\Camera.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\CarCameraData.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\ChannelInterpolationMode.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\CollisionAxisAlignedBoundingBox.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\CollisionCylinder.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\CollisionObject.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\CollisionObjectAttribute.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\CollisionOrientedBoundingBox.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\CollisionVector.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\CollisionVolume.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\CollisionVolumeOwner.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\CollisionVolumeOwnerName.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\ColourList.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\CompositeDrawable.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\CompositeDrawableCTTR.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\CompositeDrawableEffectList.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\CompositeDrawablePrimitive.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\CompositeDrawableProp.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\CompositeDrawablePropList.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\CompositeDrawableSkin.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\CompositeDrawableSkinList.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\CompositeDrawableSortOrder.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\CompressedQuaternionChannel.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\ExportInfo.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\ExportInfoNamedInteger.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\ExportInfoNamedString.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\Float1Channel.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\FrameController.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\FrontendGroup.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\FrontendLanguage.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\FrontendLayer.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\FrontendPage.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\FrontendPolygon.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\FrontendProject.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\FrontendScreen.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\FrontendSprite.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\FrontendString.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\FrontendTextBible.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\History.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\Image.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\ImageData.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\IndexList.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\IntegerChannel.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\Locator.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\MatrixList.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\MatrixPalette.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\Mesh.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\MeshStats.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\Named.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\NormalList.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\PackedNormalList.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\ParticleAnimation.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\ParticleInstancingInfo.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\ParticleSystemFactory.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\PhysicsInertiaMatrix.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\PhysicsJoint.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\PhysicsObject.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\PhysicsVector.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\PositionList.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\PrimitiveGroup.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\PrimitiveGroupCTTR.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\PrimitiveGroupMemoryImageVertex.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\QuaternionChannel.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\QuaternionChannel2.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\RenderStatus.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\Root.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\Shader.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\ShaderParam.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\Skeleton.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\SkeletonCTTR.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\SkeletonJoint.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\SkeletonJointBonePreserve.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\SkeletonJointCTTR.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\SkeletonJointMirrorMap.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\Skin.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\SortOrder.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\Sprite.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\SpriteEmitter.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\Texture.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\TextureFont.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\TextureGlyphList.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\Unknown.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\UVList.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\Vector1Channel.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\Vector2Channel.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\Vector3Channel.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\VersionNamed.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\VertexCompressionHint.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\VertexShader.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\WeightList.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\WorldDef.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\ChunkType.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\File.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Types.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Pure3D\Util.cs" />
+    <Compile Include="GameSpecific\CrashTTR\RCF.cs" />
+    <Compile Include="GameSpecific\CrashTTR\RCF_Manager.cs" />
+    <Compile Include="GameSpecific\CrashTWOC\Modder_TWOC.cs" />
+    <Compile Include="GameSpecific\CrashTWOC\TWOC_File_CRT.cs" />
+    <Compile Include="GameSpecific\MarioSunshine\Modder_MarioSunshine.cs" />
+    <Compile Include="GameSpecific\Rayman3\Modder_Rayman3.cs" />
+    <Compile Include="GameSpecific\Rayman3\Rayman3_Text.Designer.cs">
+      <DependentUpon>Rayman3_Text.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Tools\CTR\filenames_pal.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Tools\CTR\filenames_usa.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Tools\GOBEXTRACT License.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Tools\gobextract.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Tools\CTR\versions.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CrateModAPI\CrateModAPI.csproj">
+      <Project>{864c8392-b1cc-45ec-9d1b-a7df2c1d1b6a}</Project>
+      <Name>CrateModAPI</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="GameSpecific\Crash1\Crash1_Text.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Crash1_Text.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GameSpecific\Crash2\Crash2_Text.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Crash2_Text.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GameSpecific\Crash3\Crash3_Text.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Crash3_Text.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GameSpecific\CrashNitroKart\CNK_Text.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>CNK_Text.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GameSpecific\CrashTS\Twins_Text.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Twins_Text.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GameSpecific\CrashTTR\CTTR_Text.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>CTTR_Text.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GameSpecific\Rayman3\Rayman3_Text.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Rayman3_Text.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using CrateModLoader.Resources.Text;
+using CrateModAPI.Resources.Text;
 
 namespace CrateModLoader
 {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using System.Windows.Forms;
-using CrateModLoader.Resources.Text;
+using CrateModAPI.Resources.Text;
 
 namespace CrateModLoader
 {

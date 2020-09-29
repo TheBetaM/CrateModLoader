@@ -6,7 +6,7 @@ using System.Media;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Diagnostics;
-using CrateModLoader.Resources.Text;
+using CrateModAPI.Resources.Text;
 using CrateModLoader.ModProperties;
 
 namespace CrateModLoader

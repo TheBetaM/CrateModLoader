@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using CrateModLoader.ModProperties;
 using CrateModLoader.ModProperties.GUI;
-using CrateModLoader.Resources.Text;
+using CrateModAPI.Resources.Text;
 
 namespace CrateModLoader
 {

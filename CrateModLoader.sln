@@ -1,9 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1231
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrateModLoader", "CrateModLoader\CrateModLoader.csproj", "{46D69B25-8CD5-4332-BCD5-7BCF45AC0AA0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrateModAPI", "CrateModAPI\CrateModAPI.csproj", "{864C8392-B1CC-45EC-9D1B-A7DF2C1D1B6A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrateModGames", "CrateModGames\CrateModGames.csproj", "{5F39B57C-59F7-4C68-91CB-928312A2AEBE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrateModConsoles", "CrateModConsoles\CrateModConsoles.csproj", "{AAC55D9F-7996-4A11-A5CE-D82073E33D7D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +21,23 @@ Global
 		{46D69B25-8CD5-4332-BCD5-7BCF45AC0AA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46D69B25-8CD5-4332-BCD5-7BCF45AC0AA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46D69B25-8CD5-4332-BCD5-7BCF45AC0AA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{864C8392-B1CC-45EC-9D1B-A7DF2C1D1B6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{864C8392-B1CC-45EC-9D1B-A7DF2C1D1B6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{864C8392-B1CC-45EC-9D1B-A7DF2C1D1B6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{864C8392-B1CC-45EC-9D1B-A7DF2C1D1B6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F39B57C-59F7-4C68-91CB-928312A2AEBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F39B57C-59F7-4C68-91CB-928312A2AEBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F39B57C-59F7-4C68-91CB-928312A2AEBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F39B57C-59F7-4C68-91CB-928312A2AEBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AAC55D9F-7996-4A11-A5CE-D82073E33D7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAC55D9F-7996-4A11-A5CE-D82073E33D7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAC55D9F-7996-4A11-A5CE-D82073E33D7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAC55D9F-7996-4A11-A5CE-D82073E33D7D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EDE1DA6A-CB30-42A2-B874-6BD325471B1E}
 	EndGlobalSection
 EndGlobal
