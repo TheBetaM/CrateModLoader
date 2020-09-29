@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using CrateModLoader.ModProperties;
+using CrateModLoader.ModProperties.GUI;
 using CrateModLoader.Resources.Text;
 
 namespace CrateModLoader
@@ -18,6 +14,32 @@ namespace CrateModLoader
         private Modder mod;
         private Game Game;
         private ModLoaderForm parentForm;
+
+        private ModPropertyGUI_Base GetExtension(object prop)
+        {
+            if (prop is ModPropBool)
+                return new ModPropBoolGUI((ModPropBool)prop);
+            else if (prop is ModPropFloat)
+                return new ModPropFloatGUI((ModPropFloat)prop);
+            else if (prop is ModPropFloatArray)
+                return new ModPropFloatArrayGUI((ModPropFloatArray)prop);
+            else if (prop is ModPropInt)
+                return new ModPropIntGUI((ModPropInt)prop);
+            else if (prop is ModPropNamedFloatArray)
+                return new ModPropNamedFloatArrayGUI((ModPropNamedFloatArray)prop);
+            else if (prop is ModPropNamedFloatArray2)
+                return new ModPropNamedFloatArray2GUI((ModPropNamedFloatArray2)prop);
+            else if (prop is ModPropNamedUIntArray)
+                return new ModPropNamedUIntArrayGUI((ModPropNamedUIntArray)prop);
+            else if (prop is ModPropOption)
+                return new ModPropOptionGUI((ModPropOption)prop);
+            else if (prop is ModPropString)
+                return new ModPropStringGUI((ModPropString)prop);
+            else if (prop is ModPropUInt)
+                return new ModPropUIntGUI((ModPropUInt)prop);
+            else
+                return null;
+        }
 
         public ModMenuForm(ModLoaderForm parent, Modder modder, Game g)
         {
@@ -83,9 +105,9 @@ namespace CrateModLoader
                 curPage = 1;
                 tableLayout = null;
 
-                foreach (ModPropertyBase prop in mod.Props)
+                foreach (ModPropertyBase propbase in mod.Props)
                 {
-                    if (prop.Hidden)
+                    if (propbase.Hidden)
                     {
                         continue;
                     }
@@ -102,7 +124,7 @@ namespace CrateModLoader
                         curItem = 0;
                         offset = initOffset;
                     }
-                    if (prop.Category == pair.Key)
+                    if (propbase.Category == pair.Key)
                     {
                         if (curItem == 0)
                         {
@@ -132,6 +154,8 @@ namespace CrateModLoader
 
                         }
 
+                        //ModPropertyGUI_Base prop = new ModPropertyGUI<ModPropertyBase>(propbase);
+                        ModPropertyGUI_Base prop = GetExtension(propbase);
                         prop.GenerateUI(tableLayout, ref offset);
                         tableLayout.RowCount++;
                         tableLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, initRowSize));

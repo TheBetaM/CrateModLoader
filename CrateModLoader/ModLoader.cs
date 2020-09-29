@@ -13,10 +13,20 @@ namespace CrateModLoader
     public class ModLoader
     {
 
-        public ModLoaderForm main_form;
         public Modder Modder;
         public Game Game;
         public ModPipeline Pipeline;
+        public event EventHandler<EventValueArgs<string>> ProcessMessageChanged;
+        public event EventHandler InteractionEnable;
+        public event EventHandler InteractionDisable;
+        public event EventHandler<EventValueArgs<int>> ProcessProgressChanged;
+        public event EventHandler ProcessFinished;
+        public event EventHandler ModCratesUpdated;
+        public event EventHandler<EventValueArgs<bool>> ResetGameEvent;
+        public event EventHandler<EventValueArgs<bool>> SetProcessStartAllow;
+        public event EventHandler<EventValueArgs<bool>> ModMenuUpdated;
+        public event EventHandler<EventValueArgs<string>> LayoutChangeUnsupported;
+        public event EventHandler<EventGameDetails> LayoutChangeSupported;
 
         public ModLoader()
         {
@@ -172,19 +182,20 @@ namespace CrateModLoader
             catch (Exception ex)
             {
                 Console.WriteLine("Detect Error: " + ex.Message);
-                main_form.UpdateGameTitleText(ModLoaderText.Error_UnableToOpenGame);
-                ResetGameSpecific(false, true);
+                
+                ProcessMessageChanged.Invoke(this, new EventValueArgs<string>(ModLoaderText.Error_UnableToOpenGame));
+                ResetGameSpecific(false);
                 return;
             }
 
             DeleteTempFiles();
 
-            main_form.SetProcessStartAllowed(ConsoleDetected);
+            SetProcessStartAllow.Invoke(this, new EventValueArgs<bool>(ConsoleDetected));
 
             if (!ConsoleDetected)
             {
-                ResetGameSpecific(false, true);
-                main_form.UpdateGameTitleText(ModLoaderText.Error_UnknownGameROM);
+                ResetGameSpecific(false);
+                ProcessMessageChanged.Invoke(this, new EventValueArgs<string>(ModLoaderText.Error_UnknownGameROM));
             }
         }
 
@@ -241,7 +252,7 @@ namespace CrateModLoader
 
         public void StartProcess()
         {
-            main_form.DisableInteraction();
+            InteractionDisable.Invoke(this, null);
 
             BackgroundWorker asyncWorker = new BackgroundWorker();
             asyncWorker.WorkerReportsProgress = true;
@@ -289,24 +300,24 @@ namespace CrateModLoader
 
         private void AsyncWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            main_form.UpdateProcessProgress(100);
-            main_form.Notify_ProcessFinished();
+            ProcessProgressChanged.Invoke(this, new EventValueArgs<int>(100));
+            ProcessFinished.Invoke(this, null);
             if (e.Error != null)
             {
-                main_form.ResetProcessProgress();
-                main_form.UpdateProcessText(ModLoaderText.Process_Error + " " + e.Error.Message);
+                ProcessProgressChanged.Invoke(this, new EventValueArgs<int>(0));
+                ProcessMessageChanged.Invoke(this, new EventValueArgs<string>(ModLoaderText.Process_Error + " " + e.Error.Message));
             }
             else if (!e.Cancelled)
             {
-                main_form.UpdateProcessText(ModLoaderText.Process_Finished);
+                ProcessMessageChanged.Invoke(this, new EventValueArgs<string>(ModLoaderText.Process_Finished));
             }
             else
             {
-                main_form.ResetProcessProgress();
-                main_form.UpdateProcessText(ModLoaderText.Process_Cancelled);
+                ProcessProgressChanged.Invoke(this, new EventValueArgs<int>(0));
+                ProcessMessageChanged.Invoke(this, new EventValueArgs<string>(ModLoaderText.Process_Cancelled));
             }
 
-            main_form.EnableInteraction();
+            InteractionEnable.Invoke(this, null);
 
             BackgroundWorker a = sender as BackgroundWorker;
             a.DoWork -= AsyncWorker_DoWork;
@@ -316,26 +327,26 @@ namespace CrateModLoader
 
         private void AsyncWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            main_form.UpdateProcessProgress(e.ProgressPercentage);
+            ProcessProgressChanged.Invoke(this, new EventValueArgs<int>(e.ProgressPercentage));
             if (e.ProgressPercentage == 0)
             {
-                main_form.UpdateProcessText(ModLoaderText.Process_Step0);
+                ProcessMessageChanged.Invoke(this, new EventValueArgs<string>(ModLoaderText.Process_Step0));
             }
             else if (e.ProgressPercentage == 25)
             {
-                main_form.UpdateProcessText(ModLoaderText.Process_Step1_ROM);
+                ProcessMessageChanged.Invoke(this, new EventValueArgs<string>(ModLoaderText.Process_Step1_ROM));
             }
             else if (e.ProgressPercentage == 50)
             {
-                main_form.UpdateProcessText(ModLoaderText.Process_Step2);
+                ProcessMessageChanged.Invoke(this, new EventValueArgs<string>(ModLoaderText.Process_Step2));
             }
             else if (e.ProgressPercentage == 75)
             {
-                main_form.UpdateProcessText(ModLoaderText.Process_Step3_ROM);
+                ProcessMessageChanged.Invoke(this, new EventValueArgs<string>(ModLoaderText.Process_Step3_ROM));
             }
             else if (e.ProgressPercentage == 90)
             {
-                main_form.UpdateProcessText("Removing temporary files...");
+                ProcessMessageChanged.Invoke(this, new EventValueArgs<string>("Removing temporary files..."));
             }
         }
 
@@ -468,32 +479,32 @@ namespace CrateModLoader
             // UI stuff
             if (Modder == null)
             {
-                main_form.SetLayoutUnsupportedGame(cons_mod);
+                LayoutChangeUnsupported.Invoke(this, new EventValueArgs<string>(cons_mod));
             }
             else
             {
                 Modder.PopulateProperties();
-                main_form.SetLayoutSupportedGame(Game, cons_mod, region_mod);
+                LayoutChangeSupported.Invoke(this, new EventGameDetails(Game, cons_mod, region_mod));
             }
         }
 
         public void UpdateModMenuChangedState(bool change)
         {
-            main_form.UpdateModMenuChangeState(change);
+            ModMenuUpdated.Invoke(this, new EventValueArgs<bool>(change));
         }
         public void UpdateModCrateChangedState()
         {
-            main_form.UpdateModCrateChangedState();
+            ModCratesUpdated.Invoke(this, null);
         }
 
-        public void ResetGameSpecific(bool ClearGameText = false, bool ExtendedWindow = false)
+        public void ResetGameSpecific(bool ClearGameText = false)
         {
             Modder = null;
             Pipeline = null;
             ModLoaderGlobals.Console = ConsoleMode.Undefined;
             ModCrates.ClearModLists();
 
-            main_form.ResetGameSpecific(ClearGameText, ExtendedWindow);
+            ResetGameEvent.Invoke(this, new EventValueArgs<bool>(ClearGameText));
         }
     }
 }

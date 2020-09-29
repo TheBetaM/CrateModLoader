@@ -91,6 +91,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EventArgs.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GameSpecific\Crash1\Crash1_Mods.cs" />
     <Compile Include="GameSpecific\Crash1\Crash1_Text.Designer.cs">
@@ -297,6 +298,17 @@
     <Compile Include="Forms\ModCrateManagerForm.Designer.cs">
       <DependentUpon>ModCrateManagerForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI_ModProperties\ModPropBoolGUI.cs" />
+    <Compile Include="GUI_ModProperties\ModPropertyGUI_Base.cs" />
+    <Compile Include="GUI_ModProperties\ModPropFloatGUI.cs" />
+    <Compile Include="GUI_ModProperties\ModPropFloatArrayGUI.cs" />
+    <Compile Include="GUI_ModProperties\ModPropIntGUI.cs" />
+    <Compile Include="GUI_ModProperties\ModPropNamedFloatArray2GUI.cs" />
+    <Compile Include="GUI_ModProperties\ModPropNamedFloatArrayGUI.cs" />
+    <Compile Include="GUI_ModProperties\ModPropNamedUIntArrayGUI.cs" />
+    <Compile Include="GUI_ModProperties\ModPropOptionGUI.cs" />
+    <Compile Include="GUI_ModProperties\ModPropStringGUI.cs" />
+    <Compile Include="GUI_ModProperties\ModPropUIntGUI.cs" />
     <Compile Include="ModCrates.cs" />
     <Compile Include="Modder.cs" />
     <Compile Include="ModLoader.cs" />
@@ -324,6 +336,7 @@
     <Compile Include="ModPipelines\ModPipeline_WII.cs" />
     <Compile Include="ModPipelines\ModPipeline_XBOX.cs" />
     <Compile Include="ModPipelines\ModPipeline_XBOX360.cs" />
+    <Compile Include="GUI_ModProperties\ModPropertyGUI.cs" />
     <Compile Include="ModProperties\ModCategory.cs" />
     <Compile Include="ModProperties\ModPropertyBase.cs" />
     <Compile Include="ModProperties\ModPropBool.cs" />

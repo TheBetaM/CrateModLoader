@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
-using CrateModLoader.Resources.Text;
 using System.Globalization;
 
 namespace CrateModLoader
