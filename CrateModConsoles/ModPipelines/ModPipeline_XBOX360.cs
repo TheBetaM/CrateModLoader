@@ -47,9 +47,9 @@ namespace CrateModLoader.ModPipelines
 
             ExtractorProcess.WaitForExit();
 
-            if (Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + @"\" + Path.GetFileNameWithoutExtension(inputPath)))
+            if (Directory.Exists(ModLoaderGlobals.BaseDirectory + @"\" + Path.GetFileNameWithoutExtension(inputPath)))
             {
-                Directory.Move(AppDomain.CurrentDomain.BaseDirectory + @"\" + Path.GetFileNameWithoutExtension(inputPath), ModLoaderGlobals.TempPath);
+                Directory.Move(ModLoaderGlobals.BaseDirectory + @"\" + Path.GetFileNameWithoutExtension(inputPath), ModLoaderGlobals.TempPath);
             }
 
             if (Directory.Exists(ModLoaderGlobals.TempPath) && File.Exists(ModLoaderGlobals.TempPath + @"default.xex"))
@@ -148,7 +148,7 @@ namespace CrateModLoader.ModPipelines
             ExtractorProcess.WaitForExit();
 
             // this may not work with an arbitrary output path, since it assumes it's on the same drive
-            Directory.Move(AppDomain.CurrentDomain.BaseDirectory + @"\" + Path.GetFileNameWithoutExtension(inputPath), outputPath);
+            Directory.Move(ModLoaderGlobals.BaseDirectory + @"\" + Path.GetFileNameWithoutExtension(inputPath), outputPath);
         }
 
     }

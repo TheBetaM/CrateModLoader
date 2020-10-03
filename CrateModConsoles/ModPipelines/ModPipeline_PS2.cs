@@ -40,10 +40,10 @@ namespace CrateModLoader.ModPipelines
 
                 if (Path.GetExtension(inputPath).ToLower() == ".bin") // PS2 CD image
                 {
-                    FileStream binconvout = new FileStream(AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso", FileMode.Create, FileAccess.Write);
+                    FileStream binconvout = new FileStream(ModLoaderGlobals.BaseDirectory + "binconvout.iso", FileMode.Create, FileAccess.Write);
                     PSX2ISO.Run(isoStream, binconvout);
                     binconvout.Close();
-                    tempbin = new FileStream(AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso", FileMode.Open, FileAccess.Read);
+                    tempbin = new FileStream(ModLoaderGlobals.BaseDirectory + "binconvout.iso", FileMode.Open, FileAccess.Read);
                     cd = new CDReader(tempbin, true);
                 }
                 else if (!CDReader.Detect(isoStream))
@@ -69,7 +69,7 @@ namespace CrateModLoader.ModPipelines
                 if (tempbin != null)
                 {
                     tempbin.Dispose();
-                    File.Delete(AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso");
+                    File.Delete(ModLoaderGlobals.BaseDirectory + "binconvout.iso");
                 }
             }
             if (!found)
@@ -237,10 +237,10 @@ namespace CrateModLoader.ModPipelines
                 FileStream tempbin = null;
                 if (Path.GetExtension(inputPath).ToLower() == ".bin") // PS2 CD image
                 {
-                    FileStream binconvout = new FileStream(AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso", FileMode.Create, FileAccess.Write);
+                    FileStream binconvout = new FileStream(ModLoaderGlobals.BaseDirectory + "binconvout.iso", FileMode.Create, FileAccess.Write);
                     PSX2ISO.Run(isoStream, binconvout);
                     binconvout.Close();
-                    tempbin = new FileStream(AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso", FileMode.Open, FileAccess.Read);
+                    tempbin = new FileStream(ModLoaderGlobals.BaseDirectory + "binconvout.iso", FileMode.Open, FileAccess.Read);
                     cd = new CDReader(tempbin, true);
                     isCDimage = true;
                 }
@@ -316,7 +316,7 @@ namespace CrateModLoader.ModPipelines
                 if (tempbin != null)
                 {
                     tempbin.Dispose();
-                    File.Delete(AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso");
+                    File.Delete(ModLoaderGlobals.BaseDirectory + "binconvout.iso");
                 }
             }
         }

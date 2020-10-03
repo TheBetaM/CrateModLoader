@@ -128,7 +128,7 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
         {
             string path_Bigfile = "BIGFILE.TXT";
 
-            File.Move(AppDomain.CurrentDomain.BaseDirectory + path_Bigfile, basePath + path_Bigfile);
+            File.Move(ModLoaderGlobals.BaseDirectory + path_Bigfile, basePath + path_Bigfile);
 
             bigtool.BIG big = new bigtool.BIG();
             big.Build(basePath + path_Bigfile);

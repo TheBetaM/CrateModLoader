@@ -75,7 +75,7 @@ namespace CrateModLoader.ModPipelines
 
             string args = "";
             args += @"--iso=";
-            args += "\"" + AppDomain.CurrentDomain.BaseDirectory + "/Tools/Game.iso\"";
+            args += "\"" + ModLoaderGlobals.BaseDirectory + "/Tools/Game.iso\"";
             args += " --file=\"";
             args += inputPath + "PSP_GAME\"";
             //args += " --log";
@@ -99,10 +99,10 @@ namespace CrateModLoader.ModPipelines
                 FileStream tempbin = null;
                 if (Path.GetExtension(inputPath).ToLower() == ".bin")
                 {
-                    FileStream binconvout = new FileStream(AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso", FileMode.Create, FileAccess.Write);
+                    FileStream binconvout = new FileStream(ModLoaderGlobals.BaseDirectory + "binconvout.iso", FileMode.Create, FileAccess.Write);
                     PSX2ISO.Run(isoStream, binconvout);
                     binconvout.Close();
-                    tempbin = new FileStream(AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso", FileMode.Open, FileAccess.Read);
+                    tempbin = new FileStream(ModLoaderGlobals.BaseDirectory + "binconvout.iso", FileMode.Open, FileAccess.Read);
                     cd = new CDReader(tempbin, true);
                 }
                 else
@@ -177,7 +177,7 @@ namespace CrateModLoader.ModPipelines
                 if (tempbin != null)
                 {
                     tempbin.Dispose();
-                    File.Delete(AppDomain.CurrentDomain.BaseDirectory + "binconvout.iso");
+                    File.Delete(ModLoaderGlobals.BaseDirectory + "binconvout.iso");
                 }
             }
         }

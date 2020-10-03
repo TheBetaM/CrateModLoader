@@ -226,35 +226,35 @@ namespace CrateModLoader
             LineList_Info.Add(string.Format("{0}{1}{2}", ModCrates.Prop_CML_Version, ModCrates.Separator, crate.CML_Version));
             LineList_Info.Add(string.Format("{0}{1}{2}", ModCrates.Prop_Game, ModCrates.Separator, crate.TargetGame));
 
-            File.WriteAllLines(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ModCrates.InfoFileName), LineList_Info);
+            File.WriteAllLines(Path.Combine(ModLoaderGlobals.BaseDirectory, ModCrates.InfoFileName), LineList_Info);
 
-            SaveSettingsToFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ModCrates.SettingsFileName), false);
+            SaveSettingsToFile(Path.Combine(ModLoaderGlobals.BaseDirectory, ModCrates.SettingsFileName), false);
 
             if (crate.HasIcon)
             {
-                File.Copy(crate.IconPath, Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ModCrates.IconFileName));
-                //crate.Icon.Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ModCrates.IconFileName));
+                File.Copy(crate.IconPath, Path.Combine(ModLoaderGlobals.BaseDirectory, ModCrates.IconFileName));
+                //crate.Icon.Save(Path.Combine(ModLoaderGlobals.BaseDirectory, ModCrates.IconFileName));
             }
 
             using (FileStream fileStream = new FileStream(path, FileMode.Create))
             {
                 using (ZipArchive zip = new ZipArchive(fileStream, ZipArchiveMode.Create))
                 {
-                    zip.CreateEntryFromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ModCrates.InfoFileName), ModCrates.InfoFileName);
-                    zip.CreateEntryFromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ModCrates.SettingsFileName), ModCrates.SettingsFileName);
+                    zip.CreateEntryFromFile(Path.Combine(ModLoaderGlobals.BaseDirectory, ModCrates.InfoFileName), ModCrates.InfoFileName);
+                    zip.CreateEntryFromFile(Path.Combine(ModLoaderGlobals.BaseDirectory, ModCrates.SettingsFileName), ModCrates.SettingsFileName);
                     if (crate.HasIcon)
                     {
-                        zip.CreateEntryFromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ModCrates.IconFileName), ModCrates.IconFileName);
+                        zip.CreateEntryFromFile(Path.Combine(ModLoaderGlobals.BaseDirectory, ModCrates.IconFileName), ModCrates.IconFileName);
                     } 
                 }
             }
 
             //cleanup
-            File.Delete(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ModCrates.InfoFileName));
-            File.Delete(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ModCrates.SettingsFileName));
+            File.Delete(Path.Combine(ModLoaderGlobals.BaseDirectory, ModCrates.InfoFileName));
+            File.Delete(Path.Combine(ModLoaderGlobals.BaseDirectory, ModCrates.SettingsFileName));
             if (crate.HasIcon)
             {
-                File.Delete(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ModCrates.IconFileName));
+                File.Delete(Path.Combine(ModLoaderGlobals.BaseDirectory, ModCrates.IconFileName));
             }
 
         }

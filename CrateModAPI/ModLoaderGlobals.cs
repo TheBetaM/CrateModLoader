@@ -66,12 +66,15 @@ namespace CrateModLoader
         /// <summary> Name of the folder used to hold game data during the modding process. Folder will be created in the program's directory. </summary>
         public static string TempName = "temp";
 
+        /// <summary> Base directory of the program. </summary>
+        public static string BaseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+
         /// <summary> Full path to the extracted files' folder. Differs based on console, but always points to the same game data. Ends with '\' </summary>
         public static string ExtractedPath
         {
             get
             {
-                return AppDomain.CurrentDomain.BaseDirectory + ProcessPath;
+                return BaseDirectory + ProcessPath;
             }
         }
 
@@ -106,10 +109,10 @@ namespace CrateModLoader
         public static string ISO_Label = "";
 
         /// <summary> Path to external tools' folder. Ends with '\' </summary>
-        public static string ToolsPath = AppDomain.CurrentDomain.BaseDirectory + @"Tools\";
+        public static string ToolsPath = BaseDirectory + @"Tools\";
 
         /// <summary> Path to mods' folder. Ends with '\' </summary>
-        public static string ModDirectory = AppDomain.CurrentDomain.BaseDirectory + @"Mods\";
+        public static string ModDirectory = BaseDirectory + @"Mods\";
 
         /// <summary> Partial path to the extracted files. Use ExtractedPath instead!! </summary>
         public static string TempPath
@@ -119,16 +122,16 @@ namespace CrateModLoader
                 switch (Console)
                 {
                     default:
-                        return AppDomain.CurrentDomain.BaseDirectory + TempName + @"\";
+                        return BaseDirectory + TempName + @"\";
                     case ConsoleMode.PS1:
                     case ConsoleMode.PS2:
                     case ConsoleMode.XBOX:
                     case ConsoleMode.XBOX360:
                     case ConsoleMode.PSP:
-                        return AppDomain.CurrentDomain.BaseDirectory + TempName + @"\";
+                        return BaseDirectory + TempName + @"\";
                     case ConsoleMode.GCN:
                     case ConsoleMode.WII:
-                        return AppDomain.CurrentDomain.BaseDirectory + TempName;
+                        return BaseDirectory + TempName;
                 }
             }
         }
