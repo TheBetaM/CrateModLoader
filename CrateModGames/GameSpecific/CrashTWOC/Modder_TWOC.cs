@@ -88,7 +88,7 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
 
         public override void StartModProcess()
         {
-            if (ModLoaderGlobals.Console == ConsoleMode.GCN)
+            if (ConsolePipeline.Metadata.Console == ConsoleMode.GCN)
             {
                 // rebuilding the GC version makes it not boot for some reason...
                 return;
@@ -97,7 +97,7 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
             ModProcess();
         }
 
-        protected override void ModProcess()
+        void ModProcess()
         {
             Random rand = new Random(ModLoaderGlobals.RandomizerSeed);
 
@@ -240,7 +240,7 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
         void Mod_RandomizeLevelOrder(Random rand)
         {
             string LevelsPath = @"LEVELS\A\";
-            if (ModLoaderGlobals.Console != ConsoleMode.PS2)
+            if (ConsolePipeline.Metadata.Console != ConsoleMode.PS2)
             {
                 LevelsPath = LevelsPath.ToLower();
             }
@@ -249,7 +249,7 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
             List<int> LevelsToRand = new List<int>();
             for (int i = 0; i < maxLevel; i++)
             {
-                Directory.Move(ModLoaderGlobals.ExtractedPath + LevelsPath + LevelNames[i], ModLoaderGlobals.ExtractedPath + LevelsPath + "LEVEL" + i);
+                Directory.Move(ConsolePipeline.ExtractedPath + LevelsPath + LevelNames[i], ConsolePipeline.ExtractedPath + LevelsPath + "LEVEL" + i);
                 LevelsToRand.Add(i);
             }
 
@@ -263,11 +263,11 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
 
             for (int i = 0; i < maxLevel; i++)
             {
-                Directory.Move(ModLoaderGlobals.ExtractedPath + LevelsPath + "LEVEL" + i, ModLoaderGlobals.ExtractedPath + LevelsPath + LevelNames[LevelsRand[i]]);
+                Directory.Move(ConsolePipeline.ExtractedPath + LevelsPath + "LEVEL" + i, ConsolePipeline.ExtractedPath + LevelsPath + LevelNames[LevelsRand[i]]);
 
                 if (i != LevelsRand[i])
                 {
-                    DirectoryInfo di = new DirectoryInfo(ModLoaderGlobals.ExtractedPath + LevelsPath + LevelNames[LevelsRand[i]]);
+                    DirectoryInfo di = new DirectoryInfo(ConsolePipeline.ExtractedPath + LevelsPath + LevelNames[LevelsRand[i]]);
                     foreach (FileInfo file in di.EnumerateFiles())
                     {
                         if (file.Name.Contains(FileNames[i]))
@@ -324,15 +324,15 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
 
         void Mod_RandomizeMusic(Random rand)
         {
-            if (ModLoaderGlobals.Console == ConsoleMode.PS2)
+            if (ConsolePipeline.Metadata.Console == ConsoleMode.PS2)
             {
                 return;
             }
             string musicPath;
             string ext;
-            if (ModLoaderGlobals.Console == ConsoleMode.GCN)
+            if (ConsolePipeline.Metadata.Console == ConsoleMode.GCN)
             {
-                musicPath = ModLoaderGlobals.ExtractedPath + @"sfx\music\";
+                musicPath = ConsolePipeline.ExtractedPath + @"sfx\music\";
                 ext = ".adp";
                 if (!MusicNames.Contains(Music_GC_Extra))
                 {
@@ -341,7 +341,7 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
             }
             else
             {
-                musicPath = ModLoaderGlobals.ExtractedPath + @"sfx\Music\";
+                musicPath = ConsolePipeline.ExtractedPath + @"sfx\Music\";
                 ext = ".wav";
                 if (MusicNames.Contains(Music_GC_Extra))
                 {

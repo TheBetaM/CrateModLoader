@@ -54,7 +54,7 @@ namespace CrateModLoader
 
         private void button_save_Click(object sender, EventArgs e)
         {
-            mod.SaveSimpleCrateToFile(path, crate);
+            ModCrates.SaveSimpleCrateToFile(mod, path, crate);
 
             Close();
         }

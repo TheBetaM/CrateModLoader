@@ -16,6 +16,10 @@ namespace CrateModLoader
         public Modder Modder;
         public Game Game;
         public ModPipeline Pipeline;
+
+        public static Dictionary<Game, Assembly> SupportedGames;
+        public static Dictionary<ModPipelineInfo, Type> SupportedConsoles;
+
         public event EventHandler<EventValueArgs<string>> ProcessMessageChanged;
         public event EventHandler InteractionEnable;
         public event EventHandler InteractionDisable;
@@ -28,6 +32,16 @@ namespace CrateModLoader
         public event EventHandler<EventValueArgs<string>> LayoutChangeUnsupported;
         public event EventHandler<EventGameDetails> LayoutChangeSupported;
 
+        public string TempPath = ModLoaderGlobals.BaseDirectory + ModLoaderGlobals.TempName + @"\";
+        public static bool KeepTempFiles = false;
+        public int RandomizerSeedBase = 0;
+        public string InputPath = "";
+        public string OutputPath = "";
+
+        public ModLoader()
+        {
+
+        }
         public ModLoader(Assembly[] assemblies)
         {
             CacheSupportedGames(assemblies);
@@ -56,7 +70,7 @@ namespace CrateModLoader
             {
                 //Directory Mode - just copy files to output
                 DirectoryInfo di = new DirectoryInfo(inputPath);
-                if (ModLoaderGlobals.Console == ConsoleMode.PS2)
+                if (Pipeline.Metadata.Console == ConsoleMode.PS2)
                 {
                     foreach (DirectoryInfo dir in di.EnumerateDirectories())
                     {
@@ -159,70 +173,64 @@ namespace CrateModLoader
             string regionID;
             uint regionNumber;
 
-            DeleteTempFiles();
+            DeleteTempFiles(TempPath);
 
             try
             {
-                foreach (KeyValuePair<ModPipelineInfo, Type> pair in ModLoaderGlobals.SupportedConsoles)
+                foreach (KeyValuePair<ModPipelineInfo, Type> pair in SupportedConsoles)
                 {
-                    ModLoaderGlobals.Console = ConsoleMode.Undefined;
                     Pipeline = (ModPipeline)Activator.CreateInstance(pair.Value);
                     bool DetectResult = Pipeline.Detect(directoryMode, inputPath, out regionID, out regionNumber);
                     if (DetectResult)
                     {
                         ConsoleDetected = true;
                         SetGameType(regionID, pair.Key.Console, regionNumber);
-                        if (Modder != null)
-                        {
-                            ModLoaderGlobals.ProductCode = regionID;
-                            ModLoaderGlobals.ISO_Label = regionID;
-                        }
                         break;
                     }
-                    DeleteTempFiles();
+                    DeleteTempFiles(TempPath);
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Detect Error: " + ex.Message);
-                
-                ProcessMessageChanged.Invoke(this, new EventValueArgs<string>(ModLoaderText.Error_UnableToOpenGame));
+
+                UpdateProcessMessage(ModLoaderText.Error_UnableToOpenGame);
                 ResetGameSpecific(false);
                 return;
             }
 
-            DeleteTempFiles();
+            DeleteTempFiles(TempPath);
 
             SetProcessStartAllow.Invoke(this, new EventValueArgs<bool>(ConsoleDetected));
 
             if (!ConsoleDetected)
             {
                 ResetGameSpecific(false);
-                ProcessMessageChanged.Invoke(this, new EventValueArgs<string>(ModLoaderText.Error_UnknownGameROM));
+                UpdateProcessMessage(ModLoaderText.Error_UnknownGameROM);
             }
         }
 
         public void EditGame()
         {
             //To make sure the seed matches
-            ModLoaderGlobals.RandomizerSeed = ModLoaderGlobals.RandomizerSeedBase;
+            ModLoaderGlobals.RandomizerSeed = RandomizerSeedBase;
 
             if (Modder == null || !Modder.ModCratesManualInstall)
             {
-                ModCrates.InstallLayerMods(ModLoaderGlobals.ExtractedPath, 0);
+                ModCrates.InstallLayerMods(Pipeline.ExtractedPath, 0);
             }
             if (Modder != null)
             {
-                Modder.InstallCrateSettings();
+                ModCrates.InstallCrateSettings(Modder);
                 Modder.StartModProcess();
             }
         }
 
-        void DeleteTempFiles()
+        void DeleteTempFiles(string Path)
         {
-            if (Directory.Exists(ModLoaderGlobals.TempPath))
+            if (Directory.Exists(Path))
             {
-                DirectoryInfo di = new DirectoryInfo(ModLoaderGlobals.TempPath);
+                DirectoryInfo di = new DirectoryInfo(Path);
 
                 foreach (DirectoryInfo dir in di.GetDirectories())
                 {
@@ -268,20 +276,20 @@ namespace CrateModLoader
         private void AsyncWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker a = sender as BackgroundWorker;
-            string inputPath = ModLoaderGlobals.InputPath;
-            string tempPath = ModLoaderGlobals.TempPath;
-            string outputPath = ModLoaderGlobals.OutputPath;
+            string inputPath = InputPath;
+            //string tempPath = ModLoaderGlobals.BaseDirectory + ModLoaderGlobals.TempName + @"\";
+            string outputPath = OutputPath;
             bool inputDirectoryMode = IO_Common.PathIsFolder(inputPath);
             bool outputDirectoryMode = IO_Common.PathIsFolder(outputPath);
 
             a.ReportProgress(0);
 
-            DeleteTempFiles();
+            DeleteTempFiles(TempPath);
             Pipeline.PreStart(inputDirectoryMode, outputDirectoryMode);
 
             a.ReportProgress(25);
 
-            ExtractGame(inputPath, tempPath);
+            ExtractGame(inputPath, TempPath);
             while (Pipeline.IsBusy) Thread.Sleep(100);
 
             a.ReportProgress(50);
@@ -290,14 +298,14 @@ namespace CrateModLoader
 
             a.ReportProgress(75);
 
-            BuildGame(tempPath, outputPath);
+            BuildGame(TempPath, outputPath);
             while (Pipeline.IsBusy) Thread.Sleep(100);
 
             a.ReportProgress(90);
 
-            if (!ModLoaderGlobals.KeepTempFiles)
+            if (!KeepTempFiles)
             {
-                DeleteTempFiles();
+                DeleteTempFiles(TempPath);
             }
         }
 
@@ -308,16 +316,16 @@ namespace CrateModLoader
             if (e.Error != null)
             {
                 ProcessProgressChanged.Invoke(this, new EventValueArgs<int>(0));
-                ProcessMessageChanged.Invoke(this, new EventValueArgs<string>(ModLoaderText.Process_Error + " " + e.Error.Message));
+                UpdateProcessMessage(ModLoaderText.Process_Error + " " + e.Error.Message);
             }
             else if (!e.Cancelled)
             {
-                ProcessMessageChanged.Invoke(this, new EventValueArgs<string>(ModLoaderText.Process_Finished));
+                UpdateProcessMessage(ModLoaderText.Process_Finished);
             }
             else
             {
                 ProcessProgressChanged.Invoke(this, new EventValueArgs<int>(0));
-                ProcessMessageChanged.Invoke(this, new EventValueArgs<string>(ModLoaderText.Process_Cancelled));
+                UpdateProcessMessage(ModLoaderText.Process_Cancelled);
             }
 
             InteractionEnable.Invoke(this, null);
@@ -333,29 +341,29 @@ namespace CrateModLoader
             ProcessProgressChanged.Invoke(this, new EventValueArgs<int>(e.ProgressPercentage));
             if (e.ProgressPercentage == 0)
             {
-                ProcessMessageChanged.Invoke(this, new EventValueArgs<string>(ModLoaderText.Process_Step0));
+                UpdateProcessMessage(ModLoaderText.Process_Step0);
             }
             else if (e.ProgressPercentage == 25)
             {
-                ProcessMessageChanged.Invoke(this, new EventValueArgs<string>(ModLoaderText.Process_Step1_ROM));
+                UpdateProcessMessage(ModLoaderText.Process_Step1_ROM);
             }
             else if (e.ProgressPercentage == 50)
             {
-                ProcessMessageChanged.Invoke(this, new EventValueArgs<string>(ModLoaderText.Process_Step2));
+                UpdateProcessMessage(ModLoaderText.Process_Step2);
             }
             else if (e.ProgressPercentage == 75)
             {
-                ProcessMessageChanged.Invoke(this, new EventValueArgs<string>(ModLoaderText.Process_Step3_ROM));
+                UpdateProcessMessage(ModLoaderText.Process_Step3_ROM);
             }
             else if (e.ProgressPercentage == 90)
             {
-                ProcessMessageChanged.Invoke(this, new EventValueArgs<string>("Removing temporary files..."));
+                UpdateProcessMessage("Removing temporary files...");
             }
         }
 
         void CacheSupportedGames(Assembly[] assemblies)
         {
-            ModLoaderGlobals.SupportedGames = new Dictionary<Game, Assembly>();
+            SupportedGames = new Dictionary<Game, Assembly>();
 
             foreach (Assembly assembly in assemblies)
             {
@@ -367,14 +375,14 @@ namespace CrateModLoader
                     Game game = modder.Game;
                     game.ModderClass = type;
 
-                    ModLoaderGlobals.SupportedGames.Add(game, assembly);
+                    SupportedGames.Add(game, assembly);
                 }
             }
         }
 
         void CachePipelines(Assembly[] assemblies)
         {
-            ModLoaderGlobals.SupportedConsoles = new Dictionary<ModPipelineInfo, Type>();
+            SupportedConsoles = new Dictionary<ModPipelineInfo, Type>();
 
             foreach (Assembly assembly in assemblies)
             {
@@ -385,7 +393,7 @@ namespace CrateModLoader
                     ModPipeline pipeline = (ModPipeline)Activator.CreateInstance(type);
                     pipeline.Metadata.Assembly = assembly;
 
-                    ModLoaderGlobals.SupportedConsoles.Add(pipeline.Metadata, type);
+                    SupportedConsoles.Add(pipeline.Metadata, type);
                 }
             }
         }
@@ -393,19 +401,18 @@ namespace CrateModLoader
         void SetGameType(string serial, ConsoleMode console, uint RegionID)
         {
             bool RegionNotSupported = true;
+            RegionCode TargetRegion = new RegionCode();
             Modder = null;
 
             ModCrates.ClearModLists();
 
-            ModLoaderGlobals.Console = console;
-
-            if (ModLoaderGlobals.SupportedGames.Count <= 0)
+            if (SupportedGames.Count <= 0)
             {
                 Console.WriteLine("ERROR: No games supported!");
                 return; 
             }
 
-            foreach (KeyValuePair<Game, Assembly> pair in ModLoaderGlobals.SupportedGames)
+            foreach (KeyValuePair<Game, Assembly> pair in SupportedGames)
             {
                 Game game = pair.Key;
 
@@ -435,13 +442,9 @@ namespace CrateModLoader
                         else
                         {
                             RegionNotSupported = false;
-                            ModLoaderGlobals.Region = r.Region;
                             Modder = (Modder)Activator.CreateInstance(game.ModderClass);
                             Game = game;
-                            if (!string.IsNullOrEmpty(r.ExecName))
-                            {
-                                ModLoaderGlobals.ExecutableName = r.ExecName;
-                            }
+                            TargetRegion = r;
                             break;
                         }
                     }
@@ -453,13 +456,9 @@ namespace CrateModLoader
                     {
                         if (serial.Contains(r.Name))
                         {
-                            ModLoaderGlobals.Region = RegionType.Undefined;
                             Modder = (Modder)Activator.CreateInstance(game.ModderClass);
                             Game = game;
-                            if (!string.IsNullOrEmpty(r.ExecName))
-                            {
-                                ModLoaderGlobals.ExecutableName = r.ExecName;
-                            }
+                            TargetRegion = r;
                             break;
                         }
                     }
@@ -468,6 +467,8 @@ namespace CrateModLoader
                 if (Modder != null)
                 {
                     Modder.assembly = pair.Value;
+                    Modder.ConsolePipeline = Pipeline;
+                    Modder.GameRegion = TargetRegion;
                     break;
                 }
             }
@@ -479,14 +480,17 @@ namespace CrateModLoader
                 case ConsoleMode.Undefined: cons_mod = "(" + ModLoaderText.UnknownConsole + ")"; break;
             }
 
-            string region_mod = "";
-            switch (ModLoaderGlobals.Region)
+            string region_mod = "(" + ModLoaderText.UnknownRegion + ")";
+            if (!RegionNotSupported)
             {
-                case RegionType.NTSC_J: region_mod = "NTSC-J"; break;
-                case RegionType.NTSC_U: region_mod = "NTSC-U"; break;
-                case RegionType.PAL: region_mod = "PAL"; break;
-                case RegionType.Global: region_mod = ""; break;
-                default: region_mod = "(" + ModLoaderText.UnknownRegion + ")"; break;
+                switch (TargetRegion.Region)
+                {
+                    case RegionType.NTSC_J: region_mod = "NTSC-J"; break;
+                    case RegionType.NTSC_U: region_mod = "NTSC-U"; break;
+                    case RegionType.PAL: region_mod = "PAL"; break;
+                    case RegionType.Global: region_mod = ""; break;
+                    default: region_mod = "(" + ModLoaderText.UnknownRegion + ")"; break;
+                }
             }
 
             // UI stuff
@@ -501,6 +505,10 @@ namespace CrateModLoader
             }
         }
 
+        public void UpdateProcessMessage(string txt)
+        {
+            ProcessMessageChanged.Invoke(this, new EventValueArgs<string>(txt));
+        }
         public void UpdateModMenuChangedState(bool change)
         {
             ModMenuUpdated.Invoke(this, new EventValueArgs<bool>(change));
@@ -514,7 +522,7 @@ namespace CrateModLoader
         {
             Modder = null;
             Pipeline = null;
-            ModLoaderGlobals.Console = ConsoleMode.Undefined;
+
             ModCrates.ClearModLists();
 
             ResetGameEvent.Invoke(this, new EventValueArgs<bool>(ClearGameText));

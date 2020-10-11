@@ -76,15 +76,15 @@ namespace CrateModLoader
             }
         }
 
-        public static void PopulateModList()
+        public static void PopulateModList(bool IsSupportedGame, string ShortName)
         {
 
             bool SupportAll = false;
-            if (ModLoaderGlobals.ModProgram.Modder == null)
+            if (!IsSupportedGame)
             {
                 SupportAll = true;
             }
-            else if (string.IsNullOrEmpty(ModLoaderGlobals.ModProgram.Game.ShortName))
+            else if (string.IsNullOrEmpty(ShortName))
             {
                 Console.WriteLine("WARN: Target game is missing short name!");
                 SupportAll = true;
@@ -111,7 +111,7 @@ namespace CrateModLoader
                             }
                             else
                             {
-                                if (Crate.TargetGame == ModLoaderGlobals.ModProgram.Game.ShortName || Crate.TargetGame == AllGamesShortName)
+                                if (Crate.TargetGame == ShortName || Crate.TargetGame == AllGamesShortName)
                                 {
                                     ModList.Add(Crate);
                                 }
@@ -142,7 +142,7 @@ namespace CrateModLoader
                             }
                             else
                             {
-                                if (Crate.TargetGame == ModLoaderGlobals.ModProgram.Game.ShortName || Crate.TargetGame == AllGamesShortName)
+                                if (Crate.TargetGame == ShortName || Crate.TargetGame == AllGamesShortName)
                                 {
                                     ModList.Add(Crate);
                                 }
@@ -516,6 +516,172 @@ namespace CrateModLoader
                 string relativePath = Path.Combine(dest.FullName, mainbuffer + @"\" + file.Name);
                 File.Copy(file.FullName, basePath + relativePath, true);
             }
+        }
+
+        /// <summary>
+        /// De-serializes mod properties in activated Mod Crates into the given Modder 
+        /// </summary>
+        public static void InstallCrateSettings(Modder modder)
+        {
+            for (int mod = 0; mod < SupportedMods.Count; mod++)
+            {
+                if (SupportedMods[mod].IsActivated && SupportedMods[mod].HasSettings)
+                {
+                    foreach (ModPropertyBase prop in modder.Props)
+                    {
+                        if (SupportedMods[mod].Settings.ContainsKey(prop.CodeName) && !prop.HasChanged) // Manual mod menu changes override mod crates
+                        {
+                            prop.DeSerialize(SupportedMods[mod].Settings[prop.CodeName]);
+                            prop.HasChanged = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Takes the given Modder's mod properties and saves them into a valid settings text file at the given path. (if fullSettings is false - only saves altered properties)
+        /// </summary>
+        public static void SaveSettingsToFile(Modder mod, string path, bool fullSettings)
+        {
+
+            List<string> LineList = new List<string>();
+
+            LineList.Add(string.Format("{0} {1} {2}", CommentSymbol, ModLoaderGlobals.ProgramVersion, "Auto-Generated Settings File"));
+
+            foreach (ModPropertyBase prop in mod.Props)
+            {
+                if (fullSettings || (!fullSettings && prop.HasChanged))
+                {
+                    string text = "";
+                    prop.Serialize(ref text);
+                    LineList.Add(text);
+                }
+            }
+
+            File.WriteAllLines(path, LineList);
+        }
+
+        /// <summary>
+        /// Saves the given Mod Crate using the given Modder to given path.
+        /// </summary>
+        public static void SaveSimpleCrateToFile(Modder mod, string path, ModCrate crate)
+        {
+            List<string> LineList_Info = new List<string>();
+
+            LineList_Info.Add(string.Format("{0}{1}{2}", Prop_Name, Separator, crate.Name));
+            LineList_Info.Add(string.Format("{0}{1}{2}", Prop_Desc, Separator, crate.Desc));
+            LineList_Info.Add(string.Format("{0}{1}{2}", Prop_Author, Separator, crate.Author));
+            LineList_Info.Add(string.Format("{0}{1}{2}", Prop_Version, Separator, crate.Version));
+            LineList_Info.Add(string.Format("{0}{1}{2}", Prop_CML_Version, Separator, crate.CML_Version));
+            LineList_Info.Add(string.Format("{0}{1}{2}", Prop_Game, Separator, crate.TargetGame));
+
+            File.WriteAllLines(Path.Combine(ModLoaderGlobals.BaseDirectory, InfoFileName), LineList_Info);
+
+            SaveSettingsToFile(mod, Path.Combine(ModLoaderGlobals.BaseDirectory, SettingsFileName), false);
+
+            if (crate.HasIcon)
+            {
+                File.Copy(crate.IconPath, Path.Combine(ModLoaderGlobals.BaseDirectory, IconFileName));
+                //crate.Icon.Save(Path.Combine(ModLoaderGlobals.BaseDirectory, IconFileName));
+            }
+
+            using (FileStream fileStream = new FileStream(path, FileMode.Create))
+            {
+                using (ZipArchive zip = new ZipArchive(fileStream, ZipArchiveMode.Create))
+                {
+                    zip.CreateEntryFromFile(Path.Combine(ModLoaderGlobals.BaseDirectory, InfoFileName), InfoFileName);
+                    zip.CreateEntryFromFile(Path.Combine(ModLoaderGlobals.BaseDirectory, SettingsFileName), SettingsFileName);
+                    if (crate.HasIcon)
+                    {
+                        zip.CreateEntryFromFile(Path.Combine(ModLoaderGlobals.BaseDirectory, IconFileName), IconFileName);
+                    }
+                }
+            }
+
+            //cleanup
+            File.Delete(Path.Combine(ModLoaderGlobals.BaseDirectory, InfoFileName));
+            File.Delete(Path.Combine(ModLoaderGlobals.BaseDirectory, SettingsFileName));
+            if (crate.HasIcon)
+            {
+                File.Delete(Path.Combine(ModLoaderGlobals.BaseDirectory, IconFileName));
+            }
+
+        }
+
+        /// <summary>
+        /// Loads mod properties from given Settings file or Mod Crate at given path into the given Modder
+        /// </summary>
+        public static void LoadSettingsFromFile(Modder mod, string path)
+        {
+            FileInfo file = new FileInfo(path);
+
+            bool isModCrate = file.Extension.ToLower() == ".zip";
+
+            Dictionary<string, string> Settings = new Dictionary<string, string>();
+
+            //zip handling
+            if (isModCrate)
+            {
+                using (ZipArchive archive = ZipFile.OpenRead(file.FullName))
+                {
+                    foreach (ZipArchiveEntry entry in archive.Entries)
+                    {
+                        if (entry.FullName.EndsWith(".txt", StringComparison.OrdinalIgnoreCase))
+                        {
+                            if (entry.Name.ToLower() == SettingsFileName)
+                            {
+                                using (StreamReader fileStream = new StreamReader(entry.Open(), true))
+                                {
+                                    string line;
+                                    while ((line = fileStream.ReadLine()) != null)
+                                    {
+                                        if (line[0] != CommentSymbol)
+                                        {
+                                            string[] setting = line.Split(Separator);
+                                            Settings[setting[0]] = setting[1];
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                using (StreamReader fileStream = new StreamReader(path, true))
+                {
+                    string line;
+                    while ((line = fileStream.ReadLine()) != null)
+                    {
+                        if (line[0] != CommentSymbol)
+                        {
+                            string[] setting = line.Split(Separator);
+                            if (setting.Length > 1)
+                            {
+                                Settings[setting[0]] = setting[1];
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (Settings.Count == 0)
+            {
+                //MessageBox.Show(ModLoaderText.ModMenuLoad_Error);
+                return;
+            }
+
+            foreach (ModPropertyBase prop in mod.Props)
+            {
+                if (Settings.ContainsKey(prop.CodeName))
+                {
+                    prop.DeSerialize(Settings[prop.CodeName]);
+                    prop.HasChanged = true;
+                }
+            }
+
         }
 
         /// <summary>

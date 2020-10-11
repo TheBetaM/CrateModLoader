@@ -23,12 +23,12 @@ namespace CrateModLoader
         static void Main(string[] args)
         {
             Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
-            ModLoaderGlobals.ModProgram = new ModLoader(assemblies);
+            ModLoader ModProgram = new ModLoader(assemblies);
             if (args.Length == 0)
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                using (ModLoaderForm ModProgramForm = new ModLoaderForm())
+                using (ModLoaderForm ModProgramForm = new ModLoaderForm(ModProgram))
                 {
                     Application.Run(ModProgramForm);
                 }

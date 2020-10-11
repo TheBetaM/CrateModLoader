@@ -62,11 +62,11 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
 
             string path_Bigfile = "BIGFILE.BIG";
 
-            basePath = ModLoaderGlobals.ExtractedPath;
+            basePath = ConsolePipeline.ExtractedPath;
 
             bigtool.BIG big;
 
-            switch (ModLoaderGlobals.Region)
+            switch (GameRegion.Region)
             {
                 case RegionType.NTSC_U:
                     big = new bigtool.BIG(basePath + path_Bigfile, false);
@@ -85,10 +85,10 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
             ModProcess();
         }
 
-        protected override void ModProcess()
+        void ModProcess()
         {
 
-            string path_extr = ModLoaderGlobals.ExtractedPath + @"BIGFILE\";
+            string path_extr = ConsolePipeline.ExtractedPath + @"BIGFILE\";
 
             ModCrates.InstallLayerMods(path_extr, 1);
             
@@ -124,14 +124,14 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
             EndModProcess();
         }
 
-        protected override void EndModProcess()
+        void EndModProcess()
         {
             string path_Bigfile = "BIGFILE.TXT";
 
             File.Move(ModLoaderGlobals.BaseDirectory + path_Bigfile, basePath + path_Bigfile);
 
             bigtool.BIG big = new bigtool.BIG();
-            big.Build(basePath + path_Bigfile);
+            big.Build(basePath, basePath + path_Bigfile);
 
             // Extraction cleanup
             if (Directory.Exists(basePath + @"BIGFILE\"))

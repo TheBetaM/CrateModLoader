@@ -88,18 +88,18 @@ namespace CrateModLoader.GameSpecific.CrashTitans
         public override void StartModProcess()
         {
             string path_RCF_frontend = "DEFAULT.RCF";
-            basePath = ModLoaderGlobals.ExtractedPath;
+            basePath = ConsolePipeline.ExtractedPath;
             RCF_Manager.cachedRCF = null;
 
-            if (ModLoaderGlobals.Console == ConsoleMode.WII)
+            if (ConsolePipeline.Metadata.Console == ConsoleMode.WII)
             {
                 path_RCF_frontend = "default.rcf";
             }
-            else if (ModLoaderGlobals.Console == ConsoleMode.PSP)
+            else if (ConsolePipeline.Metadata.Console == ConsoleMode.PSP)
             {
                 path_RCF_frontend = "default.rcf";
             }
-            else if  (ModLoaderGlobals.Console == ConsoleMode.XBOX360)
+            else if  (ConsolePipeline.Metadata.Console == ConsoleMode.XBOX360)
             {
                 path_RCF_frontend = "default.rcf";
             }

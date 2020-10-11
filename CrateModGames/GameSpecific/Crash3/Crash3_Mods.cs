@@ -2666,7 +2666,7 @@ namespace CrateModLoader.GameSpecific.Crash3
             return zones;
         }
 
-        public static void Mod_Metadata(NSF nsf, NewNSD nsd, Crash3_Levels level)
+        public static void Mod_Metadata(NSF nsf, NewNSD nsd, Crash3_Levels level, RegionType region)
         {
             if (level != Crash3_Levels.WarpRoom)
             {
@@ -2683,7 +2683,7 @@ namespace CrateModLoader.GameSpecific.Crash3
                         {
                             if (gool.EName == "DispC")
                             {
-                                if (ModLoaderGlobals.Region == RegionType.NTSC_U)
+                                if (region == RegionType.NTSC_U)
                                 {
                                     for (int i = gool.Anims.Length - 11; i > 0; i--)
                                     {
@@ -2707,7 +2707,7 @@ namespace CrateModLoader.GameSpecific.Crash3
                                         }
                                     }
                                 }
-                                else if (ModLoaderGlobals.Region == RegionType.PAL)
+                                else if (region == RegionType.PAL)
                                 {
                                     for (int i = gool.Anims.Length - 11; i > 0; i--)
                                     {

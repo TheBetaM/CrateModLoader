@@ -40,18 +40,6 @@ namespace CrateModLoader.GameSpecific.MarioSunshine
         public override void StartModProcess()
         {
             // TODO
-            ModProcess();
-        }
-
-        protected override void ModProcess()
-        {
-            // TODO
-            EndModProcess();
-        }
-
-        protected override void EndModProcess()
-        {
-            // TODO
         }
     }
 }

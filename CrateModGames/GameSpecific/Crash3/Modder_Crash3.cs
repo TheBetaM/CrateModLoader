@@ -86,20 +86,18 @@ namespace CrateModLoader.GameSpecific.Crash3
             // there is nothing for us to do here...
 
             ModProcess();
-
-            EndModProcess();
         }
 
-        protected override void ModProcess()
+        void ModProcess()
         {
             Random rand = new Random(ModLoaderGlobals.RandomizerSeed);
 
-            CrateSettings_CrashTri.VerifyModCrates();
-            ModCrates.InstallLayerMods(ModLoaderGlobals.ExtractedPath, 0);
+            CrateSettings_CrashTri.VerifyModCrates(Game.ShortName, GameRegion);
+            ModCrates.InstallLayerMods(ConsolePipeline.ExtractedPath, 0);
 
             List<FileInfo> nsfs = new List<FileInfo>();
             List<FileInfo> nsds = new List<FileInfo>();
-            DirectoryInfo di = new DirectoryInfo(ModLoaderGlobals.ExtractedPath);
+            DirectoryInfo di = new DirectoryInfo(ConsolePipeline.ExtractedPath);
             AppendFileInfoDir(nsfs, nsds, di); // this should return all NSF/NSD file pairs
 
             ErrorManager.EnterSkipRegion();
@@ -145,7 +143,7 @@ namespace CrateModLoader.GameSpecific.Crash3
                 if (Option_RandWorldColors.Enabled) CrashTri_Common.Mod_Scenery_Rainbow(nsf, rand);
                 if (Option_UntexturedWorld.Enabled) CrashTri_Common.Mod_Scenery_Untextured(nsf);
 
-                Crash3_Mods.Mod_Metadata(nsf, nsd, NSF_Level);
+                Crash3_Mods.Mod_Metadata(nsf, nsd, NSF_Level, GameRegion.Region);
 
                 PatchNSD(nsf, nsd);
 
@@ -167,11 +165,6 @@ namespace CrateModLoader.GameSpecific.Crash3
                 if (file.Extension.ToUpper() == ".NSF") nsfpaths.Add(file);
                 else if (file.Extension.ToUpper() == ".NSD") nsdpaths.Add(file);
             }
-        }
-
-        protected override void EndModProcess()
-        {
-            // ...or here
         }
 
         internal void PatchNSD(NSF nsf, NewNSD nsd)

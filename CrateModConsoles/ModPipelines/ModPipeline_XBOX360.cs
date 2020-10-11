@@ -17,6 +17,9 @@ namespace CrateModLoader.ModPipelines
             CanBuildROMfromROM = false,
         };
 
+        public override string TempPath => ModLoaderGlobals.BaseDirectory + ModLoaderGlobals.TempName + @"\";
+        public override string ProcessPath => ModLoaderGlobals.TempName + @"\";
+
         public ModPipeline_XBOX360()
         {
 
@@ -49,13 +52,13 @@ namespace CrateModLoader.ModPipelines
 
             if (Directory.Exists(ModLoaderGlobals.BaseDirectory + @"\" + Path.GetFileNameWithoutExtension(inputPath)))
             {
-                Directory.Move(ModLoaderGlobals.BaseDirectory + @"\" + Path.GetFileNameWithoutExtension(inputPath), ModLoaderGlobals.TempPath);
+                Directory.Move(ModLoaderGlobals.BaseDirectory + @"\" + Path.GetFileNameWithoutExtension(inputPath), TempPath);
             }
 
-            if (Directory.Exists(ModLoaderGlobals.TempPath) && File.Exists(ModLoaderGlobals.TempPath + @"default.xex"))
+            if (Directory.Exists(TempPath) && File.Exists(TempPath + @"default.xex"))
             {
                 string xargs = "-l ";
-                xargs += "\"" + ModLoaderGlobals.TempPath + @"default.xex" + "\"";
+                xargs += "\"" + TempPath + @"default.xex" + "\"";
 
                 Process DetectProcess = new Process();
                 DetectProcess.StartInfo.FileName = ModLoaderGlobals.ToolsPath + "xextool.exe";

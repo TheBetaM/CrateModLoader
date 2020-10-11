@@ -126,33 +126,33 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
             Process GobExtract = new Process();
             GobExtract.StartInfo.FileName = ModLoaderGlobals.ToolsPath + "gobextract.exe";
             GobExtract.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            if (ModLoaderGlobals.Console == ConsoleMode.GCN)
+            if (ConsolePipeline.Metadata.Console == ConsoleMode.GCN)
             {
-                GobExtract.StartInfo.Arguments = ModLoaderGlobals.ProcessPath + "assets.gob" + " " + ModLoaderGlobals.ProcessPath + "cml_extr";
+                GobExtract.StartInfo.Arguments = ConsolePipeline.ProcessPath + "assets.gob" + " " + ConsolePipeline.ProcessPath + "cml_extr";
             }
             else
             {
-                GobExtract.StartInfo.Arguments = ModLoaderGlobals.ProcessPath + "ASSETS.GOB" + " " + ModLoaderGlobals.ProcessPath + "cml_extr";
+                GobExtract.StartInfo.Arguments = ConsolePipeline.ProcessPath + "ASSETS.GOB" + " " + ConsolePipeline.ProcessPath + "cml_extr";
             }
             GobExtract.Start();
             GobExtract.WaitForExit();
 
-            if (ModLoaderGlobals.Console == ConsoleMode.PS2)
+            if (ConsolePipeline.Metadata.Console == ConsoleMode.PS2)
             {
-                File.Delete(ModLoaderGlobals.ExtractedPath + "ASSETS.GFC");
-                File.Delete(ModLoaderGlobals.ExtractedPath + "ASSETS.GOB");
+                File.Delete(ConsolePipeline.ExtractedPath + "ASSETS.GFC");
+                File.Delete(ConsolePipeline.ExtractedPath + "ASSETS.GOB");
             }
             else
             {
-                File.Delete(ModLoaderGlobals.ExtractedPath + "assets.gfc");
-                File.Delete(ModLoaderGlobals.ExtractedPath + "assets.gob");
+                File.Delete(ConsolePipeline.ExtractedPath + "assets.gfc");
+                File.Delete(ConsolePipeline.ExtractedPath + "assets.gob");
             }
-            path_gob_extracted = ModLoaderGlobals.ExtractedPath + @"\cml_extr\";
+            path_gob_extracted = ConsolePipeline.ExtractedPath + @"\cml_extr\";
 
             ModProcess();
         }
 
-        protected override void ModProcess()
+        void ModProcess()
         {
             randState = new Random(ModLoaderGlobals.RandomizerSeed);
 
@@ -227,104 +227,104 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
 
             if (Option_NoIntro.Enabled)
             {
-                if (ModLoaderGlobals.Console == ConsoleMode.PS2)
+                if (ConsolePipeline.Metadata.Console == ConsoleMode.PS2)
                 {
-                    if (File.Exists(ModLoaderGlobals.ExtractedPath + "VIDEO/INTRO/ALCHEMY.SFD;1"))
-                        File.Delete(ModLoaderGlobals.ExtractedPath + "VIDEO/INTRO/ALCHEMY.SFD;1");
-                    if (File.Exists(ModLoaderGlobals.ExtractedPath + "VIDEO/INTRO/FCO.SFD;1"))
-                        File.Delete(ModLoaderGlobals.ExtractedPath + "VIDEO/INTRO/FCO.SFD;1");
-                    if (File.Exists(ModLoaderGlobals.ExtractedPath + "VIDEO/INTRO/FCODUT.SFD;1"))
-                        File.Delete(ModLoaderGlobals.ExtractedPath + "VIDEO/INTRO/FCODUT.SFD;1");
-                    if (File.Exists(ModLoaderGlobals.ExtractedPath + "VIDEO/INTRO/FCOENG.SFD;1"))
-                        File.Delete(ModLoaderGlobals.ExtractedPath + "VIDEO/INTRO/FCOENG.SFD;1");
-                    if (File.Exists(ModLoaderGlobals.ExtractedPath + "VIDEO/INTRO/FCOFRE.SFD;1"))
-                        File.Delete(ModLoaderGlobals.ExtractedPath + "VIDEO/INTRO/FCOFRE.SFD;1");
-                    if (File.Exists(ModLoaderGlobals.ExtractedPath + "VIDEO/INTRO/FCOGER.SFD;1"))
-                        File.Delete(ModLoaderGlobals.ExtractedPath + "VIDEO/INTRO/FCOGER.SFD;1");
-                    if (File.Exists(ModLoaderGlobals.ExtractedPath + "VIDEO/INTRO/FCOITA.SFD;1"))
-                        File.Delete(ModLoaderGlobals.ExtractedPath + "VIDEO/INTRO/FCOITA.SFD;1");
-                    if (File.Exists(ModLoaderGlobals.ExtractedPath + "VIDEO/INTRO/FCOSPA.SFD;1"))
-                        File.Delete(ModLoaderGlobals.ExtractedPath + "VIDEO/INTRO/FCOSPA.SFD;1");
-                    if (File.Exists(ModLoaderGlobals.ExtractedPath + "VIDEO/INTRO/SCO.SFD;1"))
-                        File.Delete(ModLoaderGlobals.ExtractedPath + "VIDEO/INTRO/SCO.SFD;1");
-                    if (File.Exists(ModLoaderGlobals.ExtractedPath + "VIDEO/INTRO/SCODUT.SFD;1"))
-                        File.Delete(ModLoaderGlobals.ExtractedPath + "VIDEO/INTRO/SCODUT.SFD;1");
-                    if (File.Exists(ModLoaderGlobals.ExtractedPath + "VIDEO/INTRO/SCOENG.SFD;1"))
-                        File.Delete(ModLoaderGlobals.ExtractedPath + "VIDEO/INTRO/SCOENG.SFD;1");
-                    if (File.Exists(ModLoaderGlobals.ExtractedPath + "VIDEO/INTRO/SCOFRE.SFD;1"))
-                        File.Delete(ModLoaderGlobals.ExtractedPath + "VIDEO/INTRO/SCOFRE.SFD;1");
-                    if (File.Exists(ModLoaderGlobals.ExtractedPath + "VIDEO/INTRO/SCOGER.SFD;1"))
-                        File.Delete(ModLoaderGlobals.ExtractedPath + "VIDEO/INTRO/SCOGER.SFD;1");
-                    if (File.Exists(ModLoaderGlobals.ExtractedPath + "VIDEO/INTRO/SCOITA.SFD;1"))
-                        File.Delete(ModLoaderGlobals.ExtractedPath + "VIDEO/INTRO/SCOITA.SFD;1");
-                    if (File.Exists(ModLoaderGlobals.ExtractedPath + "VIDEO/INTRO/SCOSPA.SFD;1"))
-                        File.Delete(ModLoaderGlobals.ExtractedPath + "VIDEO/INTRO/SCOSPA.SFD;1");
+                    if (File.Exists(ConsolePipeline.ExtractedPath + "VIDEO/INTRO/ALCHEMY.SFD;1"))
+                        File.Delete(ConsolePipeline.ExtractedPath + "VIDEO/INTRO/ALCHEMY.SFD;1");
+                    if (File.Exists(ConsolePipeline.ExtractedPath + "VIDEO/INTRO/FCO.SFD;1"))
+                        File.Delete(ConsolePipeline.ExtractedPath + "VIDEO/INTRO/FCO.SFD;1");
+                    if (File.Exists(ConsolePipeline.ExtractedPath + "VIDEO/INTRO/FCODUT.SFD;1"))
+                        File.Delete(ConsolePipeline.ExtractedPath + "VIDEO/INTRO/FCODUT.SFD;1");
+                    if (File.Exists(ConsolePipeline.ExtractedPath + "VIDEO/INTRO/FCOENG.SFD;1"))
+                        File.Delete(ConsolePipeline.ExtractedPath + "VIDEO/INTRO/FCOENG.SFD;1");
+                    if (File.Exists(ConsolePipeline.ExtractedPath + "VIDEO/INTRO/FCOFRE.SFD;1"))
+                        File.Delete(ConsolePipeline.ExtractedPath + "VIDEO/INTRO/FCOFRE.SFD;1");
+                    if (File.Exists(ConsolePipeline.ExtractedPath + "VIDEO/INTRO/FCOGER.SFD;1"))
+                        File.Delete(ConsolePipeline.ExtractedPath + "VIDEO/INTRO/FCOGER.SFD;1");
+                    if (File.Exists(ConsolePipeline.ExtractedPath + "VIDEO/INTRO/FCOITA.SFD;1"))
+                        File.Delete(ConsolePipeline.ExtractedPath + "VIDEO/INTRO/FCOITA.SFD;1");
+                    if (File.Exists(ConsolePipeline.ExtractedPath + "VIDEO/INTRO/FCOSPA.SFD;1"))
+                        File.Delete(ConsolePipeline.ExtractedPath + "VIDEO/INTRO/FCOSPA.SFD;1");
+                    if (File.Exists(ConsolePipeline.ExtractedPath + "VIDEO/INTRO/SCO.SFD;1"))
+                        File.Delete(ConsolePipeline.ExtractedPath + "VIDEO/INTRO/SCO.SFD;1");
+                    if (File.Exists(ConsolePipeline.ExtractedPath + "VIDEO/INTRO/SCODUT.SFD;1"))
+                        File.Delete(ConsolePipeline.ExtractedPath + "VIDEO/INTRO/SCODUT.SFD;1");
+                    if (File.Exists(ConsolePipeline.ExtractedPath + "VIDEO/INTRO/SCOENG.SFD;1"))
+                        File.Delete(ConsolePipeline.ExtractedPath + "VIDEO/INTRO/SCOENG.SFD;1");
+                    if (File.Exists(ConsolePipeline.ExtractedPath + "VIDEO/INTRO/SCOFRE.SFD;1"))
+                        File.Delete(ConsolePipeline.ExtractedPath + "VIDEO/INTRO/SCOFRE.SFD;1");
+                    if (File.Exists(ConsolePipeline.ExtractedPath + "VIDEO/INTRO/SCOGER.SFD;1"))
+                        File.Delete(ConsolePipeline.ExtractedPath + "VIDEO/INTRO/SCOGER.SFD;1");
+                    if (File.Exists(ConsolePipeline.ExtractedPath + "VIDEO/INTRO/SCOITA.SFD;1"))
+                        File.Delete(ConsolePipeline.ExtractedPath + "VIDEO/INTRO/SCOITA.SFD;1");
+                    if (File.Exists(ConsolePipeline.ExtractedPath + "VIDEO/INTRO/SCOSPA.SFD;1"))
+                        File.Delete(ConsolePipeline.ExtractedPath + "VIDEO/INTRO/SCOSPA.SFD;1");
                 }
-                else if (ModLoaderGlobals.Console == ConsoleMode.GCN)
+                else if (ConsolePipeline.Metadata.Console == ConsoleMode.GCN)
                 {
-                    if (File.Exists(ModLoaderGlobals.ExtractedPath + "video/intro/alchemy.sfd"))
-                        File.Delete(ModLoaderGlobals.ExtractedPath + "video/intro/alchemy.sfd");
-                    if (File.Exists(ModLoaderGlobals.ExtractedPath + "video/intro/fco.sfd"))
-                        File.Delete(ModLoaderGlobals.ExtractedPath + "video/intro/fco.sfd");
-                    if (File.Exists(ModLoaderGlobals.ExtractedPath + "video/intro/fcodut.sfd"))
-                        File.Delete(ModLoaderGlobals.ExtractedPath + "video/intro/fcodut.sfd");
-                    if (File.Exists(ModLoaderGlobals.ExtractedPath + "video/intro/fcoeng.sfd"))
-                        File.Delete(ModLoaderGlobals.ExtractedPath + "video/intro/fcoeng.sfd");
-                    if (File.Exists(ModLoaderGlobals.ExtractedPath + "video/intro/fcofre.sfd"))
-                        File.Delete(ModLoaderGlobals.ExtractedPath + "video/intro/fcofre.sfd");
-                    if (File.Exists(ModLoaderGlobals.ExtractedPath + "video/intro/fcoger.sfd"))
-                        File.Delete(ModLoaderGlobals.ExtractedPath + "video/intro/fcoger.sfd");
-                    if (File.Exists(ModLoaderGlobals.ExtractedPath + "video/intro/fcoita.sfd"))
-                        File.Delete(ModLoaderGlobals.ExtractedPath + "video/intro/fcoita.sfd");
-                    if (File.Exists(ModLoaderGlobals.ExtractedPath + "video/intro/fcospa.sfd"))
-                        File.Delete(ModLoaderGlobals.ExtractedPath + "video/intro/fcospa.sfd");
-                    if (File.Exists(ModLoaderGlobals.ExtractedPath + "video/intro/sco.sfd"))
-                        File.Delete(ModLoaderGlobals.ExtractedPath + "video/intro/sco.sfd");
-                    if (File.Exists(ModLoaderGlobals.ExtractedPath + "video/intro/scodut.sfd"))
-                        File.Delete(ModLoaderGlobals.ExtractedPath + "video/intro/scodut.sfd");
-                    if (File.Exists(ModLoaderGlobals.ExtractedPath + "video/intro/scoeng.sfd"))
-                        File.Delete(ModLoaderGlobals.ExtractedPath + "video/intro/scoeng.sfd");
-                    if (File.Exists(ModLoaderGlobals.ExtractedPath + "video/intro/scofre.sfd"))
-                        File.Delete(ModLoaderGlobals.ExtractedPath + "video/intro/scofre.sfd");
-                    if (File.Exists(ModLoaderGlobals.ExtractedPath + "video/intro/scoger.sfd"))
-                        File.Delete(ModLoaderGlobals.ExtractedPath + "video/intro/scoger.sfd");
-                    if (File.Exists(ModLoaderGlobals.ExtractedPath + "video/intro/scoita.sfd"))
-                        File.Delete(ModLoaderGlobals.ExtractedPath + "video/intro/scoita.sfd");
-                    if (File.Exists(ModLoaderGlobals.ExtractedPath + "video/intro/scospa.sfd"))
-                        File.Delete(ModLoaderGlobals.ExtractedPath + "video/intro/scospa.sfd");
+                    if (File.Exists(ConsolePipeline.ExtractedPath + "video/intro/alchemy.sfd"))
+                        File.Delete(ConsolePipeline.ExtractedPath + "video/intro/alchemy.sfd");
+                    if (File.Exists(ConsolePipeline.ExtractedPath + "video/intro/fco.sfd"))
+                        File.Delete(ConsolePipeline.ExtractedPath + "video/intro/fco.sfd");
+                    if (File.Exists(ConsolePipeline.ExtractedPath + "video/intro/fcodut.sfd"))
+                        File.Delete(ConsolePipeline.ExtractedPath + "video/intro/fcodut.sfd");
+                    if (File.Exists(ConsolePipeline.ExtractedPath + "video/intro/fcoeng.sfd"))
+                        File.Delete(ConsolePipeline.ExtractedPath + "video/intro/fcoeng.sfd");
+                    if (File.Exists(ConsolePipeline.ExtractedPath + "video/intro/fcofre.sfd"))
+                        File.Delete(ConsolePipeline.ExtractedPath + "video/intro/fcofre.sfd");
+                    if (File.Exists(ConsolePipeline.ExtractedPath + "video/intro/fcoger.sfd"))
+                        File.Delete(ConsolePipeline.ExtractedPath + "video/intro/fcoger.sfd");
+                    if (File.Exists(ConsolePipeline.ExtractedPath + "video/intro/fcoita.sfd"))
+                        File.Delete(ConsolePipeline.ExtractedPath + "video/intro/fcoita.sfd");
+                    if (File.Exists(ConsolePipeline.ExtractedPath + "video/intro/fcospa.sfd"))
+                        File.Delete(ConsolePipeline.ExtractedPath + "video/intro/fcospa.sfd");
+                    if (File.Exists(ConsolePipeline.ExtractedPath + "video/intro/sco.sfd"))
+                        File.Delete(ConsolePipeline.ExtractedPath + "video/intro/sco.sfd");
+                    if (File.Exists(ConsolePipeline.ExtractedPath + "video/intro/scodut.sfd"))
+                        File.Delete(ConsolePipeline.ExtractedPath + "video/intro/scodut.sfd");
+                    if (File.Exists(ConsolePipeline.ExtractedPath + "video/intro/scoeng.sfd"))
+                        File.Delete(ConsolePipeline.ExtractedPath + "video/intro/scoeng.sfd");
+                    if (File.Exists(ConsolePipeline.ExtractedPath + "video/intro/scofre.sfd"))
+                        File.Delete(ConsolePipeline.ExtractedPath + "video/intro/scofre.sfd");
+                    if (File.Exists(ConsolePipeline.ExtractedPath + "video/intro/scoger.sfd"))
+                        File.Delete(ConsolePipeline.ExtractedPath + "video/intro/scoger.sfd");
+                    if (File.Exists(ConsolePipeline.ExtractedPath + "video/intro/scoita.sfd"))
+                        File.Delete(ConsolePipeline.ExtractedPath + "video/intro/scoita.sfd");
+                    if (File.Exists(ConsolePipeline.ExtractedPath + "video/intro/scospa.sfd"))
+                        File.Delete(ConsolePipeline.ExtractedPath + "video/intro/scospa.sfd");
                 }
                 else
                 {
-                    if (File.Exists(ModLoaderGlobals.ExtractedPath + "video/intro/alchemy.sfd"))
-                        File.Delete(ModLoaderGlobals.ExtractedPath + "video/intro/alchemy.sfd");
-                    if (File.Exists(ModLoaderGlobals.ExtractedPath + "video/intro/fco.sfd"))
-                        File.Delete(ModLoaderGlobals.ExtractedPath + "video/intro/fco.sfd");
-                    if (File.Exists(ModLoaderGlobals.ExtractedPath + "video/intro/fcodut.sfd"))
-                        File.Delete(ModLoaderGlobals.ExtractedPath + "video/intro/fcodut.sfd");
-                    if (File.Exists(ModLoaderGlobals.ExtractedPath + "video/intro/fcoeng.sfd"))
-                        File.Delete(ModLoaderGlobals.ExtractedPath + "video/intro/fcoeng.sfd");
-                    if (File.Exists(ModLoaderGlobals.ExtractedPath + "video/intro/fcofre.sfd"))
-                        File.Delete(ModLoaderGlobals.ExtractedPath + "video/intro/fcofre.sfd");
-                    if (File.Exists(ModLoaderGlobals.ExtractedPath + "video/intro/fcoger.sfd"))
-                        File.Delete(ModLoaderGlobals.ExtractedPath + "video/intro/fcoger.sfd");
-                    if (File.Exists(ModLoaderGlobals.ExtractedPath + "video/intro/fcoita.sfd"))
-                        File.Delete(ModLoaderGlobals.ExtractedPath + "video/intro/fcoita.sfd");
-                    if (File.Exists(ModLoaderGlobals.ExtractedPath + "video/intro/fcospa.sfd"))
-                        File.Delete(ModLoaderGlobals.ExtractedPath + "video/intro/fcospa.sfd");
-                    if (File.Exists(ModLoaderGlobals.ExtractedPath + "video/intro/sco.sfd"))
-                        File.Delete(ModLoaderGlobals.ExtractedPath + "video/intro/sco.sfd");
-                    if (File.Exists(ModLoaderGlobals.ExtractedPath + "video/intro/scodut.sfd"))
-                        File.Delete(ModLoaderGlobals.ExtractedPath + "video/intro/scodut.sfd");
-                    if (File.Exists(ModLoaderGlobals.ExtractedPath + "video/intro/scoeng.sfd"))
-                        File.Delete(ModLoaderGlobals.ExtractedPath + "video/intro/scoeng.sfd");
-                    if (File.Exists(ModLoaderGlobals.ExtractedPath + "video/intro/scofre.sfd"))
-                        File.Delete(ModLoaderGlobals.ExtractedPath + "video/intro/scofre.sfd");
-                    if (File.Exists(ModLoaderGlobals.ExtractedPath + "video/intro/scoger.sfd"))
-                        File.Delete(ModLoaderGlobals.ExtractedPath + "video/intro/scoger.sfd");
-                    if (File.Exists(ModLoaderGlobals.ExtractedPath + "video/intro/scoita.sfd"))
-                        File.Delete(ModLoaderGlobals.ExtractedPath + "video/intro/scoita.sfd");
-                    if (File.Exists(ModLoaderGlobals.ExtractedPath + "video/intro/scospa.sfd"))
-                        File.Delete(ModLoaderGlobals.ExtractedPath + "video/intro/scospa.sfd");
+                    if (File.Exists(ConsolePipeline.ExtractedPath + "video/intro/alchemy.sfd"))
+                        File.Delete(ConsolePipeline.ExtractedPath + "video/intro/alchemy.sfd");
+                    if (File.Exists(ConsolePipeline.ExtractedPath + "video/intro/fco.sfd"))
+                        File.Delete(ConsolePipeline.ExtractedPath + "video/intro/fco.sfd");
+                    if (File.Exists(ConsolePipeline.ExtractedPath + "video/intro/fcodut.sfd"))
+                        File.Delete(ConsolePipeline.ExtractedPath + "video/intro/fcodut.sfd");
+                    if (File.Exists(ConsolePipeline.ExtractedPath + "video/intro/fcoeng.sfd"))
+                        File.Delete(ConsolePipeline.ExtractedPath + "video/intro/fcoeng.sfd");
+                    if (File.Exists(ConsolePipeline.ExtractedPath + "video/intro/fcofre.sfd"))
+                        File.Delete(ConsolePipeline.ExtractedPath + "video/intro/fcofre.sfd");
+                    if (File.Exists(ConsolePipeline.ExtractedPath + "video/intro/fcoger.sfd"))
+                        File.Delete(ConsolePipeline.ExtractedPath + "video/intro/fcoger.sfd");
+                    if (File.Exists(ConsolePipeline.ExtractedPath + "video/intro/fcoita.sfd"))
+                        File.Delete(ConsolePipeline.ExtractedPath + "video/intro/fcoita.sfd");
+                    if (File.Exists(ConsolePipeline.ExtractedPath + "video/intro/fcospa.sfd"))
+                        File.Delete(ConsolePipeline.ExtractedPath + "video/intro/fcospa.sfd");
+                    if (File.Exists(ConsolePipeline.ExtractedPath + "video/intro/sco.sfd"))
+                        File.Delete(ConsolePipeline.ExtractedPath + "video/intro/sco.sfd");
+                    if (File.Exists(ConsolePipeline.ExtractedPath + "video/intro/scodut.sfd"))
+                        File.Delete(ConsolePipeline.ExtractedPath + "video/intro/scodut.sfd");
+                    if (File.Exists(ConsolePipeline.ExtractedPath + "video/intro/scoeng.sfd"))
+                        File.Delete(ConsolePipeline.ExtractedPath + "video/intro/scoeng.sfd");
+                    if (File.Exists(ConsolePipeline.ExtractedPath + "video/intro/scofre.sfd"))
+                        File.Delete(ConsolePipeline.ExtractedPath + "video/intro/scofre.sfd");
+                    if (File.Exists(ConsolePipeline.ExtractedPath + "video/intro/scoger.sfd"))
+                        File.Delete(ConsolePipeline.ExtractedPath + "video/intro/scoger.sfd");
+                    if (File.Exists(ConsolePipeline.ExtractedPath + "video/intro/scoita.sfd"))
+                        File.Delete(ConsolePipeline.ExtractedPath + "video/intro/scoita.sfd");
+                    if (File.Exists(ConsolePipeline.ExtractedPath + "video/intro/scospa.sfd"))
+                        File.Delete(ConsolePipeline.ExtractedPath + "video/intro/scospa.sfd");
                 }
             }
             if (Option_RandCharacters.Enabled)
@@ -1570,11 +1570,11 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
         {
             //Replace model files
             string modelpath = path_gob_extracted;
-            if (ModLoaderGlobals.Console == ConsoleMode.PS2)
+            if (ConsolePipeline.Metadata.Console == ConsoleMode.PS2)
             {
                 modelpath += "/ps2/gfx/chars/";
             }
-            else if (ModLoaderGlobals.Console == ConsoleMode.XBOX)
+            else if (ConsolePipeline.Metadata.Console == ConsoleMode.XBOX)
             {
                 modelpath += "/xbox/gfx/chars/";
             }
@@ -1649,11 +1649,11 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
         {
             //Replace model files
             string modelpath = path_gob_extracted;
-            if (ModLoaderGlobals.Console == ConsoleMode.PS2)
+            if (ConsolePipeline.Metadata.Console == ConsoleMode.PS2)
             {
                 modelpath += "/ps2/gfx/karts/";
             }
-            else if (ModLoaderGlobals.Console == ConsoleMode.XBOX)
+            else if (ConsolePipeline.Metadata.Console == ConsoleMode.XBOX)
             {
                 modelpath += "/xbox/gfx/karts/";
             }
@@ -1687,19 +1687,19 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
 
         }
 
-        protected override void EndModProcess()
+        void EndModProcess()
         {
             // Build GOB
             Process GobExtract = new Process();
             GobExtract.StartInfo.FileName = ModLoaderGlobals.ToolsPath + "gobextract.exe";
             GobExtract.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            if (ModLoaderGlobals.Console == ConsoleMode.PS2)
+            if (ConsolePipeline.Metadata.Console == ConsoleMode.PS2)
             {
-                GobExtract.StartInfo.Arguments = ModLoaderGlobals.ProcessPath + "ASSETS.GOB" + " " + ModLoaderGlobals.ProcessPath + "cml_extr" + " -create 1";
+                GobExtract.StartInfo.Arguments = ConsolePipeline.ProcessPath + "ASSETS.GOB" + " " + ConsolePipeline.ProcessPath + "cml_extr" + " -create 1";
             }
             else
             {
-                GobExtract.StartInfo.Arguments = ModLoaderGlobals.ProcessPath + "assets.gob" + " " + ModLoaderGlobals.ProcessPath + "cml_extr" + " -create 1";
+                GobExtract.StartInfo.Arguments = ConsolePipeline.ProcessPath + "assets.gob" + " " + ConsolePipeline.ProcessPath + "cml_extr" + " -create 1";
             }
             GobExtract.Start();
             GobExtract.WaitForExit();

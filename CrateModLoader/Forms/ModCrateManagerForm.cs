@@ -8,13 +8,17 @@ namespace CrateModLoader
 {
     public partial class ModCrateManagerForm : Form
     {
-        public ModCrateManagerForm()
+        public ModLoader ModProgram;
+
+        public ModCrateManagerForm(ModLoader Program)
         {
+            ModProgram = Program;
+
             InitializeComponent();
 
             checkedListBox_mods.Items.Clear();
 
-            ModCrates.PopulateModList();
+            ModCrates.PopulateModList(ModProgram.Modder != null, ModProgram.Game.ShortName);
 
             if (ModCrates.SupportedMods.Count > 0)
             {
@@ -79,7 +83,7 @@ namespace CrateModLoader
         {
             Owner.Enabled = true;
 
-            ModLoaderGlobals.ModProgram.UpdateModCrateChangedState();
+            ModProgram.UpdateModCrateChangedState();
         }
 
         private void checkedListBox_mods_ItemCheck(object sender, ItemCheckEventArgs e)

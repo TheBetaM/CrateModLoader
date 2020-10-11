@@ -8,6 +8,11 @@ namespace CrateModLoader.ModPipelines
     public class ModPipeline_GCN : ModPipeline
     {
 
+        public string ProductCode = "";
+
+        public override string TempPath => ModLoaderGlobals.BaseDirectory + ModLoaderGlobals.TempName;
+        public override string ProcessPath => ModLoaderGlobals.TempName + @"\P-" + ProductCode.Substring(0, 4) + @"\files\";
+
         public override ModPipelineInfo Metadata => new ModPipelineInfo()
         {
             Console = ConsoleMode.GCN,
@@ -19,14 +24,14 @@ namespace CrateModLoader.ModPipelines
 
         public ModPipeline_GCN()
         {
-
+            ProductCode = "";
         }
 
         public override bool DetectROM(string inputPath, out string titleID, out uint regionID)
         {
             regionID = 0;
             string args = "ID6 ";
-            args += "\"" + ModLoaderGlobals.InputPath + "\"";
+            args += "\"" + inputPath + "\"";
 
             Process DetectProcess = new Process();
             DetectProcess.StartInfo.FileName = ModLoaderGlobals.ToolsPath + @"wit\wit.exe";
@@ -50,6 +55,7 @@ namespace CrateModLoader.ModPipelines
                 {
                     if (titleID.StartsWith("G"))
                     {
+                        ProductCode = titleID;
                         return true;
                     }
                 }
@@ -70,6 +76,7 @@ namespace CrateModLoader.ModPipelines
 
                     if (titleID.StartsWith("G"))
                     {
+                        ProductCode = titleID;
                         return true;
                     }
                 }
@@ -81,7 +88,7 @@ namespace CrateModLoader.ModPipelines
         public override void Build(string inputPath, string outputPath)
         {
             // Use GCIT (Wiims ISO Tool doesn't work for this)
-            string folderFix = ModLoaderGlobals.ProductCode.Substring(0, 4);
+            string folderFix = ProductCode.Substring(0, 4);
 
             Directory.Move(inputPath + @"\P-" + folderFix + @"\files\", inputPath + @"\P-" + folderFix + @"\root\");
 

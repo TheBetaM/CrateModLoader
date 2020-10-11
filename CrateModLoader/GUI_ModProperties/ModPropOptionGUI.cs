@@ -8,14 +8,18 @@ namespace CrateModLoader.ModProperties.GUI
     public class ModPropOptionGUI : ModPropertyGUI<ModPropOption>
     {
 
-        public ModPropOptionGUI(ModPropOption p) : base(p)
-        {
+        private ConsoleMode Console;
+        private RegionType Region;
 
+        public ModPropOptionGUI(ModPropOption p, ConsoleMode console, RegionType region) : base(p)
+        {
+            Console = console;
+            Region = region;
         }
 
         public override void GenerateUI(object parent, ref int offset, bool showTitle)
         {
-            if (!Prop.Allowed())
+            if (!Prop.Allowed(Console, Region))
             {
                 return;
             }

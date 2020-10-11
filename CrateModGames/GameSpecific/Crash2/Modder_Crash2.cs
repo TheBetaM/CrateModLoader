@@ -83,20 +83,18 @@ namespace CrateModLoader.GameSpecific.Crash2
             // there is nothing for us to do here...
 
             ModProcess();
-
-            EndModProcess();
         }
 
-        protected override void ModProcess()
+        void ModProcess()
         {
             Random rand = new Random(ModLoaderGlobals.RandomizerSeed);
 
-            CrateSettings_CrashTri.VerifyModCrates();
-            ModCrates.InstallLayerMods(ModLoaderGlobals.ExtractedPath, 0);
+            CrateSettings_CrashTri.VerifyModCrates(Game.ShortName, GameRegion);
+            ModCrates.InstallLayerMods(ConsolePipeline.ExtractedPath, 0);
 
             List<FileInfo> nsfs = new List<FileInfo>();
             List<FileInfo> nsds = new List<FileInfo>();
-            DirectoryInfo di = new DirectoryInfo(ModLoaderGlobals.ExtractedPath);
+            DirectoryInfo di = new DirectoryInfo(ConsolePipeline.ExtractedPath);
 
             AppendFileInfoDir(nsfs, nsds, di); // this should return all NSF/NSD file pairs
 
@@ -157,7 +155,7 @@ namespace CrateModLoader.GameSpecific.Crash2
                         Randomize_Music(nsf, rand, ref wavebankChunks, ref musicEntries, Option_RandMusic.Enabled, Option_RandMusicTracks.Enabled, Option_RandMusicInstruments.Enabled);
                     if (Option_RandSounds.Enabled) Mod_RandomizeADIO(nsf, nsd, rand);
 
-                    Crash2_Mods.Mod_Metadata(nsf, nsd, NSF_Level);
+                    Crash2_Mods.Mod_Metadata(nsf, nsd, NSF_Level, GameRegion.Region);
                 }
                 else
                 {
@@ -190,11 +188,6 @@ namespace CrateModLoader.GameSpecific.Crash2
                 if (file.Extension.ToUpper() == ".NSF") nsfpaths.Add(file);
                 else if (file.Extension.ToUpper() == ".NSD") nsdpaths.Add(file);
             }
-        }
-
-        protected override void EndModProcess()
-        {
-            // ...or here
         }
 
         internal void PatchNSD(NSF nsf, NSD nsd)

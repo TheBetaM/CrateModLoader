@@ -192,22 +192,22 @@ namespace CrateModLoader.GameSpecific.CrashTS
         {
 
             // Extract BD (PS2 only)
-            if (ModLoaderGlobals.Console == ConsoleMode.PS2)
+            if (ConsolePipeline.Metadata.Console == ConsoleMode.PS2)
             {
-                bdPath = System.IO.Path.Combine(ModLoaderGlobals.ExtractedPath, "cml_extr/");
+                bdPath = System.IO.Path.Combine(ConsolePipeline.ExtractedPath, "cml_extr/");
                 Directory.CreateDirectory(bdPath);
 
-                BDArchive.ExtractAll(System.IO.Path.Combine(ModLoaderGlobals.ExtractedPath, "CRASH6/CRASH"), bdPath);
+                BDArchive.ExtractAll(System.IO.Path.Combine(ConsolePipeline.ExtractedPath, "CRASH6/CRASH"), bdPath);
 
-                File.Delete(System.IO.Path.Combine(ModLoaderGlobals.ExtractedPath, "CRASH6/CRASH.BD"));
-                File.Delete(System.IO.Path.Combine(ModLoaderGlobals.ExtractedPath, "CRASH6/CRASH.BH"));
+                File.Delete(System.IO.Path.Combine(ConsolePipeline.ExtractedPath, "CRASH6/CRASH.BD"));
+                File.Delete(System.IO.Path.Combine(ConsolePipeline.ExtractedPath, "CRASH6/CRASH.BH"));
                 extensionMod = "2";
                 rmType = TwinsFile.FileType.RM2;
                 smType = TwinsFile.FileType.SM2;
             }
             else
             {
-                bdPath = ModLoaderGlobals.ExtractedPath;
+                bdPath = ConsolePipeline.ExtractedPath;
                 extensionMod = "x";
                 rmType = TwinsFile.FileType.RMX;
                 smType = TwinsFile.FileType.SMX;
@@ -216,12 +216,12 @@ namespace CrateModLoader.GameSpecific.CrashTS
             ModProcess();
         }
 
-        protected override void ModProcess()
+        void ModProcess()
         {
             //Start Modding
             randState = new Random(ModLoaderGlobals.RandomizerSeed);
             
-            Twins_Settings.PatchEXE();
+            Twins_Settings.PatchEXE(ConsolePipeline.Metadata.Console, GameRegion.Region, ConsolePipeline.ExtractedPath, GameRegion.ExecName);
 
             ModCrates.InstallLayerMods(bdPath, 1);
 
@@ -444,7 +444,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 Twins_Data.allObjects.Sort((x, y) => x.ID.CompareTo(y.ID));
 
                 int scriptVer = 0;
-                if (ModLoaderGlobals.Console == ConsoleMode.XBOX)
+                if (ConsolePipeline.Metadata.Console == ConsoleMode.XBOX)
                 {
                     scriptVer = 1;
                 }
@@ -672,11 +672,11 @@ namespace CrateModLoader.GameSpecific.CrashTS
             if (Twins_Edit_CodeText)
             {
                 string[] CodeText;
-                if (ModLoaderGlobals.Region == RegionType.NTSC_U)
+                if (GameRegion.Region == RegionType.NTSC_U)
                 {
                     CodeText = File.ReadAllLines(bdPath + "/Language/Code/American.txt", Encoding.Default);
                 }
-                else if (ModLoaderGlobals.Region == RegionType.PAL)
+                else if (GameRegion.Region == RegionType.PAL)
                 {
                     CodeText = File.ReadAllLines(bdPath + "/Language/Code/English.txt", Encoding.Default);
                 }
@@ -701,11 +701,11 @@ namespace CrateModLoader.GameSpecific.CrashTS
                     {
                         CodeText_LineList[i] = "autosave disabled~";
                     }
-                    else if (i == 39 && ModLoaderGlobals.Region == RegionType.NTSC_J)
+                    else if (i == 39 && GameRegion.Region == RegionType.NTSC_J)
                     {
                         CodeText_LineList[i] += "~";
                     }
-                    else if (i == 40 && ModLoaderGlobals.Region == RegionType.NTSC_J)
+                    else if (i == 40 && GameRegion.Region == RegionType.NTSC_J)
                     {
                         CodeText_LineList[i] += "~" + ModLoaderGlobals.ProgramVersion.ToLower() + "~" + "" + ModLoaderGlobals.RandomizerSeed + "";
                     }
@@ -717,11 +717,11 @@ namespace CrateModLoader.GameSpecific.CrashTS
                     CodeText[i] = CodeText_LineList[i];
                 }
 
-                if (ModLoaderGlobals.Region == RegionType.NTSC_U)
+                if (GameRegion.Region == RegionType.NTSC_U)
                 {
                     File.WriteAllLines(bdPath + "/Language/Code/American.txt", CodeText, Encoding.Default);
                 }
-                else if (ModLoaderGlobals.Region == RegionType.PAL)
+                else if (GameRegion.Region == RegionType.PAL)
                 {
                     File.WriteAllLines(bdPath + "/Language/Code/English.txt", CodeText, Encoding.Default);
                 }
@@ -747,10 +747,10 @@ namespace CrateModLoader.GameSpecific.CrashTS
 
         void RM_EditLevel(string path)
         {
-            string mainPath = System.IO.Path.Combine(ModLoaderGlobals.ExtractedPath, @"cml_extr\");
-            if (ModLoaderGlobals.Console == ConsoleMode.XBOX)
+            string mainPath = System.IO.Path.Combine(ConsolePipeline.ExtractedPath, @"cml_extr\");
+            if (ConsolePipeline.Metadata.Console == ConsoleMode.XBOX)
             {
-                mainPath = ModLoaderGlobals.ExtractedPath;
+                mainPath = ConsolePipeline.ExtractedPath;
             }
             ChunkType chunkType = Twins_Data.ChunkPathToType(path, mainPath, extensionMod);
             if (chunkType != ChunkType.Invalid)
@@ -804,10 +804,10 @@ namespace CrateModLoader.GameSpecific.CrashTS
         
         void RM_LoadLevel(string path)
         {
-            string mainPath = System.IO.Path.Combine(ModLoaderGlobals.ExtractedPath, @"cml_extr\");
-            if (ModLoaderGlobals.Console == ConsoleMode.XBOX)
+            string mainPath = System.IO.Path.Combine(ConsolePipeline.ExtractedPath, @"cml_extr\");
+            if (ConsolePipeline.Metadata.Console == ConsoleMode.XBOX)
             {
-                mainPath = ModLoaderGlobals.ExtractedPath;
+                mainPath = ConsolePipeline.ExtractedPath;
             }
             ChunkType chunkType = Twins_Data.ChunkPathToType(path, mainPath, extensionMod);
             if (chunkType != ChunkType.Invalid)
@@ -946,7 +946,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
             }
         }
 
-        protected override void EndModProcess()
+        void EndModProcess()
         {
             CrateReplaceList.Clear();
             randCrateList.Clear();
@@ -955,9 +955,9 @@ namespace CrateModLoader.GameSpecific.CrashTS
             randMusicList.Clear();
 
             // Build BD
-            if (ModLoaderGlobals.Console == ConsoleMode.PS2)
+            if (ConsolePipeline.Metadata.Console == ConsoleMode.PS2)
             {
-                BDArchive.CompileAll(System.IO.Path.Combine(ModLoaderGlobals.ExtractedPath, "CRASH6/CRASH"), bdPath);
+                BDArchive.CompileAll(System.IO.Path.Combine(ConsolePipeline.ExtractedPath, "CRASH6/CRASH"), bdPath);
 
                 // Get rid of extracted files
                 if (Directory.Exists(bdPath))

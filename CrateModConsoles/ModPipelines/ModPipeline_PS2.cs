@@ -14,6 +14,8 @@ namespace CrateModLoader.ModPipelines
     public class ModPipeline_PS2 : ModPipeline
     {
 
+        public string ISO_Label = "";
+
         public override ModPipelineInfo Metadata => new ModPipelineInfo()
         {
             Console = ConsoleMode.PS2,
@@ -21,10 +23,14 @@ namespace CrateModLoader.ModPipelines
             NeedsDetection = true,
         };
 
+        public override string TempPath => ModLoaderGlobals.BaseDirectory + ModLoaderGlobals.TempName + @"\";
+        public override string ProcessPath => ModLoaderGlobals.TempName + @"\";
+
         public bool isCDimage = false;
 
         public ModPipeline_PS2()
         {
+            ISO_Label = "";
             isCDimage = false;
         }
 
@@ -186,7 +192,7 @@ namespace CrateModLoader.ModPipelines
                 // Use CDBuilder
                 CDBuilder isoBuild = new CDBuilder();
                 isoBuild.UseJoliet = true;
-                isoBuild.VolumeIdentifier = ModLoaderGlobals.ISO_Label;
+                isoBuild.VolumeIdentifier = ISO_Label;
 
                 // CD image adjustments
                 DirectoryInfo dit = new DirectoryInfo(inputPath);
@@ -208,11 +214,11 @@ namespace CrateModLoader.ModPipelines
 
                 foreach (DirectoryInfo dir in di.GetDirectories())
                 {
-                    ISO_Common.Recursive_AddDirs(isoBuild, dir, dir.Name + @"\", files);
+                    ISO_Common.Recursive_AddDirs(isoBuild, dir, dir.Name + @"\", files, true);
                 }
                 foreach (FileInfo file in di.GetFiles())
                 {
-                    ISO_Common.AddFile(isoBuild, file, string.Empty, files);
+                    ISO_Common.AddFile(isoBuild, file, string.Empty, files, true);
                 }
 
                 using (FileStream output = new FileStream(outputPath, FileMode.Create, FileAccess.Write))
@@ -248,7 +254,7 @@ namespace CrateModLoader.ModPipelines
                 {
                     cd = new CDReader(isoStream, true);
                 }
-                ModLoaderGlobals.ISO_Label = cd.VolumeLabel;
+                ISO_Label = cd.VolumeLabel;
 
                 /* Sometimes doesn't work?
                 if (isoInfo.Length * 2 > GetTotalFreeSpace(ModLoaderGlobals.TempPath.Substring(0, 3)))
@@ -325,13 +331,13 @@ namespace CrateModLoader.ModPipelines
         {
             foreach (string directory in cd.GetDirectories(dir))
             {
-                Directory.CreateDirectory(ModLoaderGlobals.TempPath + @"\" + directory);
+                Directory.CreateDirectory(TempPath + @"\" + directory);
                 if (cd.GetDirectoryInfo(directory).GetFiles().Length > 0)
                 {
                     foreach (string file in cd.GetFiles(directory))
                     {
                         fileStreamFrom = cd.OpenFile(file, FileMode.Open);
-                        fileStreamTo = File.Open(ModLoaderGlobals.TempPath + @"\" + file, FileMode.OpenOrCreate);
+                        fileStreamTo = File.Open(TempPath + @"\" + file, FileMode.OpenOrCreate);
                         fileStreamFrom.CopyTo(fileStreamTo);
                         fileStreamFrom.Close();
                         fileStreamTo.Close();

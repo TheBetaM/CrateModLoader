@@ -46,12 +46,15 @@
   <ItemGroup>
     <Compile Include="EventArgs.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="IMod.cs" />
     <Compile Include="ModCrates.cs" />
     <Compile Include="Modder.cs" />
     <Compile Include="ModLoader.cs" />
     <Compile Include="ModLoaderGlobals.cs" />
+    <Compile Include="ModPipelines\IModPipeline.cs" />
     <Compile Include="ModPipelines\IO_Common.cs" />
     <Compile Include="ModPipelines\ModPipeline.cs" />
+    <Compile Include="Mod.cs" />
     <Compile Include="ModProperties\ModCategory.cs" />
     <Compile Include="ModProperties\ModPropBool.cs" />
     <Compile Include="ModProperties\ModProperty.cs" />

@@ -11,6 +11,8 @@ namespace CrateModLoader.ModPipelines
     public class ModPipeline_PS1 : ModPipeline
     {
 
+        public string ISO_Label = "";
+
         public override ModPipelineInfo Metadata => new ModPipelineInfo()
         {
             Console = ConsoleMode.PS1,
@@ -19,9 +21,12 @@ namespace CrateModLoader.ModPipelines
             CanBuildROMfromFolder = false, // original file required for label
         };
 
+        public override string TempPath => ModLoaderGlobals.BaseDirectory + ModLoaderGlobals.TempName + @"\";
+        public override string ProcessPath => ModLoaderGlobals.TempName + @"\";
+
         public ModPipeline_PS1()
         {
-
+            ISO_Label = "";
         }
 
         public override bool DetectROM(string inputPath, out string titleID, out uint regionID)
@@ -29,12 +34,12 @@ namespace CrateModLoader.ModPipelines
             bool found = false;
             titleID = null;
             regionID = 0;
-            using (FileStream isoStream = File.Open(ModLoaderGlobals.InputPath, FileMode.Open))
+            using (FileStream isoStream = File.Open(inputPath, FileMode.Open))
             {
                 CDReader cd;
                 FileStream tempbin = null;
 
-                if (Path.GetExtension(ModLoaderGlobals.InputPath).ToLower() == ".bin") // PS1 CD image
+                if (Path.GetExtension(inputPath).ToLower() == ".bin") // PS1 CD image
                 {
                     FileStream binconvout = new FileStream(ModLoaderGlobals.BaseDirectory + "binconvout.iso", FileMode.Create, FileAccess.Write);
                     PSX2ISO.Run(isoStream, binconvout);
@@ -105,18 +110,18 @@ namespace CrateModLoader.ModPipelines
             // Use CDBuilder
             CDBuilder isoBuild = new CDBuilder();
             isoBuild.UseJoliet = true;
-            isoBuild.VolumeIdentifier = ModLoaderGlobals.ISO_Label;
+            isoBuild.VolumeIdentifier = ISO_Label;
 
             DirectoryInfo di = new DirectoryInfo(inputPath);
             HashSet<FileStream> files = new HashSet<FileStream>();
 
             foreach (DirectoryInfo dir in di.GetDirectories())
             {
-                ISO_Common.Recursive_AddDirs(isoBuild, dir, dir.Name + @"\", files);
+                ISO_Common.Recursive_AddDirs(isoBuild, dir, dir.Name + @"\", files, true);
             }
             foreach (FileInfo file in di.GetFiles())
             {
-                ISO_Common.AddFile(isoBuild, file, string.Empty, files);
+                ISO_Common.AddFile(isoBuild, file, string.Empty, files, true);
             }
 
             using (FileStream output = new FileStream(outputPath, FileMode.Create, FileAccess.Write))
@@ -152,7 +157,7 @@ namespace CrateModLoader.ModPipelines
                 {
                     cd = new CDReader(isoStream, true);
                 }
-                ModLoaderGlobals.ISO_Label = cd.VolumeLabel;
+                ISO_Label = cd.VolumeLabel;
 
                 /* Sometimes doesn't work?
                 if (isoInfo.Length * 2 > GetTotalFreeSpace(ModLoaderGlobals.TempPath.Substring(0, 3)))
@@ -229,13 +234,13 @@ namespace CrateModLoader.ModPipelines
         {
             foreach (string directory in cd.GetDirectories(dir))
             {
-                Directory.CreateDirectory(ModLoaderGlobals.TempPath + @"\" + directory);
+                Directory.CreateDirectory(TempPath + @"\" + directory);
                 if (cd.GetDirectoryInfo(directory).GetFiles().Length > 0)
                 {
                     foreach (string file in cd.GetFiles(directory))
                     {
                         fileStreamFrom = cd.OpenFile(file, FileMode.Open);
-                        fileStreamTo = File.Open(ModLoaderGlobals.TempPath + @"\" + file, FileMode.OpenOrCreate);
+                        fileStreamTo = File.Open(TempPath + @"\" + file, FileMode.OpenOrCreate);
                         fileStreamFrom.CopyTo(fileStreamTo);
                         fileStreamFrom.Close();
                         fileStreamTo.Close();

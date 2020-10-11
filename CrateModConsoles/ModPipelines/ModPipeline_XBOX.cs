@@ -15,6 +15,9 @@ namespace CrateModLoader.ModPipelines
             NeedsDetection = true,
         };
 
+        public override string TempPath => ModLoaderGlobals.BaseDirectory + ModLoaderGlobals.TempName + @"\";
+        public override string ProcessPath => ModLoaderGlobals.TempName + @"\";
+
         public ModPipeline_XBOX()
         {
 
@@ -47,13 +50,13 @@ namespace CrateModLoader.ModPipelines
 
             if (Directory.Exists(ModLoaderGlobals.BaseDirectory + @"\" + Path.GetFileNameWithoutExtension(inputPath)))
             {
-                Directory.Move(ModLoaderGlobals.BaseDirectory + @"\" + Path.GetFileNameWithoutExtension(inputPath), ModLoaderGlobals.TempPath);
+                Directory.Move(ModLoaderGlobals.BaseDirectory + @"\" + Path.GetFileNameWithoutExtension(inputPath),TempPath);
             }
 
-            if (Directory.Exists(ModLoaderGlobals.TempPath) && File.Exists(ModLoaderGlobals.TempPath + @"default.xbe"))
+            if (Directory.Exists(TempPath) && File.Exists(TempPath + @"default.xbe"))
             {
                 //Based on OpenXDK
-                using (FileStream fileStream = new FileStream(ModLoaderGlobals.TempPath + @"default.xbe", FileMode.Open, FileAccess.Read, FileShare.Read))
+                using (FileStream fileStream = new FileStream(TempPath + @"default.xbe", FileMode.Open, FileAccess.Read, FileShare.Read))
                 {
                     fileStream.Seek(0x0118, SeekOrigin.Begin);
                     BinaryReader reader = new BinaryReader(fileStream);

@@ -101,21 +101,21 @@ namespace CrateModLoader.GameSpecific.Rayman3
         public override void StartModProcess()
         {
 
-            if (ModLoaderGlobals.Console == ConsoleMode.PS2)
+            if (ConsolePipeline.Metadata.Console == ConsoleMode.PS2)
             {
-                basePath = ModLoaderGlobals.ExtractedPath + @"DATABIN\";
+                basePath = ConsolePipeline.ExtractedPath + @"DATABIN\";
             }
-            else if (ModLoaderGlobals.Console == ConsoleMode.GCN)
+            else if (ConsolePipeline.Metadata.Console == ConsoleMode.GCN)
             {
-                basePath = ModLoaderGlobals.ExtractedPath + @"GAMEDATABIN\";
+                basePath = ConsolePipeline.ExtractedPath + @"GAMEDATABIN\";
             }
-            else if (ModLoaderGlobals.Console  == ConsoleMode.XBOX)
+            else if (ConsolePipeline.Metadata.Console  == ConsoleMode.XBOX)
             {
-                basePath = ModLoaderGlobals.ExtractedPath + @"gamedatabin\";
+                basePath = ConsolePipeline.ExtractedPath + @"gamedatabin\";
             }
-            else if (ModLoaderGlobals.Console == ConsoleMode.PC)
+            else if (ConsolePipeline.Metadata.Console == ConsoleMode.PC)
             {
-                basePath = ModLoaderGlobals.ExtractedPath + @"Gamedatabin\";
+                basePath = ConsolePipeline.ExtractedPath + @"Gamedatabin\";
             }
 
             randState = new Random(ModLoaderGlobals.RandomizerSeed);
@@ -245,7 +245,7 @@ namespace CrateModLoader.GameSpecific.Rayman3
             for (int i = minLevel; i <= maxLevel; i++)
             {
                 targetLevel = LevelNames[i];
-                if (ModLoaderGlobals.Console == ConsoleMode.PS2)
+                if (ConsolePipeline.Metadata.Console == ConsoleMode.PS2)
                 {
                     targetLevel = targetLevel.ToUpper();
                 }
@@ -253,23 +253,23 @@ namespace CrateModLoader.GameSpecific.Rayman3
                 {
                     Directory.Move(basePath + targetLevel + @"\", basePath + "level" + i + @"\");
                 }
-                if (ModLoaderGlobals.Console == ConsoleMode.PS2)
+                if (ConsolePipeline.Metadata.Console == ConsoleMode.PS2)
                 {
                     File.Move(basePath + @"WORLD\SOUND\" + targetLevel + ".BNH;1", basePath + @"WORLD\SOUND\" + "level" + i + ".BNH;1");
                     File.Move(basePath + @"WORLD\SOUND\" + targetLevel + ".HX2;1", basePath + @"WORLD\SOUND\" + "level" + i + ".HX2;1");
                     File.Move(basePath + @"WORLD\SOUND\" + targetLevel + ".SMT;1", basePath + @"WORLD\SOUND\" + "level" + i + ".SMT;1");
                 }
-                else if (ModLoaderGlobals.Console == ConsoleMode.GCN)
+                else if (ConsolePipeline.Metadata.Console == ConsoleMode.GCN)
                 {
                     File.Move(basePath + @"World\Sound\" + targetLevel + ".bnh", basePath + @"World\Sound\" + "level" + i + ".bnh");
                     File.Move(basePath + @"World\Sound\" + targetLevel + ".hxg", basePath + @"World\Sound\" + "level" + i + ".hxg");
                 }
-                else if (ModLoaderGlobals.Console == ConsoleMode.XBOX)
+                else if (ConsolePipeline.Metadata.Console == ConsoleMode.XBOX)
                 {
                     File.Move(basePath + @"World\Sound\" + targetLevel + ".bnh", basePath + @"World\Sound\" + "level" + i + ".bnh");
                     File.Move(basePath + @"World\Sound\" + targetLevel + ".hxx", basePath + @"World\Sound\" + "level" + i + ".hxx");
                 }
-                else if (ModLoaderGlobals.Console == ConsoleMode.PC)
+                else if (ConsolePipeline.Metadata.Console == ConsoleMode.PC)
                 {
                     File.Move(basePath + @"World\Sound\" + targetLevel + ".bnh", basePath + @"World\Sound\" + "level" + i + ".bnh");
                     File.Move(basePath + @"World\Sound\" + targetLevel + ".HXC", basePath + @"World\Sound\" + "level" + i + ".HXC");
@@ -279,7 +279,7 @@ namespace CrateModLoader.GameSpecific.Rayman3
             {
                 sourceLevel = LevelNames[i];
                 targetLevel = LevelNames[LevelsReplacing[i]];
-                if (ModLoaderGlobals.Console == ConsoleMode.PS2)
+                if (ConsolePipeline.Metadata.Console == ConsoleMode.PS2)
                 {
                     sourceLevel = sourceLevel.ToUpper();
                     targetLevel = targetLevel.ToUpper();
@@ -288,7 +288,7 @@ namespace CrateModLoader.GameSpecific.Rayman3
                 {
                     Directory.Move(basePath + "level" + i + @"\", basePath + targetLevel + @"\");
 
-                    if (ModLoaderGlobals.Console == ConsoleMode.PS2)
+                    if (ConsolePipeline.Metadata.Console == ConsoleMode.PS2)
                     {
                         File.Move(basePath + targetLevel + @"\" + sourceLevel + ".LVL;1", basePath + targetLevel + @"\" + targetLevel + ".LVL;1");
                         File.Move(basePath + targetLevel + @"\" + sourceLevel + ".PTR;1", basePath + targetLevel + @"\" + targetLevel + ".PTR;1");
@@ -298,7 +298,7 @@ namespace CrateModLoader.GameSpecific.Rayman3
                         File.Move(basePath + @"WORLD\SOUND\" + "level" + i + ".HX2;1", basePath + @"WORLD\SOUND\" + targetLevel + ".HX2;1");
                         File.Move(basePath + @"WORLD\SOUND\" + "level" + i + ".SMT;1", basePath + @"WORLD\SOUND\" + targetLevel + ".SMT;1");
                     }
-                    else if (ModLoaderGlobals.Console == ConsoleMode.GCN)
+                    else if (ConsolePipeline.Metadata.Console == ConsoleMode.GCN)
                     {
                         File.Move(basePath + targetLevel + @"\" + sourceLevel + ".lvl", basePath + targetLevel + @"\" + targetLevel + ".lvl");
                         File.Move(basePath + targetLevel + @"\" + sourceLevel + ".ptr", basePath + targetLevel + @"\" + targetLevel + ".ptr");
@@ -312,7 +312,7 @@ namespace CrateModLoader.GameSpecific.Rayman3
                         File.Move(basePath + @"World\Sound\" + "level" + i + ".bnh", basePath + @"World\Sound\" + targetLevel + ".bnh");
                         File.Move(basePath + @"World\Sound\" + "level" + i + ".hxg", basePath + @"World\Sound\" + targetLevel + ".hxg");
                     }
-                    else if (ModLoaderGlobals.Console == ConsoleMode.XBOX)
+                    else if (ConsolePipeline.Metadata.Console == ConsoleMode.XBOX)
                     {
                         File.Move(basePath + targetLevel + @"\" + sourceLevel + ".bhf", basePath + targetLevel + @"\" + targetLevel + ".bhf");
                         File.Move(basePath + targetLevel + @"\" + sourceLevel + ".bif", basePath + targetLevel + @"\" + targetLevel + ".bif");
@@ -326,7 +326,7 @@ namespace CrateModLoader.GameSpecific.Rayman3
                         File.Move(basePath + @"World\Sound\" + "level" + i + ".bnh", basePath + @"World\Sound\" + targetLevel + ".bnh");
                         File.Move(basePath + @"World\Sound\" + "level" + i + ".hxx", basePath + @"World\Sound\" + targetLevel + ".hxx");
                     }
-                    else if (ModLoaderGlobals.Console == ConsoleMode.PC)
+                    else if (ConsolePipeline.Metadata.Console == ConsoleMode.PC)
                     {
                         File.Move(basePath + targetLevel + @"\" + sourceLevel + ".lvl", basePath + targetLevel + @"\" + targetLevel + ".lvl");
                         File.Move(basePath + targetLevel + @"\" + sourceLevel + ".ptr", basePath + targetLevel + @"\" + targetLevel + ".ptr");

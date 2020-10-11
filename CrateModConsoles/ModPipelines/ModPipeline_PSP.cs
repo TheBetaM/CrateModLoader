@@ -18,6 +18,9 @@ namespace CrateModLoader.ModPipelines
             CanBuildROMfromFolder = false, // original file required for building
         };
 
+        public override string TempPath => ModLoaderGlobals.BaseDirectory + ModLoaderGlobals.TempName + @"\";
+        public override string ProcessPath => ModLoaderGlobals.TempName + @"\PSP_GAME\USRDIR\";
+
         public ModPipeline_PSP()
         {
 
@@ -71,7 +74,7 @@ namespace CrateModLoader.ModPipelines
         public override void Build(string inputPath, string outputPath)
         {
             // Use WQSG_UMD (requires input ROM)
-            File.Copy(ModLoaderGlobals.InputPath, ModLoaderGlobals.ToolsPath + "Game.iso");
+            //File.Copy(ModLoaderGlobals.InputPath, ModLoaderGlobals.ToolsPath + "Game.iso");
 
             string args = "";
             args += @"--iso=";
@@ -92,6 +95,9 @@ namespace CrateModLoader.ModPipelines
 
         public override void Extract(string inputPath, string outputPath)
         {
+            //Needed to build
+            File.Copy(inputPath, ModLoaderGlobals.ToolsPath + "Game.iso");
+
             using (FileStream isoStream = File.Open(inputPath, FileMode.Open))
             {
                 FileInfo isoInfo = new FileInfo(inputPath);
@@ -109,7 +115,7 @@ namespace CrateModLoader.ModPipelines
                 {
                     cd = new CDReader(isoStream, true);
                 }
-                ModLoaderGlobals.ISO_Label = cd.VolumeLabel;
+                //ModLoaderGlobals.ISO_Label = cd.VolumeLabel;
 
                 /* Sometimes doesn't work?
                 if (isoInfo.Length * 2 > GetTotalFreeSpace(ModLoaderGlobals.TempPath.Substring(0, 3)))
@@ -186,13 +192,13 @@ namespace CrateModLoader.ModPipelines
         {
             foreach (string directory in cd.GetDirectories(dir))
             {
-                Directory.CreateDirectory(ModLoaderGlobals.TempPath + @"\" + directory);
+                Directory.CreateDirectory(TempPath + @"\" + directory);
                 if (cd.GetDirectoryInfo(directory).GetFiles().Length > 0)
                 {
                     foreach (string file in cd.GetFiles(directory))
                     {
                         fileStreamFrom = cd.OpenFile(file, FileMode.Open);
-                        fileStreamTo = File.Open(ModLoaderGlobals.TempPath + @"\" + file, FileMode.OpenOrCreate);
+                        fileStreamTo = File.Open(TempPath + @"\" + file, FileMode.OpenOrCreate);
                         fileStreamFrom.CopyTo(fileStreamTo);
                         fileStreamFrom.Close();
                         fileStreamTo.Close();

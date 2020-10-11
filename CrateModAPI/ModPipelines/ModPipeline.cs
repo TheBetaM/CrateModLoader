@@ -4,13 +4,30 @@ using System.ComponentModel;
 
 namespace CrateModLoader
 {
-    public abstract class ModPipeline
+    // A mod pipeline describes a process of extracting, rebuilding and detecting the format of a game file/folder or a container (archive) of game files.
+    public abstract class ModPipeline : IModPipeline
     {
 
         public abstract ModPipelineInfo Metadata { get; }
 
-        public BackgroundWorker AsyncWorker = null;
+        public BackgroundWorker AsyncWorker { get; set; }
         public bool IsBusy { get { return AsyncWorker != null && AsyncWorker.IsBusy; } }
+
+        /// <summary> Full path to the extracted files' folder. Differs based on console, but always points to the same game data. Ends with '\' </summary>
+        public string ExtractedPath
+        {
+            get
+            {
+                return ModLoaderGlobals.BaseDirectory + ProcessPath;
+            }
+        }
+
+        /// <summary> Relative path to the extracted files' folder that starts with the temp folder's name. Ends with '\' </summary>
+        public abstract string ProcessPath { get; }
+        /// <summary> Folder path to extract game files to (only for use in console Pipelines & ModLoader) </summary>
+        public abstract string TempPath { get; }
+        /// <summary> Executable file name from the detected RegionCode struct of the currently loaded ROM. ex. "SLUS_209.09" </summary>
+        //public abstract string ExecutablePath { get; } // todo
 
         public virtual bool DetectROM(string inputPath, out string titleID, out uint regionID)
         {

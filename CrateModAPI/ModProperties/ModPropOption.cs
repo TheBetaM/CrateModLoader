@@ -57,13 +57,13 @@ namespace CrateModLoader.ModProperties
             }
         }
 
-        public bool Allowed()
+        public bool Allowed(ConsoleMode Console, RegionType Region)
         {
             if (Hidden)
                 return false;
-            if (AllowedRegions != null && AllowedRegions.Count > 0 && !AllowedRegions.Contains(ModLoaderGlobals.Region))
+            if (AllowedRegions != null && AllowedRegions.Count > 0 && !AllowedRegions.Contains(Region))
                 return false;
-            if (AllowedConsoles != null && AllowedConsoles.Count > 0 && !AllowedConsoles.Contains(ModLoaderGlobals.Console))
+            if (AllowedConsoles != null && AllowedConsoles.Count > 0 && !AllowedConsoles.Contains(Console))
                 return false;
 
             return true;

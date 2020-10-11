@@ -32,7 +32,7 @@ namespace CrateModLoader
             else if (prop is ModPropNamedUIntArray)
                 return new ModPropNamedUIntArrayGUI((ModPropNamedUIntArray)prop);
             else if (prop is ModPropOption)
-                return new ModPropOptionGUI((ModPropOption)prop);
+                return new ModPropOptionGUI((ModPropOption)prop, parentForm.ModProgram.Pipeline.Metadata.Console, parentForm.ModProgram.Modder.GameRegion.Region);
             else if (prop is ModPropString)
                 return new ModPropStringGUI((ModPropString)prop);
             else if (prop is ModPropUInt)
@@ -218,7 +218,7 @@ namespace CrateModLoader
                 }
             }
 
-            ModLoaderGlobals.ModProgram.UpdateModMenuChangedState(HasChanged);
+            parentForm.ModProgram.UpdateModMenuChangedState(HasChanged);
         }
 
         private void ModMenuForm_Load(object sender, EventArgs e)
@@ -244,7 +244,7 @@ namespace CrateModLoader
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                mod.LoadSettingsFromFile(openFileDialog1.FileName);
+                ModCrates.LoadSettingsFromFile(mod, openFileDialog1.FileName);
 
                 GenerateUI();
             }
@@ -285,11 +285,11 @@ namespace CrateModLoader
                 }
                 else if (saveFileDialog1.FilterIndex == 2)
                 {
-                    mod.SaveSettingsToFile(saveFileDialog1.FileName, false);
+                    ModCrates.SaveSettingsToFile(mod, saveFileDialog1.FileName, false);
                 }
                 else if (saveFileDialog1.FilterIndex == 3)
                 {
-                    mod.SaveSettingsToFile(saveFileDialog1.FileName, true);
+                    ModCrates.SaveSettingsToFile(mod, saveFileDialog1.FileName, true);
                 }
             }
         }

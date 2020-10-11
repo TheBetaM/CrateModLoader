@@ -15,6 +15,9 @@ namespace CrateModLoader.ModPipelines
             NeedsDetection = true,
         };
 
+        public override string TempPath => ModLoaderGlobals.BaseDirectory + ModLoaderGlobals.TempName;
+        public override string ProcessPath => ModLoaderGlobals.TempName + @"\DATA\files\";
+
         public ModPipeline_WII()
         {
 
@@ -24,7 +27,7 @@ namespace CrateModLoader.ModPipelines
         {
             regionID = 0;
             string args = "ID6 ";
-            args += "\"" + ModLoaderGlobals.InputPath + "\"";
+            args += "\"" + inputPath + "\"";
 
             Process DetectProcess = new Process();
             DetectProcess.StartInfo.FileName = ModLoaderGlobals.ToolsPath + @"wit\wit.exe";

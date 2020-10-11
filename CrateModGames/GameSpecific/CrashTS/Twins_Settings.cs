@@ -43,18 +43,18 @@ namespace CrateModLoader.GameSpecific.CrashTS
             new ExecutablePatchInfo() { LevelOff = 0x368858, LevelSize = 0x17, ArchiveOff = 0x1ED310, ArchiveSize = 0x7 },
         };
 
-        public static void PatchEXE(string StartChunk = @"Levels\Earth\Hub\Beach")
+        public static void PatchEXE(ConsoleMode console, RegionType region, string basePath, string execName, string StartChunk = @"Levels\Earth\Hub\Beach")
         {
-            string filePath = Path.Combine(ModLoaderGlobals.ExtractedPath, ModLoaderGlobals.ExecutableName);
+            string filePath = Path.Combine(basePath, execName);
 
             ExecutablePatchInfo executable;
-            if (ModLoaderGlobals.Console == ConsoleMode.XBOX)
+            if (console == ConsoleMode.XBOX)
             {
-                if (ModLoaderGlobals.Region == RegionType.PAL)
+                if (region == RegionType.PAL)
                 {
                     executable = executables[(int)ExecutableIndex.XBOX_PAL];
                 }
-                else if (ModLoaderGlobals.Region == RegionType.NTSC_U)
+                else if (region == RegionType.NTSC_U)
                 {
                     executable = executables[(int)ExecutableIndex.XBOX_NTSC];
                 }
@@ -65,7 +65,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
             }
             else
             {
-                if (ModLoaderGlobals.Region == RegionType.NTSC_U)
+                if (region == RegionType.NTSC_U)
                 {
                     using (BinaryReader reader = new BinaryReader(new FileStream(filePath, FileMode.Open, FileAccess.Read)))
                     {
@@ -82,11 +82,11 @@ namespace CrateModLoader.GameSpecific.CrashTS
                         }
                     }
                 }
-                else if (ModLoaderGlobals.Region == RegionType.PAL)
+                else if (region == RegionType.PAL)
                 {
                     executable = executables[(int)ExecutableIndex.PAL];
                 }
-                else if (ModLoaderGlobals.Region == RegionType.NTSC_J)
+                else if (region == RegionType.NTSC_J)
                 {
                     executable = executables[(int)ExecutableIndex.NTSCJ];
                 }

@@ -190,7 +190,7 @@ namespace bigtool
         }
 
 
-        public void Build(string txt)
+        public void Build(string basePath, string txt)
         {
             string path = Path.GetFileNameWithoutExtension(txt);
             string[] files = File.ReadAllLines(txt);
@@ -241,7 +241,7 @@ namespace bigtool
             //Console.WriteLine(p.disk_dump);
 
             //File.WriteAllBytes(path + ".BIG", final_big);
-            File.WriteAllBytes(CrateModLoader.ModLoaderGlobals.ExtractedPath + path + ".BIG", final_big);
+            File.WriteAllBytes(basePath + path + ".BIG", final_big);
 
             //Console.WriteLine(p.big_created);
 

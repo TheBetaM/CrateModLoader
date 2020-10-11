@@ -13,8 +13,12 @@ namespace CrateModLoader
 {
     public partial class ModLoaderForm : Form
     {
-        public ModLoaderForm()
+        public ModLoader ModProgram;
+
+        public ModLoaderForm(ModLoader Program)
         {
+            ModProgram = Program;
+
             InitializeComponent();
             linkLabel_programTitle.Text = ModLoaderText.ProgramTitle + " " + ModLoaderGlobals.ProgramVersion;
             label_gameType.Text = "";
@@ -56,32 +60,32 @@ namespace CrateModLoader
             int Seed = rand.Next(0, int.MaxValue);
             numericUpDown1.Value = Seed;
             ModLoaderGlobals.RandomizerSeed = Seed;
-            ModLoaderGlobals.RandomizerSeedBase = Seed;
+            ModProgram.RandomizerSeedBase = Seed;
 
             openFileDialog1.FileName = string.Empty;
 
-            ModLoaderGlobals.ModProgram.ProcessMessageChanged += UpdateProcessText;
-            ModLoaderGlobals.ModProgram.InteractionEnable += EnableInteraction;
-            ModLoaderGlobals.ModProgram.InteractionDisable += DisableInteraction;
-            ModLoaderGlobals.ModProgram.ProcessProgressChanged += UpdateProcessProgress;
-            ModLoaderGlobals.ModProgram.ProcessFinished += Notify_ProcessFinished;
-            ModLoaderGlobals.ModProgram.ModCratesUpdated += UpdateModCrateChangedState;
-            ModLoaderGlobals.ModProgram.ResetGameEvent += ResetGameSpecific;
-            ModLoaderGlobals.ModProgram.SetProcessStartAllow += SetProcessStartAllowed;
-            ModLoaderGlobals.ModProgram.ModMenuUpdated += UpdateModMenuChangeState;
-            ModLoaderGlobals.ModProgram.LayoutChangeUnsupported += SetLayoutUnsupportedGame;
-            ModLoaderGlobals.ModProgram.LayoutChangeSupported += SetLayoutSupportedGame;
+            ModProgram.ProcessMessageChanged += UpdateProcessText;
+            ModProgram.InteractionEnable += EnableInteraction;
+            ModProgram.InteractionDisable += DisableInteraction;
+            ModProgram.ProcessProgressChanged += UpdateProcessProgress;
+            ModProgram.ProcessFinished += Notify_ProcessFinished;
+            ModProgram.ModCratesUpdated += UpdateModCrateChangedState;
+            ModProgram.ResetGameEvent += ResetGameSpecific;
+            ModProgram.SetProcessStartAllow += SetProcessStartAllowed;
+            ModProgram.ModMenuUpdated += UpdateModMenuChangeState;
+            ModProgram.LayoutChangeUnsupported += SetLayoutUnsupportedGame;
+            ModProgram.LayoutChangeSupported += SetLayoutSupportedGame;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             /*
-            if (ModLoaderGlobals.ModProgram.inputDirectoryMode)
+            if (ModProgram.inputDirectoryMode)
             {
                 if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
                 {
                     ModLoaderGlobals.InputPath = folderBrowserDialog1.SelectedPath + @"\";
-                    ModLoaderGlobals.ModProgram.DetectGame(ModLoaderGlobals.InputPath);
+                    ModProgram.DetectGame(ModLoaderGlobals.InputPath);
                     textBox_inputPath.Text = ModLoaderGlobals.InputPath;
                 }
             }
@@ -96,9 +100,9 @@ namespace CrateModLoader
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                ModLoaderGlobals.InputPath = openFileDialog1.FileName;
-                ModLoaderGlobals.ModProgram.DetectGame(ModLoaderGlobals.InputPath);
-                textBox_inputPath.Text = ModLoaderGlobals.InputPath;
+                ModProgram.InputPath = openFileDialog1.FileName;
+                ModProgram.DetectGame(ModProgram.InputPath);
+                textBox_inputPath.Text = ModProgram.InputPath;
             }
 
         }
@@ -106,14 +110,14 @@ namespace CrateModLoader
         private void button2_Click(object sender, EventArgs e)
         {
             /*
-            if (ModLoaderGlobals.ModProgram.outputDirectoryMode)
+            if (ModProgram.outputDirectoryMode)
             {
                 if (folderBrowserDialog2.ShowDialog() == DialogResult.OK)
                 {
                     ModLoaderGlobals.OutputPath = folderBrowserDialog2.SelectedPath + @"\";
                     textBox_outputPath.Text = ModLoaderGlobals.OutputPath;
-                    ModLoaderGlobals.ModProgram.OutputPathSet = true;
-                    if (ModLoaderGlobals.ModProgram.GameDetected)
+                    ModProgram.OutputPathSet = true;
+                    if (ModProgram.GameDetected)
                     {
                         button_startProcess.Enabled = true;
                         label_processText.Text = ModLoaderText.ProcessReady;
@@ -139,7 +143,7 @@ namespace CrateModLoader
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
             ModLoaderGlobals.RandomizerSeed = int.Parse(numericUpDown1.Text);
-            ModLoaderGlobals.RandomizerSeedBase = ModLoaderGlobals.RandomizerSeed;
+            ModProgram.RandomizerSeedBase = ModLoaderGlobals.RandomizerSeed;
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -148,14 +152,14 @@ namespace CrateModLoader
             int Seed = rand.Next(0,int.MaxValue);
             numericUpDown1.Value = Seed;
             ModLoaderGlobals.RandomizerSeed = Seed;
-            ModLoaderGlobals.RandomizerSeedBase = Seed;
+            ModProgram.RandomizerSeedBase = Seed;
         }
 
         private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
-            ModLoaderGlobals.OutputPath = saveFileDialog1.FileName;
-            textBox_outputPath.Text = ModLoaderGlobals.OutputPath;
-            bool ready = ModLoaderGlobals.ModProgram.Pipeline != null;
+            ModProgram.OutputPath = saveFileDialog1.FileName;
+            textBox_outputPath.Text = ModProgram.OutputPath;
+            bool ready = ModProgram.Pipeline != null;
             button_startProcess.Enabled = ready;
             if (ready)
             {
@@ -165,7 +169,7 @@ namespace CrateModLoader
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
-            ModLoaderGlobals.OutputPath = textBox_outputPath.Text;
+            ModProgram.OutputPath = textBox_outputPath.Text;
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -174,12 +178,12 @@ namespace CrateModLoader
             {
                 if (MessageBox.Show(ModLoaderText.NoOptionsSelectedPopup, ModLoaderText.NoOptionsSelectedTitle, MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    ModLoaderGlobals.ModProgram.StartProcess();
+                    ModProgram.StartProcess();
                 }
             }
             else
             {
-                ModLoaderGlobals.ModProgram.StartProcess();
+                ModProgram.StartProcess();
             }
         }
 
@@ -190,7 +194,7 @@ namespace CrateModLoader
             // A list with a button that lets you manually add .zip files
             // Set availability in the respective modder's Game struct (ModCratesSupported variable) 
 
-            ModCrateManagerForm modCrateManagerMenu = new ModCrateManagerForm();
+            ModCrateManagerForm modCrateManagerMenu = new ModCrateManagerForm(ModProgram);
 
             modCrateManagerMenu.Owner = this;
             modCrateManagerMenu.Show();
@@ -202,12 +206,12 @@ namespace CrateModLoader
             // Detailed settings UI for mod properties
             // Automatically generated for any ModProperty in the modder class' namespace
 
-            ModMenuForm modMenu = new ModMenuForm(this, ModLoaderGlobals.ModProgram.Modder, ModLoaderGlobals.ModProgram.Game);
+            ModMenuForm modMenu = new ModMenuForm(this, ModProgram.Modder, ModProgram.Game);
 
             modMenu.Owner = this;
             modMenu.Show();
 
-            //ModLoaderGlobals.ModProgram.Modder.OpenModMenu();
+            //ModProgram.Modder.OpenModMenu();
         }
 
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -269,9 +273,9 @@ namespace CrateModLoader
             try
             {
                 linkLabel_apiCredit.LinkVisited = true;
-                if (ModLoaderGlobals.ModProgram.Modder != null && !string.IsNullOrWhiteSpace(ModLoaderGlobals.ModProgram.Game.API_Credit) && !string.IsNullOrWhiteSpace(ModLoaderGlobals.ModProgram.Game.API_Link))
+                if (ModProgram.Modder != null && !string.IsNullOrWhiteSpace(ModProgram.Game.API_Credit) && !string.IsNullOrWhiteSpace(ModProgram.Game.API_Link))
                 {
-                    Process.Start(ModLoaderGlobals.ModProgram.Game.API_Link);
+                    Process.Start(ModProgram.Game.API_Link);
                 }
             }
             catch
@@ -290,16 +294,16 @@ namespace CrateModLoader
                     textBox_inputPath.Text = "";
                     if (Directory.Exists(fileList[0]))
                     {
-                        ModLoaderGlobals.InputPath = fileList[0] + @"\";
+                        ModProgram.InputPath = fileList[0] + @"\";
                     }
                     else
                     {
-                        ModLoaderGlobals.InputPath = fileList[0];
+                        ModProgram.InputPath = fileList[0];
                     }
-                    ModLoaderGlobals.ModProgram.ResetGameSpecific(true);
+                    ModProgram.ResetGameSpecific(true);
                     UpdateProcessText(ModLoaderText.Step1Text);
-                    ModLoaderGlobals.ModProgram.DetectGame(ModLoaderGlobals.InputPath);
-                    textBox_inputPath.Text = ModLoaderGlobals.InputPath;
+                    ModProgram.DetectGame(ModProgram.InputPath);
+                    textBox_inputPath.Text = ModProgram.InputPath;
                 }
             }
             catch
@@ -353,8 +357,8 @@ namespace CrateModLoader
         private void toolStripMenuItem_loadROM_Click(object sender, EventArgs e)
         {
             textBox_inputPath.Text = "";
-            ModLoaderGlobals.InputPath = "";
-            ModLoaderGlobals.ModProgram.ResetGameSpecific(true);
+            ModProgram.InputPath = "";
+            ModProgram.ResetGameSpecific(true);
             UpdateProcessText(ModLoaderText.Step1Text);
             button1_Click(null, null);
         }
@@ -362,21 +366,21 @@ namespace CrateModLoader
         private void toolStripMenuItem_loadFolder_Click(object sender, EventArgs e)
         {
             textBox_inputPath.Text = "";
-            ModLoaderGlobals.InputPath = "";
-            ModLoaderGlobals.ModProgram.ResetGameSpecific(true);
+            ModProgram.InputPath = "";
+            ModProgram.ResetGameSpecific(true);
             UpdateProcessText(ModLoaderText.Step1Text);
             if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
             {
-                ModLoaderGlobals.InputPath = folderBrowserDialog1.SelectedPath + @"\";
-                ModLoaderGlobals.ModProgram.DetectGame(ModLoaderGlobals.InputPath);
-                textBox_inputPath.Text = ModLoaderGlobals.InputPath;
+                ModProgram.InputPath = folderBrowserDialog1.SelectedPath + @"\";
+                ModProgram.DetectGame(ModProgram.InputPath);
+                textBox_inputPath.Text = ModProgram.InputPath;
             }
         }
 
         private void toolStripMenuItem_saveROM_Click(object sender, EventArgs e)
         {
             textBox_outputPath.Text = "";
-            ModLoaderGlobals.OutputPath = "";
+            ModProgram.OutputPath = "";
             button_startProcess.Enabled = false;
             button2_Click(null, null);
         }
@@ -384,14 +388,14 @@ namespace CrateModLoader
         private void toolStripMenuItem_saveFolder_Click(object sender, EventArgs e)
         {
             textBox_outputPath.Text = "";
-            ModLoaderGlobals.OutputPath = "";
+            ModProgram.OutputPath = "";
             button_startProcess.Enabled = false;
             if (folderBrowserDialog2.ShowDialog() == DialogResult.OK)
             {
-                ModLoaderGlobals.OutputPath = folderBrowserDialog2.SelectedPath + @"\";
-                textBox_outputPath.Text = ModLoaderGlobals.OutputPath;
+                ModProgram.OutputPath = folderBrowserDialog2.SelectedPath + @"\";
+                textBox_outputPath.Text = ModProgram.OutputPath;
 
-                bool ready = ModLoaderGlobals.ModProgram.Pipeline != null;
+                bool ready = ModProgram.Pipeline != null;
                 button_startProcess.Enabled = ready;
                 if (ready)
                 {
@@ -451,14 +455,11 @@ namespace CrateModLoader
             DragDrop += ModLoaderForm_DragDrop;
             DragEnter += ModLoaderForm_DragEnter;
 
-            if (ModLoaderGlobals.ModProgram.Modder != null)
-            {
-                button_openModMenu.Enabled = ModLoaderGlobals.ModProgram.Modder.ModMenuEnabled;
-            }
+            button_openModMenu.Enabled = ModProgram.Modder.ModMenuEnabled;
             button_modTools.Enabled = true;
             //button_downloadMods.Enabled = true;
 
-            if (ModLoaderGlobals.ModProgram.Modder != null && !string.IsNullOrWhiteSpace(ModLoaderGlobals.ModProgram.Game.API_Link))
+            if (ModProgram.Modder != null && !string.IsNullOrWhiteSpace(ModProgram.Game.API_Link))
             {
                 linkLabel_apiCredit.Enabled = true;
             }
@@ -530,7 +531,7 @@ namespace CrateModLoader
             button_modCrateMenu.Text = ModLoaderText.ModCratesButton;
             checkedListBox1.Items.Clear();
             button_openModMenu.Visible = true;
-            button_openModMenu.Enabled = ModLoaderGlobals.ModProgram.Modder.ModMenuEnabled;
+            button_openModMenu.Enabled = ModProgram.Modder.ModMenuEnabled;
             button_modCrateMenu.Visible = true;
             button_modCrateMenu.Enabled = !game.ModCratesDisabled;
             button_randomizeSeed.Enabled = button_randomizeSeed.Visible = button_modTools.Visible = button_downloadMods.Visible = true;
@@ -567,11 +568,11 @@ namespace CrateModLoader
                 linkLabel_apiCredit.Enabled = false;
             }
 
-            if (ModLoaderGlobals.ModProgram.Modder.Props.Count > 0)
+            if (ModProgram.Modder.Props.Count > 0)
             {
-                foreach (var prop in ModLoaderGlobals.ModProgram.Modder.Props)
+                foreach (var prop in ModProgram.Modder.Props)
                 {
-                    if (prop is ModPropOption option && option.Allowed())
+                    if (prop is ModPropOption option && option.Allowed(ModProgram.Pipeline.Metadata.Console, ModProgram.Modder.GameRegion.Region))
                     {
                         checkedListBox1.Items.Add(option, option.Value != 0);
                     }
@@ -600,7 +601,7 @@ namespace CrateModLoader
         public void SetProcessStartAllowed(object sender, EventValueArgs<bool> e)
         {
             bool allow = e.Value;
-            if (ModLoaderGlobals.OutputPath == "")
+            if (ModProgram.OutputPath == "")
             {
                 UpdateProcessText(ModLoaderText.Step2Text);
                 allow = false;

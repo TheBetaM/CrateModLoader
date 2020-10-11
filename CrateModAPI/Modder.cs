@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.IO;
-using System.IO.Compression;
-using CrateModAPI.Resources.Text;
+using System.ComponentModel;
 using CrateModLoader.ModProperties;
+using CrateModAPI.Resources.Text;
 
 namespace CrateModLoader
 {
@@ -26,15 +25,23 @@ namespace CrateModLoader
     public abstract class Modder
     {
 
+        public List<Mod> Mods = new List<Mod>();
+        public List<ModPipeline> Pipelines = new List<ModPipeline>();
         public List<ModPropertyBase> Props = new List<ModPropertyBase>();
 
+        // External
         public Assembly assembly;
+        public ModPipeline ConsolePipeline;
+        public RegionCode GameRegion;
 
-        public Modder()
-        {
-            // moved to ModLoader.cs because of localization being loaded by constructor, also for speed I guess
-            //PopulateProperties();
-        }
+        public BackgroundWorker AsyncWorker = null;
+        public bool ModMenuEnabled => Props.Count > 0;
+        public bool ModCratesManualInstall = false; // A game might require some type of verification (i.e. file integrity, region matching) before installing layer0 mod crates.
+        public bool IsBusy { get { return AsyncWorker != null && AsyncWorker.IsBusy; } }
+
+        public abstract Game Game { get; }
+
+        public Modder() { }
 
         public void PopulateProperties()
         {
@@ -47,7 +54,7 @@ namespace CrateModLoader
 
             foreach (Type type in asm.GetTypes())
             {
-                if (!string.IsNullOrEmpty(type.Namespace) && type.Namespace.Contains(GetType().Namespace))
+                if (!string.IsNullOrEmpty(type.Namespace) && type.Namespace.Contains(nameSpace))
                 {
                     foreach (FieldInfo field in type.GetFields())
                     {
@@ -103,171 +110,96 @@ namespace CrateModLoader
             }
         }
 
-        public bool ModMenuEnabled => Props.Count > 0;
-
-        public void InstallCrateSettings()
+        public void PopulateModsPipelines()
         {
-            for (int mod = 0; mod < ModCrates.SupportedMods.Count; mod++)
+            Mods.Clear();
+            Pipelines.Clear();
+
+            // Populate mod and pipeline list automatically from namespace
+            Assembly asm = assembly;
+
+            string nameSpace = GetType().Namespace;
+
+            foreach (Type type in asm.GetTypes())
             {
-                if (ModCrates.SupportedMods[mod].IsActivated && ModCrates.SupportedMods[mod].HasSettings)
+                if (!string.IsNullOrEmpty(type.Namespace) && type.Namespace.Contains(nameSpace))
                 {
-                    foreach (ModPropertyBase prop in Props)
+                    if (type.IsAssignableFrom(typeof(Mod)))
                     {
-                        if (ModCrates.SupportedMods[mod].Settings.ContainsKey(prop.CodeName) && !prop.HasChanged) // Manual mod menu changes override mod crates
+                        Mod mod = (Mod)Activator.CreateInstance(type);
+                        if (!mod.Hidden)
                         {
-                            prop.DeSerialize(ModCrates.SupportedMods[mod].Settings[prop.CodeName]);
-                            prop.HasChanged = true;
+                            Mods.Add(mod);
                         }
+                    }
+                    else if (type.IsAssignableFrom(typeof(ModPipeline)))
+                    {
+                        ModPipeline pipeline = (ModPipeline)Activator.CreateInstance(type);
+                        Pipelines.Add(pipeline);
                     }
                 }
             }
         }
-
-        public void LoadSettingsFromFile(string path)
-        {
-            FileInfo file = new FileInfo(path);
-
-            bool isModCrate = file.Extension.ToLower() == ".zip";
-
-            Dictionary<string, string> Settings = new Dictionary<string, string>();
-
-            //zip handling
-            if (isModCrate)
-            {
-                using (ZipArchive archive = ZipFile.OpenRead(file.FullName))
-                {
-                    foreach (ZipArchiveEntry entry in archive.Entries)
-                    {
-                        if (entry.FullName.EndsWith(".txt", StringComparison.OrdinalIgnoreCase))
-                        {
-                            if (entry.Name.ToLower() == ModCrates.SettingsFileName)
-                            {
-                                using (StreamReader fileStream = new StreamReader(entry.Open(), true))
-                                {
-                                    string line;
-                                    while ((line = fileStream.ReadLine()) != null)
-                                    {
-                                        if (line[0] != ModCrates.CommentSymbol)
-                                        {
-                                            string[] setting = line.Split(ModCrates.Separator);
-                                            Settings[setting[0]] = setting[1];
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            else
-            {
-                using (StreamReader fileStream = new StreamReader(path, true))
-                {
-                    string line;
-                    while ((line = fileStream.ReadLine()) != null)
-                    {
-                        if (line[0] != ModCrates.CommentSymbol)
-                        {
-                            string[] setting = line.Split(ModCrates.Separator);
-                            if (setting.Length > 1)
-                            {
-                                Settings[setting[0]] = setting[1];
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (Settings.Count == 0)
-            {
-                //MessageBox.Show(ModLoaderText.ModMenuLoad_Error);
-                return;
-            }
-
-            foreach (ModPropertyBase prop in Props)
-            {
-                if (Settings.ContainsKey(prop.CodeName))
-                {
-                    prop.DeSerialize(Settings[prop.CodeName]);
-                    prop.HasChanged = true;
-                }
-            }
-
-        }
-
-        public void SaveSettingsToFile(string path, bool fullSettings)
-        {
-
-            List<string> LineList = new List<string>();
-
-            LineList.Add(string.Format("{0} {1} {2} {3}", ModCrates.CommentSymbol, ModLoaderText.ProgramTitle, ModLoaderGlobals.ProgramVersion, "Auto-Generated Settings File"));
-
-            foreach (ModPropertyBase prop in Props)
-            {
-                if (fullSettings || (!fullSettings && prop.HasChanged))
-                {
-                    string text = "";
-                    prop.Serialize(ref text);
-                    LineList.Add(text);
-                }
-            }
-
-            File.WriteAllLines(path, LineList);
-        }
-
-        public void SaveSimpleCrateToFile(string path, ModCrate crate)
-        {
-            List<string> LineList_Info = new List<string>();
-
-            LineList_Info.Add(string.Format("{0}{1}{2}", ModCrates.Prop_Name, ModCrates.Separator, crate.Name));
-            LineList_Info.Add(string.Format("{0}{1}{2}", ModCrates.Prop_Desc, ModCrates.Separator, crate.Desc));
-            LineList_Info.Add(string.Format("{0}{1}{2}", ModCrates.Prop_Author, ModCrates.Separator, crate.Author));
-            LineList_Info.Add(string.Format("{0}{1}{2}", ModCrates.Prop_Version, ModCrates.Separator, crate.Version));
-            LineList_Info.Add(string.Format("{0}{1}{2}", ModCrates.Prop_CML_Version, ModCrates.Separator, crate.CML_Version));
-            LineList_Info.Add(string.Format("{0}{1}{2}", ModCrates.Prop_Game, ModCrates.Separator, crate.TargetGame));
-
-            File.WriteAllLines(Path.Combine(ModLoaderGlobals.BaseDirectory, ModCrates.InfoFileName), LineList_Info);
-
-            SaveSettingsToFile(Path.Combine(ModLoaderGlobals.BaseDirectory, ModCrates.SettingsFileName), false);
-
-            if (crate.HasIcon)
-            {
-                File.Copy(crate.IconPath, Path.Combine(ModLoaderGlobals.BaseDirectory, ModCrates.IconFileName));
-                //crate.Icon.Save(Path.Combine(ModLoaderGlobals.BaseDirectory, ModCrates.IconFileName));
-            }
-
-            using (FileStream fileStream = new FileStream(path, FileMode.Create))
-            {
-                using (ZipArchive zip = new ZipArchive(fileStream, ZipArchiveMode.Create))
-                {
-                    zip.CreateEntryFromFile(Path.Combine(ModLoaderGlobals.BaseDirectory, ModCrates.InfoFileName), ModCrates.InfoFileName);
-                    zip.CreateEntryFromFile(Path.Combine(ModLoaderGlobals.BaseDirectory, ModCrates.SettingsFileName), ModCrates.SettingsFileName);
-                    if (crate.HasIcon)
-                    {
-                        zip.CreateEntryFromFile(Path.Combine(ModLoaderGlobals.BaseDirectory, ModCrates.IconFileName), ModCrates.IconFileName);
-                    } 
-                }
-            }
-
-            //cleanup
-            File.Delete(Path.Combine(ModLoaderGlobals.BaseDirectory, ModCrates.InfoFileName));
-            File.Delete(Path.Combine(ModLoaderGlobals.BaseDirectory, ModCrates.SettingsFileName));
-            if (crate.HasIcon)
-            {
-                File.Delete(Path.Combine(ModLoaderGlobals.BaseDirectory, ModCrates.IconFileName));
-            }
-
-        }
-
-        public bool ModCratesManualInstall = false; // A game might require some type of verification (i.e. file integrity, region matching) before installing layer0 mod crates.
 
         public abstract void StartModProcess();
-        protected virtual void ModProcess() { }
-        protected virtual void EndModProcess() { }
 
-        public virtual void OpenModMenu() { }
+        public void StartProcess()
+        {
+            AsyncWorker = new BackgroundWorker();
+            AsyncWorker.WorkerReportsProgress = true;
+            AsyncWorker.DoWork += new DoWorkEventHandler(Process);
+            AsyncWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(ProcessCompleted);
+            AsyncWorker.ProgressChanged += new ProgressChangedEventHandler(ProcessProgressChanged);
+            AsyncWorker.RunWorkerAsync();
+        }
 
-        public abstract Game Game { get; }
+        public virtual void Process(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker a = sender as BackgroundWorker;
+
+            foreach (Mod mod in Mods)
+            {
+                mod.BeforeProcess();
+            }
+            foreach (Mod mod in Mods)
+            {
+                mod.StartProcess();
+            }
+
+            bool Active = true;
+            bool IsActive = false;
+            int ModCount = 0;
+            while (Active)
+            {
+                IsActive = false;
+                ModCount = 0;
+                foreach (Mod mod in Mods)
+                {
+                    if (mod.IsBusy)
+                        IsActive = true;
+                    else
+                    {
+                        ModCount++;
+                    }
+                }
+                a.ReportProgress(ModCount / Mods.Count);
+                if (!IsActive)
+                    Active = false;
+            }
+
+        }
+
+        private void ProcessCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            AsyncWorker = null;
+        }
+
+        private void ProcessProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            BackgroundWorker a = sender as BackgroundWorker;
+
+            //ModLoaderGlobals.ModProgram.UpdateProcessMessage(string.Format("{0} {1}%",ModLoaderText.Process_Step2, e.ProgressPercentage));
+        }
 
     }
 }

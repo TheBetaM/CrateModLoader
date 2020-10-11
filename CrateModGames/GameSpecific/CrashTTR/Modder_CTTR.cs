@@ -374,8 +374,8 @@ namespace CrateModLoader.GameSpecific.CrashTTR
 
         public override void StartModProcess()
         {
-            SetPaths(ModLoaderGlobals.Console, ModLoaderGlobals.ExecutableName);
-            basePath = ModLoaderGlobals.ExtractedPath;
+            SetPaths(ConsolePipeline.Metadata.Console, GameRegion.ExecName);
+            basePath = ConsolePipeline.ExtractedPath;
 
             RCF_Manager.cachedRCF = null;
 
@@ -596,7 +596,7 @@ namespace CrateModLoader.GameSpecific.CrashTTR
             RCF_Manager.Pack(basePath + path, path_extr);
         }
 
-        public override void OpenModMenu()
+        public void OpenModMenu()
         {
 
             /*

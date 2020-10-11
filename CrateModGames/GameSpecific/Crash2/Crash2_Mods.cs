@@ -2355,7 +2355,7 @@ namespace CrateModLoader.GameSpecific.Crash2
 
         }
 
-        public static void Mod_Metadata(NSF nsf, NSD nsd, Crash2_Levels level)
+        public static void Mod_Metadata(NSF nsf, NSD nsd, Crash2_Levels level, RegionType region)
         {
             if (level != Crash2_Levels.WarpRoom && level != Crash2_Levels.WarpRoom2 && level != Crash2_Levels.WarpRoom3 && level != Crash2_Levels.WarpRoom4 && level != Crash2_Levels.WarpRoom5)
             {
@@ -2372,7 +2372,7 @@ namespace CrateModLoader.GameSpecific.Crash2
                         {
                             if (gool.EName == "DispC")
                             {
-                                if (ModLoaderGlobals.Region == RegionType.NTSC_U)
+                                if (region == RegionType.NTSC_U)
                                 {
                                     for (int i = gool.Anims.Length - 11; i > 0; i--)
                                     {
@@ -2395,7 +2395,7 @@ namespace CrateModLoader.GameSpecific.Crash2
                                         }
                                     }
                                 }
-                                else if (ModLoaderGlobals.Region == RegionType.PAL)
+                                else if (region == RegionType.PAL)
                                 {
                                     for (int i = gool.Anims.Length - 11; i > 0; i--)
                                     {

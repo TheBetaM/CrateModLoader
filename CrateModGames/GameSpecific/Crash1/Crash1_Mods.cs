@@ -2448,7 +2448,7 @@ namespace CrateModLoader.GameSpecific.Crash1
 
         }
 
-        public static void Mod_Metadata(NSF nsf, OldNSD nsd, Crash1_Levels level)
+        public static void Mod_Metadata(NSF nsf, OldNSD nsd, Crash1_Levels level, RegionType region)
         {
             if (level != Crash1_Levels.MapMainMenu)
             {
@@ -2465,7 +2465,7 @@ namespace CrateModLoader.GameSpecific.Crash1
                         {
                             if (gool.EName == "GamOC" || gool.EName == "IsldC")
                             {
-                                if (ModLoaderGlobals.Region == RegionType.NTSC_U || ModLoaderGlobals.Region == RegionType.PAL)
+                                if (region == RegionType.NTSC_U || region == RegionType.PAL)
                                 {
                                     for (int i = gool.Anims.Length - 11; i > 0; i--)
                                     {
