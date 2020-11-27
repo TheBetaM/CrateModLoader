@@ -531,7 +531,7 @@ namespace CrateModLoader
                     {
                         if (SupportedMods[mod].Settings.ContainsKey(prop.CodeName) && !prop.HasChanged) // Manual mod menu changes override mod crates
                         {
-                            prop.DeSerialize(SupportedMods[mod].Settings[prop.CodeName]);
+                            prop.DeSerialize(SupportedMods[mod].Settings[prop.CodeName], SupportedMods[mod]);
                             prop.HasChanged = true;
                         }
                     }
@@ -677,7 +677,7 @@ namespace CrateModLoader
             {
                 if (Settings.ContainsKey(prop.CodeName))
                 {
-                    prop.DeSerialize(Settings[prop.CodeName]);
+                    prop.DeSerialize(Settings[prop.CodeName], null);
                     prop.HasChanged = true;
                 }
             }

@@ -7,6 +7,8 @@ namespace CrateModLoader.ModProperties.GUI
     public class ModPropStringGUI : ModPropertyGUI<ModPropString>
     {
 
+        private TextBox textBox;
+
         public ModPropStringGUI(ModPropString p) : base(p)
         {
 
@@ -17,7 +19,7 @@ namespace CrateModLoader.ModProperties.GUI
 
             base.GenerateUI(parent, ref offset);
 
-            TextBox textBox = new TextBox();
+            textBox = new TextBox();
             textBox.Text = Prop.Value;
             textBox.Parent = (Control)parent;
             textBox.Dock = DockStyle.Fill;
@@ -34,6 +36,13 @@ namespace CrateModLoader.ModProperties.GUI
             table.SetColumn(textBox, 1);
             table.SetRow(textBox, offset);
 
+        }
+
+        public override void UpdateUI()
+        {
+            textBox.Text = Prop.Value;
+
+            base.UpdateUI();
         }
 
         public override void ValueChange(object sender, EventArgs e)

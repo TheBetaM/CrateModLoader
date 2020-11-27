@@ -36,6 +36,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -59,6 +60,8 @@
     <Compile Include="ModProperties\ModPropBool.cs" />
     <Compile Include="ModProperties\ModProperty.cs" />
     <Compile Include="ModProperties\ModPropertyBase.cs" />
+    <Compile Include="ModProperties\ModPropExternalResource.cs" />
+    <Compile Include="ModProperties\ModPropExternalResourceBase.cs" />
     <Compile Include="ModProperties\ModPropFloat.cs" />
     <Compile Include="ModProperties\ModPropFloatArray.cs" />
     <Compile Include="ModProperties\ModPropInt.cs" />

@@ -37,6 +37,7 @@ namespace CrateModLoader
         public BackgroundWorker AsyncWorker = null;
         public bool ModMenuEnabled => Props.Count > 0;
         public bool ModCratesManualInstall = false; // A game might require some type of verification (i.e. file integrity, region matching) before installing layer0 mod crates.
+        public virtual bool CanPreloadGame => false;
         public bool IsBusy { get { return AsyncWorker != null && AsyncWorker.IsBusy; } }
 
         public abstract Game Game { get; }
@@ -142,6 +143,8 @@ namespace CrateModLoader
         }
 
         public abstract void StartModProcess();
+
+        public virtual void StartPreload() { } // Optional method to preload variables and resources from the game to the Mod Menu+
 
         public void StartProcess()
         {

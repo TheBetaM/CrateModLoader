@@ -114,9 +114,11 @@ namespace CrateModLoader.ModPipelines
         {
             // TODO: add free space checks
 
+            string outputPathFixed = outputPath.Substring(0, outputPath.Length - 1);
+
             string args = "extract ";
             args += "\"" + inputPath + "\" ";
-            args += "\"" + outputPath + "\" ";
+            args += "\"" + outputPathFixed + "\" ";
 
             Process ExtractorProcess = new Process();
             ExtractorProcess.StartInfo.FileName = ModLoaderGlobals.ToolsPath + @"wit\wit.exe";

@@ -47,7 +47,7 @@ namespace CrateModLoader.ModProperties
             }
         }
 
-        public override void DeSerialize(string input)
+        public override void DeSerialize(string input, ModCrate crate)
         {
             string[] vals = input.Split(';');
 

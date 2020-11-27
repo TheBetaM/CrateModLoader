@@ -24,7 +24,7 @@ namespace CrateModLoader.ModProperties
                 line += "0";
         }
 
-        public override void DeSerialize(string input)
+        public override void DeSerialize(string input, ModCrate crate)
         {
             if (input == "1")
                 Value = true;

@@ -21,7 +21,7 @@ namespace CrateModLoader.ModProperties
             line += Value;
         }
 
-        public override void DeSerialize(string input)
+        public override void DeSerialize(string input, ModCrate crate)
         {
             uint val;
             if (uint.TryParse(input, out val))

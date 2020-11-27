@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace CrateModLoader
 {
@@ -9,26 +10,50 @@ namespace CrateModLoader
 
         public string Description;
 
-        /// <summary> Property name in code </summary>
+        /// <summary> The property's name in code </summary>
         public string CodeName;
 
         /// <summary> UI category tab ID </summary>
         public int? Category = null;
 
-        /// <summary> Value changed from default </summary>
+        /// <summary> True if value changed from default </summary>
         public bool HasChanged = false;
 
-        /// <summary> Hidden from UI </summary>
+        /// <summary> True if meant to be hidden from UI </summary>
         public bool Hidden = false;
+
+        /// <summary> True if it requires to be preloaded from game data to be visible and editable. Does not enforce preload for "dry" property use! </summary>
+        public bool RequiresPreload = false;
+
+        /// <summary> True if preload extends functionality </summary>
+        public bool PreloadBonus = false;
+
+        /// <summary> Region list for the property to be allowed for </summary>
+        public List<RegionType> AllowedRegions { get; set; }
+
+        /// <summary> Console list for the property to be allowed for </summary>
+        public List<ConsoleMode> AllowedConsoles { get; set; }
 
         /// <summary> Appends input string with a serialized version of the property. </summary>
         public abstract void Serialize(ref string input);
 
-        /// <summary> Changes the property's value by deserializing the input string. </summary>
-        public abstract void DeSerialize(string input);
+        /// <summary> Changes the property's value by parsing the input string. </summary>
+        public abstract void DeSerialize(string input, ModCrate crate);
 
-        /// <summary> Resets the property's value to it's default state. </summary>
+        /// <summary> Resets the property's value to its default state. </summary>
         public abstract void ResetToDefault();
+
+        public bool Allowed(ConsoleMode Console, RegionType Region)
+        {
+            if (Hidden)
+                return false;
+            if (AllowedRegions != null && AllowedRegions.Count > 0 && !AllowedRegions.Contains(Region))
+                return false;
+            if (AllowedConsoles != null && AllowedConsoles.Count > 0 && !AllowedConsoles.Contains(Console))
+                return false;
+
+            return true;
+        }
 
         public virtual void ValueChange(object sender, EventArgs e)
         {

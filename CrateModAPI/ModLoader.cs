@@ -16,7 +16,13 @@ namespace CrateModLoader
         public Modder Modder;
         public Game Game;
         public ModPipeline Pipeline;
+        public int RandomizerSeedBase = 0;
+        public string InputPath = "";
+        public string OutputPath = "";
+        public bool GamePreloaded = false;
 
+        public string TempPath = ModLoaderGlobals.BaseDirectory + ModLoaderGlobals.TempName + @"\";
+        public static bool KeepTempFiles = false;
         public static Dictionary<Game, Assembly> SupportedGames;
         public static Dictionary<ModPipelineInfo, Type> SupportedConsoles;
 
@@ -31,12 +37,6 @@ namespace CrateModLoader
         public event EventHandler<EventValueArgs<bool>> ModMenuUpdated;
         public event EventHandler<EventValueArgs<string>> LayoutChangeUnsupported;
         public event EventHandler<EventGameDetails> LayoutChangeSupported;
-
-        public string TempPath = ModLoaderGlobals.BaseDirectory + ModLoaderGlobals.TempName + @"\";
-        public static bool KeepTempFiles = false;
-        public int RandomizerSeedBase = 0;
-        public string InputPath = "";
-        public string OutputPath = "";
 
         public ModLoader()
         {
@@ -168,6 +168,7 @@ namespace CrateModLoader
 
             Modder = null;
             Pipeline = null;
+            GamePreloaded = false;
             ModCrates.ClearModLists();
             bool ConsoleDetected = false;
             string regionID;
@@ -526,6 +527,107 @@ namespace CrateModLoader
             ModCrates.ClearModLists();
 
             ResetGameEvent.Invoke(this, new EventValueArgs<bool>(ClearGameText));
+        }
+
+        public void StartPreload()
+        {
+            InteractionDisable.Invoke(this, null);
+
+            BackgroundWorker asyncWorker = new BackgroundWorker();
+            asyncWorker.WorkerReportsProgress = true;
+            asyncWorker.DoWork += new DoWorkEventHandler(Preload_DoWork);
+            asyncWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(Preload_RunWorkerCompleted);
+            asyncWorker.ProgressChanged += new ProgressChangedEventHandler(Preload_ProgressChanged);
+            asyncWorker.RunWorkerAsync();
+        }
+
+        private void Preload_DoWork(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker a = sender as BackgroundWorker;
+            string inputPath = InputPath;
+            //string tempPath = ModLoaderGlobals.BaseDirectory + ModLoaderGlobals.TempName + @"\";
+            //string outputPath = OutputPath;
+            bool inputDirectoryMode = IO_Common.PathIsFolder(inputPath);
+            //bool outputDirectoryMode = IO_Common.PathIsFolder(outputPath);
+
+            a.ReportProgress(0);
+
+            DeleteTempFiles(TempPath);
+            //Pipeline.PreStart(inputDirectoryMode, outputDirectoryMode);
+
+            a.ReportProgress(33);
+
+            ExtractGame(inputPath, TempPath);
+            while (Pipeline.IsBusy) Thread.Sleep(100);
+
+            a.ReportProgress(66);
+
+            PreloadGame();
+
+            a.ReportProgress(90);
+
+            if (!KeepTempFiles)
+            {
+                DeleteTempFiles(TempPath);
+            }
+        }
+
+        public void PreloadGame()
+        {
+            if (Modder != null)
+            {
+                Modder.StartPreload();
+            }
+        }
+
+        private void Preload_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            ProcessProgressChanged.Invoke(this, new EventValueArgs<int>(100));
+            ProcessFinished.Invoke(this, null);
+            if (e.Error != null)
+            {
+                ProcessProgressChanged.Invoke(this, new EventValueArgs<int>(0));
+                UpdateProcessMessage(ModLoaderText.Process_Error + " " + e.Error.Message);
+            }
+            else if (!e.Cancelled)
+            {
+                UpdateProcessMessage("Preload complete!");
+                GamePreloaded = true;
+                ModMenuUpdated.Invoke(this, new EventValueArgs<bool>(false));
+            }
+            else
+            {
+                ProcessProgressChanged.Invoke(this, new EventValueArgs<int>(0));
+                UpdateProcessMessage(ModLoaderText.Process_Cancelled);
+            }
+
+            InteractionEnable.Invoke(this, null);
+
+            BackgroundWorker a = sender as BackgroundWorker;
+            a.DoWork -= Preload_DoWork;
+            a.RunWorkerCompleted -= Preload_RunWorkerCompleted;
+            a.ProgressChanged -= Preload_ProgressChanged;
+        }
+
+        private void Preload_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            ProcessProgressChanged.Invoke(this, new EventValueArgs<int>(e.ProgressPercentage));
+            if (e.ProgressPercentage == 0)
+            {
+                UpdateProcessMessage(ModLoaderText.Process_Step0);
+            }
+            else if (e.ProgressPercentage == 33)
+            {
+                UpdateProcessMessage(ModLoaderText.Process_Step1_ROM);
+            }
+            else if (e.ProgressPercentage == 66)
+            {
+                UpdateProcessMessage("Processing game files...");
+            }
+            else if (e.ProgressPercentage == 90)
+            {
+                UpdateProcessMessage("Removing temporary files...");
+            }
         }
     }
 }

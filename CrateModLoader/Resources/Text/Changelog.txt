@@ -3,6 +3,12 @@
 General:
 - PS2 ROM building is now supported internally (Thanks to Smartkin). Folder mode is now supported.  
 - Options are now handled the same as Mod Menu properties allowing them to be set by Mod Crates and enabling variations and choices like difficulty settings in Mod Menus.  
+- Select games can now be preloaded allowing an extended Mod Menu+.
+
+Mod Menu updates:
+- Crash Nitro Kart - Mod Menu+ enabled
+- Crash Twinsanity - Mod Menu+ enabled (PS2)
+- Rayman 3: Hoodlum Havoc - Mod Menu+ enabled (GCN)
 
 Crash Twinsanity:
 - New feature: Classic Health

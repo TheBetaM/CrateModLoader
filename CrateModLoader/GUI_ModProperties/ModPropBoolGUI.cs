@@ -7,6 +7,8 @@ namespace CrateModLoader.ModProperties.GUI
 {
     public class ModPropBoolGUI : ModPropertyGUI<ModPropBool>
     {
+        private CheckBox checkBox;
+
         public ModPropBoolGUI(ModPropBool p) : base(p)
         {
 
@@ -16,7 +18,7 @@ namespace CrateModLoader.ModProperties.GUI
         {
             base.GenerateUI(parent, ref offset, false);
 
-            CheckBox checkBox = new CheckBox();
+            checkBox = new CheckBox();
             checkBox.Text = Prop.Name;
             checkBox.BackColor = Color.FromKnownColor(KnownColor.Transparent);
             checkBox.Checked = Prop.Value;
@@ -31,6 +33,16 @@ namespace CrateModLoader.ModProperties.GUI
                 {
                     checkBox.Text += '*';
                 }
+            }
+        }
+
+        public override void UpdateUI()
+        {
+            checkBox.Checked = Prop.Value;
+            checkBox.Text = Prop.Name;
+            if (Prop.HasChanged && Prop.Value != Prop.DefaultValue)
+            {
+                checkBox.Text += '*';
             }
         }
 

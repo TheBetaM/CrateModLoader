@@ -14,6 +14,7 @@ namespace CrateModLoader
         private Modder mod;
         private Game Game;
         private ModLoaderForm parentForm;
+        private List<ModPropertyGUI_Base> PropGUIs;
 
         private ModPropertyGUI_Base GetExtension(object prop)
         {
@@ -32,11 +33,13 @@ namespace CrateModLoader
             else if (prop is ModPropNamedUIntArray)
                 return new ModPropNamedUIntArrayGUI((ModPropNamedUIntArray)prop);
             else if (prop is ModPropOption)
-                return new ModPropOptionGUI((ModPropOption)prop, parentForm.ModProgram.Pipeline.Metadata.Console, parentForm.ModProgram.Modder.GameRegion.Region);
+                return new ModPropOptionGUI((ModPropOption)prop);
             else if (prop is ModPropString)
                 return new ModPropStringGUI((ModPropString)prop);
             else if (prop is ModPropUInt)
                 return new ModPropUIntGUI((ModPropUInt)prop);
+            else if (prop is ModPropExternalResourceBase)
+                return new ModPropExternalResourceGUI((ModPropExternalResourceBase)prop);
             else
                 return null;
         }
@@ -65,6 +68,7 @@ namespace CrateModLoader
 
         void GenerateUI()
         {
+            PropGUIs = new List<ModPropertyGUI_Base>();
             label1.Text = "";
 
             int initOffset = 0;
@@ -94,12 +98,13 @@ namespace CrateModLoader
             int curItem = 0;
             int curPage = 1;
             TableLayoutPanel tableLayout = null;
+            ConsoleMode Console = mod.ConsolePipeline.Metadata.Console;
+            RegionType Region = mod.GameRegion.Region;
 
             foreach (KeyValuePair<int, string> pair in Pages)
             {
                 tabControl1.TabPages.Add(pair.Value);
-                tabControl1.TabPages[tabControl1.TabPages.Count - 1].AutoScroll = true; //causes massive cpu usage and choppy visuals with lots of elements
-                //tabControl1.TabPages[tabControl1.TabPages.Count - 1].AutoScroll = false;
+                tabControl1.TabPages[tabControl1.TabPages.Count - 1].AutoScroll = true; //auto scroll causes massive cpu usage and choppy visuals with lots of elements
 
                 curItem = 0;
                 curPage = 1;
@@ -107,7 +112,7 @@ namespace CrateModLoader
 
                 foreach (ModPropertyBase propbase in mod.Props)
                 {
-                    if (propbase.Hidden)
+                    if (!propbase.Allowed(Console, Region))
                     {
                         continue;
                     }
@@ -161,6 +166,7 @@ namespace CrateModLoader
                         tableLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, initRowSize));
                         offset += 1;
                         curItem++;
+                        PropGUIs.Add(prop);
                     }
                 }
 
@@ -232,8 +238,10 @@ namespace CrateModLoader
             {
                 prop.ResetToDefault();
             }
-            // todo: maybe update UI instead at some point
-            GenerateUI();
+            foreach (ModPropertyGUI_Base prop in PropGUIs)
+            {
+                prop.UpdateUI();
+            }
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -246,7 +254,10 @@ namespace CrateModLoader
             {
                 ModCrates.LoadSettingsFromFile(mod, openFileDialog1.FileName);
 
-                GenerateUI();
+                foreach (ModPropertyGUI_Base prop in PropGUIs)
+                {
+                    prop.UpdateUI();
+                }
             }
         }
 

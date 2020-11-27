@@ -8,21 +8,16 @@ namespace CrateModLoader.ModProperties.GUI
     public class ModPropOptionGUI : ModPropertyGUI<ModPropOption>
     {
 
-        private ConsoleMode Console;
-        private RegionType Region;
+        private CheckBox checkBox;
+        private ComboBox comboBox;
 
-        public ModPropOptionGUI(ModPropOption p, ConsoleMode console, RegionType region) : base(p)
+        public ModPropOptionGUI(ModPropOption p) : base(p)
         {
-            Console = console;
-            Region = region;
+
         }
 
         public override void GenerateUI(object parent, ref int offset, bool showTitle)
         {
-            if (!Prop.Allowed(Console, Region))
-            {
-                return;
-            }
             Prop.SetItemCount();
 
             TableLayoutPanel table = (TableLayoutPanel)parent;
@@ -31,7 +26,7 @@ namespace CrateModLoader.ModProperties.GUI
             {
                 base.GenerateUI(parent, ref offset, false);
 
-                CheckBox checkBox = new CheckBox();
+                checkBox = new CheckBox();
                 checkBox.Text = Prop.Name;
                 checkBox.BackColor = Color.FromKnownColor(KnownColor.Transparent);
                 checkBox.Checked = Prop.Enabled;
@@ -57,7 +52,7 @@ namespace CrateModLoader.ModProperties.GUI
             {
                 base.GenerateUI(parent, ref offset);
 
-                ComboBox comboBox = new ComboBox();
+                comboBox = new ComboBox();
                 comboBox.Parent = (Control)parent;
                 comboBox.Dock = DockStyle.Fill;
                 comboBox.Items.Clear();
@@ -85,6 +80,19 @@ namespace CrateModLoader.ModProperties.GUI
                 table.SetRow(comboBox, offset);
 
 
+            }
+        }
+
+        public override void UpdateUI()
+        {
+            if (Prop.SingleChoice)
+            {
+                checkBox.Checked = Prop.Enabled;
+            }
+            else
+            {
+                comboBox.SelectedIndex = Prop.Value;
+                base.UpdateUI();
             }
         }
 

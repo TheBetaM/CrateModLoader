@@ -31,7 +31,7 @@ namespace CrateModLoader.ModProperties
             line += Value;
         }
 
-        public override void DeSerialize(string input)
+        public override void DeSerialize(string input, ModCrate crate)
         {
             Value = input;
         }

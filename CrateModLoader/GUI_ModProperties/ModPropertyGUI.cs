@@ -49,6 +49,19 @@ namespace CrateModLoader.ModProperties.GUI
 
         }
 
+        public override void UpdateUI()
+        {
+            if (TitleLabel != null)
+            {
+                ModPropertyBase Base = Prop as ModPropertyBase;
+                TitleLabel.Text = Base.Name;
+                if (Base.HasChanged)
+                {
+                    TitleLabel.Text += '*';
+                }
+            }
+        }
+
         void GenerateTitle(Control parent, ref int offset)
         {
             TableLayoutPanel table = (TableLayoutPanel)parent;

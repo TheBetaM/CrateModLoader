@@ -32,7 +32,7 @@ namespace CrateModLoader
             Text = ModLoaderText.ProgramTitle;
             textBox_inputPath.Text = ModLoaderText.InputInstruction;
             textBox_outputPath.Text = ModLoaderText.OutputInstruction;
-            button_downloadMods.Text = ModLoaderText.Button_DownloadMods;
+            button_downloadMods.Text = "Preload Game";
             button_modCrateMenu.Text = ModLoaderText.ModCratesButton;
             button_modTools.Text = ModLoaderText.Button_ModTools;
             button_openModMenu.Text = ModLoaderText.ModMenuButton;
@@ -46,7 +46,7 @@ namespace CrateModLoader
             toolTip1.SetToolTip(linkLabel_programTitle, ModLoaderText.Tooltip_Label_Version);
             toolTip1.SetToolTip(linkLabel_apiCredit, ModLoaderText.Tooltip_Label_API);
             toolTip1.SetToolTip(numericUpDown1, ModLoaderText.Tooltip_Numeric_Seed);
-            toolTip1.SetToolTip(button_downloadMods, ModLoaderText.Tooltip_Button_DownloadMods);
+            toolTip1.SetToolTip(button_downloadMods, "Load the game data to unlock Mod Menu+");
             toolTip1.SetToolTip(button_modCrateMenu, ModLoaderText.Tooltip_Button_ModCrates);
             toolTip1.SetToolTip(button_openModMenu, ModLoaderText.Tooltip_Button_ModMenu);
             toolTip1.SetToolTip(button_modTools, ModLoaderText.Tooltip_Button_ModTools);
@@ -457,7 +457,7 @@ namespace CrateModLoader
 
             button_openModMenu.Enabled = ModProgram.Modder.ModMenuEnabled;
             button_modTools.Enabled = true;
-            //button_downloadMods.Enabled = true;
+            button_downloadMods.Enabled = ModProgram.Modder.CanPreloadGame && !ModProgram.GamePreloaded;
 
             if (ModProgram.Modder != null && !string.IsNullOrWhiteSpace(ModProgram.Game.API_Link))
             {
@@ -535,6 +535,7 @@ namespace CrateModLoader
             button_modCrateMenu.Visible = true;
             button_modCrateMenu.Enabled = !game.ModCratesDisabled;
             button_randomizeSeed.Enabled = button_randomizeSeed.Visible = button_modTools.Visible = button_downloadMods.Visible = true;
+            button_downloadMods.Enabled = ModProgram.Modder.CanPreloadGame && !ModProgram.GamePreloaded;
             numericUpDown1.Enabled = numericUpDown1.Visible = true;
             linkLabel_optionDesc.Text = string.Empty;
             linkLabel_optionDesc.Visible = false;
@@ -616,14 +617,16 @@ namespace CrateModLoader
         public void UpdateModMenuChangeState(object sender, EventValueArgs<bool> e)
         {
             bool changed = e.Value;
+            string name = ModLoaderText.ModMenuButton;
+            if (ModProgram.GamePreloaded)
+            {
+                name += "+";
+            }
             if (changed)
             {
-                button_openModMenu.Text = ModLoaderText.ModMenuButton + "*";
+                name = "*" + name;
             }
-            else
-            {
-                button_openModMenu.Text = ModLoaderText.ModMenuButton;
-            }
+            button_openModMenu.Text = name;
         }
 
         void UpdateModCrateChangedState(object sender, EventArgs e)
@@ -646,6 +649,15 @@ namespace CrateModLoader
             SystemSounds.Beep.Play();
         }
 
-
+        private void button_downloadMods_Click(object sender, EventArgs e)
+        {
+            if (!ModProgram.GamePreloaded)
+            {
+                if (MessageBox.Show("Preloading the game data allows you to use Mod Menu+, but it will take a while. Start the process?", "Preload Game", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    ModProgram.StartPreload();
+                }
+            }
+        }
     }
 }

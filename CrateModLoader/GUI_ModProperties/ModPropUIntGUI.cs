@@ -7,6 +7,8 @@ namespace CrateModLoader.ModProperties.GUI
     public class ModPropUIntGUI : ModPropertyGUI<ModPropUInt>
     {
 
+        private NumericUpDown num;
+
         public ModPropUIntGUI(ModPropUInt p) : base(p)
         {
 
@@ -16,7 +18,7 @@ namespace CrateModLoader.ModProperties.GUI
         {
             base.GenerateUI(parent, ref offset);
 
-            NumericUpDown num = new NumericUpDown();
+            num = new NumericUpDown();
 
             num.DecimalPlaces = 0;
             num.Minimum = uint.MinValue;
@@ -33,6 +35,13 @@ namespace CrateModLoader.ModProperties.GUI
             table.SetColumn(num, 1);
             table.SetRow(num, offset);
 
+        }
+
+        public override void UpdateUI()
+        {
+            num.Value = Prop.Value;
+
+            base.UpdateUI();
         }
 
         public override void ValueChange(object sender, EventArgs e)

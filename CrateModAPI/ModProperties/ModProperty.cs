@@ -34,6 +34,7 @@ namespace CrateModLoader.ModProperties
 
         public override void ResetToDefault()
         {
+            HasChanged = false;
             Value = DefaultValue;
             HasChanged = false;
         }
@@ -44,7 +45,7 @@ namespace CrateModLoader.ModProperties
             line += ModCrates.Separator;
         }
 
-        public override void DeSerialize(string input)
+        public override void DeSerialize(string input, ModCrate crate)
         {
 
         }

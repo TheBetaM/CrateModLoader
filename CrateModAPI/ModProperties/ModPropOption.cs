@@ -9,8 +9,6 @@ namespace CrateModLoader.ModProperties
     public class ModPropOption : ModProperty<int>
     {
 
-        public List<RegionType> AllowedRegions { get; set; }
-        public List<ConsoleMode> AllowedConsoles { get; set; }
         public List<string> Items { get; set; }
         public List<string> ItemsDesc { get; set; }
         public int ItemCount = 0;
@@ -57,18 +55,6 @@ namespace CrateModLoader.ModProperties
             }
         }
 
-        public bool Allowed(ConsoleMode Console, RegionType Region)
-        {
-            if (Hidden)
-                return false;
-            if (AllowedRegions != null && AllowedRegions.Count > 0 && !AllowedRegions.Contains(Region))
-                return false;
-            if (AllowedConsoles != null && AllowedConsoles.Count > 0 && !AllowedConsoles.Contains(Console))
-                return false;
-
-            return true;
-        }
-
         public override void Serialize(ref string line)
         {
             base.Serialize(ref line);
@@ -76,7 +62,7 @@ namespace CrateModLoader.ModProperties
             line += Value;
         }
 
-        public override void DeSerialize(string input)
+        public override void DeSerialize(string input, ModCrate crate)
         {
             int val;
             if (int.TryParse(input, out val))

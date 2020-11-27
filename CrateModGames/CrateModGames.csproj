@@ -43,6 +43,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -85,6 +87,7 @@
     <Compile Include="GameSpecific\CrashNitroKart\CNK_Data_KartStats.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\CNK_Data_Powerups.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\CNK_Data_Surfaces.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\CNK_Data_Textures.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\CNK_Text.Designer.cs">
       <DependentUpon>CNK_Text.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -239,6 +242,7 @@
     <Compile Include="GameSpecific\CrashTWOC\TWOC_File_CRT.cs" />
     <Compile Include="GameSpecific\MarioSunshine\Modder_MarioSunshine.cs" />
     <Compile Include="GameSpecific\Rayman3\Modder_Rayman3.cs" />
+    <Compile Include="GameSpecific\Rayman3\ModProp_TextureFile.cs" />
     <Compile Include="GameSpecific\Rayman3\Rayman3_Text.Designer.cs">
       <DependentUpon>Rayman3_Text.resx</DependentUpon>
       <AutoGen>True</AutoGen>

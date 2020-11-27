@@ -52,6 +52,16 @@ namespace CrateModLoader.ModProperties.GUI
             }
         }
 
+        public override void UpdateUI()
+        {
+            for (int i = 0; i < nums.Count; i++)
+            {
+                nums[i].Value = (decimal)Prop.Value[i];
+            }
+
+            base.UpdateUI();
+        }
+
         public override void ValueChange(object sender, EventArgs e)
         {
             NumericUpDown box = (NumericUpDown)sender;
