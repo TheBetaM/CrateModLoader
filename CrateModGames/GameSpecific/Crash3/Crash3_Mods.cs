@@ -257,7 +257,6 @@ namespace CrateModLoader.GameSpecific.Crash3
             CrashTri_Common.Fix_BoxCount(nsf);
         }
 
-
         public static void Mod_CameraFOV(NSF nsf, Random rand, bool isRandom)
         {
             double FoV_Mod = 0.8d;
@@ -297,7 +296,6 @@ namespace CrateModLoader.GameSpecific.Crash3
 
         static List<Crash3_Levels> BackwardsLevelsList = new List<Crash3_Levels>()
         {
-
             Crash3_Levels.L01_ToadVillage,
             Crash3_Levels.L02_UnderPressure,
             //Crash3_Levels.L03_OrientExpress, // todo: tiger stuff (onfoot is unstable)
@@ -382,6 +380,7 @@ namespace CrateModLoader.GameSpecific.Crash3
             //Crash3_Levels.L04_BoneYard,
             Crash3_Levels.L11_DinoMight,
         };
+        
         static List<Crash3_Levels> BossLevelsList = new List<Crash3_Levels>()
         {
             //Crash3_Levels.B01_TinyTiger,
@@ -2307,8 +2306,6 @@ namespace CrateModLoader.GameSpecific.Crash3
             
 
         }
-
-
 
         static void AddToDrawList(ref NSF nsf, ref NewZoneEntry zone, int ID, bool debug = false)
         {

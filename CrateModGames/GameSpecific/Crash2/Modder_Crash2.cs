@@ -60,10 +60,14 @@ namespace CrateModLoader.GameSpecific.Crash2
         public static ModPropOption Option_CameraBigFOV = new ModPropOption(Crash2_Text.Mod_CameraWideFOV, Crash2_Text.Mod_CameraWideFOVDesc);
         public static ModPropOption Option_RandCameraFOV = new ModPropOption(Crash2_Text.Rand_CameraFOV, Crash2_Text.Rand_CameraFOVDesc);
         public static ModPropOption Option_RandSounds = new ModPropOption(Crash2_Text.Rand_SFX, Crash2_Text.Rand_SFXDesc);
+        public static ModPropOption Option_RandStreams = new ModPropOption(Crash2_Text.Rand_Streams, Crash2_Text.Rand_StreamsDesc);
         public static ModPropOption Option_RandWorldColors = new ModPropOption(Crash2_Text.Rand_WorldColors, Crash2_Text.Rand_WorldColorsDesc);
         public static ModPropOption Option_RandWorldPalette = new ModPropOption(Crash2_Text.Rand_WorldPalette, Crash2_Text.Rand_WorldPaletteDesc);
         public static ModPropOption Option_GreyscaleWorld = new ModPropOption(Crash2_Text.Mod_GreyscaleWorld, Crash2_Text.Mod_GreyscaleWorldDesc);
         public static ModPropOption Option_UntexturedWorld = new ModPropOption(Crash2_Text.Mod_UntexturedWorld, Crash2_Text.Mod_UntexturedWorldDesc);
+        public static ModPropOption Option_RandWorldTex = new ModPropOption(Crash2_Text.Rand_WorldTex, Crash2_Text.Rand_WorldTexDesc);
+        public static ModPropOption Option_RandObjCol = new ModPropOption(Crash2_Text.Rand_ObjCol, Crash2_Text.Rand_ObjColDesc);
+        public static ModPropOption Option_RandObjTex = new ModPropOption(Crash2_Text.Rand_ObjTex, Crash2_Text.Rand_ObjTexDesc);
 
         public static ModPropOption Option_VehicleLevelsOnFoot = new ModPropOption("Vehicle Levels On Foot", "") { Hidden = true };
         public static ModPropOption Option_MirroredWorld = new ModPropOption("Mirrored World", "") { Hidden = true };
@@ -153,7 +157,11 @@ namespace CrateModLoader.GameSpecific.Crash2
                     if (Option_UntexturedWorld.Enabled) CrashTri_Common.Mod_Scenery_Untextured(nsf);
                     if (Option_RandMusic.Enabled || Option_RandMusicTracks.Enabled || Option_RandMusicInstruments.Enabled)
                         Randomize_Music(nsf, rand, ref wavebankChunks, ref musicEntries, Option_RandMusic.Enabled, Option_RandMusicTracks.Enabled, Option_RandMusicInstruments.Enabled);
-                    if (Option_RandSounds.Enabled) Mod_RandomizeADIO(nsf, nsd, rand);
+                    if (Option_RandSounds.Enabled) CrashTri_Common.Mod_RandomizeADIO(nsf, rand);
+                    if (Option_RandWorldTex.Enabled) CrashTri_Common.Mod_RandomizeWGEOTex(nsf, rand);
+                    if (Option_RandObjCol.Enabled) CrashTri_Common.Mod_RandomizeTGEOCol(nsf, rand);
+                    if (Option_RandObjTex.Enabled) CrashTri_Common.Mod_RandomizeTGEOTex(nsf, rand);
+                    if (Option_RandStreams.Enabled) CrashTri_Common.Mod_RandomizeSDIO(nsf, rand);
 
                     Crash2_Mods.Mod_Metadata(nsf, nsd, NSF_Level, GameRegion.Region);
                 }
@@ -247,31 +255,6 @@ namespace CrateModLoader.GameSpecific.Crash2
                                     });
                                 }
                             }
-                        }
-                    }
-                }
-            }
-        }
-
-        internal void Mod_RandomizeADIO(NSF nsf, NSD nsd, Random rand)
-        {
-            // edit NSF
-            foreach (Chunk chunk in nsf.Chunks)
-            {
-                if (chunk is SoundChunk soundchunk)
-                {
-                    List<int> oldeids = new List<int>();
-                    foreach (Entry entry in soundchunk.Entries)
-                    {
-                        oldeids.Add(entry.EID);
-                    }
-                    foreach (Entry entry in soundchunk.Entries)
-                    {
-                        if (entry is SoundEntry)
-                        {
-                            int eid = oldeids[rand.Next(oldeids.Count)];
-                            entry.EID = eid;
-                            oldeids.Remove(eid);
                         }
                     }
                 }

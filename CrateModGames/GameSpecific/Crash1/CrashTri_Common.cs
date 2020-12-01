@@ -249,12 +249,9 @@ namespace CrateModLoader.GameSpecific
                         for (int i = 0; i < entry.Colors.Count; i++)
                         {
                             SceneryColor color = entry.Colors[i];
-                            byte r = color.Red;
-                            byte g = color.Green;
-                            byte b = color.Blue;
-                            r = (byte)rand.Next(0, 256);
-                            g = (byte)rand.Next(0, 256);
-                            b = (byte)rand.Next(0, 256);
+                            byte r = (byte)rand.Next(256);
+                            byte g = (byte)rand.Next(256);
+                            byte b = (byte)rand.Next(256);
                             entry.Colors[i] = new SceneryColor(r, g, b, color.Extra);
                         }
                     }
@@ -264,12 +261,9 @@ namespace CrateModLoader.GameSpecific
                         for (int i = 0; i < entry.Colors.Count; i++)
                         {
                             SceneryColor color = entry.Colors[i];
-                            byte r = color.Red;
-                            byte g = color.Green;
-                            byte b = color.Blue;
-                            r = (byte)rand.Next(0, 256);
-                            g = (byte)rand.Next(0, 256);
-                            b = (byte)rand.Next(0, 256);
+                            byte r = (byte)rand.Next(256);
+                            byte g = (byte)rand.Next(256);
+                            byte b = (byte)rand.Next(256);
                             entry.Colors[i] = new SceneryColor(r, g, b, color.Extra);
                         }
                     }
@@ -279,12 +273,9 @@ namespace CrateModLoader.GameSpecific
                         for (int i = 0; i < entry.Vertices.Count; i++)
                         {
                             OldSceneryVertex color = entry.Vertices[i];
-                            byte r = color.Red;
-                            byte g = color.Green;
-                            byte b = color.Blue;
-                            r = (byte)rand.Next(0, 256);
-                            g = (byte)rand.Next(0, 256);
-                            b = (byte)rand.Next(0, 256);
+                            byte r = (byte)rand.Next(256);
+                            byte g = (byte)rand.Next(256);
+                            byte b = (byte)rand.Next(256);
                             entry.Vertices[i] = new OldSceneryVertex(color.X, color.Y, color.Z, r, g, b, color.FX);
                         }
                     }
@@ -387,24 +378,12 @@ namespace CrateModLoader.GameSpecific
                         for (int i = 0; i < e.Triangles.Count; i++)
                         {
                             SceneryTriangle tri = e.Triangles[i];
-                            int vertexa = tri.VertexA;
-                            int vertexb = tri.VertexB;
-                            int vertexc = tri.VertexC;
-                            short texture = 0;
-                            bool animated = false;
-                            e.Triangles[i] = new SceneryTriangle(vertexa, vertexb, vertexc, texture, animated);
+                            e.Triangles[i] = new SceneryTriangle(tri.VertexA, tri.VertexB, tri.VertexC, 0, false);
                         }
                         for (int i = 0; i < e.Quads.Count; i++)
                         {
                             SceneryQuad quad = e.Quads[i];
-                            int vertexa = quad.VertexA;
-                            int vertexb = quad.VertexB;
-                            int vertexc = quad.VertexC;
-                            int vertexd = quad.VertexD;
-                            short texture = 0;
-                            byte unknown = 0;
-                            bool animated = false;
-                            e.Quads[i] = new SceneryQuad(vertexa, vertexb, vertexc, vertexd, texture, unknown, animated);
+                            e.Quads[i] = new SceneryQuad(quad.VertexA, quad.VertexB, quad.VertexC, quad.VertexD, 0, 0, false);
                         }
                     }
                     else if (en is NewSceneryEntry)
@@ -413,24 +392,12 @@ namespace CrateModLoader.GameSpecific
                         for (int i = 0; i < e.Triangles.Count; i++)
                         {
                             SceneryTriangle tri = e.Triangles[i];
-                            int vertexa = tri.VertexA;
-                            int vertexb = tri.VertexB;
-                            int vertexc = tri.VertexC;
-                            short texture = 0;
-                            bool animated = false;
-                            e.Triangles[i] = new SceneryTriangle(vertexa, vertexb, vertexc, texture, animated);
+                            e.Triangles[i] = new SceneryTriangle(tri.VertexA, tri.VertexB, tri.VertexC, 0, false);
                         }
                         for (int i = 0; i < e.Quads.Count; i++)
                         {
                             SceneryQuad quad = e.Quads[i];
-                            int vertexa = quad.VertexA;
-                            int vertexb = quad.VertexB;
-                            int vertexc = quad.VertexC;
-                            int vertexd = quad.VertexD;
-                            short texture = 0;
-                            byte unknown = 0;
-                            bool animated = false;
-                            e.Quads[i] = new SceneryQuad(vertexa, vertexb, vertexc, vertexd, texture, unknown, animated);
+                            e.Quads[i] = new SceneryQuad(quad.VertexA, quad.VertexB, quad.VertexC, quad.VertexD, 0, 0, false);
                         }
                     }
                     else if (en is OldSceneryEntry)
@@ -512,6 +479,200 @@ namespace CrateModLoader.GameSpecific
             }
         }
 
+        public static void Mod_RandomizeADIO(NSF nsf, Random rand)
+        {
+            // edit NSF
+            foreach (Chunk chunk in nsf.Chunks)
+            {
+                if (chunk is SoundChunk soundchunk)
+                {
+                    List<int> oldeids = new List<int>();
+                    foreach (Entry entry in soundchunk.Entries)
+                    {
+                        oldeids.Add(entry.EID);
+                    }
+                    foreach (Entry entry in soundchunk.Entries)
+                    {
+                        if (entry is SoundEntry)
+                        {
+                            int eid = oldeids[rand.Next(oldeids.Count)];
+                            entry.EID = eid;
+                            oldeids.Remove(eid);
+                        }
+                    }
+                }
+            }
+        }
 
+        public static void Mod_RandomizeWGEOTex(NSF nsf, Random rand)
+        {
+            foreach (Chunk ck in nsf.Chunks)
+            {
+                if (ck is EntryChunk eck)
+                {
+                    foreach (Entry en in eck.Entries)
+                    {
+                        if (en is SceneryEntry)
+                        {
+                            SceneryEntry e = (SceneryEntry)en;
+                            List<ModelTexture> tex_list = new List<ModelTexture>(e.Textures);
+                            List<ModelExtendedTexture> anim_list = new List<ModelExtendedTexture>(e.AnimatedTextures);
+                            e.Textures.Clear();
+                            e.AnimatedTextures.Clear();
+                            while (tex_list.Count > 0)
+                            {
+                                var t = tex_list[rand.Next(tex_list.Count)];
+                                e.Textures.Add(t);
+                                tex_list.Remove(t);
+                            }
+                            while (anim_list.Count > 0)
+                            {
+                                var t = anim_list[rand.Next(anim_list.Count)];
+                                e.AnimatedTextures.Add(t);
+                                anim_list.Remove(t);
+                            }
+                        }
+                        else if (en is NewSceneryEntry)
+                        {
+                            NewSceneryEntry e = (NewSceneryEntry)en;
+                            List<ModelTexture> tex_list = new List<ModelTexture>(e.Textures);
+                            List<ModelExtendedTexture> anim_list = new List<ModelExtendedTexture>(e.AnimatedTextures);
+                            e.Textures.Clear();
+                            e.AnimatedTextures.Clear();
+                            while (tex_list.Count > 0)
+                            {
+                                var t = tex_list[rand.Next(tex_list.Count)];
+                                e.Textures.Add(t);
+                                tex_list.Remove(t);
+                            }
+                            while (anim_list.Count > 0)
+                            {
+                                var t = anim_list[rand.Next(anim_list.Count)];
+                                e.AnimatedTextures.Add(t);
+                                anim_list.Remove(t);
+                            }
+                        }
+                        /* Per-poly randomization (too random!)
+                         * 
+                         * if (en is SceneryEntry)
+                        {
+                            SceneryEntry e = (SceneryEntry)en;
+                            int texture_count = e.Textures.Count;
+                            int anim_count = e.AnimatedTextures.Count;
+                            for (int i = 0; i < e.Triangles.Count; i++)
+                            {
+                                SceneryTriangle tri = e.Triangles[i];
+                                short new_tex = (short)(tri.Animated ? rand.Next(anim_count) : rand.Next(texture_count));
+                                e.Triangles[i] = new SceneryTriangle(tri.VertexA, tri.VertexB, tri.VertexC, new_tex, tri.Animated);
+                            }
+                            for (int i = 0; i < e.Quads.Count; i++)
+                            {
+                                SceneryQuad quad = e.Quads[i];
+                                short new_tex = (short)(quad.Animated ? rand.Next(anim_count) : rand.Next(texture_count));
+                                e.Quads[i] = new SceneryQuad(quad.VertexA, quad.VertexB, quad.VertexC, quad.VertexD, new_tex, quad.Unknown, quad.Animated);
+                            }
+                        }
+                        else if (en is NewSceneryEntry)
+                        {
+                            NewSceneryEntry e = (NewSceneryEntry)en;
+                            int texture_count = e.Textures.Count;
+                            int anim_count = e.AnimatedTextures.Count;
+                            for (int i = 0; i < e.Triangles.Count; i++)
+                            {
+                                SceneryTriangle tri = e.Triangles[i];
+                                short new_tex = (short)(tri.Animated ? rand.Next(anim_count) : rand.Next(texture_count));
+                                e.Triangles[i] = new SceneryTriangle(tri.VertexA, tri.VertexB, tri.VertexC, new_tex, tri.Animated);
+                            }
+                            for (int i = 0; i < e.Quads.Count; i++)
+                            {
+                                SceneryQuad quad = e.Quads[i];
+                                short new_tex = (short)(quad.Animated ? rand.Next(anim_count) : rand.Next(texture_count));
+                                e.Quads[i] = new SceneryQuad(quad.VertexA, quad.VertexB, quad.VertexC, quad.VertexD, new_tex, quad.Unknown, quad.Animated);
+                            }
+                        }*/
+                    }
+                }
+            }
+        }
+
+        public static void Mod_RandomizeTGEOCol(NSF nsf, Random rand)
+        {
+            foreach (Chunk ck in nsf.Chunks)
+            {
+                if (ck is EntryChunk eck)
+                {
+                    foreach (Entry en in eck.Entries)
+                    {
+                        if (en is ModelEntry)
+                        {
+                            ModelEntry e = (ModelEntry)en;
+                            for (int i = 0; i < e.Colors.Count; ++i)
+                            {
+                                e.Colors[i] = new SceneryColor((byte)rand.Next(256), (byte)rand.Next(256), (byte)rand.Next(256), 0);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        public static void Mod_RandomizeTGEOTex(NSF nsf, Random rand)
+        {
+            foreach (Chunk ck in nsf.Chunks)
+            {
+                if (ck is EntryChunk eck)
+                {
+                    foreach (Entry en in eck.Entries)
+                    {
+                        if (en is ModelEntry)
+                        {
+                            ModelEntry e = (ModelEntry)en;
+                            List<ModelTexture> tex_list = new List<ModelTexture>(e.Textures);
+                            List<ModelExtendedTexture> anim_list = new List<ModelExtendedTexture>(e.AnimatedTextures);
+                            e.Textures.Clear();
+                            e.AnimatedTextures.Clear();
+                            while (tex_list.Count > 0)
+                            {
+                                var t = tex_list[rand.Next(tex_list.Count)];
+                                e.Textures.Add(t);
+                                tex_list.Remove(t);
+                            }
+                            while (anim_list.Count > 0)
+                            {
+                                var t = anim_list[rand.Next(anim_list.Count)];
+                                e.AnimatedTextures.Add(t);
+                                anim_list.Remove(t);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        public static void Mod_RandomizeSDIO(NSF nsf, Random rand)
+        {
+            var streams = new List<SpeechEntry>();
+            var eids = new List<int>();
+            foreach (Chunk ck in nsf.Chunks)
+            {
+                if (ck is EntryChunk eck)
+                {
+                    foreach (Entry en in eck.Entries)
+                    {
+                        if (en is SpeechEntry e)
+                        {
+                            streams.Add(e);
+                            eids.Add(e.EID);
+                        }
+                    }
+                }
+            }
+            foreach (SpeechEntry stream in streams)
+            {
+                int i = rand.Next(eids.Count);
+                stream.EID = eids[i];
+                eids.RemoveAt(i);
+            }
+        }
     }
 }

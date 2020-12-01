@@ -189,11 +189,35 @@
   <data name="Rand_FlyingLevelsDesc" xml:space="preserve">
     <value>Levels featuring flying (17, 24, 28) have randomized paths, spawns and other factors.</value>
   </data>
+  <data name="Rand_ObjCol" xml:space="preserve">
+    <value>Randomize Object Colors</value>
+  </data>
+  <data name="Rand_ObjColDesc" xml:space="preserve">
+    <value>Color palette used in objects is shuffled around.</value>
+  </data>
+  <data name="Rand_ObjPalette" xml:space="preserve">
+    <value>Randomize Object Palette</value>
+  </data>
+  <data name="Rand_ObjPaletteDesc" xml:space="preserve">
+    <value>The object model color palette is randomized in each level.</value>
+  </data>
+  <data name="Rand_ObjTex" xml:space="preserve">
+    <value>Randomize Object Textures</value>
+  </data>
+  <data name="Rand_ObjTexDesc" xml:space="preserve">
+    <value>Textures and animated textures used in objects are shuffled around.</value>
+  </data>
   <data name="Rand_SFX" xml:space="preserve">
     <value>Randomize Sound Effects</value>
   </data>
   <data name="Rand_SFXDesc" xml:space="preserve">
     <value>The sound effects in each level are randomized between each other.</value>
+  </data>
+  <data name="Rand_Streams" xml:space="preserve">
+    <value>Randomize Streamed Audio (Cutscenes, etc.)</value>
+  </data>
+  <data name="Rand_StreamsDesc" xml:space="preserve">
+    <value>The streamed audio used for cutscenes and Aku Aku hints is randomly shuffled around in each level.</value>
   </data>
   <data name="Rand_WarpRoom" xml:space="preserve">
     <value>Randomize Warp Room</value>
@@ -208,9 +232,15 @@
     <value>The scenery colors are randomized in each level.</value>
   </data>
   <data name="Rand_WorldPalette" xml:space="preserve">
-    <value>Randomize World Palette</value>
+    <value>Swizzle World Palette</value>
   </data>
   <data name="Rand_WorldPaletteDesc" xml:space="preserve">
-    <value>The scenery color palette is randomized in each level.</value>
+    <value>Swizzle the scenery colors into a random shade.</value>
+  </data>
+  <data name="Rand_WorldTex" xml:space="preserve">
+    <value>Randomize World Textures</value>
+  </data>
+  <data name="Rand_WorldTexDesc" xml:space="preserve">
+    <value>Textures and animated textures used in scenery are shuffled around.</value>
   </data>
 </root>

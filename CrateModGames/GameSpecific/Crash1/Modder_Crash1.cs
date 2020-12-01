@@ -142,7 +142,7 @@ namespace CrateModLoader.GameSpecific.Crash1
                     if (Option_BackwardsLevels.Enabled || Option_RandBackwardsLevels.Enabled) Crash1_Mods.Mod_BackwardsLevels(nsf, nsd, NSF_Level, Option_RandBackwardsLevels.Enabled, rand);
                     if (Option_BackwardsHogLevels.Enabled) Crash1_Mods.Mod_HogLevelsBackwards(nsf, nsd, NSF_Level);
                     if (Option_CameraBigFOV.Enabled || Option_RandCameraFOV.Enabled) Crash1_Mods.Mod_CameraFOV(nsf, rand, Option_RandCameraFOV.Enabled);
-                    if (Option_RandSounds.Enabled) Mod_RandomizeADIO(nsf, nsd, rand);
+                    if (Option_RandSounds.Enabled) CrashTri_Common.Mod_RandomizeADIO(nsf, rand);
                     if (Option_AllCratesBlank.Enabled) Crash1_Mods.Mod_RandomWoodCrates(nsf, rand, NSF_Level);
                     if (Option_RandCrateContents.Enabled) Crash1_Mods.Mod_RandomCrateContents(nsf, rand, NSF_Level);
                     if (Option_RandBosses.Enabled) Crash1_Mods.Mod_RandomizeBosses(nsf, nsd, NSF_Level, rand, false);
@@ -189,31 +189,6 @@ namespace CrateModLoader.GameSpecific.Crash1
             var indexdata = nsf.MakeNSDIndex();
             nsd.HashKeyMap = indexdata.Item1;
             nsd.Index = indexdata.Item2;
-        }
-
-        internal void Mod_RandomizeADIO(NSF nsf, OldNSD nsd, Random rand)
-        {
-            // edit NSF
-            foreach (Chunk chunk in nsf.Chunks)
-            {
-                if (chunk is SoundChunk soundchunk)
-                {
-                    List<int> oldeids = new List<int>();
-                    foreach (Entry entry in soundchunk.Entries)
-                    {
-                        oldeids.Add(entry.EID);
-                    }
-                    foreach (Entry entry in soundchunk.Entries)
-                    {
-                        if (entry is SoundEntry soundentry)
-                        {
-                            int eid = oldeids[rand.Next(oldeids.Count)];
-                            entry.EID = eid;
-                            oldeids.Remove(eid);
-                        }
-                    }
-                }
-            }
         }
 
         internal string[] Crash1_LevelFileNames = new string[]

@@ -19,7 +19,7 @@ namespace CrateModGames.GameSpecific.Crash2 {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Crash2_Text {
@@ -277,6 +277,42 @@ namespace CrateModGames.GameSpecific.Crash2 {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Randomize Object Colors.
+        /// </summary>
+        internal static string Rand_ObjCol {
+            get {
+                return ResourceManager.GetString("Rand_ObjCol", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Color palette used in objects is shuffled around..
+        /// </summary>
+        internal static string Rand_ObjColDesc {
+            get {
+                return ResourceManager.GetString("Rand_ObjColDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Randomize Object Textures.
+        /// </summary>
+        internal static string Rand_ObjTex {
+            get {
+                return ResourceManager.GetString("Rand_ObjTex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Textures and animated textures used in objects are shuffled around..
+        /// </summary>
+        internal static string Rand_ObjTexDesc {
+            get {
+                return ResourceManager.GetString("Rand_ObjTexDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Randomize Sound Effects.
         /// </summary>
         internal static string Rand_SFX {
@@ -291,6 +327,24 @@ namespace CrateModGames.GameSpecific.Crash2 {
         internal static string Rand_SFXDesc {
             get {
                 return ResourceManager.GetString("Rand_SFXDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Randomize Streamed Audio (Cutscenes, etc.).
+        /// </summary>
+        internal static string Rand_Streams {
+            get {
+                return ResourceManager.GetString("Rand_Streams", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The streamed audio used for cutscenes and Aku Aku hints is randomly shuffled around in each level..
+        /// </summary>
+        internal static string Rand_StreamsDesc {
+            get {
+                return ResourceManager.GetString("Rand_StreamsDesc", resourceCulture);
             }
         }
         
@@ -331,7 +385,7 @@ namespace CrateModGames.GameSpecific.Crash2 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Randomize World Palette.
+        ///   Looks up a localized string similar to Swizzle World Palette.
         /// </summary>
         internal static string Rand_WorldPalette {
             get {
@@ -340,11 +394,29 @@ namespace CrateModGames.GameSpecific.Crash2 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The scenery color palette is randomized in each level..
+        ///   Looks up a localized string similar to Swizzle the scenery colors into a random shade..
         /// </summary>
         internal static string Rand_WorldPaletteDesc {
             get {
                 return ResourceManager.GetString("Rand_WorldPaletteDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Randomize World Textures.
+        /// </summary>
+        internal static string Rand_WorldTex {
+            get {
+                return ResourceManager.GetString("Rand_WorldTex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Textures and animated textures used in scenery are shuffled around..
+        /// </summary>
+        internal static string Rand_WorldTexDesc {
+            get {
+                return ResourceManager.GetString("Rand_WorldTexDesc", resourceCulture);
             }
         }
     }

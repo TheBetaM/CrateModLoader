@@ -59,10 +59,14 @@ namespace CrateModLoader.GameSpecific.Crash3
         public static ModPropOption Option_CameraBigFOV = new ModPropOption(Crash3_Text.Mod_CameraWideFOV, Crash3_Text.Mod_CameraWideFOVDesc);
         public static ModPropOption Option_RandCameraFOV = new ModPropOption(Crash3_Text.Rand_CameraFOV, Crash3_Text.Rand_CameraFOVDesc);
         public static ModPropOption Option_RandSounds = new ModPropOption(Crash3_Text.Rand_SFX, Crash3_Text.Rand_SFXDesc);
+        public static ModPropOption Option_RandStreams = new ModPropOption(Crash3_Text.Rand_Streams, Crash3_Text.Rand_StreamsDesc);
         public static ModPropOption Option_RandWorldColors = new ModPropOption(Crash3_Text.Rand_WorldColors, Crash3_Text.Rand_WorldColorsDesc);
         public static ModPropOption Option_RandWorldPalette = new ModPropOption(Crash3_Text.Rand_WorldPalette, Crash3_Text.Rand_WorldPaletteDesc);
         public static ModPropOption Option_GreyscaleWorld = new ModPropOption(Crash3_Text.Mod_GreyscaleWorld, Crash3_Text.Mod_GreyscaleWorldDesc);
         public static ModPropOption Option_UntexturedWorld = new ModPropOption(Crash3_Text.Mod_UntexturedWorld, Crash3_Text.Mod_UntexturedWorldDesc);
+        public static ModPropOption Option_RandWorldTex = new ModPropOption(Crash3_Text.Rand_WorldTex, Crash3_Text.Rand_WorldTexDesc);
+        public static ModPropOption Option_RandObjCol = new ModPropOption(Crash3_Text.Rand_ObjCol, Crash3_Text.Rand_ObjColDesc);
+        public static ModPropOption Option_RandObjTex = new ModPropOption(Crash3_Text.Rand_ObjTex, Crash3_Text.Rand_ObjTexDesc);
 
         public static ModPropOption Option_RandFlyingLevels = new ModPropOption(Crash3_Text.Rand_FlyingLevels, Crash3_Text.Rand_FlyingLevelsDesc) { Hidden = true }; //unfinished
         public static ModPropOption Option_RandBikeLevels = new ModPropOption("Randomize Bike Levels", "") { Hidden = true };
@@ -137,11 +141,15 @@ namespace CrateModLoader.GameSpecific.Crash3
                 if (Option_RandBosses.Enabled) Crash3_Mods.Mod_RandomizeBosses(nsf, nsd, NSF_Level, rand, false);
                 if (Option_RandFlyingLevels.Enabled) Crash3_Mods.Mod_RandomizeFlyingLevels(nsf, nsd, NSF_Level, rand, false);
                 if (Option_RandBoxCount.Enabled) CrashTri_Common.Rand_BoxCount(nsf,rand);
-                if (Option_RandSounds.Enabled) Mod_RandomizeADIO(nsf, nsd, rand);
+                if (Option_RandSounds.Enabled) CrashTri_Common.Mod_RandomizeADIO(nsf, rand);
                 if (Option_RandWorldPalette.Enabled) CrashTri_Common.Mod_Scenery_Swizzle(nsf, rand);
                 if (Option_GreyscaleWorld.Enabled) CrashTri_Common.Mod_Scenery_Greyscale(nsf);
                 if (Option_RandWorldColors.Enabled) CrashTri_Common.Mod_Scenery_Rainbow(nsf, rand);
                 if (Option_UntexturedWorld.Enabled) CrashTri_Common.Mod_Scenery_Untextured(nsf);
+                if (Option_RandWorldTex.Enabled) CrashTri_Common.Mod_RandomizeWGEOTex(nsf, rand);
+                if (Option_RandObjCol.Enabled) CrashTri_Common.Mod_RandomizeTGEOCol(nsf, rand);
+                if (Option_RandObjTex.Enabled) CrashTri_Common.Mod_RandomizeTGEOTex(nsf, rand);
+                if (Option_RandStreams.Enabled) CrashTri_Common.Mod_RandomizeSDIO(nsf, rand);
 
                 Crash3_Mods.Mod_Metadata(nsf, nsd, NSF_Level, GameRegion.Region);
 
@@ -230,31 +238,6 @@ namespace CrateModLoader.GameSpecific.Crash3
             }
         }
 
-        internal void Mod_RandomizeADIO(NSF nsf, NewNSD nsd, Random rand)
-        {
-            // edit NSF
-            foreach (Chunk chunk in nsf.Chunks)
-            {
-                if (chunk is SoundChunk soundchunk)
-                {
-                    List<int> oldeids = new List<int>();
-                    foreach (Entry entry in soundchunk.Entries)
-                    {
-                        oldeids.Add(entry.EID);
-                    }
-                    foreach (Entry entry in soundchunk.Entries)
-                    {
-                        if (entry is SoundEntry)
-                        {
-                            int eid = oldeids[rand.Next(oldeids.Count)];
-                            entry.EID = eid;
-                            oldeids.Remove(eid);
-                        }
-                    }
-                }
-            }
-        }
-
         internal string[] Crash3_LevelFileNames = new string[]
         {
             "0A",
@@ -297,11 +280,11 @@ namespace CrateModLoader.GameSpecific.Crash3
             "02",
         };
 
-        internal Crash3_Levels GetLevelFromNSF(string NSf_Name)
+        internal Crash3_Levels GetLevelFromNSF(string NSF_Name)
         {
             for (int i = 0; i < Crash3_LevelFileNames.Length; i++)
             {
-                if (NSf_Name.Contains("S00000" + Crash3_LevelFileNames[i]))
+                if (NSF_Name.Contains("S00000" + Crash3_LevelFileNames[i]))
                 {
                     return (Crash3_Levels)i;
                 }
