@@ -67,6 +67,10 @@ namespace CrateModLoader.GameSpecific.Crash3
         public static ModPropOption Option_RandWorldTex = new ModPropOption(Crash3_Text.Rand_WorldTex, Crash3_Text.Rand_WorldTexDesc);
         public static ModPropOption Option_RandObjCol = new ModPropOption(Crash3_Text.Rand_ObjCol, Crash3_Text.Rand_ObjColDesc);
         public static ModPropOption Option_RandObjTex = new ModPropOption(Crash3_Text.Rand_ObjTex, Crash3_Text.Rand_ObjTexDesc);
+        public static ModPropOption Option_RandPantsColor = new ModPropOption(Crash3_Text.Rand_PantsColor, Crash3_Text.Rand_PantsColorDesc);
+
+        [ModCategory(1)]
+        public static ModPropNamedFloatArray Prop_PantsColor = new ModPropNamedFloatArray(new float[3] { 0, 0, 1f }, new string[] { "Red", "Green", "Blue" }, Crash3_Text.Prop_PantsColor, Crash3_Text.Prop_PantsColorDesc);
 
         public static ModPropOption Option_RandFlyingLevels = new ModPropOption(Crash3_Text.Rand_FlyingLevels, Crash3_Text.Rand_FlyingLevelsDesc) { Hidden = true }; //unfinished
         public static ModPropOption Option_RandBikeLevels = new ModPropOption("Randomize Bike Levels", "") { Hidden = true };
@@ -98,6 +102,19 @@ namespace CrateModLoader.GameSpecific.Crash3
 
             CrateSettings_CrashTri.VerifyModCrates(Game.ShortName, GameRegion);
             ModCrates.InstallLayerMods(ConsolePipeline.ExtractedPath, 0);
+
+            SceneryColor PantsColor = new SceneryColor(0, 0, 0);
+            if (Option_RandPantsColor.Enabled)
+            {
+                PantsColor = new SceneryColor((byte)rand.Next(256), (byte)rand.Next(256), (byte)rand.Next(256), 0);
+                // just so that it doesn't affect gameplay randomizers
+                rand = new Random(ModLoaderGlobals.RandomizerSeed);
+            }
+
+            if (Prop_PantsColor.HasChanged)
+            {
+                PantsColor = new SceneryColor((byte)(Prop_PantsColor.Value[0] * 255f), (byte)(Prop_PantsColor.Value[1] * 255f), (byte)(Prop_PantsColor.Value[2] * 255f), 0);
+            }
 
             List<FileInfo> nsfs = new List<FileInfo>();
             List<FileInfo> nsds = new List<FileInfo>();
@@ -147,6 +164,7 @@ namespace CrateModLoader.GameSpecific.Crash3
                 if (Option_RandWorldColors.Enabled) CrashTri_Common.Mod_Scenery_Rainbow(nsf, rand);
                 if (Option_UntexturedWorld.Enabled) CrashTri_Common.Mod_Scenery_Untextured(nsf);
                 if (Option_RandWorldTex.Enabled) CrashTri_Common.Mod_RandomizeWGEOTex(nsf, rand);
+                if (Option_RandPantsColor.Enabled || Prop_PantsColor.HasChanged) Crash3_Mods.Mod_PantsColor(nsf, PantsColor);
                 if (Option_RandObjCol.Enabled) CrashTri_Common.Mod_RandomizeTGEOCol(nsf, rand);
                 if (Option_RandObjTex.Enabled) CrashTri_Common.Mod_RandomizeTGEOTex(nsf, rand);
                 if (Option_RandStreams.Enabled) CrashTri_Common.Mod_RandomizeSDIO(nsf, rand);

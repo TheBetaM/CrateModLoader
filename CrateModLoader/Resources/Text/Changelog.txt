@@ -6,9 +6,25 @@ General:
 - Select games can now be preloaded allowing an extended Mod Menu+.
 
 Mod Menu updates:
-- Crash Nitro Kart - Mod Menu+ enabled
+- Crash Nitro Kart - Mod Menu+ enabled (All)
 - Crash Twinsanity - Mod Menu+ enabled (PS2)
 - Rayman 3: Hoodlum Havoc - Mod Menu+ enabled (GCN)
+
+Crash Bandicoot 2: Cortex Strikes Back:
+- New feature: Randomize World Textures
+- New feature: Randomize Object Colors
+- New feature: Randomize Object Textures
+- New feature: Randomize Streamed Audio
+- New feature: Ranodmize Pants Color
+- Pants color can now be customized in the Mod Menu
+
+Crash Bandicoot: WARPED:
+- New feature: Randomize World Textures
+- New feature: Randomize Object Colors
+- New feature: Randomize Object Textures
+- New feature: Randomize Streamed Audio
+- New feature: Ranodmize Pants Color
+- Pants color can now be customized in the Mod Menu
 
 Crash Twinsanity:
 - New feature: Classic Health

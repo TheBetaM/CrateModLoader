@@ -2355,6 +2355,47 @@ namespace CrateModLoader.GameSpecific.Crash2
 
         }
 
+        public static void Mod_PantsColor(NSF nsf, SceneryColor color)
+        {
+            foreach (Chunk ck in nsf.Chunks)
+            {
+                if (ck is EntryChunk eck)
+                {
+                    foreach (Entry en in eck.Entries)
+                    {
+                        if (en is ModelEntry)
+                        {
+                            ModelEntry e = (ModelEntry)en;
+                            if (e.EName.StartsWith("Cb") || e.EName.StartsWith("Cr") || e.EName.StartsWith("CR") || e.EName.StartsWith("Ch") || e.EName.StartsWith("CS") || e.EName.StartsWith("WiB"))
+                            {
+                                // don't paint the back texture and shoes!
+                                List<int> TexturedTris = new List<int>();
+                                for (int t = 0; t < e.Triangles.Count; ++t)
+                                {
+                                    if (e.Triangles[t].Tex > 0)
+                                    {
+                                        for (int i = 0; i < e.Triangles[t].Color.Length; i++)
+                                        {
+                                            TexturedTris.Add(e.Triangles[t].Color[i]);
+                                        }
+                                    }
+                                }
+                                
+                                for (int i = 0; i < e.Colors.Count; ++i)
+                                {
+                                    if (e.Colors[i].Blue > 0 && e.Colors[i].Green < 110 && e.Colors[i].Red < 110 && !TexturedTris.Contains(i))
+                                    {
+                                        float intensity = e.Colors[i].Blue / 255f;
+                                        e.Colors[i] = new SceneryColor((byte)(color.Red * intensity), (byte)(color.Green * intensity), (byte)(color.Blue * intensity), color.Extra);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         public static void Mod_Metadata(NSF nsf, NSD nsd, Crash2_Levels level, RegionType region)
         {
             if (level != Crash2_Levels.WarpRoom && level != Crash2_Levels.WarpRoom2 && level != Crash2_Levels.WarpRoom3 && level != Crash2_Levels.WarpRoom4 && level != Crash2_Levels.WarpRoom5)

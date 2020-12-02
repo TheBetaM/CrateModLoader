@@ -51,7 +51,7 @@ namespace CrateModLoader.GameSpecific.Crash1
         public static ModPropOption Option_AllCratesBlank = new ModPropOption(Crash1_Text.Mod_AllCratesBlank, Crash1_Text.Mod_AllCratesBlankDesc);
         public static ModPropOption Option_AllCratesWumpa = new ModPropOption(Crash1_Text.Mod_AllCratesWumpa, Crash1_Text.Mod_AllCratesWumpaDesc);
         public static ModPropOption Option_BackwardsLevels = new ModPropOption(Crash1_Text.Mod_BackwardsLevels, Crash1_Text.Mod_BackwardsLevelsDesc);
-        public static ModPropOption Option_RandBackwardsLevels = new ModPropOption(Crash1_Text.Mod_BackwardsLevels, Crash1_Text.Mod_BackwardsLevelsDesc);
+        public static ModPropOption Option_RandBackwardsLevels = new ModPropOption(Crash1_Text.Rand_BackwardsLevels, Crash1_Text.Rand_BackwardsLevelsDesc);
         public static ModPropOption Option_BackwardsHogLevels = new ModPropOption(Crash1_Text.Mod_BackwardsHogLevels, Crash1_Text.Mod_BackwardsHogLevelsDesc);
         public static ModPropOption Option_RandCrateContents = new ModPropOption(Crash1_Text.Rand_CrateContents, Crash1_Text.Rand_CrateContentsDesc);
         public static ModPropOption Option_RandBosses = new ModPropOption(Crash1_Text.Rand_BossLevels, Crash1_Text.Rand_BossLevelsDesc);
@@ -60,6 +60,11 @@ namespace CrateModLoader.GameSpecific.Crash1
         public static ModPropOption Option_RandSounds = new ModPropOption(Crash1_Text.Rand_SFX, Crash1_Text.Rand_SFXDesc);
         public static ModPropOption Option_RandWorldColors = new ModPropOption(Crash1_Text.Rand_WorldColors, Crash1_Text.Rand_WorldColorsDesc);
         public static ModPropOption Option_RandWorldPalette = new ModPropOption(Crash1_Text.Rand_WorldPalette, Crash1_Text.Rand_WorldPaletteDesc);
+        public static ModPropOption Option_RandPantsColor = new ModPropOption("Randomize Pants Color", "") { Hidden = true };
+
+        [ModCategory(1)]
+        public static ModPropNamedFloatArray Prop_PantsColor = new ModPropNamedFloatArray(new float[3] { 0, 0, 1f }, new string[] { "Red", "Green", "Blue" }, "Pants Color", "")
+        { Hidden = true };
 
         public static ModPropOption Option_RandMap = new ModPropOption("Randomize Map", "") { Hidden = true };
         public static ModPropOption Option_HogLevelsOnFoot = new ModPropOption("Hog Levels On Foot", "") { Hidden = true };
@@ -104,6 +109,19 @@ namespace CrateModLoader.GameSpecific.Crash1
                 CachingPass = true;
             }
             */
+
+            OldSceneryColor PantsColor = new OldSceneryColor(0, 0, 0, false);
+            if (Option_RandPantsColor.Enabled)
+            {
+                PantsColor = new OldSceneryColor((byte)rand.Next(256), (byte)rand.Next(256), (byte)rand.Next(256), false);
+                // just so that it doesn't affect gameplay randomizers
+                rand = new Random(ModLoaderGlobals.RandomizerSeed);
+            }
+
+            if (Prop_PantsColor.HasChanged)
+            {
+                PantsColor = new OldSceneryColor((byte)(Prop_PantsColor.Value[0] * 255f), (byte)(Prop_PantsColor.Value[1] * 255f), (byte)(Prop_PantsColor.Value[2] * 255f), false);
+            }
 
             for (int i = 0; i < Math.Min(nsfs.Count, nsds.Count); ++i)
             {
@@ -150,6 +168,7 @@ namespace CrateModLoader.GameSpecific.Crash1
                     if (Option_GreyscaleWorld.Enabled) CrashTri_Common.Mod_Scenery_Greyscale(nsf);
                     if (Option_RandWorldColors.Enabled) CrashTri_Common.Mod_Scenery_Rainbow(nsf, rand);
                     if (Option_UntexturedWorld.Enabled) CrashTri_Common.Mod_Scenery_Untextured(nsf);
+                    if (Option_RandPantsColor.Enabled || Prop_PantsColor.HasChanged) Crash1_Mods.Mod_PantsColor(nsf, PantsColor);
 
                     Crash1_Mods.Mod_Metadata(nsf, nsd, NSF_Level, GameRegion.Region);
                 }

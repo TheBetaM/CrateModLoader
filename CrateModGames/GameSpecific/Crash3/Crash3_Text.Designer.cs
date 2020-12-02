@@ -19,7 +19,7 @@ namespace CrateModGames.GameSpecific.Crash3 {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Crash3_Text {
@@ -187,6 +187,24 @@ namespace CrateModGames.GameSpecific.Crash3 {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pants Color.
+        /// </summary>
+        internal static string Prop_PantsColor {
+            get {
+                return ResourceManager.GetString("Prop_PantsColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modify the color of Crash&apos;s pants..
+        /// </summary>
+        internal static string Prop_PantsColorDesc {
+            get {
+                return ResourceManager.GetString("Prop_PantsColorDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Random Levels Are Backwards.
         /// </summary>
         internal static string Rand_BackwardsLevels {
@@ -327,6 +345,24 @@ namespace CrateModGames.GameSpecific.Crash3 {
         internal static string Rand_ObjTexDesc {
             get {
                 return ResourceManager.GetString("Rand_ObjTexDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Randomize Pants Color.
+        /// </summary>
+        internal static string Rand_PantsColor {
+            get {
+                return ResourceManager.GetString("Rand_PantsColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Randomize the color of Crash&apos;s pants..
+        /// </summary>
+        internal static string Rand_PantsColorDesc {
+            get {
+                return ResourceManager.GetString("Rand_PantsColorDesc", resourceCulture);
             }
         }
         

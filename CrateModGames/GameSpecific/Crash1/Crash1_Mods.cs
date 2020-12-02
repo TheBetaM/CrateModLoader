@@ -2448,6 +2448,48 @@ namespace CrateModLoader.GameSpecific.Crash1
 
         }
 
+        public static void Mod_PantsColor(NSF nsf, OldSceneryColor color)
+        {
+            foreach (Chunk ck in nsf.Chunks)
+            {
+                if (ck is EntryChunk eck)
+                {
+                    foreach (Entry en in eck.Entries)
+                    {
+                        if (en is OldModelEntry)
+                        {
+                            OldModelEntry e = (OldModelEntry)en;
+                            if (e.EName.StartsWith("Wi"))
+                            {
+                                // this does nothing...
+                                for (int i = 0; i < e.Structs.Count; ++i)
+                                {
+                                    if (e.Structs[i] is OldSceneryColor col)
+                                    {
+                                        if (col.B > 0 && col.G < 110 && col.R < 110)
+                                        {
+                                            float intensity = col.B / 255f;
+                                            e.Structs[i] = new OldSceneryColor((byte)(color.R * intensity), (byte)(color.G * intensity), (byte)(color.B * intensity), col.N);
+                                        }
+                                    }
+                                    else if (e.Structs[i] is OldModelTexture tex)
+                                    {
+                                        if (tex.B > 0 && tex.G < 110 && tex.R < 110)
+                                        {
+                                            float intensity = tex.B / 255f;
+                                            e.Structs[i] = new OldModelTexture(tex.UVIndex, tex.ClutX, tex.ClutY, tex.XOffU, tex.YOffU, tex.ColorMode, tex.BlendMode, tex.Segment,
+                                                (byte)(color.R * intensity), (byte)(color.G * intensity), (byte)(color.B * intensity), 
+                                                tex.N, tex.EID);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         public static void Mod_Metadata(NSF nsf, OldNSD nsd, Crash1_Levels level, RegionType region)
         {
             if (level != Crash1_Levels.MapMainMenu)

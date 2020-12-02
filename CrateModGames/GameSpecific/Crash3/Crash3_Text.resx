@@ -159,6 +159,12 @@
   <data name="Mod_UntexturedWorldDesc" xml:space="preserve">
     <value>The scenery's textures are disabled (only colors remain).</value>
   </data>
+  <data name="Prop_PantsColor" xml:space="preserve">
+    <value>Pants Color</value>
+  </data>
+  <data name="Prop_PantsColorDesc" xml:space="preserve">
+    <value>Modify the color of Crash's pants.</value>
+  </data>
   <data name="Rand_BackwardsLevels" xml:space="preserve">
     <value>Random Levels Are Backwards</value>
   </data>
@@ -206,6 +212,12 @@
   </data>
   <data name="Rand_ObjTexDesc" xml:space="preserve">
     <value>Textures and animated textures used in objects are shuffled around.</value>
+  </data>
+  <data name="Rand_PantsColor" xml:space="preserve">
+    <value>Randomize Pants Color</value>
+  </data>
+  <data name="Rand_PantsColorDesc" xml:space="preserve">
+    <value>Randomize the color of Crash's pants.</value>
   </data>
   <data name="Rand_SFX" xml:space="preserve">
     <value>Randomize Sound Effects</value>

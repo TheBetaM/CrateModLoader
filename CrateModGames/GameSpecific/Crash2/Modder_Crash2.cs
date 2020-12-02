@@ -68,6 +68,10 @@ namespace CrateModLoader.GameSpecific.Crash2
         public static ModPropOption Option_RandWorldTex = new ModPropOption(Crash2_Text.Rand_WorldTex, Crash2_Text.Rand_WorldTexDesc);
         public static ModPropOption Option_RandObjCol = new ModPropOption(Crash2_Text.Rand_ObjCol, Crash2_Text.Rand_ObjColDesc);
         public static ModPropOption Option_RandObjTex = new ModPropOption(Crash2_Text.Rand_ObjTex, Crash2_Text.Rand_ObjTexDesc);
+        public static ModPropOption Option_RandPantsColor = new ModPropOption(Crash2_Text.Rand_PantsColor, Crash2_Text.Rand_PantsColorDesc);
+
+        [ModCategory(1)]
+        public static ModPropNamedFloatArray Prop_PantsColor = new ModPropNamedFloatArray(new float[3] { 0, 0, 1f }, new string[] { "Red", "Green", "Blue" }, Crash2_Text.Prop_PantsColor, Crash2_Text.Prop_PantsColorDesc);
 
         public static ModPropOption Option_VehicleLevelsOnFoot = new ModPropOption("Vehicle Levels On Foot", "") { Hidden = true };
         public static ModPropOption Option_MirroredWorld = new ModPropOption("Mirrored World", "") { Hidden = true };
@@ -108,6 +112,19 @@ namespace CrateModLoader.GameSpecific.Crash2
             if (Option_RandMusic.Enabled || Option_RandMusicTracks.Enabled || Option_RandMusicInstruments.Enabled)
             {
                 CachingPass = true;
+            }
+
+            SceneryColor PantsColor = new SceneryColor(0, 0, 0);
+            if (Option_RandPantsColor.Enabled)
+            {
+                PantsColor = new SceneryColor((byte)rand.Next(256), (byte)rand.Next(256), (byte)rand.Next(256), 0);
+                // just so that it doesn't affect gameplay randomizers
+                rand = new Random(ModLoaderGlobals.RandomizerSeed);
+            }
+
+            if (Prop_PantsColor.HasChanged)
+            {
+                PantsColor = new SceneryColor((byte)(Prop_PantsColor.Value[0] * 255f), (byte)(Prop_PantsColor.Value[1] * 255f), (byte)(Prop_PantsColor.Value[2] * 255f), 0);
             }
 
             List<List<WavebankChunk>> wavebankChunks = new List<List<WavebankChunk>>();
@@ -159,6 +176,7 @@ namespace CrateModLoader.GameSpecific.Crash2
                         Randomize_Music(nsf, rand, ref wavebankChunks, ref musicEntries, Option_RandMusic.Enabled, Option_RandMusicTracks.Enabled, Option_RandMusicInstruments.Enabled);
                     if (Option_RandSounds.Enabled) CrashTri_Common.Mod_RandomizeADIO(nsf, rand);
                     if (Option_RandWorldTex.Enabled) CrashTri_Common.Mod_RandomizeWGEOTex(nsf, rand);
+                    if (Option_RandPantsColor.Enabled || Prop_PantsColor.HasChanged) Crash2_Mods.Mod_PantsColor(nsf, PantsColor);
                     if (Option_RandObjCol.Enabled) CrashTri_Common.Mod_RandomizeTGEOCol(nsf, rand);
                     if (Option_RandObjTex.Enabled) CrashTri_Common.Mod_RandomizeTGEOTex(nsf, rand);
                     if (Option_RandStreams.Enabled) CrashTri_Common.Mod_RandomizeSDIO(nsf, rand);
