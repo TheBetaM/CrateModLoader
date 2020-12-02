@@ -119,6 +119,72 @@ namespace CrateModLoader.GameSpecific.Crash2
             CrateSubTypes.Blank, //CrateSubTypes.Fruit, CrateSubTypes.Life, CrateSubTypes.Aku, CrateSubTypes.Pickup
         };
 
+        public static void Rand_BoxCount(NSF nsf, Random rand, Crash2_Levels level)
+        {
+            List<Entity> willys = new List<Entity>();
+            foreach (Chunk chunk in nsf.Chunks)
+            {
+                if (chunk is EntryChunk entrychunk)
+                {
+                    foreach (Entry entry in entrychunk.Entries)
+                    {
+                        if (entry is ZoneEntry zone2)
+                        {
+                            foreach (Entity entity in zone2.Entities)
+                            {
+                                if (entity.Type == 0 && entity.Subtype == 0)
+                                {
+                                    willys.Add(entity);
+                                }
+                            }
+                        }
+                        if (entry is NewZoneEntry zone3)
+                        {
+                            foreach (Entity entity in zone3.Entities)
+                            {
+                                if (entity.Type == 0 && entity.Subtype == 0)
+                                {
+                                    willys.Add(entity);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            Dictionary<Crash2_Levels, int> minBoxCounts = new Dictionary<Crash2_Levels, int>()
+            {
+                [Crash2_Levels.L02_SnowGo] = 4,
+                [Crash2_Levels.L05_CrashDash] = 8,
+                [Crash2_Levels.L08_BearIt] = 10,
+                [Crash2_Levels.L09_CrashCrush] = 18,
+                [Crash2_Levels.L12_SewerOrLater] = 14,
+                [Crash2_Levels.L13_BearDown] = 2,
+                [Crash2_Levels.L15_UnBearable] = 18,
+                [Crash2_Levels.L16_HanginOut] = 16,
+                [Crash2_Levels.L18_ColdHardCrash] = 26,
+                [Crash2_Levels.L25_SpacedOut] = 2,
+                [Crash2_Levels.L26_TotallyBear] = 8,
+            };
+
+            foreach (Entity willy in willys)
+            {
+                if (willy.BoxCount.HasValue)
+                {
+                    int boxcount = willy.BoxCount.Value.ValueB;
+                    if (minBoxCounts.ContainsKey(level))
+                    {
+                        boxcount = rand.Next(minBoxCounts[level], boxcount + 1);
+                    }
+                    else
+                    {
+                        boxcount = rand.Next(0, boxcount + 1);
+                    }
+                    willy.BoxCount = new EntitySetting(0, boxcount);
+                }
+            }
+        }
+
         public static void Mod_RandomWoodCrates(NSF nsf, Random rand)
         {
             // edit NSF

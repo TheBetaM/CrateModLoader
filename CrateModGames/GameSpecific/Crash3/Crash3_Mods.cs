@@ -120,6 +120,78 @@ namespace CrateModLoader.GameSpecific.Crash3
             CrateSubTypes.Blank, //CrateSubTypes.Fruit, CrateSubTypes.Life, CrateSubTypes.Aku, CrateSubTypes.Pickup
         };
 
+        public static void Rand_BoxCount(NSF nsf, Random rand, Crash3_Levels level)
+        {
+            List<Entity> willys = new List<Entity>();
+            foreach (Chunk chunk in nsf.Chunks)
+            {
+                if (chunk is EntryChunk entrychunk)
+                {
+                    foreach (Entry entry in entrychunk.Entries)
+                    {
+                        if (entry is ZoneEntry zone2)
+                        {
+                            foreach (Entity entity in zone2.Entities)
+                            {
+                                if (entity.Type == 0 && entity.Subtype == 0)
+                                {
+                                    willys.Add(entity);
+                                }
+                            }
+                        }
+                        if (entry is NewZoneEntry zone3)
+                        {
+                            foreach (Entity entity in zone3.Entities)
+                            {
+                                if (entity.Type == 0 && entity.Subtype == 0)
+                                {
+                                    willys.Add(entity);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            Dictionary<Crash3_Levels, int> minBoxCounts = new Dictionary<Crash3_Levels, int>()
+            {
+                [Crash3_Levels.L02_UnderPressure] = 20,
+                [Crash3_Levels.L04_BoneYard] = 27,
+                [Crash3_Levels.L06_GeeWiz] = 1,
+                [Crash3_Levels.L07_HangEmHigh] = 6,
+                [Crash3_Levels.L09_TombTime] = 6,
+                [Crash3_Levels.L11_DinoMight] = 22,
+                [Crash3_Levels.L12_DeepTrouble] = 10,
+                [Crash3_Levels.L13_HighTime] = 4,
+                [Crash3_Levels.L16_Sphynxinator] = 20,
+                [Crash3_Levels.L17_ByeByeBlimps] = 1,
+                [Crash3_Levels.L19_FutureFrenzy] = 8,
+                [Crash3_Levels.L21_GoneTomorrow] = 6,
+                [Crash3_Levels.L24_MadBombers] = 1,
+                [Crash3_Levels.L25_BugLite] = 9,
+                [Crash3_Levels.L26_SkiCrazed] = 21,
+                [Crash3_Levels.L28_RingsOfPower] = 1,
+                [Crash3_Levels.L29_HotCoco] = 18,
+            };
+
+            foreach (Entity willy in willys)
+            {
+                if (willy.BoxCount.HasValue)
+                {
+                    int boxcount = willy.BoxCount.Value.ValueB;
+                    if (minBoxCounts.ContainsKey(level))
+                    {
+                        boxcount = rand.Next(minBoxCounts[level], boxcount + 1);
+                    }
+                    else
+                    {
+                        boxcount = rand.Next(0, boxcount + 1);
+                    }
+                    willy.BoxCount = new EntitySetting(0, boxcount);
+                }
+            }
+        }
+
         public static void Mod_RandomWoodCrates(NSF nsf, Random rand)
         {
             // edit NSF
@@ -302,21 +374,21 @@ namespace CrateModLoader.GameSpecific.Crash3
             //Crash3_Levels.L04_BoneYard, // todo: exit has trouble appearing, stability problems?, out of space on PAL and NTSC-J
             //Crash3_Levels.L05_MakinWaves, // todo: warpout/box counter/clock doesn't appear
 
-            Crash3_Levels.L06_GeeWiz, // todo: laggy start
+            Crash3_Levels.L06_GeeWiz, // todo: laggy start, exit problems if clock is there?
             Crash3_Levels.L07_HangEmHigh,
             //Crash3_Levels.L08_HogRide, // todo: vehicle stuff
             Crash3_Levels.L09_TombTime,
             //Crash3_Levels.L10_MidnightRun, // unverified, todo: camera stitching, tiger stuff (onfoot is unstable)
 
             //Crash3_Levels.L11_DinoMight, // todo: exit has trouble appearing, stability problems?
-            Crash3_Levels.L12_DeepTrouble,
+            Crash3_Levels.L12_DeepTrouble, // exit problems if clock is there?
             Crash3_Levels.L13_HighTime,
             //Crash3_Levels.L14_RoadCrash, // todo: vehicle stuff
-            Crash3_Levels.L15_DoubleHeader,
+            Crash3_Levels.L15_DoubleHeader, // exit problems if clock is there?
 
             Crash3_Levels.L16_Sphynxinator, // todo: adding clock crashes
             Crash3_Levels.L17_ByeByeBlimps,
-            Crash3_Levels.L18_TellNoTales, 
+            //Crash3_Levels.L18_TellNoTales, // exit having trouble spawning
             Crash3_Levels.L19_FutureFrenzy,
             Crash3_Levels.L20_TombWader, 
 
