@@ -1742,6 +1742,10 @@ namespace CrateModLoader.GameSpecific.Crash1
                                         zone.EntityCount--;
                                         i--;
                                     }
+                                    else if (zone.Entities[i].Type == 34 && zone.Entities[i].Subtype == (int)CrateSubTypes.Checkpoint)
+                                    {
+                                        zone.Entities[i].Subtype = (int)CrateSubTypes.Blank;
+                                    }
 
 
                                 }

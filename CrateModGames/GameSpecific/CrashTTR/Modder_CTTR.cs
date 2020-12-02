@@ -482,7 +482,14 @@ namespace CrateModLoader.GameSpecific.CrashTTR
             {
                 for (int i = 0; i < 15; i++)
                 {
-                    randLaps.Add(randState.Next(1,7));
+                    if (i == 12) // Rings of Uranus
+                    {
+                        randLaps.Add(randState.Next(3, 13));
+                    }
+                    else
+                    {
+                        randLaps.Add(randState.Next(1, 7));
+                    }
                 }
             }
             randKOs = new List<int>();

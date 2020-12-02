@@ -10,13 +10,16 @@ Mod Menu updates:
 - Crash Twinsanity - Mod Menu+ enabled (PS2)
 - Rayman 3: Hoodlum Havoc - Mod Menu+ enabled (GCN)
 
+Crash Bandicoot:
+- Backwards Hog Levels: Removed checkpoints because they didn't work anyway.
+
 Crash Bandicoot 2: Cortex Strikes Back:
 - New feature: Randomize World Textures
 - New feature: Randomize Object Colors
 - New feature: Randomize Object Textures
 - New feature: Randomize Streamed Audio
 - New feature: Ranodmize Pants Color
-- Pants color can now be customized in the Mod Menu
+- Pants color can now be customized in the Mod Menu.
 
 Crash Bandicoot: WARPED:
 - New feature: Randomize World Textures
@@ -24,12 +27,15 @@ Crash Bandicoot: WARPED:
 - New feature: Randomize Object Textures
 - New feature: Randomize Streamed Audio
 - New feature: Ranodmize Pants Color
-- Pants color can now be customized in the Mod Menu
+- Pants color can now be customized in the Mod Menu.
 
 Crash Twinsanity:
 - New feature: Classic Health
 - New feature: Classic Explosion Damage
-- Fixed default values for character health
+- Fixed default values for character health.
+
+Crash Tag Team Racing:
+- Randomize Race Laps: Rings of Uranus now randomized between 3 and 12 laps.
 
 1.2.1
 
