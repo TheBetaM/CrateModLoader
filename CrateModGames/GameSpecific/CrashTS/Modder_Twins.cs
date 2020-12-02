@@ -33,12 +33,12 @@ namespace CrateModLoader.GameSpecific.CrashTS
     {
         Textures = 0,
         Materials = 1,
-        Meshes = 2,
-        Models = 3,
-        ArmatureModel = 4,
-        ActorModel = 5,
-        StaticModel = 6,
-        Terrains = 7,
+        Models = 2,
+        RigidModels = 3,
+        Skin = 4,
+        BlendSkin = 5,
+        Meshes = 6,
+        LodModels = 7,
         Skydome = 8,
     }
     public enum RM_Code_Sections
@@ -157,6 +157,10 @@ namespace CrateModLoader.GameSpecific.CrashTS
         public static ModPropOption Option_SwitchCharacters = new ModPropOption(Twins_Text.Mod_SwitchCharacters, Twins_Text.Mod_SwitchCharactersDesc);
         public static ModPropOption Option_ClassicHealth = new ModPropOption(Twins_Text.Mod_ClassicHealth, Twins_Text.Mod_ClassicHealthDesc);
         public static ModPropOption Option_ClassicExplosions = new ModPropOption(Twins_Text.Mod_ClassicExplosionDaamge, Twins_Text.Mod_ClassicExplosionDamageDesc);
+        public static ModPropOption Option_GreyscaleWorld = new ModPropOption("Greyscale World", "") // todo: textures
+        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 }, };
+        public static ModPropOption Option_UntexturedWorld = new ModPropOption("Untextured World", "");
+
         public static ModPropOption Option_ClassicCrates = new ModPropOption(Twins_Text.Mod_ClassicCratePersistence, Twins_Text.Mod_ClassicCratePersistenceDesc) // TODO
         { Hidden = true, };
         public static ModPropOption Option_ClassicBossHealth = new ModPropOption("Classic Boss Health", "Start boss fights with 2 masks.") // TODO
@@ -182,6 +186,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
         internal List<ObjectID> EnemyReplaceList = new List<ObjectID>();
         internal List<ObjectID> EnemyInsertList = new List<ObjectID>();
         internal bool[] levelEdited;
+        internal bool[] sceneryEdited;
         internal bool Edit_AllCharacters = false;
         internal Script StrafeLeft = null;
         internal Script StrafeRight = null;
@@ -227,6 +232,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
 
             bool Twins_Edit_CodeText = true;
             bool Twins_Edit_AllLevels = false;
+            bool Twins_Edit_AllScenery = false;
 
             Edit_AllCharacters = false;
 
@@ -240,6 +246,11 @@ namespace CrateModLoader.GameSpecific.CrashTS
                         Edit_AllCharacters = true;
                     }
                 }
+            }
+
+            if (Option_GreyscaleWorld.Enabled || Option_UntexturedWorld.Enabled)
+            {
+                Twins_Edit_AllScenery = true;
             }
 
             if (Option_RandCrates.Value == 2)
@@ -614,13 +625,13 @@ namespace CrateModLoader.GameSpecific.CrashTS
                                     PositionIDs = new List<ushort>(), //Twins_Data.cachedGameObjects[i].instanceTemplate.PositionIDs,
                                     PositionsNum = Twins_Data.cachedGameObjects[i].instanceTemplate.PositionsNum
                                 },
-                                list_actormodels = Twins_Data.cachedGameObjects[i].list_actormodels,
+                                list_blendskins = Twins_Data.cachedGameObjects[i].list_blendskins,
                                 list_anims = Twins_Data.cachedGameObjects[i].list_anims,
-                                list_armaturemodels = Twins_Data.cachedGameObjects[i].list_armaturemodels,
-                                list_codemodels = Twins_Data.cachedGameObjects[i].list_codemodels,
+                                list_skins = Twins_Data.cachedGameObjects[i].list_skins,
+                                list_scriptpacks = Twins_Data.cachedGameObjects[i].list_scriptpacks,
                                 list_materials = Twins_Data.cachedGameObjects[i].list_materials,
-                                list_meshes = Twins_Data.cachedGameObjects[i].list_meshes,
                                 list_models = Twins_Data.cachedGameObjects[i].list_models,
+                                list_rigidmodels = Twins_Data.cachedGameObjects[i].list_rigidmodels,
                                 list_ogi = Twins_Data.cachedGameObjects[i].list_ogi,
                                 list_scripts = Twins_Data.cachedGameObjects[i].list_scripts,
                                 list_sounds = Twins_Data.cachedGameObjects[i].list_sounds,
@@ -667,6 +678,17 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 Twins_Data.allScripts.Clear();
                 Twins_Data.allObjects.Clear();
                 Twins_Data.cachedGameObjects.Clear();
+            }
+
+            if (Twins_Edit_AllScenery)
+            {
+                sceneryEdited = new bool[140];
+
+                DirectoryInfo di = new DirectoryInfo(bdPath + "/Levels/");
+                foreach (DirectoryInfo dir in di.EnumerateDirectories())
+                {
+                    Recursive_EditScenery(di);
+                }
             }
 
             if (Twins_Edit_CodeText)
@@ -917,6 +939,39 @@ namespace CrateModLoader.GameSpecific.CrashTS
 
         }
 
+        void SM_EditLevel(string path)
+        {
+            string mainPath = System.IO.Path.Combine(ConsolePipeline.ExtractedPath, @"cml_extr\");
+            if (ConsolePipeline.Metadata.Console == ConsoleMode.XBOX)
+            {
+                mainPath = ConsolePipeline.ExtractedPath;
+            }
+            ChunkType chunkType = Twins_Data.SceneryPathToType(path, mainPath, extensionMod);
+            if (chunkType != ChunkType.Invalid)
+            {
+                if (sceneryEdited[(int)chunkType])
+                {
+                    return;
+                }
+                else
+                {
+                    sceneryEdited[(int)chunkType] = true;
+                }
+            }
+
+            //Console.WriteLine(chunkType);
+
+            TwinsFile SM_Archive = new TwinsFile();
+            SM_Archive.LoadFile(path, smType);
+
+            if (Option_GreyscaleWorld.Enabled)
+                Twins_Mods.SM_Mod_GreyscaleWorld(SM_Archive);
+            if (Option_UntexturedWorld.Enabled)
+                Twins_Mods.SM_Mod_UntexturedWorld(SM_Archive);
+
+            SM_Archive.SaveFile(path);
+        }
+
         void Recursive_EditLevels(DirectoryInfo di)
         {
             foreach (DirectoryInfo dir in di.EnumerateDirectories())
@@ -943,6 +998,20 @@ namespace CrateModLoader.GameSpecific.CrashTS
                     }
                 }
                 Recursive_LoadLevels(dir);
+            }
+        }
+        void Recursive_EditScenery(DirectoryInfo di)
+        {
+            foreach (DirectoryInfo dir in di.EnumerateDirectories())
+            {
+                foreach (FileInfo file in dir.EnumerateFiles())
+                {
+                    if (file.Extension.ToLower() == ".sm2" || file.Extension.ToLower() == ".smx")
+                    {
+                        SM_EditLevel(file.FullName);
+                    }
+                }
+                Recursive_EditScenery(dir);
             }
         }
 

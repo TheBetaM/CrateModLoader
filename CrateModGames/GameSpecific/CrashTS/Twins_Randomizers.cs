@@ -44,52 +44,52 @@ namespace CrateModLoader.GameSpecific.CrashTS
 
                                 if (target_item == (int)ObjectID.AMMOCRATESMALL)
                                 {
-                                    instance.UnkI32 = 0x4011E;
+                                    instance.Flags = 0x4011E;
                                     instance.UnkI322 = new List<float>() { 1, 50, 10 };
                                 }
                                 else if (target_item == (int)ObjectID.BASICCRATE)
                                 {
-                                    instance.UnkI32 = 0x811E;
+                                    instance.Flags = 0x811E;
                                 }
                                 else if (target_item == (int)ObjectID.EXTRALIFECRATE || target_item == (int)ObjectID.EXTRALIFECRATECORTEX || target_item == (int)ObjectID.EXTRALIFECRATENINA)
                                 {
-                                    instance.UnkI32 = 0x81DE;
+                                    instance.Flags = 0x81DE;
                                 }
                                 else if (target_item == (int)ObjectID.WOODENSPRINGCRATE)
                                 {
-                                    instance.UnkI32 = 0x811E;
+                                    instance.Flags = 0x811E;
                                 }
                                 else if (target_item == (int)ObjectID.REINFORCEDWOODENCRATE)
                                 {
-                                    instance.UnkI32 = 0xD91E;
+                                    instance.Flags = 0xD91E;
                                 }
                                 else if (target_item == (int)ObjectID.AKUAKUCRATE)
                                 {
-                                    instance.UnkI32 = 0x811E;
+                                    instance.Flags = 0x811E;
                                 }
                                 else if (target_item == (int)ObjectID.IRONCRATE)
                                 {
-                                    instance.UnkI32 = 0x7D1E;
+                                    instance.Flags = 0x7D1E;
                                 }
                                 else if (target_item == (int)ObjectID.IRONSPRINGCRATE)
                                 {
-                                    instance.UnkI32 = 0x7D1E;
+                                    instance.Flags = 0x7D1E;
                                 }
                                 else if (target_item == (int)ObjectID.MULTIPLEHITCRATE)
                                 {
-                                    instance.UnkI32 = 0x811E;
+                                    instance.Flags = 0x811E;
                                 }
                                 else if (target_item == (int)ObjectID.SURPRISECRATE)
                                 {
-                                    instance.UnkI32 = 0x811E;
+                                    instance.Flags = 0x811E;
                                 }
                                 else if (target_item == (int)ObjectID.TNTCRATE)
                                 {
-                                    instance.UnkI32 = 0x811E;
+                                    instance.Flags = 0x811E;
                                 }
                                 else if (target_item == (int)ObjectID.NITROCRATE)
                                 {
-                                    instance.UnkI32 = 0x811E;
+                                    instance.Flags = 0x811E;
                                 }
 
                                 instance.ObjectID = (ushort)target_item;
@@ -195,7 +195,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
                     NewGem.SomeNum2 = 10;
                     NewGem.SomeNum3 = 10;
                     NewGem.AfterOID = uint.MaxValue;
-                    NewGem.UnkI32 = 0x1CE;
+                    NewGem.Flags = 0x1CE;
                     NewGem.UnkI322 = new List<float>() { 1 };
                     NewGem.UnkI323 = new List<uint>() { 0, 255, (uint)Twins_Data.All_Gems[i].type };
 
@@ -303,7 +303,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
                             instance.SomeNum1 = template.InstancesNum;
                             instance.SomeNum2 = template.PathsNum;
                             instance.SomeNum3 = template.PositionsNum;
-                            instance.UnkI32 = template.Properties;
+                            instance.Flags = template.Properties;
                             instance.UnkI321 = template.Flags;
                             instance.UnkI322 = template.FloatVars;
                             instance.UnkI323 = template.IntVars;

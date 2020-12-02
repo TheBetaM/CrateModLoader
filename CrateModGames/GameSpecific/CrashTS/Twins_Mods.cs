@@ -22,14 +22,14 @@ namespace CrateModLoader.GameSpecific.CrashTS
                         Instance instance = (Instance)instances.Records[i];
                         if (instance.ObjectID == (uint)ObjectID.GLOBAL_BAT_DARKPURPLE)
                         {
-                            if (instance.UnkI32 > (uint)PropertyFlags.DisableObject)
+                            if (instance.Flags > (uint)PropertyFlags.DisableObject)
                             {
-                                instance.UnkI32 -= (uint)PropertyFlags.DisableObject;
+                                instance.Flags -= (uint)PropertyFlags.DisableObject;
                             }
                         }
                         else if (instance.ObjectID == (uint)ObjectID.SCHOOL_FROGENSTEIN)
                         {
-                            instance.UnkI32 = 0x188B2E;
+                            instance.Flags = 0x188B2E;
                         }
                         instances.Records[i] = instance;
                     }
@@ -373,6 +373,73 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 }
             }
 
+        }
+
+        public static void SM_Mod_GreyscaleWorld(TwinsFile SM_Archive)
+        {
+            if (SM_Archive.Type != TwinsFile.FileType.SM2) return;
+            if (!SM_Archive.ContainsItem(6)) return;
+            TwinsSection section = SM_Archive.GetItem<TwinsSection>(6);
+            if (section.ContainsItem((uint)RM_Graphics_Sections.Models) && section.Records.Count > 0)
+            {
+                TwinsSection model_section = section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.Models);
+
+                foreach (TwinsItem item in model_section.Records)
+                {
+                    Model model = (Model)item;
+                    for (int i = 0; i < model.SubModels.Count; i++)
+                    {
+                        for (int g = 0; g < model.SubModels[i].Groups.Count; g++)
+                        {
+                            for (int v = 0; v < model.SubModels[i].Groups[g].VData.Length; v++)
+                            {
+                                int maxVal = Math.Max(model.SubModels[i].Groups[g].VData[v].R, model.SubModels[i].Groups[g].VData[v].G);
+                                maxVal = Math.Max(maxVal, model.SubModels[i].Groups[g].VData[v].B);
+                                model.SubModels[i].Groups[g].VData[v].R = (byte)maxVal;
+                                model.SubModels[i].Groups[g].VData[v].G = (byte)maxVal;
+                                model.SubModels[i].Groups[g].VData[v].B = (byte)maxVal;
+                            }
+                        }
+                    }
+                }
+
+            }
+            if (section.ContainsItem((uint)RM_Graphics_Sections.Textures) && section.Records.Count > 0)
+            {
+                //todo
+                TwinsSection tex_section = section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.Textures);
+
+                foreach (TwinsItem item in tex_section.Records)
+                {
+                    Texture tex = (Texture)item;
+                    for (int i = 0; i < tex.RawData.Length; i++)
+                    {
+                        //tex.RawData[i] = new System.Drawing.Color();
+                    }
+                }
+
+            }
+        }
+
+        public static void SM_Mod_UntexturedWorld(TwinsFile SM_Archive)
+        {
+            if (!SM_Archive.ContainsItem(6)) return;
+            TwinsSection section = SM_Archive.GetItem<TwinsSection>(6);
+            if (section.ContainsItem((uint)RM_Graphics_Sections.Materials) && section.Records.Count > 0)
+            {
+                TwinsSection mat_section = section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.Materials);
+
+                foreach (TwinsItem item in mat_section.Records)
+                {
+                    Material mat = (Material)item;
+                    for (int i = 0; i < mat.Shaders.Count; i++)
+                    {
+                        mat.Shaders[i].TextureId = 0;
+                        mat.Shaders[i].TxtMapping = TwinsShader.TextureMapping.OFF;
+                    }
+                }
+
+            }
         }
 
     }

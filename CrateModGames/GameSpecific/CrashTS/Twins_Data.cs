@@ -1197,6 +1197,32 @@ namespace CrateModLoader.GameSpecific.CrashTS
 
             return type;
         }
+        public static ChunkType SceneryPathToType(string path, string bdpath, string extension)
+        {
+            ChunkType type = ChunkType.Invalid;
+
+            for (int i = 0; i < All_Chunks.Count; i++)
+            {
+                string comparePath = bdpath.ToLower() + @"levels\" + All_Chunks[i].Path.ToLower() + ".sm" + extension;
+                if (comparePath == path.ToLower())
+                {
+                    type = All_Chunks[i].Chunk;
+                    break;
+                }
+            }
+
+            if (type == ChunkType.Invalid)
+            {
+                string comparePath1 = bdpath.ToLower() + @"levels\" + All_Chunks[0].Path.ToLower() + ".sm" + extension;
+                Console.WriteLine("invalid Chunk");
+                Console.WriteLine("bd path: " + bdpath.ToLower());
+                Console.WriteLine("any chunk path: " + All_Chunks[0].Path.ToLower());
+                Console.WriteLine("file path: " + path.ToLower());
+                Console.WriteLine("compare path: " + comparePath1);
+            }
+
+            return type;
+        }
 
         public static List<CachedGameObject> cachedGameObjects = new List<CachedGameObject>();
 
@@ -1222,10 +1248,10 @@ namespace CrateModLoader.GameSpecific.CrashTS
             TwinsSection gfx_section = RM_Archive.GetItem<TwinsSection>((uint)RM_Sections.Graphics);
             TwinsSection tex_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.Textures);
             TwinsSection mat_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.Materials);
-            TwinsSection mesh_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.Meshes);
-            TwinsSection mdl_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.Models);
-            TwinsSection armdl_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.ArmatureModel);
-            TwinsSection acmdl_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.ActorModel);
+            TwinsSection mesh_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.Models);
+            TwinsSection mdl_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.RigidModels);
+            TwinsSection armdl_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.Skin);
+            TwinsSection acmdl_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.BlendSkin);
 
             TwinsSection code_section = RM_Archive.GetItem<TwinsSection>((uint)RM_Sections.Code);
             TwinsSection anim_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.Animation);
@@ -1329,11 +1355,11 @@ namespace CrateModLoader.GameSpecific.CrashTS
             {
                 if (export_comdl.Contains((ushort)comdl_section.Records[i].ID))
                 {
-                    if (gameObject.list_codemodels == null)
+                    if (gameObject.list_scriptpacks == null)
                     {
-                        gameObject.list_codemodels = new List<TwinsItem>();
+                        gameObject.list_scriptpacks = new List<TwinsItem>();
                     }
-                    gameObject.list_codemodels.Add(comdl_section.Records[i]);
+                    gameObject.list_scriptpacks.Add(comdl_section.Records[i]);
                 }
             }
 
@@ -1452,11 +1478,11 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 {
                     if (export_mdl.Contains(mdl_section.Records[i].ID))
                     {
-                        if (gameObject.list_models == null)
+                        if (gameObject.list_rigidmodels == null)
                         {
-                            gameObject.list_models = new List<TwinsItem>();
+                            gameObject.list_rigidmodels = new List<TwinsItem>();
                         }
-                        gameObject.list_models.Add(mdl_section.Records[i]);
+                        gameObject.list_rigidmodels.Add(mdl_section.Records[i]);
                     }
                 }
             }
@@ -1466,11 +1492,11 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 {
                     if (export_armdl.Contains(armdl_section.Records[i].ID))
                     {
-                        if (gameObject.list_armaturemodels == null)
+                        if (gameObject.list_skins == null)
                         {
-                            gameObject.list_armaturemodels = new List<TwinsItem>();
+                            gameObject.list_skins = new List<TwinsItem>();
                         }
-                        gameObject.list_armaturemodels.Add(armdl_section.Records[i]);
+                        gameObject.list_skins.Add(armdl_section.Records[i]);
                     }
                 }
             }
@@ -1480,22 +1506,22 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 {
                     if (export_acmdl.Contains(acmdl_section.Records[i].ID))
                     {
-                        if (gameObject.list_actormodels == null)
+                        if (gameObject.list_blendskins == null)
                         {
-                            gameObject.list_actormodels = new List<TwinsItem>();
+                            gameObject.list_blendskins = new List<TwinsItem>();
                         }
-                        gameObject.list_actormodels.Add(acmdl_section.Records[i]);
+                        gameObject.list_blendskins.Add(acmdl_section.Records[i]);
                     }
                 }
             }
 
             List<uint> export_mat = new List<uint>();
             List<uint> export_mesh = new List<uint>();
-            if (gameObject.list_models != null)
+            if (gameObject.list_rigidmodels != null)
             {
-                for (int mdl = 0; mdl < gameObject.list_models.Count; mdl++)
+                for (int mdl = 0; mdl < gameObject.list_rigidmodels.Count; mdl++)
                 {
-                    Model This_MDL = (Model)gameObject.list_models[mdl];
+                    RigidModel This_MDL = (RigidModel)gameObject.list_rigidmodels[mdl];
                     export_mesh.Add(This_MDL.MeshID);
                     for (int i = 0; i < This_MDL.MaterialIDs.Length; i++)
                     {
@@ -1503,13 +1529,13 @@ namespace CrateModLoader.GameSpecific.CrashTS
                     }
                 }
             }
-            if (gameObject.list_armaturemodels != null)
+            if (gameObject.list_skins != null)
             {
                 if (RM_Archive.Type == TwinsFile.FileType.RM2)
                 {
-                    for (int mdl = 0; mdl < gameObject.list_armaturemodels.Count; mdl++)
+                    for (int mdl = 0; mdl < gameObject.list_skins.Count; mdl++)
                     {
-                        ArmatureModel ARM_MDL = (ArmatureModel)gameObject.list_armaturemodels[mdl];
+                        Skin ARM_MDL = (Skin)gameObject.list_skins[mdl];
                         for (int i = 0; i < ARM_MDL.MaterialIDs.Length; i++)
                         {
                             export_mat.Add(ARM_MDL.MaterialIDs[i]);
@@ -1518,9 +1544,9 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 }
                 else if (RM_Archive.Type == TwinsFile.FileType.RMX)
                 {
-                    for (int mdl = 0; mdl < gameObject.list_armaturemodels.Count; mdl++)
+                    for (int mdl = 0; mdl < gameObject.list_skins.Count; mdl++)
                     {
-                        ArmatureModelX ARM_MDL = (ArmatureModelX)gameObject.list_armaturemodels[mdl];
+                        SkinX ARM_MDL = (SkinX)gameObject.list_skins[mdl];
                         for (int i = 0; i < ARM_MDL.MaterialIDs.Length; i++)
                         {
                             export_mat.Add(ARM_MDL.MaterialIDs[i]);
@@ -1534,11 +1560,11 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 {
                     if (export_mesh.Contains(mesh_section.Records[i].ID))
                     {
-                        if (gameObject.list_meshes == null)
+                        if (gameObject.list_models == null)
                         {
-                            gameObject.list_meshes = new List<TwinsItem>();
+                            gameObject.list_models = new List<TwinsItem>();
                         }
-                        gameObject.list_meshes.Add(mesh_section.Records[i]);
+                        gameObject.list_models.Add(mesh_section.Records[i]);
                     }
                 }
             }
@@ -1563,7 +1589,13 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 for (int mat = 0; mat < gameObject.list_materials.Count; mat++)
                 {
                     Material This_MAT = (Material)gameObject.list_materials[mat];
-                    export_tex.Add(This_MAT.Tex);
+                    for (int sh = 0; sh < This_MAT.Shaders.Count; sh++)
+                    {
+                        if (This_MAT.Shaders[sh].TextureId != 0)
+                        {
+                            export_tex.Add(This_MAT.Shaders[sh].TextureId);
+                        }
+                    }
                 }
             }
             if (export_tex.Count > 0)
@@ -1601,7 +1633,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
                                 gameObject.instanceTemplate = new InstanceTemplate()
                                 {
                                     ObjectID = instance.ObjectID,
-                                    Properties = instance.UnkI32,
+                                    Properties = instance.Flags,
                                     Flags = instance.UnkI321,
                                     FloatVars = instance.UnkI322,
                                     IntVars = instance.UnkI323,
@@ -1645,7 +1677,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
                                 gameObject.instanceTemplate = new InstanceTemplate()
                                 {
                                     ObjectID = instance.ObjectID,
-                                    Properties = instance.UnkI32,
+                                    Properties = instance.Flags,
                                     Flags = instance.UnkI321,
                                     FloatVars = instance.UnkI322,
                                     IntVars = instance.UnkI323,
@@ -1740,10 +1772,10 @@ namespace CrateModLoader.GameSpecific.CrashTS
             TwinsSection gfx_section = RM_Archive.GetItem<TwinsSection>((uint)RM_Sections.Graphics);
             TwinsSection tex_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.Textures);
             TwinsSection mat_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.Materials);
-            TwinsSection mesh_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.Meshes);
-            TwinsSection mdl_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.Models);
-            TwinsSection armdl_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.ArmatureModel);
-            TwinsSection acmdl_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.ActorModel);
+            TwinsSection mesh_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.Models);
+            TwinsSection mdl_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.RigidModels);
+            TwinsSection armdl_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.Skin);
+            TwinsSection acmdl_section = gfx_section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.BlendSkin);
 
             TwinsSection code_section = RM_Archive.GetItem<TwinsSection>((uint)RM_Sections.Code);
             TwinsSection anim_section = code_section.GetItem<TwinsSection>((uint)RM_Code_Sections.Animation);
@@ -1784,43 +1816,43 @@ namespace CrateModLoader.GameSpecific.CrashTS
                     }
                 }
             }
-            if (cachedGameObjects[targetObject].list_meshes != null && cachedGameObjects[targetObject].list_meshes.Count > 0)
-            {
-                for (int i = 0; i < cachedGameObjects[targetObject].list_meshes.Count; i++)
-                {
-                    if (!SectionContainsItemID(ref mesh_section.Records, cachedGameObjects[targetObject].list_meshes[i].ID))
-                    {
-                        mesh_section.Records.Add(cachedGameObjects[targetObject].list_meshes[i]);
-                    }
-                }
-            }
             if (cachedGameObjects[targetObject].list_models != null && cachedGameObjects[targetObject].list_models.Count > 0)
             {
                 for (int i = 0; i < cachedGameObjects[targetObject].list_models.Count; i++)
                 {
-                    if (!SectionContainsItemID(ref mdl_section.Records, cachedGameObjects[targetObject].list_models[i].ID))
+                    if (!SectionContainsItemID(ref mesh_section.Records, cachedGameObjects[targetObject].list_models[i].ID))
                     {
-                        mdl_section.Records.Add(cachedGameObjects[targetObject].list_models[i]);
+                        mesh_section.Records.Add(cachedGameObjects[targetObject].list_models[i]);
                     }
                 }
             }
-            if (cachedGameObjects[targetObject].list_armaturemodels != null && cachedGameObjects[targetObject].list_armaturemodels.Count > 0)
+            if (cachedGameObjects[targetObject].list_rigidmodels != null && cachedGameObjects[targetObject].list_rigidmodels.Count > 0)
             {
-                for (int i = 0; i < cachedGameObjects[targetObject].list_armaturemodels.Count; i++)
+                for (int i = 0; i < cachedGameObjects[targetObject].list_rigidmodels.Count; i++)
                 {
-                    if (!SectionContainsItemID(ref armdl_section.Records, cachedGameObjects[targetObject].list_armaturemodels[i].ID))
+                    if (!SectionContainsItemID(ref mdl_section.Records, cachedGameObjects[targetObject].list_rigidmodels[i].ID))
                     {
-                        armdl_section.Records.Add(cachedGameObjects[targetObject].list_armaturemodels[i]);
+                        mdl_section.Records.Add(cachedGameObjects[targetObject].list_rigidmodels[i]);
                     }
                 }
             }
-            if (cachedGameObjects[targetObject].list_actormodels != null && cachedGameObjects[targetObject].list_actormodels.Count > 0)
+            if (cachedGameObjects[targetObject].list_skins != null && cachedGameObjects[targetObject].list_skins.Count > 0)
             {
-                for (int i = 0; i < cachedGameObjects[targetObject].list_actormodels.Count; i++)
+                for (int i = 0; i < cachedGameObjects[targetObject].list_skins.Count; i++)
                 {
-                    if (!SectionContainsItemID(ref acmdl_section.Records, cachedGameObjects[targetObject].list_actormodels[i].ID))
+                    if (!SectionContainsItemID(ref armdl_section.Records, cachedGameObjects[targetObject].list_skins[i].ID))
                     {
-                        acmdl_section.Records.Add(cachedGameObjects[targetObject].list_actormodels[i]);
+                        armdl_section.Records.Add(cachedGameObjects[targetObject].list_skins[i]);
+                    }
+                }
+            }
+            if (cachedGameObjects[targetObject].list_blendskins != null && cachedGameObjects[targetObject].list_blendskins.Count > 0)
+            {
+                for (int i = 0; i < cachedGameObjects[targetObject].list_blendskins.Count; i++)
+                {
+                    if (!SectionContainsItemID(ref acmdl_section.Records, cachedGameObjects[targetObject].list_blendskins[i].ID))
+                    {
+                        acmdl_section.Records.Add(cachedGameObjects[targetObject].list_blendskins[i]);
                     }
                 }
             }
@@ -1854,13 +1886,13 @@ namespace CrateModLoader.GameSpecific.CrashTS
                     }
                 }
             }
-            if (cachedGameObjects[targetObject].list_codemodels != null && cachedGameObjects[targetObject].list_codemodels.Count > 0)
+            if (cachedGameObjects[targetObject].list_scriptpacks != null && cachedGameObjects[targetObject].list_scriptpacks.Count > 0)
             {
-                for (int i = 0; i < cachedGameObjects[targetObject].list_codemodels.Count; i++)
+                for (int i = 0; i < cachedGameObjects[targetObject].list_scriptpacks.Count; i++)
                 {
-                    if (!SectionContainsItemID(ref comdl_section.Records, cachedGameObjects[targetObject].list_codemodels[i].ID))
+                    if (!SectionContainsItemID(ref comdl_section.Records, cachedGameObjects[targetObject].list_scriptpacks[i].ID))
                     {
-                        comdl_section.Records.Add(cachedGameObjects[targetObject].list_codemodels[i]);
+                        comdl_section.Records.Add(cachedGameObjects[targetObject].list_scriptpacks[i]);
                     }
                 }
             }
@@ -2006,12 +2038,12 @@ namespace CrateModLoader.GameSpecific.CrashTS
     {
         public GameObject mainObject;
         public List<TwinsItem> list_anims;
-        public List<TwinsItem> list_models;
-        public List<TwinsItem> list_armaturemodels;
-        public List<TwinsItem> list_codemodels;
-        public List<TwinsItem> list_actormodels;
+        public List<TwinsItem> list_rigidmodels;
+        public List<TwinsItem> list_skins;
+        public List<TwinsItem> list_scriptpacks;
+        public List<TwinsItem> list_blendskins;
         public List<TwinsItem> list_materials;
-        public List<TwinsItem> list_meshes;
+        public List<TwinsItem> list_models;
         public List<TwinsItem> list_ogi;
         public List<TwinsItem> list_scripts;
         public List<TwinsItem> list_sounds;
