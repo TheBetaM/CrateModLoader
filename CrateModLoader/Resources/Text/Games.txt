@@ -122,7 +122,7 @@ Features:
 - Version and seed visible in the Pause screen in the Warp Room (English only)  
   
 Crash Team Racing
-Supported: NTSC-U and NTSC-J PS1 versions (.BIN/.ISO formats)  
+Supported: All PS1 versions (.BIN/.ISO formats)  
 Mod abbreviation: CrashTR  
 Mod layers: 1 - BIGFILE.BIG contents
 API by DCxDemo. (https://github.com/DCxDemo/CTR-tools)  

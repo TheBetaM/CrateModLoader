@@ -573,7 +573,7 @@ namespace CrateModLoader
             {
                 foreach (var prop in ModProgram.Modder.Props)
                 {
-                    if (prop is ModPropOption option && option.Allowed(ModProgram.Pipeline.Metadata.Console, ModProgram.Modder.GameRegion.Region))
+                    if (prop is ModPropOption option && option.Allowed(ModProgram.Pipeline.Metadata.Console, ModProgram.Modder.GameRegion.Region) && !option.ModMenuOnly)
                     {
                         checkedListBox1.Items.Add(option, option.Value != 0);
                     }

@@ -244,23 +244,27 @@ namespace CrateModLoader.GameSpecific.CrashTS
 
         public static void Twins_Randomize_Character(int charID, ref Random randState)
         {
+            if (charID == (int)CharacterID.Mechabandicoot)
+            {
+                return;
+            }
 
             CharInts_SpawnHealth.Value[charID] = (uint)randState.Next(1, 4);
-            CharFloats_AirGravity.Value[charID] = randState.Next(40, 60);
+            //CharFloats_AirGravity.Value[charID] = randState.Next(40, 60);
             CharFloats_WalkSpeed.Value[charID] = randState.Next(20, 60) / 10f;
             CharFloats_RunSpeed.Value[charID] = randState.Next(7, 14);
             CharFloats_SpinThrowForwardForce.Value[charID] = randState.Next(7, 15);
             CharFloats_SpinLength.Value[charID] = randState.Next(25, 100) / 100f;
             CharFloats_SpinDelay.Value[charID] = randState.Next(10, 20) / 100f;
-            CharFloats_JumpAirSpeed.Value[charID] = randState.Next(6, 10);
-            CharFloats_JumpHeight.Value[charID] = randState.Next(13, 18);
+            //CharFloats_JumpAirSpeed.Value[charID] = randState.Next(6, 10);
+            //CharFloats_JumpHeight.Value[charID] = randState.Next(13, 18);
             CharFloats_CrawlSpeed.Value[charID] = randState.Next(125, 400) / 100f;
             CharFloats_SlideSpeed.Value[charID] = randState.Next(10, 24);
 
             if (charID == (int)CharacterID.Crash)
             {
-                CharFloats_DoubleJumpHeight.Value[charID] = CharFloats_JumpHeight.Value[charID] + randState.Next(1, 5);
-                CharFloats_SlideJumpUnk24.Value[charID] = randState.Next(9, 16);
+                //CharFloats_DoubleJumpHeight.Value[charID] = CharFloats_JumpHeight.Value[charID] + randState.Next(1, 5);
+                //CharFloats_SlideJumpUnk24.Value[charID] = randState.Next(9, 16);
                 CharFloats_BodyslamHangTime.Value[charID] = randState.Next(20, 60) / 100f;
             }
             else if (charID == (int)CharacterID.Cortex)

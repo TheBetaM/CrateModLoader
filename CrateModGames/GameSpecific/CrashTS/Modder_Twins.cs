@@ -143,12 +143,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 "", "Individual crates are randomized.", "Only crate types are switched around.", },
         };
         public static ModPropOption Option_RandGemLocations = new ModPropOption(Twins_Text.Rand_GemLocations, Twins_Text.Rand_GemLocationsDesc);
-        public static ModPropOption Option_RandEnemies = new ModPropOption("Randomize Enemies (Soundless)", "") // not stable enough
-        { Hidden = true, };
-        public static ModPropOption Option_RandomizeMusic = new ModPropOption(Twins_Text.Rand_Music, Twins_Text.Rand_MusicDesc);
         public static ModPropOption Option_RandCharacterParams = new ModPropOption(Twins_Text.Rand_CharParams, Twins_Text.Rand_CharParamsDesc);
-        public static ModPropOption Option_RandStartingChunk = new ModPropOption("Randomize Starting Chunk", "") // TODO
-        { Hidden = true, };
         public static ModPropOption Option_FlyingKick = new ModPropOption(Twins_Text.Mod_FlyingKick, Twins_Text.Mod_FlyingKickDesc);
         public static ModPropOption Option_StompKick = new ModPropOption(Twins_Text.Mod_StompKick, Twins_Text.Mod_StompKickDesc);
         public static ModPropOption Option_DoubleJumpCortex = new ModPropOption(Twins_Text.Mod_CortexDoubleJump, Twins_Text.Mod_CortexDoubleJumpDesc);
@@ -157,10 +152,20 @@ namespace CrateModLoader.GameSpecific.CrashTS
         public static ModPropOption Option_SwitchCharacters = new ModPropOption(Twins_Text.Mod_SwitchCharacters, Twins_Text.Mod_SwitchCharactersDesc);
         public static ModPropOption Option_ClassicHealth = new ModPropOption(Twins_Text.Mod_ClassicHealth, Twins_Text.Mod_ClassicHealthDesc);
         public static ModPropOption Option_ClassicExplosions = new ModPropOption(Twins_Text.Mod_ClassicExplosionDaamge, Twins_Text.Mod_ClassicExplosionDamageDesc);
+
+        public static ModPropOption Option_RandomizeMusic = new ModPropOption(Twins_Text.Rand_Music, Twins_Text.Rand_MusicDesc);
         public static ModPropOption Option_GreyscaleWorld = new ModPropOption("Greyscale World", "") // todo: textures
         { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 }, };
         public static ModPropOption Option_UntexturedWorld = new ModPropOption("Untextured World", "");
 
+        public static ModPropOption Option_RandWorldPalette = new ModPropOption("Randomize World Palette", "") // TODO
+        { Hidden = true, };
+        public static ModPropOption Option_MirroredWorld = new ModPropOption("Mirrored World", "") // TODO
+        { Hidden = true, };
+        public static ModPropOption Option_RandEnemies = new ModPropOption("Randomize Enemies (Soundless)", "") // not stable enough
+        { Hidden = true, };
+        public static ModPropOption Option_RandStartingChunk = new ModPropOption("Randomize Starting Chunk", "") // TODO
+        { Hidden = true, };
         public static ModPropOption Option_ClassicCrates = new ModPropOption(Twins_Text.Mod_ClassicCratePersistence, Twins_Text.Mod_ClassicCratePersistenceDesc) // TODO
         { Hidden = true, };
         public static ModPropOption Option_ClassicBossHealth = new ModPropOption("Classic Boss Health", "Start boss fights with 2 masks.") // TODO

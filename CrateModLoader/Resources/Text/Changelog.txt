@@ -13,8 +13,11 @@ Crash Twinsanity:
 - Mod Menu+ enabled (PS2)
 - New feature: Classic Health
 - New feature: Classic Explosion Damage
+- New feature: Untextured World
+- New feature: Greyscale World (PS2)
 - Mod Menu: More understandable names and descriptions
 - Fixed default values for character health.
+- Randomize Character Parameters: No longer changes jump parameteres.
 
 Crash Tag Team Racing:
 - Randomize Race Laps: Rings of Uranus now randomized between 3 and 12 laps.
