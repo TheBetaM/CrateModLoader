@@ -214,7 +214,7 @@ namespace CrateModGames.GameSpecific.Crash3 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Any supported level has a random chance of being backwards..
+        ///   Looks up a localized string similar to Any supported level has a random chance of being backwards. The game is NOT 105% completable..
         /// </summary>
         internal static string Rand_BackwardsLevelsDesc {
             get {
@@ -277,7 +277,7 @@ namespace CrateModGames.GameSpecific.Crash3 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Randomize Flying Levels.
+        ///   Looks up a localized string similar to Randomize Biplane Levels.
         /// </summary>
         internal static string Rand_FlyingLevels {
             get {
@@ -286,7 +286,7 @@ namespace CrateModGames.GameSpecific.Crash3 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Levels featuring flying (17, 24, 28) have randomized paths, spawns and other factors..
+        ///   Looks up a localized string similar to Levels featuring the biplane (17, 24, 28) have randomized paths, spawns and other factors..
         /// </summary>
         internal static string Rand_FlyingLevelsDesc {
             get {

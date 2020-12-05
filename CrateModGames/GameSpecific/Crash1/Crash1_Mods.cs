@@ -192,6 +192,83 @@ namespace CrateModLoader.GameSpecific.Crash1
 
         }
 
+        public static void Mod_RandomCrates(NSF nsf, Random rand, Crash1_Levels level)
+        {
+            List<CrateSubTypes> AvailableTypes = new List<CrateSubTypes>();
+
+            List<CrateSubTypes> PossibleList = new List<CrateSubTypes>()
+            {
+                CrateSubTypes.Aku,
+                CrateSubTypes.Blank,
+                CrateSubTypes.Blank2,
+                CrateSubTypes.Fruit,
+                CrateSubTypes.Life,
+                CrateSubTypes.Pickup,
+                //CrateSubTypes.Pow,
+                //CrateSubTypes.TNT, // walls of TNT...
+                CrateSubTypes.WoodSpring,
+            };
+
+            foreach (Chunk chunk in nsf.Chunks)
+            {
+                if (chunk is NormalChunk zonechunk)
+                {
+                    foreach (Entry entry in zonechunk.Entries)
+                    {
+                        if (entry is OldZoneEntry)
+                        {
+                            OldZoneEntry zone = (OldZoneEntry)entry;
+                            foreach (OldEntity ent in zone.Entities)
+                            {
+                                if (ent.Type == 34 && PossibleList.Contains((CrateSubTypes)ent.Subtype))
+                                {
+                                    if (!AvailableTypes.Contains((CrateSubTypes)ent.Subtype))
+                                    {
+                                        AvailableTypes.Add((CrateSubTypes)ent.Subtype);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            foreach (Chunk chunk in nsf.Chunks)
+            {
+                if (chunk is NormalChunk zonechunk)
+                {
+                    foreach (Entry entry in zonechunk.Entries)
+                    {
+                        if (entry is OldZoneEntry)
+                        {
+                            OldZoneEntry zone = (OldZoneEntry)entry;
+                            foreach (OldEntity ent in zone.Entities)
+                            {
+                                if (ent.Type == 34 && PossibleList.Contains((CrateSubTypes)ent.Subtype))
+                                {
+                                    if (level == Crash1_Levels.L22_LightsOut || level == Crash1_Levels.L23_FumblingInTheDark)
+                                    {
+                                        if (ent.Subtype != (byte)CrateSubTypes.Aku && ent.ModeA != (short)CrateContentTypes.Mask)
+                                        {
+                                            ent.Subtype = (byte)AvailableTypes[rand.Next(AvailableTypes.Count)];
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (ent.ModeA != (short)CrateContentTypes.Token_Brio && ent.ModeA != (short)CrateContentTypes.Token_Cortex && ent.ModeA != (short)CrateContentTypes.Token_Tawna)
+                                        {
+                                            ent.Subtype = (byte)AvailableTypes[rand.Next(AvailableTypes.Count)];
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+
         public static void Mod_TurnCratesIntoWumpa(NSF nsf, Random rand, Crash1_Levels level)
         {
             // edit NSF
@@ -2405,13 +2482,15 @@ namespace CrateModLoader.GameSpecific.Crash1
 
         }
 
-        public static void Mod_RandomizeMap(NSF nsf, NSD nsd, Crash1_Levels level, Random rand)
+        public static void Mod_RandomizeMap(NSF nsf, OldNSD nsd, Crash1_Levels level, Random rand)
         {
             if (level != Crash1_Levels.MapMainMenu)
             {
                 return;
             }
 
+
+            // if there's a way to switch to the beta map at some point...
             List<int> LevelsToReplace = new List<int>();
             for (int i = 0; i < 35; i++)
             {
@@ -2432,23 +2511,24 @@ namespace CrateModLoader.GameSpecific.Crash1
                 {
                     foreach (Entry entry in zonechunk.Entries)
                     {
-                        if (entry is MapEntry zone)
+                        if (entry is MapEntry mapzone)
                         {
-                            if (zone.EName == "3MapP" || zone.EName == "2MapP" || zone.EName == "1MapP")
+                            if (mapzone.EName == "3MapP" || mapzone.EName == "2MapP" || mapzone.EName == "1MapP")
                             {
-                                for (int i = 0; i < zone.Entities.Count; i++)
+                                for (int i = 0; i < mapzone.Entities.Count; i++)
                                 {
-                                    if (zone.Entities[i].Type == 44)
+                                    if (mapzone.Entities[i].Type == 44)
                                     {
 
                                     }
                                 }
                             }
-                            
                         }
                     }
                 }
             }
+
+
 
         }
 

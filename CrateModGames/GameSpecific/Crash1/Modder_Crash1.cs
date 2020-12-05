@@ -48,8 +48,8 @@ namespace CrateModLoader.GameSpecific.Crash1
             },
         };
 
-        
 
+        public static ModPropOption Option_RandCrates = new ModPropOption(Crash1_Text.Rand_Crates, Crash1_Text.Rand_CratesDesc);
         public static ModPropOption Option_BackwardsLevels = new ModPropOption(Crash1_Text.Mod_BackwardsLevels, Crash1_Text.Mod_BackwardsLevelsDesc);
         public static ModPropOption Option_RandBackwardsLevels = new ModPropOption(Crash1_Text.Rand_BackwardsLevels, Crash1_Text.Rand_BackwardsLevelsDesc);
         public static ModPropOption Option_BackwardsHogLevels = new ModPropOption(Crash1_Text.Mod_BackwardsHogLevels, Crash1_Text.Mod_BackwardsHogLevelsDesc);
@@ -167,18 +167,20 @@ namespace CrateModLoader.GameSpecific.Crash1
                 else
                 {
                     if (Option_AllCratesWumpa.Enabled) Crash1_Mods.Mod_TurnCratesIntoWumpa(nsf, rand, NSF_Level);
+                    if (Option_RandCrates.Enabled) Crash1_Mods.Mod_RandomCrates(nsf, rand, NSF_Level);
                     if (Option_BackwardsLevels.Enabled || Option_RandBackwardsLevels.Enabled) Crash1_Mods.Mod_BackwardsLevels(nsf, nsd, NSF_Level, Option_RandBackwardsLevels.Enabled, rand);
                     if (Option_BackwardsHogLevels.Enabled) Crash1_Mods.Mod_HogLevelsBackwards(nsf, nsd, NSF_Level);
                     if (Option_CameraBigFOV.Enabled || Option_RandCameraFOV.Enabled) Crash1_Mods.Mod_CameraFOV(nsf, rand, Option_RandCameraFOV.Enabled);
-                    if (Option_RandSounds.Enabled) CrashTri_Common.Mod_RandomizeADIO(nsf, rand);
                     if (Option_AllCratesBlank.Enabled) Crash1_Mods.Mod_RandomWoodCrates(nsf, rand, NSF_Level);
                     if (Option_RandCrateContents.Enabled) Crash1_Mods.Mod_RandomCrateContents(nsf, rand, NSF_Level);
                     if (Option_RandBosses.Enabled) Crash1_Mods.Mod_RandomizeBosses(nsf, nsd, NSF_Level, rand, false);
+                    if (Option_RandMap.Enabled) Crash1_Mods.Mod_RandomizeMap(nsf, nsd, NSF_Level, rand);
                     if (Option_RandWorldPalette.Enabled) CrashTri_Common.Mod_Scenery_Swizzle(nsf, rand);
                     if (Option_GreyscaleWorld.Enabled) CrashTri_Common.Mod_Scenery_Greyscale(nsf);
                     if (Option_RandWorldColors.Enabled) CrashTri_Common.Mod_Scenery_Rainbow(nsf, rand);
                     if (Option_UntexturedWorld.Enabled) CrashTri_Common.Mod_Scenery_Untextured(nsf);
                     if (Option_RandPantsColor.Enabled || Prop_PantsColor.HasChanged) Crash1_Mods.Mod_PantsColor(nsf, PantsColor);
+                    if (Option_RandSounds.Enabled) CrashTri_Common.Mod_RandomizeADIO(nsf, rand);
 
                     Crash1_Mods.Mod_Metadata(nsf, nsd, NSF_Level, GameRegion.Region);
                 }

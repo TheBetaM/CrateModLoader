@@ -169,7 +169,7 @@
     <value>Random Levels Are Backwards</value>
   </data>
   <data name="Rand_BackwardsLevelsDesc" xml:space="preserve">
-    <value>Any supported level has a random chance of being backwards.</value>
+    <value>Any supported level has a random chance of being backwards. The game is NOT 105% completable.</value>
   </data>
   <data name="Rand_CameraFOV" xml:space="preserve">
     <value>Randomize Camera Field-Of-View</value>
@@ -190,10 +190,10 @@
     <value>Randomize the number of required crates to break to get a gem in each level. Breaking more crates than required will not grant a gem.</value>
   </data>
   <data name="Rand_FlyingLevels" xml:space="preserve">
-    <value>Randomize Flying Levels</value>
+    <value>Randomize Biplane Levels</value>
   </data>
   <data name="Rand_FlyingLevelsDesc" xml:space="preserve">
-    <value>Levels featuring flying (17, 24, 28) have randomized paths, spawns and other factors.</value>
+    <value>Levels featuring the biplane (17, 24, 28) have randomized paths, spawns and other factors.</value>
   </data>
   <data name="Rand_ObjCol" xml:space="preserve">
     <value>Randomize Object Colors</value>

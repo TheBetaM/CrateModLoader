@@ -241,6 +241,24 @@ namespace CrateModGames.GameSpecific.Crash1 {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Randomize Wooden Crates.
+        /// </summary>
+        internal static string Rand_Crates {
+            get {
+                return ResourceManager.GetString("Rand_Crates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Randomizes wooden crate types from available ones in each level..
+        /// </summary>
+        internal static string Rand_CratesDesc {
+            get {
+                return ResourceManager.GetString("Rand_CratesDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Randomize Sound Effects.
         /// </summary>
         internal static string Rand_SFX {

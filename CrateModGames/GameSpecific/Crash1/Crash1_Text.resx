@@ -177,6 +177,12 @@
   <data name="Rand_CrateContentsDesc" xml:space="preserve">
     <value>Contents of regular crates are randomized between different amounts of Wumpa, an extra life, and a mask.</value>
   </data>
+  <data name="Rand_Crates" xml:space="preserve">
+    <value>Randomize Wooden Crates</value>
+  </data>
+  <data name="Rand_CratesDesc" xml:space="preserve">
+    <value>Randomizes wooden crate types from available ones in each level.</value>
+  </data>
   <data name="Rand_SFX" xml:space="preserve">
     <value>Randomize Sound Effects</value>
   </data>
