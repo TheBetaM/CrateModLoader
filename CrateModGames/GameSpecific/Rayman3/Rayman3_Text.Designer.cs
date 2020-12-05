@@ -106,6 +106,42 @@ namespace CrateModGames.GameSpecific.Rayman3 {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Randomize Copter Colors.
+        /// </summary>
+        internal static string Rand_CopterColors {
+            get {
+                return ResourceManager.GetString("Rand_CopterColors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Randomizes the colors of Rayman&apos;s gliding copter ears..
+        /// </summary>
+        internal static string Rand_CopterColorsDesc {
+            get {
+                return ResourceManager.GetString("Rand_CopterColorsDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Randomize HUD Colors.
+        /// </summary>
+        internal static string Rand_HUDColors {
+            get {
+                return ResourceManager.GetString("Rand_HUDColors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Randomizes the colors of the onscreen display..
+        /// </summary>
+        internal static string Rand_HUDColorsDesc {
+            get {
+                return ResourceManager.GetString("Rand_HUDColorsDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Randomize Level Order (Any amount of Levels).
         /// </summary>
         internal static string Rand_LevelOrder {
@@ -115,7 +151,7 @@ namespace CrateModGames.GameSpecific.Rayman3 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Randomize Level Order (All Levels).
+        ///   Looks up a localized string similar to Randomize Sub-Level Order.
         /// </summary>
         internal static string Rand_LevelOrder2 {
             get {
@@ -124,7 +160,7 @@ namespace CrateModGames.GameSpecific.Rayman3 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Levels are shuffled around. The final boss is still the last level to play (followed by credits).
+        ///   Looks up a localized string similar to Sub-levels are shuffled while the location order stays the same. The final boss is still the last level to play (followed by credits).
         /// </summary>
         internal static string Rand_LevelOrder2Desc {
             get {
@@ -142,7 +178,7 @@ namespace CrateModGames.GameSpecific.Rayman3 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Randomize Outfit Visuals.
+        ///   Looks up a localized string similar to Randomize Outfit Colors.
         /// </summary>
         internal static string Rand_OutfitColors {
             get {
@@ -151,11 +187,47 @@ namespace CrateModGames.GameSpecific.Rayman3 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The textures for outfits are shuffled around..
+        ///   Looks up a localized string similar to Randomizes the colors of Rayman&apos;s outfits..
         /// </summary>
         internal static string Rand_OutfitColorsDesc {
             get {
                 return ResourceManager.GetString("Rand_OutfitColorsDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Randomize Outfit Visuals.
+        /// </summary>
+        internal static string Rand_OutfitVisuals {
+            get {
+                return ResourceManager.GetString("Rand_OutfitVisuals", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The textures for outfits are shuffled around..
+        /// </summary>
+        internal static string Rand_OutfitVisualsDesc {
+            get {
+                return ResourceManager.GetString("Rand_OutfitVisualsDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Randomize World Colors.
+        /// </summary>
+        internal static string Rand_WorldColors {
+            get {
+                return ResourceManager.GetString("Rand_WorldColors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Randomizes the world&apos;s texture colors..
+        /// </summary>
+        internal static string Rand_WorldColorsDesc {
+            get {
+                return ResourceManager.GetString("Rand_WorldColorsDesc", resourceCulture);
             }
         }
     }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Diagnostics;
+using System.Drawing;
 using CrateModLoader.ModProperties;
 using CrateModGames.GameSpecific.Rayman3;
 
@@ -91,15 +92,23 @@ namespace CrateModLoader.GameSpecific.Rayman3
         };
         public override bool CanPreloadGame => true;
 
-        public static ModPropOption Option_RandLevelOrderAll = new ModPropOption(Rayman3_Text.Rand_LevelOrder2, Rayman3_Text.Rand_LevelOrder2Desc)
-        { Hidden = true, };
+        public static ModPropOption Option_RandLevelOrderAll = new ModPropOption(Rayman3_Text.Rand_LevelOrder2, Rayman3_Text.Rand_LevelOrder2Desc);
         public static ModPropOption Option_RandLevelOrder = new ModPropOption(Rayman3_Text.Rand_LevelOrder, Rayman3_Text.Rand_LevelOrderDesc);
+        public static ModPropOption Option_RandOutfitVisuals = new ModPropOption(Rayman3_Text.Rand_OutfitVisuals, Rayman3_Text.Rand_OutfitVisualsDesc)
+        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
         public static ModPropOption Option_RandOutfitColors = new ModPropOption(Rayman3_Text.Rand_OutfitColors, Rayman3_Text.Rand_OutfitColorsDesc)
         { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
+        public static ModPropOption Option_RandCopterColors = new ModPropOption(Rayman3_Text.Rand_CopterColors, Rayman3_Text.Rand_CopterColorsDesc)
+        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
+        public static ModPropOption Option_RandHUDColors = new ModPropOption(Rayman3_Text.Rand_HUDColors, Rayman3_Text.Rand_HUDColorsDesc)
+        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
+        public static ModPropOption Option_RandWorldColors = new ModPropOption(Rayman3_Text.Rand_WorldColors, Rayman3_Text.Rand_WorldColorsDesc)
+        { Hidden = true, AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, }; // works in some levels, broken in others
         public static ModPropOption Option_NewGameNightmare = new ModPropOption(Rayman3_Text.Mod_NewGameNightmare, Rayman3_Text.Mod_NewGameNightmareDesc)
         { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
         public static ModPropOption Option_RemoveIntroVideos = new ModPropOption(1, Rayman3_Text.Mod_RemoveIntroVideo, Rayman3_Text.Mod_RemoveIntroVideoDesc)
         { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
+        
 
         [ModCategory((int)R3_ModProps.Textures_Loading)]
         public static ModProp_TextureFile Texture_Load_Gear = new ModProp_TextureFile(false, "Loading - Gear", "")
@@ -237,10 +246,28 @@ namespace CrateModLoader.GameSpecific.Rayman3
 
             Custom_Texture_Handle();
 
+            if (Option_RandCopterColors.Enabled)
+                Rand_Copter_Colors(randState);
+            if (Option_RandHUDColors.Enabled)
+                Rand_HUD_Colors(randState);
+            if (Option_RandOutfitColors.Enabled)
+                Rand_Outfit_Colors(randState);
+
+            if (Option_RandWorldColors.Enabled)
+            {
+                DirectoryInfo di = new DirectoryInfo(basePath);
+                foreach (DirectoryInfo dir in di.GetDirectories())
+                {
+                    Recursive_WorldColor(dir, randState);
+                }
+            }
+
             if (Option_NewGameNightmare.Enabled)
             {
                 Replace_Intro_With_Nightmare();
             }
+
+            Recursive_PostCleanup(new DirectoryInfo(ConsolePipeline.ExtractedPath));
 
             Add_CMl_Metadata();
         }
@@ -283,8 +310,8 @@ namespace CrateModLoader.GameSpecific.Rayman3
 
         void Randomize_Level_Order(bool anyLevels)
         {
-            int minLevel = 0;
-            int maxLevel = 46;
+            int minLevel = 1;
+            int maxLevel = 46; //46
             int targetPos = 0;
             List<int> ValidLevels = new List<int>();
             List<int> LevelsReplacing = new List<int>();
@@ -292,6 +319,8 @@ namespace CrateModLoader.GameSpecific.Rayman3
 
             if (anyLevels)
             {
+                minLevel = 0;
+                maxLevel = 46;
                 for (int i = minLevel; i <= maxLevel; i++)
                 {
                     ValidLevels.Add(i);
@@ -305,39 +334,69 @@ namespace CrateModLoader.GameSpecific.Rayman3
             }
             else
             {
+                LevelsReplacing.Add(0);
                 for (int i = minLevel; i <= maxLevel; i++)
                 {
                     LevelsReplacing.Add(-1);
-                    if (i < maxLevel)
+                }
+                List<int> HubSections = new List<int>()
+                {
+                    5,
+                    6,
+                    6,
+                    6,
+                    8,
+                    3,
+                    3,
+                    5,
+                    4,
+                };
+                int currentPos = 1;
+                int lastLevel = 0;
+                int currentSection = 0;
+
+                while (currentSection < HubSections.Count)
+                {
+
+                    int firstLevel = minLevel;
+                    if (currentSection > 0)
+                    {
+                        for (int i = 0; i < currentSection; i++)
+                        {
+                            firstLevel += HubSections[i];
+                        }
+                    }
+                    currentPos = firstLevel;
+                    int endLevel = firstLevel + HubSections[currentSection] - 1;
+                    for (int i = firstLevel; i < endLevel; i++)
                     {
                         ValidLevels.Add(i);
                     }
-                }
-                int levelsLeft = 0;
-                int currentPos = 0;
-                while (levelsLeft <= maxLevel)
-                {
-                    if (ValidLevels.Count > 0)
+                    while (ValidLevels.Count > 0)
                     {
                         targetPos = randState.Next(0, ValidLevels.Count);
                         LevelsReplacing[currentPos] = ValidLevels[targetPos];
-                        //Console.WriteLine("Level " + levelsLeft + ": " + (LevelID)LevelsReplacing[currentPos]);
+                        Console.WriteLine("Level " + currentPos + ": " + (LevelID)LevelsReplacing[currentPos] + " (" + LevelsReplacing[currentPos] + ")");
                         currentPos = ValidLevels[targetPos] + 1;
+                        //currentPos++;
+                        lastLevel = ValidLevels[targetPos];
                         ValidLevels.RemoveAt(targetPos);
                     }
-                    else
-                    {
-                        LevelsReplacing[currentPos] = maxLevel;
-                    }
+                    currentSection++;
 
-                    levelsLeft++;
+                    currentPos = lastLevel + 1;
+                    LevelsReplacing[currentPos] = endLevel;
+                    Console.WriteLine("Level " + currentPos + ": " + (LevelID)LevelsReplacing[currentPos] + " (" + LevelsReplacing[currentPos] + ")");
                 }
 
-                //Console.WriteLine("");
-                //for (int i = minLevel; i <= maxLevel; i++)
-                //{
-                //    Console.WriteLine("Order " + i + ": " + (LevelID)LevelsReplacing[i]);
-                //}
+                //currentPos = lastLevel + 1;
+                
+                Console.WriteLine("");
+                for (int i = minLevel; i <= maxLevel; i++)
+                {
+                    Console.WriteLine("Order " + i + ": " + (LevelID)LevelsReplacing[i]);
+                }
+                
             }
 
             for (int i = minLevel; i <= maxLevel; i++)
@@ -564,6 +623,241 @@ namespace CrateModLoader.GameSpecific.Rayman3
             }
         }
 
+        void Rand_HUD_Colors(Random rand)
+        {
+            if (File.Exists(basePath + @"fix.tpl"))
+            {
+                GCN_ExportTextures(basePath + @"fix.tpl");
+
+                File.Delete(basePath + @"fix.tpl");
+
+                List<List<string>> HUDTex = new List<List<string>>()
+                {
+                    new List<string>() {
+                        "fix.tpl.mm27",
+                    },
+                    new List<string>() {
+                        "fix.tpl.mm29",
+                    },
+                    new List<string>() {
+                        "fix.tpl.mm39",
+                        "fix.tpl.mm40",
+                        "fix.tpl.mm41",
+                        "fix.tpl.mm42",
+                    },
+                    new List<string>() {
+                        "fix.tpl.mm43",
+                    },
+                    new List<string>() {
+                        "fix.tpl.mm47",
+                    },
+                    new List<string>() {
+                        "fix.tpl.mm46",
+                        "fix.tpl.mm49",
+                        "fix.tpl.mm53",
+                        "fix.tpl.mm54",
+                        "fix.tpl.mm55",
+                    },
+                    new List<string>() {
+                        "fix.tpl.mm56",
+                    },
+                    new List<string>() {
+                        "fix.tpl.mm71",
+                    },
+                    new List<string>() {
+                        "fix.tpl.mm72",
+                        "fix.tpl.mm73",
+                        "fix.tpl.mm74",
+                    },
+                };
+
+                for (int i = 0; i < HUDTex.Count; i++)
+                {
+                    //Color targetColor = Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256));
+                    ColorSwizzleData Swiz = new ColorSwizzleData(rand);
+
+                    for (int t = 0; t < HUDTex[i].Count; t++)
+                    {
+                        Recolor_Texture_File(basePath + HUDTex[i][t] + ".png", Swiz);
+                    }
+                }
+
+                GCN_ImportTextures(basePath + @"fix.tpl.png");
+            }
+
+            if (ConsolePipeline.Metadata.Console == ConsoleMode.GCN)
+            {
+                string lsbinpath = ConsolePipeline.ExtractedPath + @"LSBIN\";
+                if (File.Exists(lsbinpath + @"lodmeca.tpl"))
+                {
+                    GCN_ExportTextures(lsbinpath + @"lodmeca.tpl");
+                    File.Delete(lsbinpath + @"lodmeca.tpl");
+
+                    //Color GearColor = Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256));
+                    ColorSwizzleData Swiz = new ColorSwizzleData(rand);
+
+                    Recolor_Texture_File(lsbinpath + @"lodmeca.tpl.png", Swiz);
+
+                    GCN_ImportTextures(lsbinpath + @"lodmeca.tpl.png");
+                }
+                if (File.Exists(lsbinpath + @"lodps2_01.tpl"))
+                {
+                    for (int i = 1; i < 9; i++)
+                    {
+                        //Color LoadColor = Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256));
+                        ColorSwizzleData Swiz = new ColorSwizzleData(rand);
+
+                        string filePath = lsbinpath + @"lodps2_0" + i + ".tpl";
+                        string pngPath = lsbinpath + @"lodps2_0" + i + ".tpl.png";
+
+                        GCN_ExportTextures(filePath);
+                        File.Delete(filePath);
+
+                        Recolor_Texture_File(pngPath, Swiz);
+
+                        GCN_ImportTextures(pngPath);
+                    }
+                }
+            }
+        }
+
+        void Rand_Copter_Colors(Random rand)
+        {
+            if (File.Exists(basePath + @"fix.tpl"))
+            {
+                GCN_ExportTextures(basePath + @"fix.tpl");
+
+                File.Delete(basePath + @"fix.tpl");
+
+                List<string> CopterTex = new List<string>()
+                {
+                    "fix.tpl.mm15",
+                    "fix.tpl.mm16",
+                    "fix.tpl.mm17",
+                    "fix.tpl.mm18",
+                    "fix.tpl.mm19",
+                };
+
+                foreach (string fileName in CopterTex)
+                {
+                    //Color CopterColor = Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256));
+                    ColorSwizzleData Swiz = new ColorSwizzleData(rand);
+
+                    Recolor_Texture_File(basePath + fileName + ".png", Swiz);
+                }
+
+                GCN_ImportTextures(basePath + @"fix.tpl.png");
+            }
+        }
+
+        void Rand_Outfit_Colors(Random rand)
+        {
+            if (File.Exists(basePath + @"fix.tpl"))
+            {
+                GCN_ExportTextures(basePath + @"fix.tpl");
+
+                File.Delete(basePath + @"fix.tpl");
+
+                List<string> OutfitTex = new List<string>()
+                {
+                    "fix.tpl.mm4",
+                    "fix.tpl.mm6",
+                    "fix.tpl.mm7",
+                    "fix.tpl.mm8",
+                    "fix.tpl.mm9",
+                    "fix.tpl.mm10",
+                    "fix.tpl.mm11",
+                    "fix.tpl.mm13",
+                    "fix.tpl.mm20",
+                    "fix.tpl.mm21",
+                    "fix.tpl.mm22",
+                };
+
+                foreach (string fileName in OutfitTex)
+                {
+                    //Color OutfitColor = Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256));
+                    ColorSwizzleData Swiz = new ColorSwizzleData(rand);
+
+                    Recolor_Texture_File(basePath + fileName + ".png", Swiz);
+                }
+
+                GCN_ImportTextures(basePath + @"fix.tpl.png");
+            }
+        }
+
+        void Rand_World_Colors(DirectoryInfo di, string filePath, Random rand)
+        {
+            GCN_ExportTextures(filePath, true);
+
+            File.Delete(filePath);
+
+            DirectoryInfo dir = new DirectoryInfo(di.FullName);
+
+            foreach (FileInfo file in dir.GetFiles())
+            {
+                if (file.Extension.ToLower().Contains("png"))
+                {
+                    //Color CopterColor = Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256));
+                    ColorSwizzleData Swiz = new ColorSwizzleData(rand);
+
+                    Recolor_Texture_File(file.FullName, Swiz);
+                }
+                
+            }
+
+            GCN_ImportTextures(filePath + ".png");
+        }
+
+        void Recursive_WorldColor(DirectoryInfo di, Random rand)
+        {
+            foreach(DirectoryInfo dir in di.GetDirectories())
+            {
+                Recursive_WorldColor(dir, rand);
+            }
+            foreach (FileInfo file in di.GetFiles())
+            {
+                if (file.Extension.ToLower().Contains("tpl"))
+                {
+                    Rand_World_Colors(di, file.FullName, rand);
+                }
+            }
+        }
+
+
+        void Recolor_Texture_File(string filePath, ColorSwizzleData Swiz)
+        {
+            Bitmap temp = new Bitmap(filePath);
+            Bitmap tex = new Bitmap(temp);
+            temp.Dispose();
+            File.Delete(filePath);
+
+            for (int x = 0; x < tex.Width; x++)
+            {
+                for (int y = 0; y < tex.Height; y++)
+                {
+                    Color sourceColor = tex.GetPixel(x, y);
+                    float intensity = Math.Max(sourceColor.R, sourceColor.G);
+                    intensity = Math.Max(intensity, sourceColor.B);
+                    intensity = intensity / 255f;
+
+                    int r = sourceColor.R;
+                    int g = sourceColor.G;
+                    int b = sourceColor.B;
+
+                    Color targetColor = Color.FromArgb(tex.GetPixel(x, y).A,
+                        (int)((Swiz.r_r * r + Swiz.r_g * g + Swiz.r_b * b) / Swiz.r_s),
+                        (int)((Swiz.g_r * r + Swiz.g_g * g + Swiz.g_b * b) / Swiz.g_s),
+                        (int)((Swiz.b_r * r + Swiz.b_g * g + Swiz.b_b * b) / Swiz.b_s));
+
+                    tex.SetPixel(x, y, targetColor);
+                }
+            }
+
+            tex.Save(filePath);
+            tex.Dispose();
+        }
+
+
         void Remove_Intro_Videos()
         {
             if (Directory.Exists(basePath + "videos"))
@@ -574,6 +868,27 @@ namespace CrateModLoader.GameSpecific.Rayman3
                 }
             }
         }
+
+        void Recursive_PostCleanup(DirectoryInfo di)
+        {
+            foreach(DirectoryInfo dir in di.GetDirectories())
+            {
+                Recursive_PostCleanup(dir);
+                PostCleanup(di);
+            }
+        }
+
+        void PostCleanup(DirectoryInfo di)
+        {
+            foreach(FileInfo file in di.GetFiles())
+            {
+                if (file.Extension.ToLower().Contains("png"))
+                {
+                    file.Delete();
+                }
+            }
+        }
+
 
         public override void StartPreload()
         {
@@ -676,8 +991,13 @@ namespace CrateModLoader.GameSpecific.Rayman3
             }
         }
 
-        void GCN_ExportTextures(string path)
+        void GCN_ExportTextures(string path, bool noCleanup = false)
         {
+            if (!noCleanup)
+            {
+                Recursive_PostCleanup(new DirectoryInfo(ConsolePipeline.ExtractedPath));
+            }
+
             string args = "decode ";
             args += path;
 
@@ -713,6 +1033,42 @@ namespace CrateModLoader.GameSpecific.Rayman3
             //Console.WriteLine(outputMessage);
 
             wimgt.WaitForExit();
+        }
+
+        class ColorSwizzleData
+        {
+            public int r_r;
+            public int r_g;
+            public int r_b;
+            public int r_s;
+            public int g_r;
+            public int g_g;
+            public int g_b;
+            public int g_s;
+            public int b_r;
+            public int b_g;
+            public int b_b;
+            public int b_s;
+
+            public ColorSwizzleData(Random rand)
+            {
+                r_r = rand.Next(2);
+                r_g = rand.Next(2);
+                r_b = rand.Next(2);
+                r_s = r_r + r_g + r_b;
+                g_r = rand.Next(2);
+                g_g = rand.Next(2);
+                g_b = rand.Next(2);
+                g_s = g_r + g_g + g_b;
+                b_r = rand.Next(2);
+                b_g = rand.Next(2);
+                b_b = rand.Next(2);
+                b_s = b_r + b_g + b_b;
+
+                if (r_s == 0) r_s = 1;
+                if (g_s == 0) g_s = 1;
+                if (b_s == 0) b_s = 1;
+            }
         }
 
         public enum LevelID

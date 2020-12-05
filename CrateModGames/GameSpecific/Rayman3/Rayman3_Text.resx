@@ -132,22 +132,46 @@
   <data name="Mod_RemoveIntroVideoDesc" xml:space="preserve">
     <value>Remove the video that plays before the main menu.</value>
   </data>
+  <data name="Rand_CopterColors" xml:space="preserve">
+    <value>Randomize Copter Colors</value>
+  </data>
+  <data name="Rand_CopterColorsDesc" xml:space="preserve">
+    <value>Randomizes the colors of Rayman's gliding copter ears.</value>
+  </data>
+  <data name="Rand_HUDColors" xml:space="preserve">
+    <value>Randomize HUD Colors</value>
+  </data>
+  <data name="Rand_HUDColorsDesc" xml:space="preserve">
+    <value>Randomizes the colors of the onscreen display.</value>
+  </data>
   <data name="Rand_LevelOrder" xml:space="preserve">
     <value>Randomize Level Order (Any amount of Levels)</value>
   </data>
   <data name="Rand_LevelOrder2" xml:space="preserve">
-    <value>Randomize Level Order (All Levels)</value>
+    <value>Randomize Sub-Level Order</value>
   </data>
   <data name="Rand_LevelOrder2Desc" xml:space="preserve">
-    <value>Levels are shuffled around. The final boss is still the last level to play (followed by credits)</value>
+    <value>Sub-levels are shuffled while the location order stays the same. The final boss is still the last level to play (followed by credits)</value>
   </data>
   <data name="Rand_LevelOrderDesc" xml:space="preserve">
     <value>Levels are shuffled around. The final boss may appear after any amount of levels (followed by credits)</value>
   </data>
   <data name="Rand_OutfitColors" xml:space="preserve">
-    <value>Randomize Outfit Visuals</value>
+    <value>Randomize Outfit Colors</value>
   </data>
   <data name="Rand_OutfitColorsDesc" xml:space="preserve">
+    <value>Randomizes the colors of Rayman's outfits.</value>
+  </data>
+  <data name="Rand_OutfitVisuals" xml:space="preserve">
+    <value>Randomize Outfit Visuals</value>
+  </data>
+  <data name="Rand_OutfitVisualsDesc" xml:space="preserve">
     <value>The textures for outfits are shuffled around.</value>
+  </data>
+  <data name="Rand_WorldColors" xml:space="preserve">
+    <value>Randomize World Colors</value>
+  </data>
+  <data name="Rand_WorldColorsDesc" xml:space="preserve">
+    <value>Randomizes the world's texture colors.</value>
   </data>
 </root>
