@@ -51,12 +51,16 @@ namespace CrateModLoader.GameSpecific.Crash2
 
         
         public static ModPropOption Option_RandWarpRoomExits = new ModPropOption(Crash2_Text.Rand_WarpRoom, Crash2_Text.Rand_WarpRoomDesc);
+        public static ModPropOption Option_RandCrates = new ModPropOption("Randomize Wooden Crates", "");
+        public static ModPropOption Option_RandCratesMissing = new ModPropOption("Random Crates Removed", "A random amount of crates is removed in each level. The box counter is adjusted accordingly.");
+        public static ModPropOption Option_RandEnemiesMissing = new ModPropOption("Random Enemies/Hazards Removed", ""); //todo
         public static ModPropOption Option_BackwardsLevels = new ModPropOption(Crash2_Text.Mod_BackwardsLevels, Crash2_Text.Mod_BackwardsLevelsDesc);
         public static ModPropOption Option_RandBackwardsLevels = new ModPropOption(Crash2_Text.Rand_BackwardsLevels, Crash2_Text.Rand_BackwardsLevelsDesc);
         public static ModPropOption Option_RandCrateContents = new ModPropOption(Crash2_Text.Rand_CrateContents, Crash2_Text.Rand_CrateContentsDesc);
         public static ModPropOption Option_RandBoxCount = new ModPropOption(Crash2_Text.Rand_CrateCounter, Crash2_Text.Rand_CrateCounterDesc);
         public static ModPropOption Option_RandBosses = new ModPropOption(Crash2_Text.Rand_BossLevels, Crash2_Text.Rand_BossLevelsDesc);
         public static ModPropOption Option_CameraBigFOV = new ModPropOption(Crash2_Text.Mod_CameraWideFOV, Crash2_Text.Mod_CameraWideFOVDesc);
+
         public static ModPropOption Option_RandSounds = new ModPropOption(Crash2_Text.Rand_SFX, Crash2_Text.Rand_SFXDesc);
         public static ModPropOption Option_RandStreams = new ModPropOption(Crash2_Text.Rand_Streams, Crash2_Text.Rand_StreamsDesc);
         public static ModPropOption Option_RandPantsColor = new ModPropOption(Crash2_Text.Rand_PantsColor, Crash2_Text.Rand_PantsColorDesc);
@@ -171,9 +175,11 @@ namespace CrateModLoader.GameSpecific.Crash2
                     if (Option_VehicleLevelsOnFoot.Enabled && !Option_BackwardsLevels.Enabled) Crash2_Mods.Mod_VehicleLevelsOnFoot(nsf, nsd, NSF_Level);
                     if (Option_CameraBigFOV.Enabled || Option_RandCameraFOV.Enabled) Crash2_Mods.Mod_CameraFOV(nsf, rand, Option_RandCameraFOV.Enabled);
                     if (Option_AllCratesBlank.Enabled) Crash2_Mods.Mod_RandomWoodCrates(nsf, rand);
+                    if (Option_RandCrates.Enabled) Crash2_Mods.Rand_WoodenCrates(nsf, rand, NSF_Level);
                     if (Option_RandCrateContents.Enabled) Crash2_Mods.Mod_RandomCrateContents(nsf, rand);
                     if (Option_RandBosses.Enabled) Crash2_Mods.Mod_RandomizeBosses(nsf, nsd, NSF_Level, rand, false);
                     if (Option_RandBoxCount.Enabled) Crash2_Mods.Rand_BoxCount(nsf, rand, NSF_Level);
+                    if (Option_RandCratesMissing.Enabled) Crash2_Mods.Rand_CratesMissing(nsf, rand);
                     if (Option_MirroredWorld.Enabled || Option_RandMirroredWorld.Enabled) Mod_MirrorLevel(nsf, nsd, rand, Option_RandMirroredWorld.Enabled);
                     if (Option_RandWorldPalette.Enabled) CrashTri_Common.Mod_Scenery_Swizzle(nsf, rand);
                     if (Option_GreyscaleWorld.Enabled) CrashTri_Common.Mod_Scenery_Greyscale(nsf);

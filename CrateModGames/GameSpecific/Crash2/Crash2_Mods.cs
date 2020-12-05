@@ -119,6 +119,12 @@ namespace CrateModLoader.GameSpecific.Crash2
             CrateSubTypes.Blank, //CrateSubTypes.Fruit, CrateSubTypes.Life, CrateSubTypes.Aku, CrateSubTypes.Pickup
         };
 
+        public static List<CrateSubTypes> Crates_ToRemove = new List<CrateSubTypes>()
+        {
+            CrateSubTypes.TNT, CrateSubTypes.Nitro, CrateSubTypes.Steel, CrateSubTypes.Fruit, CrateSubTypes.Life, CrateSubTypes.Aku, CrateSubTypes.Pickup, CrateSubTypes.WoodSpring, CrateSubTypes.Blank,
+            CrateSubTypes.Checkpoint,
+        };
+
         public static void Rand_BoxCount(NSF nsf, Random rand, Crash2_Levels level)
         {
             List<Entity> willys = new List<Entity>();
@@ -288,6 +294,111 @@ namespace CrateModLoader.GameSpecific.Crash2
 
             CrashTri_Common.Fix_Detonator(nsf);
             CrashTri_Common.Fix_BoxCount(nsf);
+        }
+
+        public static void Rand_CratesMissing(NSF nsf, Random rand)
+        {
+            // edit NSF
+            foreach (Chunk chunk in nsf.Chunks)
+            {
+                if (chunk is NormalChunk zonechunk)
+                {
+                    foreach (Entry entry in zonechunk.Entries)
+                    {
+                        if (entry is ZoneEntry)
+                        {
+                            ZoneEntry zone = (ZoneEntry)entry;
+                            foreach (Entity ent in zone.Entities)
+                            {
+                                if (ent.Type != null && ent.Type == 34)
+                                {
+                                    if (ent.Subtype != null && Crates_ToRemove.Contains((CrateSubTypes)ent.Subtype) && rand.Next(2) == 0)
+                                    {
+                                        ent.Type = 3;
+                                        ent.Subtype = 16;
+                                        ent.AlternateID = null;
+                                        ent.TimeTrialReward = null;
+                                        ent.Victims.Clear();
+                                        ent.BonusBoxCount = null;
+                                        ent.BoxCount = null;
+                                        ent.DDASection = null;
+                                        ent.DDASettings = null;
+                                        ent.ZMod = null;
+                                        ent.OtherSettings = null;
+                                        ent.Settings.Clear();
+                                        ent.ExtraProperties.Clear();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            CrashTri_Common.Fix_Detonator(nsf);
+            CrashTri_Common.Fix_BoxCount(nsf);
+        }
+
+        public static void Rand_WoodenCrates(NSF nsf, Random rand, Crash2_Levels level)
+        {
+            List<CrateSubTypes> AvailableTypes = new List<CrateSubTypes>();
+
+            List<CrateSubTypes> PossibleList = new List<CrateSubTypes>()
+            {
+                CrateSubTypes.Aku,
+                CrateSubTypes.Blank,
+                CrateSubTypes.Blank2,
+                CrateSubTypes.Fruit,
+                CrateSubTypes.Life,
+                CrateSubTypes.Pickup,
+                CrateSubTypes.WoodSpring,
+            };
+
+            foreach (Chunk chunk in nsf.Chunks)
+            {
+                if (chunk is NormalChunk zonechunk)
+                {
+                    foreach (Entry entry in zonechunk.Entries)
+                    {
+                        if (entry is ZoneEntry)
+                        {
+                            ZoneEntry zone = (ZoneEntry)entry;
+                            foreach (Entity ent in zone.Entities)
+                            {
+                                if (ent.Type == 34 && PossibleList.Contains((CrateSubTypes)ent.Subtype))
+                                {
+                                    if (!AvailableTypes.Contains((CrateSubTypes)ent.Subtype))
+                                    {
+                                        AvailableTypes.Add((CrateSubTypes)ent.Subtype);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            foreach (Chunk chunk in nsf.Chunks)
+            {
+                if (chunk is NormalChunk zonechunk)
+                {
+                    foreach (Entry entry in zonechunk.Entries)
+                    {
+                        if (entry is ZoneEntry)
+                        {
+                            ZoneEntry zone = (ZoneEntry)entry;
+                            foreach (Entity ent in zone.Entities)
+                            {
+                                if (ent.Type == 34 && PossibleList.Contains((CrateSubTypes)ent.Subtype))
+                                {
+                                    ent.Subtype = (byte)AvailableTypes[rand.Next(AvailableTypes.Count)];
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
         }
 
         public static void Mod_CameraFOV(NSF nsf, Random rand, bool isRandom)

@@ -53,10 +53,14 @@ namespace CrateModLoader.GameSpecific.Crash3
         
         public static ModPropOption Option_BackwardsLevels = new ModPropOption(Crash3_Text.Mod_BackwardsLevels, Crash3_Text.Mod_BackwardsLevelsDesc);
         public static ModPropOption Option_RandBackwardsLevels = new ModPropOption(Crash3_Text.Rand_BackwardsLevels, Crash3_Text.Rand_BackwardsLevelsDesc);
+        public static ModPropOption Option_RandCrates = new ModPropOption("Randomize Wooden Crates", ""); //todo
+        public static ModPropOption Option_RandCratesMissing = new ModPropOption("Random Crates Removed", "A random amount of crates is removed in each level. The box counter is adjusted accordingly.");
+        public static ModPropOption Option_RandEnemiesMissing = new ModPropOption("Random Enemies/Hazards Removed", ""); //todo
         public static ModPropOption Option_RandCrateContents = new ModPropOption(Crash3_Text.Rand_CrateContents, Crash3_Text.Rand_CrateContentsDesc);
         public static ModPropOption Option_RandBoxCount = new ModPropOption(Crash3_Text.Rand_CrateCounter, Crash3_Text.Rand_CrateCounterDesc);
         public static ModPropOption Option_CameraBigFOV = new ModPropOption(Crash3_Text.Mod_CameraWideFOV, Crash3_Text.Mod_CameraWideFOVDesc);
-        
+        public static ModPropOption Option_RemoveWarpRoomBarriers = new ModPropOption("Remove Warp Room Barriers", ""); 
+
         public static ModPropOption Option_RandSounds = new ModPropOption(Crash3_Text.Rand_SFX, Crash3_Text.Rand_SFXDesc);
         public static ModPropOption Option_RandStreams = new ModPropOption(Crash3_Text.Rand_Streams, Crash3_Text.Rand_StreamsDesc);
         public static ModPropOption Option_RandPantsColor = new ModPropOption(Crash3_Text.Rand_PantsColor, Crash3_Text.Rand_PantsColorDesc);
@@ -163,11 +167,14 @@ namespace CrateModLoader.GameSpecific.Crash3
                 if (Option_RandWarpRoom.Enabled) Crash3_Mods.Mod_RandomizeWRButtons(nsf, nsd, NSF_Level, rand);
                 if (Option_BackwardsLevels.Enabled || Option_RandBackwardsLevels.Enabled) Crash3_Mods.Mod_BackwardsLevels(nsf, nsd, NSF_Level, Option_RandBackwardsLevels.Enabled, rand);
                 if (Option_CameraBigFOV.Enabled || Option_RandCameraFOV.Enabled) Crash3_Mods.Mod_CameraFOV(nsf, rand, Option_RandCameraFOV.Enabled);
-                if (Option_AllCratesBlank.Enabled) Crash3_Mods.Mod_RandomWoodCrates(nsf, rand);
+                if (Option_AllCratesBlank.Enabled) Crash3_Mods.Mod_AllWoodCrates(nsf, rand);
+                if (Option_RandCrates.Enabled) Crash3_Mods.Rand_WoodenCrates(nsf, rand, NSF_Level);
                 if (Option_RandCrateContents.Enabled) Crash3_Mods.Mod_RandomCrateContents(nsf, rand);
                 if (Option_RandBosses.Enabled) Crash3_Mods.Mod_RandomizeBosses(nsf, nsd, NSF_Level, rand, false);
                 if (Option_RandFlyingLevels.Enabled) Crash3_Mods.Mod_RandomizeFlyingLevels(nsf, nsd, NSF_Level, rand, false);
                 if (Option_RandBoxCount.Enabled) Crash3_Mods.Rand_BoxCount(nsf, rand, NSF_Level);
+                if (Option_RandCratesMissing.Enabled) Crash3_Mods.Rand_CratesMissing(nsf, rand);
+                if (Option_RemoveWarpRoomBarriers.Enabled) Crash3_Mods.Mod_RemoveBarriers(nsf, NSF_Level);
                 if (Option_RandSounds.Enabled) CrashTri_Common.Mod_RandomizeADIO(nsf, rand);
                 if (Option_RandWorldPalette.Enabled) CrashTri_Common.Mod_Scenery_Swizzle(nsf, rand);
                 if (Option_GreyscaleWorld.Enabled) CrashTri_Common.Mod_Scenery_Greyscale(nsf);

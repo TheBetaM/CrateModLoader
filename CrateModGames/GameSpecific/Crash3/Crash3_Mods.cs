@@ -192,7 +192,7 @@ namespace CrateModLoader.GameSpecific.Crash3
             }
         }
 
-        public static void Mod_RandomWoodCrates(NSF nsf, Random rand)
+        public static void Mod_AllWoodCrates(NSF nsf, Random rand)
         {
             // edit NSF
             foreach (Chunk chunk in nsf.Chunks)
@@ -291,6 +291,86 @@ namespace CrateModLoader.GameSpecific.Crash3
                                     }
                                 }
                                 else if (ent.Type != null && ent.Type == 8 && ent.Subtype == 1) // kite
+                                {
+                                    ent.Type = 3;
+                                    ent.Subtype = 16;
+                                    ent.AlternateID = null;
+                                    ent.TimeTrialReward = null;
+                                    ent.Victims.Clear();
+                                    ent.BonusBoxCount = null;
+                                    ent.BoxCount = null;
+                                    ent.DDASection = null;
+                                    ent.DDASettings = null;
+                                    ent.ZMod = null;
+                                    ent.OtherSettings = null;
+                                    ent.Scaling = 0;
+                                    ent.Settings.Clear();
+                                    ent.Settings.Add(new EntitySetting(0, 0));
+                                    ent.ExtraProperties.Clear();
+                                }
+                                else if (ent.Type != null && ent.Type == 0 && ent.Subtype == 0)
+                                {
+                                    if (ent.BoxCount != null)
+                                    {
+                                        ent.BoxCount = new EntitySetting(0, 0);
+                                    }
+                                    if (ent.BonusBoxCount != null)
+                                    {
+                                        ent.BonusBoxCount = new EntitySetting(0, 0);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            CrashTri_Common.Fix_Detonator(nsf);
+            CrashTri_Common.Fix_BoxCount(nsf);
+        }
+
+        public static List<CrateSubTypes> Crates_ToRemove = new List<CrateSubTypes>()
+        {
+            CrateSubTypes.TNT, CrateSubTypes.Nitro, CrateSubTypes.Steel, CrateSubTypes.Fruit, CrateSubTypes.Life, CrateSubTypes.Aku, CrateSubTypes.Pickup, CrateSubTypes.WoodSpring, CrateSubTypes.Blank,
+            CrateSubTypes.Checkpoint,
+        };
+
+        public static void Rand_CratesMissing(NSF nsf, Random rand)
+        {
+            // edit NSF
+            foreach (Chunk chunk in nsf.Chunks)
+            {
+                if (chunk is NormalChunk zonechunk)
+                {
+                    foreach (Entry entry in zonechunk.Entries)
+                    {
+                        if (entry is NewZoneEntry)
+                        {
+                            NewZoneEntry zone = (NewZoneEntry)entry;
+                            foreach (Entity ent in zone.Entities)
+                            {
+                                if (ent.Type != null && ent.Type == 34)
+                                {
+                                    if (ent.Subtype != null && Crates_ToRemove.Contains((CrateSubTypes)ent.Subtype) && rand.Next(2) == 0)
+                                    {
+                                        ent.Type = 3;
+                                        ent.Subtype = 16;
+                                        ent.AlternateID = null;
+                                        ent.TimeTrialReward = null;
+                                        ent.Victims.Clear();
+                                        ent.BonusBoxCount = null;
+                                        ent.BoxCount = null;
+                                        ent.DDASection = null;
+                                        ent.DDASettings = null;
+                                        ent.ZMod = null;
+                                        ent.OtherSettings = null;
+                                        ent.Scaling = 0;
+                                        ent.Settings.Clear();
+                                        ent.Settings.Add(new EntitySetting(0, 0));
+                                        ent.ExtraProperties.Clear();
+                                    }
+                                }
+                                else if (ent.Type != null && ent.Type == 8 && ent.Subtype == 1 && rand.Next(2) == 0) // kite
                                 {
                                     ent.Type = 3;
                                     ent.Subtype = 16;
@@ -2168,6 +2248,101 @@ namespace CrateModLoader.GameSpecific.Crash3
                                     }
                                 }
 
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+
+        public static void Mod_RemoveBarriers(NSF nsf, Crash3_Levels level)
+        {
+            if (level != Crash3_Levels.WarpRoom)
+            {
+                return;
+            }
+
+            foreach (Chunk chunk in nsf.Chunks)
+            {
+                if (chunk is NormalChunk zonechunk)
+                {
+                    foreach (Entry entry in zonechunk.Entries)
+                    {
+                        if (entry is NewZoneEntry zone)
+                        {
+                            for (int i = 0; i < zone.Entities.Count; i++)
+                            {
+                                if (zone.Entities[i].Type != null && zone.Entities[i].Subtype != null)
+                                {
+                                    if (zone.Entities[i].Type == 26 && zone.Entities[i].Subtype == 2) //barrier
+                                    {
+                                        zone.Entities[i].Positions.Clear();
+                                        zone.Entities[i].Positions.Add(new EntityPosition(-12000, -12000, -12000));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+
+        public static void Rand_WoodenCrates(NSF nsf, Random rand, Crash3_Levels level)
+        {
+            List<CrateSubTypes> AvailableTypes = new List<CrateSubTypes>();
+
+            List<CrateSubTypes> PossibleList = new List<CrateSubTypes>()
+            {
+                CrateSubTypes.Aku,
+                CrateSubTypes.Blank,
+                CrateSubTypes.Blank2,
+                CrateSubTypes.Fruit,
+                CrateSubTypes.Life,
+                CrateSubTypes.Pickup,
+                CrateSubTypes.WoodSpring,
+            };
+
+            foreach (Chunk chunk in nsf.Chunks)
+            {
+                if (chunk is NormalChunk zonechunk)
+                {
+                    foreach (Entry entry in zonechunk.Entries)
+                    {
+                        if (entry is NewZoneEntry)
+                        {
+                            NewZoneEntry zone = (NewZoneEntry)entry;
+                            foreach (Entity ent in zone.Entities)
+                            {
+                                if (ent.Type == 34 && PossibleList.Contains((CrateSubTypes)ent.Subtype))
+                                {
+                                    if (!AvailableTypes.Contains((CrateSubTypes)ent.Subtype))
+                                    {
+                                        AvailableTypes.Add((CrateSubTypes)ent.Subtype);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            foreach (Chunk chunk in nsf.Chunks)
+            {
+                if (chunk is NormalChunk zonechunk)
+                {
+                    foreach (Entry entry in zonechunk.Entries)
+                    {
+                        if (entry is NewZoneEntry)
+                        {
+                            NewZoneEntry zone = (NewZoneEntry)entry;
+                            foreach (Entity ent in zone.Entities)
+                            {
+                                if (ent.Type == 34 && PossibleList.Contains((CrateSubTypes)ent.Subtype))
+                                {
+                                    ent.Subtype = (byte)AvailableTypes[rand.Next(AvailableTypes.Count)];
+                                }
                             }
                         }
                     }
