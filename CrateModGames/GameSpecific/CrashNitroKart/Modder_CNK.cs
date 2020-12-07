@@ -102,19 +102,19 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
         public static ModPropOption Option_RandWeaponEffects = new ModPropOption(CNK_Text.Rand_PowerupEffects, CNK_Text.Rand_PowerupEffectsDesc);
         public static ModPropOption Option_RandCharacters = new ModPropOption(CNK_Text.Rand_Drivers, CNK_Text.Rand_DriversDesc); //TODO: later version: icon replacement, name replacement, main menu model replacement, adventure character select model
         public static ModPropOption Option_RandKarts = new ModPropOption(CNK_Text.Rand_Karts, CNK_Text.Rand_KartsDesc);
-        
+
         public static ModPropOption Option_DisableFadeout = new ModPropOption(CNK_Text.Mod_DisableFadeout, CNK_Text.Mod_DisableFadeoutDesc);
         public static ModPropOption Option_DisablePopups = new ModPropOption(CNK_Text.Mod_DisableUnlockPopups, CNK_Text.Mod_DisableUnlockPopupsDesc);
         public static ModPropOption Option_SpeedUpMaskHints = new ModPropOption(CNK_Text.Mod_SpeedUpMaskHint, CNK_Text.Mod_SpeedUpMaskHintDesc);
         public static ModPropOption Option_NoIntro = new ModPropOption(1, CNK_Text.Mod_RemoveIntroVideos, CNK_Text.Mod_RemoveIntroVideosDesc);
 
         //unfinished
+        public static ModPropOption Option_RandMusic = new ModPropOption("Randomize Music", "") { Hidden = true }; // audio.csv does NOTHING
         public static ModPropOption Option_RandWumpaCrate = new ModPropOption() { Hidden = true };  //TODO dda
         public static ModPropOption Option_RandObstacles = new ModPropOption() { Hidden = true };  //TODO obstacles
         public static ModPropOption Option_RandCupPoints = new ModPropOption() { Hidden = true };  //Maybe? gameprogression
         public static ModPropOption Option_RandSurfParams = new ModPropOption() { Hidden = true }; // TODO: later version
         public static ModPropOption Option_RandWeaponPools = new ModPropOption() { Hidden = true }; // TODO: later version
-        public static ModPropOption Option_RandMusic = new ModPropOption() { Hidden = true }; //TODO music.csv
         public static ModPropOption Option_NoMaskHints = new ModPropOption() { Hidden = true }; //TODO, hinthistory.csv
 
         public Modder_CNK()
@@ -189,6 +189,7 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
             //bool Editing_CSV_PlayerWeaponSelection_Battle = false;
             bool Editing_CSV_PlayerWeaponSelection_Boss = false;
             //bool Editing_CSV_AI_WeaponSelection = false;
+            bool Editing_CSV_Music = false;
             bool Editing_CSV_Credits = true;
 
             foreach (ModPropertyBase mod in Props)
@@ -356,7 +357,7 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
                 Editing_CSV_KartPhysicsBase = true;
                 CNK_Data_KartStats.CNK_Randomize_KartStats(randState);
             }
-            if (Option_RandCharacters.Enabled)
+            if (Option_RandCharStats.Enabled)
             {
                 Editing_CSV_CharacterPhysics = true;
                 for (int i = 0; i < 16; i++)
@@ -408,6 +409,10 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
             if (Option_SpeedUpMaskHints.Enabled)
             {
                 Editing_CSV_HintsConfig = true;
+            }
+            if (Option_RandMusic.Enabled)
+            {
+                Editing_CSV_Music = true;
             }
 
             if (Editing_CSV_AdventureTracksManager)
@@ -1443,6 +1448,123 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
                 File.WriteAllLines(path_gob_extracted + "common/dda/playerweaponselection_boss.csv", csv_PlayerWeaponSelBoss);
             }
 
+            if (Editing_CSV_Music)
+            {
+                string[] csv_music = File.ReadAllLines(path_gob_extracted + "common/audio/music.csv");
+
+                List<string> csv_Music_LineList = new List<string>();
+                for (int i = 0; i < 12; i++)
+                {
+                    csv_Music_LineList.Add(csv_music[i]);
+                }
+
+                List<TrackID> TrackList = new List<TrackID>()
+                {
+                    TrackID.Barin_1,
+                    TrackID.Barin_2,
+                    TrackID.Barin_3,
+                    TrackID.Earth_1,
+                    TrackID.Earth_2,
+                    TrackID.Earth_3,
+                    TrackID.Fenom_1,
+                    TrackID.Fenom_2,
+                    TrackID.Fenom_3,
+                    TrackID.Teknee_1,
+                    TrackID.Teknee_2,
+                    TrackID.Teknee_3,
+                    TrackID.VeloRace,
+                };
+                List<TrackID> HubList = new List<TrackID>()
+                {
+                    TrackID.Citadel,
+                    TrackID.Hub_1,
+                    TrackID.Hub_2,
+                    TrackID.Hub_3,
+                    TrackID.Hub_4,
+                };
+
+                List<TrackID> TempTracks = new List<TrackID>(TrackList);
+                List<TrackID> TempHubs = new List<TrackID>(HubList);
+                List<TrackID> RandTracks = new List<TrackID>();
+                List<TrackID> RandHubs = new List<TrackID>();
+                while (TempTracks.Count > 0)
+                {
+                    int r = randState.Next(TempTracks.Count);
+                    //RandTracks.Add(TempTracks[r]);
+                    RandTracks.Add(TrackID.Fenom_2);
+                    TempTracks.RemoveAt(r);
+                }
+                while (TempHubs.Count > 0)
+                {
+                    int r = randState.Next(TempHubs.Count);
+                    //RandHubs.Add(TempHubs[r]);
+                    RandHubs.Add(TrackID.Citadel);
+                    TempHubs.RemoveAt(r);
+                }
+
+                string extra = ",0,MusicBalance,0.8";
+                string extraf = "f,0,MusicBalance,0.8";
+
+                csv_Music_LineList.Add(CNK_Data.TrackName[(int)TrackList[0]] + "," + CNK_Data.TrackName[(int)RandTracks[0]] + extra);
+                csv_Music_LineList.Add(CNK_Data.TrackName[(int)TrackList[0]] + "f," + CNK_Data.TrackName[(int)RandTracks[0]] + extraf);
+                csv_Music_LineList.Add(CNK_Data.TrackName[(int)TrackList[1]] + "," + CNK_Data.TrackName[(int)RandTracks[1]] + extra);
+                csv_Music_LineList.Add(CNK_Data.TrackName[(int)TrackList[1]] + "f," + CNK_Data.TrackName[(int)RandTracks[1]] + extraf);
+                csv_Music_LineList.Add(CNK_Data.TrackName[(int)TrackList[2]] + "," + CNK_Data.TrackName[(int)RandTracks[2]] + extra);
+                csv_Music_LineList.Add(CNK_Data.TrackName[(int)TrackList[2]] + "f," + CNK_Data.TrackName[(int)RandTracks[2]] + extraf);
+                csv_Music_LineList.Add(CNK_Data.TrackName[(int)HubList[0]] + "," + CNK_Data.TrackName[(int)RandHubs[0]] + extra);
+                csv_Music_LineList.Add(CNK_Data.TrackName[(int)TrackList[3]] + "," + CNK_Data.TrackName[(int)RandTracks[3]] + extra);
+                csv_Music_LineList.Add(CNK_Data.TrackName[(int)TrackList[3]] + "f," + CNK_Data.TrackName[(int)RandTracks[3]] + extraf);
+                csv_Music_LineList.Add(CNK_Data.TrackName[(int)TrackList[4]] + "," + CNK_Data.TrackName[(int)RandTracks[4]] + extra);
+                csv_Music_LineList.Add(CNK_Data.TrackName[(int)TrackList[4]] + "f," + CNK_Data.TrackName[(int)RandTracks[4]] + extraf);
+                csv_Music_LineList.Add(CNK_Data.TrackName[(int)TrackList[5]] + "," + CNK_Data.TrackName[(int)RandTracks[5]] + extra);
+                csv_Music_LineList.Add(CNK_Data.TrackName[(int)TrackList[5]] + "f," + CNK_Data.TrackName[(int)RandTracks[5]] + extraf);
+                csv_Music_LineList.Add(CNK_Data.TrackName[(int)TrackList[6]] + "," + CNK_Data.TrackName[(int)RandTracks[6]] + extra);
+                csv_Music_LineList.Add(CNK_Data.TrackName[(int)TrackList[6]] + "f," + CNK_Data.TrackName[(int)RandTracks[6]] + extraf);
+                csv_Music_LineList.Add(CNK_Data.TrackName[(int)TrackList[7]] + "," + CNK_Data.TrackName[(int)RandTracks[7]] + extra);
+                csv_Music_LineList.Add(CNK_Data.TrackName[(int)TrackList[7]] + "f," + CNK_Data.TrackName[(int)RandTracks[7]] + extraf);
+                csv_Music_LineList.Add(CNK_Data.TrackName[(int)TrackList[8]] + "," + CNK_Data.TrackName[(int)RandTracks[8]] + extra);
+                csv_Music_LineList.Add(CNK_Data.TrackName[(int)TrackList[8]] + "f," + CNK_Data.TrackName[(int)RandTracks[8]] + extraf);
+                csv_Music_LineList.Add(CNK_Data.TrackName[(int)HubList[1]] + "," + CNK_Data.TrackName[(int)RandHubs[1]] + extra);
+                csv_Music_LineList.Add(CNK_Data.TrackName[(int)HubList[2]] + "," + CNK_Data.TrackName[(int)RandHubs[2]] + extra);
+                csv_Music_LineList.Add(CNK_Data.TrackName[(int)HubList[3]] + "," + CNK_Data.TrackName[(int)RandHubs[3]] + extra);
+                csv_Music_LineList.Add(CNK_Data.TrackName[(int)HubList[4]] + "," + CNK_Data.TrackName[(int)RandHubs[4]] + extra);
+
+                for (int i = 35; i < 37; i++)
+                {
+                    csv_Music_LineList.Add(csv_music[i]);
+                }
+
+                csv_Music_LineList.Add(CNK_Data.TrackName[(int)TrackList[9]] + "," + CNK_Data.TrackName[(int)RandTracks[9]] + extra);
+                csv_Music_LineList.Add(CNK_Data.TrackName[(int)TrackList[9]] + "f," + CNK_Data.TrackName[(int)RandTracks[9]] + extraf);
+                csv_Music_LineList.Add(CNK_Data.TrackName[(int)TrackList[10]] + "," + CNK_Data.TrackName[(int)RandTracks[10]] + extra);
+                csv_Music_LineList.Add(CNK_Data.TrackName[(int)TrackList[10]] + "f," + CNK_Data.TrackName[(int)RandTracks[10]] + extraf);
+                csv_Music_LineList.Add(CNK_Data.TrackName[(int)TrackList[11]] + "," + CNK_Data.TrackName[(int)RandTracks[11]] + extra);
+                csv_Music_LineList.Add(CNK_Data.TrackName[(int)TrackList[11]] + "f," + CNK_Data.TrackName[(int)RandTracks[11]] + extraf);
+
+                for (int i = 43; i < 45; i++)
+                {
+                    csv_Music_LineList.Add(csv_music[i]);
+                }
+
+                csv_Music_LineList.Add(CNK_Data.TrackName[(int)TrackList[12]] + "," + CNK_Data.TrackName[(int)RandTracks[12]] + extra);
+
+                for (int i = 46; i < 48; i++)
+                {
+                    csv_Music_LineList.Add(csv_music[i]);
+                }
+
+                csv_Music_LineList.Add(CNK_Data.TrackName[(int)TrackList[12]] + "f," + CNK_Data.TrackName[(int)RandTracks[12]] + extraf);
+
+                csv_Music_LineList.Add("");
+
+                csv_music = new string[csv_Music_LineList.Count];
+                for (int i = 0; i < csv_Music_LineList.Count; i++)
+                {
+                    csv_music[i] = csv_Music_LineList[i];
+                }
+
+                File.WriteAllLines(path_gob_extracted + "common/audio/music.csv", csv_music);
+            }
 
             if (Editing_CSV_Unlockables)
             {

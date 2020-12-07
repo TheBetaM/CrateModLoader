@@ -193,13 +193,37 @@
     <value>Randomize Crate Counter</value>
   </data>
   <data name="Rand_CrateCounterDesc" xml:space="preserve">
-    <value>Randomize the number of required crates to break to get a gem in each level. Breaking more crates than required will not grant a gem.</value>
+    <value>Randomize the number of required crates to break to get a gem in each level. Breaking more crates than required will not grant a gem. Overridden by Random/All Enemies Are Random Crates and Random Crates Removed.</value>
+  </data>
+  <data name="Rand_CratesRemoved" xml:space="preserve">
+    <value>Random Crates Removed</value>
+  </data>
+  <data name="Rand_CratesRemovedDesc" xml:space="preserve">
+    <value>A random amount of crates is removed in each level. The box counter is adjusted accordingly.</value>
+  </data>
+  <data name="Rand_EnemiesRemoved" xml:space="preserve">
+    <value>Random Enemies Removed</value>
+  </data>
+  <data name="Rand_EnemiesRemovedDesc" xml:space="preserve">
+    <value>Random enemies and hazards are removed in each level.</value>
+  </data>
+  <data name="Rand_EnemyCrates" xml:space="preserve">
+    <value>Random Enemies Are Random Crates (Beta)</value>
+  </data>
+  <data name="Rand_EnemyCratesDesc" xml:space="preserve">
+    <value>Random enemies and hazards are turned into random crates in each level. The box counter is adjusted accordingly.</value>
   </data>
   <data name="Rand_ObjCol" xml:space="preserve">
     <value>Randomize Object Colors</value>
   </data>
   <data name="Rand_ObjColDesc" xml:space="preserve">
     <value>Color palette used in objects is shuffled around.</value>
+  </data>
+  <data name="Rand_ObjectPalette" xml:space="preserve">
+    <value>Swizzle Object Palette</value>
+  </data>
+  <data name="Rand_ObjectPaletteDesc" xml:space="preserve">
+    <value>Swizzle the object colors into a random shade.</value>
   </data>
   <data name="Rand_ObjTex" xml:space="preserve">
     <value>Randomize Object Textures</value>
@@ -231,6 +255,12 @@
   <data name="Rand_WarpRoomDesc" xml:space="preserve">
     <value>All Warp Room exits and the new game spawn are shuffled around.</value>
   </data>
+  <data name="Rand_WoodenCrates" xml:space="preserve">
+    <value>Randomize Wooden Crates</value>
+  </data>
+  <data name="Rand_WoodenCratesDesc" xml:space="preserve">
+    <value>The types of some wooden crates are randomized.</value>
+  </data>
   <data name="Rand_WorldColors" xml:space="preserve">
     <value>Randomize World Colors</value>
   </data>
@@ -248,5 +278,29 @@
   </data>
   <data name="Rand_WorldTexDesc" xml:space="preserve">
     <value>Textures and animated textures used in scenery are shuffled around.</value>
+  </data>
+  <data name="Mod_GreyscaleObjects" xml:space="preserve">
+    <value>Greyscale Objects</value>
+  </data>
+  <data name="Mod_GreyscaleObjectsDesc" xml:space="preserve">
+    <value>The object colors are greyed out.</value>
+  </data>
+  <data name="Mod_RemoveEnemies" xml:space="preserve">
+    <value>Remove All Enemies</value>
+  </data>
+  <data name="Mod_RemoveEnemiesDesc" xml:space="preserve">
+    <value>All enemies and hazaards are removed.</value>
+  </data>
+  <data name="Rand_AllEnemiesCrates" xml:space="preserve">
+    <value>All Enemies Are Random Crates (Beta)</value>
+  </data>
+  <data name="Rand_AllEnemiesCratesDesc" xml:space="preserve">
+    <value>All enemies are turned into random crates in each level. The box counter is adjusted accordingly.</value>
+  </data>
+  <data name="Rand_EnemyPaths" xml:space="preserve">
+    <value>Randomize Enemy Paths</value>
+  </data>
+  <data name="Rand_EnemyPathsDesc" xml:space="preserve">
+    <value>Paths of enemies are randomized.</value>
   </data>
 </root>

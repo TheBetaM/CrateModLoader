@@ -51,9 +51,10 @@ namespace CrateModLoader.GameSpecific.Crash2
 
         
         public static ModPropOption Option_RandWarpRoomExits = new ModPropOption(Crash2_Text.Rand_WarpRoom, Crash2_Text.Rand_WarpRoomDesc);
-        public static ModPropOption Option_RandCrates = new ModPropOption("Randomize Wooden Crates", "");
-        public static ModPropOption Option_RandCratesMissing = new ModPropOption("Random Crates Removed", "A random amount of crates is removed in each level. The box counter is adjusted accordingly.");
-        public static ModPropOption Option_RandEnemiesMissing = new ModPropOption("Random Enemies/Hazards Removed", ""); //todo
+        public static ModPropOption Option_RandCrates = new ModPropOption(Crash2_Text.Rand_WoodenCrates, Crash2_Text.Rand_WoodenCratesDesc);
+        public static ModPropOption Option_RandCratesMissing = new ModPropOption(Crash2_Text.Rand_CratesRemoved, Crash2_Text.Rand_EnemiesRemovedDesc);
+        public static ModPropOption Option_RandEnemiesMissing = new ModPropOption(Crash2_Text.Rand_EnemiesRemoved, Crash2_Text.Rand_EnemiesRemovedDesc); 
+        public static ModPropOption Option_RandEnemiesAreCrates = new ModPropOption(Crash2_Text.Rand_EnemyCrates, Crash2_Text.Rand_EnemyCratesDesc);
         public static ModPropOption Option_BackwardsLevels = new ModPropOption(Crash2_Text.Mod_BackwardsLevels, Crash2_Text.Mod_BackwardsLevelsDesc);
         public static ModPropOption Option_RandBackwardsLevels = new ModPropOption(Crash2_Text.Rand_BackwardsLevels, Crash2_Text.Rand_BackwardsLevelsDesc);
         public static ModPropOption Option_RandCrateContents = new ModPropOption(Crash2_Text.Rand_CrateContents, Crash2_Text.Rand_CrateContentsDesc);
@@ -71,11 +72,21 @@ namespace CrateModLoader.GameSpecific.Crash2
         public static ModPropOption Option_RandWorldTex = new ModPropOption(Crash2_Text.Rand_WorldTex, Crash2_Text.Rand_WorldTexDesc);
         public static ModPropOption Option_RandObjCol = new ModPropOption(Crash2_Text.Rand_ObjCol, Crash2_Text.Rand_ObjColDesc);
         public static ModPropOption Option_RandObjTex = new ModPropOption(Crash2_Text.Rand_ObjTex, Crash2_Text.Rand_ObjTexDesc);
+        public static ModPropOption Option_RandObjPalette = new ModPropOption(Crash2_Text.Rand_ObjectPalette, Crash2_Text.Rand_ObjectPaletteDesc); 
 
         [ModCategory(1)]
         public static ModPropNamedFloatArray Prop_PantsColor = new ModPropNamedFloatArray(new float[3] { 0, 0, 1f }, new string[] { "Red", "Green", "Blue" }, Crash2_Text.Prop_PantsColor, Crash2_Text.Prop_PantsColorDesc);
 
         //less used
+
+        [ModCategory(1)]
+        public static ModPropOption Option_AllEnemiesAreCrates = new ModPropOption(Crash2_Text.Rand_AllEnemiesCrates, Crash2_Text.Rand_AllEnemiesCratesDesc) { ModMenuOnly = true };
+        [ModCategory(1)]
+        public static ModPropOption Option_RandEnemyPaths = new ModPropOption(Crash2_Text.Rand_EnemyPaths, Crash2_Text.Rand_EnemyPathsDesc) { ModMenuOnly = true };
+        [ModCategory(1)]
+        public static ModPropOption Option_AllEnemiesMissing = new ModPropOption(Crash2_Text.Mod_RemoveEnemies, Crash2_Text.Mod_RemoveEnemiesDesc) { ModMenuOnly = true };
+        [ModCategory(1)]
+        public static ModPropOption Option_UncoloredObj = new ModPropOption(Crash2_Text.Mod_GreyscaleObjects, Crash2_Text.Mod_GreyscaleObjectsDesc) { ModMenuOnly = true };
         [ModCategory(1)]
         public static ModPropOption Option_AllCratesBlank = new ModPropOption(Crash2_Text.Mod_AllCratesBlank, Crash2_Text.Mod_AllCratesBlankDesc) { ModMenuOnly = true };
         [ModCategory(1)]
@@ -84,6 +95,7 @@ namespace CrateModLoader.GameSpecific.Crash2
         public static ModPropOption Option_RandCameraFOV = new ModPropOption(Crash2_Text.Rand_CameraFOV, Crash2_Text.Rand_CameraFOVDesc) { ModMenuOnly = true };
 
         //unfinished
+        public static ModPropOption Option_UntexturedObj = new ModPropOption("Untextured Objects", "") { Hidden = true }; // broken
         public static ModPropOption Option_VehicleLevelsOnFoot = new ModPropOption("Vehicle Levels On Foot", "") { Hidden = true };
         public static ModPropOption Option_MirroredWorld = new ModPropOption("Mirrored World", "") { Hidden = true };
         public static ModPropOption Option_RandMirroredWorld = new ModPropOption("Random Levels Are Mirrored", "") { Hidden = true };
@@ -179,6 +191,11 @@ namespace CrateModLoader.GameSpecific.Crash2
                     if (Option_RandCrateContents.Enabled) Crash2_Mods.Mod_RandomCrateContents(nsf, rand);
                     if (Option_RandBosses.Enabled) Crash2_Mods.Mod_RandomizeBosses(nsf, nsd, NSF_Level, rand, false);
                     if (Option_RandBoxCount.Enabled) Crash2_Mods.Rand_BoxCount(nsf, rand, NSF_Level);
+                    if (Option_AllEnemiesMissing.Enabled) Crash2_Mods.Mod_RemoveEnemies(nsf, rand, NSF_Level, false);
+                    if (Option_RandEnemiesAreCrates.Enabled) Crash2_Mods.Mod_EnemyCrates(nsf, rand, NSF_Level, true);
+                    if (Option_AllEnemiesAreCrates.Enabled) Crash2_Mods.Mod_EnemyCrates(nsf, rand, NSF_Level, false);
+                    if (Option_RandEnemiesMissing.Enabled) Crash2_Mods.Mod_RemoveEnemies(nsf, rand, NSF_Level, true);
+                    if (Option_RandEnemyPaths.Enabled) Crash2_Mods.Rand_EnemyPaths(nsf, rand, NSF_Level);
                     if (Option_RandCratesMissing.Enabled) Crash2_Mods.Rand_CratesMissing(nsf, rand);
                     if (Option_MirroredWorld.Enabled || Option_RandMirroredWorld.Enabled) Mod_MirrorLevel(nsf, nsd, rand, Option_RandMirroredWorld.Enabled);
                     if (Option_RandWorldPalette.Enabled) CrashTri_Common.Mod_Scenery_Swizzle(nsf, rand);
@@ -193,6 +210,9 @@ namespace CrateModLoader.GameSpecific.Crash2
                     if (Option_RandObjCol.Enabled) CrashTri_Common.Mod_RandomizeTGEOCol(nsf, rand);
                     if (Option_RandObjTex.Enabled) CrashTri_Common.Mod_RandomizeTGEOTex(nsf, rand);
                     if (Option_RandStreams.Enabled) CrashTri_Common.Mod_RandomizeSDIO(nsf, rand);
+                    if (Option_RandObjPalette.Enabled) CrashTri_Common.Mod_SwizzleObjectColors(nsf, rand);
+                    if (Option_UntexturedObj.Enabled) CrashTri_Common.Mod_RemoveTGEOTex(nsf, rand);
+                    if (Option_UncoloredObj.Enabled) CrashTri_Common.Mod_RemoveObjectColors(nsf, rand);
 
                     Crash2_Mods.Mod_Metadata(nsf, nsd, NSF_Level, GameRegion.Region);
                 }

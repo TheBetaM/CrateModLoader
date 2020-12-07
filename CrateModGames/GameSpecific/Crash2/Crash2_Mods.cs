@@ -351,7 +351,7 @@ namespace CrateModLoader.GameSpecific.Crash2
                 CrateSubTypes.Fruit,
                 CrateSubTypes.Life,
                 CrateSubTypes.Pickup,
-                CrateSubTypes.WoodSpring,
+                //CrateSubTypes.WoodSpring,
             };
 
             foreach (Chunk chunk in nsf.Chunks)
@@ -2530,6 +2530,416 @@ namespace CrateModLoader.GameSpecific.Crash2
             zone.Entities.Add(newentity);
             zone.EntityCount++;
 
+        }
+
+        class EntityTypePair
+        {
+            public int Type;
+            public int Subtype;
+
+            public EntityTypePair(int t, int s)
+            {
+                Type = t;
+                Subtype = s;
+            }
+        }
+
+        static List<EntityTypePair> EnemiesToRemove = new List<EntityTypePair>()
+        {
+            // Turtle Woods
+            new EntityTypePair(20, 1), //armadillo
+            new EntityTypePair(2, 0), //spiky turtle
+            new EntityTypePair(6, 0), //dive bird
+            // Snow Go
+            new EntityTypePair(25, 1), //penguin pulse
+            new EntityTypePair(25, 0), //penguin
+            new EntityTypePair(24, 0), //seal
+            new EntityTypePair(24, 1), //seal path
+            new EntityTypePair(32, 0), //smasher
+            new EntityTypePair(32, 1), //smasher constant
+            new EntityTypePair(27, 0), //porcupine
+            // Hang Eight
+            new EntityTypePair(47, 5), //fish
+            new EntityTypePair(47, 4), //mine float
+            new EntityTypePair(38, 4), //evil plant
+            //new EntityTypePair(47, 8), //whirlpool
+            new EntityTypePair(47, 7), //mine path
+            // The Pits
+            new EntityTypePair(6, 2), //bird 3D
+            new EntityTypePair(2, 5), //saw turtle
+            // Crash Dash
+            new EntityTypePair(39, 0), //mine
+            new EntityTypePair(39, 1), //fence
+            // Snow Biz
+            new EntityTypePair(32, 3), //icicle
+            new EntityTypePair(27, 1), //porcupine smart
+            new EntityTypePair(32, 2), //roller
+            new EntityTypePair(25, 2), //penguin path
+            // Bear It
+            new EntityTypePair(48, 2), //orca
+            // The Eel Deal
+            new EntityTypePair(28, 0), //rat
+            new EntityTypePair(28, 1), //rat tunnel
+            new EntityTypePair(13, 0), //scrubber
+            new EntityTypePair(13, 6), //scrubber circle
+            new EntityTypePair(12, 1), //fan
+            new EntityTypePair(13, 8), //scrubber tunnel ring
+            //new EntityTypePair(12, 8), //eel
+            new EntityTypePair(12, 9), //barrel tunnel
+            new EntityTypePair(21, 0), //mech floater
+            new EntityTypePair(21, 3), //mech bob
+            // Sewer Or Later
+            new EntityTypePair(16, 0), //welder
+            new EntityTypePair(28, 4), //rat circle
+            new EntityTypePair(13, 5), //scrubber path
+            new EntityTypePair(12, 2), //fan break
+            // Bear Down
+            new EntityTypePair(48, 5), //lab lift
+            // Road To Ruin
+            new EntityTypePair(7, 1), //fireface watcher
+            new EntityTypePair(28, 2), //possum path
+            new EntityTypePair(7, 0), //fireface
+            new EntityTypePair(10, 0), //monkey hop
+            new EntityTypePair(28, 3), //lizard path
+            new EntityTypePair(11, 0), //gorilla boulder
+            // UnBearable
+            new EntityTypePair(39, 8), //critter
+            new EntityTypePair(20, 0), //armadillo
+            new EntityTypePair(33, 0), //hunter
+            // Hangin Out
+            new EntityTypePair(13, 10), //scrubber tunnel
+            new EntityTypePair(21, 4), //mech path
+            new EntityTypePair(28, 6), //rat tunnel ring
+            new EntityTypePair(21, 1), //mech hanger
+            new EntityTypePair(28, 4), //rat circle
+            new EntityTypePair(21, 5), //mech path floater
+            // Diggin It
+            new EntityTypePair(38, 0), //spore plant
+            new EntityTypePair(39, 7), //tiki
+            new EntityTypePair(39, 4), //timed spark
+            new EntityTypePair(39, 6), //timed spark
+            //new EntityTypePair(18, 2), //hive
+            new EntityTypePair(18, 0), //bee hive
+            new EntityTypePair(45, 1), //labjack
+            // Piston It Away
+            new EntityTypePair(55, 1), //piston
+            new EntityTypePair(55, 5), //robot walker
+            new EntityTypePair(53, 0), //fred
+            new EntityTypePair(55, 2), //pad
+            //new EntityTypePair(55, 3), //gun
+            //new EntityTypePair(55, 4), //gun down
+            //new EntityTypePair(55, 0), //piston up
+            new EntityTypePair(56, 0), //pusher
+            // Rock It
+            new EntityTypePair(35, 11), //space cable
+            new EntityTypePair(35, 13), //space gun
+            //new EntityTypePair(42, 0), //space lab
+            new EntityTypePair(35, 15), //space ring
+            // Night Fight
+            new EntityTypePair(46, 0), //dragonfly
+        };
+
+        public static void Mod_RemoveEnemies(NSF nsf, Random rand, Crash2_Levels level, bool isRandom)
+        {
+            foreach (Chunk chunk in nsf.Chunks)
+            {
+                if (chunk is NormalChunk zonechunk)
+                {
+                    foreach (Entry entry in zonechunk.Entries)
+                    {
+                        if (entry is ZoneEntry zone && zone.EName != "H2_gZ") // piston it death route
+                        {
+                            foreach (Entity ent in zone.Entities)
+                            {
+                                if (ent.Type != null && ent.Subtype != null)
+                                {
+                                    foreach (EntityTypePair pair in EnemiesToRemove)
+                                    {
+                                        if (pair.Type == ent.Type && pair.Subtype == ent.Subtype)
+                                        {
+                                            if (!isRandom || (isRandom && rand.Next(2) == 0))
+                                            {
+                                                ent.Type = 3;
+                                                ent.Subtype = 16;
+                                                ent.AlternateID = null;
+                                                ent.TimeTrialReward = null;
+                                                ent.Victims.Clear();
+                                                ent.BonusBoxCount = null;
+                                                ent.BoxCount = null;
+                                                ent.DDASection = null;
+                                                ent.DDASettings = null;
+                                                ent.ZMod = null;
+                                                ent.OtherSettings = null;
+                                                ent.Settings.Clear();
+                                                ent.ExtraProperties.Clear();
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        static List<EntityTypePair> EnemiesToCrate = new List<EntityTypePair>()
+        {
+            // Turtle Woods
+            new EntityTypePair(20, 1), //armadillo
+            new EntityTypePair(2, 0), //spiky turtle
+            new EntityTypePair(6, 0), //dive bird
+            // Snow Go
+            new EntityTypePair(25, 1), //penguin pulse
+            new EntityTypePair(25, 0), //penguin
+            new EntityTypePair(24, 0), //seal
+            new EntityTypePair(24, 1), //seal path
+            //new EntityTypePair(32, 0), //smasher
+            //new EntityTypePair(32, 1), //smasher constant
+            new EntityTypePair(27, 0), //porcupine
+            // Hang Eight
+            new EntityTypePair(47, 5), //fish
+            new EntityTypePair(47, 4), //mine float
+            //new EntityTypePair(38, 4), //evil plant
+            //new EntityTypePair(47, 8), //whirlpool
+            new EntityTypePair(47, 7), //mine path
+            // The Pits
+            new EntityTypePair(6, 2), //bird 3D
+            new EntityTypePair(2, 5), //saw turtle
+            // Crash Dash
+            new EntityTypePair(39, 0), //mine
+            new EntityTypePair(39, 1), //fence
+            // Snow Biz
+            //new EntityTypePair(32, 3), //icicle
+            new EntityTypePair(27, 1), //porcupine smart
+            new EntityTypePair(32, 2), //roller
+            new EntityTypePair(25, 2), //penguin path
+            // Bear It
+            //new EntityTypePair(48, 2), //orca
+            // The Eel Deal
+            new EntityTypePair(28, 0), //rat
+            new EntityTypePair(28, 1), //rat tunnel
+            new EntityTypePair(13, 0), //scrubber
+            new EntityTypePair(13, 6), //scrubber circle
+            new EntityTypePair(12, 1), //fan
+            new EntityTypePair(13, 8), //scrubber tunnel ring
+            //new EntityTypePair(12, 8), //eel
+            new EntityTypePair(12, 9), //barrel tunnel
+            new EntityTypePair(21, 0), //mech floater
+            new EntityTypePair(21, 3), //mech bob
+            // Sewer Or Later
+            //new EntityTypePair(16, 0), //welder
+            new EntityTypePair(28, 4), //rat circle
+            new EntityTypePair(13, 5), //scrubber path
+            new EntityTypePair(12, 2), //fan break
+            // Bear Down
+            new EntityTypePair(48, 5), //lab lift
+            // Road To Ruin
+            //new EntityTypePair(7, 1), //fireface watcher
+            new EntityTypePair(28, 2), //possum path
+            //new EntityTypePair(7, 0), //fireface
+            new EntityTypePair(10, 0), //monkey hop
+            new EntityTypePair(28, 3), //lizard path
+            new EntityTypePair(11, 0), //gorilla boulder
+            // UnBearable
+            new EntityTypePair(39, 8), //critter
+            new EntityTypePair(20, 0), //armadillo
+            new EntityTypePair(33, 0), //hunter
+            // Hangin Out
+            new EntityTypePair(13, 10), //scrubber tunnel
+            new EntityTypePair(21, 4), //mech path
+            new EntityTypePair(28, 6), //rat tunnel ring
+            new EntityTypePair(21, 1), //mech hanger
+            new EntityTypePair(28, 4), //rat circle
+            new EntityTypePair(21, 5), //mech path floater
+            // Diggin It
+            new EntityTypePair(38, 0), //spore plant
+            new EntityTypePair(39, 7), //tiki
+            new EntityTypePair(39, 4), //timed spark
+            new EntityTypePair(39, 6), //timed spark
+            //new EntityTypePair(18, 2), //hive
+            new EntityTypePair(18, 0), //bee hive
+            new EntityTypePair(45, 1), //labjack
+            // Piston It Away
+            //new EntityTypePair(55, 1), //piston
+            new EntityTypePair(55, 5), //robot walker
+            new EntityTypePair(53, 0), //fred
+            new EntityTypePair(55, 2), //pad
+            //new EntityTypePair(55, 3), //gun
+            //new EntityTypePair(55, 4), //gun down
+            //new EntityTypePair(55, 0), //piston up
+            new EntityTypePair(56, 0), //pusher
+            // Rock It
+            new EntityTypePair(35, 11), //space cable
+            new EntityTypePair(35, 13), //space gun
+            //new EntityTypePair(42, 0), //space lab
+            new EntityTypePair(35, 15), //space ring
+            // Night Fight
+            new EntityTypePair(46, 0), //dragonfly
+        };
+
+        public static void Mod_EnemyCrates(NSF nsf, Random rand, Crash2_Levels level, bool isRandom)
+        {
+            List<CrateSubTypes> AvailableTypes = new List<CrateSubTypes>();
+
+            List<CrateSubTypes> PossibleList = new List<CrateSubTypes>()
+            {
+                CrateSubTypes.Aku,
+                CrateSubTypes.Blank,
+                CrateSubTypes.Fruit,
+                CrateSubTypes.Life,
+                CrateSubTypes.Pickup,
+                CrateSubTypes.Nitro,
+                //CrateSubTypes.Iron,
+                //CrateSubTypes.IronSpring,
+            };
+
+            foreach (Chunk chunk in nsf.Chunks)
+            {
+                if (chunk is NormalChunk zonechunk)
+                {
+                    foreach (Entry entry in zonechunk.Entries)
+                    {
+                        if (entry is ZoneEntry)
+                        {
+                            ZoneEntry zone = (ZoneEntry)entry;
+                            foreach (Entity ent in zone.Entities)
+                            {
+                                if (ent.Type == 34 && PossibleList.Contains((CrateSubTypes)ent.Subtype))
+                                {
+                                    if (!AvailableTypes.Contains((CrateSubTypes)ent.Subtype))
+                                    {
+                                        AvailableTypes.Add((CrateSubTypes)ent.Subtype);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            foreach (Chunk chunk in nsf.Chunks)
+            {
+                if (chunk is NormalChunk zonechunk)
+                {
+                    foreach (Entry entry in zonechunk.Entries)
+                    {
+                        if (entry is ZoneEntry)
+                        {
+                            ZoneEntry zone = (ZoneEntry)entry;
+                            foreach (Entity ent in zone.Entities)
+                            {
+                                ent.Name = null; // may need the extra space
+                                if (ent.Type != null && ent.Subtype != null)
+                                {
+                                    foreach (EntityTypePair pair in EnemiesToCrate)
+                                    {
+                                        if (pair.Type == ent.Type && pair.Subtype == ent.Subtype)
+                                        {
+                                            if (!isRandom || (isRandom && rand.Next(2) == 0))
+                                            {
+                                                ent.Type = 34;
+                                                ent.Subtype = (int)AvailableTypes[rand.Next(AvailableTypes.Count)];
+                                                ent.AlternateID = null;
+                                                ent.TimeTrialReward = null;
+                                                ent.Victims.Clear();
+                                                ent.BonusBoxCount = null;
+                                                ent.BoxCount = null;
+                                                ent.DDASection = null;
+                                                ent.DDASettings = null;
+                                                ent.ZMod = null;
+                                                ent.OtherSettings = null;
+                                                ent.Settings.Clear();
+                                                ent.Settings.Add(new EntitySetting(0, 0));
+                                                ent.Settings.Add(new EntitySetting(0, 0));
+                                                ent.Settings.Add(new EntitySetting(0, 0));
+                                                ent.ExtraProperties.Clear();
+                                                int randPos = rand.Next(ent.Positions.Count / 2);
+                                                EntityPosition StartPos = ent.Positions[randPos];
+                                                ent.Positions.Clear();
+                                                ent.Positions.Add(StartPos);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            CrashTri_Common.Fix_Detonator(nsf);
+            CrashTri_Common.Fix_BoxCount(nsf);
+        }
+
+        public static void Rand_EnemyPaths(NSF nsf, Random rand, Crash2_Levels level)
+        {
+            foreach (Chunk chunk in nsf.Chunks)
+            {
+                if (chunk is NormalChunk zonechunk)
+                {
+                    foreach (Entry entry in zonechunk.Entries)
+                    {
+                        if (entry is ZoneEntry)
+                        {
+                            ZoneEntry zone = (ZoneEntry)entry;
+                            foreach (Entity ent in zone.Entities)
+                            {
+                                if (ent.Type != null && ent.Subtype != null && ent.Positions.Count > 1)
+                                {
+                                    foreach (EntityTypePair pair in EnemiesToRemove)
+                                    {
+                                        if (pair.Type == ent.Type && pair.Subtype == ent.Subtype)
+                                        {
+                                            int startPos = rand.Next(ent.Positions.Count);
+                                            bool reversed = false;
+                                            if (rand.Next(2) == 0)
+                                            {
+                                                reversed = true;
+                                            }
+                                            List<EntityPosition> oldPath = new List<EntityPosition>(ent.Positions);
+                                            ent.Positions.Clear();
+
+                                            if (reversed)
+                                            {
+                                                for (int i = startPos; i > 0; i--)
+                                                {
+                                                    ent.Positions.Add(oldPath[i]);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                for (int i = startPos; i < oldPath.Count; i++)
+                                                {
+                                                    ent.Positions.Add(oldPath[i]);
+                                                }
+                                            }
+
+                                            if (ent.Positions.Count != oldPath.Count)
+                                            {
+                                                if (reversed)
+                                                {
+                                                    for (int i = oldPath.Count - 1; i > startPos; i--)
+                                                    {
+                                                        ent.Positions.Add(oldPath[i]);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    for (int i = 0; i < startPos; i++)
+                                                    {
+                                                        ent.Positions.Add(oldPath[i]);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         public static void Mod_PantsColor(NSF nsf, SceneryColor color)

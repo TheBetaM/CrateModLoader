@@ -53,6 +53,7 @@ namespace CrateModLoader.GameSpecific.Crash1
         public static ModPropOption Option_BackwardsLevels = new ModPropOption(Crash1_Text.Mod_BackwardsLevels, Crash1_Text.Mod_BackwardsLevelsDesc);
         public static ModPropOption Option_RandBackwardsLevels = new ModPropOption(Crash1_Text.Rand_BackwardsLevels, Crash1_Text.Rand_BackwardsLevelsDesc);
         public static ModPropOption Option_BackwardsHogLevels = new ModPropOption(Crash1_Text.Mod_BackwardsHogLevels, Crash1_Text.Mod_BackwardsHogLevelsDesc);
+        public static ModPropOption Option_RandEnemiesMissing = new ModPropOption("Random Enemies/Hazards Removed", ""); //todo
         public static ModPropOption Option_RandCrateContents = new ModPropOption(Crash1_Text.Rand_CrateContents, Crash1_Text.Rand_CrateContentsDesc);
         public static ModPropOption Option_RandBosses = new ModPropOption(Crash1_Text.Rand_BossLevels, Crash1_Text.Rand_BossLevelsDesc);
         public static ModPropOption Option_CameraBigFOV = new ModPropOption(Crash1_Text.Mod_CameraWideFOV, Crash1_Text.Mod_CameraWideFOVDesc);
@@ -62,6 +63,8 @@ namespace CrateModLoader.GameSpecific.Crash1
         public static ModPropOption Option_RandWorldPalette = new ModPropOption(Crash1_Text.Rand_WorldPalette, Crash1_Text.Rand_WorldPaletteDesc);
 
         // less used
+        [ModCategory(1)]
+        public static ModPropOption Option_AllEnemiesMissing = new ModPropOption("All Enemies/Hazards Removed", "") { ModMenuOnly = true };
         [ModCategory(1)]
         public static ModPropOption Option_AllCratesBlank = new ModPropOption(Crash1_Text.Mod_AllCratesBlank, Crash1_Text.Mod_AllCratesBlankDesc) { ModMenuOnly = true };
         [ModCategory(1)]

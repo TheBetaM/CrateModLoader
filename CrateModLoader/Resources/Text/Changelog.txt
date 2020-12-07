@@ -32,17 +32,24 @@ Rayman 3: Hoodlum Havoc:
 Crash Bandicoot:
 - New feature: Randomize Wooden Crates
 - New feature: Random Enemies/Hazards Removed
+- New feature: All Enemies/Hazards Removed
 - Backwards Hog Levels: Removed checkpoints since they didn't work anyway.
 
 Crash Bandicoot 2: Cortex Strikes Back:
 - New feature: Randomize Wooden Crates
 - New feature: Random Crates Removed
-- New feature: Random Enemies/Hazards Removed
+- New feature: Random Enemies Removed
+- New feature: All Enemies Removed
+- New feature: Random Enemies Are Random Crates
+- New feature: All Enemies Are Random Crates
+- New feature: Randomize Enemy Paths
 - New feature: Randomize World Textures
 - New feature: Randomize Object Colors
 - New feature: Randomize Object Textures
 - New feature: Randomize Streamed Audio
-- New feature: Ranodmize Pants Color
+- New feature: Swizzle Object Palette
+- New feature: Greyscale Objects
+- New feature: Randomize Pants Color
 - Pants color can now be customized in the Mod Menu.
 - Randomize Crate Counter: Adjusted minimum counts to prevent impossible scenarios.
 
@@ -50,11 +57,14 @@ Crash Bandicoot: WARPED:
 - New feature: Randomize Wooden Crates
 - New feature: Random Crates Removed
 - New feature: Random Enemies/Hazards Removed
+- New feature: All Enemies/Hazards Removed
 - New feature: Remove Warp Room Barriers
 - New feature: Randomize World Textures
 - New feature: Randomize Object Colors
 - New feature: Randomize Object Textures
 - New feature: Randomize Streamed Audio
+- New feature: Swizzle Object Palette
+- New feature: Greyscale Objects
 - New feature: Randomize Pants Color
 - Pants color can now be customized in the Mod Menu.
 - Randomize Crate Counter: Adjusted minimum counts to prevent impossible scenarios.

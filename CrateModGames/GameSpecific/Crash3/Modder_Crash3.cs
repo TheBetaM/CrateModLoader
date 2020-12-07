@@ -71,12 +71,16 @@ namespace CrateModLoader.GameSpecific.Crash3
         public static ModPropOption Option_RandWorldTex = new ModPropOption(Crash3_Text.Rand_WorldTex, Crash3_Text.Rand_WorldTexDesc);
         public static ModPropOption Option_RandObjCol = new ModPropOption(Crash3_Text.Rand_ObjCol, Crash3_Text.Rand_ObjColDesc);
         public static ModPropOption Option_RandObjTex = new ModPropOption(Crash3_Text.Rand_ObjTex, Crash3_Text.Rand_ObjTexDesc);
+        public static ModPropOption Option_RandObjPalette = new ModPropOption("Swizzle Object Palette", "");
 
         [ModCategory(1)]
         public static ModPropNamedFloatArray Prop_PantsColor = new ModPropNamedFloatArray(new float[3] { 0, 0, 1f }, new string[] { "Red", "Green", "Blue" }, Crash3_Text.Prop_PantsColor, Crash3_Text.Prop_PantsColorDesc);
 
         // less used
-
+        [ModCategory(1)]
+        public static ModPropOption Option_AllEnemiesMissing = new ModPropOption("All Enemies/Hazards Removed", "") { ModMenuOnly = true };
+        [ModCategory(1)]
+        public static ModPropOption Option_UncoloredObj = new ModPropOption("Greyscale Objects", "") { ModMenuOnly = true };
         [ModCategory(1)]
         public static ModPropOption Option_AllCratesBlank = new ModPropOption(Crash3_Text.Mod_AllCratesBlank, Crash3_Text.Mod_AllCratesBlankDesc) { ModMenuOnly = true };
         [ModCategory(1)]
@@ -85,6 +89,7 @@ namespace CrateModLoader.GameSpecific.Crash3
         public static ModPropOption Option_RandCameraFOV = new ModPropOption(Crash3_Text.Rand_CameraFOV, Crash3_Text.Rand_CameraFOVDesc) { ModMenuOnly = true };
 
         //unfinished
+        public static ModPropOption Option_UntexturedObj = new ModPropOption("Untextured Objects", "") { Hidden = true }; // broken
         public static ModPropOption Option_RandWarpRoom = new ModPropOption(Crash3_Text.Rand_WarpRoom, Crash3_Text.Rand_WarpRoomDesc) { Hidden = true }; //unstable, unfinished
         public static ModPropOption Option_RandFlyingLevels = new ModPropOption(Crash3_Text.Rand_FlyingLevels, Crash3_Text.Rand_FlyingLevelsDesc) { Hidden = true }; //unfinished
         public static ModPropOption Option_RandBikeLevels = new ModPropOption("Randomize Bike Levels", "") { Hidden = true };
@@ -185,6 +190,9 @@ namespace CrateModLoader.GameSpecific.Crash3
                 if (Option_RandObjCol.Enabled) CrashTri_Common.Mod_RandomizeTGEOCol(nsf, rand);
                 if (Option_RandObjTex.Enabled) CrashTri_Common.Mod_RandomizeTGEOTex(nsf, rand);
                 if (Option_RandStreams.Enabled) CrashTri_Common.Mod_RandomizeSDIO(nsf, rand);
+                if (Option_RandObjPalette.Enabled) CrashTri_Common.Mod_SwizzleObjectColors(nsf, rand);
+                if (Option_UntexturedObj.Enabled) CrashTri_Common.Mod_RemoveTGEOTex(nsf, rand);
+                if (Option_UncoloredObj.Enabled) CrashTri_Common.Mod_RemoveObjectColors(nsf, rand);
 
                 Crash3_Mods.Mod_Metadata(nsf, nsd, NSF_Level, GameRegion.Region);
 

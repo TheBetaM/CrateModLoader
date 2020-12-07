@@ -206,7 +206,7 @@ namespace CrateModLoader.GameSpecific.Crash1
                 CrateSubTypes.Pickup,
                 //CrateSubTypes.Pow,
                 //CrateSubTypes.TNT, // walls of TNT...
-                CrateSubTypes.WoodSpring,
+                //CrateSubTypes.WoodSpring,
             };
 
             foreach (Chunk chunk in nsf.Chunks)

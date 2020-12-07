@@ -151,6 +151,24 @@ namespace CrateModGames.GameSpecific.Crash2 {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Greyscale Objects.
+        /// </summary>
+        internal static string Mod_GreyscaleObjects {
+            get {
+                return ResourceManager.GetString("Mod_GreyscaleObjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The object colors are greyed out..
+        /// </summary>
+        internal static string Mod_GreyscaleObjectsDesc {
+            get {
+                return ResourceManager.GetString("Mod_GreyscaleObjectsDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Greyscale World.
         /// </summary>
         internal static string Mod_GreyscaleWorld {
@@ -165,6 +183,24 @@ namespace CrateModGames.GameSpecific.Crash2 {
         internal static string Mod_GreyscaleWorldDesc {
             get {
                 return ResourceManager.GetString("Mod_GreyscaleWorldDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove All Enemies.
+        /// </summary>
+        internal static string Mod_RemoveEnemies {
+            get {
+                return ResourceManager.GetString("Mod_RemoveEnemies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All enemies and hazaards are removed..
+        /// </summary>
+        internal static string Mod_RemoveEnemiesDesc {
+            get {
+                return ResourceManager.GetString("Mod_RemoveEnemiesDesc", resourceCulture);
             }
         }
         
@@ -201,6 +237,24 @@ namespace CrateModGames.GameSpecific.Crash2 {
         internal static string Prop_PantsColorDesc {
             get {
                 return ResourceManager.GetString("Prop_PantsColorDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All Enemies Are Random Crates (Beta).
+        /// </summary>
+        internal static string Rand_AllEnemiesCrates {
+            get {
+                return ResourceManager.GetString("Rand_AllEnemiesCrates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All enemies are turned into random crates in each level. The box counter is adjusted accordingly..
+        /// </summary>
+        internal static string Rand_AllEnemiesCratesDesc {
+            get {
+                return ResourceManager.GetString("Rand_AllEnemiesCratesDesc", resourceCulture);
             }
         }
         
@@ -286,11 +340,83 @@ namespace CrateModGames.GameSpecific.Crash2 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Randomize the number of required crates to break to get a gem in each level. Breaking more crates than required will not grant a gem..
+        ///   Looks up a localized string similar to Randomize the number of required crates to break to get a gem in each level. Breaking more crates than required will not grant a gem. Overridden by Random/All Enemies Are Random Crates and Random Crates Removed..
         /// </summary>
         internal static string Rand_CrateCounterDesc {
             get {
                 return ResourceManager.GetString("Rand_CrateCounterDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Random Crates Removed.
+        /// </summary>
+        internal static string Rand_CratesRemoved {
+            get {
+                return ResourceManager.GetString("Rand_CratesRemoved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A random amount of crates is removed in each level. The box counter is adjusted accordingly..
+        /// </summary>
+        internal static string Rand_CratesRemovedDesc {
+            get {
+                return ResourceManager.GetString("Rand_CratesRemovedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Random Enemies Removed.
+        /// </summary>
+        internal static string Rand_EnemiesRemoved {
+            get {
+                return ResourceManager.GetString("Rand_EnemiesRemoved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Random enemies and hazards are removed in each level..
+        /// </summary>
+        internal static string Rand_EnemiesRemovedDesc {
+            get {
+                return ResourceManager.GetString("Rand_EnemiesRemovedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Random Enemies Are Random Crates (Beta).
+        /// </summary>
+        internal static string Rand_EnemyCrates {
+            get {
+                return ResourceManager.GetString("Rand_EnemyCrates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Random enemies and hazards are turned into random crates in each level. The box counter is adjusted accordingly..
+        /// </summary>
+        internal static string Rand_EnemyCratesDesc {
+            get {
+                return ResourceManager.GetString("Rand_EnemyCratesDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Randomize Enemy Paths.
+        /// </summary>
+        internal static string Rand_EnemyPaths {
+            get {
+                return ResourceManager.GetString("Rand_EnemyPaths", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Paths of enemies are randomized..
+        /// </summary>
+        internal static string Rand_EnemyPathsDesc {
+            get {
+                return ResourceManager.GetString("Rand_EnemyPathsDesc", resourceCulture);
             }
         }
         
@@ -309,6 +435,24 @@ namespace CrateModGames.GameSpecific.Crash2 {
         internal static string Rand_ObjColDesc {
             get {
                 return ResourceManager.GetString("Rand_ObjColDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Swizzle Object Palette.
+        /// </summary>
+        internal static string Rand_ObjectPalette {
+            get {
+                return ResourceManager.GetString("Rand_ObjectPalette", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Swizzle the object colors into a random shade..
+        /// </summary>
+        internal static string Rand_ObjectPaletteDesc {
+            get {
+                return ResourceManager.GetString("Rand_ObjectPaletteDesc", resourceCulture);
             }
         }
         
@@ -399,6 +543,24 @@ namespace CrateModGames.GameSpecific.Crash2 {
         internal static string Rand_WarpRoomDesc {
             get {
                 return ResourceManager.GetString("Rand_WarpRoomDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Randomize Wooden Crates.
+        /// </summary>
+        internal static string Rand_WoodenCrates {
+            get {
+                return ResourceManager.GetString("Rand_WoodenCrates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The types of some wooden crates are randomized..
+        /// </summary>
+        internal static string Rand_WoodenCratesDesc {
+            get {
+                return ResourceManager.GetString("Rand_WoodenCratesDesc", resourceCulture);
             }
         }
         

@@ -2301,7 +2301,7 @@ namespace CrateModLoader.GameSpecific.Crash3
                 CrateSubTypes.Fruit,
                 CrateSubTypes.Life,
                 CrateSubTypes.Pickup,
-                CrateSubTypes.WoodSpring,
+                //CrateSubTypes.WoodSpring,
             };
 
             foreach (Chunk chunk in nsf.Chunks)
