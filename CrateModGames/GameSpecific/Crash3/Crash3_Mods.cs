@@ -254,6 +254,80 @@ namespace CrateModLoader.GameSpecific.Crash3
 
         }
 
+        public enum CrateParamFlags
+        {
+            Unk1 = 0,
+            Unk2 = 1,
+            Unk3 = 2,
+            WaterFloat = 3,
+            Outlined = 4,
+            Unk4 = 5,
+            NonSolid = 6, //can walk into to activate/destroy, can bounce off of it
+            Unk5 = 7,
+            IceReflection = 8,
+            SpaceFloat = 9, // doesn't work in this game, just randomly despawns the box
+            Unk6 = 10,
+            Unk7 = 11,
+            Unk8 = 12,
+            Unk9 = 13,
+            Unk10 = 14,
+            Unk11 = 15,
+            Unk12 = 16,
+            Unk13 = 17,
+            Unk14 = 18,
+            Unk15 = 19,
+        };
+
+        public static void Mod_RandomCrateParams(NSF nsf, Random rand, Crash3_Levels level)
+        {
+            List<int> foundFlags = new List<int>();
+
+            // edit NSF
+            foreach (Chunk chunk in nsf.Chunks)
+            {
+                if (chunk is NormalChunk zonechunk)
+                {
+                    foreach (Entry entry in zonechunk.Entries)
+                    {
+                        if (entry is NewZoneEntry zone)
+                        {
+                            foreach (Entity ent in zone.Entities)
+                            {
+                                if (ent.Type != null && ent.Type == 34)
+                                {
+                                    if (ent.Settings.Count > 1 && ent.Subtype != (int)CrateSubTypes.Slot)
+                                    {
+                                        int oldSet = ent.Settings[1].ValueB;
+
+                                        int cratePreset = rand.Next(6);
+                                        
+                                        switch (cratePreset)
+                                        {
+                                            default:
+                                                break;
+                                            case 0:
+                                                oldSet |= 1 << (int)CrateParamFlags.WaterFloat;
+                                                break;
+                                            case 1:
+                                                oldSet |= 1 << (int)CrateParamFlags.NonSolid;
+                                                break;
+                                            case 2:
+                                                oldSet |= 1 << (int)CrateParamFlags.WaterFloat;
+                                                oldSet |= 1 << (int)CrateParamFlags.NonSolid;
+                                                break;
+                                        }
+
+                                        ent.Settings[1] = new EntitySetting(0, oldSet);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+
         public static void Mod_TurnCratesIntoWumpa(NSF nsf, Random rand)
         {
             // edit NSF

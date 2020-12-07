@@ -151,6 +151,24 @@ namespace CrateModGames.GameSpecific.Crash3 {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Greyscale Objects.
+        /// </summary>
+        internal static string Mod_GreyscaleObjects {
+            get {
+                return ResourceManager.GetString("Mod_GreyscaleObjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The object colors are greyed out..
+        /// </summary>
+        internal static string Mod_GreyscaleObjectsDesc {
+            get {
+                return ResourceManager.GetString("Mod_GreyscaleObjectsDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Greyscale World.
         /// </summary>
         internal static string Mod_GreyscaleWorld {
@@ -165,6 +183,24 @@ namespace CrateModGames.GameSpecific.Crash3 {
         internal static string Mod_GreyscaleWorldDesc {
             get {
                 return ResourceManager.GetString("Mod_GreyscaleWorldDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove Warp Room Barriers.
+        /// </summary>
+        internal static string Mod_RemoveWarpRoomWalls {
+            get {
+                return ResourceManager.GetString("Mod_RemoveWarpRoomWalls", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove all barriers in the Warp Room, allowing you to enter warp rooms early. Stepping on a button from a later hub grants powerups from the previous hubs..
+        /// </summary>
+        internal static string Mod_RemoveWarpRoomWallsDesc {
+            get {
+                return ResourceManager.GetString("Mod_RemoveWarpRoomWallsDesc", resourceCulture);
             }
         }
         
@@ -277,6 +313,42 @@ namespace CrateModGames.GameSpecific.Crash3 {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Randomize Crate Parameters.
+        /// </summary>
+        internal static string Rand_CrateParams {
+            get {
+                return ResourceManager.GetString("Rand_CrateParams", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Random crates can float like in water or allow itself to be walked through..
+        /// </summary>
+        internal static string Rand_CrateParamsDesc {
+            get {
+                return ResourceManager.GetString("Rand_CrateParamsDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Random Crates Removed.
+        /// </summary>
+        internal static string Rand_CratesRemoved {
+            get {
+                return ResourceManager.GetString("Rand_CratesRemoved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A random amount of crates is removed in each level. The box counter is adjusted accordingly..
+        /// </summary>
+        internal static string Rand_CratesRemovedDesc {
+            get {
+                return ResourceManager.GetString("Rand_CratesRemovedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Randomize Biplane Levels.
         /// </summary>
         internal static string Rand_FlyingLevels {
@@ -309,6 +381,24 @@ namespace CrateModGames.GameSpecific.Crash3 {
         internal static string Rand_ObjColDesc {
             get {
                 return ResourceManager.GetString("Rand_ObjColDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Swizzle Object Palette.
+        /// </summary>
+        internal static string Rand_ObjectPalette {
+            get {
+                return ResourceManager.GetString("Rand_ObjectPalette", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Swizzle the object colors into a random shade..
+        /// </summary>
+        internal static string Rand_ObjectPaletteDesc {
+            get {
+                return ResourceManager.GetString("Rand_ObjectPaletteDesc", resourceCulture);
             }
         }
         
@@ -417,6 +507,24 @@ namespace CrateModGames.GameSpecific.Crash3 {
         internal static string Rand_WarpRoomDesc {
             get {
                 return ResourceManager.GetString("Rand_WarpRoomDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Randomize Wooden Crates.
+        /// </summary>
+        internal static string Rand_WoodenCrates {
+            get {
+                return ResourceManager.GetString("Rand_WoodenCrates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The types of some wooden crates are randomized..
+        /// </summary>
+        internal static string Rand_WoodenCratesDesc {
+            get {
+                return ResourceManager.GetString("Rand_WoodenCratesDesc", resourceCulture);
             }
         }
         

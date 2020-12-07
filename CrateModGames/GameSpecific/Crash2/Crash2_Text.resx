@@ -303,4 +303,10 @@
   <data name="Rand_EnemyPathsDesc" xml:space="preserve">
     <value>Paths of enemies are randomized.</value>
   </data>
+  <data name="Rand_CrateParams" xml:space="preserve">
+    <value>Randomize Crate Parameters</value>
+  </data>
+  <data name="Rand_CrateParamsDesc" xml:space="preserve">
+    <value>Random crates can float like in water or space.</value>
+  </data>
 </root>

@@ -349,6 +349,24 @@ namespace CrateModGames.GameSpecific.Crash2 {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Randomize Crate Parameters.
+        /// </summary>
+        internal static string Rand_CrateParams {
+            get {
+                return ResourceManager.GetString("Rand_CrateParams", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Random crates can float like in water or space..
+        /// </summary>
+        internal static string Rand_CrateParamsDesc {
+            get {
+                return ResourceManager.GetString("Rand_CrateParamsDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Random Crates Removed.
         /// </summary>
         internal static string Rand_CratesRemoved {

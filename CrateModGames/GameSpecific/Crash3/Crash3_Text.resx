@@ -147,11 +147,23 @@
   <data name="Mod_CameraWideFOVDesc" xml:space="preserve">
     <value>The camera is further away from the player than normal (recommended for Backwards Levels)</value>
   </data>
+  <data name="Mod_GreyscaleObjects" xml:space="preserve">
+    <value>Greyscale Objects</value>
+  </data>
+  <data name="Mod_GreyscaleObjectsDesc" xml:space="preserve">
+    <value>The object colors are greyed out.</value>
+  </data>
   <data name="Mod_GreyscaleWorld" xml:space="preserve">
     <value>Greyscale World</value>
   </data>
   <data name="Mod_GreyscaleWorldDesc" xml:space="preserve">
     <value>The scenery colors are greyed out.</value>
+  </data>
+  <data name="Mod_RemoveWarpRoomWalls" xml:space="preserve">
+    <value>Remove Warp Room Barriers</value>
+  </data>
+  <data name="Mod_RemoveWarpRoomWallsDesc" xml:space="preserve">
+    <value>Remove all barriers in the Warp Room, allowing you to enter warp rooms early. Stepping on a button from a later hub grants powerups from the previous hubs.</value>
   </data>
   <data name="Mod_UntexturedWorld" xml:space="preserve">
     <value>Untextured World</value>
@@ -189,6 +201,18 @@
   <data name="Rand_CrateCounterDesc" xml:space="preserve">
     <value>Randomize the number of required crates to break to get a gem in each level. Breaking more crates than required will not grant a gem.</value>
   </data>
+  <data name="Rand_CrateParams" xml:space="preserve">
+    <value>Randomize Crate Parameters</value>
+  </data>
+  <data name="Rand_CrateParamsDesc" xml:space="preserve">
+    <value>Random crates can float like in water or allow itself to be walked through.</value>
+  </data>
+  <data name="Rand_CratesRemoved" xml:space="preserve">
+    <value>Random Crates Removed</value>
+  </data>
+  <data name="Rand_CratesRemovedDesc" xml:space="preserve">
+    <value>A random amount of crates is removed in each level. The box counter is adjusted accordingly.</value>
+  </data>
   <data name="Rand_FlyingLevels" xml:space="preserve">
     <value>Randomize Biplane Levels</value>
   </data>
@@ -200,6 +224,12 @@
   </data>
   <data name="Rand_ObjColDesc" xml:space="preserve">
     <value>Color palette used in objects is shuffled around.</value>
+  </data>
+  <data name="Rand_ObjectPalette" xml:space="preserve">
+    <value>Swizzle Object Palette</value>
+  </data>
+  <data name="Rand_ObjectPaletteDesc" xml:space="preserve">
+    <value>Swizzle the object colors into a random shade.</value>
   </data>
   <data name="Rand_ObjPalette" xml:space="preserve">
     <value>Randomize Object Palette</value>
@@ -236,6 +266,12 @@
   </data>
   <data name="Rand_WarpRoomDesc" xml:space="preserve">
     <value>Warp Room barriers and buttons are shuffled around.</value>
+  </data>
+  <data name="Rand_WoodenCrates" xml:space="preserve">
+    <value>Randomize Wooden Crates</value>
+  </data>
+  <data name="Rand_WoodenCratesDesc" xml:space="preserve">
+    <value>The types of some wooden crates are randomized.</value>
   </data>
   <data name="Rand_WorldColors" xml:space="preserve">
     <value>Randomize World Colors</value>
