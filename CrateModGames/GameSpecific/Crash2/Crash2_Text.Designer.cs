@@ -448,7 +448,7 @@ namespace CrateModGames.GameSpecific.Crash2 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Color palette used in objects is shuffled around..
+        ///   Looks up a localized string similar to Colors used in objects is shuffled around..
         /// </summary>
         internal static string Rand_ObjColDesc {
             get {

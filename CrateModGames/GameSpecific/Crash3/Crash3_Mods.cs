@@ -295,7 +295,7 @@ namespace CrateModLoader.GameSpecific.Crash3
                             {
                                 if (ent.Type != null && ent.Type == 34)
                                 {
-                                    if (ent.Settings.Count > 1 && ent.Subtype != (int)CrateSubTypes.Slot)
+                                    if (ent.Settings.Count > 1 && ent.Subtype != (int)CrateSubTypes.Slot && ent.Subtype != (int)CrateSubTypes.Clock)
                                     {
                                         int oldSet = ent.Settings[1].ValueB;
 
@@ -2423,6 +2423,311 @@ namespace CrateModLoader.GameSpecific.Crash3
                 }
             }
 
+        }
+
+        class EntityTypePair
+        {
+            public int Type;
+            public int Subtype;
+
+            public EntityTypePair(int t, int s)
+            {
+                Type = t;
+                Subtype = s;
+            }
+        }
+
+        static List<EntityTypePair> EnemiesToRemove = new List<EntityTypePair>()
+        {
+            // Toad Village
+            new EntityTypePair(11, 1), //goat
+            new EntityTypePair(11, 2), //knight
+            new EntityTypePair(11, 6), //log
+            new EntityTypePair(11, 7), //fence
+            new EntityTypePair(11, 0), //frog
+            // Under Pressure
+            new EntityTypePair(2, 1), //shark
+            new EntityTypePair(23, 0), //mine
+            new EntityTypePair(2, 2), //eel
+            new EntityTypePair(2, 0), //pufferfish
+            new EntityTypePair(2, 3), //paddle
+            // Orient Express
+            new EntityTypePair(8, 4), //stone assistant
+            //new EntityTypePair(7, 0), //assistant
+            new EntityTypePair(6, 0), //dragon
+            new EntityTypePair(8, 0), //barrel
+            // Bone Yard
+            new EntityTypePair(13, 0), //grass
+            new EntityTypePair(16, 2), //tery
+            new EntityTypePair(19, 0), //swamp assistant
+            // Makin Waves
+            new EntityTypePair(42, 0), //jet mine
+            new EntityTypePair(46, 0), //boat guy
+            new EntityTypePair(42, 1), //jet mine circle
+            new EntityTypePair(15, 16), //ship
+            new EntityTypePair(15, 18), //ship
+            // Gee Wiz
+            new EntityTypePair(25, 0), //wizard
+            // Hang Em High
+            new EntityTypePair(61, 0), //guard
+            new EntityTypePair(59, 0), //carpet guy
+            new EntityTypePair(58, 0), //scorpion
+            new EntityTypePair(65, 0), //vase guy
+            // Tomb Time
+            new EntityTypePair(37, 2), //cobra
+            new EntityTypePair(37, 0), //croc
+            new EntityTypePair(41, 0), //flamer
+            //new EntityTypePair(39, 0), //vase
+            new EntityTypePair(38, 0), //switch guy
+            new EntityTypePair(37, 4), //spear
+            // Midnight Run
+            new EntityTypePair(31, 0), //runner
+            // Dino Might
+            new EntityTypePair(21, 0), //crash fish
+            // Deep Trouble
+            new EntityTypePair(70, 0), //laser
+            // High Time
+            new EntityTypePair(74, 0), //thrower
+            new EntityTypePair(60, 0), //knife guy
+            // Double Header
+            new EntityTypePair(81, 0), //giant
+            // Sphynxinator
+            new EntityTypePair(57, 0), //sarcophagus
+            // Tell No Tales
+            new EntityTypePair(49, 0), //crows nest
+            new EntityTypePair(47, 0), //shark
+            // Future Frenzy
+            new EntityTypePair(77, 6), //future fence
+            new EntityTypePair(79, 0), //jumper
+            new EntityTypePair(82, 0), //ufo
+            new EntityTypePair(83, 0), //spinner
+            // Tomb Wader
+            new EntityTypePair(71, 0), //scarab
+            new EntityTypePair(76, 0), //jump gator
+            new EntityTypePair(69, 0), //pusher wave
+            new EntityTypePair(75, 0), //shield guy
+            // Gone Tomorrow
+            new EntityTypePair(82, 0), //bazooka robot
+            new EntityTypePair(77, 10), //future fence 2D
+            // Eggipus Rex
+            new EntityTypePair(16, 9), //ptery
+        };
+
+        public static void Mod_RemoveEnemies(NSF nsf, Random rand, Crash3_Levels level, bool isRandom)
+        {
+            foreach (Chunk chunk in nsf.Chunks)
+            {
+                if (chunk is NormalChunk zonechunk)
+                {
+                    foreach (Entry entry in zonechunk.Entries)
+                    {
+                        if (entry is NewZoneEntry zone && zone.EName != "77_gZ") // eggipus entrance
+                        {
+                            foreach (Entity ent in zone.Entities)
+                            {
+                                if (ent.Type != null && ent.Subtype != null)
+                                {
+                                    foreach (EntityTypePair pair in EnemiesToRemove)
+                                    {
+                                        if (pair.Type == ent.Type && pair.Subtype == ent.Subtype)
+                                        {
+                                            if (!isRandom || (isRandom && rand.Next(2) == 0))
+                                            {
+                                                ent.Type = 3;
+                                                ent.Subtype = 16;
+                                                ent.AlternateID = null;
+                                                ent.TimeTrialReward = null;
+                                                ent.Victims.Clear();
+                                                ent.BonusBoxCount = null;
+                                                ent.BoxCount = null;
+                                                ent.DDASection = null;
+                                                ent.DDASettings = null;
+                                                ent.ZMod = null;
+                                                ent.OtherSettings = null;
+                                                ent.Scaling = 0;
+                                                ent.Settings.Clear();
+                                                ent.Settings.Add(new EntitySetting(0, 0));
+                                                ent.ExtraProperties.Clear();
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        static List<EntityTypePair> EnemiesToCrate = new List<EntityTypePair>()
+        {
+            // Toad Village
+            new EntityTypePair(11, 1), //goat
+            new EntityTypePair(11, 2), //knight
+            new EntityTypePair(11, 6), //log
+            new EntityTypePair(11, 7), //fence
+            new EntityTypePair(11, 0), //frog
+            // Under Pressure
+            new EntityTypePair(2, 1), //shark
+            new EntityTypePair(23, 0), //mine
+            //new EntityTypePair(2, 2), //eel
+            new EntityTypePair(2, 0), //pufferfish
+            new EntityTypePair(2, 3), //paddle
+            // Orient Express
+            new EntityTypePair(8, 4), //stone assistant
+            //new EntityTypePair(7, 0), //assistant
+            //new EntityTypePair(6, 0), //dragon
+            new EntityTypePair(8, 0), //barrel
+            // Bone Yard
+            //new EntityTypePair(13, 0), //grass
+            new EntityTypePair(16, 2), //tery
+            new EntityTypePair(19, 0), //swamp assistant
+            // Makin Waves
+            //new EntityTypePair(42, 0), //jet mine
+            //new EntityTypePair(46, 0), //boat guy
+            //new EntityTypePair(42, 1), //jet mine circle
+            //new EntityTypePair(15, 16), //ship
+            //new EntityTypePair(15, 18), //ship
+            // Gee Wiz
+            new EntityTypePair(25, 0), //wizard
+            // Hang Em High
+            new EntityTypePair(61, 0), //guard
+            //new EntityTypePair(59, 0), //carpet guy
+            //new EntityTypePair(58, 0), //scorpion
+            new EntityTypePair(65, 0), //vase guy
+            // Tomb Time
+            new EntityTypePair(37, 2), //cobra
+            //new EntityTypePair(37, 0), //croc
+            new EntityTypePair(41, 0), //flamer
+            //new EntityTypePair(39, 0), //vase
+            new EntityTypePair(38, 0), //switch guy
+            new EntityTypePair(37, 4), //spear
+            // Midnight Run
+            new EntityTypePair(31, 0), //runner
+            // Dino Might
+            new EntityTypePair(21, 0), //crash fish
+            // Deep Trouble
+            //new EntityTypePair(70, 0), //laser
+            // High Time
+            //new EntityTypePair(74, 0), //thrower
+            new EntityTypePair(60, 0), //knife guy
+            // Double Header
+            new EntityTypePair(81, 0), //giant
+            // Sphynxinator
+            new EntityTypePair(57, 0), //sarcophagus
+            // Tell No Tales
+            //new EntityTypePair(49, 0), //crows nest
+            //new EntityTypePair(47, 0), //shark
+            // Future Frenzy
+            new EntityTypePair(77, 6), //future fence
+            new EntityTypePair(79, 0), //jumper
+            new EntityTypePair(82, 0), //ufo
+            new EntityTypePair(83, 0), //spinner
+            // Tomb Wader
+            new EntityTypePair(71, 0), //scarab
+            //new EntityTypePair(76, 0), //jump gator
+            //new EntityTypePair(69, 0), //pusher wave
+            new EntityTypePair(75, 0), //shield guy
+            // Gone Tomorrow
+            new EntityTypePair(82, 0), //bazooka robot
+            new EntityTypePair(77, 10), //future fence 2D
+            // Eggipus Rex
+            //new EntityTypePair(16, 9), //ptery
+        };
+
+
+        public static void Mod_EnemyCrates(NSF nsf, Random rand, Crash3_Levels level, bool isRandom)
+        {
+            List<CrateSubTypes> AvailableTypes = new List<CrateSubTypes>();
+
+            List<CrateSubTypes> PossibleList = new List<CrateSubTypes>()
+            {
+                CrateSubTypes.Aku,
+                CrateSubTypes.Blank,
+                CrateSubTypes.Fruit,
+                CrateSubTypes.Life,
+                CrateSubTypes.Pickup,
+                CrateSubTypes.Nitro,
+                //CrateSubTypes.Iron,
+                //CrateSubTypes.IronSpring,
+            };
+
+            foreach (Chunk chunk in nsf.Chunks)
+            {
+                if (chunk is NormalChunk zonechunk)
+                {
+                    foreach (Entry entry in zonechunk.Entries)
+                    {
+                        if (entry is NewZoneEntry)
+                        {
+                            NewZoneEntry zone = (NewZoneEntry)entry;
+                            foreach (Entity ent in zone.Entities)
+                            {
+                                if (ent.Type == 34 && PossibleList.Contains((CrateSubTypes)ent.Subtype))
+                                {
+                                    if (!AvailableTypes.Contains((CrateSubTypes)ent.Subtype))
+                                    {
+                                        AvailableTypes.Add((CrateSubTypes)ent.Subtype);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            foreach (Chunk chunk in nsf.Chunks)
+            {
+                if (chunk is NormalChunk zonechunk)
+                {
+                    foreach (Entry entry in zonechunk.Entries)
+                    {
+                        if (entry is NewZoneEntry zone && zone.EName != "77_gZ") // eggipus entrance
+                        {
+                            foreach (Entity ent in zone.Entities)
+                            {
+                                ent.Name = null; // may need the extra space
+                                if (ent.Type != null && ent.Subtype != null)
+                                {
+                                    foreach (EntityTypePair pair in EnemiesToCrate)
+                                    {
+                                        if (pair.Type == ent.Type && pair.Subtype == ent.Subtype)
+                                        {
+                                            if (!isRandom || (isRandom && rand.Next(2) == 0))
+                                            {
+                                                ent.Type = 34;
+                                                ent.Subtype = (int)AvailableTypes[rand.Next(AvailableTypes.Count)];
+                                                ent.AlternateID = null;
+                                                ent.TimeTrialReward = null;
+                                                ent.Victims.Clear();
+                                                ent.BonusBoxCount = null;
+                                                ent.BoxCount = null;
+                                                ent.DDASection = null;
+                                                ent.DDASettings = null;
+                                                ent.ZMod = null;
+                                                ent.OtherSettings = null;
+                                                //ent.Scaling = 0;
+                                                ent.Settings.Clear();
+                                                ent.Settings.Add(new EntitySetting(0, 0));
+                                                ent.Settings.Add(new EntitySetting(0, 0));
+                                                ent.Settings.Add(new EntitySetting(0, 0));
+                                                ent.ExtraProperties.Clear();
+                                                int randPos = rand.Next(ent.Positions.Count / 2);
+                                                EntityPosition StartPos = ent.Positions[randPos];
+                                                ent.Positions.Clear();
+                                                ent.Positions.Add(StartPos);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            CrashTri_Common.Fix_Detonator(nsf);
+            CrashTri_Common.Fix_BoxCount(nsf);
         }
 
         public static void Mod_RandomizeBosses(NSF nsf, NewNSD nsd, Crash3_Levels level, Random rand, bool isBackwards)

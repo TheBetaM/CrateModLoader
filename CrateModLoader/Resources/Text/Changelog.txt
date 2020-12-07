@@ -1,15 +1,15 @@
 1.3.0
 
-General:
+General
 - PS2 ROM building is now supported internally (Thanks to Smartkin). Folder mode is now supported.  
 - Options are now handled the same as Mod Menu properties allowing them to be set by Mod Crates and enabling variations and choices like difficulty settings in Mod Menus.  
 - Select games' data can now be preloaded allowing an extended Mod Menu+.
 
-Crash Nitro Kart:
+Crash Nitro Kart
 - Mod Menu+ enabled (All)
 - Mod Menu: More understandable names and descriptions
 
-Crash Twinsanity:
+Crash Twinsanity
 - Mod Menu+ enabled (PS2)
 - New feature: Classic Health
 - New feature: Classic Explosion Damage
@@ -19,23 +19,23 @@ Crash Twinsanity:
 - Fixed default values for character health.
 - Randomize Character Parameters: No longer changes jump parameteres.
 
-Crash Tag Team Racing:
+Crash Tag Team Racing
 - Randomize Race Laps: Rings of Uranus now randomized between 3 and 12 laps.
 
-Rayman 3: Hoodlum Havoc:
+Rayman 3: Hoodlum Havoc
 - Mod Menu+ enabled (GCN)
 - New feature: Randomize Sub-Level Order
 - New feature: Randomize Outfit Colors (GCN)
 - New feature: Randomize Copter Colors (GCN)
 - New feature: Randomize HUD Colors (GCN)
 
-Crash Bandicoot:
+Crash Bandicoot
 - New feature: Randomize Wooden Crates
 - New feature: Random Enemies/Hazards Removed
 - New feature: All Enemies/Hazards Removed
 - Backwards Hog Levels: Removed checkpoints since they didn't work anyway.
 
-Crash Bandicoot 2: Cortex Strikes Back:
+Crash Bandicoot 2: Cortex Strikes Back
 - New feature: Randomize Wooden Crates
 - New feature: Random Crates Removed
 - New feature: Randomize Crate Parameters
@@ -54,12 +54,14 @@ Crash Bandicoot 2: Cortex Strikes Back:
 - Pants color can now be customized in the Mod Menu.
 - Randomize Crate Counter: Adjusted minimum counts to prevent impossible scenarios.
 
-Crash Bandicoot: WARPED:
+Crash Bandicoot: WARPED
 - New feature: Randomize Wooden Crates
 - New feature: Random Crates Removed
 - New feature: Randomize Crate Parameters
 - New feature: Random Enemies/Hazards Removed
 - New feature: All Enemies/Hazards Removed
+- New feature: Random Enemies Are Random Crates
+- New feature: All Enemies Are Random Crates
 - New feature: Remove Warp Room Barriers
 - New feature: Randomize World Textures
 - New feature: Randomize Object Colors

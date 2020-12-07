@@ -151,6 +151,42 @@ namespace CrateModGames.GameSpecific.Crash3 {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All Enemies Removed.
+        /// </summary>
+        internal static string Mod_EnemiesRemoved {
+            get {
+                return ResourceManager.GetString("Mod_EnemiesRemoved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enemies and hazards are removed in each level..
+        /// </summary>
+        internal static string Mod_EnemiesRemovedDesc {
+            get {
+                return ResourceManager.GetString("Mod_EnemiesRemovedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All Enemies Are Random Crates (Beta).
+        /// </summary>
+        internal static string Mod_EnemyCrates {
+            get {
+                return ResourceManager.GetString("Mod_EnemyCrates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All enemies and hazards are turned into random crates in each level. The box counter is adjusted accordingly..
+        /// </summary>
+        internal static string Mod_EnemyCratesDesc {
+            get {
+                return ResourceManager.GetString("Mod_EnemyCratesDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Greyscale Objects.
         /// </summary>
         internal static string Mod_GreyscaleObjects {
@@ -345,6 +381,42 @@ namespace CrateModGames.GameSpecific.Crash3 {
         internal static string Rand_CratesRemovedDesc {
             get {
                 return ResourceManager.GetString("Rand_CratesRemovedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Random Enemies Removed.
+        /// </summary>
+        internal static string Rand_EnemiesRemoved {
+            get {
+                return ResourceManager.GetString("Rand_EnemiesRemoved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Random enemies and hazards are removed in each level..
+        /// </summary>
+        internal static string Rand_EnemiesRemovedDesc {
+            get {
+                return ResourceManager.GetString("Rand_EnemiesRemovedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Random Enemies Are Random Crates (Beta).
+        /// </summary>
+        internal static string Rand_EnemyCrates {
+            get {
+                return ResourceManager.GetString("Rand_EnemyCrates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Random enemies and hazards are turned into random crates in each level. The box counter is adjusted accordingly..
+        /// </summary>
+        internal static string Rand_EnemyCratesDesc {
+            get {
+                return ResourceManager.GetString("Rand_EnemyCratesDesc", resourceCulture);
             }
         }
         

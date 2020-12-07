@@ -291,4 +291,28 @@
   <data name="Rand_WorldTexDesc" xml:space="preserve">
     <value>Textures and animated textures used in scenery are shuffled around.</value>
   </data>
+  <data name="Mod_EnemiesRemoved" xml:space="preserve">
+    <value>All Enemies Removed</value>
+  </data>
+  <data name="Mod_EnemiesRemovedDesc" xml:space="preserve">
+    <value>Enemies and hazards are removed in each level.</value>
+  </data>
+  <data name="Mod_EnemyCrates" xml:space="preserve">
+    <value>All Enemies Are Random Crates (Beta)</value>
+  </data>
+  <data name="Mod_EnemyCratesDesc" xml:space="preserve">
+    <value>All enemies and hazards are turned into random crates in each level. The box counter is adjusted accordingly.</value>
+  </data>
+  <data name="Rand_EnemiesRemoved" xml:space="preserve">
+    <value>Random Enemies Removed</value>
+  </data>
+  <data name="Rand_EnemiesRemovedDesc" xml:space="preserve">
+    <value>Random enemies and hazards are removed in each level.</value>
+  </data>
+  <data name="Rand_EnemyCrates" xml:space="preserve">
+    <value>Random Enemies Are Random Crates (Beta)</value>
+  </data>
+  <data name="Rand_EnemyCratesDesc" xml:space="preserve">
+    <value>Random enemies and hazards are turned into random crates in each level. The box counter is adjusted accordingly.</value>
+  </data>
 </root>

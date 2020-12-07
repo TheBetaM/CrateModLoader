@@ -49,13 +49,12 @@ namespace CrateModLoader.GameSpecific.Crash3
             },
         };
 
-        
-        
-        public static ModPropOption Option_BackwardsLevels = new ModPropOption(Crash3_Text.Mod_BackwardsLevels, Crash3_Text.Mod_BackwardsLevelsDesc);
-        public static ModPropOption Option_RandBackwardsLevels = new ModPropOption(Crash3_Text.Rand_BackwardsLevels, Crash3_Text.Rand_BackwardsLevelsDesc);
         public static ModPropOption Option_RandCrates = new ModPropOption(Crash3_Text.Rand_WoodenCrates, Crash3_Text.Rand_WoodenCratesDesc);
         public static ModPropOption Option_RandCratesMissing = new ModPropOption(Crash3_Text.Rand_CratesRemoved, Crash3_Text.Rand_CratesRemovedDesc);
-        public static ModPropOption Option_RandEnemiesMissing = new ModPropOption("Random Enemies/Hazards Removed", ""); //todo
+        public static ModPropOption Option_RandEnemiesMissing = new ModPropOption(Crash3_Text.Rand_EnemiesRemoved, Crash3_Text.Rand_EnemiesRemovedDesc); 
+        public static ModPropOption Option_RandEnemiesAreCrates = new ModPropOption(Crash3_Text.Rand_EnemyCrates, Crash3_Text.Rand_EnemyCratesDesc);
+        public static ModPropOption Option_BackwardsLevels = new ModPropOption(Crash3_Text.Mod_BackwardsLevels, Crash3_Text.Mod_BackwardsLevelsDesc);
+        public static ModPropOption Option_RandBackwardsLevels = new ModPropOption(Crash3_Text.Rand_BackwardsLevels, Crash3_Text.Rand_BackwardsLevelsDesc);
         public static ModPropOption Option_RandCrateContents = new ModPropOption(Crash3_Text.Rand_CrateContents, Crash3_Text.Rand_CrateContentsDesc);
         public static ModPropOption Option_RandCrateParams = new ModPropOption(Crash3_Text.Rand_CrateParams, Crash3_Text.Rand_CrateParamsDesc);
         public static ModPropOption Option_RandBoxCount = new ModPropOption(Crash3_Text.Rand_CrateCounter, Crash3_Text.Rand_CrateCounterDesc);
@@ -79,7 +78,9 @@ namespace CrateModLoader.GameSpecific.Crash3
 
         // less used
         [ModCategory(1)]
-        public static ModPropOption Option_AllEnemiesMissing = new ModPropOption("All Enemies/Hazards Removed", "") { ModMenuOnly = true };
+        public static ModPropOption Option_AllEnemiesAreCrates = new ModPropOption(Crash3_Text.Mod_EnemyCrates, Crash3_Text.Mod_EnemyCratesDesc) { ModMenuOnly = true };
+        [ModCategory(1)]
+        public static ModPropOption Option_AllEnemiesMissing = new ModPropOption(Crash3_Text.Mod_EnemiesRemoved, Crash3_Text.Mod_EnemiesRemovedDesc) { ModMenuOnly = true };
         [ModCategory(1)]
         public static ModPropOption Option_UncoloredObj = new ModPropOption(Crash3_Text.Mod_GreyscaleObjects, Crash3_Text.Mod_GreyscaleObjectsDesc) { ModMenuOnly = true };
         [ModCategory(1)]
@@ -178,6 +179,10 @@ namespace CrateModLoader.GameSpecific.Crash3
                 if (Option_RandBosses.Enabled) Crash3_Mods.Mod_RandomizeBosses(nsf, nsd, NSF_Level, rand, false);
                 if (Option_RandFlyingLevels.Enabled) Crash3_Mods.Mod_RandomizeFlyingLevels(nsf, nsd, NSF_Level, rand, false);
                 if (Option_RandBoxCount.Enabled) Crash3_Mods.Rand_BoxCount(nsf, rand, NSF_Level);
+                if (Option_AllEnemiesMissing.Enabled) Crash3_Mods.Mod_RemoveEnemies(nsf, rand, NSF_Level, false);
+                if (Option_RandEnemiesAreCrates.Enabled) Crash3_Mods.Mod_EnemyCrates(nsf, rand, NSF_Level, true);
+                if (Option_AllEnemiesAreCrates.Enabled) Crash3_Mods.Mod_EnemyCrates(nsf, rand, NSF_Level, false);
+                if (Option_RandEnemiesMissing.Enabled) Crash3_Mods.Mod_RemoveEnemies(nsf, rand, NSF_Level, true);
                 if (Option_RandCratesMissing.Enabled) Crash3_Mods.Rand_CratesMissing(nsf, rand);
                 if (Option_RandCrateContents.Enabled) Crash3_Mods.Mod_RandomCrateContents(nsf, rand);
                 if (Option_RandCrateParams.Enabled) Crash3_Mods.Mod_RandomCrateParams(nsf, rand, NSF_Level);
