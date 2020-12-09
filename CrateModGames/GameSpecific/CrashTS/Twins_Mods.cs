@@ -395,6 +395,43 @@ namespace CrateModLoader.GameSpecific.CrashTS
             }
         }
 
+        public static void SM_Rand_WorldPalette(TwinsFile SM_Archive, Modder_Twins.ColorSwizzleData Swiz)
+        {
+            if (SM_Archive.Type != TwinsFile.FileType.SM2) return;
+            if (!SM_Archive.ContainsItem(6)) return;
+            TwinsSection section = SM_Archive.GetItem<TwinsSection>(6);
+            if (section.ContainsItem((uint)RM_Graphics_Sections.Models) && section.Records.Count > 0)
+            {
+                TwinsSection model_section = section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.Models);
+
+                foreach (TwinsItem item in model_section.Records)
+                {
+                    Model model = (Model)item;
+                    for (int i = 0; i < model.SubModels.Count; i++)
+                    {
+                        for (int g = 0; g < model.SubModels[i].Groups.Count; g++)
+                        {
+                            for (int v = 0; v < model.SubModels[i].Groups[g].VData.Length; v++)
+                            {
+                                float maxVal = Math.Max(model.SubModels[i].Groups[g].VData[v].R, model.SubModels[i].Groups[g].VData[v].G);
+                                maxVal = Math.Max(maxVal, model.SubModels[i].Groups[g].VData[v].B);
+                                maxVal = maxVal / 255f;
+
+                                int r = model.SubModels[i].Groups[g].VData[v].R;
+                                int gr = model.SubModels[i].Groups[g].VData[v].G;
+                                int b = model.SubModels[i].Groups[g].VData[v].B;
+
+                                model.SubModels[i].Groups[g].VData[v].R = (byte)((Swiz.r_r * r + Swiz.r_g * gr + Swiz.r_b * b) / Swiz.r_s);
+                                model.SubModels[i].Groups[g].VData[v].G = (byte)((Swiz.g_r * r + Swiz.g_g * gr + Swiz.g_b * b) / Swiz.g_s);
+                                model.SubModels[i].Groups[g].VData[v].B = (byte)((Swiz.b_r * r + Swiz.b_g * gr + Swiz.b_b * b) / Swiz.b_s);
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+
         public static void SM_Mod_GreyscaleWorld(TwinsFile SM_Archive)
         {
             if (SM_Archive.Type != TwinsFile.FileType.SM2) return;

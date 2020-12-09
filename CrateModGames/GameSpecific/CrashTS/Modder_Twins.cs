@@ -154,8 +154,15 @@ namespace CrateModLoader.GameSpecific.CrashTS
         public static ModPropOption Option_ClassicHealth = new ModPropOption(Twins_Text.Mod_ClassicHealth, Twins_Text.Mod_ClassicHealthDesc);
         public static ModPropOption Option_ClassicExplosions = new ModPropOption(Twins_Text.Mod_ClassicExplosionDaamge, Twins_Text.Mod_ClassicExplosionDamageDesc);
         public static ModPropOption Option_UnlockedCamera = new ModPropOption(Twins_Text.Mod_UnlockedCamera, Twins_Text.Mod_UnlockedCameraDesc);
+        public static ModPropOption Option_ClassicBossHealth = new ModPropOption("Classic Boss Health", "Start boss fights with 2 masks.") // TODO
+        { Hidden = true, };
+        public static ModPropOption Option_SkipCutscenes = new ModPropOption("Skip Cutscenes", "Skips all non-video cutscenes after entering.") // TODO
+        { Hidden = true, };
+        public static ModPropOption Option_ClassicCrates = new ModPropOption(Twins_Text.Mod_ClassicCratePersistence, Twins_Text.Mod_ClassicCratePersistenceDesc) // TODO
+        { Hidden = true, };
 
         public static ModPropOption Option_RandomizeMusic = new ModPropOption(Twins_Text.Rand_Music, Twins_Text.Rand_MusicDesc);
+        public static ModPropOption Option_RandWorldPalette = new ModPropOption(Twins_Text.Rand_WorldPalette, Twins_Text.Rand_WorldPaletteDesc);
         public static ModPropOption Option_GreyscaleWorld = new ModPropOption(Twins_Text.Mod_GreyscaleWorld, Twins_Text.Mod_GreyscaleWorldDesc) // todo: textures
         { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 }, };
         public static ModPropOption Option_UntexturedWorld = new ModPropOption(Twins_Text.Mod_UntexturedWorld, Twins_Text.Mod_UntexturedWorldDesc);
@@ -165,19 +172,11 @@ namespace CrateModLoader.GameSpecific.CrashTS
         public static ModPropNamedFloatArray Prop_PantsColor = new ModPropNamedFloatArray(new float[3] { 0, 0, 1f }, new string[] { "Red", "Green", "Blue" }, Twins_Text.Prop_PantsColor, Twins_Text.Prop_PantsColorDesc)
         { Hidden = true };
 
-        public static ModPropOption Option_RandWorldPalette = new ModPropOption("Randomize World Palette", "") // TODO
-        { Hidden = true, };
         public static ModPropOption Option_MirroredWorld = new ModPropOption("Mirrored World", "") // TODO
         { Hidden = true, };
         public static ModPropOption Option_RandEnemies = new ModPropOption("Randomize Enemies (Soundless)", "") // not stable enough
         { Hidden = true, };
         public static ModPropOption Option_RandStartingChunk = new ModPropOption("Randomize Starting Chunk", "") // TODO
-        { Hidden = true, };
-        public static ModPropOption Option_ClassicCrates = new ModPropOption(Twins_Text.Mod_ClassicCratePersistence, Twins_Text.Mod_ClassicCratePersistenceDesc) // TODO
-        { Hidden = true, };
-        public static ModPropOption Option_ClassicBossHealth = new ModPropOption("Classic Boss Health", "Start boss fights with 2 masks.") // TODO
-        { Hidden = true, };
-        public static ModPropOption Option_SkipCutscenes = new ModPropOption("Skip Cutscenes", "Skips all non-video cutscenes after entering.") // TODO
         { Hidden = true, };
 
         public Modder_Twins()
@@ -260,7 +259,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 }
             }
 
-            if (Option_GreyscaleWorld.Enabled || Option_UntexturedWorld.Enabled)
+            if (Option_GreyscaleWorld.Enabled || Option_UntexturedWorld.Enabled || Option_RandWorldPalette.Enabled)
             {
                 Twins_Edit_AllScenery = true;
             }
@@ -980,6 +979,8 @@ namespace CrateModLoader.GameSpecific.CrashTS
             TwinsFile SM_Archive = new TwinsFile();
             SM_Archive.LoadFile(path, smType);
 
+            if (Option_RandWorldPalette.Enabled)
+                Twins_Mods.SM_Rand_WorldPalette(SM_Archive, new ColorSwizzleData(randState));
             if (Option_GreyscaleWorld.Enabled)
                 Twins_Mods.SM_Mod_GreyscaleWorld(SM_Archive);
             if (Option_UntexturedWorld.Enabled)
@@ -1139,6 +1140,42 @@ namespace CrateModLoader.GameSpecific.CrashTS
                         }
                     }
                 }
+            }
+        }
+
+        public class ColorSwizzleData
+        {
+            public int r_r;
+            public int r_g;
+            public int r_b;
+            public int r_s;
+            public int g_r;
+            public int g_g;
+            public int g_b;
+            public int g_s;
+            public int b_r;
+            public int b_g;
+            public int b_b;
+            public int b_s;
+
+            public ColorSwizzleData(Random rand)
+            {
+                r_r = rand.Next(2);
+                r_g = rand.Next(2);
+                r_b = rand.Next(2);
+                r_s = r_r + r_g + r_b;
+                g_r = rand.Next(2);
+                g_g = rand.Next(2);
+                g_b = rand.Next(2);
+                g_s = g_r + g_g + g_b;
+                b_r = rand.Next(2);
+                b_g = rand.Next(2);
+                b_b = rand.Next(2);
+                b_s = b_r + b_g + b_b;
+
+                if (r_s == 0) r_s = 1;
+                if (g_s == 0) g_s = 1;
+                if (b_s == 0) b_s = 1;
             }
         }
 

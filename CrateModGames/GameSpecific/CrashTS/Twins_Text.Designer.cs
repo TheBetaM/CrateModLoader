@@ -1438,6 +1438,24 @@ namespace CrateModGames.GameSpecific.CrashTS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Randomize World Palette.
+        /// </summary>
+        internal static string Rand_WorldPalette {
+            get {
+                return ResourceManager.GetString("Rand_WorldPalette", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Swizzle the scenery colors into a random shade..
+        /// </summary>
+        internal static string Rand_WorldPaletteDesc {
+            get {
+                return ResourceManager.GetString("Rand_WorldPaletteDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Randomize the color of Crash&apos;s pants..
         /// </summary>
         internal static string Rnad_PantsColorDesc {
