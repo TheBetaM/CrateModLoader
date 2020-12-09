@@ -145,6 +145,10 @@ namespace CrateModLoader.GameSpecific.CrashTS
         };
         public static ModPropOption Option_RandGemLocations = new ModPropOption(Twins_Text.Rand_GemLocations, Twins_Text.Rand_GemLocationsDesc);
         public static ModPropOption Option_RandCharacterParams = new ModPropOption(Twins_Text.Rand_CharParams, Twins_Text.Rand_CharParamsDesc);
+        public static ModPropOption Option_RandSurfaces = new ModPropOption(Twins_Text.Rand_SurfaceParams, Twins_Text.Rand_SurfaceParamsDesc);
+        public static ModPropOption Option_RandomWumpaCrates = new ModPropOption(Twins_Text.Rand_WumpaIntoCrates, Twins_Text.Rand_WumpaIntoCratesDesc);
+        [ModCategory((int)ModProps.Misc)]
+        public static ModPropOption Option_AllWumpaCrates = new ModPropOption(Twins_Text.Mod_WumpaIntoCrates, Twins_Text.Mod_WumpaIntoCratesDesc) { ModMenuOnly = true, };
         public static ModPropOption Option_FlyingKick = new ModPropOption(Twins_Text.Mod_FlyingKick, Twins_Text.Mod_FlyingKickDesc);
         public static ModPropOption Option_StompKick = new ModPropOption(Twins_Text.Mod_StompKick, Twins_Text.Mod_StompKickDesc);
         public static ModPropOption Option_DoubleJumpCortex = new ModPropOption(Twins_Text.Mod_CortexDoubleJump, Twins_Text.Mod_CortexDoubleJumpDesc);
@@ -154,11 +158,14 @@ namespace CrateModLoader.GameSpecific.CrashTS
         public static ModPropOption Option_ClassicHealth = new ModPropOption(Twins_Text.Mod_ClassicHealth, Twins_Text.Mod_ClassicHealthDesc);
         public static ModPropOption Option_ClassicExplosions = new ModPropOption(Twins_Text.Mod_ClassicExplosionDaamge, Twins_Text.Mod_ClassicExplosionDamageDesc);
         public static ModPropOption Option_UnlockedCamera = new ModPropOption(Twins_Text.Mod_UnlockedCamera, Twins_Text.Mod_UnlockedCameraDesc);
+
         public static ModPropOption Option_ClassicBossHealth = new ModPropOption("Classic Boss Health", "Start boss fights with 2 masks.") // TODO
         { Hidden = true, };
         public static ModPropOption Option_SkipCutscenes = new ModPropOption("Skip Cutscenes", "Skips all non-video cutscenes after entering.") // TODO
         { Hidden = true, };
         public static ModPropOption Option_ClassicCrates = new ModPropOption(Twins_Text.Mod_ClassicCratePersistence, Twins_Text.Mod_ClassicCratePersistenceDesc) // TODO
+        { Hidden = true, };
+        public static ModPropOption Option_RandStartingChunk = new ModPropOption("Randomize Starting Level", "") // TODO
         { Hidden = true, };
 
         public static ModPropOption Option_RandomizeMusic = new ModPropOption(Twins_Text.Rand_Music, Twins_Text.Rand_MusicDesc);
@@ -166,7 +173,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
         public static ModPropOption Option_GreyscaleWorld = new ModPropOption(Twins_Text.Mod_GreyscaleWorld, Twins_Text.Mod_GreyscaleWorldDesc) // todo: textures
         { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 }, };
         public static ModPropOption Option_UntexturedWorld = new ModPropOption(Twins_Text.Mod_UntexturedWorld, Twins_Text.Mod_UntexturedWorldDesc);
-        public static ModPropOption Option_RandPantsColor = new ModPropOption(Twins_Text.Rand_PantsColor, Twins_Text.Rnad_PantsColorDesc) { Hidden = true, }; // doesn't work yet
+        public static ModPropOption Option_RandPantsColor = new ModPropOption(Twins_Text.Rand_PantsColor, Twins_Text.Rand_PantsColorDesc) { Hidden = true, }; // doesn't work yet
 
         [ModCategory((int)ModProps.Misc)]
         public static ModPropNamedFloatArray Prop_PantsColor = new ModPropNamedFloatArray(new float[3] { 0, 0, 1f }, new string[] { "Red", "Green", "Blue" }, Twins_Text.Prop_PantsColor, Twins_Text.Prop_PantsColorDesc)
@@ -175,8 +182,6 @@ namespace CrateModLoader.GameSpecific.CrashTS
         public static ModPropOption Option_MirroredWorld = new ModPropOption("Mirrored World", "") // TODO
         { Hidden = true, };
         public static ModPropOption Option_RandEnemies = new ModPropOption("Randomize Enemies (Soundless)", "") // not stable enough
-        { Hidden = true, };
-        public static ModPropOption Option_RandStartingChunk = new ModPropOption("Randomize Starting Chunk", "") // TODO
         { Hidden = true, };
 
         public Modder_Twins()
@@ -202,6 +207,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
         internal Script StrafeLeft = null;
         internal Script StrafeRight = null;
         internal Script GenericCrateExplode = null;
+        internal Dictionary<int, int> randSurfaces = new Dictionary<int, int>();
         
 
         public override void StartModProcess()
@@ -237,6 +243,34 @@ namespace CrateModLoader.GameSpecific.CrashTS
             //Start Modding
             randState = new Random(ModLoaderGlobals.RandomizerSeed);
             
+            if (Option_RandStartingChunk.Enabled)
+            {
+                ChunkType randChunk = Twins_Data.possibleStartingChunks[randState.Next(Twins_Data.possibleStartingChunks.Count)];
+                bool longName = false;
+                for (int i = 0; i < Twins_Data.All_Chunks.Count; i++)
+                {
+                    if (Twins_Data.All_Chunks[i].Chunk == randChunk)
+                    {
+                        if (Twins_Data.All_Chunks[i].Path.Length >= 0x17)
+                        {
+                            longName = true;
+                        }
+                        if (longName)
+                        {
+                            Twins_Settings.UnsafeStartingChunk.Value = Twins_Data.All_Chunks[i].Path;
+                            Twins_Settings.UnsafeStartingChunk.HasChanged = true;
+                        }
+                        else
+                        {
+                            Twins_Settings.StartingChunk.Value = Twins_Data.All_Chunks[i].Path;
+                            Twins_Settings.StartingChunk.HasChanged = true;
+                        }
+                        break;
+                    }
+                }
+
+            }
+
             Twins_Settings.PatchEXE(ConsolePipeline.Metadata.Console, GameRegion.Region, ConsolePipeline.ExtractedPath, GameRegion.ExecName);
 
             ModCrates.InstallLayerMods(bdPath, 1);
@@ -662,7 +696,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
             }
             
 
-            if (Option_UnusedEnemies.Enabled || Option_RandPantsColor.Enabled || Option_UnlockedCamera.Enabled)
+            if (Option_UnusedEnemies.Enabled || Option_RandPantsColor.Enabled || Option_UnlockedCamera.Enabled || Option_AllWumpaCrates.Enabled || Option_RandomWumpaCrates.Enabled)
             {
                 Twins_Edit_AllLevels = true;
             }
@@ -671,6 +705,16 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 Twins_Data_Characters.Twins_Randomize_Character((int)CharacterID.Crash, ref randState);
                 Twins_Data_Characters.Twins_Randomize_Character((int)CharacterID.Cortex, ref randState);
                 Twins_Data_Characters.Twins_Randomize_Character((int)CharacterID.Nina, ref randState);
+                Twins_Edit_AllLevels = true;
+            }
+            if (Option_RandSurfaces.Enabled)
+            {
+                randSurfaces = new Dictionary<int, int>();
+                for (int i = 0; i < Twins_Randomizers.SurfacesToChange.Count; i++)
+                {
+                    // surfaces can repeat
+                    randSurfaces.Add((int)Twins_Randomizers.SurfacesToChange[i], (int)Twins_Randomizers.SurfacesToPlace[randState.Next(Twins_Randomizers.SurfacesToPlace.Count)]);
+                }
                 Twins_Edit_AllLevels = true;
             }
 
@@ -805,6 +849,10 @@ namespace CrateModLoader.GameSpecific.CrashTS
 
             if (Option_RandCrates.Value == 1)
                 Twins_Randomizers.RM_Randomize_Crates(RM_Archive, chunkType, ref randState, ref CrateReplaceList, ref randCrateList);
+            if (Option_RandomWumpaCrates.Enabled)
+                Twins_Randomizers.RM_WumpaIntoRandomCrates(RM_Archive, chunkType, ref randState, true);
+            if (Option_AllWumpaCrates.Enabled)
+                Twins_Randomizers.RM_WumpaIntoRandomCrates(RM_Archive, chunkType, ref randState, false);
             if (Option_RandGemLocations.Enabled)
                 Twins_Randomizers.RM_Randomize_Gems(RM_Archive, chunkType, ref gemObjectList);
             if (Option_RandomizeMusic.Enabled)
@@ -813,6 +861,8 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 Twins_Randomizers.RM_Randomize_CharacterInstanceStats(RM_Archive);
             if (Option_RandEnemies.Enabled)
                 Twins_Randomizers.RM_Randomize_Enemies(RM_Archive, chunkType, ref randState, ref EnemyReplaceList, ref EnemyInsertList);
+            if (Option_RandSurfaces.Enabled)
+                Twins_Randomizers.RM_Randomize_Surfaces(RM_Archive, randSurfaces);
             if (Option_RandPantsColor.Enabled)
                 Twins_Randomizers.RM_Randomize_PantsColor(RM_Archive, Color.Green);
 

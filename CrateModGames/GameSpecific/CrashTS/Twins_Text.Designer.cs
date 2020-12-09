@@ -1321,6 +1321,24 @@ namespace CrateModGames.GameSpecific.CrashTS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All Wumpa Are Random Crates.
+        /// </summary>
+        internal static string Mod_WumpaIntoCrates {
+            get {
+                return ResourceManager.GetString("Mod_WumpaIntoCrates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turn all wumpa fruit into random crates in each level..
+        /// </summary>
+        internal static string Mod_WumpaIntoCratesDesc {
+            get {
+                return ResourceManager.GetString("Mod_WumpaIntoCratesDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pants Color.
         /// </summary>
         internal static string Prop_PantsColor {
@@ -1438,6 +1456,33 @@ namespace CrateModGames.GameSpecific.CrashTS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Randomize the color of Crash&apos;s pants..
+        /// </summary>
+        internal static string Rand_PantsColorDesc {
+            get {
+                return ResourceManager.GetString("Rand_PantsColorDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Randomize Surface Parameters.
+        /// </summary>
+        internal static string Rand_SurfaceParams {
+            get {
+                return ResourceManager.GetString("Rand_SurfaceParams", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Randomize the properties of walkable surfaces..
+        /// </summary>
+        internal static string Rand_SurfaceParamsDesc {
+            get {
+                return ResourceManager.GetString("Rand_SurfaceParamsDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Randomize World Palette.
         /// </summary>
         internal static string Rand_WorldPalette {
@@ -1456,11 +1501,20 @@ namespace CrateModGames.GameSpecific.CrashTS {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Randomize the color of Crash&apos;s pants..
+        ///   Looks up a localized string similar to Random Wumpa Are Random Crates.
         /// </summary>
-        internal static string Rnad_PantsColorDesc {
+        internal static string Rand_WumpaIntoCrates {
             get {
-                return ResourceManager.GetString("Rnad_PantsColorDesc", resourceCulture);
+                return ResourceManager.GetString("Rand_WumpaIntoCrates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turn random wumpa fruit into random crates in each level..
+        /// </summary>
+        internal static string Rand_WumpaIntoCratesDesc {
+            get {
+                return ResourceManager.GetString("Rand_WumpaIntoCratesDesc", resourceCulture);
             }
         }
         

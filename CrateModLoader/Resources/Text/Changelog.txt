@@ -14,6 +14,10 @@ Crash Twinsanity
 - New feature: Classic Health
 - New feature: Classic Explosion Damage
 - New feature: Unlocked Camera Everywhere
+- New feature: Randomize Surface Parameters
+- New feature: Random Wumpa Are Random Crates
+- New feature: All Wumpa Are Random Crates
+- New feature: Randomize World Palette
 - New feature: Untextured World
 - New feature: Greyscale World (PS2)
 - Mod Menu: More understandable names and descriptions

@@ -594,7 +594,25 @@
   <data name="Rand_WorldPaletteDesc" xml:space="preserve">
     <value>Swizzle the scenery colors into a random shade.</value>
   </data>
-  <data name="Rnad_PantsColorDesc" xml:space="preserve">
+  <data name="Rand_PantsColorDesc" xml:space="preserve">
     <value>Randomize the color of Crash's pants.</value>
+  </data>
+  <data name="Mod_WumpaIntoCrates" xml:space="preserve">
+    <value>All Wumpa Are Random Crates</value>
+  </data>
+  <data name="Mod_WumpaIntoCratesDesc" xml:space="preserve">
+    <value>Turn all wumpa fruit into random crates in each level.</value>
+  </data>
+  <data name="Rand_SurfaceParams" xml:space="preserve">
+    <value>Randomize Surface Parameters</value>
+  </data>
+  <data name="Rand_SurfaceParamsDesc" xml:space="preserve">
+    <value>Randomize the properties of walkable surfaces.</value>
+  </data>
+  <data name="Rand_WumpaIntoCrates" xml:space="preserve">
+    <value>Random Wumpa Are Random Crates</value>
+  </data>
+  <data name="Rand_WumpaIntoCratesDesc" xml:space="preserve">
+    <value>Turn random wumpa fruit into random crates in each level.</value>
   </data>
 </root>
