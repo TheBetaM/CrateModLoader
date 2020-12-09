@@ -10,6 +10,13 @@ namespace CrateModLoader.GameSpecific.CrashTS
 
         public static void RM_Randomize_Crates(TwinsFile RM_Archive, ChunkType chunkType, ref Random randState, ref List<uint> CrateReplaceList, ref List<uint> randCrateList)
         {
+            List<ChunkType> BannedChunks = new List<ChunkType>()
+            {
+                ChunkType.School_Rooftop_BusChase,
+            };
+            if (BannedChunks.Contains(chunkType))
+                return;
+
             randState = new Random((ModLoaderGlobals.RandomizerSeed + (int)chunkType) % int.MaxValue);
             List<uint> lifecrates = new List<uint>
             {
@@ -733,6 +740,21 @@ namespace CrateModLoader.GameSpecific.CrashTS
 
         public static void RM_WumpaIntoRandomCrates(TwinsFile RM_Archive, ChunkType chunkType, ref Random randState, bool isRandom)
         {
+            List<ChunkType> BannedChunks = new List<ChunkType>()
+            {
+                ChunkType.AltEarth_Core_Throne,
+                ChunkType.School_Rooftop_BusChase,
+                ChunkType.School_Rooftop_Roof01,
+                ChunkType.School_Rooftop_Roof02,
+                ChunkType.School_Rooftop_Roof03,
+                ChunkType.School_Rooftop_Roof04,
+                ChunkType.School_Rooftop_Roof05,
+                ChunkType.School_Rooftop_RoofCor1,
+                ChunkType.School_Rooftop_RoofCor2,
+            };
+            if (BannedChunks.Contains(chunkType))
+                return;
+
             List<uint> lifecrates = new List<uint>
             {
                 (uint)ObjectID.EXTRALIFECRATE,
