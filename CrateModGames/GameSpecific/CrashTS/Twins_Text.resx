@@ -561,4 +561,34 @@
   <data name="UnsafeStartingChunkDesc" xml:space="preserve">
     <value>Allows for a longer starting chunk name at the expense of the game crashing after the credits (due to overwriting the post-credits chunk)</value>
   </data>
+  <data name="Mod_GreyscaleWorld" xml:space="preserve">
+    <value>Greyscale World</value>
+  </data>
+  <data name="Mod_GreyscaleWorldDesc" xml:space="preserve">
+    <value>The scenery colors are greyed out.</value>
+  </data>
+  <data name="Mod_UnlockedCamera" xml:space="preserve">
+    <value>Unlocked Camera Everywhere</value>
+  </data>
+  <data name="Mod_UnlockedCameraDesc" xml:space="preserve">
+    <value>Disables all camera triggers allowing you to freely control the camera everywhere.</value>
+  </data>
+  <data name="Mod_UntexturedWorld" xml:space="preserve">
+    <value>Untextured World</value>
+  </data>
+  <data name="Mod_UntexturedWorldDesc" xml:space="preserve">
+    <value>The scenery becomes textureless.</value>
+  </data>
+  <data name="Prop_PantsColor" xml:space="preserve">
+    <value>Pants Color</value>
+  </data>
+  <data name="Prop_PantsColorDesc" xml:space="preserve">
+    <value>Modify the color of Crash's pants.</value>
+  </data>
+  <data name="Rand_PantsColor" xml:space="preserve">
+    <value>Randomize Pants Color</value>
+  </data>
+  <data name="Rnad_PantsColorDesc" xml:space="preserve">
+    <value>Randomize the color of Crash's pants.</value>
+  </data>
 </root>

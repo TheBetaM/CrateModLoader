@@ -1195,6 +1195,24 @@ namespace CrateModGames.GameSpecific.CrashTS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Greyscale World.
+        /// </summary>
+        internal static string Mod_GreyscaleWorld {
+            get {
+                return ResourceManager.GetString("Mod_GreyscaleWorld", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The scenery colors are greyed out..
+        /// </summary>
+        internal static string Mod_GreyscaleWorldDesc {
+            get {
+                return ResourceManager.GetString("Mod_GreyscaleWorldDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enable Double Jump for Nina.
         /// </summary>
         internal static string Mod_NinaDoubleJump {
@@ -1249,6 +1267,42 @@ namespace CrateModGames.GameSpecific.CrashTS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unlocked Camera Everywhere.
+        /// </summary>
+        internal static string Mod_UnlockedCamera {
+            get {
+                return ResourceManager.GetString("Mod_UnlockedCamera", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disables all camera triggers allowing you to freely control the camera everywhere..
+        /// </summary>
+        internal static string Mod_UnlockedCameraDesc {
+            get {
+                return ResourceManager.GetString("Mod_UnlockedCameraDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Untextured World.
+        /// </summary>
+        internal static string Mod_UntexturedWorld {
+            get {
+                return ResourceManager.GetString("Mod_UntexturedWorld", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The scenery becomes textureless..
+        /// </summary>
+        internal static string Mod_UntexturedWorldDesc {
+            get {
+                return ResourceManager.GetString("Mod_UntexturedWorldDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enable Unused Enemies.
         /// </summary>
         internal static string Mod_UnusedEnemies {
@@ -1263,6 +1317,24 @@ namespace CrateModGames.GameSpecific.CrashTS {
         internal static string Mod_UnusedEnemiesDesc {
             get {
                 return ResourceManager.GetString("Mod_UnusedEnemiesDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pants Color.
+        /// </summary>
+        internal static string Prop_PantsColor {
+            get {
+                return ResourceManager.GetString("Prop_PantsColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modify the color of Crash&apos;s pants..
+        /// </summary>
+        internal static string Prop_PantsColorDesc {
+            get {
+                return ResourceManager.GetString("Prop_PantsColorDesc", resourceCulture);
             }
         }
         
@@ -1353,6 +1425,24 @@ namespace CrateModGames.GameSpecific.CrashTS {
         internal static string Rand_MusicDesc {
             get {
                 return ResourceManager.GetString("Rand_MusicDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Randomize Pants Color.
+        /// </summary>
+        internal static string Rand_PantsColor {
+            get {
+                return ResourceManager.GetString("Rand_PantsColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Randomize the color of Crash&apos;s pants..
+        /// </summary>
+        internal static string Rnad_PantsColorDesc {
+            get {
+                return ResourceManager.GetString("Rnad_PantsColorDesc", resourceCulture);
             }
         }
         

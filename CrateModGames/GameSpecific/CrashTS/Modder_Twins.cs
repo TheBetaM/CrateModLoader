@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using Twinsanity;
 using CrateModLoader.ModProperties;
@@ -152,11 +153,17 @@ namespace CrateModLoader.GameSpecific.CrashTS
         public static ModPropOption Option_SwitchCharacters = new ModPropOption(Twins_Text.Mod_SwitchCharacters, Twins_Text.Mod_SwitchCharactersDesc);
         public static ModPropOption Option_ClassicHealth = new ModPropOption(Twins_Text.Mod_ClassicHealth, Twins_Text.Mod_ClassicHealthDesc);
         public static ModPropOption Option_ClassicExplosions = new ModPropOption(Twins_Text.Mod_ClassicExplosionDaamge, Twins_Text.Mod_ClassicExplosionDamageDesc);
+        public static ModPropOption Option_UnlockedCamera = new ModPropOption(Twins_Text.Mod_UnlockedCamera, Twins_Text.Mod_UnlockedCameraDesc);
 
         public static ModPropOption Option_RandomizeMusic = new ModPropOption(Twins_Text.Rand_Music, Twins_Text.Rand_MusicDesc);
-        public static ModPropOption Option_GreyscaleWorld = new ModPropOption("Greyscale World", "") // todo: textures
+        public static ModPropOption Option_GreyscaleWorld = new ModPropOption(Twins_Text.Mod_GreyscaleWorld, Twins_Text.Mod_GreyscaleWorldDesc) // todo: textures
         { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 }, };
-        public static ModPropOption Option_UntexturedWorld = new ModPropOption("Untextured World", "");
+        public static ModPropOption Option_UntexturedWorld = new ModPropOption(Twins_Text.Mod_UntexturedWorld, Twins_Text.Mod_UntexturedWorldDesc);
+        public static ModPropOption Option_RandPantsColor = new ModPropOption(Twins_Text.Rand_PantsColor, Twins_Text.Rnad_PantsColorDesc) { Hidden = true, }; // doesn't work yet
+
+        [ModCategory((int)ModProps.Misc)]
+        public static ModPropNamedFloatArray Prop_PantsColor = new ModPropNamedFloatArray(new float[3] { 0, 0, 1f }, new string[] { "Red", "Green", "Blue" }, Twins_Text.Prop_PantsColor, Twins_Text.Prop_PantsColorDesc)
+        { Hidden = true };
 
         public static ModPropOption Option_RandWorldPalette = new ModPropOption("Randomize World Palette", "") // TODO
         { Hidden = true, };
@@ -656,7 +663,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
             }
             
 
-            if (Option_UnusedEnemies.Enabled)
+            if (Option_UnusedEnemies.Enabled || Option_RandPantsColor.Enabled || Option_UnlockedCamera.Enabled)
             {
                 Twins_Edit_AllLevels = true;
             }
@@ -807,7 +814,9 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 Twins_Randomizers.RM_Randomize_CharacterInstanceStats(RM_Archive);
             if (Option_RandEnemies.Enabled)
                 Twins_Randomizers.RM_Randomize_Enemies(RM_Archive, chunkType, ref randState, ref EnemyReplaceList, ref EnemyInsertList);
-            
+            if (Option_RandPantsColor.Enabled)
+                Twins_Randomizers.RM_Randomize_PantsColor(RM_Archive, Color.Green);
+
 
             if (Option_StompKick.Enabled)
                 Twins_Mods.RM_CharacterObjectMod(RM_Archive);
@@ -825,6 +834,8 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 Twins_Mods.RM_Mod_ClassicHealth(RM_Archive);
             if (Option_ClassicExplosions.Enabled)
                 Twins_Mods.RM_Mod_ClassicExplosions(RM_Archive, GenericCrateExplode);
+            if (Option_UnlockedCamera.Enabled)
+                Twins_Mods.RM_Mod_UnlockedCamera(RM_Archive, chunkType);
 
             RM_Archive.SaveFile(path);
         }

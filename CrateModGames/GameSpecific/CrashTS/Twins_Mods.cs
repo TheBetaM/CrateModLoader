@@ -375,6 +375,26 @@ namespace CrateModLoader.GameSpecific.CrashTS
 
         }
 
+        public static void RM_Mod_UnlockedCamera(TwinsFile RM_Archive, ChunkType chunk)
+        {
+            for (uint section_id = (uint)RM_Sections.Instances1; section_id <= (uint)RM_Sections.Instances8; section_id++)
+            {
+                if (!RM_Archive.ContainsItem(section_id)) continue;
+                TwinsSection section = RM_Archive.GetItem<TwinsSection>(section_id);
+                if (section.Records.Count > 0)
+                {
+                    if (!section.ContainsItem((uint)RM_Instance_Sections.Camera)) continue;
+                    TwinsSection cameras = section.GetItem<TwinsSection>((uint)RM_Instance_Sections.Camera);
+                    for (int i = 0; i < cameras.Records.Count; ++i)
+                    {
+                        Camera cam = (Camera)cameras.Records[i];
+                        cam.Enabled = 0;
+                        cameras.Records[i] = cam;
+                    }
+                }
+            }
+        }
+
         public static void SM_Mod_GreyscaleWorld(TwinsFile SM_Archive)
         {
             if (SM_Archive.Type != TwinsFile.FileType.SM2) return;
