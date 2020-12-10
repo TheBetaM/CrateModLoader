@@ -646,15 +646,15 @@ namespace CrateModLoader.GameSpecific.CrashTS
                     if (item.ID == 0x0B75575C || item.ID == 0x0325A8A8)
                     {
                         Texture tex = (Texture)item;
-                        tex.ConvertToPSMCT32();
                         for (int i = 0; i < tex.RawData.Length; i++)
                         {
-                            if (tex.RawData[i].B > tex.RawData[i].R + 20 && tex.RawData[i].B > tex.RawData[i].G + 20)
+                            if (tex.RawData[i].B > tex.RawData[i].R + 10 && tex.RawData[i].B > tex.RawData[i].G + 10)
                             {
                                 float intensity = tex.RawData[i].B / 255f;
-                                //tex.RawData[i] = Color.FromArgb(tex.RawData[i].A, (int)(PantsColor.R * intensity), (int)(PantsColor.G * intensity), (int)(PantsColor.B * intensity));
+                                tex.RawData[i] = Color.FromArgb(tex.RawData[i].A, (int)(PantsColor.R * intensity), (int)(PantsColor.G * intensity), (int)(PantsColor.B * intensity));
                             }
                         }
+                        tex.UpdateImageData();
                     }
                 }
 

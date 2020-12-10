@@ -158,26 +158,29 @@ namespace CrateModLoader.GameSpecific.CrashTS
         public static ModPropOption Option_ClassicHealth = new ModPropOption(Twins_Text.Mod_ClassicHealth, Twins_Text.Mod_ClassicHealthDesc);
         public static ModPropOption Option_ClassicExplosions = new ModPropOption(Twins_Text.Mod_ClassicExplosionDaamge, Twins_Text.Mod_ClassicExplosionDamageDesc);
         public static ModPropOption Option_UnlockedCamera = new ModPropOption(Twins_Text.Mod_UnlockedCamera, Twins_Text.Mod_UnlockedCameraDesc);
+        public static ModPropOption Option_SkipCutscenes = new ModPropOption("Skip Cutscenes (Beta)", "Skips non-video cutscenes after entering.");
+
 
         public static ModPropOption Option_ClassicBossHealth = new ModPropOption("Classic Boss Health", "Start boss fights with 2 masks.") // TODO
-        { Hidden = true, };
-        public static ModPropOption Option_SkipCutscenes = new ModPropOption("Skip Cutscenes", "Skips all non-video cutscenes after entering.") // TODO
         { Hidden = true, };
         public static ModPropOption Option_ClassicCrates = new ModPropOption(Twins_Text.Mod_ClassicCratePersistence, Twins_Text.Mod_ClassicCratePersistenceDesc) // TODO
         { Hidden = true, };
         public static ModPropOption Option_RandStartingChunk = new ModPropOption("Randomize Starting Level", "") // TODO
         { Hidden = true, };
 
+        public static ModPropOption Option_RandPantsColor = new ModPropOption(Twins_Text.Rand_PantsColor, Twins_Text.Rand_PantsColorDesc)
+        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 }, };
         public static ModPropOption Option_RandomizeMusic = new ModPropOption(Twins_Text.Rand_Music, Twins_Text.Rand_MusicDesc);
         public static ModPropOption Option_RandWorldPalette = new ModPropOption(Twins_Text.Rand_WorldPalette, Twins_Text.Rand_WorldPaletteDesc);
         public static ModPropOption Option_GreyscaleWorld = new ModPropOption(Twins_Text.Mod_GreyscaleWorld, Twins_Text.Mod_GreyscaleWorldDesc) // todo: textures
         { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 }, };
+        [ModCategory((int)ModProps.Misc)]
+        public static ModPropOption Option_GreyscaleDimension = new ModPropOption("Greyscale 10th Dimension", "The scenery colors in the 4th Hub's levels are greyed out.") // todo: textures
+        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 }, ModMenuOnly = true, };
         public static ModPropOption Option_UntexturedWorld = new ModPropOption(Twins_Text.Mod_UntexturedWorld, Twins_Text.Mod_UntexturedWorldDesc);
-        public static ModPropOption Option_RandPantsColor = new ModPropOption(Twins_Text.Rand_PantsColor, Twins_Text.Rand_PantsColorDesc) { Hidden = true, }; // doesn't work yet
 
         [ModCategory((int)ModProps.Misc)]
-        public static ModPropNamedFloatArray Prop_PantsColor = new ModPropNamedFloatArray(new float[3] { 0, 0, 1f }, new string[] { "Red", "Green", "Blue" }, Twins_Text.Prop_PantsColor, Twins_Text.Prop_PantsColorDesc)
-        { Hidden = true };
+        public static ModPropNamedUIntArray Prop_PantsColor = new ModPropNamedUIntArray(new uint[3] { 0, 0, 255 }, new string[] { "Red", "Green", "Blue" }, Twins_Text.Prop_PantsColor, Twins_Text.Prop_PantsColorDesc);
 
         public static ModPropOption Option_MirroredWorld = new ModPropOption("Mirrored World", "") // TODO
         { Hidden = true, };
@@ -208,6 +211,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
         internal Script StrafeRight = null;
         internal Script GenericCrateExplode = null;
         internal Dictionary<int, int> randSurfaces = new Dictionary<int, int>();
+        internal Color PantsColor = Color.Blue;
         
 
         public override void StartModProcess()
@@ -293,7 +297,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 }
             }
 
-            if (Option_GreyscaleWorld.Enabled || Option_UntexturedWorld.Enabled || Option_RandWorldPalette.Enabled)
+            if (Option_GreyscaleWorld.Enabled || Option_UntexturedWorld.Enabled || Option_RandWorldPalette.Enabled || Option_GreyscaleDimension.Enabled)
             {
                 Twins_Edit_AllScenery = true;
             }
@@ -478,7 +482,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
             }
 
             if (Option_FlyingKick.Enabled || Option_StompKick.Enabled || Option_DoubleJumpCortex.Enabled || Option_DoubleJumpNina.Enabled 
-                || Option_SwitchCharacters.Enabled || Option_ClassicExplosions.Enabled || Option_RandEnemies.Enabled)
+                || Option_SwitchCharacters.Enabled || Option_ClassicExplosions.Enabled || Option_RandEnemies.Enabled || Option_SkipCutscenes.Enabled)
             {
                 Twins_Edit_AllLevels = true;
 
@@ -496,7 +500,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 RM_LoadScripts(mainArchiveLoad);
                 RM_LoadObjects(mainArchiveLoad);
 
-                Twins_Data.allScripts.Sort((x, y) => x.ID.CompareTo(y.ID));
+                //Twins_Data.allScripts.Sort((x, y) => x.ID.CompareTo(y.ID));
                 Twins_Data.allObjects.Sort((x, y) => x.ID.CompareTo(y.ID));
 
                 int scriptVer = 0;
@@ -507,8 +511,8 @@ namespace CrateModLoader.GameSpecific.CrashTS
 
                 if (Option_SwitchCharacters.Enabled)
                 {
-                    StrafeLeft = Twins_Data.GetScriptByID(ScriptID.COM_GENERIC_CHARACTER_STRAFE_LEFT);
-                    StrafeRight = Twins_Data.GetScriptByID(ScriptID.COM_GENERIC_CHARACTER_STRAFE_RIGHT);
+                    StrafeLeft = Twins_Data.allScripts[(uint)ScriptID.COM_GENERIC_CHARACTER_STRAFE_LEFT];
+                    StrafeRight = Twins_Data.allScripts[(uint)ScriptID.COM_GENERIC_CHARACTER_STRAFE_RIGHT];
 
                     Script.MainScript.ScriptCommand SwitchToCrashCommand = new Script.MainScript.ScriptCommand(scriptVer)
                     {
@@ -550,7 +554,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
 
                 if (Option_ClassicExplosions.Enabled)
                 {
-                    GenericCrateExplode = Twins_Data.GetScriptByID(ScriptID.COM_GENERIC_CRATE_EXPLODE);
+                    GenericCrateExplode = Twins_Data.allScripts[(uint)ScriptID.COM_GENERIC_CRATE_EXPLODE];
 
                     Script.MainScript.ScriptState state = GenericCrateExplode.Main.scriptState1;
                     for (int s = 0; s < 3; s++)
@@ -566,6 +570,10 @@ namespace CrateModLoader.GameSpecific.CrashTS
 
                 }
                 
+                if (Option_SkipCutscenes.Enabled)
+                {
+                    Twins_Mods.Script_Mod_SkipCutscenes();
+                }
                 
                 if (Option_RandEnemies.Enabled)
                 {
@@ -696,9 +704,18 @@ namespace CrateModLoader.GameSpecific.CrashTS
             }
             
 
-            if (Option_UnusedEnemies.Enabled || Option_RandPantsColor.Enabled || Option_UnlockedCamera.Enabled || Option_AllWumpaCrates.Enabled || Option_RandomWumpaCrates.Enabled)
+            if (Option_UnusedEnemies.Enabled || Option_RandPantsColor.Enabled || Option_UnlockedCamera.Enabled || Option_AllWumpaCrates.Enabled || Option_RandomWumpaCrates.Enabled
+                || Prop_PantsColor.HasChanged)
             {
                 Twins_Edit_AllLevels = true;
+                if (Option_RandPantsColor.Enabled)
+                {
+                    PantsColor = Color.FromArgb(255, randState.Next(256), randState.Next(256), randState.Next(256));
+                }
+                else if (Prop_PantsColor.HasChanged)
+                {
+                    PantsColor = Color.FromArgb(255, (int)Prop_PantsColor.Value[0], (int)Prop_PantsColor.Value[1], (int)Prop_PantsColor.Value[0]);
+                }
             }
             if (Option_RandCharacterParams.Enabled)
             {
@@ -863,10 +880,11 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 Twins_Randomizers.RM_Randomize_Enemies(RM_Archive, chunkType, ref randState, ref EnemyReplaceList, ref EnemyInsertList);
             if (Option_RandSurfaces.Enabled)
                 Twins_Randomizers.RM_Randomize_Surfaces(RM_Archive, randSurfaces);
-            if (Option_RandPantsColor.Enabled)
-                Twins_Randomizers.RM_Randomize_PantsColor(RM_Archive, Color.Green);
+            if (Option_RandPantsColor.Enabled || Prop_PantsColor.HasChanged)
+                Twins_Randomizers.RM_Randomize_PantsColor(RM_Archive, PantsColor);
 
-
+            if (Option_SkipCutscenes.Enabled)
+                Twins_Mods.RM_Mod_SyncScripts(RM_Archive, chunkType);
             if (Option_StompKick.Enabled)
                 Twins_Mods.RM_CharacterObjectMod(RM_Archive);
             if (Option_FlyingKick.Enabled || Option_StompKick.Enabled)
@@ -1031,6 +1049,8 @@ namespace CrateModLoader.GameSpecific.CrashTS
 
             if (Option_RandWorldPalette.Enabled)
                 Twins_Mods.SM_Rand_WorldPalette(SM_Archive, new ColorSwizzleData(randState));
+            if (Option_GreyscaleDimension.Enabled)
+                Twins_Mods.SM_Mod_GreyscaleDimension(SM_Archive, chunkType);
             if (Option_GreyscaleWorld.Enabled)
                 Twins_Mods.SM_Mod_GreyscaleWorld(SM_Archive);
             if (Option_UntexturedWorld.Enabled)
@@ -1129,22 +1149,14 @@ namespace CrateModLoader.GameSpecific.CrashTS
                             Script scr = (Script)script_section.Records[i];
                             if (Twins_Data.allScripts.Count > 0)
                             {
-                                bool check = false;
-                                for (int d = 0; d < Twins_Data.allScripts.Count; d++)
+                                if (!Twins_Data.allScripts.ContainsKey(scr.ID))
                                 {
-                                    if (Twins_Data.allScripts[d].ID == scr.ID)
-                                    {
-                                        check = true;
-                                    }
-                                }
-                                if (!check)
-                                {
-                                    Twins_Data.allScripts.Add(scr);
+                                    Twins_Data.allScripts.Add(scr.ID, scr);
                                 }
                             }
                             else
                             {
-                                Twins_Data.allScripts.Add(scr);
+                                Twins_Data.allScripts.Add(scr.ID, scr);
                             }
                         }
                     }

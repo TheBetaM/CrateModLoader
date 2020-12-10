@@ -17,6 +17,8 @@ Crash Twinsanity
 - New feature: Randomize Surface Parameters
 - New feature: Random Wumpa Are Random Crates
 - New feature: All Wumpa Are Random Crates
+- New feature: Skip Cutscenes
+- New feature: Randomize Pants Color
 - New feature: Randomize World Palette
 - New feature: Untextured World
 - New feature: Greyscale World (PS2)

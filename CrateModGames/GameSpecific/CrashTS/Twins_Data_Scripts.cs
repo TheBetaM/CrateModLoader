@@ -4,26 +4,6 @@ using Twinsanity;
 
 namespace CrateModLoader.GameSpecific.CrashTS
 {
-    static partial class Twins_Data
-    {
-
-        public static List<Script> allScripts = new List<Script>();
-
-        public static Script GetScriptByID(ScriptID scrID)
-        {
-            for (int i = 0; i < allScripts.Count; i++)
-            {
-                if (allScripts[i].ID == (uint)scrID)
-                {
-                    return allScripts[i];
-                }
-            }
-
-            return allScripts[0];
-        }
-
-    }
-
     public enum ScriptID
     {
         HEAD_COM_CRASH_IDLE = 0,

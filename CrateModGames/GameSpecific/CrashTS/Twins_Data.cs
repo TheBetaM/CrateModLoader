@@ -515,6 +515,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
 
     static partial class Twins_Data
     {
+        public static Dictionary<uint, Script> allScripts = new Dictionary<uint, Script>();
 
         public static List<TwinsLevelChunk> All_Chunks = new List<TwinsLevelChunk>()
         {
