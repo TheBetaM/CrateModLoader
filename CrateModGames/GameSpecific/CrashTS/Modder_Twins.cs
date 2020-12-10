@@ -77,6 +77,8 @@ namespace CrateModLoader.GameSpecific.CrashTS
         Options = 0,
         Misc = 1,
         Character = 2,
+        Textures = 3,
+        Text = 4,
     }
 
     public sealed class Modder_Twins : Modder
@@ -133,8 +135,10 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 [(int)ModProps.Options] = "Options",
                 [(int)ModProps.Misc] = "Misc.",
                 [(int)ModProps.Character] = "Character",
+                [(int)ModProps.Textures] = "Textures",
             }
         };
+        public override bool CanPreloadGame => true;
 
         public static ModPropOption Option_RandCrates = new ModPropOption(Twins_Text.Rand_Crates, Twins_Text.Rand_CratesDesc)
         {
@@ -825,6 +829,8 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 }
             }
 
+            Twins_Data_Textures.Textures_Mod(bdPath, GameRegion.Region);
+
             EndModProcess();
         }
 
@@ -1239,6 +1245,37 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 if (g_s == 0) g_s = 1;
                 if (b_s == 0) b_s = 1;
             }
+        }
+
+        public override void StartPreload()
+        {
+            // Extract BD (PS2 only)
+            if (ConsolePipeline.Metadata.Console == ConsoleMode.PS2)
+            {
+                bdPath = System.IO.Path.Combine(ConsolePipeline.ExtractedPath, "cml_extr/");
+                Directory.CreateDirectory(bdPath);
+
+                BDArchive.ExtractAll(System.IO.Path.Combine(ConsolePipeline.ExtractedPath, "CRASH6/CRASH"), bdPath);
+
+                File.Delete(System.IO.Path.Combine(ConsolePipeline.ExtractedPath, "CRASH6/CRASH.BD"));
+                File.Delete(System.IO.Path.Combine(ConsolePipeline.ExtractedPath, "CRASH6/CRASH.BH"));
+                extensionMod = "2";
+                rmType = TwinsFile.FileType.RM2;
+                smType = TwinsFile.FileType.SM2;
+            }
+            else
+            {
+                bdPath = ConsolePipeline.ExtractedPath;
+                extensionMod = "x";
+                rmType = TwinsFile.FileType.RMX;
+                smType = TwinsFile.FileType.SMX;
+            }
+
+            if (ConsolePipeline.Metadata.Console == ConsoleMode.PS2)
+            {
+                Twins_Data_Textures.Textures_Preload(bdPath, GameRegion.Region);
+            }
+
         }
 
     }

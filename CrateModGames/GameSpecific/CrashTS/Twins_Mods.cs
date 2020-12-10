@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Twinsanity;
+using System.Drawing;
 
 namespace CrateModLoader.GameSpecific.CrashTS
 {
@@ -643,7 +644,6 @@ namespace CrateModLoader.GameSpecific.CrashTS
             }
             if (section.ContainsItem((uint)RM_Graphics_Sections.Textures) && section.Records.Count > 0)
             {
-                //todo
                 TwinsSection tex_section = section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.Textures);
 
                 foreach (TwinsItem item in tex_section.Records)
@@ -651,10 +651,75 @@ namespace CrateModLoader.GameSpecific.CrashTS
                     Texture tex = (Texture)item;
                     for (int i = 0; i < tex.RawData.Length; i++)
                     {
-                        //tex.RawData[i] = new System.Drawing.Color();
+                        int maxVal = Math.Max(tex.RawData[i].R, tex.RawData[i].G);
+                        maxVal = Math.Max(maxVal, tex.RawData[i].B);
+                        tex.RawData[i] = Color.FromArgb(tex.RawData[i].A, maxVal, maxVal, maxVal);
+                    }
+                    tex.UpdateImageData();
+                }
+
+            }
+            /*
+            if (section.ContainsItem((uint)RM_Graphics_Sections.Materials) && section.Records.Count > 0)
+            {
+                TwinsSection mat_section = section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.Materials);
+
+                foreach (TwinsItem item in mat_section.Records)
+                {
+                    Material mat = (Material)item;
+                    for (int i = 0; i < mat.Shaders.Count; i++)
+                    {
+                        mat.Shaders[i].Fog = TwinsShader.Fogging.OFF;
                     }
                 }
 
+            }
+            */
+
+            SceneryData scenery = (SceneryData)SM_Archive.GetItem<TwinsItem>(0);
+            if (scenery.LightsAmbient.Count > 0)
+            {
+                foreach (SceneryData.LightAmbient light in scenery.LightsAmbient)
+                {
+                    float maxVal = Math.Max(light.Color_R, light.Color_G);
+                    maxVal = Math.Max(maxVal, light.Color_B);
+                    light.Color_R = maxVal;
+                    light.Color_G = maxVal;
+                    light.Color_B = maxVal;
+                }
+            }
+            if (scenery.LightsDirectional.Count > 0)
+            {
+                foreach (SceneryData.LightDirectional light in scenery.LightsDirectional)
+                {
+                    float maxVal = Math.Max(light.Color_R, light.Color_G);
+                    maxVal = Math.Max(maxVal, light.Color_B);
+                    light.Color_R = maxVal;
+                    light.Color_G = maxVal;
+                    light.Color_B = maxVal;
+                }
+            }
+            if (scenery.LightsPoint.Count > 0)
+            {
+                foreach (SceneryData.LightPoint light in scenery.LightsPoint)
+                {
+                    float maxVal = Math.Max(light.Color_R, light.Color_G);
+                    maxVal = Math.Max(maxVal, light.Color_B);
+                    light.Color_R = maxVal;
+                    light.Color_G = maxVal;
+                    light.Color_B = maxVal;
+                }
+            }
+            if (scenery.LightsNegative.Count > 0)
+            {
+                foreach (SceneryData.LightNegative light in scenery.LightsNegative)
+                {
+                    float maxVal = Math.Max(light.Color_R, light.Color_G);
+                    maxVal = Math.Max(maxVal, light.Color_B);
+                    light.Color_R = maxVal;
+                    light.Color_G = maxVal;
+                    light.Color_B = maxVal;
+                }
             }
         }
 
