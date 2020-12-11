@@ -59,6 +59,7 @@ namespace CrateModLoader.ModProperties.GUI
         public void SetButtonClicked(object sender, EventArgs e)
         {
             ColorDialog colorPicker = new ColorDialog();
+            colorPicker.Color = Color.FromArgb(Prop.A, Prop.R, Prop.G, Prop.B);
 
             if (colorPicker.ShowDialog() == DialogResult.OK)
             {

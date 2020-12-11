@@ -23,6 +23,7 @@ Crash Twinsanity
 - New feature: Untextured World
 - New feature: Greyscale World (PS2)
 - Mod Menu: More understandable names and descriptions
+- Pants color can now be customized in the Mod Menu.
 - Fixed default values for character health.
 - Randomize Character Parameters: No longer changes jump parameteres.
 
@@ -38,8 +39,6 @@ Rayman 3: Hoodlum Havoc
 
 Crash Bandicoot
 - New feature: Randomize Wooden Crates
-- New feature: Random Enemies Removed
-- New feature: All Enemies Removed
 - Backwards Hog Levels: Removed checkpoints since they didn't work anyway.
 
 Crash Bandicoot 2: Cortex Strikes Back

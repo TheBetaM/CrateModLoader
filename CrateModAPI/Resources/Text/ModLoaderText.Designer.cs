@@ -79,6 +79,15 @@ namespace CrateModAPI.Resources.Text {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Preload Game.
+        /// </summary>
+        public static string Button_PreloadGame {
+            get {
+                return ResourceManager.GetString("Button_PreloadGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Changelog.
         /// </summary>
         public static string Changelog {
@@ -610,6 +619,15 @@ namespace CrateModAPI.Resources.Text {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Preloading the game data allows you to use Mod Menu+, but it will take a while. Start the process?.
+        /// </summary>
+        public static string Popup_PreloadGame {
+            get {
+                return ResourceManager.GetString("Popup_PreloadGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancelled!.
         /// </summary>
         public static string Process_Cancelled {
@@ -840,6 +858,15 @@ namespace CrateModAPI.Resources.Text {
         public static string Tooltip_Numeric_Seed {
             get {
                 return ResourceManager.GetString("Tooltip_Numeric_Seed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load the game data to unlock Mod Menu+.
+        /// </summary>
+        public static string Tooltip_PreloadGame {
+            get {
+                return ResourceManager.GetString("Tooltip_PreloadGame", resourceCulture);
             }
         }
         

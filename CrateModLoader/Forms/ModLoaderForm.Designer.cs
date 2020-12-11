@@ -372,8 +372,8 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel1.Controls.Add(this.numericUpDown1, 2, 1);
             this.tableLayoutPanel1.Controls.Add(this.button_randomizeSeed, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.button_modTools, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.button_downloadMods, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.button_modTools, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.button_downloadMods, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.button_modCrateMenu, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.button_openModMenu, 2, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -383,6 +383,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(464, 52);
             this.tableLayoutPanel1.TabIndex = 42;
             // 
@@ -391,7 +392,7 @@
             this.button_modTools.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button_modTools.Enabled = false;
             this.button_modTools.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button_modTools.Location = new System.Drawing.Point(154, 0);
+            this.button_modTools.Location = new System.Drawing.Point(0, 26);
             this.button_modTools.Margin = new System.Windows.Forms.Padding(0);
             this.button_modTools.Name = "button_modTools";
             this.button_modTools.Size = new System.Drawing.Size(154, 26);
@@ -405,12 +406,12 @@
             this.button_downloadMods.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button_downloadMods.Enabled = false;
             this.button_downloadMods.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button_downloadMods.Location = new System.Drawing.Point(0, 26);
+            this.button_downloadMods.Location = new System.Drawing.Point(154, 0);
             this.button_downloadMods.Margin = new System.Windows.Forms.Padding(0);
             this.button_downloadMods.Name = "button_downloadMods";
             this.button_downloadMods.Size = new System.Drawing.Size(154, 26);
             this.button_downloadMods.TabIndex = 22;
-            this.button_downloadMods.Text = "Download Mods";
+            this.button_downloadMods.Text = "Preload Game";
             this.button_downloadMods.UseVisualStyleBackColor = true;
             this.button_downloadMods.Visible = false;
             this.button_downloadMods.Click += new System.EventHandler(this.button_downloadMods_Click);

@@ -173,11 +173,11 @@ namespace CrateModLoader.GameSpecific.CrashTS
         { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 }, };
         public static ModPropOption Option_RandomizeMusic = new ModPropOption(Twins_Text.Rand_Music, Twins_Text.Rand_MusicDesc);
         public static ModPropOption Option_RandWorldPalette = new ModPropOption(Twins_Text.Rand_WorldPalette, Twins_Text.Rand_WorldPaletteDesc);
-        public static ModPropOption Option_GreyscaleWorld = new ModPropOption(Twins_Text.Mod_GreyscaleWorld, Twins_Text.Mod_GreyscaleWorldDesc)
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 }, };
         [ModCategory((int)ModProps.Misc)]
-        public static ModPropOption Option_GreyscaleDimension = new ModPropOption("Greyscale 10th Dimension", "The scenery colors in the 4th Hub's levels are greyed out.")
+        public static ModPropOption Option_GreyscaleWorld = new ModPropOption(Twins_Text.Mod_GreyscaleWorld, Twins_Text.Mod_GreyscaleWorldDesc)
         { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 }, ModMenuOnly = true, };
+        public static ModPropOption Option_GreyscaleDimension = new ModPropOption("Greyscale 10th Dimension", "The scenery colors in the 4th Hub's levels are greyed out.")
+        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 },  };
         public static ModPropOption Option_UntexturedWorld = new ModPropOption(Twins_Text.Mod_UntexturedWorld, Twins_Text.Mod_UntexturedWorldDesc);
 
         [ModCategory((int)ModProps.Misc)]

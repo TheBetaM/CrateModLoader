@@ -123,6 +123,9 @@
   <data name="Button_ModTools" xml:space="preserve">
     <value>Mod Tools</value>
   </data>
+  <data name="Button_PreloadGame" xml:space="preserve">
+    <value>Preload Game</value>
+  </data>
   <data name="Changelog" xml:space="preserve">
     <value>Changelog</value>
   </data>
@@ -301,6 +304,9 @@
   <data name="OutputInstruction" xml:space="preserve">
     <value>2. Click "Browse" to set the output path.</value>
   </data>
+  <data name="Popup_PreloadGame" xml:space="preserve">
+    <value>Preloading the game data allows you to use Mod Menu+, but it will take a while. Start the process?</value>
+  </data>
   <data name="ProcessReady" xml:space="preserve">
     <value>Ready!</value>
   </data>
@@ -378,6 +384,9 @@
   </data>
   <data name="Tooltip_Numeric_Seed" xml:space="preserve">
     <value>The seed of all randomizers for this game.</value>
+  </data>
+  <data name="Tooltip_PreloadGame" xml:space="preserve">
+    <value>Load the game data to unlock Mod Menu+</value>
   </data>
   <data name="UnknownConsole" xml:space="preserve">
     <value>Unknown Console</value>
