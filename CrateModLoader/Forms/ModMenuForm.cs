@@ -40,6 +40,8 @@ namespace CrateModLoader
                 return new ModPropUIntGUI((ModPropUInt)prop);
             else if (prop is ModPropExternalResourceBase)
                 return new ModPropExternalResourceGUI((ModPropExternalResourceBase)prop);
+            else if (prop is ModPropColor)
+                return new ModPropColorGUI((ModPropColor)prop);
             else
                 return null;
         }

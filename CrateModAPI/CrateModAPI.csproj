@@ -58,6 +58,7 @@
     <Compile Include="Mod.cs" />
     <Compile Include="ModProperties\ModCategory.cs" />
     <Compile Include="ModProperties\ModPropBool.cs" />
+    <Compile Include="ModProperties\ModPropColor.cs" />
     <Compile Include="ModProperties\ModProperty.cs" />
     <Compile Include="ModProperties\ModPropertyBase.cs" />
     <Compile Include="ModProperties\ModPropExternalResource.cs" />

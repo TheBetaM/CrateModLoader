@@ -76,7 +76,7 @@ namespace CrateModLoader.GameSpecific.Crash1
         public static ModPropOption Option_RandPantsColor = new ModPropOption("Randomize Pants Color", "") { Hidden = true };
 
         [ModCategory(1)]
-        public static ModPropNamedFloatArray Prop_PantsColor = new ModPropNamedFloatArray(new float[3] { 0, 0, 1f }, new string[] { "Red", "Green", "Blue" }, "Pants Color", "")
+        public static ModPropColor Prop_PantsColor = new ModPropColor(new int[4] { 0, 0, 255, 255 }, "Pants Color", "")
         { Hidden = true };
 
         public static ModPropOption Option_RandMap = new ModPropOption("Randomize Map", "") { Hidden = true };

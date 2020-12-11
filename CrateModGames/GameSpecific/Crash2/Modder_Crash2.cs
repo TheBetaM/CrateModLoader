@@ -76,7 +76,7 @@ namespace CrateModLoader.GameSpecific.Crash2
         public static ModPropOption Option_RandObjPalette = new ModPropOption(Crash2_Text.Rand_ObjectPalette, Crash2_Text.Rand_ObjectPaletteDesc); 
 
         [ModCategory(1)]
-        public static ModPropNamedFloatArray Prop_PantsColor = new ModPropNamedFloatArray(new float[3] { 0, 0, 1f }, new string[] { "Red", "Green", "Blue" }, Crash2_Text.Prop_PantsColor, Crash2_Text.Prop_PantsColorDesc);
+        public static ModPropColor Prop_PantsColor = new ModPropColor(new int[4] { 0, 0, 255, 255 }, Crash2_Text.Prop_PantsColor, Crash2_Text.Prop_PantsColorDesc);
 
         //less used
 
@@ -148,7 +148,7 @@ namespace CrateModLoader.GameSpecific.Crash2
 
             if (Prop_PantsColor.HasChanged)
             {
-                PantsColor = new SceneryColor((byte)(Prop_PantsColor.Value[0] * 255f), (byte)(Prop_PantsColor.Value[1] * 255f), (byte)(Prop_PantsColor.Value[2] * 255f), 0);
+                PantsColor = new SceneryColor((byte)Prop_PantsColor.R, (byte)Prop_PantsColor.G, (byte)Prop_PantsColor.B, 0);
             }
 
             List<List<WavebankChunk>> wavebankChunks = new List<List<WavebankChunk>>();

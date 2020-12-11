@@ -163,10 +163,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
         public static ModPropOption Option_ClassicExplosions = new ModPropOption(Twins_Text.Mod_ClassicExplosionDaamge, Twins_Text.Mod_ClassicExplosionDamageDesc);
         public static ModPropOption Option_UnlockedCamera = new ModPropOption(Twins_Text.Mod_UnlockedCamera, Twins_Text.Mod_UnlockedCameraDesc);
         public static ModPropOption Option_SkipCutscenes = new ModPropOption("Skip Cutscenes (Beta)", "Skips non-video cutscenes after entering.");
-
-
-        public static ModPropOption Option_ClassicBossHealth = new ModPropOption("Classic Boss Health", "Start boss fights with 2 masks.") // TODO
-        { Hidden = true, };
+        
         public static ModPropOption Option_ClassicCrates = new ModPropOption(Twins_Text.Mod_ClassicCratePersistence, Twins_Text.Mod_ClassicCratePersistenceDesc) // TODO
         { Hidden = true, };
         public static ModPropOption Option_RandStartingChunk = new ModPropOption("Randomize Starting Level", "") // TODO
@@ -176,16 +173,20 @@ namespace CrateModLoader.GameSpecific.CrashTS
         { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 }, };
         public static ModPropOption Option_RandomizeMusic = new ModPropOption(Twins_Text.Rand_Music, Twins_Text.Rand_MusicDesc);
         public static ModPropOption Option_RandWorldPalette = new ModPropOption(Twins_Text.Rand_WorldPalette, Twins_Text.Rand_WorldPaletteDesc);
-        public static ModPropOption Option_GreyscaleWorld = new ModPropOption(Twins_Text.Mod_GreyscaleWorld, Twins_Text.Mod_GreyscaleWorldDesc) // todo: textures
+        public static ModPropOption Option_GreyscaleWorld = new ModPropOption(Twins_Text.Mod_GreyscaleWorld, Twins_Text.Mod_GreyscaleWorldDesc)
         { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 }, };
         [ModCategory((int)ModProps.Misc)]
-        public static ModPropOption Option_GreyscaleDimension = new ModPropOption("Greyscale 10th Dimension", "The scenery colors in the 4th Hub's levels are greyed out.") // todo: textures
+        public static ModPropOption Option_GreyscaleDimension = new ModPropOption("Greyscale 10th Dimension", "The scenery colors in the 4th Hub's levels are greyed out.")
         { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 }, ModMenuOnly = true, };
         public static ModPropOption Option_UntexturedWorld = new ModPropOption(Twins_Text.Mod_UntexturedWorld, Twins_Text.Mod_UntexturedWorldDesc);
 
         [ModCategory((int)ModProps.Misc)]
-        public static ModPropNamedUIntArray Prop_PantsColor = new ModPropNamedUIntArray(new uint[3] { 0, 0, 255 }, new string[] { "Red", "Green", "Blue" }, Twins_Text.Prop_PantsColor, Twins_Text.Prop_PantsColorDesc);
+        public static ModPropColor Prop_PantsColor = new ModPropColor(new int[4] { 0, 0, 255, 255 }, Twins_Text.Prop_PantsColor, Twins_Text.Prop_PantsColorDesc);
 
+
+        //unfinished
+        public static ModPropOption Option_ClassicBossHealth = new ModPropOption("Classic Boss Health", "Start boss fights with 2 masks.") // TODO
+        { Hidden = true, };
         public static ModPropOption Option_MirroredWorld = new ModPropOption("Mirrored World", "") // TODO
         { Hidden = true, };
         public static ModPropOption Option_RandEnemies = new ModPropOption("Randomize Enemies (Soundless)", "") // not stable enough
@@ -718,7 +719,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 }
                 else if (Prop_PantsColor.HasChanged)
                 {
-                    PantsColor = Color.FromArgb(255, (int)Prop_PantsColor.Value[0], (int)Prop_PantsColor.Value[1], (int)Prop_PantsColor.Value[0]);
+                    PantsColor = Color.FromArgb(255, Prop_PantsColor.R, Prop_PantsColor.G, Prop_PantsColor.B);
                 }
             }
             if (Option_RandCharacterParams.Enabled)

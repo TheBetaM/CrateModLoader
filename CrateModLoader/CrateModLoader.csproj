@@ -82,6 +82,7 @@
       <DependentUpon>ModCrateManagerForm.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI_ModProperties\ModPropBoolGUI.cs" />
+    <Compile Include="GUI_ModProperties\ModPropColorGUI.cs" />
     <Compile Include="GUI_ModProperties\ModPropertyGUI_Base.cs" />
     <Compile Include="GUI_ModProperties\ModPropExternalResourceGUI.cs" />
     <Compile Include="GUI_ModProperties\ModPropFloatGUI.cs" />
