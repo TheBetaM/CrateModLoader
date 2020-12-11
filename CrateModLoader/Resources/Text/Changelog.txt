@@ -80,6 +80,9 @@ Crash Bandicoot: WARPED
 - Randomize Crate Counter: Adjusted minimum counts to prevent impossible scenarios.
 - Backwards Levels: Disabled Tell No Tales due to exiting problems.
 
+CTR: Crash Team Racing:
+- New feature: Randomize Track Order
+
 1.2.1
 
 Crash Twinsanity:

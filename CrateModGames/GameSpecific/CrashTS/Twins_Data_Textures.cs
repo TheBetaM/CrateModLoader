@@ -323,7 +323,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
                                         }
                                         else
                                         {
-                                            psm.PTCs[ptc].Texture.RawData[c] = Color.Black;
+                                            //psm.PTCs[ptc].Texture.RawData[c] = Color.Black;
                                         }
                                         c++;
                                     }
