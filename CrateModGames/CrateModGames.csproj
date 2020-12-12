@@ -241,6 +241,7 @@
     <Compile Include="GameSpecific\CrashTTR\RCF_Manager.cs" />
     <Compile Include="GameSpecific\CrashTWOC\Modder_TWOC.cs" />
     <Compile Include="GameSpecific\CrashTWOC\TWOC_File_CRT.cs" />
+    <Compile Include="GameSpecific\CrashTWOC\TWOC_File_WMP.cs" />
     <Compile Include="GameSpecific\MarioSunshine\Modder_MarioSunshine.cs" />
     <Compile Include="GameSpecific\Rayman3\Modder_Rayman3.cs" />
     <Compile Include="GameSpecific\Rayman3\ModProp_TextureFile.cs" />

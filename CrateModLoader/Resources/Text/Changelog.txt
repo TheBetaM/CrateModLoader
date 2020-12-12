@@ -1,9 +1,12 @@
 1.3.0
 
 General
-- PS2 ROM building is now supported internally (Thanks to Smartkin). Folder mode is now supported.  
+- PS2 ROM building is now supported internally (Thanks to Smartkin). 
 - Options are now handled the same as Mod Menu properties allowing them to be set by Mod Crates and enabling variations and choices like difficulty settings in Mod Menus.  
 - Select games' data can now be preloaded allowing an extended Mod Menu+.
+
+New games supported:
+- Crash Bandicoot: The Wrath Of Cortex
 
 Crash Nitro Kart
 - Mod Menu+ enabled (All)

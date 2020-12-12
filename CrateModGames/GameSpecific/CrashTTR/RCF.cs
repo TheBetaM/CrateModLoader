@@ -5,7 +5,7 @@ using System.IO;
 
 namespace RadcoreCementFile
 {
-    class BinaryReader2 : BinaryReader
+    public class BinaryReader2 : BinaryReader
     {
         public BinaryReader2(System.IO.Stream stream) : base(stream) { }
 
@@ -37,9 +37,16 @@ namespace RadcoreCementFile
             return BitConverter.ToUInt32(data, 0);
         }
 
+        public override float ReadSingle()
+        {
+            var data = base.ReadBytes(4);
+            Array.Reverse(data);
+            return BitConverter.ToSingle(data, 0);
+        }
+
     }
 
-    class BinaryWriter2 : BinaryWriter
+    public class BinaryWriter2 : BinaryWriter
     {
         public BinaryWriter2(System.IO.Stream stream) : base(stream) { }
 
@@ -58,6 +65,13 @@ namespace RadcoreCementFile
         }
 
         public void WriteBigEndian(UInt64 val)
+        {
+            byte[] data = BitConverter.GetBytes(val);
+            Array.Reverse(data);
+            Write(data);
+        }
+
+        public void WriteBigEndian(float val)
         {
             byte[] data = BitConverter.GetBytes(val);
             Array.Reverse(data);

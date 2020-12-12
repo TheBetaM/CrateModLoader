@@ -154,13 +154,22 @@ Mod abbreviation: CrashTR
 Mod layers: 1 - BIGFILE.BIG contents
 API by DCxDemo. (https://github.com/DCxDemo/CTR-tools)  
 Features:  
+- Randomize Track Order  
 - Version and seed visible in the Loading screen (English only)  
+
+Crash Bandicoot: The Wrath Of Cortex
+Supported: All PS2 versions (.BIN/.ISO format), All XBOX versions (.ISO format) (GC not supported yet)  
+Mod abbreviation: CrashTWOC  
+Features:  
+- Randomize Wooden Crates  
+- Random Crates Removed  
+- Random Wumpa Are Crates  
   
 Crash of the Titans
 Supported: All PS2 versions (.ISO format), All Wii versions (.ISO/.WBFS formats), All PSP versions (.ISO format), All 360 versions (.ISO format)   
 Mod abbreviation: CrashTitans  
 Mod layers: 1 - Default.RCF contents (only replace files)
-API by NeoKesha.  
+API by BetaM and NeoKesha.   
 Features:   
 - Test mod: Increased camera FOV in Episode 1
   
@@ -168,6 +177,6 @@ Crash Mind Over Mutant
 Supported: All PS2 versions (.ISO format), All Wii versions (.ISO/.WBFS formats), All PSP versions (.ISO format), All 360 versions (.ISO format)   
 Mod abbreviation: CrashMOM  
 Mod layers: 1 - Default.RCF contents (only replace files)
-API by NeoKesha.  
+API by BetaM and NeoKesha.  
 Features:    
 - Version, seed and settings visible in the Credits screen  

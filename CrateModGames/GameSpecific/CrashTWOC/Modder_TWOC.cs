@@ -74,12 +74,19 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
             },
         };
 
-        public static ModPropOption Option_RandCrates = new ModPropOption("Randomize Crates", "")
-        { Hidden = true, };
-        public static ModPropOption Option_RandLevelOrder = new ModPropOption("Randomize Level Order", "") //doesn't work yet
-        { Hidden = true, };
+        public static ModPropOption Option_RandCrates = new ModPropOption("Randomize Wooden Crates", "");
+        public static ModPropOption Option_RandCratesRemoved = new ModPropOption("Random Crates Removed", "Crates are randomly removed in each level. The box counter is adjusted accordingly.");
+        public static ModPropOption Option_RandWumpaCrates = new ModPropOption("Random Wumpa Are Random Crates", "Wumpas are randomly turned into crates in each level. The box counter is adjusted accordingly.");
+        //todo: new box positions are off
         public static ModPropOption Option_RandMusic = new ModPropOption("Randomize Music", "") //not tested
-        { Hidden = true, AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN, ConsoleMode.XBOX }, };
+        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN, ConsoleMode.XBOX }, };
+
+
+        public static ModPropOption Option_RandLevelOrder = new ModPropOption("Randomize Level Order", "") //todo, unbeatable levels, enemies not spawning, etc.
+        { Hidden = true, };
+        public static ModPropOption Option_SphereLevelsOnFoot = new ModPropOption("Atlasphere Levels On Foot", "") //todo: camera!!!
+        { Hidden = true, };
+        
 
         public Modder_TWOC()
         {
@@ -103,11 +110,26 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
 
             if (Option_RandCrates.Enabled)
             {
-                Mod_RandomizeCrates(rand);
+                Rand_RandomizeCrates(rand);
+            }
+            if (Option_RandWumpaCrates.Enabled)
+            {
+                Rand_WumpaCrates(rand);
+            }
+            if (Option_RandCratesRemoved.Enabled)
+            {
+                Rand_CratesRemoved(rand);
             }
             if (Option_RandLevelOrder.Enabled)
             {
                 Mod_RandomizeLevelOrder(rand);
+            }
+            if (Option_SphereLevelsOnFoot.Enabled)
+            {
+                Mod_ReplaceLevel(TWOC_Levels.L01_ArcticAntics, TWOC_Levels.L30_ForceOfNature);
+                Mod_ReplaceLevel(TWOC_Levels.L04_WizardsAndLizards, TWOC_Levels.L12_Tsunami);
+                Mod_ReplaceLevel(TWOC_Levels.L13_SmokeyAndTheBandicoot, TWOC_Levels.L28_IceStationBandicoot);
+                Mod_ReplaceLevel(TWOC_Levels.L03_Bamboozled, TWOC_Levels.L14_EskimoRoll);
             }
             if (Option_RandMusic.Enabled)
             {
@@ -232,53 +254,199 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
             "SPACE_B",
         };
 
-        void Mod_RandomizeCrates(Random rand)
+        public List<TWOC_Levels> LevelList_Onfoot = new List<TWOC_Levels>()
         {
+            TWOC_Levels.L01_ArcticAntics,
+            TWOC_Levels.L04_WizardsAndLizards,
+            TWOC_Levels.L05_CompactorReactor,
+            TWOC_Levels.L06_JungleRumble,
+            TWOC_Levels.L08_BanzaiBonzai,
+            TWOC_Levels.L11_TheGauntlet,
+            TWOC_Levels.L12_Tsunami,
+            TWOC_Levels.L15_FahrenheitFrenzy,
+            TWOC_Levels.L16_Avalanche,
+            TWOC_Levels.L17_DroidVoid,
+            TWOC_Levels.L20_WeatheringHeights,
+            TWOC_Levels.L21_CrashAndBurn,
+            TWOC_Levels.L22_GoldRush,
+            TWOC_Levels.L25_CortexVortex,
+            TWOC_Levels.L26_KnightTime,
+            TWOC_Levels.L30_ForceOfNature,
+        };
 
-        }
+        public List<TWOC_Levels> LevelList_Sphere = new List<TWOC_Levels>()
+        {
+            TWOC_Levels.L03_Bamboozled,
+            TWOC_Levels.L14_EskimoRoll,
+            TWOC_Levels.L23_MedievalMadness,
+            TWOC_Levels.L29_SolarBowler,
+        };
+
+        public List<TWOC_Levels> LevelList_Underwater = new List<TWOC_Levels>()
+        {
+            TWOC_Levels.L07_SeaShellShenanigans,
+            TWOC_Levels.L10_H2OhNo,
+            TWOC_Levels.L19_CoralCanyon,
+        };
+
+        public List<TWOC_Levels> LevelList_Flying = new List<TWOC_Levels>()
+        {
+            TWOC_Levels.L02_TornadoAlley,
+            TWOC_Levels.L09_ThatSinkingFeeling,
+            TWOC_Levels.L18_Crashteroids,
+            TWOC_Levels.L24_CrateBallsOfFire,
+            TWOC_Levels.L28_IceStationBandicoot,
+        };
+
+        public List<TWOC_Levels> LevelList_Racing = new List<TWOC_Levels>()
+        {
+            TWOC_Levels.L13_SmokeyAndTheBandicoot,
+            TWOC_Levels.L27_GhostTown,
+        };
 
         void Mod_RandomizeLevelOrder(Random rand)
         {
-            string LevelsPath = @"LEVELS\A\";
+            string LevelsPathA = @"LEVELS\A\";
+            string LevelsPathC = @"LEVELS\C\";
             if (ConsolePipeline.Metadata.Console != ConsoleMode.PS2)
             {
-                LevelsPath = LevelsPath.ToLower();
+                LevelsPathA = LevelsPathA.ToLower();
+                LevelsPathC = LevelsPathC.ToLower();
             }
-            int maxLevel = LevelNames.Length - 10;
+            int maxLevel = LevelNames.Length; // - 5;
+
+            List<TWOC_Levels> LevelsNoRand = new List<TWOC_Levels>()
+            {
+                TWOC_Levels.L03_Bamboozled,
+                TWOC_Levels.L14_EskimoRoll,
+                TWOC_Levels.L23_MedievalMadness,
+                TWOC_Levels.L29_SolarBowler,
+
+                TWOC_Levels.L07_SeaShellShenanigans,
+                TWOC_Levels.L10_H2OhNo,
+                TWOC_Levels.L19_CoralCanyon,
+
+                TWOC_Levels.L02_TornadoAlley,
+                TWOC_Levels.L09_ThatSinkingFeeling,
+                TWOC_Levels.L18_Crashteroids,
+                TWOC_Levels.L24_CrateBallsOfFire,
+                TWOC_Levels.L28_IceStationBandicoot,
+
+                TWOC_Levels.L13_SmokeyAndTheBandicoot,
+                TWOC_Levels.L27_GhostTown,
+
+                TWOC_Levels.B01_Earth,
+                TWOC_Levels.B02_Water,
+                TWOC_Levels.B03_Fire,
+                TWOC_Levels.B04_Air,
+                TWOC_Levels.B05_Cortex,
+            };
 
             List<int> LevelsToRand = new List<int>();
             for (int i = 0; i < maxLevel; i++)
             {
-                Directory.Move(ConsolePipeline.ExtractedPath + LevelsPath + LevelNames[i], ConsolePipeline.ExtractedPath + LevelsPath + "LEVEL" + i);
-                LevelsToRand.Add(i);
+                if (i < 25)
+                {
+                    Directory.Move(ConsolePipeline.ExtractedPath + LevelsPathA + LevelNames[i], ConsolePipeline.ExtractedPath + LevelsPathA + "LEVEL" + i);
+                }
+                else
+                {
+                    Directory.Move(ConsolePipeline.ExtractedPath + LevelsPathC + LevelNames[i], ConsolePipeline.ExtractedPath + LevelsPathC + "LEVEL" + i);
+                }
+                
+                if (!LevelsNoRand.Contains((TWOC_Levels)i))
+                {
+                    LevelsToRand.Add(i);
+                }
             }
 
             List<int> LevelsRand = new List<int>();
             for (int i = 0; i < maxLevel; i++)
             {
-                int r = rand.Next(LevelsToRand.Count);
-                LevelsRand.Add(LevelsToRand[r]);
-                LevelsToRand.RemoveAt(r);
+                if (LevelsNoRand.Contains((TWOC_Levels)i))
+                {
+                    LevelsRand.Add(i);
+                }
+                else
+                {
+                    int r = rand.Next(LevelsToRand.Count);
+                    LevelsRand.Add(LevelsToRand[r]);
+                    LevelsToRand.RemoveAt(r);
+                }
             }
 
             for (int i = 0; i < maxLevel; i++)
             {
-                Directory.Move(ConsolePipeline.ExtractedPath + LevelsPath + "LEVEL" + i, ConsolePipeline.ExtractedPath + LevelsPath + LevelNames[LevelsRand[i]]);
+                string LevelPathIn = LevelsPathA;
+                string LevelPathOut = LevelsPathA;
+                if (i > 24)
+                {
+                    LevelPathIn = LevelsPathC;
+                }
+                if (LevelsRand[i] > 24)
+                {
+                    LevelPathOut = LevelsPathC;
+                }
+
+                Directory.Move(ConsolePipeline.ExtractedPath + LevelPathIn + "LEVEL" + i, ConsolePipeline.ExtractedPath + LevelPathOut + LevelNames[LevelsRand[i]]);
 
                 if (i != LevelsRand[i])
                 {
-                    DirectoryInfo di = new DirectoryInfo(ConsolePipeline.ExtractedPath + LevelsPath + LevelNames[LevelsRand[i]]);
+                    DirectoryInfo di = new DirectoryInfo(ConsolePipeline.ExtractedPath + LevelPathOut + LevelNames[LevelsRand[i]]);
                     foreach (FileInfo file in di.EnumerateFiles())
                     {
-                        if (file.Name.Contains(FileNames[i]))
+                        if (file.Name.ToUpper().Contains(FileNames[i]))
                         {
-                            file.MoveTo(di.FullName + @"\" + FileNames[LevelsRand[i]] + "." + file.Extension);
+                            file.MoveTo(di.FullName + @"\" + FileNames[LevelsRand[i]] + file.Extension);
                         }
                     }
                 }
             }
+        }
 
+        void Mod_ReplaceLevel(TWOC_Levels Level1, TWOC_Levels Level2)
+        {
+            string LevelsPathA = @"LEVELS\A\";
+            string LevelsPathC = @"LEVELS\C\";
+            if (ConsolePipeline.Metadata.Console != ConsoleMode.PS2)
+            {
+                LevelsPathA = LevelsPathA.ToLower();
+                LevelsPathC = LevelsPathC.ToLower();
+            }
+            int maxLevel = LevelNames.Length;
 
+            string LevelPathIn = LevelsPathA;
+            string LevelPathOut = LevelsPathA;
+            if ((int)Level1 > 24)
+            {
+                LevelPathIn = LevelsPathC;
+            }
+            if ((int)Level2 > 24)
+            {
+                LevelPathOut = LevelsPathC;
+            }
+
+            Directory.Move(ConsolePipeline.ExtractedPath + LevelPathIn + LevelNames[(int)Level1], ConsolePipeline.ExtractedPath + LevelPathIn + "LEVEL");
+            Directory.Move(ConsolePipeline.ExtractedPath + LevelPathOut + LevelNames[(int)Level2], ConsolePipeline.ExtractedPath + LevelPathIn + LevelNames[(int)Level1]);
+            Directory.Move(ConsolePipeline.ExtractedPath + LevelPathIn + "LEVEL", ConsolePipeline.ExtractedPath + LevelPathOut + LevelNames[(int)Level2]);
+
+            DirectoryInfo di = new DirectoryInfo(ConsolePipeline.ExtractedPath + LevelPathOut + LevelNames[(int)Level2]);
+            foreach (FileInfo file in di.EnumerateFiles())
+            {
+                if (file.Name.ToUpper().Contains(FileNames[(int)Level1]))
+                {
+                    file.MoveTo(di.FullName + @"\" + FileNames[(int)Level2] + file.Extension);
+                }
+            }
+
+            di = new DirectoryInfo(ConsolePipeline.ExtractedPath + LevelPathIn + LevelNames[(int)Level1]);
+            foreach (FileInfo file in di.EnumerateFiles())
+            {
+                if (file.Name.ToUpper().Contains(FileNames[(int)Level2]))
+                {
+                    file.MoveTo(di.FullName + @"\" + FileNames[(int)Level1] + file.Extension);
+                }
+            }
 
         }
 
@@ -373,5 +541,257 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
 
         }
 
+        public List<TWOC_File_CRT.CrateType> CratesToChange = new List<TWOC_File_CRT.CrateType>()
+        {
+            TWOC_File_CRT.CrateType.Aku,
+            TWOC_File_CRT.CrateType.Blank,
+            //TWOC_File_CRT.CrateType.Bounce,
+            TWOC_File_CRT.CrateType.Fruit,
+            TWOC_File_CRT.CrateType.Invisibility,
+            TWOC_File_CRT.CrateType.Life,
+            TWOC_File_CRT.CrateType.Pickup,
+            TWOC_File_CRT.CrateType.Proximity,
+            TWOC_File_CRT.CrateType.TNT,
+        };
+        public List<TWOC_File_CRT.CrateType> CratesToInsert = new List<TWOC_File_CRT.CrateType>()
+        {
+            TWOC_File_CRT.CrateType.Aku,
+            TWOC_File_CRT.CrateType.Blank,
+            TWOC_File_CRT.CrateType.Bounce,
+            TWOC_File_CRT.CrateType.Fruit,
+            TWOC_File_CRT.CrateType.Invisibility,
+            TWOC_File_CRT.CrateType.Life,
+            TWOC_File_CRT.CrateType.Pickup,
+            TWOC_File_CRT.CrateType.Proximity,
+        };
+
+        public void Rand_RandomizeCrates(Random rand)
+        {
+            string LevelsPathA = @"LEVELS\A\";
+            string LevelsPathC = @"LEVELS\C\";
+            string Ext = ".CRT";
+            if (ConsolePipeline.Metadata.Console != ConsoleMode.PS2)
+            {
+                LevelsPathA = LevelsPathA.ToLower();
+                LevelsPathC = LevelsPathC.ToLower();
+                Ext = Ext.ToLower();
+            }
+            else
+            {
+                Ext += ";1";
+            }
+
+            for (int i = 0; i < LevelNames.Length; i++)
+            {
+                string path = ConsolePipeline.ExtractedPath + LevelsPathA + LevelNames[i] + @"\" + FileNames[i] + Ext;
+                if (i > 24)
+                {
+                    path = ConsolePipeline.ExtractedPath + LevelsPathC + LevelNames[i] + @"\" + FileNames[i] + Ext;
+                }
+                if (File.Exists(path))
+                {
+                    TWOC_File_CRT CrateFile = new TWOC_File_CRT(path, false);
+
+                    foreach (TWOC_File_CRT.CrateGroup Group in CrateFile.CrateGroups)
+                    {
+                        foreach (TWOC_File_CRT.Crate Crate in Group.Crates)
+                        {
+                            if (CratesToChange.Contains(Crate.Type))
+                            {
+                                int r = rand.Next(CratesToInsert.Count);
+                                Crate.Type = CratesToInsert[r];
+                            }
+                        }
+                    }
+
+                    CrateFile.Save(path);
+                }
+            }
+
+        }
+
+        public List<TWOC_File_CRT.CrateType> CratesToRemove = new List<TWOC_File_CRT.CrateType>()
+        {
+            TWOC_File_CRT.CrateType.Aku,
+            TWOC_File_CRT.CrateType.Blank,
+            //TWOC_File_CRT.CrateType.Bounce,
+            TWOC_File_CRT.CrateType.Fruit,
+            TWOC_File_CRT.CrateType.Invisibility,
+            TWOC_File_CRT.CrateType.Life,
+            TWOC_File_CRT.CrateType.Pickup,
+            TWOC_File_CRT.CrateType.Proximity,
+            TWOC_File_CRT.CrateType.Nitro,
+            TWOC_File_CRT.CrateType.Reinforced,
+            TWOC_File_CRT.CrateType.Checkpoint,
+            TWOC_File_CRT.CrateType.Slot,
+        };
+
+        public void Rand_CratesRemoved(Random rand)
+        {
+            string LevelsPathA = @"LEVELS\A\";
+            string LevelsPathC = @"LEVELS\C\";
+            string Ext = ".CRT";
+            if (ConsolePipeline.Metadata.Console != ConsoleMode.PS2)
+            {
+                LevelsPathA = LevelsPathA.ToLower();
+                LevelsPathC = LevelsPathC.ToLower();
+                Ext = Ext.ToLower();
+            }
+            else
+            {
+                Ext += ";1";
+            }
+
+            for (int i = 0; i < LevelNames.Length; i++)
+            {
+                string path = ConsolePipeline.ExtractedPath + LevelsPathA + LevelNames[i] + @"\" + FileNames[i] + Ext;
+                if (i > 24)
+                {
+                    path = ConsolePipeline.ExtractedPath + LevelsPathC + LevelNames[i] + @"\" + FileNames[i] + Ext;
+                }
+                if (File.Exists(path))
+                {
+                    TWOC_File_CRT CrateFile = new TWOC_File_CRT(path, false);
+
+                    for (int g = 0; g < CrateFile.CrateGroups.Count; g++)
+                    {
+                        for (int c = 0; c < CrateFile.CrateGroups[g].Crates.Count; c++)
+                        {
+                            if (CratesToRemove.Contains(CrateFile.CrateGroups[g].Crates[c].Type) && rand.Next(2) == 0)
+                            {
+                                CrateFile.CrateGroups[g].Crates.RemoveAt(c);
+                                c--;
+                            }
+                        }
+                        if (CrateFile.CrateGroups[g].Crates.Count == 0)
+                        {
+                            CrateFile.CrateGroups.RemoveAt(g);
+                            g--;
+                        }
+                    }
+
+                    CrateFile.Save(path);
+                }
+            }
+
+        }
+
+        List<TWOC_File_CRT.CrateType> TimeCrates = new List<TWOC_File_CRT.CrateType>()
+        {
+            TWOC_File_CRT.CrateType.Time1,
+            TWOC_File_CRT.CrateType.Time2,
+            TWOC_File_CRT.CrateType.Time3,
+        };
+
+        public void Rand_WumpaCrates(Random rand)
+        {
+            string LevelsPathA = @"LEVELS\A\";
+            string LevelsPathC = @"LEVELS\C\";
+            string ExtWMP = ".WMP";
+            string ExtCRT = ".CRT";
+            if (ConsolePipeline.Metadata.Console != ConsoleMode.PS2)
+            {
+                LevelsPathA = LevelsPathA.ToLower();
+                LevelsPathC = LevelsPathC.ToLower();
+                ExtWMP = ExtWMP.ToLower();
+                ExtCRT = ExtCRT.ToLower();
+            }
+            else
+            {
+                ExtCRT += ";1";
+                ExtWMP += ";1";
+            }
+
+            for (int i = 0; i < LevelNames.Length - 5; i++)
+            {
+                string path = ConsolePipeline.ExtractedPath + LevelsPathA + LevelNames[i] + @"\" + FileNames[i] + ExtWMP;
+                if (i > 24)
+                {
+                    path = ConsolePipeline.ExtractedPath + LevelsPathC + LevelNames[i] + @"\" + FileNames[i] + ExtWMP;
+                }
+                if (File.Exists(path))
+                {
+                    TWOC_File_WMP WumpaFile = new TWOC_File_WMP(path, false);
+
+                    List<TWOC_Vector3> WumpaPos = new List<TWOC_Vector3>();
+
+                    for (int w = 0; w < WumpaFile.Wumpas.Count; w++)
+                    {
+                        if (rand.Next(0,5) == 0)
+                        {
+                            WumpaPos.Add(WumpaFile.Wumpas[w]);
+                            WumpaFile.Wumpas.RemoveAt(w);
+                            w--;
+                        }
+                    }
+
+                    WumpaFile.Save(path);
+
+                    path = ConsolePipeline.ExtractedPath + LevelsPathA + LevelNames[i] + @"\" + FileNames[i] + ExtCRT;
+                    if (i > 24)
+                    {
+                        path = ConsolePipeline.ExtractedPath + LevelsPathC + LevelNames[i] + @"\" + FileNames[i] + ExtCRT;
+                    }
+
+                    if (File.Exists(path))
+                    {
+                        TWOC_File_CRT CrateFile = new TWOC_File_CRT(path, false);
+
+                        ushort CrateCount = CrateFile.GetCrateCount();
+
+                        for (int w = 0; w < WumpaPos.Count; w++)
+                        {
+                            TWOC_File_CRT.CrateGroup Group = new TWOC_File_CRT.CrateGroup();
+                            Group.Crates = new List<TWOC_File_CRT.Crate>();
+                            TWOC_File_CRT.Crate BaseCrate = new TWOC_File_CRT.Crate();
+                            BaseCrate.Pos = new TWOC_Vector3(WumpaPos[w].X, WumpaPos[w].Y, WumpaPos[w].Z);
+                            Group.ID = CrateCount;
+                            CrateCount++;
+                            Group.unkFlags = 0; // ??
+                            if (rand.Next(0,2) == 0)
+                                Group.Rot = new TWOC_Vector3((float)rand.NextDouble() * 180f, 0, 0);
+                            else
+                                Group.Rot = new TWOC_Vector3((float)rand.NextDouble() * -180f, 0, 0);
+                            
+                            BaseCrate.unkFlags = new byte[10] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, };
+                            int r = rand.Next(CratesToInsert.Count);
+                            BaseCrate.Type = CratesToInsert[r];
+                            if (rand.Next(0,3) == 0)
+                            {
+                                r = rand.Next(TimeCrates.Count);
+                                BaseCrate.TypeTT = TimeCrates[r];
+                            }
+                            else
+                            {
+                                BaseCrate.TypeTT = BaseCrate.Type;
+                            }
+                            BaseCrate.Type3 = TWOC_File_CRT.CrateType.NULL;
+                            BaseCrate.Type4 = TWOC_File_CRT.CrateType.NULL;
+                            BaseCrate.unkFlags2 = new byte[14] { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, };
+                            Group.Crates.Add(BaseCrate);
+                            CrateFile.CrateGroups.Add(Group);
+                        }
+
+                        CrateFile.Save(path);
+                    }
+                }
+            }
+
+        }
+
+    }
+
+    public class TWOC_Vector3
+    {
+        public float X;
+        public float Y;
+        public float Z;
+
+        public TWOC_Vector3(float x, float y, float z)
+        {
+            X = x;
+            Y = y;
+            Z = z;
+        }
     }
 }

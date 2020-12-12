@@ -77,6 +77,7 @@ namespace CrateModLoader.GameSpecific.CrashTitans
         };
 
         public static ModPropOption Option_TestMod = new ModPropOption("Test Mod: Wide camera angle in Episode 1", "");
+        public static ModPropOption Option_RandEpisodeOrder = new ModPropOption("Randomize Episode Order", "") { Hidden = true, };
 
         public Modder_Titans()
         {
@@ -87,6 +88,8 @@ namespace CrateModLoader.GameSpecific.CrashTitans
 
         public override void StartModProcess()
         {
+            Random rand = new Random(ModLoaderGlobals.RandomizerSeed);
+
             string path_RCF_frontend = "DEFAULT.RCF";
             basePath = ConsolePipeline.ExtractedPath;
             RCF_Manager.cachedRCF = null;
@@ -133,7 +136,54 @@ namespace CrateModLoader.GameSpecific.CrashTitans
                 File.WriteAllLines(path_extr + @"levels\L1_E1\cameraoverrides.blua", frontend_lines);
             }
 
+            if (Option_RandEpisodeOrder.Enabled)
+            {
+                List<int> LevelsToRand = new List<int>();
+                for (int i = 0; i < EpisodeFolderNames.Count; i++)
+                {
+                    LevelsToRand.Add(i);
+                    Directory.Move(path_extr + @"levels\" + EpisodeFolderNames[i], path_extr + @"levels\" + "level" + i);
+                }
+
+                List<int> LevelsRand = new List<int>();
+                for (int i = 0; i < EpisodeFolderNames.Count; i++)
+                {
+                    int r = rand.Next(LevelsToRand.Count);
+                    LevelsRand.Add(LevelsToRand[r]);
+                    LevelsToRand.RemoveAt(r);
+                }
+
+                for (int i = 0; i < EpisodeFolderNames.Count; i++)
+                {
+                    Directory.Move(path_extr + @"levels\" + "level" + i, path_extr + @"levels\" + EpisodeFolderNames[LevelsRand[i]]);
+                }
+            }
+
             RCF_Manager.Pack(basePath + path_RCF_frontend, path_extr);
         }
+
+        List<string> EpisodeFolderNames = new List<string>()
+        {
+            "L1_E1",
+            "L1_E2",
+            "L1_E3",
+            "L1_E4",
+            "L2_E1",
+            "L2_E2",
+            "L2_E4",
+            "L3_E1",
+            "L3_E1A",
+            "L3_E1B",
+            "L3_E2",
+            "L3_E3",
+            "L3_E4",
+            "L4_E1",
+            "L4_E2",
+            "L4_E3",
+            "L4_E4",
+            "L5_E1",
+            "L5_E2",
+            "L5_E3",
+        };
     }
 }
