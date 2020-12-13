@@ -282,7 +282,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
 
             Twins_Settings.PatchEXE(ConsolePipeline.Metadata.Console, GameRegion.Region, ConsolePipeline.ExtractedPath, GameRegion.ExecName);
 
-            ModCrates.InstallLayerMods(bdPath, 1);
+            ModCrates.InstallLayerMods(EnabledModCrates, bdPath, 1);
 
             bool Twins_Edit_CodeText = true;
             bool Twins_Edit_AllLevels = false;

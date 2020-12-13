@@ -503,7 +503,7 @@ namespace CrateModLoader.GameSpecific.CrashTTR
             }
             */
 
-            string[] all_RCF = new string[] {
+            List<string> all_RCF = new List<string> {
                 path_RCF_default,
                 path_RCF_common,
                 path_RCF_frontend,
@@ -542,12 +542,19 @@ namespace CrateModLoader.GameSpecific.CrashTTR
                 path_RCF_4,
                 path_RCF_5,
                 path_RCF_6,
-                path_RCF_sound,
-                path_RCF_english,
-                path_RCF_movies,
+                //path_RCF_sound,
+                //path_RCF_english,
+                //path_RCF_movies,
             };
 
-            for (int i = 0; i < all_RCF.Length; i++)
+            if (ModCrates.HasLayerModsActive(EnabledModCrates, 1)) // these take forever, so only if they're needed
+            {
+                all_RCF.Add(path_RCF_movies);
+                all_RCF.Add(path_RCF_english);
+                all_RCF.Add(path_RCF_sound);
+            }
+
+            for (int i = 0; i < all_RCF.Count; i++)
             {
                 if (all_RCF[i] != "")
                 {
@@ -562,7 +569,7 @@ namespace CrateModLoader.GameSpecific.CrashTTR
             string path_extr = basePath + @"cml_extr\";
             RCF_Manager.Extract(basePath + path, path_extr);
 
-            ModCrates.InstallLayerMods(path_extr, 1);
+            ModCrates.InstallLayerMods(EnabledModCrates, path_extr, 1);
 
             CTTR_Settings.ParseSettings(path_extr);
 

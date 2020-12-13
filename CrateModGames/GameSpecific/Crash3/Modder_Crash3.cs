@@ -106,7 +106,7 @@ namespace CrateModLoader.GameSpecific.Crash3
         public Modder_Crash3()
         {
 
-            ModCratesManualInstall = true;
+            ModCrateRegionCheck = true;
             
         }
 
@@ -120,9 +120,6 @@ namespace CrateModLoader.GameSpecific.Crash3
         void ModProcess()
         {
             Random rand = new Random(ModLoaderGlobals.RandomizerSeed);
-
-            CrateSettings_CrashTri.VerifyModCrates(Game.ShortName, GameRegion);
-            ModCrates.InstallLayerMods(ConsolePipeline.ExtractedPath, 0);
 
             SceneryColor PantsColor = new SceneryColor(0, 0, 0);
             if (Option_RandPantsColor.Enabled)

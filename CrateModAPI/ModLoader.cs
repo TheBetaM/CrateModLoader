@@ -25,6 +25,20 @@ namespace CrateModLoader
         public static bool KeepTempFiles = false;
         public static Dictionary<Game, Assembly> SupportedGames;
         public static Dictionary<ModPipelineInfo, Type> SupportedConsoles;
+        public List<ModCrate> SupportedMods = new List<ModCrate>();
+        public int ModsActiveAmount
+        {
+            get
+            {
+                int amount = 0;
+                foreach (var mod in SupportedMods)
+                {
+                    if (mod.IsActivated)
+                        ++amount;
+                }
+                return amount;
+            }
+        }
 
         public event EventHandler<EventValueArgs<string>> ProcessMessageChanged;
         public event EventHandler InteractionEnable;
@@ -169,7 +183,7 @@ namespace CrateModLoader
             Modder = null;
             Pipeline = null;
             GamePreloaded = false;
-            ModCrates.ClearModLists();
+            SupportedMods = new List<ModCrate>();
             bool ConsoleDetected = false;
             string regionID;
             uint regionNumber;
@@ -215,14 +229,23 @@ namespace CrateModLoader
         {
             //To make sure the seed matches
             ModLoaderGlobals.RandomizerSeed = RandomizerSeedBase;
-
-            if (Modder == null || !Modder.ModCratesManualInstall)
+            
+            if (Modder.ModCrateRegionCheck)
             {
-                ModCrates.InstallLayerMods(Pipeline.ExtractedPath, 0);
+                ModCrates.VerifyModCrates(SupportedMods, Game.ShortName, Modder.GameRegion);
+            }
+            ModCrates.InstallLayerMods(SupportedMods, Pipeline.ExtractedPath, 0);
+            Modder.EnabledModCrates = new List<ModCrate>();
+            foreach (ModCrate Mod in SupportedMods)
+            {
+                if (Mod.IsActivated)
+                {
+                    Modder.EnabledModCrates.Add(Mod);
+                }
             }
             if (Modder != null)
             {
-                ModCrates.InstallCrateSettings(Modder);
+                ModCrates.InstallCrateSettings(SupportedMods, Modder);
                 Modder.StartModProcess();
             }
         }
@@ -405,7 +428,7 @@ namespace CrateModLoader
             RegionCode TargetRegion = new RegionCode();
             Modder = null;
 
-            ModCrates.ClearModLists();
+            SupportedMods = new List<ModCrate>();
 
             if (SupportedGames.Count <= 0)
             {
@@ -524,7 +547,7 @@ namespace CrateModLoader
             Modder = null;
             Pipeline = null;
 
-            ModCrates.ClearModLists();
+            SupportedMods = new List<ModCrate>();
 
             ResetGameEvent.Invoke(this, new EventValueArgs<bool>(ClearGameText));
         }

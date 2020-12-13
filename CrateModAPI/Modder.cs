@@ -33,10 +33,11 @@ namespace CrateModLoader
         public Assembly assembly;
         public ModPipeline ConsolePipeline;
         public RegionCode GameRegion;
+        public List<ModCrate> EnabledModCrates = new List<ModCrate>();
 
         public BackgroundWorker AsyncWorker = null;
         public bool ModMenuEnabled => Props.Count > 0;
-        public bool ModCratesManualInstall = false; // A game might require some type of verification (i.e. file integrity, region matching) before installing layer0 mod crates.
+        public bool ModCrateRegionCheck = false; // A game might require some type of verification (i.e. file integrity, region matching) before installing layer0 mod crates.
         public virtual bool CanPreloadGame => false;
         public bool IsBusy { get { return AsyncWorker != null && AsyncWorker.IsBusy; } }
 

@@ -163,7 +163,7 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
         {
             randState = new Random(ModLoaderGlobals.RandomizerSeed);
 
-            ModCrates.InstallLayerMods(path_gob_extracted, 1);
+            ModCrates.InstallLayerMods(EnabledModCrates, path_gob_extracted, 1);
 
             bool Editing_CSV_AdventureTracksManager = false;
             bool Editing_CSV_GoalsToRewardsConverter = false;

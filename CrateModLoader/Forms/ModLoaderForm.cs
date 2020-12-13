@@ -174,7 +174,7 @@ namespace CrateModLoader
 
         private void button3_Click(object sender, EventArgs e)
         {
-            if (checkedListBox1.CheckedItems.Count <= 0 && ModCrates.ModsActiveAmount <= 0 && !button_openModMenu.Text.StartsWith("*"))
+            if (checkedListBox1.CheckedItems.Count <= 0 && ModProgram.ModsActiveAmount <= 0 && !button_openModMenu.Text.StartsWith("*"))
             {
                 if (MessageBox.Show(ModLoaderText.NoOptionsSelectedPopup, ModLoaderText.NoOptionsSelectedTitle, MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
@@ -632,9 +632,10 @@ namespace CrateModLoader
         void UpdateModCrateChangedState(object sender, EventArgs e)
         {
             string CratesActive = ModLoaderText.ModCratesButton;
-            if (ModCrates.ModsActiveAmount > 0)
+            int ModsActive = ModProgram.ModsActiveAmount;
+            if (ModsActive > 0)
             {
-                CratesActive += $" ({ ModCrates.ModsActiveAmount }x)";
+                CratesActive += $" ({ ModsActive }x)";
             }
 
             button_modCrateMenu.Text = CratesActive;

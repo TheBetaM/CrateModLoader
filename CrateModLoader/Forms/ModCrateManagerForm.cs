@@ -18,15 +18,15 @@ namespace CrateModLoader
 
             checkedListBox_mods.Items.Clear();
 
-            ModCrates.PopulateModList(ModProgram.Modder != null, ModProgram.Game.ShortName);
+            ModCrates.PopulateModList(ModProgram.SupportedMods, ModProgram.Modder != null, ModProgram.Game.ShortName);
 
-            if (ModCrates.SupportedMods.Count > 0)
+            if (ModProgram.SupportedMods.Count > 0)
             {
-                for (int i = 0; i < ModCrates.SupportedMods.Count; i++)
+                for (int i = 0; i < ModProgram.SupportedMods.Count; i++)
                 {
-                    string ListName = ModCrates.SupportedMods[i].Name;
+                    string ListName = ModProgram.SupportedMods[i].Name;
                     ListName += " ";
-                    ListName += ModCrates.SupportedMods[i].Version;
+                    ListName += ModProgram.SupportedMods[i].Version;
 
                     /*
                     uint ModLoaderVer;
@@ -46,7 +46,7 @@ namespace CrateModLoader
                     */
 
                     checkedListBox_mods.Items.Add(ListName);
-                    if (ModCrates.SupportedMods[i].IsActivated)
+                    if (ModProgram.SupportedMods[i].IsActivated)
                     {
                         checkedListBox_mods.SetItemCheckState(i, CheckState.Checked);
                     }
@@ -91,11 +91,11 @@ namespace CrateModLoader
             int index = e.Index;
             if (e.NewValue == CheckState.Checked)
             {
-                ModCrates.UpdateModSelection(index, true);
+                ModCrates.UpdateModSelection(ModProgram.SupportedMods, index, true);
             }
             else
             {
-                ModCrates.UpdateModSelection(index, false);
+                ModCrates.UpdateModSelection(ModProgram.SupportedMods, index, false);
             }
         }
 
@@ -104,17 +104,17 @@ namespace CrateModLoader
             int index = checkedListBox_mods.SelectedIndex;
             if (index >= 0)
             {
-                label_author.Text = ModLoaderText.ModCrateManagerAuthorText + " " + ModCrates.SupportedMods[index].Author;
-                label_desc.Text = ModCrates.SupportedMods[index].Desc;
-                if (!ModCrates.SupportedMods[index].HasIcon)
+                label_author.Text = ModLoaderText.ModCrateManagerAuthorText + " " + ModProgram.SupportedMods[index].Author;
+                label_desc.Text = ModProgram.SupportedMods[index].Desc;
+                if (!ModProgram.SupportedMods[index].HasIcon)
                 {
                     pictureBox_ModIcon.Image = Properties.Resources.cml_icon;
                 }
                 else
                 {
-                    if (ModCrates.SupportedMods[index].IsFolder)
+                    if (ModProgram.SupportedMods[index].IsFolder)
                     {
-                        pictureBox_ModIcon.Image = Image.FromFile(Path.Combine(ModCrates.SupportedMods[index].Path, ModCrates.IconFileName));
+                        pictureBox_ModIcon.Image = Image.FromFile(Path.Combine(ModProgram.SupportedMods[index].Path, ModCrates.IconFileName));
                     }
                     else
                     {

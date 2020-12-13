@@ -111,7 +111,7 @@ namespace CrateModLoader.GameSpecific.CrashTitans
             
             RCF_Manager.Extract(basePath + path_RCF_frontend, path_extr);
 
-            ModCrates.InstallLayerMods(path_extr, 1);
+            ModCrates.InstallLayerMods(EnabledModCrates, path_extr, 1);
 
             if (Option_TestMod.Enabled)
             {

@@ -95,7 +95,7 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
 
             string path_extr = ConsolePipeline.ExtractedPath + @"BIGFILE\";
 
-            ModCrates.InstallLayerMods(path_extr, 1);
+            ModCrates.InstallLayerMods(EnabledModCrates, path_extr, 1);
 
             if (Option_RandTracks.Enabled && Directory.Exists(path_extr + @"levels\tracks\island1"))
             {

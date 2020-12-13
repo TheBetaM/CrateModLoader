@@ -63,7 +63,6 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="GameSpecific\Crash1\CrashTri_Common.cs" />
-    <Compile Include="GameSpecific\Crash1\CrateSettings_CrashTri.cs" />
     <Compile Include="GameSpecific\Crash1\Modder_Crash1.cs" />
     <Compile Include="GameSpecific\Crash2\Crash2_Mods.cs" />
     <Compile Include="GameSpecific\Crash2\Crash2_Text.Designer.cs">
@@ -240,6 +239,7 @@
     <Compile Include="GameSpecific\CrashTTR\RCF.cs" />
     <Compile Include="GameSpecific\CrashTTR\RCF_Manager.cs" />
     <Compile Include="GameSpecific\CrashTWOC\Modder_TWOC.cs" />
+    <Compile Include="GameSpecific\CrashTWOC\TWOC_File_AI.cs" />
     <Compile Include="GameSpecific\CrashTWOC\TWOC_File_CRT.cs" />
     <Compile Include="GameSpecific\CrashTWOC\TWOC_File_WMP.cs" />
     <Compile Include="GameSpecific\MarioSunshine\Modder_MarioSunshine.cs" />

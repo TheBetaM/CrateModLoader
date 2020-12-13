@@ -91,7 +91,7 @@ namespace CrateModLoader.GameSpecific.Crash1
 
         public Modder_Crash1()
         {
-            ModCratesManualInstall = true;
+            ModCrateRegionCheck = true;
         }
 
         public override void StartModProcess()
@@ -104,9 +104,6 @@ namespace CrateModLoader.GameSpecific.Crash1
         void ModProcess()
         {
             Random rand = new Random(ModLoaderGlobals.RandomizerSeed);
-
-            CrateSettings_CrashTri.VerifyModCrates(Game.ShortName, GameRegion);
-            ModCrates.InstallLayerMods(ConsolePipeline.ExtractedPath, 0);
 
             List<FileInfo> nsfs = new List<FileInfo>();
             List<FileInfo> nsds = new List<FileInfo>();

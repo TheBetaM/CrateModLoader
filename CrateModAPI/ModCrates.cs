@@ -61,22 +61,7 @@ namespace CrateModLoader
         public const string Prop_Plugin = "Plugin";
         public const string Prop_Game = "Game";
 
-        public static List<ModCrate> SupportedMods = new List<ModCrate>();
-        public static int ModsActiveAmount
-        {
-            get
-            {
-                int amount = 0;
-                foreach (var mod in SupportedMods)
-                {
-                    if (mod.IsActivated)
-                        ++amount;
-                }
-                return amount;
-            }
-        }
-
-        public static void PopulateModList(bool IsSupportedGame, string ShortName)
+        public static void PopulateModList(List<ModCrate> SupportedMods, bool IsSupportedGame, string ShortName)
         {
 
             bool SupportAll = false;
@@ -183,7 +168,7 @@ namespace CrateModLoader
 
         }
 
-        public static void UpdateModSelection(int index, bool value)
+        public static void UpdateModSelection(List<ModCrate> SupportedMods, int index, bool value)
         {
             SupportedMods[index].IsActivated = value;
         }
@@ -442,16 +427,16 @@ namespace CrateModLoader
             return NewCrate;
         }
 
-        public static void ClearModLists()
-        {
+        //public static void ClearModLists(List<ModCrate> SupportedMods)
+        //{
             //ModList = new List<ModCrate>();
-            SupportedMods = new List<ModCrate>();
-        }
+            //SupportedMods = new List<ModCrate>();
+        //}
 
         /// <summary>
         /// Installs all active mods of the specified layer in the specified path
         /// </summary>
-        public static void InstallLayerMods(string basePath, int layer)
+        public static void InstallLayerMods(List<ModCrate> SupportedMods, string basePath, int layer)
         {
             for (int i = 0; i < SupportedMods.Count; i++)
             {
@@ -521,7 +506,7 @@ namespace CrateModLoader
         /// <summary>
         /// De-serializes mod properties in activated Mod Crates into the given Modder 
         /// </summary>
-        public static void InstallCrateSettings(Modder modder)
+        public static void InstallCrateSettings(List<ModCrate> SupportedMods, Modder modder)
         {
             for (int mod = 0; mod < SupportedMods.Count; mod++)
             {
@@ -687,7 +672,7 @@ namespace CrateModLoader
         /// <summary>
         /// For checking if a layer is modded
         /// </summary>
-        public static bool HasLayerModsActive(int layer)
+        public static bool HasLayerModsActive(List<ModCrate> SupportedMods, int layer)
         {
             for (int i = 0; i < SupportedMods.Count; i++)
             {
@@ -697,6 +682,25 @@ namespace CrateModLoader
                 }
             }
             return false;
+        }
+
+        /// <summary>
+        /// Optional region check.
+        /// </summary>
+        public static void VerifyModCrates(List<ModCrate> SupportedMods, string ShortName, RegionCode region)
+        {
+            bool modsdirty = false;
+            foreach (var crate in SupportedMods)
+            {
+                if (!crate.IsActivated) continue;
+                if (!crate.HasSettings || !crate.Settings.ContainsKey("GameRegion") || crate.Settings["GameRegion"] != region.Region.ToString())
+                {
+                    crate.IsActivated = false;
+                    modsdirty = true;
+                }
+            }
+            if (modsdirty)
+                PopulateModList(SupportedMods, true, ShortName);
         }
 
     }
