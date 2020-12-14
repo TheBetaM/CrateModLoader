@@ -56,7 +56,8 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
         }
 
         public static ModPropOption Option_RandCharacters = new ModPropOption("Randomize Drivers", "") { Hidden = true, };
-        public static ModPropOption Option_RandTracks = new ModPropOption("Randomize Track Order", "Shuffles tracks around.");
+        public static ModPropOption Option_RandTracks = new ModPropOption("Randomize Track Order (Any%)", "Shuffles all tracks around. CTR letters don't spawn in bonus tracks so 101% is not possible.");
+        public static ModPropOption Option_RandTracks101 = new ModPropOption("Randomize Track Order (101%)", "Shuffles all tracks (except bonus tracks) around.");
         public static ModPropOption Option_RandTracksWithDupes = new ModPropOption("Randomize Tracks (With Duplicates)", "Shuffles tracks around, which can repeat.") { Hidden = true, };
 
         private string basePath = "";
@@ -97,11 +98,17 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
 
             ModCrates.InstallLayerMods(EnabledModCrates, path_extr, 1);
 
-            if (Option_RandTracks.Enabled && Directory.Exists(path_extr + @"levels\tracks\island1"))
+            if ((Option_RandTracks.Enabled || Option_RandTracks101.Enabled) && Directory.Exists(path_extr + @"levels\tracks\island1"))
             {
                 List<int> LevelInd = new List<int>();
                 List<int> LevelRand = new List<int>();
-                for (int i = 0; i < TrackFolderNames.Count; i++)
+                int maxLevel = TrackFolderNames.Count;
+                if (Option_RandTracks101.Enabled)
+                {
+                    maxLevel -= 2;
+                }
+
+                for (int i = 0; i < maxLevel; i++)
                 {
                     Directory.Move(path_extr + @"levels\tracks\" + TrackFolderNames[i], path_extr + @"levels\tracks\level" + i);
                     LevelInd.Add(i);
@@ -119,7 +126,7 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
                     Directory.Move(path_extr + @"levels\tracks\level" + i, path_extr + @"levels\tracks\" + TrackFolderNames[LevelRand[i]]);
                 }
             }
-            
+
             LNG lng = new LNG(path_extr + @"lang\en.lng");
             string[] lang_lines = File.ReadAllLines(path_extr + @"lang\en.txt", System.Text.Encoding.Default);
             for (int i = 0; i < lang_lines.Length; i++)
@@ -198,13 +205,14 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
             "labs1",
             "proto8",
             "proto9",
-            "secret1",
-            "secret2",
             "sewer1",
             "space",
             "temple1",
             "temple2",
             "tube1",
+
+            "secret1",
+            "secret2",
         };
     }
 }

@@ -16,7 +16,7 @@ Features:
 - Disable Unlock Popups
 - Speed Up Mask Hint Appearance  
 - Remove Intro Videos  
-- Version, seed and settings visible in the Credits screen
+- Version and seed visible in the Credits screen
 Mod Menu:
 - Individual character and kart physics parameters
 - UI Textures
@@ -41,7 +41,7 @@ Features:
 - Classic Explosion Damage
 - Untextured World
 - Greyscale World (PS2)
-- Version, seed and settings visible in the Autosave Disabled screen  
+- Version and seed visible in the Autosave Disabled screen  
 Mod Menu:
 - Randomize Crate Types  
 - Individual character parameters
@@ -58,7 +58,7 @@ Features:
 - Randomize Minigames
 - Randomize Race Laps
 - Prevent Sequence Breaks
-- Version, seed and settings visible in the Credits screen
+- Version and seed visible in the Credits screen
 Mod Menu:
 - Individual Race laps
 
@@ -164,6 +164,9 @@ Features:
 - Randomize Wooden Crates  
 - Random Crates Removed  
 - Random Wumpa Are Crates  
+- Randomize Enemy Paths  
+- Random Enemies Removed  
+- Randomize Music (XBOX)  
   
 Crash of the Titans
 Supported: All PS2 versions (.ISO format), All Wii versions (.ISO/.WBFS formats), All PSP versions (.ISO format), All 360 versions (.ISO format)   
@@ -179,4 +182,4 @@ Mod abbreviation: CrashMOM
 Mod layers: 1 - Default.RCF contents (only replace files)
 API by BetaM and NeoKesha.  
 Features:    
-- Version, seed and settings visible in the Credits screen  
+- Version and seed visible in the Credits screen  

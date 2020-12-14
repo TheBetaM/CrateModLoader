@@ -15,30 +15,6 @@ namespace CrateModLoader.GameSpecific.CrashTS
     public static class Twins_Data_Textures
     {
 
-        public static ModProp_TextureFile Texture_GameOver_Crash = new ModProp_TextureFile(false, "Game Over - Crash", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 }, };
-        public static ModProp_TextureFile Texture_GameOver_Cortex = new ModProp_TextureFile(false, "Game Over - Cortex", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 }, };
-        public static ModProp_TextureFile Texture_GameOver_Nina = new ModProp_TextureFile(false, "Game Over - Nina", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 }, };
-        public static ModProp_TextureFile Texture_GameOver_Mecha = new ModProp_TextureFile(false, "Game Over - Mecha", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 }, };
-        public static ModProp_TextureFile Texture_GameOver_CrashAndCortex = new ModProp_TextureFile(false, "Game Over - Crash And Cortex", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 }, };
-
-        public static ModProp_TextureFile Texture_Legal = new ModProp_TextureFile(false, "Legal Display", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 }, };
-
-        public static ModProp_TextureFile Texture_Loading_01 = new ModProp_TextureFile(false, "Loading - 01", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 }, };
-        public static ModProp_TextureFile Texture_Loading_02 = new ModProp_TextureFile(false, "Loading - 02", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 }, };
-        public static ModProp_TextureFile Texture_Loading_03 = new ModProp_TextureFile(false, "Loading - 03", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 }, };
-
-        public static ModProp_TextureFile Texture_Credits = new ModProp_TextureFile(false, "Credits", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 }, };
-
         public static ModProp_TextureFile Texture_Icons = new ModProp_TextureFile(false, "Icons", "")
         { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 }, };
 
@@ -79,7 +55,29 @@ namespace CrateModLoader.GameSpecific.CrashTS
         public static ModProp_TextureFile Texture_Titles_Level13 = new ModProp_TextureFile(false, "Logo - Ant Agony", "")
         { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 }, };
 
+        public static ModProp_TextureFile Texture_Loading_01 = new ModProp_TextureFile(false, "Loading - 01", "")
+        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 }, };
+        public static ModProp_TextureFile Texture_Loading_02 = new ModProp_TextureFile(false, "Loading - 02", "")
+        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 }, };
+        public static ModProp_TextureFile Texture_Loading_03 = new ModProp_TextureFile(false, "Loading - 03", "")
+        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 }, };
 
+        public static ModProp_TextureFile Texture_Credits = new ModProp_TextureFile(false, "Credits", "")
+        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 }, };
+
+        public static ModProp_TextureFile Texture_Legal = new ModProp_TextureFile(false, "Legal Display", "")
+        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 }, };
+
+        public static ModProp_TextureFile Texture_GameOver_Crash = new ModProp_TextureFile(false, "Game Over - Crash", "")
+        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 }, };
+        public static ModProp_TextureFile Texture_GameOver_Cortex = new ModProp_TextureFile(false, "Game Over - Cortex", "")
+        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 }, };
+        public static ModProp_TextureFile Texture_GameOver_Nina = new ModProp_TextureFile(false, "Game Over - Nina", "")
+        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 }, };
+        public static ModProp_TextureFile Texture_GameOver_Mecha = new ModProp_TextureFile(false, "Game Over - Mecha", "")
+        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 }, };
+        public static ModProp_TextureFile Texture_GameOver_CrashAndCortex = new ModProp_TextureFile(false, "Game Over - Crash And Cortex", "")
+        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 }, };
 
         public static void Textures_Preload(string basePath, RegionType region)
         {

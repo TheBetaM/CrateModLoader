@@ -74,18 +74,19 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
             },
         };
 
-        public static ModPropOption Option_RandCrates = new ModPropOption("Randomize Wooden Crates", "");
+        public static ModPropOption Option_RandCrates = new ModPropOption("Randomize Wooden Crates", "The types of wooden crates are randomized.");
         public static ModPropOption Option_RandCratesRemoved = new ModPropOption("Random Crates Removed", "Crates are randomly removed in each level. The box counter is adjusted accordingly.");
         public static ModPropOption Option_RandWumpaCrates = new ModPropOption("Random Wumpa Are Random Crates", "Wumpas are randomly turned into crates in each level. The box counter is adjusted accordingly.");
         //todo: new box positions are off
-        public static ModPropOption Option_RandEnemyPaths = new ModPropOption("Randomize Enemy Paths", "") { Hidden = true, };
-        public static ModPropOption Option_RandEnemiesRemoved = new ModPropOption("Random Enemies Removed", "") { Hidden = true, };
-        public static ModPropOption Option_RandEnemyCrates = new ModPropOption("Random Enemies Are Random Crates", "The box counter is adjusted accordingly.") { Hidden = true, };
-        public static ModPropOption Option_AllEnemyCrates = new ModPropOption("All Enemies Are Random Crates", "The box counter is adjusted accordingly.") { ModMenuOnly = true,  Hidden = true, };
-        public static ModPropOption Option_RandMusic = new ModPropOption("Randomize Music", "") //not tested
+        public static ModPropOption Option_RandEnemyPaths = new ModPropOption("Randomize Enemy Paths", "Reverses paths of random enemies.");
+        public static ModPropOption Option_RandEnemiesRemoved = new ModPropOption("Random Enemies Removed", "Enemies are randomly removed in each level.");
+        public static ModPropOption Option_RandMusic = new ModPropOption("Randomize Music", "Music tracks are shuffled around.") //not tested
         { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN, ConsoleMode.XBOX }, };
 
-
+        public static ModPropOption Option_RandEnemyCrates = new ModPropOption("Random Enemies Are Random Crates", "Enemies are randomly turned into random cratesin each level. The box counter is adjusted accordingly.")
+        { Hidden = true, }; //todo
+        public static ModPropOption Option_AllEnemyCrates = new ModPropOption("All Enemies Are Random Crates", "The box counter is adjusted accordingly.")
+        { ModMenuOnly = true, Hidden = true, }; //todo
         public static ModPropOption Option_RandLevelOrder = new ModPropOption("Randomize Level Order", "") //todo, unbeatable levels, enemies not spawning, etc.
         { Hidden = true, };
         public static ModPropOption Option_SphereLevelsOnFoot = new ModPropOption("Atlasphere Levels On Foot", "") //todo: camera!!!
@@ -113,32 +114,23 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
             Random rand = new Random(ModLoaderGlobals.RandomizerSeed);
 
             if (Option_RandCrates.Enabled)
-            {
                 Rand_RandomizeCrates(rand);
-            }
             if (Option_RandWumpaCrates.Enabled)
-            {
                 Rand_WumpaCrates(rand);
-            }
             if (Option_RandCratesRemoved.Enabled)
-            {
                 Rand_CratesRemoved(rand);
-            }
             if (Option_RandLevelOrder.Enabled)
-            {
                 Mod_RandomizeLevelOrder(rand);
-            }
+            if (Option_RandEnemiesRemoved.Enabled)
+                Rand_EnemiesRemoved(rand);
+            if (Option_RandEnemyPaths.Enabled)
+                Rand_EnemyPaths(rand);
             if (Option_SphereLevelsOnFoot.Enabled)
             {
-                Mod_ReplaceLevel(TWOC_Levels.L01_ArcticAntics, TWOC_Levels.L30_ForceOfNature);
-                Mod_ReplaceLevel(TWOC_Levels.L04_WizardsAndLizards, TWOC_Levels.L12_Tsunami);
-                Mod_ReplaceLevel(TWOC_Levels.L13_SmokeyAndTheBandicoot, TWOC_Levels.L28_IceStationBandicoot);
                 Mod_ReplaceLevel(TWOC_Levels.L03_Bamboozled, TWOC_Levels.L14_EskimoRoll);
             }
             if (Option_RandMusic.Enabled)
-            {
                 Mod_RandomizeMusic(rand);
-            }
         }
 
         public enum TWOC_Levels
@@ -778,6 +770,125 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
 
                         CrateFile.Save(path);
                     }
+                }
+            }
+
+        }
+
+        List<string> BannedEnemies = new List<string>()
+            {
+                "crystal",
+                "clock",
+                "probe",
+                "crate gem",
+                "green gem",
+                "bonus gem",
+                "flying clock",
+                "super slam",
+                "flying crystal",
+                "flying crategem",
+                "flying probe",
+                "blue gem",
+                "double jump",
+                "red gem",
+                "flying bonusgem",
+                "tiptoe",
+                "super spin",
+                "sprint",
+                "space cortex",
+                "space crunch",
+                "water crunch",
+                "yellow gem",
+                "purple gem",
+                "bazooka",
+                "coco",
+                "space lo-lo",
+                "earth crunch",
+                "space rok-ko",
+                "space wa-wa",
+                "space py-ro",
+                "atlas crunch",
+            };
+
+
+        public void Rand_EnemiesRemoved(Random rand)
+        {
+            string LevelsPathA = @"LEVELS\A\";
+            string LevelsPathC = @"LEVELS\C\";
+            string Ext = ".AI";
+            if (ConsolePipeline.Metadata.Console != ConsoleMode.PS2)
+            {
+                LevelsPathA = LevelsPathA.ToLower();
+                LevelsPathC = LevelsPathC.ToLower();
+                Ext = Ext.ToLower();
+            }
+            else
+            {
+                Ext += ";1";
+            }
+
+            for (int i = 0; i < LevelNames.Length; i++)
+            {
+                string path = ConsolePipeline.ExtractedPath + LevelsPathA + LevelNames[i] + @"\" + FileNames[i] + Ext;
+                if (i > 24)
+                {
+                    path = ConsolePipeline.ExtractedPath + LevelsPathC + LevelNames[i] + @"\" + FileNames[i] + Ext;
+                }
+                if (File.Exists(path))
+                {
+                    TWOC_File_AI AIFile = new TWOC_File_AI(path, false);
+
+                    for (int a = 0; a < AIFile.AI.Count; a++)
+                    {
+                        if (!BannedEnemies.Contains(AIFile.AI[a].Name) && rand.Next(2) == 0)
+                        {
+                            AIFile.AI.RemoveAt(a);
+                            a--;
+                        }
+                    }
+
+                    AIFile.Save(path);
+                }
+            }
+
+        }
+
+        public void Rand_EnemyPaths(Random rand)
+        {
+            string LevelsPathA = @"LEVELS\A\";
+            string LevelsPathC = @"LEVELS\C\";
+            string Ext = ".AI";
+            if (ConsolePipeline.Metadata.Console != ConsoleMode.PS2)
+            {
+                LevelsPathA = LevelsPathA.ToLower();
+                LevelsPathC = LevelsPathC.ToLower();
+                Ext = Ext.ToLower();
+            }
+            else
+            {
+                Ext += ";1";
+            }
+
+            for (int i = 0; i < LevelNames.Length; i++)
+            {
+                string path = ConsolePipeline.ExtractedPath + LevelsPathA + LevelNames[i] + @"\" + FileNames[i] + Ext;
+                if (i > 24)
+                {
+                    path = ConsolePipeline.ExtractedPath + LevelsPathC + LevelNames[i] + @"\" + FileNames[i] + Ext;
+                }
+                if (File.Exists(path))
+                {
+                    TWOC_File_AI AIFile = new TWOC_File_AI(path, false);
+
+                    for (int a = 0; a < AIFile.AI.Count; a++)
+                    {
+                        if (!BannedEnemies.Contains(AIFile.AI[a].Name) && rand.Next(2) == 0)
+                        {
+                            AIFile.AI[a].Pos.Reverse();
+                        }
+                    }
+
+                    AIFile.Save(path);
                 }
             }
 

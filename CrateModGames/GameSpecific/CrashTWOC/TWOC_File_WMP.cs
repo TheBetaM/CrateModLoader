@@ -61,7 +61,7 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
                     Wumpas.RemoveAt(255);
                 }
             }
-            using (FileStream fileStream = new FileStream(path, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite))
+            using (FileStream fileStream = new FileStream(path, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite))
             {
                 BinaryWriter writer = new BinaryWriter(fileStream);
                 writer.Write(Wumpas.Count);

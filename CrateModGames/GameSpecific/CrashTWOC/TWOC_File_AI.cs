@@ -43,7 +43,7 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
                 {
                     AIObject Object = new AIObject();
                     string tempName = new string(reader.ReadChars(0x10));
-                    Object.Name = tempName.Replace('\0', ' ');
+                    Object.Name = tempName.Trim('\0');
 
                     uint VectorCount = reader.ReadUInt32();
                     Object.Pos = new List<TWOC_Vector3>();
@@ -51,7 +51,8 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
                     {
                         Object.Pos.Add(new TWOC_Vector3(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle()));
                     }
-                    
+
+                    AI.Add(Object);
                 }
             }
         }
@@ -65,7 +66,7 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
                     AI.RemoveAt(95);
                 }
             }
-            using (FileStream fileStream = new FileStream(path, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite))
+            using (FileStream fileStream = new FileStream(path, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite))
             {
                 BinaryWriter writer = new BinaryWriter(fileStream);
                 writer.Write(AI.Count);
@@ -79,11 +80,10 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
                     {
                         while (AI[i].Name.Length < 16)
                         {
-                            AI[i].Name += " ";
+                            AI[i].Name += '\0';
                         }
                     }
-                    string tempName = AI[i].Name.Replace(' ', '\0');
-                    char[] tempName2 = tempName.ToCharArray();
+                    char[] tempName2 = AI[i].Name.ToCharArray();
                     writer.Write(tempName2);
 
                     writer.Write(AI[i].Pos.Count);
