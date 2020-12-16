@@ -70,6 +70,168 @@ namespace CrateModGames.GameSpecific.CrashTS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Crawl Rotation Speed.
+        /// </summary>
+        internal static string CharFlags_CrawlRotationSpeed {
+            get {
+                return ResourceManager.GetString("CharFlags_CrawlRotationSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Character rotation speed while crawling..
+        /// </summary>
+        internal static string CharFlags_CrawlRotationSpeedDesc {
+            get {
+                return ResourceManager.GetString("CharFlags_CrawlRotationSpeedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ground Rotation Speed.
+        /// </summary>
+        internal static string CharFlags_GroundRotationSpeed {
+            get {
+                return ResourceManager.GetString("CharFlags_GroundRotationSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Character rotation speed while walking or running on the ground..
+        /// </summary>
+        internal static string CharFlags_GroundRotationSpeedDesc {
+            get {
+                return ResourceManager.GetString("CharFlags_GroundRotationSpeedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Jump Rotation Speed.
+        /// </summary>
+        internal static string CharFlags_JumpRotationSpeed {
+            get {
+                return ResourceManager.GetString("CharFlags_JumpRotationSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Character rotation speed while jumping..
+        /// </summary>
+        internal static string CharFlags_JumpRotationSpeedDesc {
+            get {
+                return ResourceManager.GetString("CharFlags_JumpRotationSpeedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slide Jump Rotation Speed.
+        /// </summary>
+        internal static string CharFlags_SlideJumpRotationSpeed {
+            get {
+                return ResourceManager.GetString("CharFlags_SlideJumpRotationSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Character rotation speed while slide jumping..
+        /// </summary>
+        internal static string CharFlags_SlideJumpRotationSpeedDesc {
+            get {
+                return ResourceManager.GetString("CharFlags_SlideJumpRotationSpeedDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown Parameter 1.
+        /// </summary>
+        internal static string CharFlags_Unk1 {
+            get {
+                return ResourceManager.GetString("CharFlags_Unk1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown.
+        /// </summary>
+        internal static string CharFlags_Unk1Desc {
+            get {
+                return ResourceManager.GetString("CharFlags_Unk1Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown Parameter 2.
+        /// </summary>
+        internal static string CharFlags_Unk2 {
+            get {
+                return ResourceManager.GetString("CharFlags_Unk2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown.
+        /// </summary>
+        internal static string CharFlags_Unk2Desc {
+            get {
+                return ResourceManager.GetString("CharFlags_Unk2Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown Parameter 4.
+        /// </summary>
+        internal static string CharFlags_Unk4 {
+            get {
+                return ResourceManager.GetString("CharFlags_Unk4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown.
+        /// </summary>
+        internal static string CharFlags_Unk4Desc {
+            get {
+                return ResourceManager.GetString("CharFlags_Unk4Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown Parameter 6.
+        /// </summary>
+        internal static string CharFlags_Unk6 {
+            get {
+                return ResourceManager.GetString("CharFlags_Unk6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown.
+        /// </summary>
+        internal static string CharFlags_Unk6Desc {
+            get {
+                return ResourceManager.GetString("CharFlags_Unk6Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown Parameter 8.
+        /// </summary>
+        internal static string CharFlags_Unk8 {
+            get {
+                return ResourceManager.GetString("CharFlags_Unk8", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown.
+        /// </summary>
+        internal static string CharFlags_Unk8Desc {
+            get {
+                return ResourceManager.GetString("CharFlags_Unk8Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Air Gravity.
         /// </summary>
         internal static string CharFloats_AirGravity {
@@ -1155,6 +1317,24 @@ namespace CrateModGames.GameSpecific.CrashTS {
         internal static string Mod_ClassicHealthDesc {
             get {
                 return ResourceManager.GetString("Mod_ClassicHealthDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Classic Slide Jump for Crash.
+        /// </summary>
+        internal static string Mod_ClassicSlideJump {
+            get {
+                return ResourceManager.GetString("Mod_ClassicSlideJump", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gives you full control of Crash during his slide jump..
+        /// </summary>
+        internal static string Mod_ClassicSlideJumpDesc {
+            get {
+                return ResourceManager.GetString("Mod_ClassicSlideJumpDesc", resourceCulture);
             }
         }
         

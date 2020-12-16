@@ -16,6 +16,7 @@ Crash Twinsanity
 - Mod Menu+ enabled (PS2)
 - New feature: Classic Health
 - New feature: Classic Explosion Damage
+- New feature: Classic Slide Jump for Crash
 - New feature: Unlocked Camera Everywhere
 - New feature: Randomize Surface Parameters
 - New feature: Random Wumpa Are Random Crates
@@ -26,6 +27,7 @@ Crash Twinsanity
 - New feature: Untextured World
 - New feature: Greyscale World (PS2)
 - Mod Menu: More understandable names and descriptions
+- Mod Menu: Added a few more character parameters
 - Pants color can now be customized in the Mod Menu.
 - Fixed default values for character health.
 - Randomize Character Parameters: No longer changes jump parameteres.

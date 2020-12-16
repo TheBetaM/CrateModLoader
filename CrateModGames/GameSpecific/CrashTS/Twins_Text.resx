@@ -615,4 +615,64 @@
   <data name="Rand_WumpaIntoCratesDesc" xml:space="preserve">
     <value>Turn random wumpa fruit into random crates in each level.</value>
   </data>
+  <data name="CharFlags_CrawlRotationSpeed" xml:space="preserve">
+    <value>Crawl Rotation Speed</value>
+  </data>
+  <data name="CharFlags_CrawlRotationSpeedDesc" xml:space="preserve">
+    <value>Character rotation speed while crawling.</value>
+  </data>
+  <data name="CharFlags_GroundRotationSpeed" xml:space="preserve">
+    <value>Ground Rotation Speed</value>
+  </data>
+  <data name="CharFlags_GroundRotationSpeedDesc" xml:space="preserve">
+    <value>Character rotation speed while walking or running on the ground.</value>
+  </data>
+  <data name="CharFlags_JumpRotationSpeed" xml:space="preserve">
+    <value>Jump Rotation Speed</value>
+  </data>
+  <data name="CharFlags_JumpRotationSpeedDesc" xml:space="preserve">
+    <value>Character rotation speed while jumping.</value>
+  </data>
+  <data name="CharFlags_SlideJumpRotationSpeed" xml:space="preserve">
+    <value>Slide Jump Rotation Speed</value>
+  </data>
+  <data name="CharFlags_SlideJumpRotationSpeedDesc" xml:space="preserve">
+    <value>Character rotation speed while slide jumping.</value>
+  </data>
+  <data name="CharFlags_Unk1" xml:space="preserve">
+    <value>Unknown Parameter 1</value>
+  </data>
+  <data name="CharFlags_Unk1Desc" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="CharFlags_Unk2" xml:space="preserve">
+    <value>Unknown Parameter 2</value>
+  </data>
+  <data name="CharFlags_Unk2Desc" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="CharFlags_Unk4" xml:space="preserve">
+    <value>Unknown Parameter 4</value>
+  </data>
+  <data name="CharFlags_Unk4Desc" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="CharFlags_Unk6" xml:space="preserve">
+    <value>Unknown Parameter 6</value>
+  </data>
+  <data name="CharFlags_Unk6Desc" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="CharFlags_Unk8" xml:space="preserve">
+    <value>Unknown Parameter 8</value>
+  </data>
+  <data name="CharFlags_Unk8Desc" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="Mod_ClassicSlideJump" xml:space="preserve">
+    <value>Classic Slide Jump for Crash</value>
+  </data>
+  <data name="Mod_ClassicSlideJumpDesc" xml:space="preserve">
+    <value>Gives you full control of Crash during his slide jump.</value>
+  </data>
 </root>

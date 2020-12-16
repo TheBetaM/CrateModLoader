@@ -428,6 +428,16 @@ namespace CrateModLoader.GameSpecific.CrashTS
                             instance.UnkI322[(int)CharacterInstanceFloats.Unk55] = Twins_Data_Characters.CharFloats_Unk55.Value[(int)CharacterID.Crash];
                             instance.UnkI323[2] = Twins_Data_Characters.CharInts_SpawnHealth.Value[(int)CharacterID.Crash];
 
+                            instance.UnkI321[(int)CharacterInstanceFlags.Unk1] = Twins_Data_Characters.CharFlags_Unk1.Value[(int)CharacterID.Crash];
+                            instance.UnkI321[(int)CharacterInstanceFlags.Unk2] = Twins_Data_Characters.CharFlags_Unk2.Value[(int)CharacterID.Crash];
+                            instance.UnkI321[(int)CharacterInstanceFlags.GroundRotationSpeed] = Twins_Data_Characters.CharFlags_GroundRotationSpeed.Value[(int)CharacterID.Crash];
+                            instance.UnkI321[(int)CharacterInstanceFlags.Unk4] = Twins_Data_Characters.CharFlags_Unk4.Value[(int)CharacterID.Crash];
+                            instance.UnkI321[(int)CharacterInstanceFlags.CrawlRotationSpeed] = Twins_Data_Characters.CharFlags_CrawlRotationSpeed.Value[(int)CharacterID.Crash];
+                            instance.UnkI321[(int)CharacterInstanceFlags.Unk6] = Twins_Data_Characters.CharFlags_Unk6.Value[(int)CharacterID.Crash];
+                            instance.UnkI321[(int)CharacterInstanceFlags.JumpRotationSpeed] = Twins_Data_Characters.CharFlags_JumpRotationSpeed.Value[(int)CharacterID.Crash];
+                            instance.UnkI321[(int)CharacterInstanceFlags.Unk8] = Twins_Data_Characters.CharFlags_Unk8.Value[(int)CharacterID.Crash];
+                            instance.UnkI321[(int)CharacterInstanceFlags.SlideJumpRotationSpeed] = Twins_Data_Characters.CharFlags_SlideJumpRotationSpeed.Value[(int)CharacterID.Crash];
+
                             //instance.UnkI322[(int)CharacterInstanceFloats.Static1] = 0; // 1
 
                         }
@@ -492,6 +502,16 @@ namespace CrateModLoader.GameSpecific.CrashTS
                             instance.UnkI322[(int)CharacterInstanceFloats.Unk31] = Twins_Data_Characters.CharFloats_Unk31.Value[(int)CharacterID.Cortex];
                             instance.UnkI322[(int)CharacterInstanceFloats.Unk55] = Twins_Data_Characters.CharFloats_Unk55.Value[(int)CharacterID.Cortex];
                             instance.UnkI323[2] = Twins_Data_Characters.CharInts_SpawnHealth.Value[(int)CharacterID.Cortex];
+
+                            instance.UnkI321[(int)CharacterInstanceFlags.Unk1] = Twins_Data_Characters.CharFlags_Unk1.Value[(int)CharacterID.Cortex];
+                            instance.UnkI321[(int)CharacterInstanceFlags.Unk2] = Twins_Data_Characters.CharFlags_Unk2.Value[(int)CharacterID.Cortex];
+                            instance.UnkI321[(int)CharacterInstanceFlags.GroundRotationSpeed] = Twins_Data_Characters.CharFlags_GroundRotationSpeed.Value[(int)CharacterID.Cortex];
+                            instance.UnkI321[(int)CharacterInstanceFlags.Unk4] = Twins_Data_Characters.CharFlags_Unk4.Value[(int)CharacterID.Cortex];
+                            instance.UnkI321[(int)CharacterInstanceFlags.CrawlRotationSpeed] = Twins_Data_Characters.CharFlags_CrawlRotationSpeed.Value[(int)CharacterID.Cortex];
+                            instance.UnkI321[(int)CharacterInstanceFlags.Unk6] = Twins_Data_Characters.CharFlags_Unk6.Value[(int)CharacterID.Cortex];
+                            instance.UnkI321[(int)CharacterInstanceFlags.JumpRotationSpeed] = Twins_Data_Characters.CharFlags_JumpRotationSpeed.Value[(int)CharacterID.Cortex];
+                            instance.UnkI321[(int)CharacterInstanceFlags.Unk8] = Twins_Data_Characters.CharFlags_Unk8.Value[(int)CharacterID.Cortex];
+                            instance.UnkI321[(int)CharacterInstanceFlags.SlideJumpRotationSpeed] = Twins_Data_Characters.CharFlags_SlideJumpRotationSpeed.Value[(int)CharacterID.Cortex];
 
                             //instance.UnkI322[(int)CharacterInstanceFloats.BodyslamHangTime] = 0.4f;
 
@@ -558,6 +578,16 @@ namespace CrateModLoader.GameSpecific.CrashTS
                             instance.UnkI322[(int)CharacterInstanceFloats.Unk55] = Twins_Data_Characters.CharFloats_Unk55.Value[(int)CharacterID.Nina];
                             instance.UnkI323[2] = Twins_Data_Characters.CharInts_SpawnHealth.Value[(int)CharacterID.Nina];
 
+                            instance.UnkI321[(int)CharacterInstanceFlags.Unk1] = Twins_Data_Characters.CharFlags_Unk1.Value[(int)CharacterID.Nina];
+                            instance.UnkI321[(int)CharacterInstanceFlags.Unk2] = Twins_Data_Characters.CharFlags_Unk2.Value[(int)CharacterID.Nina];
+                            instance.UnkI321[(int)CharacterInstanceFlags.GroundRotationSpeed] = Twins_Data_Characters.CharFlags_GroundRotationSpeed.Value[(int)CharacterID.Nina];
+                            instance.UnkI321[(int)CharacterInstanceFlags.Unk4] = Twins_Data_Characters.CharFlags_Unk4.Value[(int)CharacterID.Nina];
+                            instance.UnkI321[(int)CharacterInstanceFlags.CrawlRotationSpeed] = Twins_Data_Characters.CharFlags_CrawlRotationSpeed.Value[(int)CharacterID.Nina];
+                            instance.UnkI321[(int)CharacterInstanceFlags.Unk6] = Twins_Data_Characters.CharFlags_Unk6.Value[(int)CharacterID.Nina];
+                            instance.UnkI321[(int)CharacterInstanceFlags.JumpRotationSpeed] = Twins_Data_Characters.CharFlags_JumpRotationSpeed.Value[(int)CharacterID.Nina];
+                            instance.UnkI321[(int)CharacterInstanceFlags.Unk8] = Twins_Data_Characters.CharFlags_Unk8.Value[(int)CharacterID.Nina];
+                            instance.UnkI321[(int)CharacterInstanceFlags.SlideJumpRotationSpeed] = Twins_Data_Characters.CharFlags_SlideJumpRotationSpeed.Value[(int)CharacterID.Nina];
+
                             //instance.UnkI322[(int)CharacterInstanceFloats.CrawlSpeed] = 1.75f;
 
                         }
@@ -623,6 +653,16 @@ namespace CrateModLoader.GameSpecific.CrashTS
                             instance.UnkI322[(int)CharacterInstanceFloats.Unk55] = Twins_Data_Characters.CharFloats_Unk55.Value[(int)CharacterID.Mechabandicoot];
                             instance.UnkI323[2] = Twins_Data_Characters.CharInts_SpawnHealth.Value[(int)CharacterID.Mechabandicoot];
 
+                            instance.UnkI321[(int)CharacterInstanceFlags.Unk1] = Twins_Data_Characters.CharFlags_Unk1.Value[(int)CharacterID.Mechabandicoot];
+                            instance.UnkI321[(int)CharacterInstanceFlags.Unk2] = Twins_Data_Characters.CharFlags_Unk2.Value[(int)CharacterID.Mechabandicoot];
+                            instance.UnkI321[(int)CharacterInstanceFlags.GroundRotationSpeed] = Twins_Data_Characters.CharFlags_GroundRotationSpeed.Value[(int)CharacterID.Mechabandicoot];
+                            instance.UnkI321[(int)CharacterInstanceFlags.Unk4] = Twins_Data_Characters.CharFlags_Unk4.Value[(int)CharacterID.Mechabandicoot];
+                            instance.UnkI321[(int)CharacterInstanceFlags.CrawlRotationSpeed] = Twins_Data_Characters.CharFlags_CrawlRotationSpeed.Value[(int)CharacterID.Mechabandicoot];
+                            instance.UnkI321[(int)CharacterInstanceFlags.Unk6] = Twins_Data_Characters.CharFlags_Unk6.Value[(int)CharacterID.Mechabandicoot];
+                            instance.UnkI321[(int)CharacterInstanceFlags.JumpRotationSpeed] = Twins_Data_Characters.CharFlags_JumpRotationSpeed.Value[(int)CharacterID.Mechabandicoot];
+                            instance.UnkI321[(int)CharacterInstanceFlags.Unk8] = Twins_Data_Characters.CharFlags_Unk8.Value[(int)CharacterID.Mechabandicoot];
+                            instance.UnkI321[(int)CharacterInstanceFlags.SlideJumpRotationSpeed] = Twins_Data_Characters.CharFlags_SlideJumpRotationSpeed.Value[(int)CharacterID.Mechabandicoot];
+
                             //instance.UnkI322[(int)CharacterInstanceFloats.StrafingSpeed] = 10;
                         }
                         instances.Records[i] = instance;
@@ -648,7 +688,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
                         Texture tex = (Texture)item;
                         for (int i = 0; i < tex.RawData.Length; i++)
                         {
-                            if (tex.RawData[i].B > tex.RawData[i].R + 10 && tex.RawData[i].B > tex.RawData[i].G + 10)
+                            if (tex.RawData[i].B > tex.RawData[i].R + 8 && tex.RawData[i].B > tex.RawData[i].G + 8)
                             {
                                 float intensity = tex.RawData[i].B / 255f;
                                 tex.RawData[i] = Color.FromArgb(tex.RawData[i].A, (int)(PantsColor.R * intensity), (int)(PantsColor.G * intensity), (int)(PantsColor.B * intensity));

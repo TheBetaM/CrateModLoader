@@ -159,6 +159,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
         public static ModPropOption Option_DoubleJumpNina = new ModPropOption(Twins_Text.Mod_NinaDoubleJump, Twins_Text.Mod_NinaDoubleJumpDesc);
         public static ModPropOption Option_UnusedEnemies = new ModPropOption(Twins_Text.Mod_UnusedEnemies, Twins_Text.Mod_UnusedEnemiesDesc);
         public static ModPropOption Option_SwitchCharacters = new ModPropOption(Twins_Text.Mod_SwitchCharacters, Twins_Text.Mod_SwitchCharactersDesc);
+        public static ModPropOption Option_ClassicSlideJump = new ModPropOption(Twins_Text.Mod_ClassicSlideJump, Twins_Text.Mod_ClassicSlideJumpDesc);
         public static ModPropOption Option_ClassicHealth = new ModPropOption(Twins_Text.Mod_ClassicHealth, Twins_Text.Mod_ClassicHealthDesc);
         public static ModPropOption Option_ClassicExplosions = new ModPropOption(Twins_Text.Mod_ClassicExplosionDaamge, Twins_Text.Mod_ClassicExplosionDamageDesc);
         public static ModPropOption Option_UnlockedCamera = new ModPropOption(Twins_Text.Mod_UnlockedCamera, Twins_Text.Mod_UnlockedCameraDesc);
@@ -487,7 +488,8 @@ namespace CrateModLoader.GameSpecific.CrashTS
             }
 
             if (Option_FlyingKick.Enabled || Option_StompKick.Enabled || Option_DoubleJumpCortex.Enabled || Option_DoubleJumpNina.Enabled 
-                || Option_SwitchCharacters.Enabled || Option_ClassicExplosions.Enabled || Option_RandEnemies.Enabled || Option_SkipCutscenes.Enabled)
+                || Option_SwitchCharacters.Enabled || Option_ClassicExplosions.Enabled || Option_RandEnemies.Enabled || Option_SkipCutscenes.Enabled
+                || Option_ClassicSlideJump.Enabled)
             {
                 Twins_Edit_AllLevels = true;
 
@@ -896,6 +898,8 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 Twins_Mods.RM_CharacterObjectMod(RM_Archive);
             if (Option_FlyingKick.Enabled || Option_StompKick.Enabled)
                 Twins_Mods.RM_CharacterMod_EnableFlyingKick(RM_Archive);
+            if (Option_ClassicSlideJump.Enabled)
+                Twins_Mods.RM_CharacterMod_ClassicSlideJump(RM_Archive);
             if (Option_DoubleJumpCortex.Enabled)
                 Twins_Mods.RM_CharacterMod_DoubleJumpCortex(RM_Archive);
             if (Option_DoubleJumpNina.Enabled)

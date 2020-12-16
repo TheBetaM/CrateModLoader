@@ -241,6 +241,50 @@ namespace CrateModLoader.GameSpecific.CrashTS
             2, 2, 2, 2, 2, 2
         }, CharacterNames);
 
+        public static ModPropNamedUIntArray CharFlags_Unk1 = new ModPropNamedUIntArray(new uint[]
+        {
+            0x10000, 0x20000, 0x10000, 0x10000, 0, 0x20000
+        }, CharacterNames);
+
+        public static ModPropNamedUIntArray CharFlags_Unk2 = new ModPropNamedUIntArray(new uint[]
+        {
+            0x20000, 0x30000, 0x20000, 0x20000, 0, 0xC000
+        }, CharacterNames);
+
+        public static ModPropNamedUIntArray CharFlags_GroundRotationSpeed = new ModPropNamedUIntArray(new uint[]
+        {
+            0x20000, 0x30000, 0x20000, 0x20000, 0, 0
+        }, CharacterNames);
+
+        public static ModPropNamedUIntArray CharFlags_Unk4 = new ModPropNamedUIntArray(new uint[]
+        {
+            0x58E38, 0, 0, 0, 0, 0
+        }, CharacterNames);
+
+        public static ModPropNamedUIntArray CharFlags_CrawlRotationSpeed = new ModPropNamedUIntArray(new uint[]
+        {
+            0x1AAAA, 0x30000, 0, 0, 0, 0
+        }, CharacterNames);
+
+        public static ModPropNamedUIntArray CharFlags_Unk6 = new ModPropNamedUIntArray(new uint[]
+        {
+            0x4000, 0, 0, 0, 0, 0
+        }, CharacterNames);
+
+        public static ModPropNamedUIntArray CharFlags_JumpRotationSpeed = new ModPropNamedUIntArray(new uint[]
+        {
+            0x40000, 0x30000, 0x40000, 0x20000, 0, 0xC000
+        }, CharacterNames);
+
+        public static ModPropNamedUIntArray CharFlags_Unk8 = new ModPropNamedUIntArray(new uint[]
+        {
+            0x40000, 0, 0, 0, 0, 0
+        }, CharacterNames);
+
+        public static ModPropNamedUIntArray CharFlags_SlideJumpRotationSpeed = new ModPropNamedUIntArray(new uint[]
+        {
+            0, 0, 0, 0, 0, 0
+        }, CharacterNames);
 
         public static void Twins_Randomize_Character(int charID, ref Random randState)
         {

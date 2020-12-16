@@ -503,6 +503,35 @@ namespace CrateModLoader.GameSpecific.CrashTS
         RadialBlastChargeTime = 55,
     }
 
+    public enum CharacterInstanceFlags
+    {
+        // 0x10000 / 0x20000
+        Unk1 = 0,
+        // 0x20000 / 0x30000
+        Unk2 = 1,
+
+        // running rotation, 0x20000 / 0x30000
+        GroundRotationSpeed = 2,
+
+        // 0x58E38 crash only
+        Unk4 = 3,
+
+        /// 0x1AAAA / 0x30000
+        CrawlRotationSpeed = 4,
+
+        // 0x4000 crash only
+        Unk6 = 5,
+
+        // 0x40000 / 0x30000 / 0x20000 / 0xC000
+        JumpRotationSpeed = 6,
+
+        /// 0x40000 crash only
+        Unk8 = 7,
+
+        /// default 0 for all
+        SlideJumpRotationSpeed = 8,
+    }
+
     public enum CharacterID
     {
         Crash = 0,
