@@ -201,7 +201,7 @@ namespace CrateModLoader.GameSpecific.Rayman3
 
         public Modder_Rayman3()
         {
-
+            PreloadConsoles = new List<ConsoleMode>() { ConsoleMode.GCN, };
         }
 
         internal string basePath = "";

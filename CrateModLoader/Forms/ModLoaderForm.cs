@@ -457,7 +457,16 @@ namespace CrateModLoader
 
             button_openModMenu.Enabled = ModProgram.Modder.ModMenuEnabled;
             button_modTools.Enabled = false;//true;
-            button_downloadMods.Enabled = ModProgram.Modder.CanPreloadGame && !ModProgram.GamePreloaded;
+
+            if (!ModProgram.GamePreloaded && ModProgram.Modder.CanPreloadGame 
+                && (ModProgram.Modder.PreloadConsoles.Count == 0 || ModProgram.Modder.PreloadConsoles.Contains(ModProgram.Pipeline.Metadata.Console)))
+            {
+                button_downloadMods.Enabled = true;
+            }
+            else
+            {
+                button_downloadMods.Enabled = false;
+            }
 
             if (ModProgram.Modder != null && !string.IsNullOrWhiteSpace(ModProgram.Game.API_Link))
             {
@@ -535,7 +544,17 @@ namespace CrateModLoader
             button_modCrateMenu.Visible = true;
             button_modCrateMenu.Enabled = !game.ModCratesDisabled;
             button_randomizeSeed.Enabled = button_randomizeSeed.Visible = button_modTools.Visible = button_downloadMods.Visible = true;
-            button_downloadMods.Enabled = ModProgram.Modder.CanPreloadGame && !ModProgram.GamePreloaded;
+
+            if (!ModProgram.GamePreloaded && ModProgram.Modder.CanPreloadGame
+                && (ModProgram.Modder.PreloadConsoles.Count == 0 || ModProgram.Modder.PreloadConsoles.Contains(ModProgram.Pipeline.Metadata.Console)))
+            {
+                button_downloadMods.Enabled = true;
+            }
+            else
+            {
+                button_downloadMods.Enabled = false;
+            }
+
             numericUpDown1.Enabled = numericUpDown1.Visible = true;
             linkLabel_optionDesc.Text = string.Empty;
             linkLabel_optionDesc.Visible = false;

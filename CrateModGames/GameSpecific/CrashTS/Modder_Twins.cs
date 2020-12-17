@@ -150,9 +150,6 @@ namespace CrateModLoader.GameSpecific.CrashTS
         public static ModPropOption Option_RandGemLocations = new ModPropOption(Twins_Text.Rand_GemLocations, Twins_Text.Rand_GemLocationsDesc);
         public static ModPropOption Option_RandCharacterParams = new ModPropOption(Twins_Text.Rand_CharParams, Twins_Text.Rand_CharParamsDesc);
         public static ModPropOption Option_RandSurfaces = new ModPropOption(Twins_Text.Rand_SurfaceParams, Twins_Text.Rand_SurfaceParamsDesc);
-        public static ModPropOption Option_RandomWumpaCrates = new ModPropOption(Twins_Text.Rand_WumpaIntoCrates, Twins_Text.Rand_WumpaIntoCratesDesc);
-        [ModCategory((int)ModProps.Misc)]
-        public static ModPropOption Option_AllWumpaCrates = new ModPropOption(Twins_Text.Mod_WumpaIntoCrates, Twins_Text.Mod_WumpaIntoCratesDesc) { ModMenuOnly = true, };
         public static ModPropOption Option_FlyingKick = new ModPropOption(Twins_Text.Mod_FlyingKick, Twins_Text.Mod_FlyingKickDesc);
         public static ModPropOption Option_StompKick = new ModPropOption(Twins_Text.Mod_StompKick, Twins_Text.Mod_StompKickDesc);
         public static ModPropOption Option_DoubleJumpCortex = new ModPropOption(Twins_Text.Mod_CortexDoubleJump, Twins_Text.Mod_CortexDoubleJumpDesc);
@@ -186,6 +183,9 @@ namespace CrateModLoader.GameSpecific.CrashTS
 
 
         //unfinished
+        public static ModPropOption Option_RandomWumpaCrates = new ModPropOption(Twins_Text.Rand_WumpaIntoCrates, Twins_Text.Rand_WumpaIntoCratesDesc) { Hidden = true, };
+        [ModCategory((int)ModProps.Misc)]
+        public static ModPropOption Option_AllWumpaCrates = new ModPropOption(Twins_Text.Mod_WumpaIntoCrates, Twins_Text.Mod_WumpaIntoCratesDesc) { ModMenuOnly = true, Hidden = true, };
         public static ModPropOption Option_ClassicBossHealth = new ModPropOption("Classic Boss Health", "Start boss fights with 2 masks.") // TODO
         { Hidden = true, };
         public static ModPropOption Option_MirroredWorld = new ModPropOption("Mirrored World", "") // TODO
@@ -195,7 +195,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
 
         public Modder_Twins()
         {
-
+            PreloadConsoles = new List<ConsoleMode>() { ConsoleMode.PS2, };
         }
 
         internal string bdPath = "";

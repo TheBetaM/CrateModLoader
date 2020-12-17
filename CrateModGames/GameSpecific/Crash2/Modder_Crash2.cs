@@ -54,7 +54,7 @@ namespace CrateModLoader.GameSpecific.Crash2
         public static ModPropOption Option_RandCrates = new ModPropOption(Crash2_Text.Rand_WoodenCrates, Crash2_Text.Rand_WoodenCratesDesc);
         public static ModPropOption Option_RandCratesMissing = new ModPropOption(Crash2_Text.Rand_CratesRemoved, Crash2_Text.Rand_EnemiesRemovedDesc);
         public static ModPropOption Option_RandEnemiesMissing = new ModPropOption(Crash2_Text.Rand_EnemiesRemoved, Crash2_Text.Rand_EnemiesRemovedDesc); 
-        public static ModPropOption Option_RandEnemiesAreCrates = new ModPropOption(Crash2_Text.Rand_EnemyCrates, Crash2_Text.Rand_EnemyCratesDesc);
+        
         public static ModPropOption Option_BackwardsLevels = new ModPropOption(Crash2_Text.Mod_BackwardsLevels, Crash2_Text.Mod_BackwardsLevelsDesc);
         public static ModPropOption Option_RandBackwardsLevels = new ModPropOption(Crash2_Text.Rand_BackwardsLevels, Crash2_Text.Rand_BackwardsLevelsDesc);
         public static ModPropOption Option_RandCrateContents = new ModPropOption(Crash2_Text.Rand_CrateContents, Crash2_Text.Rand_CrateContentsDesc);
@@ -79,9 +79,6 @@ namespace CrateModLoader.GameSpecific.Crash2
         public static ModPropColor Prop_PantsColor = new ModPropColor(new int[4] { 0, 0, 255, 255 }, Crash2_Text.Prop_PantsColor, Crash2_Text.Prop_PantsColorDesc);
 
         //less used
-
-        [ModCategory(1)]
-        public static ModPropOption Option_AllEnemiesAreCrates = new ModPropOption(Crash2_Text.Rand_AllEnemiesCrates, Crash2_Text.Rand_AllEnemiesCratesDesc) { ModMenuOnly = true };
         [ModCategory(1)]
         public static ModPropOption Option_RandEnemyPaths = new ModPropOption(Crash2_Text.Rand_EnemyPaths, Crash2_Text.Rand_EnemyPathsDesc) { ModMenuOnly = true };
         [ModCategory(1)]
@@ -96,6 +93,9 @@ namespace CrateModLoader.GameSpecific.Crash2
         public static ModPropOption Option_RandCameraFOV = new ModPropOption(Crash2_Text.Rand_CameraFOV, Crash2_Text.Rand_CameraFOVDesc) { ModMenuOnly = true };
 
         //unfinished
+        [ModCategory(1)]
+        public static ModPropOption Option_AllEnemiesAreCrates = new ModPropOption(Crash2_Text.Rand_AllEnemiesCrates, Crash2_Text.Rand_AllEnemiesCratesDesc) { ModMenuOnly = true, Hidden = true, };
+        public static ModPropOption Option_RandEnemiesAreCrates = new ModPropOption(Crash2_Text.Rand_EnemyCrates, Crash2_Text.Rand_EnemyCratesDesc) { Hidden = true }; //unfinished
         public static ModPropOption Option_UntexturedObj = new ModPropOption("Untextured Objects", "") { Hidden = true }; // broken
         public static ModPropOption Option_VehicleLevelsOnFoot = new ModPropOption("Vehicle Levels On Foot", "") { Hidden = true };
         public static ModPropOption Option_MirroredWorld = new ModPropOption("Mirrored World", "") { Hidden = true };

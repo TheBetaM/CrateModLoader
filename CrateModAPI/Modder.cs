@@ -39,6 +39,7 @@ namespace CrateModLoader
         public bool ModMenuEnabled => Props.Count > 0;
         public bool ModCrateRegionCheck = false; // A game might require some type of verification (i.e. file integrity, region matching) before installing layer0 mod crates.
         public virtual bool CanPreloadGame => false;
+        public List<ConsoleMode> PreloadConsoles = new List<ConsoleMode>();
         public bool IsBusy { get { return AsyncWorker != null && AsyncWorker.IsBusy; } }
 
         public abstract Game Game { get; }
