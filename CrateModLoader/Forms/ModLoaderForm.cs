@@ -435,7 +435,6 @@ namespace CrateModLoader
             linkLabel_programTitle.Enabled = false;
             button_modTools.Enabled = false;
             button_downloadMods.Enabled = false;
-            toolStripMenuItem1.Enabled = false;
             menuStrip1.Enabled = false;
             DragDrop -= ModLoaderForm_DragDrop;
             DragEnter -= ModLoaderForm_DragEnter;

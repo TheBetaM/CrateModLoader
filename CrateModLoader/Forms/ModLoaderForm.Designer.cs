@@ -480,6 +480,7 @@
             this.toolStripMenuItem3.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem_keepTempFiles,
             this.toolStripMenuItem_language});
+            this.toolStripMenuItem3.Enabled = false;
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
             this.toolStripMenuItem3.Size = new System.Drawing.Size(88, 21);
             this.toolStripMenuItem3.Text = "Preferences";

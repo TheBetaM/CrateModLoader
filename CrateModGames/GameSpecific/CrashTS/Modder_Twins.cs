@@ -78,7 +78,8 @@ namespace CrateModLoader.GameSpecific.CrashTS
         Misc = 1,
         Character = 2,
         Textures = 3,
-        Text = 4,
+        Galleries = 4,
+        Text = 5,
     }
 
     public sealed class Modder_Twins : Modder
@@ -136,6 +137,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 [(int)ModProps.Misc] = "Misc.",
                 [(int)ModProps.Character] = "Character",
                 [(int)ModProps.Textures] = "Textures",
+                [(int)ModProps.Galleries] = "Galleries",
             }
         };
         public override bool CanPreloadGame => true;

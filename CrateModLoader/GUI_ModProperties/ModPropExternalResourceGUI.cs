@@ -172,6 +172,7 @@ namespace CrateModLoader.ModProperties.GUI
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = Prop.BrowseFilter + ModLoaderText.OutputDialogTypeAllFiles + " (*.*)|*.*";
+            saveFileDialog.FileName = Prop.CodeName;
 
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {

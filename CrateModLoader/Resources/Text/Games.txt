@@ -147,15 +147,6 @@ Mod Menu:
 - All Crates Are Wumpa
 - Randomize Camera Field-Of-View
 - Customize Pants Color
-  
-Crash Team Racing
-Supported: All PS1 versions (.BIN/.ISO formats)  
-Mod abbreviation: CrashTR  
-Mod layers: 1 - BIGFILE.BIG contents
-API by DCxDemo. (https://github.com/DCxDemo/CTR-tools)  
-Features:  
-- Randomize Track Order  
-- Version and seed visible in the Loading screen (English only)  
 
 Crash Bandicoot: The Wrath Of Cortex
 Supported: All PS2 versions (.BIN/.ISO format), All XBOX versions (.ISO format) (GC not supported yet)  
@@ -167,6 +158,14 @@ Features:
 - Randomize Enemy Paths  
 - Random Enemies Removed  
 - Randomize Music (XBOX)  
+
+CTR: Crash Team Racing
+Supported: All PS1 versions (.BIN/.ISO formats)  
+Mod abbreviation: CrashTR  
+Mod layers: 1 - BIGFILE.BIG contents
+API by DCxDemo. (https://github.com/DCxDemo/CTR-tools)  
+Features:  
+- Version and seed visible in the Loading screen (English only)  
   
 Crash of the Titans
 Supported: All PS2 versions (.ISO format), All Wii versions (.ISO/.WBFS formats), All PSP versions (.ISO format), All 360 versions (.ISO format)   

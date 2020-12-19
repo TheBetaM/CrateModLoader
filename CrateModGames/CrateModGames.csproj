@@ -103,6 +103,7 @@
     <Compile Include="GameSpecific\CrashTS\Twins_Data_Objects.cs" />
     <Compile Include="GameSpecific\CrashTS\Twins_Data_Scripts.cs" />
     <Compile Include="GameSpecific\CrashTS\Twins_Data_Textures.cs" />
+    <Compile Include="GameSpecific\CrashTS\Twins_Data_Textures_Galleries.cs" />
     <Compile Include="GameSpecific\CrashTS\Twins_Mods.cs" />
     <Compile Include="GameSpecific\CrashTS\Twins_Randomizers.cs" />
     <Compile Include="GameSpecific\CrashTS\Twins_Settings.cs" />
