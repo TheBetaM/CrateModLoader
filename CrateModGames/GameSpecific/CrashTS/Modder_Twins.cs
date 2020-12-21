@@ -152,6 +152,8 @@ namespace CrateModLoader.GameSpecific.CrashTS
         public static ModPropOption Option_RandGemLocations = new ModPropOption(Twins_Text.Rand_GemLocations, Twins_Text.Rand_GemLocationsDesc);
         public static ModPropOption Option_RandCharacterParams = new ModPropOption(Twins_Text.Rand_CharParams, Twins_Text.Rand_CharParamsDesc);
         public static ModPropOption Option_RandSurfaces = new ModPropOption(Twins_Text.Rand_SurfaceParams, Twins_Text.Rand_SurfaceParamsDesc);
+        public static ModPropOption Option_RandStartingChunk = new ModPropOption(Twins_Text.Rand_StartingLevel, Twins_Text.Rand_StartingLevelDesc)
+        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 }, };
         public static ModPropOption Option_FlyingKick = new ModPropOption(Twins_Text.Mod_FlyingKick, Twins_Text.Mod_FlyingKickDesc);
         public static ModPropOption Option_StompKick = new ModPropOption(Twins_Text.Mod_StompKick, Twins_Text.Mod_StompKickDesc);
         public static ModPropOption Option_DoubleJumpCortex = new ModPropOption(Twins_Text.Mod_CortexDoubleJump, Twins_Text.Mod_CortexDoubleJumpDesc);
@@ -162,12 +164,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
         public static ModPropOption Option_ClassicHealth = new ModPropOption(Twins_Text.Mod_ClassicHealth, Twins_Text.Mod_ClassicHealthDesc);
         public static ModPropOption Option_ClassicExplosions = new ModPropOption(Twins_Text.Mod_ClassicExplosionDaamge, Twins_Text.Mod_ClassicExplosionDamageDesc);
         public static ModPropOption Option_UnlockedCamera = new ModPropOption(Twins_Text.Mod_UnlockedCamera, Twins_Text.Mod_UnlockedCameraDesc);
-        public static ModPropOption Option_SkipCutscenes = new ModPropOption("Skip Cutscenes (Beta)", "Skips non-video cutscenes after entering.");
-        
-        public static ModPropOption Option_ClassicCrates = new ModPropOption(Twins_Text.Mod_ClassicCratePersistence, Twins_Text.Mod_ClassicCratePersistenceDesc) // TODO
-        { Hidden = true, };
-        public static ModPropOption Option_RandStartingChunk = new ModPropOption("Randomize Starting Level", "") // TODO
-        { Hidden = true, };
+        public static ModPropOption Option_SkipCutscenes = new ModPropOption(Twins_Text.Mod_SkipCutscenes, Twins_Text.Mod_SkipCutscenesDesc) { Hidden = true, };
 
         public static ModPropOption Option_RandPantsColor = new ModPropOption(Twins_Text.Rand_PantsColor, Twins_Text.Rand_PantsColorDesc)
         { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 }, };
@@ -176,7 +173,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
         [ModCategory((int)ModProps.Misc)]
         public static ModPropOption Option_GreyscaleWorld = new ModPropOption(Twins_Text.Mod_GreyscaleWorld, Twins_Text.Mod_GreyscaleWorldDesc)
         { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 }, ModMenuOnly = true, };
-        public static ModPropOption Option_GreyscaleDimension = new ModPropOption("Greyscale 10th Dimension", "The scenery colors in the 4th Hub's levels are greyed out.")
+        public static ModPropOption Option_GreyscaleDimension = new ModPropOption(Twins_Text.Mod_GreyscaleDimension, Twins_Text.Mod_GreyscaleDimensionDesc)
         { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 },  };
         public static ModPropOption Option_UntexturedWorld = new ModPropOption(Twins_Text.Mod_UntexturedWorld, Twins_Text.Mod_UntexturedWorldDesc);
 
@@ -188,6 +185,9 @@ namespace CrateModLoader.GameSpecific.CrashTS
         public static ModPropOption Option_RandomWumpaCrates = new ModPropOption(Twins_Text.Rand_WumpaIntoCrates, Twins_Text.Rand_WumpaIntoCratesDesc) { Hidden = true, };
         [ModCategory((int)ModProps.Misc)]
         public static ModPropOption Option_AllWumpaCrates = new ModPropOption(Twins_Text.Mod_WumpaIntoCrates, Twins_Text.Mod_WumpaIntoCratesDesc) { ModMenuOnly = true, Hidden = true, };
+        public static ModPropOption Option_ClassicCrates = new ModPropOption(Twins_Text.Mod_ClassicCratePersistence, Twins_Text.Mod_ClassicCratePersistenceDesc) // TODO
+        { Hidden = true, };
+        
         public static ModPropOption Option_ClassicBossHealth = new ModPropOption("Classic Boss Health", "Start boss fights with 2 masks.") // TODO
         { Hidden = true, };
         public static ModPropOption Option_MirroredWorld = new ModPropOption("Mirrored World", "") // TODO
@@ -258,25 +258,14 @@ namespace CrateModLoader.GameSpecific.CrashTS
             if (Option_RandStartingChunk.Enabled)
             {
                 ChunkType randChunk = Twins_Data.possibleStartingChunks[randState.Next(Twins_Data.possibleStartingChunks.Count)];
-                bool longName = false;
                 for (int i = 0; i < Twins_Data.All_Chunks.Count; i++)
                 {
                     if (Twins_Data.All_Chunks[i].Chunk == randChunk)
                     {
-                        if (Twins_Data.All_Chunks[i].Path.Length >= 0x17)
-                        {
-                            longName = true;
-                        }
-                        if (longName)
-                        {
-                            Twins_Settings.UnsafeStartingChunk.Value = Twins_Data.All_Chunks[i].Path;
-                            Twins_Settings.UnsafeStartingChunk.HasChanged = true;
-                        }
-                        else
-                        {
-                            Twins_Settings.StartingChunk.Value = Twins_Data.All_Chunks[i].Path;
-                            Twins_Settings.StartingChunk.HasChanged = true;
-                        }
+                        Twins_Settings.CreditsChunk.Value = @"Levels\" + Twins_Data.All_Chunks[i].Path;
+                        Twins_Settings.CreditsChunk.HasChanged = true;
+                        Twins_Settings.Option_SwapStartAndCreditsChunk.Value = 1;
+                        Twins_Settings.Option_SwapStartAndCreditsChunk.HasChanged = true;
                         break;
                     }
                 }
@@ -543,21 +532,45 @@ namespace CrateModLoader.GameSpecific.CrashTS
                         VTableIndex = (ushort)DefaultEnums.CommandID.SwitchCharacter,
                         arguments = new List<uint>() { 0xCDCDDF6F, 6 },
                     };
+                    Script.MainScript.ScriptCommand ExitVehicleCommand = new Script.MainScript.ScriptCommand(scriptVer)
+                    {
+                        VTableIndex = (ushort)DefaultEnums.CommandID.ExitVehicleMode,
+                        arguments = new List<uint>() { 0 },
+                    };
+                    Script.MainScript.ScriptCommand DetachCortexCommand = new Script.MainScript.ScriptCommand(scriptVer)
+                    {
+                        VTableIndex = (ushort)562,
+                        arguments = new List<uint>() { },
+                    };
+                    Script.MainScript.ScriptCommand PlayerModeSoloCommand = new Script.MainScript.ScriptCommand(scriptVer)
+                    {
+                        VTableIndex = (ushort)DefaultEnums.CommandID.SetPlayerMode,
+                        arguments = new List<uint>() { 1, 0, 6 },
+                    };
+                    
                     /*
                     Script.MainScript.ScriptCommand TestCommand = new Script.MainScript.ScriptCommand(scriptVer)
                     {
-                        VTableIndex = 517,
-                        arguments = new List<uint>() {  },
+                        VTableIndex = (ushort)DefaultEnums.CommandID.PlayCredits,
+                        arguments = new List<uint>() { },
                     };
                     Script.MainScript.ScriptCommand TestCommand2 = new Script.MainScript.ScriptCommand(scriptVer)
                     {
-                        VTableIndex = 519,
-                        arguments = new List<uint>() {  },
+                        VTableIndex = (ushort)DefaultEnums.CommandID.PlayCredits,
+                        arguments = new List<uint>() { },
                     };
+                    StrafeLeft.Main.scriptState1.scriptStateBody.command = TestCommand;
+                    StrafeRight.Main.scriptState1.scriptStateBody.command = TestCommand2;
                     */
 
                     StrafeLeft.Main.scriptState1.scriptStateBody.command = SwitchToCrashCommand;
-                    StrafeRight.Main.scriptState1.scriptStateBody.command = SwitchToCortexCommand;
+                    StrafeRight.Main.scriptState1.scriptStateBody.AddCommand(1);
+                    StrafeRight.Main.scriptState1.scriptStateBody.AddCommand(2);
+                    StrafeRight.Main.scriptState1.scriptStateBody.command = ExitVehicleCommand;
+                    StrafeRight.Main.scriptState1.scriptStateBody.command.internalIndex = (StrafeRight.Main.scriptState1.scriptStateBody.command.internalIndex & 0xffff) | (int)((0x0100 << 16) & 0xffff0000);
+                    StrafeRight.Main.scriptState1.scriptStateBody.command.nextCommand = DetachCortexCommand;
+                    StrafeRight.Main.scriptState1.scriptStateBody.command.nextCommand.internalIndex = (StrafeRight.Main.scriptState1.scriptStateBody.command.nextCommand.internalIndex & 0xffff) | (int)((0x0100 << 16) & 0xffff0000);
+                    StrafeRight.Main.scriptState1.scriptStateBody.command.nextCommand.nextCommand = SwitchToCortexCommand;
 
                 }
 

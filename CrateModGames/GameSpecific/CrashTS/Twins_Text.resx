@@ -675,4 +675,40 @@
   <data name="Mod_ClassicSlideJumpDesc" xml:space="preserve">
     <value>Gives you full control of Crash during his slide jump.</value>
   </data>
+  <data name="Mod_GreyscaleDimension" xml:space="preserve">
+    <value>Greyscale 10th Dimension</value>
+  </data>
+  <data name="Mod_GreyscaleDimensionDesc" xml:space="preserve">
+    <value>The scenery colors in the 4th Hub's levels are greyed out.</value>
+  </data>
+  <data name="Mod_SkipCutscenes" xml:space="preserve">
+    <value>Skip Cutscenes</value>
+  </data>
+  <data name="Mod_SkipCutscenesDesc" xml:space="preserve">
+    <value>Skips most non-video cutscenes after entering.</value>
+  </data>
+  <data name="Rand_StartingLevel" xml:space="preserve">
+    <value>Randomize Starting Level</value>
+  </data>
+  <data name="Rand_StartingLevelDesc" xml:space="preserve">
+    <value>Randomize the level you start in. After the credits you spawn in the first N.Sanity Island beach.</value>
+  </data>
+  <data name="CreditsChunk" xml:space="preserve">
+    <value>Credits Chunk</value>
+  </data>
+  <data name="CreditsChunkDesc" xml:space="preserve">
+    <value>The chunk name that the game loads after credits (must have a player object or else it will not load)</value>
+  </data>
+  <data name="Mod_StartAndCreditsSpawn" xml:space="preserve">
+    <value>Starting spawn is the credits spawn</value>
+  </data>
+  <data name="Mod_StartAndCreditsSpawnDesc" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Mod_SwapStartAndCreditsChunk" xml:space="preserve">
+    <value>Swap starting and credits spawns</value>
+  </data>
+  <data name="Mod_SwapStartAndCreditsChunkDesc" xml:space="preserve">
+    <value />
+  </data>
 </root>

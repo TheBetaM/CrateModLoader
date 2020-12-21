@@ -157,7 +157,7 @@ namespace CrateModLoader.GameSpecific.Crash1
 
         public static void Mod_RandomCrateContents(NSF nsf, Random rand, Crash1_Levels level)
         {
-            if (VehicleLevelsList.Contains(level))
+            if (VehicleLevelsList.Contains(level) || ChaseLevelsList.Contains(level))
             {
                 return; // mask crashes oops
             }
@@ -208,6 +208,11 @@ namespace CrateModLoader.GameSpecific.Crash1
                 //CrateSubTypes.TNT, // walls of TNT...
                 //CrateSubTypes.WoodSpring,
             };
+
+            if (ChaseLevelsList.Contains(level) || VehicleLevelsList.Contains(level))
+            {
+                return;
+            }
 
             foreach (Chunk chunk in nsf.Chunks)
             {
@@ -452,6 +457,7 @@ namespace CrateModLoader.GameSpecific.Crash1
             {
                 return;
             }
+            Mod_CameraFOV(nsf, rand, false);
             if (VehicleLevelsList.Contains(level))
             {
                 Mod_HogLevelsBackwards(nsf, nsd, level);
@@ -1697,7 +1703,7 @@ namespace CrateModLoader.GameSpecific.Crash1
             OldEntity WarpOutEntity = null;
             OldZoneEntry WarpOutZone = null;
             int SpawnEID = 0;
-
+            Mod_CameraFOV(nsf, new Random(), false);
             /*
             List<bool> CacheChecks = new List<bool>();
             for (int i = 0; i < Cache_Entry.Count; i++)

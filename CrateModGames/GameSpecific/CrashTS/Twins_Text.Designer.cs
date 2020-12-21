@@ -1258,6 +1258,24 @@ namespace CrateModGames.GameSpecific.CrashTS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Credits Chunk.
+        /// </summary>
+        internal static string CreditsChunk {
+            get {
+                return ResourceManager.GetString("CreditsChunk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The chunk name that the game loads after credits (must have a player object or else it will not load).
+        /// </summary>
+        internal static string CreditsChunkDesc {
+            get {
+                return ResourceManager.GetString("CreditsChunkDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Crash Twinsanity.
         /// </summary>
         internal static string GameTitle {
@@ -1375,6 +1393,24 @@ namespace CrateModGames.GameSpecific.CrashTS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Greyscale 10th Dimension.
+        /// </summary>
+        internal static string Mod_GreyscaleDimension {
+            get {
+                return ResourceManager.GetString("Mod_GreyscaleDimension", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The scenery colors in the 4th Hub&apos;s levels are greyed out..
+        /// </summary>
+        internal static string Mod_GreyscaleDimensionDesc {
+            get {
+                return ResourceManager.GetString("Mod_GreyscaleDimensionDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Greyscale World.
         /// </summary>
         internal static string Mod_GreyscaleWorld {
@@ -1411,6 +1447,42 @@ namespace CrateModGames.GameSpecific.CrashTS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Skip Cutscenes.
+        /// </summary>
+        internal static string Mod_SkipCutscenes {
+            get {
+                return ResourceManager.GetString("Mod_SkipCutscenes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Skips most non-video cutscenes after entering..
+        /// </summary>
+        internal static string Mod_SkipCutscenesDesc {
+            get {
+                return ResourceManager.GetString("Mod_SkipCutscenesDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Starting spawn is the credits spawn.
+        /// </summary>
+        internal static string Mod_StartAndCreditsSpawn {
+            get {
+                return ResourceManager.GetString("Mod_StartAndCreditsSpawn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string Mod_StartAndCreditsSpawnDesc {
+            get {
+                return ResourceManager.GetString("Mod_StartAndCreditsSpawnDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enable Stomp Kick for Crash.
         /// </summary>
         internal static string Mod_StompKick {
@@ -1425,6 +1497,24 @@ namespace CrateModGames.GameSpecific.CrashTS {
         internal static string Mod_StompKickDesc {
             get {
                 return ResourceManager.GetString("Mod_StompKickDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Swap starting and credits spawns.
+        /// </summary>
+        internal static string Mod_SwapStartAndCreditsChunk {
+            get {
+                return ResourceManager.GetString("Mod_SwapStartAndCreditsChunk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string Mod_SwapStartAndCreditsChunkDesc {
+            get {
+                return ResourceManager.GetString("Mod_SwapStartAndCreditsChunkDesc", resourceCulture);
             }
         }
         
@@ -1641,6 +1731,24 @@ namespace CrateModGames.GameSpecific.CrashTS {
         internal static string Rand_PantsColorDesc {
             get {
                 return ResourceManager.GetString("Rand_PantsColorDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Randomize Starting Level.
+        /// </summary>
+        internal static string Rand_StartingLevel {
+            get {
+                return ResourceManager.GetString("Rand_StartingLevel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Randomize the level you start in. After the credits you spawn in the first N.Sanity Island beach..
+        /// </summary>
+        internal static string Rand_StartingLevelDesc {
+            get {
+                return ResourceManager.GetString("Rand_StartingLevelDesc", resourceCulture);
             }
         }
         

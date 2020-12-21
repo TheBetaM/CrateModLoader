@@ -1172,7 +1172,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
             ChunkType.School_Crash_CrashEnt,
             ChunkType.School_Cortex_CoGPA01,
             ChunkType.School_Rooftop_Roof01,
-            ChunkType.AltEarth_Lab_LabExt,
+            //ChunkType.AltEarth_Lab_LabExt, // you spawn at the bottom LOL
             ChunkType.AltEarth_RockSlid_L10Start,
             ChunkType.AltEarth_Hub_AltA,
             ChunkType.AltEarth_Hub_AltDoc,

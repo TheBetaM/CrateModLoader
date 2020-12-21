@@ -492,7 +492,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
                             break;
                     }
                     Script.MainScript.ScriptState state = scr.Value.Main.scriptState1;
-                    while (state.nextState != null)
+                    while (state != null)
                     {
                         switch (state.scriptIndexOrSlot)
                         {

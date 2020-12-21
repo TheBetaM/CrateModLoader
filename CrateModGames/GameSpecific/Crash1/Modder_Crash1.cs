@@ -53,10 +53,10 @@ namespace CrateModLoader.GameSpecific.Crash1
         public static ModPropOption Option_BackwardsLevels = new ModPropOption(Crash1_Text.Mod_BackwardsLevels, Crash1_Text.Mod_BackwardsLevelsDesc);
         public static ModPropOption Option_RandBackwardsLevels = new ModPropOption(Crash1_Text.Rand_BackwardsLevels, Crash1_Text.Rand_BackwardsLevelsDesc);
         public static ModPropOption Option_BackwardsHogLevels = new ModPropOption(Crash1_Text.Mod_BackwardsHogLevels, Crash1_Text.Mod_BackwardsHogLevelsDesc);
-        public static ModPropOption Option_RandEnemiesMissing = new ModPropOption("Random Enemies Removed", ""); //todo
+        public static ModPropOption Option_RandEnemiesMissing = new ModPropOption("Random Enemies Removed", "") { Hidden = true, }; //todo
         public static ModPropOption Option_RandCrateContents = new ModPropOption(Crash1_Text.Rand_CrateContents, Crash1_Text.Rand_CrateContentsDesc);
         public static ModPropOption Option_RandBosses = new ModPropOption(Crash1_Text.Rand_BossLevels, Crash1_Text.Rand_BossLevelsDesc);
-        public static ModPropOption Option_CameraBigFOV = new ModPropOption(Crash1_Text.Mod_CameraWideFOV, Crash1_Text.Mod_CameraWideFOVDesc);
+        public static ModPropOption Option_CameraBigFOV = new ModPropOption(Crash1_Text.Mod_CameraWideFOV, Crash1_Text.Mod_CameraWideFOVDesc) { Hidden = true, };
         
         public static ModPropOption Option_RandSounds = new ModPropOption(Crash1_Text.Rand_SFX, Crash1_Text.Rand_SFXDesc);
         public static ModPropOption Option_RandWorldColors = new ModPropOption(Crash1_Text.Rand_WorldColors, Crash1_Text.Rand_WorldColorsDesc);
@@ -64,7 +64,7 @@ namespace CrateModLoader.GameSpecific.Crash1
 
         // less used
         [ModCategory(1)]
-        public static ModPropOption Option_AllEnemiesMissing = new ModPropOption("All Enemies Removed", ""); // { ModMenuOnly = true };
+        public static ModPropOption Option_AllEnemiesMissing = new ModPropOption("All Enemies Removed", "") { Hidden = true, }; // { ModMenuOnly = true };
         [ModCategory(1)]
         public static ModPropOption Option_AllCratesBlank = new ModPropOption(Crash1_Text.Mod_AllCratesBlank, Crash1_Text.Mod_AllCratesBlankDesc) { ModMenuOnly = true };
         [ModCategory(1)]

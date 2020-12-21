@@ -19,6 +19,7 @@ Crash Twinsanity
 - New feature: Classic Health
 - New feature: Unlocked Camera Everywhere
 - New feature: Randomize Surface Parameters
+- New feature: Randomize Starting Level (PS2)
 - New feature: Skip Cutscenes
 - New feature: Untextured World
 - New feature: Greyscale World (PS2)
@@ -28,6 +29,7 @@ Crash Twinsanity
 - Mod Menu: Added a few more character parameters
 - Pants color can now be customized in the Mod Menu.
 - Fixed default values for character health.
+- Switch Characters At Will: Now detaches Cortex before switching to him to improve stability.
 - Randomize Character Parameters: No longer changes jump parameteres.
 
 Crash Tag Team Racing
@@ -43,6 +45,8 @@ Rayman 3: Hoodlum Havoc
 Crash Bandicoot
 - New feature: Randomize Wooden Crates
 - Backwards Hog Levels: Removed checkpoints since they didn't work anyway.
+- Randomize Crate Contents: No longer randomizes boulder levels.
+- Backwards Levels: Wider Camera Field-Of-View enabled by default for backwards levels. (normal FOV for forward levels)
 
 Crash Bandicoot 2: Cortex Strikes Back
 - New feature: Randomize Wooden Crates
