@@ -223,7 +223,7 @@
     <value>Randomize Object Colors</value>
   </data>
   <data name="Rand_ObjColDesc" xml:space="preserve">
-    <value>Color palette used in objects is shuffled around.</value>
+    <value>Color palette used in objects are shuffled around.</value>
   </data>
   <data name="Rand_ObjectPalette" xml:space="preserve">
     <value>Swizzle Object Palette</value>
