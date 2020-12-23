@@ -121,33 +121,15 @@ namespace CrateModLoader.GameSpecific.Crash1
         public static void Mod_RandomWoodCrates(NSF nsf, Random rand, Crash1_Levels level)
         {
             // edit NSF
-            foreach (Chunk chunk in nsf.Chunks)
+            foreach (OldZoneEntry zone in nsf.GetEntries<OldZoneEntry>())
             {
-                if (chunk is NormalChunk zonechunk)
+                foreach (OldEntity ent in zone.Entities)
                 {
-                    foreach (Entry entry in zonechunk.Entries)
+                    if (ent.Type == 34 && !((level == Crash1_Levels.L22_LightsOut || level == Crash1_Levels.L23_FumblingInTheDark) && ent.Subtype == (int)CrateSubTypes.Aku))
                     {
-                        if (entry is OldZoneEntry)
+                        if (Crates_ToReplace.Contains((CrateSubTypes)ent.Subtype) || Crates_Wood.Contains((CrateSubTypes)ent.Subtype))
                         {
-                            OldZoneEntry zone = (OldZoneEntry)entry;
-                            foreach (OldEntity ent in zone.Entities)
-                            {
-                                if (ent.Type == 34)
-                                {
-                                    if ((Crates_ToReplace.Contains((CrateSubTypes)ent.Subtype) || Crates_Wood.Contains((CrateSubTypes)ent.Subtype)))
-                                    {
-                                        if ((level == Crash1_Levels.L22_LightsOut || level == Crash1_Levels.L23_FumblingInTheDark) && ent.Subtype == (int)CrateSubTypes.Aku)
-                                        {
-
-                                        }
-                                        else
-                                        {
-                                            int entType = (int)Crates_Wood[rand.Next(Crates_Wood.Count)];
-                                            ent.Subtype = (byte)entType;
-                                        }
-                                    }
-                                }
-                            }
+                            ent.Subtype = (byte)Crates_Wood[rand.Next(Crates_Wood.Count)];
                         }
                     }
                 }
@@ -162,28 +144,17 @@ namespace CrateModLoader.GameSpecific.Crash1
                 return; // mask crashes oops
             }
             // edit NSF
-            foreach (Chunk chunk in nsf.Chunks)
+            foreach (OldZoneEntry zone in nsf.GetEntries<OldZoneEntry>())
             {
-                if (chunk is NormalChunk zonechunk)
+                foreach (OldEntity ent in zone.Entities)
                 {
-                    foreach (Entry entry in zonechunk.Entries)
+                    if (ent.Type == 34)
                     {
-                        if (entry is OldZoneEntry)
+                        if ((CrateSubTypes)ent.Subtype == CrateSubTypes.Blank || (CrateSubTypes)ent.Subtype == CrateSubTypes.Pickup || (CrateSubTypes)ent.Subtype == CrateSubTypes.WoodSpring)
                         {
-                            OldZoneEntry zone = (OldZoneEntry)entry;
-                            foreach (OldEntity ent in zone.Entities)
+                            if (ent.VecX != (short)CrateContentTypes.Token_Brio && ent.VecX != (short)CrateContentTypes.Token_Cortex && ent.VecX != (short)CrateContentTypes.Token_Tawna)
                             {
-                                if (ent.Type == 34)
-                                {
-                                    if ((CrateSubTypes)ent.Subtype == CrateSubTypes.Blank || (CrateSubTypes)ent.Subtype == CrateSubTypes.Pickup || (CrateSubTypes)ent.Subtype == CrateSubTypes.WoodSpring)
-                                    {
-                                        if (ent.ModeA != (short)CrateContentTypes.Token_Brio && ent.ModeA != (short)CrateContentTypes.Token_Cortex && ent.ModeA != (short)CrateContentTypes.Token_Tawna)
-                                        {
-                                            int r = rand.Next(Crate_PossibleContents.Count);
-                                            ent.ModeA = (short)Crate_PossibleContents[r];
-                                        }
-                                    }
-                                }
+                                ent.VecX = (short)Crate_PossibleContents[rand.Next(Crate_PossibleContents.Count)];
                             }
                         }
                     }
@@ -194,6 +165,11 @@ namespace CrateModLoader.GameSpecific.Crash1
 
         public static void Mod_RandomCrates(NSF nsf, Random rand, Crash1_Levels level)
         {
+            if (ChaseLevelsList.Contains(level) || VehicleLevelsList.Contains(level))
+            {
+                return;
+            }
+
             List<CrateSubTypes> AvailableTypes = new List<CrateSubTypes>();
 
             List<CrateSubTypes> PossibleList = new List<CrateSubTypes>()
@@ -209,63 +185,38 @@ namespace CrateModLoader.GameSpecific.Crash1
                 //CrateSubTypes.WoodSpring,
             };
 
-            if (ChaseLevelsList.Contains(level) || VehicleLevelsList.Contains(level))
+            foreach (OldZoneEntry zone in nsf.GetEntries<OldZoneEntry>())
             {
-                return;
-            }
-
-            foreach (Chunk chunk in nsf.Chunks)
-            {
-                if (chunk is NormalChunk zonechunk)
+                foreach (OldEntity ent in zone.Entities)
                 {
-                    foreach (Entry entry in zonechunk.Entries)
+                    if (ent.Type == 34 && PossibleList.Contains((CrateSubTypes)ent.Subtype))
                     {
-                        if (entry is OldZoneEntry)
+                        if (!AvailableTypes.Contains((CrateSubTypes)ent.Subtype))
                         {
-                            OldZoneEntry zone = (OldZoneEntry)entry;
-                            foreach (OldEntity ent in zone.Entities)
-                            {
-                                if (ent.Type == 34 && PossibleList.Contains((CrateSubTypes)ent.Subtype))
-                                {
-                                    if (!AvailableTypes.Contains((CrateSubTypes)ent.Subtype))
-                                    {
-                                        AvailableTypes.Add((CrateSubTypes)ent.Subtype);
-                                    }
-                                }
-                            }
+                            AvailableTypes.Add((CrateSubTypes)ent.Subtype);
                         }
                     }
                 }
             }
 
-            foreach (Chunk chunk in nsf.Chunks)
+            foreach (OldZoneEntry zone in nsf.GetEntries<OldZoneEntry>())
             {
-                if (chunk is NormalChunk zonechunk)
+                foreach (OldEntity ent in zone.Entities)
                 {
-                    foreach (Entry entry in zonechunk.Entries)
+                    if (ent.Type == 34 && PossibleList.Contains((CrateSubTypes)ent.Subtype))
                     {
-                        if (entry is OldZoneEntry)
+                        if (level == Crash1_Levels.L22_LightsOut || level == Crash1_Levels.L23_FumblingInTheDark)
                         {
-                            OldZoneEntry zone = (OldZoneEntry)entry;
-                            foreach (OldEntity ent in zone.Entities)
+                            if (ent.Subtype != (byte)CrateSubTypes.Aku && ent.VecX != (short)CrateContentTypes.Mask)
                             {
-                                if (ent.Type == 34 && PossibleList.Contains((CrateSubTypes)ent.Subtype))
-                                {
-                                    if (level == Crash1_Levels.L22_LightsOut || level == Crash1_Levels.L23_FumblingInTheDark)
-                                    {
-                                        if (ent.Subtype != (byte)CrateSubTypes.Aku && ent.ModeA != (short)CrateContentTypes.Mask)
-                                        {
-                                            ent.Subtype = (byte)AvailableTypes[rand.Next(AvailableTypes.Count)];
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (ent.ModeA != (short)CrateContentTypes.Token_Brio && ent.ModeA != (short)CrateContentTypes.Token_Cortex && ent.ModeA != (short)CrateContentTypes.Token_Tawna)
-                                        {
-                                            ent.Subtype = (byte)AvailableTypes[rand.Next(AvailableTypes.Count)];
-                                        }
-                                    }
-                                }
+                                ent.Subtype = (byte)AvailableTypes[rand.Next(AvailableTypes.Count)];
+                            }
+                        }
+                        else
+                        {
+                            if (ent.VecX != (short)CrateContentTypes.Token_Brio && ent.VecX != (short)CrateContentTypes.Token_Cortex && ent.VecX != (short)CrateContentTypes.Token_Tawna)
+                            {
+                                ent.Subtype = (byte)AvailableTypes[rand.Next(AvailableTypes.Count)];
                             }
                         }
                     }
@@ -277,46 +228,26 @@ namespace CrateModLoader.GameSpecific.Crash1
         public static void Mod_TurnCratesIntoWumpa(NSF nsf, Random rand, Crash1_Levels level)
         {
             // edit NSF
-            foreach (Chunk chunk in nsf.Chunks)
+            foreach (OldZoneEntry zone in nsf.GetEntries<OldZoneEntry>())
             {
-                if (chunk is NormalChunk zonechunk)
+                if (zone.EName != "c0_3Z" && zone.EName != "d3_TZ" && zone.EName != "d4_TZ") //cortex power ending, castle machinery last crates
                 {
-                    foreach (Entry entry in zonechunk.Entries)
+                    foreach (OldEntity ent in zone.Entities)
                     {
-                        if (entry is OldZoneEntry)
+                        if (ent.Type == 34 && !((level == Crash1_Levels.L22_LightsOut || level == Crash1_Levels.L23_FumblingInTheDark) && ent.Subtype == (int)CrateSubTypes.Aku))
                         {
-                            OldZoneEntry zone = (OldZoneEntry)entry;
-                            if (zone.EName != "c0_3Z" && zone.EName != "d3_TZ" && zone.EName != "d4_TZ") //cortex power ending, castle machinery last crates
+                            if (Crates_ToReplace.Contains((CrateSubTypes)ent.Subtype) || Crates_Wood.Contains((CrateSubTypes)ent.Subtype)
+                                || ent.Subtype == (int)CrateSubTypes.Checkpoint || ent.Subtype == (int)CrateSubTypes.Iron)
                             {
-                                foreach (OldEntity ent in zone.Entities)
+                                ent.Type = 3;
+                                ent.Subtype = 16;
+                                //ent.Flags = 0x18; // these flags should remain unaltered
+                                ent.VecX = 0;
+                                ent.VecY = 0;
+                                ent.VecZ = 0;
+                                while (ent.Positions.Count > 1)
                                 {
-                                    if (ent.Type == 34)
-                                    {
-                                        if ((Crates_ToReplace.Contains((CrateSubTypes)ent.Subtype) || Crates_Wood.Contains((CrateSubTypes)ent.Subtype)
-                                            || ent.Subtype == (int)CrateSubTypes.Checkpoint || ent.Subtype == (int)CrateSubTypes.Iron))
-                                        {
-                                            if ((level == Crash1_Levels.L22_LightsOut || level == Crash1_Levels.L23_FumblingInTheDark) && ent.Subtype == (int)CrateSubTypes.Aku)
-                                            {
-
-                                            }
-                                            else
-                                            {
-                                                ent.Type = 3;
-                                                ent.Subtype = 16;
-                                                ent.Flags = 196632;
-                                                ent.ModeA = 0;
-                                                ent.ModeB = 0;
-                                                ent.ModeC = 0;
-                                                if (ent.Positions.Count > 1)
-                                                {
-                                                    while (ent.Positions.Count > 1)
-                                                    {
-                                                        ent.Positions.RemoveAt(1);
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
+                                    ent.Positions.RemoveAt(1);
                                 }
                             }
                         }
@@ -334,21 +265,12 @@ namespace CrateModLoader.GameSpecific.Crash1
                 FoV_Mod = rand.NextDouble() + 0.5d;
             }
             // edit NSF
-            foreach (Chunk chunk in nsf.Chunks)
+            foreach (OldZoneEntry zone in nsf.GetEntries<OldZoneEntry>())
             {
-                if (chunk is NormalChunk zonechunk)
+                foreach (OldCamera cam in zone.Cameras)
                 {
-                    foreach (Entry entry in zonechunk.Entries)
-                    {
-                        if (entry is OldZoneEntry zone)
-                        {
-                            foreach (OldCamera cam in zone.Cameras)
-                            {
-                                short newFOV = (short)Math.Floor(cam.Zoom * FoV_Mod);
-                                cam.Zoom = newFOV;
-                            }
-                        }
-                    }
+                    short newFOV = (short)Math.Floor(cam.Zoom * FoV_Mod);
+                    cam.Zoom = newFOV;
                 }
             }
         }
@@ -477,1074 +399,1058 @@ namespace CrateModLoader.GameSpecific.Crash1
 
             bool FlipCamera = false;
 
-            foreach (Chunk chunk in nsf.Chunks)
+            foreach (OldZoneEntry zone in nsf.GetEntries<OldZoneEntry>())
             {
-                if (chunk is NormalChunk zonechunk)
+                for (int i = 0; i < zone.Entities.Count; i++)
                 {
-                    foreach (Entry entry in zonechunk.Entries)
+                    if (CrashEntity == null && zone.Entities[i].Type == 0 && zone.Entities[i].Subtype == 0)
                     {
-                        if (entry is OldZoneEntry zone)
+                        CrashEntity = zone.Entities[i];
+                        CrashZone = zone;
+                        if (level != Crash1_Levels.L27_GreatHall)
                         {
-                            for (int i = 0; i < zone.Entities.Count; i++)
+                            zone.Entities.RemoveAt(i);
+                            i--;
+                            if (level == Crash1_Levels.L12_RoadToNowhere && DecoySpawn)
                             {
-                                if (zone.Entities.Count > 0 && i < zone.Entities.Count)
-                                {
-                                    if (CrashEntity == null && zone.Entities[i].Type == 0 && zone.Entities[i].Subtype == 0)
-                                    {
-                                        CrashEntity = zone.Entities[i];
-                                        CrashZone = zone;
-                                        if (level != Crash1_Levels.L27_GreatHall)
-                                        {
-                                            zone.Entities.RemoveAt(i);
-                                            zone.EntityCount--;
-                                            i--;
-                                            if (level == Crash1_Levels.L12_RoadToNowhere && DecoySpawn)
-                                            {
-                                                CrashEntity = null;
-                                                DecoySpawn = false;
-                                            }
-                                        }
-                                        else
-                                        {
-                                            zone.Entities[i].Positions.Clear();
-                                            zone.Entities[i].Positions.Add(new EntityPosition(476, 593, 324));
-                                        }
-                                    }
-                                    else if (WarpOutEntity == null && zone.Entities[i].Type == 32 && zone.Entities[i].Subtype == 1)
-                                    {
-                                        if (DecoySpawn && (level == Crash1_Levels.L13_BoulderDash || level == Crash1_Levels.L22_LightsOut))
-                                        {
-                                            DecoySpawn = false;
-                                        }
-                                        else
-                                        {
-                                            WarpOutEntity = zone.Entities[i];
-                                            WarpOutZone = zone;
-                                            if (level != Crash1_Levels.L27_GreatHall)
-                                            {
-                                                zone.Entities.RemoveAt(i);
-                                                zone.EntityCount--;
-                                                i--;
-                                            }
-                                            else
-                                            {
-                                                zone.Entities[i].Positions.Clear();
-                                                zone.Entities[i].Positions.Add(new EntityPosition(476, 493, 1174));
-                                            }
-                                        }
-                                    }
-
-                                    if (zone.Entities.Count > 0)
-                                    {
-                                        if (ChaseLevelsList.Contains(level))
-                                        {
-                                            if (zone.Entities[i].Type == 22 && zone.Entities[i].Subtype == 12) //boulders
-                                            {
-                                                zone.Entities[i].Type = 3;
-                                                zone.Entities[i].Subtype = 16;
-                                                zone.Entities[i].Flags = 196632;
-                                                zone.Entities[i].ModeA = 0;
-                                                zone.Entities[i].ModeB = 0;
-                                                zone.Entities[i].ModeC = 0;
-                                                if (zone.Entities[i].Positions.Count > 1)
-                                                {
-                                                    while (zone.Entities[i].Positions.Count > 1)
-                                                    {
-                                                        zone.Entities[i].Positions.RemoveAt(1);
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-
-                                }
+                                CrashEntity = null;
+                                DecoySpawn = false;
                             }
-
-                            if (FlipCamera && BackwardsCameraList.Contains(level) && zone.Cameras.Count > 0)
+                        }
+                        else
+                        {
+                            zone.Entities[i].Positions.Clear();
+                            zone.Entities[i].Positions.Add(new EntityPosition(476, 593, 324));
+                        }
+                    }
+                    else if (WarpOutEntity == null && zone.Entities[i].Type == 32 && zone.Entities[i].Subtype == 1)
+                    {
+                        if (DecoySpawn && (level == Crash1_Levels.L13_BoulderDash || level == Crash1_Levels.L22_LightsOut))
+                        {
+                            DecoySpawn = false;
+                        }
+                        else
+                        {
+                            WarpOutEntity = zone.Entities[i];
+                            WarpOutZone = zone;
+                            if (level != Crash1_Levels.L27_GreatHall)
                             {
-                                for (int i = 0; i < zone.Cameras.Count; i++)
+                                zone.Entities.RemoveAt(i);
+                                i--;
+                            }
+                            else
+                            {
+                                zone.Entities[i].Positions.Clear();
+                                zone.Entities[i].Positions.Add(new EntityPosition(476, 493, 1174));
+                            }
+                        }
+                    }
+
+                    if (zone.Entities.Count > 0)
+                    {
+                        if (ChaseLevelsList.Contains(level))
+                        {
+                            if (zone.Entities[i].Type == 22 && zone.Entities[i].Subtype == 12) //boulders
+                            {
+                                zone.Entities[i].Type = 3;
+                                zone.Entities[i].Subtype = 16;
+                                //zone.Entities[i].Flags = 196632;
+                                zone.Entities[i].VecX = 0;
+                                zone.Entities[i].VecY = 0;
+                                zone.Entities[i].VecZ = 0;
+                                if (zone.Entities[i].Positions.Count > 1)
                                 {
-                                    for (int d = 0; d < zone.Cameras[i].Positions.Count; d++)
+                                    while (zone.Entities[i].Positions.Count > 1)
                                     {
-                                        zone.Cameras[i].Positions[d] = new OldCameraPosition(zone.Cameras[i].Positions[d].X, zone.Cameras[i].Positions[d].Y, zone.Cameras[i].Positions[d].Z, zone.Cameras[i].Positions[d].XRot, (short)(zone.Cameras[i].Positions[d].YRot + 2000), zone.Cameras[i].Positions[d].ZRot);
+                                        zone.Entities[i].Positions.RemoveAt(1);
                                     }
                                 }
                             }
-
-                            //crutch zone
-                            if (level == Crash1_Levels.L04_Boulders)
-                            {
-                                if (zone.EName == "0t_eZ")
-                                {
-                                    int crutchID = 300;
-                                    EntityPosition[] crate_pos = new EntityPosition[]
-                                    {
-                                          new EntityPosition(580, 670, 780),
-                                          new EntityPosition(750, 950, 200),
-                                    };
-                                    for (int id = 0; id < crate_pos.Length; id++)
-                                    {
-                                        int entID = id + crutchID;
-                                        CreateEntity((short)entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
-                                    }
-                                }
-                            }
-                            else if (level == Crash1_Levels.L05_Upstream)
-                            {
-                                if (zone.EName == "0r_fZ")
-                                {
-                                    int crutchID = 300;
-                                    EntityPosition[] crate_pos = new EntityPosition[]
-                                    {
-                                          new EntityPosition(560, 220, 720),
-                                    };
-                                    for (int id = 0; id < crate_pos.Length; id++)
-                                    {
-                                        int entID = id + crutchID;
-                                        CreateEntity((short)entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
-                                    }
-                                }
-                                else if (zone.EName == "0o_fZ")
-                                {
-                                    int crutchID = 301;
-                                    EntityPosition[] crate_pos = new EntityPosition[]
-                                    {
-                                          new EntityPosition(680, 220, 120),
-                                    };
-                                    for (int id = 0; id < crate_pos.Length; id++)
-                                    {
-                                        int entID = id + crutchID;
-                                        CreateEntity((short)entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
-                                    }
-                                }
-                                else if (zone.EName == "0y_fZ")
-                                {
-                                    int crutchID = 299;
-                                    EntityPosition[] crate_pos = new EntityPosition[]
-                                    {
-                                          new EntityPosition(620, 310, 686),
-                                    };
-                                    for (int id = 0; id < crate_pos.Length; id++)
-                                    {
-                                        int entID = id + crutchID;
-                                        CreateEntity((short)entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
-                                    }
-                                }
-                                else if (zone.EName == "0A_fZ")
-                                {
-                                    EntityPosition[] GemPath = new EntityPosition[zone.Entities[1].Positions.Count];
-                                    zone.Entities[1].Positions.CopyTo(GemPath, 0);
-                                    zone.Entities[2].Positions.Clear();
-                                    for (int a = 0; a < GemPath.Length; a++)
-                                    {
-                                        int pos = (GemPath.Length - 1) - a;
-                                        GemPath[pos] = new EntityPosition((short)(GemPath[pos].X - 300), GemPath[pos].Y, (short)(GemPath[pos].Z - 20));
-                                        zone.Entities[2].Positions.Add(GemPath[pos]);
-                                    }
-                                }
-                            }
-                            else if (level == Crash1_Levels.L06_RollingStones)
-                            {
-                                if (zone.EName == "0I_lZ")
-                                {
-                                    int crutchID = 299;
-                                    EntityPosition[] crate_pos = new EntityPosition[]
-                                    {
-                                          new EntityPosition(550, 1100, 600),
-                                    };
-                                    for (int id = 0; id < crate_pos.Length; id++)
-                                    {
-                                        int entID = id + crutchID;
-                                        CreateEntity((short)entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
-                                    }
-                                }
-                            }
-                            else if (level == Crash1_Levels.L09_UpTheCreek)
-                            {
-                                if (zone.EName == "0B_oZ")
-                                {
-                                    int crutchID = 300;
-                                    EntityPosition[] crate_pos = new EntityPosition[]
-                                    {
-                                          new EntityPosition(550, 250, 820),
-                                    };
-                                    for (int id = 0; id < crate_pos.Length; id++)
-                                    {
-                                        int entID = id + crutchID;
-                                        CreateEntity((short)entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
-                                    }
-                                }
-                                else if (zone.EName == "0d_oZ")
-                                {
-                                    int crutchID = 301;
-                                    EntityPosition[] crate_pos = new EntityPosition[]
-                                    {
-                                          new EntityPosition(480, 250, 550),
-                                    };
-                                    for (int id = 0; id < crate_pos.Length; id++)
-                                    {
-                                        int entID = id + crutchID;
-                                        CreateEntity((short)entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
-                                    }
-                                }
-                                else if (zone.EName == "0q_oZ")
-                                {
-                                    int crutchID = 302;
-                                    EntityPosition[] crate_pos = new EntityPosition[]
-                                    {
-                                          new EntityPosition(650, 200, 280),
-                                    };
-                                    for (int id = 0; id < crate_pos.Length; id++)
-                                    {
-                                        int entID = id + crutchID;
-                                        CreateEntity((short)entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
-                                    }
-                                }
-
-                            }
-                            else if (level == Crash1_Levels.L11_TempleRuins)
-                            {
-                                if (zone.EName == "c4_sZ")
-                                {
-                                    EntityPosition[] PlatPath = new EntityPosition[zone.Entities[0].Positions.Count];
-                                    zone.Entities[0].Positions.CopyTo(PlatPath, 0);
-                                    zone.Entities[0].Positions.Clear();
-                                    for (int a = 0; a < PlatPath.Length; a++)
-                                    {
-                                        zone.Entities[0].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
-                                    }
-                                }
-                                else if (zone.EName == "c0_sZ")
-                                {
-                                    int crutchID = 300;
-                                    EntityPosition[] crate_pos = new EntityPosition[]
-                                    {
-                                          new EntityPosition(850, 700, 350),
-                                    };
-                                    for (int id = 0; id < crate_pos.Length; id++)
-                                    {
-                                        int entID = id + crutchID;
-                                        CreateEntity((short)entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
-                                    }
-                                }
-                                else if (zone.EName == "b0_sZ")
-                                {
-                                    EntityPosition[] PlatPath = new EntityPosition[zone.Entities[0].Positions.Count];
-                                    zone.Entities[0].Positions.CopyTo(PlatPath, 0);
-                                    zone.Entities[0].Positions.Clear();
-                                    for (int a = 0; a < PlatPath.Length; a++)
-                                    {
-                                        zone.Entities[0].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
-                                    }
-                                }
-
-                            }
-                            else if (level == Crash1_Levels.L16_HeavyMachinery)
-                            {
-                                if (zone.EName == "i5_6Z")
-                                {
-                                    EntityPosition[] PlatPath = new EntityPosition[zone.Entities[3].Positions.Count];
-                                    zone.Entities[3].Positions.CopyTo(PlatPath, 0);
-                                    zone.Entities[3].Positions.Clear();
-                                    for (int a = 0; a < PlatPath.Length; a++)
-                                    {
-                                        zone.Entities[3].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
-                                    }
-                                    PlatPath = new EntityPosition[zone.Entities[4].Positions.Count];
-                                    zone.Entities[4].Positions.CopyTo(PlatPath, 0);
-                                    zone.Entities[4].Positions.Clear();
-                                    for (int a = 0; a < PlatPath.Length; a++)
-                                    {
-                                        zone.Entities[4].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
-                                    }
-
-                                }
-                                else if (zone.EName == "i3_6Z")
-                                {
-                                    EntityPosition[] PlatPath = new EntityPosition[zone.Entities[5].Positions.Count];
-                                    zone.Entities[5].Positions.CopyTo(PlatPath, 0);
-                                    zone.Entities[5].Positions.Clear();
-                                    for (int a = 0; a < PlatPath.Length; a++)
-                                    {
-                                        zone.Entities[5].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
-                                    }
-                                }
-                                else if (zone.EName == "i2_6Z")
-                                {
-                                    EntityPosition[] PlatPath = new EntityPosition[zone.Entities[0].Positions.Count];
-                                    zone.Entities[0].Positions.CopyTo(PlatPath, 0);
-                                    zone.Entities[0].Positions.Clear();
-                                    for (int a = 0; a < PlatPath.Length; a++)
-                                    {
-                                        zone.Entities[0].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
-                                    }
-                                    PlatPath = new EntityPosition[zone.Entities[1].Positions.Count];
-                                    zone.Entities[1].Positions.CopyTo(PlatPath, 0);
-                                    zone.Entities[1].Positions.Clear();
-                                    for (int a = 0; a < PlatPath.Length; a++)
-                                    {
-                                        zone.Entities[1].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
-                                    }
-                                }
-                                else if (zone.EName == "h7_6Z")
-                                {
-                                    EntityPosition[] PlatPath = new EntityPosition[zone.Entities[2].Positions.Count];
-                                    zone.Entities[2].Positions.CopyTo(PlatPath, 0);
-                                    zone.Entities[2].Positions.Clear();
-                                    for (int a = 0; a < PlatPath.Length; a++)
-                                    {
-                                        zone.Entities[2].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
-                                    }
-                                }
-                                else if (zone.EName == "h2_6Z")
-                                {
-                                    EntityPosition[] PlatPath = new EntityPosition[zone.Entities[0].Positions.Count];
-                                    zone.Entities[0].Positions.CopyTo(PlatPath, 0);
-                                    zone.Entities[0].Positions.Clear();
-                                    for (int a = 0; a < PlatPath.Length; a++)
-                                    {
-                                        zone.Entities[0].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
-                                    }
-                                }
-                                else if (zone.EName == "g9_6Z")
-                                {
-                                    EntityPosition[] PlatPath = new EntityPosition[zone.Entities[0].Positions.Count];
-                                    zone.Entities[0].Positions.CopyTo(PlatPath, 0);
-                                    zone.Entities[0].Positions.Clear();
-                                    for (int a = 0; a < PlatPath.Length; a++)
-                                    {
-                                        zone.Entities[0].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
-                                    }
-                                }
-                                else if (zone.EName == "g1_6Z")
-                                {
-                                    EntityPosition[] PlatPath = new EntityPosition[zone.Entities[3].Positions.Count];
-                                    zone.Entities[3].Positions.CopyTo(PlatPath, 0);
-                                    zone.Entities[3].Positions.Clear();
-                                    for (int a = 0; a < PlatPath.Length; a++)
-                                    {
-                                        zone.Entities[3].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
-                                    }
-                                }
-
-                            }
-                            else if (level == Crash1_Levels.L18_GeneratorRoom)
-                            {
-                                if (zone.EName == "c2_5Z")
-                                {
-                                    EntityPosition[] PlatPath = new EntityPosition[zone.Entities[1].Positions.Count];
-                                    zone.Entities[1].Positions.CopyTo(PlatPath, 0);
-                                    zone.Entities[1].Positions.Clear();
-                                    for (int a = 0; a < PlatPath.Length; a++)
-                                    {
-                                        zone.Entities[1].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
-                                    }
-
-                                }
-                                else if (zone.EName == "b4_5Z")
-                                {
-                                    EntityPosition[] PlatPath = new EntityPosition[zone.Entities[0].Positions.Count];
-                                    zone.Entities[0].Positions.CopyTo(PlatPath, 0);
-                                    zone.Entities[0].Positions.Clear();
-                                    for (int a = 0; a < PlatPath.Length; a++)
-                                    {
-                                        zone.Entities[0].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
-                                    }
-                                    PlatPath = new EntityPosition[zone.Entities[1].Positions.Count];
-                                    zone.Entities[1].Positions.CopyTo(PlatPath, 0);
-                                    zone.Entities[1].Positions.Clear();
-                                    for (int a = 0; a < PlatPath.Length; a++)
-                                    {
-                                        zone.Entities[1].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
-                                    }
-                                }
-                                else if (zone.EName == "b5_5Z")
-                                {
-                                    EntityPosition[] PlatPath = new EntityPosition[zone.Entities[1].Positions.Count];
-                                    zone.Entities[1].Positions.CopyTo(PlatPath, 0);
-                                    zone.Entities[1].Positions.Clear();
-                                    for (int a = 0; a < PlatPath.Length; a++)
-                                    {
-                                        zone.Entities[1].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
-                                    }
-                                }
-                                else if (zone.EName == "c0_5Z")
-                                {
-                                    EntityPosition[] PlatPath = new EntityPosition[zone.Entities[0].Positions.Count];
-                                    zone.Entities[0].Positions.CopyTo(PlatPath, 0);
-                                    zone.Entities[0].Positions.Clear();
-                                    for (int a = 0; a < PlatPath.Length; a++)
-                                    {
-                                        zone.Entities[0].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
-                                    }
-                                    PlatPath = new EntityPosition[zone.Entities[1].Positions.Count];
-                                    zone.Entities[1].Positions.CopyTo(PlatPath, 0);
-                                    zone.Entities[1].Positions.Clear();
-                                    for (int a = 0; a < PlatPath.Length; a++)
-                                    {
-                                        zone.Entities[1].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
-                                    }
-                                }
-                                else if (zone.EName == "b3_5Z")
-                                {
-                                    int crutchID = 299;
-                                    EntityPosition[] crate_pos = new EntityPosition[]
-                                    {
-                                          new EntityPosition(527, 1095, 505),
-                                    };
-                                    for (int id = 0; id < crate_pos.Length; id++)
-                                    {
-                                        int entID = id + crutchID;
-                                        CreateEntity((short)entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
-                                    }
-                                }
-                                else if (zone.EName == "a9_5Z")
-                                {
-                                    int crutchID = 300;
-                                    EntityPosition[] crate_pos = new EntityPosition[]
-                                    {
-                                          new EntityPosition(854, 545, 360),
-                                          new EntityPosition(1504, 705, 360),
-                                    };
-                                    for (int id = 0; id < crate_pos.Length; id++)
-                                    {
-                                        int entID = id + crutchID;
-                                        CreateEntity((short)entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
-                                    }
-                                }
-                                else if (zone.EName == "a8_5Z")
-                                {
-                                    int crutchID = 302;
-                                    EntityPosition[] crate_pos = new EntityPosition[]
-                                    {
-                                          new EntityPosition(570, 905, 360),
-                                    };
-                                    for (int id = 0; id < crate_pos.Length; id++)
-                                    {
-                                        int entID = id + crutchID;
-                                        CreateEntity((short)entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
-                                    }
-                                }
-
-                            }
-                            else if (level == Crash1_Levels.L24_JawsOfDarkness)
-                            {
-                                if (zone.EName == "d9_tZ")
-                                {
-                                    int crutchID = 298;
-                                    EntityPosition[] crate_pos = new EntityPosition[]
-                                    {
-                                          new EntityPosition(400, 700, 450),
-                                          new EntityPosition(200, 820, 450),
-                                    };
-                                    for (int id = 0; id < crate_pos.Length; id++)
-                                    {
-                                        int entID = id + crutchID;
-                                        CreateEntity((short)entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
-                                    }
-                                }
-                                else if (zone.EName == "c9_tZ")
-                                {
-                                    EntityPosition[] PlatPath = new EntityPosition[zone.Entities[0].Positions.Count];
-                                    zone.Entities[0].Positions.CopyTo(PlatPath, 0);
-                                    zone.Entities[0].Positions.Clear();
-                                    for (int a = 0; a < PlatPath.Length; a++)
-                                    {
-                                        zone.Entities[0].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
-                                    }
-                                }
-                                else if (zone.EName == "b3_tZ")
-                                {
-                                    EntityPosition[] PlatPath = new EntityPosition[zone.Entities[0].Positions.Count];
-                                    zone.Entities[0].Positions.CopyTo(PlatPath, 0);
-                                    zone.Entities[0].Positions.Clear();
-                                    for (int a = 0; a < PlatPath.Length; a++)
-                                    {
-                                        zone.Entities[0].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
-                                    }
-                                }
-                                else if (zone.EName == "b4_tZ")
-                                {
-                                    EntityPosition[] PlatPath = new EntityPosition[zone.Entities[0].Positions.Count];
-                                    zone.Entities[0].Positions.CopyTo(PlatPath, 0);
-                                    zone.Entities[0].Positions.Clear();
-                                    for (int a = 0; a < PlatPath.Length; a++)
-                                    {
-                                        zone.Entities[0].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
-                                    }
-                                }
-                                else if (zone.EName == "b9_tZ")
-                                {
-                                    int crutchID = 300;
-                                    EntityPosition[] crate_pos = new EntityPosition[]
-                                    {
-                                          new EntityPosition(850, 800, 1040),
-                                          new EntityPosition(1050, 900, 1040),
-                                    };
-                                    for (int id = 0; id < crate_pos.Length; id++)
-                                    {
-                                        int entID = id + crutchID;
-                                        CreateEntity((short)entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
-                                    }
-                                }
-                                else if (zone.EName == "s0_tZ")
-                                {
-                                    EntityPosition[] PlatPath = new EntityPosition[zone.Entities[0].Positions.Count];
-                                    zone.Entities[0].Positions.CopyTo(PlatPath, 0);
-                                    zone.Entities[0].Positions.Clear();
-                                    for (int a = 0; a < PlatPath.Length; a++)
-                                    {
-                                        zone.Entities[0].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
-                                    }
-                                }
-
-                            }
-                            else if (level == Crash1_Levels.L25_CastleMachinery)
-                            {
-                                if (zone.EName == "e1_TZ")
-                                {
-                                    EntityPosition[] PlatPath = new EntityPosition[zone.Entities[0].Positions.Count];
-                                    zone.Entities[0].Positions.CopyTo(PlatPath, 0);
-                                    zone.Entities[0].Positions.Clear();
-                                    for (int a = 0; a < PlatPath.Length; a++)
-                                    {
-                                        zone.Entities[0].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
-                                    }
-                                }
-                                else if (zone.EName == "e0_TZ")
-                                {
-                                    EntityPosition[] PlatPath = new EntityPosition[zone.Entities[1].Positions.Count];
-                                    zone.Entities[1].Positions.CopyTo(PlatPath, 0);
-                                    zone.Entities[1].Positions.Clear();
-                                    for (int a = 0; a < PlatPath.Length; a++)
-                                    {
-                                        zone.Entities[1].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
-                                    }
-                                }
-                                else if (zone.EName == "d7_TZ")
-                                {
-                                    EntityPosition[] PlatPath = new EntityPosition[zone.Entities[3].Positions.Count];
-                                    zone.Entities[3].Positions.CopyTo(PlatPath, 0);
-                                    zone.Entities[3].Positions.Clear();
-                                    for (int a = 0; a < PlatPath.Length; a++)
-                                    {
-                                        zone.Entities[3].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
-                                    }
-                                }
-                                else if (zone.EName == "d6_TZ")
-                                {
-                                    EntityPosition[] PlatPath = new EntityPosition[zone.Entities[2].Positions.Count];
-                                    zone.Entities[2].Positions.CopyTo(PlatPath, 0);
-                                    zone.Entities[2].Positions.Clear();
-                                    for (int a = 0; a < PlatPath.Length; a++)
-                                    {
-                                        zone.Entities[2].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
-                                    }
-                                }
-                                else if (zone.EName == "c0_TZ")
-                                {
-                                    EntityPosition[] PlatPath = new EntityPosition[zone.Entities[0].Positions.Count];
-                                    zone.Entities[0].Positions.CopyTo(PlatPath, 0);
-                                    zone.Entities[0].Positions.Clear();
-                                    for (int a = 0; a < PlatPath.Length; a++)
-                                    {
-                                        zone.Entities[0].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
-                                    }
-                                }
-                                else if (zone.EName == "b2_TZ")
-                                {
-                                    EntityPosition[] PlatPath = new EntityPosition[zone.Entities[0].Positions.Count];
-                                    zone.Entities[0].Positions.CopyTo(PlatPath, 0);
-                                    zone.Entities[0].Positions.Clear();
-                                    for (int a = 0; a < PlatPath.Length; a++)
-                                    {
-                                        zone.Entities[0].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
-                                    }
-                                }
-                                else if (zone.EName == "c8_TZ")
-                                {
-                                    zone.Entities[0].Positions.Clear();
-                                    //zone.Entities[0].Positions.Add(new EntityPosition(1168, 373, 190));
-                                    zone.Entities[0].Positions.Add(new EntityPosition(1068, 223, 190));
-                                }
-                                else if (zone.EName == "d3_TZ")
-                                {
-                                    int crutchID = 250;
-                                    EntityPosition[] crate_pos = new EntityPosition[]
-                                    {
-                                          new EntityPosition(850, 500, 180),
-                                    };
-                                    for (int id = 0; id < crate_pos.Length; id++)
-                                    {
-                                        int entID = id + crutchID;
-                                        CreateEntitySpring((short)entID, 14, 0, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
-                                    }
-
-                                    OldCameraNeighbor CamSet2 = new OldCameraNeighbor(1, 1, 3, 2);
-
-                                    zone.Cameras[0].NeighborCount++;
-                                    zone.Cameras[0].Neighbors[1] = CamSet2;
-                                }
-                                else if (zone.EName == "d2_TZ")
-                                {
-                                    int crutchID = 252;
-                                    EntityPosition[] crate_pos = new EntityPosition[]
-                                    {
-                                          new EntityPosition(500, 110, 180),
-                                    };
-                                    for (int id = 0; id < crate_pos.Length; id++)
-                                    {
-                                        int entID = id + crutchID;
-                                        CreateEntitySpring((short)entID, 14, 0, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
-                                    }
-                                }
-                                else if (zone.EName == "c6_TZ")
-                                {
-                                    int crutchID = 255;
-                                    EntityPosition[] crate_pos = new EntityPosition[]
-                                    {
-                                          new EntityPosition(170, 80, 180),
-                                          new EntityPosition(270, 1580, 180),
-                                    };
-                                    for (int id = 0; id < crate_pos.Length; id++)
-                                    {
-                                        int entID = id + crutchID;
-                                        CreateEntitySpring((short)entID, 14, 0, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
-                                    }
-
-                                    OldCameraNeighbor CamSet2 = new OldCameraNeighbor(1, 1, 1, 2);
-
-                                    zone.Cameras[0].NeighborCount++;
-                                    zone.Cameras[0].Neighbors[1] = CamSet2;
-                                }
-                                else if (zone.EName == "b6_TZ")
-                                {
-                                    int crutchID = 260;
-                                    EntityPosition[] crate_pos = new EntityPosition[]
-                                    {
-                                          new EntityPosition(400, 1220, 150),
-                                          new EntityPosition(900, 720, 150),
-                                          new EntityPosition(480, 220, 150),
-                                    };
-                                    for (int id = 0; id < crate_pos.Length; id++)
-                                    {
-                                        int entID = id + crutchID;
-                                        CreateEntitySpring((short)entID, 14, 0, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
-                                    }
-
-                                    OldCameraNeighbor CamSet2 = new OldCameraNeighbor(1, 1, 3, 2);
-
-                                    zone.Cameras[0].NeighborCount++;
-                                    zone.Cameras[0].Neighbors[1] = CamSet2;
-                                }
-                                else if (zone.EName == "b5_TZ")
-                                {
-                                    int crutchID = 265;
-                                    EntityPosition[] crate_pos = new EntityPosition[]
-                                    {
-                                          new EntityPosition(1100, 390, 150),
-                                    };
-                                    for (int id = 0; id < crate_pos.Length; id++)
-                                    {
-                                        int entID = id + crutchID;
-                                        CreateEntitySpring((short)entID, 14, 0, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
-                                    }
-                                }
-                                else if (zone.EName == "b4_TZ")
-                                {
-                                    int crutchID = 267;
-                                    EntityPosition[] crate_pos = new EntityPosition[]
-                                    {
-                                          new EntityPosition(720, 280, 180),
-                                    };
-                                    for (int id = 0; id < crate_pos.Length; id++)
-                                    {
-                                        int entID = id + crutchID;
-                                        CreateEntitySpring((short)entID, 14, 0, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
-                                    }
-                                }
-                                else if (zone.EName == "b3_TZ")
-                                {
-                                    int crutchID = 269;
-                                    EntityPosition[] crate_pos = new EntityPosition[]
-                                    {
-                                          new EntityPosition(1000, 250, 180),
-                                    };
-                                    for (int id = 0; id < crate_pos.Length; id++)
-                                    {
-                                        int entID = id + crutchID;
-                                        CreateEntitySpring((short)entID, 14, 0, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
-                                    }
-                                }
-                                else if (zone.EName == "a5_TZ")
-                                {
-                                    int crutchID = 275;
-                                    EntityPosition[] crate_pos = new EntityPosition[]
-                                    {
-                                          new EntityPosition(270, 200, 200),
-                                          new EntityPosition(470, 1100, 200),
-                                          new EntityPosition(670, 1600, 200),
-                                    };
-                                    for (int id = 0; id < crate_pos.Length; id++)
-                                    {
-                                        int entID = id + crutchID;
-                                        CreateEntitySpring((short)entID, 14, 0, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
-                                    }
-
-                                    OldCameraNeighbor CamSet2 = new OldCameraNeighbor(1, 1, 0, 2);
-
-                                    zone.Cameras[0].NeighborCount++;
-                                    zone.Cameras[0].Neighbors[1] = CamSet2;
-                                }
-                                else if (zone.EName == "a4_TZ")
-                                {
-
-                                    int crutchID = 280;
-                                    EntityPosition[] crate_pos = new EntityPosition[]
-                                    {
-                                          new EntityPosition(470, 1100, 200),
-                                          new EntityPosition(270, 1600, 200),
-                                    };
-                                    for (int id = 0; id < crate_pos.Length; id++)
-                                    {
-                                        int entID = id + crutchID;
-                                        CreateEntitySpring((short)entID, 14, 0, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
-                                    }
-
-                                    OldCameraNeighbor CamSet2 = new OldCameraNeighbor(1, 1, 0, 2);
-
-                                    zone.Cameras[0].NeighborCount++;
-                                    zone.Cameras[0].Neighbors[1] = CamSet2;
-                                }
-                                else if (zone.EName == "a3_TZ")
-                                {
-
-                                    int crutchID = 285;
-                                    EntityPosition[] crate_pos = new EntityPosition[]
-                                    {
-                                          new EntityPosition(470, 1100, 200),
-                                          new EntityPosition(670, 1600, 200),
-                                    };
-                                    for (int id = 0; id < crate_pos.Length; id++)
-                                    {
-                                        int entID = id + crutchID;
-                                        CreateEntitySpring((short)entID, 14, 0, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
-                                    }
-
-                                    OldCameraNeighbor CamSet2 = new OldCameraNeighbor(1, 1, 0, 2);
-
-                                    zone.Cameras[0].NeighborCount++;
-                                    zone.Cameras[0].Neighbors[1] = CamSet2;
-                                }
-                                else if (zone.EName == "a2_TZ")
-                                {
-                                    int crutchID = 290;
-                                    EntityPosition[] crate_pos = new EntityPosition[]
-                                    {
-                                          new EntityPosition(470, 1100, 200),
-                                          new EntityPosition(270, 1600, 200),
-                                          new EntityPosition(270, 2000, 200),
-                                          new EntityPosition(270, 2500, 200),
-                                    };
-                                    for (int id = 0; id < crate_pos.Length; id++)
-                                    {
-                                        int entID = id + crutchID;
-                                        CreateEntitySpring((short)entID, 14, 0, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
-                                    }
-
-                                    OldCameraNeighbor CamSet2 = new OldCameraNeighbor(1, 1, 0, 2);
-
-                                    zone.Cameras[0].NeighborCount++;
-                                    zone.Cameras[0].Neighbors[1] = CamSet2;
-                                }
-                                else if (zone.EName == "a1_TZ")
-                                {
-                                    int crutchID = 295;
-                                    EntityPosition[] crate_pos = new EntityPosition[]
-                                    {
-                                          new EntityPosition(770, -110, 200),
-                                          new EntityPosition(970, -110, 200),
-                                          new EntityPosition(1170, -110, 200),
-                                          new EntityPosition(770, -210, 200),
-                                          new EntityPosition(770, 500, 200),
-                                    };
-                                    for (int id = 0; id < crate_pos.Length; id++)
-                                    {
-                                        int entID = id + crutchID;
-                                        CreateEntitySpring((short)entID, 14, 0, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
-                                    }
-                                }
-                            }
-                            else if (level == Crash1_Levels.L21_SlipperyClimb)
-                            {
-                                if (zone.EName == "g3_KZ")
-                                {
-                                    EntityPosition[] PlatPath = new EntityPosition[zone.Entities[0].Positions.Count];
-                                    zone.Entities[0].Positions.CopyTo(PlatPath, 0);
-                                    zone.Entities[0].Positions.Clear();
-                                    for (int a = 0; a < PlatPath.Length; a++)
-                                    {
-                                        zone.Entities[0].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
-                                    }
-                                }
-                            }
-                            else if (level == Crash1_Levels.L13_BoulderDash)
-                            {
-                                if (zone.EName == "0d_jZ")
-                                {
-                                    int crutchID = 298;
-                                    EntityPosition[] crate_pos = new EntityPosition[]
-                                    {
-                                          new EntityPosition(500, 520, 800),
-                                          new EntityPosition(500, 520, 910),
-                                          new EntityPosition(600, 520, 800),
-                                          new EntityPosition(600, 520, 910),
-                                    };
-                                    for (int id = 0; id < crate_pos.Length; id++)
-                                    {
-                                        int entID = id + crutchID;
-                                        CreateEntity((short)entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
-                                    }
-                                }
-                                else if (zone.EName == "0u_jZ")
-                                {
-                                    int crutchID = 302;
-                                    EntityPosition[] crate_pos = new EntityPosition[]
-                                    {
-                                          new EntityPosition(450, 620, 950),
-                                    };
-                                    for (int id = 0; id < crate_pos.Length; id++)
-                                    {
-                                        int entID = id + crutchID;
-                                        CreateEntity((short)entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
-                                    }
-                                }
-                                else if (zone.EName == "0B_jZ")
-                                {
-                                    int crutchID = 295;
-                                    EntityPosition[] crate_pos = new EntityPosition[]
-                                    {
-                                          new EntityPosition(300, 1100, -800),
-                                    };
-                                    for (int id = 0; id < crate_pos.Length; id++)
-                                    {
-                                        int entID = id + crutchID;
-                                        CreateEntity((short)entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
-                                    }
-                                }
-                                else if (zone.EName == "0a_jZ")
-                                {
-                                    OldEntity gem = zone.Entities[0];
-
-                                    for (int a = 0; a < gem.Positions.Count; a++)
-                                    {
-                                        gem.Positions[a] = new EntityPosition((short)(gem.Positions[a].X - 50), gem.Positions[a].Y, (short)(gem.Positions[a].Z - 150)); // buggy platform >_<
-                                    }
-
-                                    CreateEntityGemPlatform(297, 5, 0, 0, 0, ref zone);
-
-                                    int pos = zone.Entities.Count - 1;
-                                    EntityPosition[] PlatPath = new EntityPosition[gem.Positions.Count];
-                                    gem.Positions.CopyTo(PlatPath, 0);
-                                    zone.Entities[pos].Positions.Clear();
-                                    for (int a = 0; a < PlatPath.Length; a++)
-                                    {
-                                        zone.Entities[pos].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
-                                    }
-
-                                    //zone.Cameras[0].Neighbors[1] = new OldCameraNeighbor(1, 2, 0, 1); // orig - 1 2 0 5
-                                }
-                                else if (zone.EName == "0b_jZ")
-                                {
-                                    zone.Cameras[1].NeighborCount = 2;
-                                    zone.Cameras[1].Neighbors[0] = new OldCameraNeighbor(1, 0, 0, 2);
-                                    zone.Cameras[1].Neighbors[1] = new OldCameraNeighbor(2, 2, 0, 5); 
-                                }
-                                else if (zone.EName == "1b_jZ")
-                                {
-                                    zone.Cameras[0].NeighborCount = 2;
-                                    zone.Cameras[0].Neighbors[0] = new OldCameraNeighbor(1, 2, 1, 2);
-                                    zone.Cameras[0].Neighbors[1] = new OldCameraNeighbor(2, 0, 3, 1);
-                                }
-                            }
-                            else if (level == Crash1_Levels.L22_LightsOut)
-                            {
-                                if (zone.EName == "d5_EZ")
-                                {
-                                    int crutchID = 300;
-                                    EntityPosition[] crate_pos = new EntityPosition[]
-                                    {
-                                          new EntityPosition(475, 500, 950),
-                                    };
-                                    for (int id = 0; id < crate_pos.Length; id++)
-                                    {
-                                        int entID = id + crutchID;
-                                        CreateEntityMask((short)entID, 3, 6, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
-                                    }
-                                }
-                                else if (zone.EName == "C8_EZ")
-                                {
-                                    int crutchID = 299;
-                                    EntityPosition[] crate_pos = new EntityPosition[]
-                                    {
-                                          new EntityPosition(524, -1100, 400),
-                                    };
-                                    for (int id = 0; id < crate_pos.Length; id++)
-                                    {
-                                        int entID = id + crutchID;
-                                        CreateEntityMask((short)entID, 3, 6, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
-                                    }
-                                    OldEntity gem = zone.Entities[0];
-                                    CreateEntityGemPlatform(298, 5, 0, 0, 0, ref zone);
-
-                                    int pos = zone.Entities.Count - 1;
-                                    EntityPosition[] PlatPath = new EntityPosition[gem.Positions.Count];
-                                    gem.Positions.CopyTo(PlatPath, 0);
-                                    zone.Entities[pos].Positions.Clear();
-                                    for (int a = 0; a < PlatPath.Length; a++)
-                                    {
-                                        zone.Entities[pos].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
-                                    }
-
-                                   
-
-                                    // move THE ENTIRE ZONE because the transition doesn't work otherwise
-
-                                    int xoffset = BitConv.FromInt32(zone.Layout, 0);
-                                    int yoffset = BitConv.FromInt32(zone.Layout, 4);
-                                    int zoffset = BitConv.FromInt32(zone.Layout, 8);
-                                    int x2 = BitConv.FromInt32(zone.Layout, 12);
-                                    int y2 = BitConv.FromInt32(zone.Layout, 16);
-                                    int z2 = BitConv.FromInt32(zone.Layout, 20);
-                                    int xmax = (ushort)BitConv.FromInt16(zone.Layout, 0x1E);
-                                    int ymax = (ushort)BitConv.FromInt16(zone.Layout, 0x20);
-                                    int zmax = (ushort)BitConv.FromInt16(zone.Layout, 0x22);
-
-                                    short CamOffset = 2600;
-                                    short EntOffset = 700; //800
-                                    double ScaleMod = 1.6;
-
-                                    short offset = 0x20;
-                                    int value = (short)(ymax * ScaleMod);
-                                    zone.Layout[offset] = (byte)value;
-                                    zone.Layout[offset + 1] = (byte)(value >> 8);
-
-                                    offset = 4;
-                                    value = yoffset - CamOffset;
-                                    zone.Layout[offset] = (byte)value;
-                                    zone.Layout[offset + 1] = (byte)(value >> 8);
-
-                                    offset = 16;
-                                    value = (short)(y2 * ScaleMod);
-                                    zone.Layout[offset] = (byte)value;
-                                    zone.Layout[offset + 1] = (byte)(value >> 8);
-                                    zone.Layout[offset + 2] = (byte)(value >> 8 * 2);
-                                    zone.Layout[offset + 3] = (byte)(value >> 8 * 3);
-
-                                    
-                                    for (int i = 0; i < zone.Entities.Count; i++)
-                                    {
-                                        for (int a = 0; a < zone.Entities[i].Positions.Count; a++)
-                                        {
-                                            zone.Entities[i].Positions[a] = new EntityPosition(zone.Entities[i].Positions[a].X, (short)(zone.Entities[i].Positions[a].Y + EntOffset), zone.Entities[i].Positions[a].Z);
-                                        }
-                                    }
-                                    
-                                    for (int i = 0; i < zone.Cameras[0].Positions.Count; i++)
-                                    {
-                                        zone.Cameras[0].Positions[i] = new OldCameraPosition(zone.Cameras[0].Positions[i].X, (short)(zone.Cameras[0].Positions[i].Y + CamOffset), zone.Cameras[0].Positions[i].Z, zone.Cameras[0].Positions[i].XRot, zone.Cameras[0].Positions[i].YRot, zone.Cameras[0].Positions[i].ZRot);
-                                    }
-                                    
-
-                                }
-                            }
-                            else if (level == Crash1_Levels.L23_FumblingInTheDark)
-                            {
-                                if (zone.EName == "e0_GZ")
-                                {
-                                    int crutchID = 300;
-                                    EntityPosition[] crate_pos = new EntityPosition[]
-                                    {
-                                          new EntityPosition(475, 500, 650),
-                                    };
-                                    for (int id = 0; id < crate_pos.Length; id++)
-                                    {
-                                        int entID = id + crutchID;
-                                        CreateEntityMask((short)entID, 3, 6, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
-                                    }
-                                }
-                            }
-                            else if (level == Crash1_Levels.L15_SunsetVista)
-                            {
-                                if (zone.EName == "n3_zZ")
-                                {
-                                    // move THE ENTIRE ZONE because the transition doesn't work otherwise
-
-                                    int xoffset = BitConv.FromInt32(zone.Layout, 0);
-                                    int yoffset = BitConv.FromInt32(zone.Layout, 4);
-                                    int zoffset = BitConv.FromInt32(zone.Layout, 8);
-                                    int x2 = BitConv.FromInt32(zone.Layout, 12);
-                                    int y2 = BitConv.FromInt32(zone.Layout, 16);
-                                    int z2 = BitConv.FromInt32(zone.Layout, 20);
-                                    int xmax = (ushort)BitConv.FromInt16(zone.Layout, 0x1E);
-                                    int ymax = (ushort)BitConv.FromInt16(zone.Layout, 0x20);
-                                    int zmax = (ushort)BitConv.FromInt16(zone.Layout, 0x22);
-
-                                    short CamOffset = 2000;
-                                    short EntOffset = 505;
-                                    double ScaleMod = 1.25;
-
-                                    short offset = 0x20;
-                                    int value = (short)(ymax * ScaleMod);
-                                    zone.Layout[offset] = (byte)value;
-                                    zone.Layout[offset + 1] = (byte)(value >> 8);
-
-                                    offset = 4;
-                                    value = yoffset - CamOffset;
-                                    zone.Layout[offset] = (byte)value;
-                                    zone.Layout[offset + 1] = (byte)(value >> 8);
-
-                                    offset = 16;
-                                    value = (short)(y2 * ScaleMod);
-                                    zone.Layout[offset] = (byte)value;
-                                    zone.Layout[offset + 1] = (byte)(value >> 8);
-                                    zone.Layout[offset + 2] = (byte)(value >> 8 * 2);
-                                    zone.Layout[offset + 3] = (byte)(value >> 8 * 3);
-
-                                    for (int i = 0; i < zone.Entities.Count; i++)
-                                    {
-                                        zone.Entities[i].Positions[0] = new EntityPosition(zone.Entities[i].Positions[0].X, (short)(zone.Entities[i].Positions[0].Y + EntOffset), zone.Entities[i].Positions[0].Z);
-                                    }
-                                    for (int i = 0; i < zone.Cameras[0].Positions.Count; i++)
-                                    {
-                                        zone.Cameras[0].Positions[i] = new OldCameraPosition(zone.Cameras[0].Positions[i].X, (short)(zone.Cameras[0].Positions[i].Y + CamOffset), zone.Cameras[0].Positions[i].Z, zone.Cameras[0].Positions[i].XRot, zone.Cameras[0].Positions[i].YRot, zone.Cameras[0].Positions[i].ZRot);
-                                    }
-
-                                }
-                                else if (zone.EName == "h3_zZ")
-                                {
-                                    int crutchID = 300;
-                                    EntityPosition[] crate_pos = new EntityPosition[]
-                                    {
-                                          new EntityPosition(800, 450, 900),
-                                    };
-                                    for (int id = 0; id < crate_pos.Length; id++)
-                                    {
-                                        int entID = id + crutchID;
-                                        CreateEntity((short)entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
-                                    }
-                                }
-
-                            }
-
                         }
                     }
                 }
+
+                if (FlipCamera && BackwardsCameraList.Contains(level) && zone.Cameras.Count > 0)
+                {
+                    for (int i = 0; i < zone.Cameras.Count; i++)
+                    {
+                        for (int d = 0; d < zone.Cameras[i].Positions.Count; d++)
+                        {
+                            zone.Cameras[i].Positions[d] = new OldCameraPosition(zone.Cameras[i].Positions[d].X, zone.Cameras[i].Positions[d].Y, zone.Cameras[i].Positions[d].Z, zone.Cameras[i].Positions[d].XRot, (short)(zone.Cameras[i].Positions[d].YRot + 0x800), zone.Cameras[i].Positions[d].ZRot);
+                        }
+                    }
+                }
+
+                //crutch zone
+                if (level == Crash1_Levels.L04_Boulders)
+                {
+                    if (zone.EName == "0t_eZ")
+                    {
+                        int crutchID = 300;
+                        EntityPosition[] crate_pos = new EntityPosition[]
+                        {
+                                new EntityPosition(580, 670, 780),
+                                new EntityPosition(750, 950, 200),
+                        };
+                        for (int id = 0; id < crate_pos.Length; id++)
+                        {
+                            int entID = id + crutchID;
+                            CreateEntity((short)entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, zone);
+                        }
+                    }
+                }
+                else if (level == Crash1_Levels.L05_Upstream)
+                {
+                    if (zone.EName == "0r_fZ")
+                    {
+                        int crutchID = 300;
+                        EntityPosition[] crate_pos = new EntityPosition[]
+                        {
+                                new EntityPosition(560, 220, 720),
+                        };
+                        for (int id = 0; id < crate_pos.Length; id++)
+                        {
+                            int entID = id + crutchID;
+                            CreateEntity((short)entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, zone);
+                        }
+                    }
+                    else if (zone.EName == "0o_fZ")
+                    {
+                        int crutchID = 301;
+                        EntityPosition[] crate_pos = new EntityPosition[]
+                        {
+                                new EntityPosition(680, 220, 120),
+                        };
+                        for (int id = 0; id < crate_pos.Length; id++)
+                        {
+                            int entID = id + crutchID;
+                            CreateEntity((short)entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, zone);
+                        }
+                    }
+                    else if (zone.EName == "0y_fZ")
+                    {
+                        int crutchID = 299;
+                        EntityPosition[] crate_pos = new EntityPosition[]
+                        {
+                                new EntityPosition(620, 310, 686),
+                        };
+                        for (int id = 0; id < crate_pos.Length; id++)
+                        {
+                            int entID = id + crutchID;
+                            CreateEntity((short)entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, zone);
+                        }
+                    }
+                    else if (zone.EName == "0A_fZ")
+                    {
+                        EntityPosition[] GemPath = new EntityPosition[zone.Entities[1].Positions.Count];
+                        zone.Entities[1].Positions.CopyTo(GemPath, 0);
+                        zone.Entities[2].Positions.Clear();
+                        for (int a = 0; a < GemPath.Length; a++)
+                        {
+                            int pos = (GemPath.Length - 1) - a;
+                            GemPath[pos] = new EntityPosition((short)(GemPath[pos].X - 300), GemPath[pos].Y, (short)(GemPath[pos].Z - 20));
+                            zone.Entities[2].Positions.Add(GemPath[pos]);
+                        }
+                    }
+                }
+                else if (level == Crash1_Levels.L06_RollingStones)
+                {
+                    if (zone.EName == "0I_lZ")
+                    {
+                        int crutchID = 299;
+                        EntityPosition[] crate_pos = new EntityPosition[]
+                        {
+                                new EntityPosition(550, 1100, 600),
+                        };
+                        for (int id = 0; id < crate_pos.Length; id++)
+                        {
+                            int entID = id + crutchID;
+                            CreateEntity((short)entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, zone);
+                        }
+                    }
+                }
+                else if (level == Crash1_Levels.L09_UpTheCreek)
+                {
+                    if (zone.EName == "0B_oZ")
+                    {
+                        int crutchID = 300;
+                        EntityPosition[] crate_pos = new EntityPosition[]
+                        {
+                                new EntityPosition(550, 250, 820),
+                        };
+                        for (int id = 0; id < crate_pos.Length; id++)
+                        {
+                            int entID = id + crutchID;
+                            CreateEntity((short)entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, zone);
+                        }
+                    }
+                    else if (zone.EName == "0d_oZ")
+                    {
+                        int crutchID = 301;
+                        EntityPosition[] crate_pos = new EntityPosition[]
+                        {
+                                new EntityPosition(480, 250, 550),
+                        };
+                        for (int id = 0; id < crate_pos.Length; id++)
+                        {
+                            int entID = id + crutchID;
+                            CreateEntity((short)entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, zone);
+                        }
+                    }
+                    else if (zone.EName == "0q_oZ")
+                    {
+                        int crutchID = 302;
+                        EntityPosition[] crate_pos = new EntityPosition[]
+                        {
+                                new EntityPosition(650, 200, 280),
+                        };
+                        for (int id = 0; id < crate_pos.Length; id++)
+                        {
+                            int entID = id + crutchID;
+                            CreateEntity((short)entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, zone);
+                        }
+                    }
+
+                }
+                else if (level == Crash1_Levels.L11_TempleRuins)
+                {
+                    if (zone.EName == "c4_sZ")
+                    {
+                        EntityPosition[] PlatPath = new EntityPosition[zone.Entities[0].Positions.Count];
+                        zone.Entities[0].Positions.CopyTo(PlatPath, 0);
+                        zone.Entities[0].Positions.Clear();
+                        for (int a = 0; a < PlatPath.Length; a++)
+                        {
+                            zone.Entities[0].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
+                        }
+                    }
+                    else if (zone.EName == "c0_sZ")
+                    {
+                        int crutchID = 300;
+                        EntityPosition[] crate_pos = new EntityPosition[]
+                        {
+                                new EntityPosition(850, 700, 350),
+                        };
+                        for (int id = 0; id < crate_pos.Length; id++)
+                        {
+                            int entID = id + crutchID;
+                            CreateEntity((short)entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, zone);
+                        }
+                    }
+                    else if (zone.EName == "b0_sZ")
+                    {
+                        EntityPosition[] PlatPath = new EntityPosition[zone.Entities[0].Positions.Count];
+                        zone.Entities[0].Positions.CopyTo(PlatPath, 0);
+                        zone.Entities[0].Positions.Clear();
+                        for (int a = 0; a < PlatPath.Length; a++)
+                        {
+                            zone.Entities[0].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
+                        }
+                    }
+
+                }
+                else if (level == Crash1_Levels.L16_HeavyMachinery)
+                {
+                    if (zone.EName == "i5_6Z")
+                    {
+                        EntityPosition[] PlatPath = new EntityPosition[zone.Entities[3].Positions.Count];
+                        zone.Entities[3].Positions.CopyTo(PlatPath, 0);
+                        zone.Entities[3].Positions.Clear();
+                        for (int a = 0; a < PlatPath.Length; a++)
+                        {
+                            zone.Entities[3].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
+                        }
+                        PlatPath = new EntityPosition[zone.Entities[4].Positions.Count];
+                        zone.Entities[4].Positions.CopyTo(PlatPath, 0);
+                        zone.Entities[4].Positions.Clear();
+                        for (int a = 0; a < PlatPath.Length; a++)
+                        {
+                            zone.Entities[4].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
+                        }
+
+                    }
+                    else if (zone.EName == "i3_6Z")
+                    {
+                        EntityPosition[] PlatPath = new EntityPosition[zone.Entities[5].Positions.Count];
+                        zone.Entities[5].Positions.CopyTo(PlatPath, 0);
+                        zone.Entities[5].Positions.Clear();
+                        for (int a = 0; a < PlatPath.Length; a++)
+                        {
+                            zone.Entities[5].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
+                        }
+                    }
+                    else if (zone.EName == "i2_6Z")
+                    {
+                        EntityPosition[] PlatPath = new EntityPosition[zone.Entities[0].Positions.Count];
+                        zone.Entities[0].Positions.CopyTo(PlatPath, 0);
+                        zone.Entities[0].Positions.Clear();
+                        for (int a = 0; a < PlatPath.Length; a++)
+                        {
+                            zone.Entities[0].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
+                        }
+                        PlatPath = new EntityPosition[zone.Entities[1].Positions.Count];
+                        zone.Entities[1].Positions.CopyTo(PlatPath, 0);
+                        zone.Entities[1].Positions.Clear();
+                        for (int a = 0; a < PlatPath.Length; a++)
+                        {
+                            zone.Entities[1].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
+                        }
+                    }
+                    else if (zone.EName == "h7_6Z")
+                    {
+                        EntityPosition[] PlatPath = new EntityPosition[zone.Entities[2].Positions.Count];
+                        zone.Entities[2].Positions.CopyTo(PlatPath, 0);
+                        zone.Entities[2].Positions.Clear();
+                        for (int a = 0; a < PlatPath.Length; a++)
+                        {
+                            zone.Entities[2].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
+                        }
+                    }
+                    else if (zone.EName == "h2_6Z")
+                    {
+                        EntityPosition[] PlatPath = new EntityPosition[zone.Entities[0].Positions.Count];
+                        zone.Entities[0].Positions.CopyTo(PlatPath, 0);
+                        zone.Entities[0].Positions.Clear();
+                        for (int a = 0; a < PlatPath.Length; a++)
+                        {
+                            zone.Entities[0].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
+                        }
+                    }
+                    else if (zone.EName == "g9_6Z")
+                    {
+                        EntityPosition[] PlatPath = new EntityPosition[zone.Entities[0].Positions.Count];
+                        zone.Entities[0].Positions.CopyTo(PlatPath, 0);
+                        zone.Entities[0].Positions.Clear();
+                        for (int a = 0; a < PlatPath.Length; a++)
+                        {
+                            zone.Entities[0].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
+                        }
+                    }
+                    else if (zone.EName == "g1_6Z")
+                    {
+                        EntityPosition[] PlatPath = new EntityPosition[zone.Entities[3].Positions.Count];
+                        zone.Entities[3].Positions.CopyTo(PlatPath, 0);
+                        zone.Entities[3].Positions.Clear();
+                        for (int a = 0; a < PlatPath.Length; a++)
+                        {
+                            zone.Entities[3].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
+                        }
+                    }
+
+                }
+                else if (level == Crash1_Levels.L18_GeneratorRoom)
+                {
+                    if (zone.EName == "c2_5Z")
+                    {
+                        EntityPosition[] PlatPath = new EntityPosition[zone.Entities[1].Positions.Count];
+                        zone.Entities[1].Positions.CopyTo(PlatPath, 0);
+                        zone.Entities[1].Positions.Clear();
+                        for (int a = 0; a < PlatPath.Length; a++)
+                        {
+                            zone.Entities[1].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
+                        }
+
+                    }
+                    else if (zone.EName == "b4_5Z")
+                    {
+                        EntityPosition[] PlatPath = new EntityPosition[zone.Entities[0].Positions.Count];
+                        zone.Entities[0].Positions.CopyTo(PlatPath, 0);
+                        zone.Entities[0].Positions.Clear();
+                        for (int a = 0; a < PlatPath.Length; a++)
+                        {
+                            zone.Entities[0].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
+                        }
+                        PlatPath = new EntityPosition[zone.Entities[1].Positions.Count];
+                        zone.Entities[1].Positions.CopyTo(PlatPath, 0);
+                        zone.Entities[1].Positions.Clear();
+                        for (int a = 0; a < PlatPath.Length; a++)
+                        {
+                            zone.Entities[1].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
+                        }
+                    }
+                    else if (zone.EName == "b5_5Z")
+                    {
+                        EntityPosition[] PlatPath = new EntityPosition[zone.Entities[1].Positions.Count];
+                        zone.Entities[1].Positions.CopyTo(PlatPath, 0);
+                        zone.Entities[1].Positions.Clear();
+                        for (int a = 0; a < PlatPath.Length; a++)
+                        {
+                            zone.Entities[1].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
+                        }
+                    }
+                    else if (zone.EName == "c0_5Z")
+                    {
+                        EntityPosition[] PlatPath = new EntityPosition[zone.Entities[0].Positions.Count];
+                        zone.Entities[0].Positions.CopyTo(PlatPath, 0);
+                        zone.Entities[0].Positions.Clear();
+                        for (int a = 0; a < PlatPath.Length; a++)
+                        {
+                            zone.Entities[0].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
+                        }
+                        PlatPath = new EntityPosition[zone.Entities[1].Positions.Count];
+                        zone.Entities[1].Positions.CopyTo(PlatPath, 0);
+                        zone.Entities[1].Positions.Clear();
+                        for (int a = 0; a < PlatPath.Length; a++)
+                        {
+                            zone.Entities[1].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
+                        }
+                    }
+                    else if (zone.EName == "b3_5Z")
+                    {
+                        int crutchID = 299;
+                        EntityPosition[] crate_pos = new EntityPosition[]
+                        {
+                                new EntityPosition(527, 1095, 505),
+                        };
+                        for (int id = 0; id < crate_pos.Length; id++)
+                        {
+                            int entID = id + crutchID;
+                            CreateEntity((short)entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, zone);
+                        }
+                    }
+                    else if (zone.EName == "a9_5Z")
+                    {
+                        int crutchID = 300;
+                        EntityPosition[] crate_pos = new EntityPosition[]
+                        {
+                                new EntityPosition(854, 545, 360),
+                                new EntityPosition(1504, 705, 360),
+                        };
+                        for (int id = 0; id < crate_pos.Length; id++)
+                        {
+                            int entID = id + crutchID;
+                            CreateEntity((short)entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, zone);
+                        }
+                    }
+                    else if (zone.EName == "a8_5Z")
+                    {
+                        int crutchID = 302;
+                        EntityPosition[] crate_pos = new EntityPosition[]
+                        {
+                                new EntityPosition(570, 905, 360),
+                        };
+                        for (int id = 0; id < crate_pos.Length; id++)
+                        {
+                            int entID = id + crutchID;
+                            CreateEntity((short)entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, zone);
+                        }
+                    }
+
+                }
+                else if (level == Crash1_Levels.L24_JawsOfDarkness)
+                {
+                    if (zone.EName == "d9_tZ")
+                    {
+                        int crutchID = 298;
+                        EntityPosition[] crate_pos = new EntityPosition[]
+                        {
+                                new EntityPosition(400, 700, 450),
+                                new EntityPosition(200, 820, 450),
+                        };
+                        for (int id = 0; id < crate_pos.Length; id++)
+                        {
+                            int entID = id + crutchID;
+                            CreateEntity((short)entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, zone);
+                        }
+                    }
+                    else if (zone.EName == "c9_tZ")
+                    {
+                        EntityPosition[] PlatPath = new EntityPosition[zone.Entities[0].Positions.Count];
+                        zone.Entities[0].Positions.CopyTo(PlatPath, 0);
+                        zone.Entities[0].Positions.Clear();
+                        for (int a = 0; a < PlatPath.Length; a++)
+                        {
+                            zone.Entities[0].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
+                        }
+                    }
+                    else if (zone.EName == "b3_tZ")
+                    {
+                        EntityPosition[] PlatPath = new EntityPosition[zone.Entities[0].Positions.Count];
+                        zone.Entities[0].Positions.CopyTo(PlatPath, 0);
+                        zone.Entities[0].Positions.Clear();
+                        for (int a = 0; a < PlatPath.Length; a++)
+                        {
+                            zone.Entities[0].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
+                        }
+                    }
+                    else if (zone.EName == "b4_tZ")
+                    {
+                        EntityPosition[] PlatPath = new EntityPosition[zone.Entities[0].Positions.Count];
+                        zone.Entities[0].Positions.CopyTo(PlatPath, 0);
+                        zone.Entities[0].Positions.Clear();
+                        for (int a = 0; a < PlatPath.Length; a++)
+                        {
+                            zone.Entities[0].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
+                        }
+                    }
+                    else if (zone.EName == "b9_tZ")
+                    {
+                        int crutchID = 300;
+                        EntityPosition[] crate_pos = new EntityPosition[]
+                        {
+                                new EntityPosition(850, 800, 1040),
+                                new EntityPosition(1050, 900, 1040),
+                        };
+                        for (int id = 0; id < crate_pos.Length; id++)
+                        {
+                            int entID = id + crutchID;
+                            CreateEntity((short)entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, zone);
+                        }
+                    }
+                    else if (zone.EName == "s0_tZ")
+                    {
+                        EntityPosition[] PlatPath = new EntityPosition[zone.Entities[0].Positions.Count];
+                        zone.Entities[0].Positions.CopyTo(PlatPath, 0);
+                        zone.Entities[0].Positions.Clear();
+                        for (int a = 0; a < PlatPath.Length; a++)
+                        {
+                            zone.Entities[0].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
+                        }
+                    }
+
+                }
+                else if (level == Crash1_Levels.L25_CastleMachinery)
+                {
+                    if (zone.EName == "e1_TZ")
+                    {
+                        EntityPosition[] PlatPath = new EntityPosition[zone.Entities[0].Positions.Count];
+                        zone.Entities[0].Positions.CopyTo(PlatPath, 0);
+                        zone.Entities[0].Positions.Clear();
+                        for (int a = 0; a < PlatPath.Length; a++)
+                        {
+                            zone.Entities[0].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
+                        }
+                    }
+                    else if (zone.EName == "e0_TZ")
+                    {
+                        EntityPosition[] PlatPath = new EntityPosition[zone.Entities[1].Positions.Count];
+                        zone.Entities[1].Positions.CopyTo(PlatPath, 0);
+                        zone.Entities[1].Positions.Clear();
+                        for (int a = 0; a < PlatPath.Length; a++)
+                        {
+                            zone.Entities[1].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
+                        }
+                    }
+                    else if (zone.EName == "d7_TZ")
+                    {
+                        EntityPosition[] PlatPath = new EntityPosition[zone.Entities[3].Positions.Count];
+                        zone.Entities[3].Positions.CopyTo(PlatPath, 0);
+                        zone.Entities[3].Positions.Clear();
+                        for (int a = 0; a < PlatPath.Length; a++)
+                        {
+                            zone.Entities[3].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
+                        }
+                    }
+                    else if (zone.EName == "d6_TZ")
+                    {
+                        EntityPosition[] PlatPath = new EntityPosition[zone.Entities[2].Positions.Count];
+                        zone.Entities[2].Positions.CopyTo(PlatPath, 0);
+                        zone.Entities[2].Positions.Clear();
+                        for (int a = 0; a < PlatPath.Length; a++)
+                        {
+                            zone.Entities[2].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
+                        }
+                    }
+                    else if (zone.EName == "c0_TZ")
+                    {
+                        EntityPosition[] PlatPath = new EntityPosition[zone.Entities[0].Positions.Count];
+                        zone.Entities[0].Positions.CopyTo(PlatPath, 0);
+                        zone.Entities[0].Positions.Clear();
+                        for (int a = 0; a < PlatPath.Length; a++)
+                        {
+                            zone.Entities[0].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
+                        }
+                    }
+                    else if (zone.EName == "b2_TZ")
+                    {
+                        EntityPosition[] PlatPath = new EntityPosition[zone.Entities[0].Positions.Count];
+                        zone.Entities[0].Positions.CopyTo(PlatPath, 0);
+                        zone.Entities[0].Positions.Clear();
+                        for (int a = 0; a < PlatPath.Length; a++)
+                        {
+                            zone.Entities[0].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
+                        }
+                    }
+                    else if (zone.EName == "c8_TZ")
+                    {
+                        zone.Entities[0].Positions.Clear();
+                        //zone.Entities[0].Positions.Add(new EntityPosition(1168, 373, 190));
+                        zone.Entities[0].Positions.Add(new EntityPosition(1068, 223, 190));
+                    }
+                    else if (zone.EName == "d3_TZ")
+                    {
+                        int crutchID = 250;
+                        EntityPosition[] crate_pos = new EntityPosition[]
+                        {
+                                new EntityPosition(850, 500, 180),
+                        };
+                        for (int id = 0; id < crate_pos.Length; id++)
+                        {
+                            int entID = id + crutchID;
+                            CreateEntity((short)entID, 14, 0, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, zone);
+                        }
+
+                        OldCameraNeighbor CamSet2 = new OldCameraNeighbor(1, 1, 3, 2);
+
+                        zone.Cameras[0].NeighborCount++;
+                        zone.Cameras[0].Neighbors[1] = CamSet2;
+                    }
+                    else if (zone.EName == "d2_TZ")
+                    {
+                        int crutchID = 252;
+                        EntityPosition[] crate_pos = new EntityPosition[]
+                        {
+                                new EntityPosition(500, 110, 180),
+                        };
+                        for (int id = 0; id < crate_pos.Length; id++)
+                        {
+                            int entID = id + crutchID;
+                            CreateEntity((short)entID, 14, 0, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, zone);
+                        }
+                    }
+                    else if (zone.EName == "c6_TZ")
+                    {
+                        int crutchID = 255;
+                        EntityPosition[] crate_pos = new EntityPosition[]
+                        {
+                                new EntityPosition(170, 80, 180),
+                                new EntityPosition(270, 1580, 180),
+                        };
+                        for (int id = 0; id < crate_pos.Length; id++)
+                        {
+                            int entID = id + crutchID;
+                            CreateEntity((short)entID, 14, 0, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, zone);
+                        }
+
+                        OldCameraNeighbor CamSet2 = new OldCameraNeighbor(1, 1, 1, 2);
+
+                        zone.Cameras[0].NeighborCount++;
+                        zone.Cameras[0].Neighbors[1] = CamSet2;
+                    }
+                    else if (zone.EName == "b6_TZ")
+                    {
+                        int crutchID = 260;
+                        EntityPosition[] crate_pos = new EntityPosition[]
+                        {
+                                new EntityPosition(400, 1220, 150),
+                                new EntityPosition(900, 720, 150),
+                                new EntityPosition(480, 220, 150),
+                        };
+                        for (int id = 0; id < crate_pos.Length; id++)
+                        {
+                            int entID = id + crutchID;
+                            CreateEntity((short)entID, 14, 0, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, zone);
+                        }
+
+                        OldCameraNeighbor CamSet2 = new OldCameraNeighbor(1, 1, 3, 2);
+
+                        zone.Cameras[0].NeighborCount++;
+                        zone.Cameras[0].Neighbors[1] = CamSet2;
+                    }
+                    else if (zone.EName == "b5_TZ")
+                    {
+                        int crutchID = 265;
+                        EntityPosition[] crate_pos = new EntityPosition[]
+                        {
+                                new EntityPosition(1100, 390, 150),
+                        };
+                        for (int id = 0; id < crate_pos.Length; id++)
+                        {
+                            int entID = id + crutchID;
+                            CreateEntity((short)entID, 14, 0, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, zone);
+                        }
+                    }
+                    else if (zone.EName == "b4_TZ")
+                    {
+                        int crutchID = 267;
+                        EntityPosition[] crate_pos = new EntityPosition[]
+                        {
+                                new EntityPosition(720, 280, 180),
+                        };
+                        for (int id = 0; id < crate_pos.Length; id++)
+                        {
+                            int entID = id + crutchID;
+                            CreateEntity((short)entID, 14, 0, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, zone);
+                        }
+                    }
+                    else if (zone.EName == "b3_TZ")
+                    {
+                        int crutchID = 269;
+                        EntityPosition[] crate_pos = new EntityPosition[]
+                        {
+                                new EntityPosition(1000, 250, 180),
+                        };
+                        for (int id = 0; id < crate_pos.Length; id++)
+                        {
+                            int entID = id + crutchID;
+                            CreateEntity((short)entID, 14, 0, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, zone);
+                        }
+                    }
+                    else if (zone.EName == "a5_TZ")
+                    {
+                        int crutchID = 275;
+                        EntityPosition[] crate_pos = new EntityPosition[]
+                        {
+                                new EntityPosition(270, 200, 200),
+                                new EntityPosition(470, 1100, 200),
+                                new EntityPosition(670, 1600, 200),
+                        };
+                        for (int id = 0; id < crate_pos.Length; id++)
+                        {
+                            int entID = id + crutchID;
+                            CreateEntity((short)entID, 14, 0, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, zone);
+                        }
+
+                        OldCameraNeighbor CamSet2 = new OldCameraNeighbor(1, 1, 0, 2);
+
+                        zone.Cameras[0].NeighborCount++;
+                        zone.Cameras[0].Neighbors[1] = CamSet2;
+                    }
+                    else if (zone.EName == "a4_TZ")
+                    {
+
+                        int crutchID = 280;
+                        EntityPosition[] crate_pos = new EntityPosition[]
+                        {
+                                new EntityPosition(470, 1100, 200),
+                                new EntityPosition(270, 1600, 200),
+                        };
+                        for (int id = 0; id < crate_pos.Length; id++)
+                        {
+                            int entID = id + crutchID;
+                            CreateEntity((short)entID, 14, 0, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, zone);
+                        }
+
+                        OldCameraNeighbor CamSet2 = new OldCameraNeighbor(1, 1, 0, 2);
+
+                        zone.Cameras[0].NeighborCount++;
+                        zone.Cameras[0].Neighbors[1] = CamSet2;
+                    }
+                    else if (zone.EName == "a3_TZ")
+                    {
+
+                        int crutchID = 285;
+                        EntityPosition[] crate_pos = new EntityPosition[]
+                        {
+                                new EntityPosition(470, 1100, 200),
+                                new EntityPosition(670, 1600, 200),
+                        };
+                        for (int id = 0; id < crate_pos.Length; id++)
+                        {
+                            int entID = id + crutchID;
+                            CreateEntity((short)entID, 14, 0, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, zone);
+                        }
+
+                        OldCameraNeighbor CamSet2 = new OldCameraNeighbor(1, 1, 0, 2);
+
+                        zone.Cameras[0].NeighborCount++;
+                        zone.Cameras[0].Neighbors[1] = CamSet2;
+                    }
+                    else if (zone.EName == "a2_TZ")
+                    {
+                        int crutchID = 290;
+                        EntityPosition[] crate_pos = new EntityPosition[]
+                        {
+                                new EntityPosition(470, 1100, 200),
+                                new EntityPosition(270, 1600, 200),
+                                new EntityPosition(270, 2000, 200),
+                                new EntityPosition(270, 2500, 200),
+                        };
+                        for (int id = 0; id < crate_pos.Length; id++)
+                        {
+                            int entID = id + crutchID;
+                            CreateEntity((short)entID, 14, 0, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, zone);
+                        }
+
+                        OldCameraNeighbor CamSet2 = new OldCameraNeighbor(1, 1, 0, 2);
+
+                        zone.Cameras[0].NeighborCount++;
+                        zone.Cameras[0].Neighbors[1] = CamSet2;
+                    }
+                    else if (zone.EName == "a1_TZ")
+                    {
+                        int crutchID = 295;
+                        EntityPosition[] crate_pos = new EntityPosition[]
+                        {
+                                new EntityPosition(770, -110, 200),
+                                new EntityPosition(970, -110, 200),
+                                new EntityPosition(1170, -110, 200),
+                                new EntityPosition(770, -210, 200),
+                                new EntityPosition(770, 500, 200),
+                        };
+                        for (int id = 0; id < crate_pos.Length; id++)
+                        {
+                            int entID = id + crutchID;
+                            CreateEntity((short)entID, 14, 0, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, zone);
+                        }
+                    }
+                }
+                else if (level == Crash1_Levels.L21_SlipperyClimb)
+                {
+                    if (zone.EName == "g3_KZ")
+                    {
+                        EntityPosition[] PlatPath = new EntityPosition[zone.Entities[0].Positions.Count];
+                        zone.Entities[0].Positions.CopyTo(PlatPath, 0);
+                        zone.Entities[0].Positions.Clear();
+                        for (int a = 0; a < PlatPath.Length; a++)
+                        {
+                            zone.Entities[0].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
+                        }
+                    }
+                }
+                else if (level == Crash1_Levels.L13_BoulderDash)
+                {
+                    if (zone.EName == "0d_jZ")
+                    {
+                        int crutchID = 298;
+                        EntityPosition[] crate_pos = new EntityPosition[]
+                        {
+                                new EntityPosition(500, 520, 800),
+                                new EntityPosition(500, 520, 910),
+                                new EntityPosition(600, 520, 800),
+                                new EntityPosition(600, 520, 910),
+                        };
+                        for (int id = 0; id < crate_pos.Length; id++)
+                        {
+                            int entID = id + crutchID;
+                            CreateEntity((short)entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, zone);
+                        }
+                    }
+                    else if (zone.EName == "0u_jZ")
+                    {
+                        int crutchID = 302;
+                        EntityPosition[] crate_pos = new EntityPosition[]
+                        {
+                                new EntityPosition(450, 620, 950),
+                        };
+                        for (int id = 0; id < crate_pos.Length; id++)
+                        {
+                            int entID = id + crutchID;
+                            CreateEntity((short)entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, zone);
+                        }
+                    }
+                    else if (zone.EName == "0B_jZ")
+                    {
+                        int crutchID = 295;
+                        EntityPosition[] crate_pos = new EntityPosition[]
+                        {
+                                new EntityPosition(300, 1100, -800),
+                        };
+                        for (int id = 0; id < crate_pos.Length; id++)
+                        {
+                            int entID = id + crutchID;
+                            CreateEntity((short)entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, zone);
+                        }
+                    }
+                    else if (zone.EName == "0a_jZ")
+                    {
+                        OldEntity gem = zone.Entities[0];
+
+                        for (int a = 0; a < gem.Positions.Count; a++)
+                        {
+                            gem.Positions[a] = new EntityPosition((short)(gem.Positions[a].X - 50), gem.Positions[a].Y, (short)(gem.Positions[a].Z - 150)); // buggy platform >_<
+                        }
+
+                        CreateEntityGemPlatform(297, 5, 0, 0, 0, zone);
+
+                        int pos = zone.Entities.Count - 1;
+                        EntityPosition[] PlatPath = new EntityPosition[gem.Positions.Count];
+                        gem.Positions.CopyTo(PlatPath, 0);
+                        zone.Entities[pos].Positions.Clear();
+                        for (int a = 0; a < PlatPath.Length; a++)
+                        {
+                            zone.Entities[pos].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
+                        }
+
+                        //zone.Cameras[0].Neighbors[1] = new OldCameraNeighbor(1, 2, 0, 1); // orig - 1 2 0 5
+                    }
+                    else if (zone.EName == "0b_jZ")
+                    {
+                        zone.Cameras[1].NeighborCount = 2;
+                        zone.Cameras[1].Neighbors[0] = new OldCameraNeighbor(1, 0, 0, 2);
+                        zone.Cameras[1].Neighbors[1] = new OldCameraNeighbor(2, 2, 0, 5); 
+                    }
+                    else if (zone.EName == "1b_jZ")
+                    {
+                        zone.Cameras[0].NeighborCount = 2;
+                        zone.Cameras[0].Neighbors[0] = new OldCameraNeighbor(1, 2, 1, 2);
+                        zone.Cameras[0].Neighbors[1] = new OldCameraNeighbor(2, 0, 3, 1);
+                    }
+                }
+                else if (level == Crash1_Levels.L22_LightsOut)
+                {
+                    if (zone.EName == "d5_EZ")
+                    {
+                        int crutchID = 300;
+                        EntityPosition[] crate_pos = new EntityPosition[]
+                        {
+                                new EntityPosition(475, 500, 950),
+                        };
+                        for (int id = 0; id < crate_pos.Length; id++)
+                        {
+                            int entID = id + crutchID;
+                            CreateEntityMask((short)entID, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, zone);
+                        }
+                    }
+                    else if (zone.EName == "C8_EZ")
+                    {
+                        int crutchID = 299;
+                        EntityPosition[] crate_pos = new EntityPosition[]
+                        {
+                                new EntityPosition(524, -1100, 400),
+                        };
+                        for (int id = 0; id < crate_pos.Length; id++)
+                        {
+                            int entID = id + crutchID;
+                            CreateEntityMask((short)entID, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, zone);
+                        }
+                        OldEntity gem = zone.Entities[0];
+                        CreateEntityGemPlatform(298, 5, 0, 0, 0, zone);
+
+                        int pos = zone.Entities.Count - 1;
+                        EntityPosition[] PlatPath = new EntityPosition[gem.Positions.Count];
+                        gem.Positions.CopyTo(PlatPath, 0);
+                        zone.Entities[pos].Positions.Clear();
+                        for (int a = 0; a < PlatPath.Length; a++)
+                        {
+                            zone.Entities[pos].Positions.Add(PlatPath[(PlatPath.Length - 1) - a]);
+                        }
+
+                        // move THE ENTIRE ZONE because the transition doesn't work otherwise
+
+                        int xoffset = BitConv.FromInt32(zone.Layout, 0);
+                        int yoffset = BitConv.FromInt32(zone.Layout, 4);
+                        int zoffset = BitConv.FromInt32(zone.Layout, 8);
+                        int x2 = BitConv.FromInt32(zone.Layout, 12);
+                        int y2 = BitConv.FromInt32(zone.Layout, 16);
+                        int z2 = BitConv.FromInt32(zone.Layout, 20);
+                        int xmax = (ushort)BitConv.FromInt16(zone.Layout, 0x1E);
+                        int ymax = (ushort)BitConv.FromInt16(zone.Layout, 0x20);
+                        int zmax = (ushort)BitConv.FromInt16(zone.Layout, 0x22);
+
+                        short CamOffset = 2600;
+                        short EntOffset = 700; //800
+                        double ScaleMod = 1.6;
+
+                        short offset = 0x20;
+                        int value = (short)(ymax * ScaleMod);
+                        zone.Layout[offset] = (byte)value;
+                        zone.Layout[offset + 1] = (byte)(value >> 8);
+
+                        offset = 4;
+                        value = yoffset - CamOffset;
+                        zone.Layout[offset] = (byte)value;
+                        zone.Layout[offset + 1] = (byte)(value >> 8);
+
+                        offset = 16;
+                        value = (short)(y2 * ScaleMod);
+                        zone.Layout[offset] = (byte)value;
+                        zone.Layout[offset + 1] = (byte)(value >> 8);
+                        zone.Layout[offset + 2] = (byte)(value >> 8 * 2);
+                        zone.Layout[offset + 3] = (byte)(value >> 8 * 3);
+
+                                    
+                        for (int i = 0; i < zone.Entities.Count; i++)
+                        {
+                            for (int a = 0; a < zone.Entities[i].Positions.Count; a++)
+                            {
+                                zone.Entities[i].Positions[a] = new EntityPosition(zone.Entities[i].Positions[a].X, (short)(zone.Entities[i].Positions[a].Y + EntOffset), zone.Entities[i].Positions[a].Z);
+                            }
+                        }
+                                    
+                        for (int i = 0; i < zone.Cameras[0].Positions.Count; i++)
+                        {
+                            zone.Cameras[0].Positions[i] = new OldCameraPosition(zone.Cameras[0].Positions[i].X, (short)(zone.Cameras[0].Positions[i].Y + CamOffset), zone.Cameras[0].Positions[i].Z, zone.Cameras[0].Positions[i].XRot, zone.Cameras[0].Positions[i].YRot, zone.Cameras[0].Positions[i].ZRot);
+                        }
+                                    
+
+                    }
+                }
+                else if (level == Crash1_Levels.L23_FumblingInTheDark)
+                {
+                    if (zone.EName == "e0_GZ")
+                    {
+                        int crutchID = 300;
+                        EntityPosition[] crate_pos = new EntityPosition[]
+                        {
+                                new EntityPosition(475, 500, 650),
+                        };
+                        for (int id = 0; id < crate_pos.Length; id++)
+                        {
+                            int entID = id + crutchID;
+                            CreateEntityMask((short)entID, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, zone);
+                        }
+                    }
+                }
+                else if (level == Crash1_Levels.L15_SunsetVista)
+                {
+                    if (zone.EName == "n3_zZ")
+                    {
+                        // move THE ENTIRE ZONE because the transition doesn't work otherwise
+
+                        int xoffset = BitConv.FromInt32(zone.Layout, 0);
+                        int yoffset = BitConv.FromInt32(zone.Layout, 4);
+                        int zoffset = BitConv.FromInt32(zone.Layout, 8);
+                        int x2 = BitConv.FromInt32(zone.Layout, 12);
+                        int y2 = BitConv.FromInt32(zone.Layout, 16);
+                        int z2 = BitConv.FromInt32(zone.Layout, 20);
+                        int xmax = (ushort)BitConv.FromInt16(zone.Layout, 0x1E);
+                        int ymax = (ushort)BitConv.FromInt16(zone.Layout, 0x20);
+                        int zmax = (ushort)BitConv.FromInt16(zone.Layout, 0x22);
+
+                        short CamOffset = 2000;
+                        short EntOffset = 505;
+                        double ScaleMod = 1.25;
+
+                        short offset = 0x20;
+                        int value = (short)(ymax * ScaleMod);
+                        zone.Layout[offset] = (byte)value;
+                        zone.Layout[offset + 1] = (byte)(value >> 8);
+
+                        offset = 4;
+                        value = yoffset - CamOffset;
+                        zone.Layout[offset] = (byte)value;
+                        zone.Layout[offset + 1] = (byte)(value >> 8);
+
+                        offset = 16;
+                        value = (short)(y2 * ScaleMod);
+                        zone.Layout[offset] = (byte)value;
+                        zone.Layout[offset + 1] = (byte)(value >> 8);
+                        zone.Layout[offset + 2] = (byte)(value >> 8 * 2);
+                        zone.Layout[offset + 3] = (byte)(value >> 8 * 3);
+
+                        for (int i = 0; i < zone.Entities.Count; i++)
+                        {
+                            zone.Entities[i].Positions[0] = new EntityPosition(zone.Entities[i].Positions[0].X, (short)(zone.Entities[i].Positions[0].Y + EntOffset), zone.Entities[i].Positions[0].Z);
+                        }
+                        for (int i = 0; i < zone.Cameras[0].Positions.Count; i++)
+                        {
+                            zone.Cameras[0].Positions[i] = new OldCameraPosition(zone.Cameras[0].Positions[i].X, (short)(zone.Cameras[0].Positions[i].Y + CamOffset), zone.Cameras[0].Positions[i].Z, zone.Cameras[0].Positions[i].XRot, zone.Cameras[0].Positions[i].YRot, zone.Cameras[0].Positions[i].ZRot);
+                        }
+
+                    }
+                    else if (zone.EName == "h3_zZ")
+                    {
+                        int crutchID = 300;
+                        EntityPosition[] crate_pos = new EntityPosition[]
+                        {
+                                new EntityPosition(800, 450, 900),
+                        };
+                        for (int id = 0; id < crate_pos.Length; id++)
+                        {
+                            int entID = id + crutchID;
+                            CreateEntity((short)entID, 34, 5, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, zone);
+                        }
+                    }
+
+                }
+
             }
 
             if (level == Crash1_Levels.L27_GreatHall)
             {
                 // a'ight imma head out
+                // re: lol
                 return;
             }
 
@@ -1588,8 +1494,8 @@ namespace CrateModLoader.GameSpecific.Crash1
             }
             else if (level == Crash1_Levels.L17_CortexPower || level == Crash1_Levels.L01_NSanityBeach)
             {
-                CrashEntity.Flags = 203416;
-                CrashEntity.ModeB = 0;
+                //CrashEntity.Flags = 203416;
+                CrashEntity.VecY = 0;
             }
 
             CrashEntity.Positions.Add(WarpOutPos);
@@ -1601,47 +1507,35 @@ namespace CrateModLoader.GameSpecific.Crash1
 
             nsd.StartZone = WarpOutZone.EID;
 
-            foreach (Chunk chunk in nsf.Chunks)
+            foreach (OldZoneEntry zone in nsf.GetEntries<OldZoneEntry>())
             {
-                if (chunk is NormalChunk zonechunk)
+                if (zone.EName == CrashZone.EName && level != Crash1_Levels.L12_RoadToNowhere)
                 {
-                    foreach (Entry entry in zonechunk.Entries)
-                    {
-                        if (entry is OldZoneEntry zone)
-                        {
-                            if (zone.EName == CrashZone.EName && level != Crash1_Levels.L12_RoadToNowhere)
-                            {
-                                zone.Entities.Add(WarpOutEntity);
-                                zone.EntityCount++;
-                            }
-                            else if (zone.EName == WarpOutZone.EName)
-                            {
-                                zone.Entities.Add(CrashEntity);
-                                zone.EntityCount++;
-                            }
-                            if (level == Crash1_Levels.L17_CortexPower && zone.EName == "c0_3Z")
-                            {
-                                nsd.StartZone = zone.EID;
-                            }
-                            if (level == Crash1_Levels.L21_SlipperyClimb && zone.EName == "i3_KZ")
-                            {
-                                nsd.StartZone = zone.EID;
-                            }
-                            if (level == Crash1_Levels.L19_ToxicWaste && zone.EName == "c6_7Z")
-                            {
-                                nsd.StartZone = zone.EID;
-                            }
-                            if (level == Crash1_Levels.L22_LightsOut && zone.EName == "d4_EZ")
-                            {
-                                nsd.StartZone = zone.EID;
-                            }
-                            if (level == Crash1_Levels.L12_RoadToNowhere && zone.EName == "a2_kZ")
-                            {
-                                zone.Entities.Add(WarpOutEntity);
-                                zone.EntityCount++;
-                            }
-                        }
-                    }
+                    zone.Entities.Add(WarpOutEntity);
+                }
+                else if (zone.EName == WarpOutZone.EName)
+                {
+                    zone.Entities.Add(CrashEntity);
+                }
+                if (level == Crash1_Levels.L17_CortexPower && zone.EName == "c0_3Z")
+                {
+                    nsd.StartZone = zone.EID;
+                }
+                if (level == Crash1_Levels.L21_SlipperyClimb && zone.EName == "i3_KZ")
+                {
+                    nsd.StartZone = zone.EID;
+                }
+                if (level == Crash1_Levels.L19_ToxicWaste && zone.EName == "c6_7Z")
+                {
+                    nsd.StartZone = zone.EID;
+                }
+                if (level == Crash1_Levels.L22_LightsOut && zone.EName == "d4_EZ")
+                {
+                    nsd.StartZone = zone.EID;
+                }
+                if (level == Crash1_Levels.L12_RoadToNowhere && zone.EName == "a2_kZ")
+                {
+                    zone.Entities.Add(WarpOutEntity);
                 }
             }
 
@@ -1658,6 +1552,7 @@ namespace CrateModLoader.GameSpecific.Crash1
             }
 
             Cache_Entry = new List<Entry>();
+            Cache_Standard_WillC = nsf.FindEID<GOOLEntry>(Entry.ENameToEID("WillC"));
 
             foreach (Chunk chunk in nsf.Chunks)
             {
@@ -1665,14 +1560,7 @@ namespace CrateModLoader.GameSpecific.Crash1
                 {
                     foreach (Entry entry in zonechunk.Entries)
                     {
-                        if (entry is GOOLEntry gool)
-                        {
-                            if (gool.EName == "WillC")
-                            {
-                                Cache_Standard_WillC = entry;
-                            }
-                        }
-                        else if (entry is OldAnimationEntry anim)
+                        if (entry is OldAnimationEntry anim)
                         {
                             if (anim.EName.StartsWith("Wi") || anim.EName.StartsWith("WW") || anim.EName.StartsWith("WD"))
                             {
@@ -1704,205 +1592,151 @@ namespace CrateModLoader.GameSpecific.Crash1
             OldZoneEntry WarpOutZone = null;
             int SpawnEID = 0;
             Mod_CameraFOV(nsf, new Random(), false);
-            /*
-            List<bool> CacheChecks = new List<bool>();
-            for (int i = 0; i < Cache_Entry.Count; i++)
-            {
-                CacheChecks.Add(false);
-            }
-            */
 
-            foreach (Chunk chunk in nsf.Chunks)
+            foreach (OldZoneEntry zone in nsf.GetEntries<OldZoneEntry>())
             {
-                if (chunk is NormalChunk zonechunk)
+                foreach (OldCamera cam in zone.Cameras)
                 {
-                    for (int e = 0; e < zonechunk.Entries.Count; e++)
+                    short newFOV = (short)Math.Floor(cam.Zoom * 2d); // 1.5
+                    cam.Zoom = newFOV;
+                }
+
+                for (int i = 0; i < zone.Entities.Count; i++)
+                {
+                    if (CrashEntity == null && zone.Entities[i].Type == 0 && zone.Entities[i].Subtype == 0)
                     {
+                        EntityPosition[] BoarPath = new EntityPosition[zone.Entities[i].Positions.Count];
+                        //BoarPath[0] = zone.Entities[i].Positions[0];
+                        zone.Entities[i].Positions.CopyTo(BoarPath, 0);
+                        zone.Entities[i].Positions.Clear();
+                        //zone.Entities[i].Positions.Add(new EntityPosition(550, 1054, -200));
+                        //zone.Entities[i].Positions.Add(BoarPath[0]);
+                        //zone.Entities[i].Positions[0] = new EntityPosition((short)(BoarPath[0].X + 50), (short)(BoarPath[0].Y + 50), (short)(BoarPath[0].Z + 50));
+
                         /*
-                        if (zonechunk.Entries[e] is GOOLEntry gool)
+                        if (isReverse)
                         {
-                            if (gool.EName == "WillC")
-                            {
-                                zonechunk.Entries[e] = Cache_Standard_WillC;
-                            }
+                            zone.Entities[i].Positions.Add(new EntityPosition(550, 1014, -200));
                         }
-                        if (zonechunk.Entries[e] is OldAnimationEntry anim)
+                        else
                         {
-                            for (int i = 0; i < Cache_Entry.Count; i++)
-                            {
-                                if (anim.EName == Cache_Entry[i].EName)
-                                {
-                                    CacheChecks[i] = true;
-                                }
-                            }
-                        }
-                        else if (zonechunk.Entries[e] is OldModelEntry model)
-                        {
-                            for (int i = 0; i < Cache_Entry.Count; i++)
-                            {
-                                if (model.EName == Cache_Entry[i].EName)
-                                {
-                                    CacheChecks[i] = true;
-                                }
-                            }
+                            zone.Entities[i].Positions.Add(new EntityPosition(420, 400, 500));
                         }
                         */
-                        if (zonechunk.Entries[e] is OldZoneEntry zone)
+
+                        CrashEntity = zone.Entities[i];
+                        CrashZone = zone;
+
+                        //EntityPosition tempPos = BoarPath[(BoarPath.Length - 1) - 15];
+                        //zone.Entities[i].Positions.Add(new EntityPosition(tempPos.X,(short)(tempPos.Y + 100),tempPos.Z));
+
+                        bool firstSpawn = true;
+
+                        for (int a = BoarPath.Length - 8; a > -1; a--)
                         {
-                            foreach (OldCamera cam in zone.Cameras)
+                            if (firstSpawn)
                             {
-                                short newFOV = (short)Math.Floor(cam.Zoom * 2d); // 1.5
-                                cam.Zoom = newFOV;
+                                zone.Entities[i].Positions.Add(new EntityPosition(BoarPath[a].X, (short)(BoarPath[a].Y + 3000), BoarPath[a].Z));
+                                firstSpawn = false;
+                                a--;
                             }
-
-                            for (int i = 0; i < zone.Entities.Count; i++)
-                            {
-                                if (zone.Entities.Count > 0 && i < zone.Entities.Count)
-                                {
-                                    if (CrashEntity == null && zone.Entities[i].Type == 0 && zone.Entities[i].Subtype == 0)
-                                    {
-
-                                        EntityPosition[] BoarPath = new EntityPosition[zone.Entities[i].Positions.Count];
-                                        //BoarPath[0] = zone.Entities[i].Positions[0];
-                                        zone.Entities[i].Positions.CopyTo(BoarPath, 0);
-                                        zone.Entities[i].Positions.Clear();
-                                        //zone.Entities[i].Positions.Add(new EntityPosition(550, 1054, -200));
-                                        //zone.Entities[i].Positions.Add(BoarPath[0]);
-                                        //zone.Entities[i].Positions[0] = new EntityPosition((short)(BoarPath[0].X + 50), (short)(BoarPath[0].Y + 50), (short)(BoarPath[0].Z + 50));
-
-                                        /*
-                                        if (isReverse)
-                                        {
-                                            zone.Entities[i].Positions.Add(new EntityPosition(550, 1014, -200));
-                                        }
-                                        else
-                                        {
-                                            zone.Entities[i].Positions.Add(new EntityPosition(420, 400, 500));
-                                        }
-                                        */
-
-                                        CrashEntity = zone.Entities[i];
-                                        CrashZone = zone;
-
-                                        //EntityPosition tempPos = BoarPath[(BoarPath.Length - 1) - 15];
-                                        //zone.Entities[i].Positions.Add(new EntityPosition(tempPos.X,(short)(tempPos.Y + 100),tempPos.Z));
-
-                                        bool firstSpawn = true;
-
-                                        for (int a = BoarPath.Length - 8; a > -1; a--)
-                                        {
-                                            if (firstSpawn)
-                                            {
-                                                zone.Entities[i].Positions.Add(new EntityPosition(BoarPath[a].X, (short)(BoarPath[a].Y + 3000), BoarPath[a].Z));
-                                                firstSpawn = false;
-                                                a--;
-                                            }
-                                            zone.Entities[i].Positions.Add(BoarPath[a]);
-                                        }
-
-                                        /*
-                                        for (int a = 19; a > -1; a--)
-                                        {
-                                            zone.Entities[i].Positions.Add(BoarPath[a]);
-                                        }
-                                        */
-
-
-                                        /*
-                                        zone.Entities.RemoveAt(i);
-                                        zone.EntityCount--;
-                                        i--;
-                                        */
-
-                                        //CrashEntity.Flags = 196632;
-
-                                    }
-                                    else if (WarpOutEntity == null && zone.Entities[i].Type == 32 && zone.Entities[i].Subtype == 1)
-                                    {
-                                        WarpOutEntity = zone.Entities[i];
-                                        WarpOutZone = zone;
-                                        zone.Entities.RemoveAt(i);
-                                        zone.EntityCount--;
-                                        i--;
-                                    }
-                                    else if (zone.Entities[i].Type == 34 && zone.Entities[i].Subtype == (int)CrateSubTypes.Checkpoint)
-                                    {
-                                        zone.Entities[i].Subtype = (int)CrateSubTypes.Blank;
-                                    }
-
-
-                                }
-                            }
-
-                            if (level == Crash1_Levels.L07_HogWild)
-                            {
-                                if (zone.EName == "s0_hZ")
-                                {
-                                    int crutchID = 300;
-                                    EntityPosition[] crate_pos = new EntityPosition[]
-                                    {
-                                          new EntityPosition(-2445, 5775, 32689),
-                                    };
-                                    for (int id = 0; id < crate_pos.Length; id++)
-                                    {
-                                        int entID = id + crutchID;
-                                        CreateEntity((short)entID, 34, 2, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
-                                    }
-                                }
-                                if (zone.EName == "1M_hZ")
-                                {
-                                    SpawnEID = zone.EID;
-
-                                    zone.Cameras[0].NeighborCount = 1;
-                                }
-                                else if (zone.EName != "s0_hZ" && zone.CameraCount > 0)
-                                {
-                                    zone.Cameras[0].NeighborCount = 2;
-                                    zone.Cameras[0].Neighbors[1] = new OldCameraNeighbor(1, 1, 0, 2);
-                                }
-                            }
-                            else
-                            {
-                                if (zone.EName == "s0_uZ")
-                                {
-                                    int crutchID = 300;
-                                    EntityPosition[] crate_pos = new EntityPosition[]
-                                    {
-                                          new EntityPosition(-2445, 5775, 32689),
-                                    };
-                                    for (int id = 0; id < crate_pos.Length; id++)
-                                    {
-                                        int entID = id + crutchID;
-                                        CreateEntity((short)entID, 34, 2, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
-                                    }
-                                }
-                                else if (zone.EName == "0y_uZ")
-                                {
-                                    int crutchID = 301;
-                                    EntityPosition[] crate_pos = new EntityPosition[]
-                                    {
-                                          new EntityPosition(533, 352, 320),
-                                    };
-                                    for (int id = 0; id < crate_pos.Length; id++)
-                                    {
-                                        int entID = id + crutchID;
-                                        CreateEntityBoarBounce((short)entID, 51, 3, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, ref zone);
-                                    }
-                                }
-                                if (zone.EName == "1M_uZ")
-                                {
-                                    SpawnEID = zone.EID;
-
-                                    zone.Cameras[0].NeighborCount = 1;
-                                }
-                                else if (zone.EName != "s0_uZ" && zone.CameraCount > 0)
-                                {
-                                    zone.Cameras[0].NeighborCount = 2;
-                                    zone.Cameras[0].Neighbors[1] = new OldCameraNeighbor(1, 1, 0, 2);
-                                }
-                            }
-
+                            zone.Entities[i].Positions.Add(BoarPath[a]);
                         }
+
+                        /*
+                        for (int a = 19; a > -1; a--)
+                        {
+                            zone.Entities[i].Positions.Add(BoarPath[a]);
+                        }
+                        */
+
+
+                        /*
+                        zone.Entities.RemoveAt(i);
+                        i--;
+                        */
+
+                        //CrashEntity.Flags = 196632;
+
+                    }
+                    else if (WarpOutEntity == null && zone.Entities[i].Type == 32 && zone.Entities[i].Subtype == 1)
+                    {
+                        WarpOutEntity = zone.Entities[i];
+                        WarpOutZone = zone;
+                        zone.Entities.RemoveAt(i);
+                        i--;
+                    }
+                    else if (zone.Entities[i].Type == 34 && zone.Entities[i].Subtype == (int)CrateSubTypes.Checkpoint)
+                    {
+                        zone.Entities[i].Subtype = (int)CrateSubTypes.Blank; // TODO : spawn position is dictated by WillC for hog levels
+                    }
+                }
+
+                if (level == Crash1_Levels.L07_HogWild)
+                {
+                    if (zone.EName == "s0_hZ")
+                    {
+                        int crutchID = 300;
+                        EntityPosition[] crate_pos = new EntityPosition[]
+                        {
+                                new EntityPosition(-2445, 5775, 32689),
+                        };
+                        for (int id = 0; id < crate_pos.Length; id++)
+                        {
+                            int entID = id + crutchID;
+                            CreateEntity((short)entID, 34, 2, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, zone);
+                        }
+                    }
+                    if (zone.EName == "1M_hZ")
+                    {
+                        SpawnEID = zone.EID;
+
+                        zone.Cameras[0].NeighborCount = 1;
+                    }
+                    else if (zone.EName != "s0_hZ" && zone.Cameras.Count > 0)
+                    {
+                        zone.Cameras[0].NeighborCount = 2;
+                        zone.Cameras[0].Neighbors[1] = new OldCameraNeighbor(1, 1, 0, 2);
+                    }
+                }
+                else
+                {
+                    if (zone.EName == "s0_uZ")
+                    {
+                        int crutchID = 300;
+                        EntityPosition[] crate_pos = new EntityPosition[]
+                        {
+                                new EntityPosition(-2445, 5775, 32689),
+                        };
+                        for (int id = 0; id < crate_pos.Length; id++)
+                        {
+                            int entID = id + crutchID;
+                            CreateEntity((short)entID, 34, 2, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, zone);
+                        }
+                    }
+                    else if (zone.EName == "0y_uZ")
+                    {
+                        int crutchID = 301;
+                        EntityPosition[] crate_pos = new EntityPosition[]
+                        {
+                                new EntityPosition(533, 352, 320),
+                        };
+                        for (int id = 0; id < crate_pos.Length; id++)
+                        {
+                            int entID = id + crutchID;
+                            CreateEntityBoarBounce((short)entID, 51, 3, crate_pos[id].X, crate_pos[id].Y, crate_pos[id].Z, zone);
+                        }
+                    }
+                    if (zone.EName == "1M_uZ")
+                    {
+                        SpawnEID = zone.EID;
+
+                        zone.Cameras[0].NeighborCount = 1;
+                    }
+                    else if (zone.EName != "s0_uZ" && zone.Cameras.Count > 0)
+                    {
+                        zone.Cameras[0].NeighborCount = 2;
+                        zone.Cameras[0].Neighbors[1] = new OldCameraNeighbor(1, 1, 0, 2);
                     }
                 }
             }
@@ -1958,57 +1792,46 @@ namespace CrateModLoader.GameSpecific.Crash1
 
             List<int> LinkedZones = new List<int>();
 
-            foreach (Chunk chunk in nsf.Chunks)
+            foreach (OldZoneEntry zone in nsf.GetEntries<OldZoneEntry>())
             {
-                if (chunk is NormalChunk zonechunk)
+                if (level == Crash1_Levels.L07_HogWild)
                 {
-                    foreach (Entry entry in zonechunk.Entries)
+                    if (zone.EName == "0a_hZ")
                     {
-                        if (entry is OldZoneEntry zone)
-                        {
-                            if (level == Crash1_Levels.L07_HogWild)
-                            {
-                                if (zone.EName == "0a_hZ")
-                                {
-                                    zone.Entities.Add(WarpOutEntity);
-                                    zone.EntityCount++;
-                                    //orig start zone is s0_hZ / s0_uZ, it has to stay that way
-                                    //nsd.StartZone = zone.EID;
-                                    //zone.Entities.Add(CrashEntity);
-                                    //zone.EntityCount++;
-                                }
-                                if (zone.EName == "s0_hZ")
-                                {
-                                    //BitConv.FromInt32(zone.Header, 532 + 1 * 4);
-                                    //BitConv.ToInt32(zone.Header, 532 + 1 * 4, nsd.StartZone);
+                        zone.Entities.Add(WarpOutEntity);
+                        //orig start zone is s0_hZ / s0_uZ, it has to stay that way
+                        //nsd.StartZone = zone.EID;
+                        //zone.Entities.Add(CrashEntity);
+                        //zone.EntityCount++;
+                    }
+                    if (zone.EName == "s0_hZ")
+                    {
+                        //BitConv.FromInt32(zone.Header, 532 + 1 * 4);
+                        //BitConv.ToInt32(zone.Header, 532 + 1 * 4, nsd.StartZone);
 
-                                    /*
-                                    int linkedzoneentrycount = BitConv.FromInt32(zone.Header, 528);
-                                    Console.WriteLine("Linked zones: " + linkedzoneentrycount);
-                                    for (int i = 0; i < linkedzoneentrycount; i++)
-                                    {
-                                        LinkedZones.Add(BitConv.FromInt32(zone.Header, 532 + i * 4));
-                                    }
-                                    */
-                                    BitConv.ToInt32(zone.Header, 532 + 1 * 4, SpawnEID);
-                                }
-                            }
-                            else
-                            {
-                                if (zone.EName == "0g_uZ") // or 0f?
-                                {
-                                    zone.Entities.Add(WarpOutEntity);
-                                    zone.EntityCount++;
-                                }
-                                if (zone.EName == "s0_uZ")
-                                {
-                                    BitConv.ToInt32(zone.Header, 532 + 1 * 4, SpawnEID);
-                                }
-                            }
-                            
+                        /*
+                        int linkedzoneentrycount = BitConv.FromInt32(zone.Header, 528);
+                        Console.WriteLine("Linked zones: " + linkedzoneentrycount);
+                        for (int i = 0; i < linkedzoneentrycount; i++)
+                        {
+                            LinkedZones.Add(BitConv.FromInt32(zone.Header, 532 + i * 4));
                         }
+                        */
+                        BitConv.ToInt32(zone.Header, 532 + 1 * 4, SpawnEID);
                     }
                 }
+                else
+                {
+                    if (zone.EName == "0g_uZ") // or 0f?
+                    {
+                        zone.Entities.Add(WarpOutEntity);
+                    }
+                    if (zone.EName == "s0_uZ")
+                    {
+                        BitConv.ToInt32(zone.Header, 532 + 1 * 4, SpawnEID);
+                    }
+                }
+                            
             }
             
             /*
@@ -2032,8 +1855,6 @@ namespace CrateModLoader.GameSpecific.Crash1
                 }
             }
             */
-            
-
         }
 
         public static void Mod_RandomizeBosses(NSF nsf, OldNSD nsd, Crash1_Levels level, Random rand, bool isBackwards)
@@ -2045,447 +1866,374 @@ namespace CrateModLoader.GameSpecific.Crash1
 
             List<List<EntityPosition>> CortexShots = new List<List<EntityPosition>>();
 
-            foreach (Chunk chunk in nsf.Chunks)
+            foreach (OldZoneEntry zone in nsf.GetEntries<OldZoneEntry>())
             {
-                if (chunk is NormalChunk zonechunk)
+                for (int i = 0; i < zone.Entities.Count; i++)
                 {
-                    for (int e = 0; e < zonechunk.Entries.Count; e++)
+                    if (zone.Entities.Count > 0 && i < zone.Entities.Count)
                     {
-                        if (zonechunk.Entries[e] is OldZoneEntry zone)
+                        if (zone.Entities[i].Type == 39 && zone.Entities[i].Subtype == 0) // Ripper Roo TNT paths
                         {
+                            // Big TNTs are hardcoded :(
+                            // addendum: in RooOC
 
-                            for (int i = 0; i < zone.Entities.Count; i++)
+                            /*
+                            EntityPosition[] Path = new EntityPosition[zone.Entities[i].Positions.Count];
+                            zone.Entities[i].Positions.CopyTo(Path, 0);
+                            zone.Entities[i].Positions.Clear();
+
+                            for (int a = 0; a < 5; a++)
                             {
-                                if (zone.Entities.Count > 0 && i < zone.Entities.Count)
+                                zone.Entities[i].Positions.Add(Path[a]);
+                            }
+
+                            if (isBackwards)
+                            {
+                                for (int a = 5; a < Path.Length - 3; a++)
                                 {
-                                    if (zone.Entities[i].Type == 39 && zone.Entities[i].Subtype == 0) // Ripper Roo TNT paths
-                                    {
-                                        // Big TNTs are hardcoded :(
-
-                                        /*
-                                        EntityPosition[] Path = new EntityPosition[zone.Entities[i].Positions.Count];
-                                        zone.Entities[i].Positions.CopyTo(Path, 0);
-                                        zone.Entities[i].Positions.Clear();
-
-                                        for (int a = 0; a < 5; a++)
+                                    zone.Entities[i].Positions.Add(Path[Path.Length - a]);
+                                }
+                            }
+                            else
+                            {
+                                int r = rand.Next(4);
+                                switch (r)
+                                {
+                                    default:
+                                    case 0:
+                                        for (int a = 5; a < Path.Length - 3; a++)
                                         {
                                             zone.Entities[i].Positions.Add(Path[a]);
                                         }
-
-                                        if (isBackwards)
+                                        break;
+                                    case 1:
+                                        for (int a = 5; a < Path.Length - 3; a++)
                                         {
-                                            for (int a = 5; a < Path.Length - 3; a++)
-                                            {
-                                                zone.Entities[i].Positions.Add(Path[Path.Length - a]);
-                                            }
+                                            zone.Entities[i].Positions.Add(Path[Path.Length - a]);
                                         }
-                                        else
-                                        {
-                                            int r = rand.Next(4);
-                                            switch (r)
-                                            {
-                                                default:
-                                                case 0:
-                                                    for (int a = 5; a < Path.Length - 3; a++)
-                                                    {
-                                                        zone.Entities[i].Positions.Add(Path[a]);
-                                                    }
-                                                    break;
-                                                case 1:
-                                                    for (int a = 5; a < Path.Length - 3; a++)
-                                                    {
-                                                        zone.Entities[i].Positions.Add(Path[Path.Length - a]);
-                                                    }
-                                                    break;
-                                                case 2:
-                                                    // todo sideways a
-                                                    for (int a = 5; a < Path.Length - 3; a++)
-                                                    {
-                                                        zone.Entities[i].Positions.Add(Path[a]);
-                                                    }
-                                                    break;
-                                                case 3:
-                                                    // todo sideways b
-                                                    for (int a = 5; a < Path.Length - 3; a++)
-                                                    {
-                                                        zone.Entities[i].Positions.Add(Path[Path.Length - a]);
-                                                    }
-                                                    break;
-                                            }
-                                        }
-
-                                        for (int a = Path.Length - 3; a < Path.Length; a++)
+                                        break;
+                                    case 2:
+                                        // todo sideways a
+                                        for (int a = 5; a < Path.Length - 3; a++)
                                         {
                                             zone.Entities[i].Positions.Add(Path[a]);
                                         }
-                                        */
+                                        break;
+                                    case 3:
+                                        // todo sideways b
+                                        for (int a = 5; a < Path.Length - 3; a++)
+                                        {
+                                            zone.Entities[i].Positions.Add(Path[Path.Length - a]);
+                                        }
+                                        break;
+                                }
+                            }
 
-                                    }
-                                    else if (zone.Entities[i].Type == 37 && zone.Entities[i].Subtype == 0) // Ripper Roo
+                            for (int a = Path.Length - 3; a < Path.Length; a++)
+                            {
+                                zone.Entities[i].Positions.Add(Path[a]);
+                            }
+                            */
+
+                        }
+                        else if (zone.Entities[i].Type == 37 && zone.Entities[i].Subtype == 0) // Ripper Roo
+                        {
+                            EntityPosition[] Path = new EntityPosition[zone.Entities[i].Positions.Count];
+                            zone.Entities[i].Positions.CopyTo(Path, 0);
+                            zone.Entities[i].Positions.Clear();
+
+                            for (int a = 0; a < 41; a++)
+                            {
+                                zone.Entities[i].Positions.Add(Path[a]);
+                            }
+
+                            if (isBackwards)
+                            {
+                                //41 - top left
+                                zone.Entities[i].Positions.Add(Path[43]);
+                                //42 - top middle
+                                zone.Entities[i].Positions.Add(Path[42]);
+                                //43 - top right
+                                zone.Entities[i].Positions.Add(Path[41]);
+                                //44 - middle left
+                                zone.Entities[i].Positions.Add(Path[46]);
+                                //45 - middle middle
+                                zone.Entities[i].Positions.Add(Path[45]);
+                                //46 - middle right
+                                zone.Entities[i].Positions.Add(Path[44]);
+                                //47 - bot left
+                                zone.Entities[i].Positions.Add(Path[49]);
+                                //48 - bot middle
+                                zone.Entities[i].Positions.Add(Path[48]);
+                                //49 - bot right
+                                zone.Entities[i].Positions.Add(Path[47]);
+                            }
+                            else
+                            {
+                                List<int> PosToRand = new List<int>();
+                                for (int a = 41; a < Path.Length - 1; a++)
+                                {
+                                    PosToRand.Add(a);
+                                }
+                                int count = PosToRand.Count;
+                                for (int a = 0; a < count; a++)
+                                {
+                                    int r = rand.Next(PosToRand.Count);
+                                    zone.Entities[i].Positions.Add(Path[PosToRand[r]]);
+                                    PosToRand.RemoveAt(r);
+                                }
+
+                            }
+
+                            zone.Entities[i].Positions.Add(Path[Path.Length - 1]);
+
+                        }
+                        else if (zone.Entities[i].Type == 15 && zone.Entities[i].Subtype == 0) // Pinstripe
+                        {
+                            EntityPosition[] Path = new EntityPosition[zone.Entities[i].Positions.Count];
+                            zone.Entities[i].Positions.CopyTo(Path, 0);
+                            zone.Entities[i].Positions.Clear();
+
+                            /*
+                                0 - middle
+                                0-15 - middle-to-left
+                            15-30 - left-to-middle
+                            30-45 - middle-to-right
+                            45-60 - right-to-middle
+                            60-65 - back-to-right
+                            65-95 - right-to-left
+                            */
+
+                            if (isBackwards)
+                            {
+                                zone.Entities[i].Positions.Add(Path[0]);
+
+                                for (int a = 1; a < 16; a++)
+                                    zone.Entities[i].Positions.Add(Path[a + 30]);
+
+                                for (int a = 1; a < 16; a++)
+                                    zone.Entities[i].Positions.Add(Path[a + 45]);
+
+                                for (int a = 1; a < 16; a++)
+                                    zone.Entities[i].Positions.Add(Path[a + 0]);
+
+                                for (int a = 1; a < 16; a++)
+                                    zone.Entities[i].Positions.Add(Path[a + 15]);
+
+                                for (int a = 1; a < 5; a++)
+                                    zone.Entities[i].Positions.Add(Path[a + 60]);
+
+                                for (int a = 0; a < 31; a++)
+                                    zone.Entities[i].Positions.Add(Path[(30 - a) + 65]);
+
+                            }
+                            else
+                            {
+                                List<int> PosToRand = new List<int>();
+                                for (int a = 0; a < 4; a++)
+                                {
+                                    PosToRand.Add(a);
+                                }
+                                int count = PosToRand.Count;
+                                for (int c = 0; c < count; c++)
+                                {
+                                    int r = rand.Next(PosToRand.Count);
+                                    if (PosToRand[r] == 0)
                                     {
-                                        EntityPosition[] Path = new EntityPosition[zone.Entities[i].Positions.Count];
-                                        zone.Entities[i].Positions.CopyTo(Path, 0);
-                                        zone.Entities[i].Positions.Clear();
-
-                                        for (int a = 0; a < 41; a++)
-                                        {
-                                            zone.Entities[i].Positions.Add(Path[a]);
-                                        }
-
-                                        if (isBackwards)
-                                        {
-                                            //41 - top left
-                                            zone.Entities[i].Positions.Add(Path[43]);
-                                            //42 - top middle
-                                            zone.Entities[i].Positions.Add(Path[42]);
-                                            //43 - top right
-                                            zone.Entities[i].Positions.Add(Path[41]);
-                                            //44 - middle left
-                                            zone.Entities[i].Positions.Add(Path[46]);
-                                            //45 - middle middle
-                                            zone.Entities[i].Positions.Add(Path[45]);
-                                            //46 - middle right
-                                            zone.Entities[i].Positions.Add(Path[44]);
-                                            //47 - bot left
-                                            zone.Entities[i].Positions.Add(Path[49]);
-                                            //48 - bot middle
-                                            zone.Entities[i].Positions.Add(Path[48]);
-                                            //49 - bot right
-                                            zone.Entities[i].Positions.Add(Path[47]);
-                                        }
-                                        else
-                                        {
-                                            List<int> PosToRand = new List<int>();
-                                            for (int a = 41; a < Path.Length - 1; a++)
-                                            {
-                                                PosToRand.Add(a);
-                                            }
-                                            int count = PosToRand.Count;
-                                            for (int a = 0; a < count; a++)
-                                            {
-                                                int r = rand.Next(PosToRand.Count);
-                                                zone.Entities[i].Positions.Add(Path[PosToRand[r]]);
-                                                PosToRand.RemoveAt(r);
-                                            }
-
-                                        }
-
-                                        zone.Entities[i].Positions.Add(Path[Path.Length - 1]);
-
-                                    }
-                                    else if (zone.Entities[i].Type == 15 && zone.Entities[i].Subtype == 0) // Pinstripe
-                                    {
-                                        EntityPosition[] Path = new EntityPosition[zone.Entities[i].Positions.Count];
-                                        zone.Entities[i].Positions.CopyTo(Path, 0);
-                                        zone.Entities[i].Positions.Clear();
-
-                                        /*
-                                            0 - middle
-                                         0-15 - middle-to-left
-                                        15-30 - left-to-middle
-                                        30-45 - middle-to-right
-                                        45-60 - right-to-middle
-                                        60-65 - back-to-right
-                                        65-95 - right-to-left
-                                        */
-
-                                        if (isBackwards)
-                                        {
+                                        if (c == 0)
                                             zone.Entities[i].Positions.Add(Path[0]);
 
-                                            for (int a = 1; a < 16; a++)
-                                                zone.Entities[i].Positions.Add(Path[a + 30]);
-
-                                            for (int a = 1; a < 16; a++)
-                                                zone.Entities[i].Positions.Add(Path[a + 45]);
-
-                                            for (int a = 1; a < 16; a++)
-                                                zone.Entities[i].Positions.Add(Path[a + 0]);
-
-                                            for (int a = 1; a < 16; a++)
-                                                zone.Entities[i].Positions.Add(Path[a + 15]);
-
-                                            for (int a = 1; a < 5; a++)
-                                                zone.Entities[i].Positions.Add(Path[a + 60]);
-
-                                            for (int a = 0; a < 31; a++)
-                                                zone.Entities[i].Positions.Add(Path[(30 - a) + 65]);
-
-                                        }
-                                        else
-                                        {
-                                            List<int> PosToRand = new List<int>();
-                                            for (int a = 0; a < 4; a++)
-                                            {
-                                                PosToRand.Add(a);
-                                            }
-                                            int count = PosToRand.Count;
-                                            for (int c = 0; c < count; c++)
-                                            {
-                                                int r = rand.Next(PosToRand.Count);
-                                                if (PosToRand[r] == 0)
-                                                {
-                                                    if (c == 0)
-                                                        zone.Entities[i].Positions.Add(Path[0]);
-
-                                                    for (int a = 1; a < 16; a++)
-                                                        zone.Entities[i].Positions.Add(Path[a + 0]);
-                                                }
-                                                else if (PosToRand[r] == 1)
-                                                {
-                                                    if (c == 0)
-                                                        zone.Entities[i].Positions.Add(Path[15]);
-
-                                                    for (int a = 1; a < 16; a++)
-                                                        zone.Entities[i].Positions.Add(Path[a + 15]);
-                                                }
-                                                else if (PosToRand[r] == 2)
-                                                {
-                                                    if (c == 0)
-                                                        zone.Entities[i].Positions.Add(Path[30]);
-
-                                                    for (int a = 1; a < 16; a++)
-                                                        zone.Entities[i].Positions.Add(Path[a + 30]);
-                                                }
-                                                else if (PosToRand[r] == 3)
-                                                {
-                                                    if (c == 0)
-                                                        zone.Entities[i].Positions.Add(Path[45]);
-
-                                                    for (int a = 1; a < 16; a++)
-                                                        zone.Entities[i].Positions.Add(Path[a + 45]);
-                                                }
-                                                PosToRand.RemoveAt(r);
-                                            }
-
-                                            for (int a = 1; a < 5; a++)
-                                                zone.Entities[i].Positions.Add(Path[a + 60]);
-
-                                            if (rand.Next(2) == 0)
-                                            {
-                                                for (int a = 0; a < 31; a++)
-                                                    zone.Entities[i].Positions.Add(Path[(30 - a) + 65]);
-                                            }
-                                            else
-                                            {
-                                                for (int a = 0; a < 31; a++)
-                                                    zone.Entities[i].Positions.Add(Path[a]);
-                                            }
-
-                                        }
-
+                                        for (int a = 1; a < 16; a++)
+                                            zone.Entities[i].Positions.Add(Path[a + 0]);
                                     }
-                                    else if (zone.Entities[i].Type == 49 && zone.Entities[i].Subtype == 0) // Cortex
+                                    else if (PosToRand[r] == 1)
                                     {
-                                        if (isBackwards)
-                                        {
-                                            EntityPosition[] Path = new EntityPosition[zone.Entities[i].Positions.Count];
-                                            zone.Entities[i].Positions.CopyTo(Path, 0);
-                                            zone.Entities[i].Positions.Clear();
-                                            for (int a = 0; a < Path.Length; a++)
-                                            {
-                                                zone.Entities[i].Positions.Add(Path[(Path.Length - 1) - a]);
-                                            }
-                                        }
+                                        if (c == 0)
+                                            zone.Entities[i].Positions.Add(Path[15]);
+
+                                        for (int a = 1; a < 16; a++)
+                                            zone.Entities[i].Positions.Add(Path[a + 15]);
                                     }
-                                    else if (zone.Entities[i].Type == 50 && zone.Entities[i].Subtype == 1) // Cortex projectiles
+                                    else if (PosToRand[r] == 2)
                                     {
-                                        
-                                        EntityPosition[] Path = new EntityPosition[zone.Entities[i].Positions.Count];
-                                        zone.Entities[i].Positions.CopyTo(Path, 0);
-                                        zone.Entities[i].Positions.Clear();
+                                        if (c == 0)
+                                            zone.Entities[i].Positions.Add(Path[30]);
 
-                                        if (isBackwards)
-                                        {
-                                            for (int a = 0; a < Path.Length; a++)
-                                            {
-                                                zone.Entities[i].Positions.Add(Path[(Path.Length - 1) - a]);
-                                            }
-                                        }
-                                        else
-                                        {
-                                            List<EntityPosition> PPath = new List<EntityPosition>();
-                                            for (int a = 0; a < Path.Length; a++)
-                                            {
-                                                PPath.Add(Path[a]);
-                                            }
-                                            CortexShots.Add(PPath);
-
-                                        }
+                                        for (int a = 1; a < 16; a++)
+                                            zone.Entities[i].Positions.Add(Path[a + 30]);
                                     }
+                                    else if (PosToRand[r] == 3)
+                                    {
+                                        if (c == 0)
+                                            zone.Entities[i].Positions.Add(Path[45]);
+
+                                        for (int a = 1; a < 16; a++)
+                                            zone.Entities[i].Positions.Add(Path[a + 45]);
+                                    }
+                                    PosToRand.RemoveAt(r);
                                 }
-                            }
 
-                            if (!isBackwards)
-                            {
-                                for (int i = 0; i < zone.Entities.Count; i++)
+                                for (int a = 1; a < 5; a++)
+                                    zone.Entities[i].Positions.Add(Path[a + 60]);
+
+                                if (rand.Next(2) == 0)
                                 {
-                                    if (zone.Entities.Count > 0 && i < zone.Entities.Count)
-                                    {
-                                        if (zone.Entities[i].Type == 50 && zone.Entities[i].Subtype == 1) // Cortex projectiles
-                                        {
-
-                                            int r = rand.Next(8);
-                                            switch (r)
-                                            {
-                                                default:
-                                                case 0:
-                                                    for (int a = 0; a < CortexShots[0].Count; a++)
-                                                    {
-                                                        zone.Entities[i].Positions.Add(CortexShots[0][a]);
-                                                    }
-                                                    break;
-                                                case 1:
-                                                    for (int a = 0; a < CortexShots[0].Count; a++)
-                                                    {
-                                                        zone.Entities[i].Positions.Add(CortexShots[0][(CortexShots[0].Count - 1) - a]);
-                                                    }
-                                                    break;
-                                                case 2:
-                                                    for (int a = 0; a < CortexShots[0].Count; a++)
-                                                    {
-                                                        zone.Entities[i].Positions.Add(CortexShots[1][a]);
-                                                    }
-                                                    break;
-                                                case 3:
-                                                    for (int a = 0; a < CortexShots[0].Count; a++)
-                                                    {
-                                                        zone.Entities[i].Positions.Add(CortexShots[1][(CortexShots[1].Count - 1) - a]);
-                                                    }
-                                                    break;
-                                                case 4:
-                                                    for (int a = 0; a < CortexShots[0].Count; a++)
-                                                    {
-                                                        zone.Entities[i].Positions.Add(CortexShots[2][a]);
-                                                    }
-                                                    break;
-                                                case 5:
-                                                    for (int a = 0; a < CortexShots[0].Count; a++)
-                                                    {
-                                                        zone.Entities[i].Positions.Add(CortexShots[2][(CortexShots[2].Count - 1) - a]);
-                                                    }
-                                                    break;
-                                                case 6:
-                                                    for (int a = 0; a < CortexShots[0].Count; a++)
-                                                    {
-                                                        zone.Entities[i].Positions.Add(CortexShots[3][a]);
-                                                    }
-                                                    break;
-                                                case 7:
-                                                    for (int a = 0; a < CortexShots[0].Count; a++)
-                                                    {
-                                                        zone.Entities[i].Positions.Add(CortexShots[3][(CortexShots[3].Count - 1) - a]);
-                                                    }
-                                                    break;
-                                            }
-
-
-                                        }
-                                    }
+                                    for (int a = 0; a < 31; a++)
+                                        zone.Entities[i].Positions.Add(Path[(30 - a) + 65]);
                                 }
+                                else
+                                {
+                                    for (int a = 0; a < 31; a++)
+                                        zone.Entities[i].Positions.Add(Path[a]);
+                                }
+
                             }
 
-                            break;
+                        }
+                        else if (zone.Entities[i].Type == 49 && zone.Entities[i].Subtype == 0) // Cortex
+                        {
+                            if (isBackwards)
+                            {
+                                EntityPosition[] Path = new EntityPosition[zone.Entities[i].Positions.Count];
+                                zone.Entities[i].Positions.CopyTo(Path, 0);
+                                zone.Entities[i].Positions.Clear();
+                                for (int a = 0; a < Path.Length; a++)
+                                {
+                                    zone.Entities[i].Positions.Add(Path[(Path.Length - 1) - a]);
+                                }
+                            }
+                        }
+                        else if (zone.Entities[i].Type == 50 && zone.Entities[i].Subtype == 1) // Cortex projectile paths
+                        {
+                                        
+                            EntityPosition[] Path = new EntityPosition[zone.Entities[i].Positions.Count];
+                            zone.Entities[i].Positions.CopyTo(Path, 0);
+                            zone.Entities[i].Positions.Clear();
+
+                            if (isBackwards)
+                            {
+                                for (int a = 0; a < Path.Length; a++)
+                                {
+                                    zone.Entities[i].Positions.Add(Path[(Path.Length - 1) - a]);
+                                }
+                            }
+                            else
+                            {
+                                List<EntityPosition> PPath = new List<EntityPosition>();
+                                for (int a = 0; a < Path.Length; a++)
+                                {
+                                    PPath.Add(Path[a]);
+                                }
+                                CortexShots.Add(PPath);
+
+                            }
                         }
                     }
                 }
+
+                if (!isBackwards)
+                {
+                    for (int i = 0; i < zone.Entities.Count; i++)
+                    {
+                        if (zone.Entities.Count > 0 && i < zone.Entities.Count)
+                        {
+                            if (zone.Entities[i].Type == 50 && zone.Entities[i].Subtype == 1) // Cortex projectiles
+                            {
+
+                                int r = rand.Next(8);
+                                switch (r)
+                                {
+                                    default:
+                                    case 0:
+                                        for (int a = 0; a < CortexShots[0].Count; a++)
+                                        {
+                                            zone.Entities[i].Positions.Add(CortexShots[0][a]);
+                                        }
+                                        break;
+                                    case 1:
+                                        for (int a = 0; a < CortexShots[0].Count; a++)
+                                        {
+                                            zone.Entities[i].Positions.Add(CortexShots[0][(CortexShots[0].Count - 1) - a]);
+                                        }
+                                        break;
+                                    case 2:
+                                        for (int a = 0; a < CortexShots[0].Count; a++)
+                                        {
+                                            zone.Entities[i].Positions.Add(CortexShots[1][a]);
+                                        }
+                                        break;
+                                    case 3:
+                                        for (int a = 0; a < CortexShots[0].Count; a++)
+                                        {
+                                            zone.Entities[i].Positions.Add(CortexShots[1][(CortexShots[1].Count - 1) - a]);
+                                        }
+                                        break;
+                                    case 4:
+                                        for (int a = 0; a < CortexShots[0].Count; a++)
+                                        {
+                                            zone.Entities[i].Positions.Add(CortexShots[2][a]);
+                                        }
+                                        break;
+                                    case 5:
+                                        for (int a = 0; a < CortexShots[0].Count; a++)
+                                        {
+                                            zone.Entities[i].Positions.Add(CortexShots[2][(CortexShots[2].Count - 1) - a]);
+                                        }
+                                        break;
+                                    case 6:
+                                        for (int a = 0; a < CortexShots[0].Count; a++)
+                                        {
+                                            zone.Entities[i].Positions.Add(CortexShots[3][a]);
+                                        }
+                                        break;
+                                    case 7:
+                                        for (int a = 0; a < CortexShots[0].Count; a++)
+                                        {
+                                            zone.Entities[i].Positions.Add(CortexShots[3][(CortexShots[3].Count - 1) - a]);
+                                        }
+                                        break;
+                                }
+
+
+                            }
+                        }
+                    }
+                }
+
+                break;
             }
 
         }
 
-        static void CreateEntity(short id, int type, int subtype, short x, short y, short z, ref OldZoneEntry zone)
+        static void CreateEntity(short id, int type, int subtype, short x, short y, short z, OldZoneEntry zone)
         {
-            OldEntity newentity = OldEntity.Load(new OldEntity(0, 0x00030018, id, 0, 0, 0, 0, 0, new List<EntityPosition>() { new EntityPosition(0, 0, 0) }, 0).Save());
-            newentity.ID = id;
-            newentity.Positions.Clear();
-            newentity.Positions.Add(new EntityPosition(x, y, z));
-            newentity.Type = (byte)type;
-            newentity.Subtype = (byte)subtype;
-
-            newentity.Flags = 196632;
-            newentity.ModeA = 0;
-            newentity.ModeB = 0;
-            newentity.ModeC = 0;
+            // Loading an entity we just made, for the error checking.
+            OldEntity newentity = OldEntity.Load(new OldEntity(0x18, 3, 0, id, 0, 0, 0, (byte)type, (byte)subtype, new List<EntityPosition>() { new EntityPosition(x, y, z) }, 0).Save());
 
             zone.Entities.Add(newentity);
-            zone.EntityCount++;
+        }
+
+        static void CreateEntityMask(short id, short x, short y, short z, OldZoneEntry zone)
+        {
+            OldEntity newentity = OldEntity.Load(new OldEntity(0x18, 3, 0, id, 0, 0, 450, 3, 6, new List<EntityPosition>() { new EntityPosition(x, y, z) }, 0).Save());
+
+            zone.Entities.Add(newentity);
 
         }
 
-        static void CreateEntityMask(short id, int type, int subtype, short x, short y, short z, ref OldZoneEntry zone)
+        static void CreateEntityBoarBounce(short id, int type, int subtype, short x, short y, short z, OldZoneEntry zone)
         {
-            OldEntity newentity = OldEntity.Load(new OldEntity(0, 0x00030018, id, 0, 0, 0, 0, 0, new List<EntityPosition>() { new EntityPosition(0, 0, 0) }, 0).Save());
-            newentity.ID = id;
-            newentity.Positions.Clear();
-            newentity.Positions.Add(new EntityPosition(x, y, z));
-            newentity.Type = (byte)type;
-            newentity.Subtype = (byte)subtype;
-
-            newentity.Flags = 196633;
-            newentity.ModeA = 0;
-            newentity.ModeB = 0;
-            newentity.ModeC = 450;
+            OldEntity newentity = OldEntity.Load(new OldEntity(0x18, 3, 0, id, 0, 0, 0, (byte)type, (byte)subtype, new List<EntityPosition>() { new EntityPosition(x, y, z) }, 0).Save());
 
             zone.Entities.Add(newentity);
-            zone.EntityCount++;
 
         }
 
-        static void CreateEntitySpring(short id, int type, int subtype, short x, short y, short z, ref OldZoneEntry zone)
+        static void CreateEntityGemPlatform(short id, int subtype, short x, short y, short z, OldZoneEntry zone)
         {
-            OldEntity newentity = OldEntity.Load(new OldEntity(0, 0x00030018, id, 0, 0, 0, 0, 0, new List<EntityPosition>() { new EntityPosition(0, 0, 0) }, 0).Save());
-            newentity.ID = id;
-            newentity.Positions.Clear();
-            newentity.Positions.Add(new EntityPosition(x, y, z));
-            newentity.Type = (byte)type;
-            newentity.Subtype = (byte)subtype;
-
-            newentity.Flags = 196616;
-            newentity.ModeA = 0;
-            newentity.ModeB = 0;
-            newentity.ModeC = 0;
+            OldEntity newentity = OldEntity.Load(new OldEntity(0x18, 3, 0, id, 0, 0, 0, 58, (byte)subtype, new List<EntityPosition>() { new EntityPosition(x, y, z) }, 0).Save());
 
             zone.Entities.Add(newentity);
-            zone.EntityCount++;
-
-        }
-
-        static void CreateEntityBoarBounce(short id, int type, int subtype, short x, short y, short z, ref OldZoneEntry zone)
-        {
-            OldEntity newentity = OldEntity.Load(new OldEntity(0, 0x00030018, id, 0, 0, 0, 0, 0, new List<EntityPosition>() { new EntityPosition(0, 0, 0) }, 0).Save());
-            newentity.ID = id;
-            newentity.Positions.Clear();
-            newentity.Positions.Add(new EntityPosition(x, y, z));
-            newentity.Type = (byte)type;
-            newentity.Subtype = (byte)subtype;
-
-            newentity.Flags = 196616;
-            newentity.ModeA = 0;
-            newentity.ModeB = 0;
-            newentity.ModeC = 0;
-
-            zone.Entities.Add(newentity);
-            zone.EntityCount++;
-
-        }
-
-        static void CreateEntityGemPlatform(short id, int subtype, short x, short y, short z, ref OldZoneEntry zone)
-        {
-            OldEntity newentity = OldEntity.Load(new OldEntity(0, 0x00030018, id, 0, 0, 0, 0, 0, new List<EntityPosition>() { new EntityPosition(0, 0, 0) }, 0).Save());
-            newentity.ID = id;
-            newentity.Positions.Clear();
-            newentity.Positions.Add(new EntityPosition(x, y, z));
-            newentity.Type = 58;
-            newentity.Subtype = (byte)subtype;
-
-            newentity.Flags = 196608;
-            newentity.ModeA = 0;
-            newentity.ModeB = 0;
-            newentity.ModeC = 0;
-
-            zone.Entities.Add(newentity);
-            zone.EntityCount++;
-
         }
 
         public static void Mod_RandomizeMap(NSF nsf, OldNSD nsd, Crash1_Levels level, Random rand)
@@ -2495,8 +2243,9 @@ namespace CrateModLoader.GameSpecific.Crash1
                 return;
             }
 
-
             // if there's a way to switch to the beta map at some point...
+            // re: doubtful, seems no functional code remains, only leftover data
+            // TODO : IsldC fully controls the map
             List<int> LevelsToReplace = new List<int>();
             for (int i = 0; i < 35; i++)
             {
@@ -2511,68 +2260,47 @@ namespace CrateModLoader.GameSpecific.Crash1
             }
 
             
-            foreach (Chunk chunk in nsf.Chunks)
+            foreach (MapEntry mapzone in nsf.GetEntries<MapEntry>())
             {
-                if (chunk is NormalChunk zonechunk)
+                if (mapzone.EName == "3MapP" || mapzone.EName == "2MapP" || mapzone.EName == "1MapP")
                 {
-                    foreach (Entry entry in zonechunk.Entries)
+                    for (int i = 0; i < mapzone.Entities.Count; i++)
                     {
-                        if (entry is MapEntry mapzone)
+                        if (mapzone.Entities[i].Type == 44)
                         {
-                            if (mapzone.EName == "3MapP" || mapzone.EName == "2MapP" || mapzone.EName == "1MapP")
-                            {
-                                for (int i = 0; i < mapzone.Entities.Count; i++)
-                                {
-                                    if (mapzone.Entities[i].Type == 44)
-                                    {
-
-                                    }
-                                }
-                            }
+                            // nothing we can do, MapOC is deleted.....
                         }
                     }
                 }
             }
-
-
-
         }
 
         public static void Mod_PantsColor(NSF nsf, OldSceneryColor color)
         {
-            foreach (Chunk ck in nsf.Chunks)
+            foreach (OldModelEntry model in nsf.GetEntries<OldModelEntry>())
             {
-                if (ck is EntryChunk eck)
+                if (model.EName.StartsWith("Wi"))
                 {
-                    foreach (Entry en in eck.Entries)
+                    // this does nothing...
+                    // needs API update, Structs list is not used for saving
+                    for (int i = 0; i < model.Structs.Count; ++i)
                     {
-                        if (en is OldModelEntry)
+                        if (model.Structs[i] is OldSceneryColor col)
                         {
-                            OldModelEntry e = (OldModelEntry)en;
-                            if (e.EName.StartsWith("Wi"))
+                            if (col.B > 0 && col.G < 110 && col.R < 110)
                             {
-                                // this does nothing...
-                                for (int i = 0; i < e.Structs.Count; ++i)
-                                {
-                                    if (e.Structs[i] is OldSceneryColor col)
-                                    {
-                                        if (col.B > 0 && col.G < 110 && col.R < 110)
-                                        {
-                                            float intensity = col.B / 255f;
-                                            e.Structs[i] = new OldSceneryColor((byte)(color.R * intensity), (byte)(color.G * intensity), (byte)(color.B * intensity), col.N);
-                                        }
-                                    }
-                                    else if (e.Structs[i] is OldModelTexture tex)
-                                    {
-                                        if (tex.B > 0 && tex.G < 110 && tex.R < 110)
-                                        {
-                                            float intensity = tex.B / 255f;
-                                            e.Structs[i] = new OldModelTexture(tex.UVIndex, tex.ClutX, tex.ClutY, tex.XOffU, tex.YOffU, tex.ColorMode, tex.BlendMode, tex.Segment,
-                                                (byte)(color.R * intensity), (byte)(color.G * intensity), (byte)(color.B * intensity), 
-                                                tex.N, tex.EID);
-                                        }
-                                    }
-                                }
+                                float intensity = col.B / 255f;
+                                model.Structs[i] = new OldSceneryColor((byte)(color.R * intensity), (byte)(color.G * intensity), (byte)(color.B * intensity), col.N);
+                            }
+                        }
+                        else if (model.Structs[i] is OldModelTexture tex)
+                        {
+                            if (tex.B > 0 && tex.G < 110 && tex.R < 110)
+                            {
+                                float intensity = tex.B / 255f;
+                                model.Structs[i] = new OldModelTexture(tex.UVIndex, tex.ClutX, tex.ClutY, tex.XOffU, tex.YOffU, tex.ColorMode, tex.BlendMode, tex.Segment,
+                                    (byte)(color.R * intensity), (byte)(color.G * intensity), (byte)(color.B * intensity), 
+                                    tex.N, tex.EID);
                             }
                         }
                     }
@@ -2587,68 +2315,59 @@ namespace CrateModLoader.GameSpecific.Crash1
                 return;
             }
 
-            foreach (Chunk chunk in nsf.Chunks)
+            foreach (GOOLEntry gool in nsf.GetEntries<GOOLEntry>())
             {
-                if (chunk is NormalChunk zonechunk)
+                if (gool.EName == "GamOC" || gool.EName == "IsldC")
                 {
-                    foreach (Entry entry in zonechunk.Entries)
+                    if (region == RegionType.NTSC_U || region == RegionType.PAL)
                     {
-                        if (entry is GOOLEntry gool)
+                        for (int i = gool.Anims.Length - 11; i > 0; i--)
                         {
-                            if (gool.EName == "GamOC" || gool.EName == "IsldC")
+                            string s = System.Text.Encoding.Default.GetString(gool.Anims, i, 10);
+                            if (s.Contains("PASSWORD"))
                             {
-                                if (region == RegionType.NTSC_U || region == RegionType.PAL)
+                                string seed = ModLoaderGlobals.RandomizerSeed.ToString();
+                                if (seed.Length < 10)
                                 {
-                                    for (int i = gool.Anims.Length - 11; i > 0; i--)
+                                    while (seed.Length < 10)
                                     {
-                                        string s = System.Text.Encoding.Default.GetString(gool.Anims, i, 10);
-                                        if (s.Contains("PASSWORD"))
-                                        {
-                                            string seed = ModLoaderGlobals.RandomizerSeed.ToString();
-                                            if (seed.Length < 10)
-                                            {
-                                                while (seed.Length < 10)
-                                                {
-                                                    seed += " ";
-                                                }
-                                            }
-
-                                            InsertStringsInByteArray(ref gool.Anims, i, 29, new List<string>() {
-                                            "CML " + ModLoaderGlobals.ProgramVersion.ToUpper(),
-                                            "SEED: " + seed,
-                                        });
-                                        }
+                                        seed += " ";
                                     }
                                 }
-                                else
-                                {
-                                    for (int i = gool.Anims.Length - 11; i > 0; i--)
-                                    {
-                                        string s = System.Text.Encoding.Default.GetString(gool.Anims, i, 10);
-                                        if (s.Contains("TEST SAVE"))
-                                        {
-                                            string seed = ModLoaderGlobals.RandomizerSeed.ToString();
-                                            if (seed.Length < 10)
-                                            {
-                                                while (seed.Length < 10)
-                                                {
-                                                    seed += " ";
-                                                }
-                                            }
 
-                                            InsertStringsInByteArray(ref gool.Anims, i - 15, 27, new List<string>() {
-                                            "CML " + ModLoaderGlobals.ProgramVersion.ToUpper(),
-                                            "SEED: " + seed,
-                                        });
-                                        }
-                                    }
-                                }
-                                
+                                InsertStringsInByteArray(ref gool.Anims, i, 29, new List<string>() {
+                                "CML " + ModLoaderGlobals.ProgramVersion.ToUpper(),
+                                "SEED: " + seed,
+                            });
                             }
-
                         }
                     }
+                    else
+                    {
+                        for (int i = gool.Anims.Length - 11; i > 0; i--)
+                        {
+                            string s = System.Text.Encoding.Default.GetString(gool.Anims, i, 10);
+                            if (s.Contains("TEST SAVE"))
+                            {
+                                string seed = ModLoaderGlobals.RandomizerSeed.ToString();
+                                if (seed.Length < 10)
+                                {
+                                    while (seed.Length < 10)
+                                    {
+                                        seed += " ";
+                                    }
+                                }
+
+                                InsertStringsInByteArray(ref gool.Anims, i - 15, 27, new List<string>() {
+                                "CML " + ModLoaderGlobals.ProgramVersion.ToUpper(),
+                                "SEED: " + seed,
+                            });
+                            }
+                        }
+                    }
+                                
                 }
+
             }
         }
 
@@ -2673,6 +2392,5 @@ namespace CrateModLoader.GameSpecific.Crash1
                 }
             }
         }
-
     }
 }
