@@ -187,6 +187,24 @@ namespace CrateModGames.GameSpecific.Crash2 {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All Crates Are Invisible.
+        /// </summary>
+        internal static string Mod_InvisibleCrates {
+            get {
+                return ResourceManager.GetString("Mod_InvisibleCrates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All crates are invisible until you touch them..
+        /// </summary>
+        internal static string Mod_InvisibleCratesDesc {
+            get {
+                return ResourceManager.GetString("Mod_InvisibleCratesDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remove All Enemies.
         /// </summary>
         internal static string Mod_RemoveEnemies {
@@ -435,6 +453,24 @@ namespace CrateModGames.GameSpecific.Crash2 {
         internal static string Rand_EnemyPathsDesc {
             get {
                 return ResourceManager.GetString("Rand_EnemyPathsDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Random Crates Are Invisible.
+        /// </summary>
+        internal static string Rand_InvisibleCrates {
+            get {
+                return ResourceManager.GetString("Rand_InvisibleCrates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Random crates are invisible until you touch them..
+        /// </summary>
+        internal static string Rand_InvisibleCratesDesc {
+            get {
+                return ResourceManager.GetString("Rand_InvisibleCratesDesc", resourceCulture);
             }
         }
         

@@ -53,6 +53,7 @@ Crash Bandicoot 2: Cortex Strikes Back
 - New feature: Random Crates Removed
 - New feature: Randomize Crate Parameters
 - New feature: Random Enemies Removed
+- New feature: Random/All Crates Are Invisible
 - New feature: Randomize World Textures
 - New feature: Randomize Object Colors
 - New feature: Randomize Object Textures
@@ -69,6 +70,7 @@ Crash Bandicoot: WARPED
 - New feature: Randomize Crate Parameters
 - New feature: Random Enemies Removed
 - New feature: Remove Warp Room Barriers
+- New feature: Random/All Crates Are Invisible
 - New feature: Randomize World Textures
 - New feature: Randomize Object Colors
 - New feature: Randomize Object Textures

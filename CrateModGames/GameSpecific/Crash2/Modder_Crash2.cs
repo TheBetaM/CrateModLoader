@@ -53,8 +53,9 @@ namespace CrateModLoader.GameSpecific.Crash2
         public static ModPropOption Option_RandWarpRoomExits = new ModPropOption(Crash2_Text.Rand_WarpRoom, Crash2_Text.Rand_WarpRoomDesc);
         public static ModPropOption Option_RandCrates = new ModPropOption(Crash2_Text.Rand_WoodenCrates, Crash2_Text.Rand_WoodenCratesDesc);
         public static ModPropOption Option_RandCratesMissing = new ModPropOption(Crash2_Text.Rand_CratesRemoved, Crash2_Text.Rand_EnemiesRemovedDesc);
-        public static ModPropOption Option_RandEnemiesMissing = new ModPropOption(Crash2_Text.Rand_EnemiesRemoved, Crash2_Text.Rand_EnemiesRemovedDesc); 
-        
+        public static ModPropOption Option_RandEnemiesMissing = new ModPropOption(Crash2_Text.Rand_EnemiesRemoved, Crash2_Text.Rand_EnemiesRemovedDesc);
+        public static ModPropOption Option_InvisibleCrates = new ModPropOption(Crash2_Text.Mod_InvisibleCrates, Crash2_Text.Mod_InvisibleCratesDesc);
+        public static ModPropOption Option_RandInvisibleCrates = new ModPropOption(Crash2_Text.Rand_InvisibleCrates, Crash2_Text.Rand_InvisibleCratesDesc);
         public static ModPropOption Option_BackwardsLevels = new ModPropOption(Crash2_Text.Mod_BackwardsLevels, Crash2_Text.Mod_BackwardsLevelsDesc);
         public static ModPropOption Option_RandBackwardsLevels = new ModPropOption(Crash2_Text.Rand_BackwardsLevels, Crash2_Text.Rand_BackwardsLevelsDesc);
         public static ModPropOption Option_RandCrateContents = new ModPropOption(Crash2_Text.Rand_CrateContents, Crash2_Text.Rand_CrateContentsDesc);
@@ -73,7 +74,8 @@ namespace CrateModLoader.GameSpecific.Crash2
         public static ModPropOption Option_RandWorldTex = new ModPropOption(Crash2_Text.Rand_WorldTex, Crash2_Text.Rand_WorldTexDesc);
         public static ModPropOption Option_RandObjCol = new ModPropOption(Crash2_Text.Rand_ObjCol, Crash2_Text.Rand_ObjColDesc);
         public static ModPropOption Option_RandObjTex = new ModPropOption(Crash2_Text.Rand_ObjTex, Crash2_Text.Rand_ObjTexDesc);
-        public static ModPropOption Option_RandObjPalette = new ModPropOption(Crash2_Text.Rand_ObjectPalette, Crash2_Text.Rand_ObjectPaletteDesc); 
+        public static ModPropOption Option_RandObjPalette = new ModPropOption(Crash2_Text.Rand_ObjectPalette, Crash2_Text.Rand_ObjectPaletteDesc);
+        
 
         [ModCategory(1)]
         public static ModPropColor Prop_PantsColor = new ModPropColor(new int[4] { 0, 0, 255, 255 }, Crash2_Text.Prop_PantsColor, Crash2_Text.Prop_PantsColorDesc);
@@ -196,6 +198,8 @@ namespace CrateModLoader.GameSpecific.Crash2
                     if (Option_RandCratesMissing.Enabled) Crash2_Mods.Rand_CratesMissing(nsf, rand);
                     if (Option_RandCrateContents.Enabled) Crash2_Mods.Mod_RandomCrateContents(nsf, rand);
                     if (Option_RandCrateParams.Enabled) Crash2_Mods.Mod_RandomCrateParams(nsf, rand, NSF_Level);
+                    if (Option_RandInvisibleCrates.Enabled) Crash2_Mods.Mod_InvisibleCrates(nsf, rand, NSF_Level, true);
+                    if (Option_InvisibleCrates.Enabled) Crash2_Mods.Mod_InvisibleCrates(nsf, rand, NSF_Level, false);
                     if (Option_MirroredWorld.Enabled || Option_RandMirroredWorld.Enabled) Mod_MirrorLevel(nsf, nsd, rand, Option_RandMirroredWorld.Enabled);
                     if (Option_RandWorldPalette.Enabled) CrashTri_Common.Mod_Scenery_Swizzle(nsf, rand);
                     if (Option_GreyscaleWorld.Enabled) CrashTri_Common.Mod_Scenery_Greyscale(nsf);
