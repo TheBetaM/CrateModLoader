@@ -315,4 +315,16 @@
   <data name="Rand_EnemyCratesDesc" xml:space="preserve">
     <value>Random enemies and hazards are turned into random crates in each level. The box counter is adjusted accordingly.</value>
   </data>
+  <data name="Mod_InvisibleCrates" xml:space="preserve">
+    <value>All Crates Are Invisible</value>
+  </data>
+  <data name="Mod_InvisibleCratesDesc" xml:space="preserve">
+    <value>All crates are invisible until you touch them.</value>
+  </data>
+  <data name="Rand_InvisibleCrates" xml:space="preserve">
+    <value>Random Crates Are Invisible</value>
+  </data>
+  <data name="Rand_InvisibleCratesDesc" xml:space="preserve">
+    <value>Random crates are invisible until you touch them.</value>
+  </data>
 </root>
