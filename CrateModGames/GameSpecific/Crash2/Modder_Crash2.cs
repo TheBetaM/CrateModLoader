@@ -128,8 +128,6 @@ namespace CrateModLoader.GameSpecific.Crash2
 
             AppendFileInfoDir(nsfs, nsds, di); // this should return all NSF/NSD file pairs
 
-            ErrorManager.EnterSkipRegion();
-
             bool CachingPass = false;
             if (Option_RandMusic.Enabled || Option_RandMusicTracks.Enabled || Option_RandMusicInstruments.Enabled)
             {
@@ -169,11 +167,22 @@ namespace CrateModLoader.GameSpecific.Crash2
                     nsf = NSF.LoadAndProcess(File.ReadAllBytes(nsfFile.FullName), GameVersion.Crash2);
                     nsd = NSD.Load(File.ReadAllBytes(nsdFile.FullName));
                 }
-                catch (LoadAbortedException)
+                catch (Exception ex)
                 {
-                    Console.WriteLine("Crash: LoadAbortedException: " + nsfFile.Name);
-                    continue;
-                    //return;
+                    if (ex is LoadAbortedException)
+                    {
+                        Console.WriteLine("Crash: LoadAbortedException: " + nsfFile.Name + "\n" + ex.Message);
+                        continue;
+                        //return;
+                    }
+                    else if (ex is LoadSkippedException)
+                    {
+                        Console.WriteLine("Crash: LoadSkippedException: " + nsfFile.Name + "\n" + ex.Message);
+                        continue;
+                        //return;
+                    }
+                    else
+                        throw;
                 }
 
                 Crash2_Levels NSF_Level = GetLevelFromNSF(nsfFile.Name);
@@ -234,8 +243,6 @@ namespace CrateModLoader.GameSpecific.Crash2
                     i = -1;
                 }
             }
-
-            ErrorManager.ExitSkipRegion();
         }
 
         private void AppendFileInfoDir(IList<FileInfo> nsfpaths, IList<FileInfo> nsdpaths, DirectoryInfo di)

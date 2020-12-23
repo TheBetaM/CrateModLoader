@@ -142,7 +142,6 @@ namespace CrateModLoader.GameSpecific.Crash3
             DirectoryInfo di = new DirectoryInfo(ConsolePipeline.ExtractedPath);
             AppendFileInfoDir(nsfs, nsds, di); // this should return all NSF/NSD file pairs
 
-            ErrorManager.EnterSkipRegion();
 
             for (int i = 0; i < Math.Min(nsfs.Count, nsds.Count); ++i)
             {
@@ -154,18 +153,29 @@ namespace CrateModLoader.GameSpecific.Crash3
                     continue;
                 }
 
-                NSF nsf;
-                NewNSD nsd;
+                NSF nsf = null;
+                NewNSD nsd = null;
                 try
                 {
                     nsf = NSF.LoadAndProcess(File.ReadAllBytes(nsfFile.FullName), GameVersion.Crash3);
                     nsd = NewNSD.Load(File.ReadAllBytes(nsdFile.FullName));
                 }
-                catch (LoadAbortedException)
+                catch (Exception ex)
                 {
-                    Console.WriteLine("Crash: LoadAbortedException: " + nsfFile.Name);
-                    continue;
-                    //return;
+                    if (ex is LoadAbortedException)
+                    {
+                        Console.WriteLine("Crash: LoadAbortedException: " + nsfFile.Name + "\n" + ex.Message);
+                        continue;
+                        //return;
+                    }
+                    else if (ex is LoadSkippedException)
+                    {
+                        Console.WriteLine("Crash: LoadSkippedException: " + nsfFile.Name + "\n" + ex.Message);
+                        continue;
+                        //return;
+                    }
+                    else
+                        throw;
                 }
 
                 Crash3_Levels NSF_Level = GetLevelFromNSF(nsfFile.Name);
@@ -210,8 +220,6 @@ namespace CrateModLoader.GameSpecific.Crash3
                 File.WriteAllBytes(nsfFile.FullName, nsf.Save());
                 File.WriteAllBytes(nsdFile.FullName, nsd.Save());
             }
-
-            ErrorManager.ExitSkipRegion();
         }
 
         private void AppendFileInfoDir(IList<FileInfo> nsfpaths, IList<FileInfo> nsdpaths, DirectoryInfo di)
