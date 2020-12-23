@@ -55,6 +55,8 @@ namespace CrateModLoader.GameSpecific.Crash1
         public static ModPropOption Option_BackwardsHogLevels = new ModPropOption(Crash1_Text.Mod_BackwardsHogLevels, Crash1_Text.Mod_BackwardsHogLevelsDesc);
         public static ModPropOption Option_RandEnemiesMissing = new ModPropOption("Random Enemies Removed", "") { Hidden = true, }; //todo
         public static ModPropOption Option_RandCrateContents = new ModPropOption(CrashTri_Text.Rand_CrateContents, CrashTri_Text.Rand_CrateContentsDesc);
+        public static ModPropOption Option_InvisibleCrates = new ModPropOption(Crash1_Text.Mod_InvisibleCrates, Crash1_Text.Mod_InvisibleCratesDesc);
+        public static ModPropOption Option_RandInvisibleCrates = new ModPropOption(Crash1_Text.Rand_InvisibleCrates, Crash1_Text.Rand_InvisibleCratesDesc);
         public static ModPropOption Option_RandBosses = new ModPropOption(Crash1_Text.Rand_BossLevels, Crash1_Text.Rand_BossLevelsDesc);
         public static ModPropOption Option_CameraBigFOV = new ModPropOption(CrashTri_Text.Mod_CameraWideFOV, CrashTri_Text.Mod_CameraWideFOVDesc) { Hidden = true, };
         
@@ -173,6 +175,8 @@ namespace CrateModLoader.GameSpecific.Crash1
                     if (Option_CameraBigFOV.Enabled || Option_RandCameraFOV.Enabled) Crash1_Mods.Mod_CameraFOV(nsf, rand, Option_RandCameraFOV.Enabled);
                     if (Option_AllCratesBlank.Enabled) Crash1_Mods.Mod_RandomWoodCrates(nsf, rand, NSF_Level);
                     if (Option_RandCrateContents.Enabled) Crash1_Mods.Mod_RandomCrateContents(nsf, rand, NSF_Level);
+                    if (Option_RandInvisibleCrates.Enabled) Crash1_Mods.Mod_InvisibleCrates(nsf, rand, NSF_Level, true);
+                    if (Option_InvisibleCrates.Enabled) Crash1_Mods.Mod_InvisibleCrates(nsf, rand, NSF_Level, false);
                     if (Option_RandBosses.Enabled) Crash1_Mods.Mod_RandomizeBosses(nsf, nsd, NSF_Level, rand, false);
                     if (Option_RandMap.Enabled) Crash1_Mods.Mod_RandomizeMap(nsf, nsd, NSF_Level, rand);
                     if (Option_RandWorldPalette.Enabled) CrashTri_Common.Mod_Scenery_Swizzle(nsf, rand);
