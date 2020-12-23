@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using CrateModGames.GameSpecific.Crash3;
+using CrateModGames.GameSpecific.Crash1;
 using CrateModLoader.ModProperties;
 //Crash 3 API by chekwob and ManDude (https://github.com/cbhacks/CrashEdit)
 //Version number and seed are displayed in the pause menu in the Warp Room.
@@ -20,7 +21,7 @@ namespace CrateModLoader.GameSpecific.Crash3
                 {
                     ConsoleMode.PS1
                 },
-            API_Credit = Crash3_Text.API_Credit,
+            API_Credit = CrashTri_Text.API_Credit,
             API_Link = "https://github.com/cbhacks/CrashEdit",
             RegionID = new Dictionary<ConsoleMode, RegionCode[]>()
             {
@@ -49,50 +50,50 @@ namespace CrateModLoader.GameSpecific.Crash3
             },
         };
 
-        public static ModPropOption Option_RandCrates = new ModPropOption(Crash3_Text.Rand_WoodenCrates, Crash3_Text.Rand_WoodenCratesDesc);
-        public static ModPropOption Option_RandCratesMissing = new ModPropOption(Crash3_Text.Rand_CratesRemoved, Crash3_Text.Rand_CratesRemovedDesc);
-        public static ModPropOption Option_RandEnemiesMissing = new ModPropOption(Crash3_Text.Rand_EnemiesRemoved, Crash3_Text.Rand_EnemiesRemovedDesc); 
+        public static ModPropOption Option_RandCrates = new ModPropOption(CrashTri_Text.Rand_WoodenCrates, CrashTri_Text.Rand_WoodenCratesDesc);
+        public static ModPropOption Option_RandCratesMissing = new ModPropOption(CrashTri_Text.Rand_CratesRemoved, CrashTri_Text.Rand_CratesRemovedDesc);
+        public static ModPropOption Option_RandEnemiesMissing = new ModPropOption(CrashTri_Text.Rand_EnemiesRemoved, CrashTri_Text.Rand_EnemiesRemovedDesc); 
         public static ModPropOption Option_BackwardsLevels = new ModPropOption(Crash3_Text.Mod_BackwardsLevels, Crash3_Text.Mod_BackwardsLevelsDesc);
-        public static ModPropOption Option_RandBackwardsLevels = new ModPropOption(Crash3_Text.Rand_BackwardsLevels, Crash3_Text.Rand_BackwardsLevelsDesc);
-        public static ModPropOption Option_RandCrateContents = new ModPropOption(Crash3_Text.Rand_CrateContents, Crash3_Text.Rand_CrateContentsDesc);
-        public static ModPropOption Option_RandCrateParams = new ModPropOption(Crash3_Text.Rand_CrateParams, Crash3_Text.Rand_CrateParamsDesc);
-        public static ModPropOption Option_InvisibleCrates = new ModPropOption(Crash3_Text.Mod_InvisibleCrates, Crash3_Text.Mod_InvisibleCratesDesc);
-        public static ModPropOption Option_RandInvisibleCrates = new ModPropOption(Crash3_Text.Rand_InvisibleCrates, Crash3_Text.Rand_InvisibleCratesDesc);
-        public static ModPropOption Option_RandBoxCount = new ModPropOption(Crash3_Text.Rand_CrateCounter, Crash3_Text.Rand_CrateCounterDesc);
-        public static ModPropOption Option_CameraBigFOV = new ModPropOption(Crash3_Text.Mod_CameraWideFOV, Crash3_Text.Mod_CameraWideFOVDesc);
+        public static ModPropOption Option_RandBackwardsLevels = new ModPropOption(CrashTri_Text.Rand_BackwardsLevels, CrashTri_Text.Rand_BackwardsLevelsDesc);
+        public static ModPropOption Option_RandCrateContents = new ModPropOption(CrashTri_Text.Rand_CrateContents, CrashTri_Text.Rand_CrateContentsDesc);
+        public static ModPropOption Option_RandCrateParams = new ModPropOption(CrashTri_Text.Rand_CrateParams, CrashTri_Text.Rand_CrateParamsDesc);
+        public static ModPropOption Option_InvisibleCrates = new ModPropOption(CrashTri_Text.Mod_InvisibleCrates, CrashTri_Text.Mod_InvisibleCratesDesc);
+        public static ModPropOption Option_RandInvisibleCrates = new ModPropOption(CrashTri_Text.Rand_InvisibleCrates, CrashTri_Text.Rand_InvisibleCratesDesc);
+        public static ModPropOption Option_RandBoxCount = new ModPropOption(CrashTri_Text.Rand_CrateCounter, CrashTri_Text.Rand_CrateCounterDesc);
+        public static ModPropOption Option_CameraBigFOV = new ModPropOption(CrashTri_Text.Mod_CameraWideFOV, CrashTri_Text.Mod_CameraWideFOVDesc);
         public static ModPropOption Option_RemoveWarpRoomBarriers = new ModPropOption(Crash3_Text.Mod_RemoveWarpRoomWalls, Crash3_Text.Mod_RemoveWarpRoomWallsDesc); 
 
-        public static ModPropOption Option_RandSounds = new ModPropOption(Crash3_Text.Rand_SFX, Crash3_Text.Rand_SFXDesc);
-        public static ModPropOption Option_RandStreams = new ModPropOption(Crash3_Text.Rand_Streams, Crash3_Text.Rand_StreamsDesc);
-        public static ModPropOption Option_RandPantsColor = new ModPropOption(Crash3_Text.Rand_PantsColor, Crash3_Text.Rand_PantsColorDesc);
-        public static ModPropOption Option_RandWorldColors = new ModPropOption(Crash3_Text.Rand_WorldColors, Crash3_Text.Rand_WorldColorsDesc);
-        public static ModPropOption Option_RandWorldPalette = new ModPropOption(Crash3_Text.Rand_WorldPalette, Crash3_Text.Rand_WorldPaletteDesc);
-        public static ModPropOption Option_GreyscaleWorld = new ModPropOption(Crash3_Text.Mod_GreyscaleWorld, Crash3_Text.Mod_GreyscaleWorldDesc);
-        public static ModPropOption Option_UntexturedWorld = new ModPropOption(Crash3_Text.Mod_UntexturedWorld, Crash3_Text.Mod_UntexturedWorldDesc);
-        public static ModPropOption Option_RandWorldTex = new ModPropOption(Crash3_Text.Rand_WorldTex, Crash3_Text.Rand_WorldTexDesc);
-        public static ModPropOption Option_RandObjCol = new ModPropOption(Crash3_Text.Rand_ObjCol, Crash3_Text.Rand_ObjColDesc);
-        public static ModPropOption Option_RandObjTex = new ModPropOption(Crash3_Text.Rand_ObjTex, Crash3_Text.Rand_ObjTexDesc);
-        public static ModPropOption Option_RandObjPalette = new ModPropOption(Crash3_Text.Rand_ObjectPalette, Crash3_Text.Rand_ObjectPaletteDesc);
+        public static ModPropOption Option_RandSounds = new ModPropOption(CrashTri_Text.Rand_SFX, CrashTri_Text.Rand_SFXDesc);
+        public static ModPropOption Option_RandStreams = new ModPropOption(CrashTri_Text.Rand_Streams, CrashTri_Text.Rand_StreamsDesc);
+        public static ModPropOption Option_RandPantsColor = new ModPropOption(CrashTri_Text.Rand_PantsColor, CrashTri_Text.Rand_PantsColorDesc);
+        public static ModPropOption Option_RandWorldColors = new ModPropOption(CrashTri_Text.Rand_WorldColors, CrashTri_Text.Rand_WorldColorsDesc);
+        public static ModPropOption Option_RandWorldPalette = new ModPropOption(CrashTri_Text.Rand_WorldPalette, CrashTri_Text.Rand_WorldPaletteDesc);
+        public static ModPropOption Option_GreyscaleWorld = new ModPropOption(CrashTri_Text.Mod_GreyscaleWorld, CrashTri_Text.Mod_GreyscaleWorldDesc);
+        public static ModPropOption Option_UntexturedWorld = new ModPropOption(CrashTri_Text.Mod_UntexturedWorld, CrashTri_Text.Mod_UntexturedWorldDesc);
+        public static ModPropOption Option_RandWorldTex = new ModPropOption(CrashTri_Text.Rand_WorldTex, CrashTri_Text.Rand_WorldTexDesc);
+        public static ModPropOption Option_RandObjCol = new ModPropOption(CrashTri_Text.Rand_ObjCol, CrashTri_Text.Rand_ObjColDesc);
+        public static ModPropOption Option_RandObjTex = new ModPropOption(CrashTri_Text.Rand_ObjTex, CrashTri_Text.Rand_ObjTexDesc);
+        public static ModPropOption Option_RandObjPalette = new ModPropOption(CrashTri_Text.Rand_ObjectPalette, CrashTri_Text.Rand_ObjectPaletteDesc);
 
         [ModCategory(1)]
-        public static ModPropColor Prop_PantsColor = new ModPropColor(new int[4] { 0, 0, 255, 255 }, Crash3_Text.Prop_PantsColor, Crash3_Text.Prop_PantsColorDesc);
+        public static ModPropColor Prop_PantsColor = new ModPropColor(new int[4] { 0, 0, 255, 255 }, CrashTri_Text.Prop_PantsColor, CrashTri_Text.Prop_PantsColorDesc);
 
         // less used
         [ModCategory(1)]
-        public static ModPropOption Option_AllEnemiesMissing = new ModPropOption(Crash3_Text.Mod_EnemiesRemoved, Crash3_Text.Mod_EnemiesRemovedDesc) { ModMenuOnly = true };
+        public static ModPropOption Option_AllEnemiesMissing = new ModPropOption(CrashTri_Text.Mod_RemoveEnemies, CrashTri_Text.Mod_RemoveEnemies) { ModMenuOnly = true };
         [ModCategory(1)]
-        public static ModPropOption Option_UncoloredObj = new ModPropOption(Crash3_Text.Mod_GreyscaleObjects, Crash3_Text.Mod_GreyscaleObjectsDesc) { ModMenuOnly = true };
+        public static ModPropOption Option_UncoloredObj = new ModPropOption(CrashTri_Text.Mod_GreyscaleObjects, CrashTri_Text.Mod_GreyscaleObjectsDesc) { ModMenuOnly = true };
         [ModCategory(1)]
-        public static ModPropOption Option_AllCratesBlank = new ModPropOption(Crash3_Text.Mod_AllCratesBlank, Crash3_Text.Mod_AllCratesBlankDesc) { ModMenuOnly = true };
+        public static ModPropOption Option_AllCratesBlank = new ModPropOption(CrashTri_Text.Mod_AllCratesBlank, CrashTri_Text.Mod_AllCratesBlankDesc) { ModMenuOnly = true };
         [ModCategory(1)]
-        public static ModPropOption Option_AllCratesWumpa = new ModPropOption(Crash3_Text.Mod_AllCratesWumpa, Crash3_Text.Mod_AllCratesWumpaDesc) { ModMenuOnly = true };
+        public static ModPropOption Option_AllCratesWumpa = new ModPropOption(CrashTri_Text.Mod_AllCratesWumpa, CrashTri_Text.Mod_AllCratesWumpaDesc) { ModMenuOnly = true };
         [ModCategory(1)]
-        public static ModPropOption Option_RandCameraFOV = new ModPropOption(Crash3_Text.Rand_CameraFOV, Crash3_Text.Rand_CameraFOVDesc) { ModMenuOnly = true };
+        public static ModPropOption Option_RandCameraFOV = new ModPropOption(CrashTri_Text.Rand_CameraFOV, CrashTri_Text.Rand_CameraFOVDesc) { ModMenuOnly = true };
 
         //unfinished
         [ModCategory(1)]
         public static ModPropOption Option_AllEnemiesAreCrates = new ModPropOption(Crash3_Text.Mod_EnemyCrates, Crash3_Text.Mod_EnemyCratesDesc) { ModMenuOnly = true, Hidden = true };
-        public static ModPropOption Option_RandEnemiesAreCrates = new ModPropOption(Crash3_Text.Rand_EnemyCrates, Crash3_Text.Rand_EnemyCratesDesc) { Hidden = true }; //unfinished
+        public static ModPropOption Option_RandEnemiesAreCrates = new ModPropOption(CrashTri_Text.Rand_EnemyCrates, CrashTri_Text.Rand_EnemyCratesDesc) { Hidden = true }; //unfinished
         public static ModPropOption Option_UntexturedObj = new ModPropOption("Untextured Objects", "") { Hidden = true }; // broken
         public static ModPropOption Option_RandWarpRoom = new ModPropOption(Crash3_Text.Rand_WarpRoom, Crash3_Text.Rand_WarpRoomDesc) { Hidden = true }; //unstable, unfinished
         public static ModPropOption Option_RandFlyingLevels = new ModPropOption(Crash3_Text.Rand_FlyingLevels, Crash3_Text.Rand_FlyingLevelsDesc) { Hidden = true }; //unfinished

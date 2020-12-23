@@ -57,6 +57,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameSpecific\Crash1\Crash1_Mods.cs" />
+    <Compile Include="GameSpecific\Crash1\CrashTri_Text.Designer.cs">
+      <DependentUpon>CrashTri_Text.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="GameSpecific\Crash1\Crash1_Text.Designer.cs">
       <DependentUpon>Crash1_Text.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -279,6 +284,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="GameSpecific\Crash1\CrashTri_Text.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>CrashTri_Text.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="GameSpecific\Crash1\Crash1_Text.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Crash1_Text.Designer.cs</LastGenOutput>

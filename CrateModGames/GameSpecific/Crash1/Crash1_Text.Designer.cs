@@ -19,7 +19,7 @@ namespace CrateModGames.GameSpecific.Crash1 {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Crash1_Text {
@@ -61,38 +61,11 @@ namespace CrateModGames.GameSpecific.Crash1 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to API by chekwob and ManDude.
-        /// </summary>
-        internal static string API_Credit {
-            get {
-                return ResourceManager.GetString("API_Credit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Crash Bandicoot.
         /// </summary>
         internal static string GameTitle {
             get {
                 return ResourceManager.GetString("GameTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to All Crates Are Blank.
-        /// </summary>
-        internal static string Mod_AllCratesBlank {
-            get {
-                return ResourceManager.GetString("Mod_AllCratesBlank", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to All regular crates are replaced with Blank ones..
-        /// </summary>
-        internal static string Mod_AllCratesBlankDesc {
-            get {
-                return ResourceManager.GetString("Mod_AllCratesBlankDesc", resourceCulture);
             }
         }
         
@@ -151,24 +124,6 @@ namespace CrateModGames.GameSpecific.Crash1 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Wider Camera Field-Of-View.
-        /// </summary>
-        internal static string Mod_CameraWideFOV {
-            get {
-                return ResourceManager.GetString("Mod_CameraWideFOV", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The camera is further away from the player than normal (recommended for Backwards Levels).
-        /// </summary>
-        internal static string Mod_CameraWideFOVDesc {
-            get {
-                return ResourceManager.GetString("Mod_CameraWideFOVDesc", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Random Levels Are Backwards.
         /// </summary>
         internal static string Rand_BackwardsLevels {
@@ -219,96 +174,6 @@ namespace CrateModGames.GameSpecific.Crash1 {
         internal static string Rand_CameraFOVDesc {
             get {
                 return ResourceManager.GetString("Rand_CameraFOVDesc", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Randomize Crate Contents.
-        /// </summary>
-        internal static string Rand_CrateContents {
-            get {
-                return ResourceManager.GetString("Rand_CrateContents", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Contents of regular crates are randomized between different amounts of Wumpa, an extra life, and a mask..
-        /// </summary>
-        internal static string Rand_CrateContentsDesc {
-            get {
-                return ResourceManager.GetString("Rand_CrateContentsDesc", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Randomize Wooden Crates.
-        /// </summary>
-        internal static string Rand_Crates {
-            get {
-                return ResourceManager.GetString("Rand_Crates", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Randomizes wooden crate types from available ones in each level..
-        /// </summary>
-        internal static string Rand_CratesDesc {
-            get {
-                return ResourceManager.GetString("Rand_CratesDesc", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Randomize Sound Effects.
-        /// </summary>
-        internal static string Rand_SFX {
-            get {
-                return ResourceManager.GetString("Rand_SFX", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The sound effects in each level are randomized between each other..
-        /// </summary>
-        internal static string Rand_SFXDesc {
-            get {
-                return ResourceManager.GetString("Rand_SFXDesc", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Randomize World Colors.
-        /// </summary>
-        internal static string Rand_WorldColors {
-            get {
-                return ResourceManager.GetString("Rand_WorldColors", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The scenery colors are randomized in each level..
-        /// </summary>
-        internal static string Rand_WorldColorsDesc {
-            get {
-                return ResourceManager.GetString("Rand_WorldColorsDesc", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Randomize World Palette.
-        /// </summary>
-        internal static string Rand_WorldPalette {
-            get {
-                return ResourceManager.GetString("Rand_WorldPalette", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The scenery color palette is randomized in each level..
-        /// </summary>
-        internal static string Rand_WorldPaletteDesc {
-            get {
-                return ResourceManager.GetString("Rand_WorldPaletteDesc", resourceCulture);
             }
         }
     }
