@@ -166,34 +166,19 @@ namespace CrateModLoader.GameSpecific.Crash1
         public static void Mod_InvisibleCrates(NSF nsf, Random rand, Crash1_Levels level, bool isRandom)
         {
             // edit NSF
-            foreach (Chunk chunk in nsf.Chunks)
+            foreach (OldZoneEntry zone in nsf.GetEntries<OldZoneEntry>())
             {
-                if (chunk is NormalChunk zonechunk)
+                foreach (OldEntity ent in zone.Entities)
                 {
-                    foreach (Entry entry in zonechunk.Entries)
+                    if (ent.Type == 34)
                     {
-                        if (entry is OldZoneEntry)
+                        if (!isRandom || (isRandom && rand.Next(2) == 0))
                         {
-                            OldZoneEntry zone = (OldZoneEntry)entry;
-                            foreach (OldEntity ent in zone.Entities)
-                            {
-                                if (ent.Type == 34)
-                                {
-                                    if (!isRandom || (isRandom && rand.Next(2) == 0))
-                                    {
-                                        short ModeB = ent.ModeB;
-
-                                        ModeB |= 1 << 0;
-
-                                        ent.ModeB = ModeB;
-                                    }
-                                }
-                            }
+                            ent.VecY |= 0x1;
                         }
                     }
                 }
             }
-
         }
 
         public static void Mod_RandomCrates(NSF nsf, Random rand, Crash1_Levels level)
