@@ -138,6 +138,12 @@
   <data name="Mod_BackwardsLevelsDesc" xml:space="preserve">
     <value>All onfoot levels start at the end and end at the start. There are minimal design changes to ensure levels are beatable. The game is 100% completable.</value>
   </data>
+  <data name="Mod_InvisibleCrates" xml:space="preserve">
+    <value>All Crates Are Invisible</value>
+  </data>
+  <data name="Mod_InvisibleCratesDesc" xml:space="preserve">
+    <value>All crates are invisible until you attack or jump on them.</value>
+  </data>
   <data name="Rand_BackwardsLevels" xml:space="preserve">
     <value>Random Levels Are Backwards</value>
   </data>
@@ -155,5 +161,11 @@
   </data>
   <data name="Rand_CameraFOVDesc" xml:space="preserve">
     <value>The distance between the camera and the player is randomized.</value>
+  </data>
+  <data name="Rand_InvisibleCrates" xml:space="preserve">
+    <value>Random Crates Are Invisible</value>
+  </data>
+  <data name="Rand_InvisibleCratesDesc" xml:space="preserve">
+    <value>Random crates are invisible until you attack or jump on them.</value>
   </data>
 </root>
