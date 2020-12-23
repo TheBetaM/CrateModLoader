@@ -263,11 +263,11 @@ namespace CrateModLoader.GameSpecific.Crash1
             "19",
         };
 
-        internal Crash1_Levels GetLevelFromNSF(string NSf_Name)
+        internal Crash1_Levels GetLevelFromNSF(string nsf_name)
         {
             for (int i = 0; i < Crash1_LevelFileNames.Length; i++)
             {
-                if (NSf_Name.Contains("S00000" + Crash1_LevelFileNames[i]))
+                if (nsf_name.Contains("S00000" + Crash1_LevelFileNames[i]))
                 {
                     return (Crash1_Levels)i;
                 }
