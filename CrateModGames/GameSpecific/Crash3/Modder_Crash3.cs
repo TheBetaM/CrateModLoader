@@ -153,8 +153,8 @@ namespace CrateModLoader.GameSpecific.Crash3
                     continue;
                 }
 
-                NSF nsf = null;
-                NewNSD nsd = null;
+                NSF nsf;
+                NewNSD nsd;
                 try
                 {
                     nsf = NSF.LoadAndProcess(File.ReadAllBytes(nsfFile.FullName), GameVersion.Crash3);
