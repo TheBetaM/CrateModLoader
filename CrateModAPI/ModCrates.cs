@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Globalization;
+using CrateModLoader.ModProperties;
 
 namespace CrateModLoader
 {
@@ -547,11 +548,49 @@ namespace CrateModLoader
             File.WriteAllLines(path, LineList);
         }
 
+        public static Dictionary<string, string> SaveSettingsToCrate(Modder mod, string path, bool fullSettings)
+        {
+            Dictionary<string, string> Assets = new Dictionary<string, string>();
+            string tempPath = ModLoaderGlobals.BaseDirectory + @"\" + ModLoaderGlobals.TempName;
+            string assetsPath = tempPath + @"\" + ModLoaderGlobals.ModAssetsFolderName + @"\";
+
+            List<string> LineList = new List<string>();
+
+            LineList.Add(string.Format("{0} {1} {2}", CommentSymbol, ModLoaderGlobals.ProgramVersion, "Auto-Generated Settings File"));
+
+            foreach (ModPropertyBase prop in mod.Props)
+            {
+                if (fullSettings || (!fullSettings && prop.HasChanged))
+                {
+                    string text = "";
+
+                    if (prop is ModPropExternalResourceBase ext)
+                    {
+                        Assets.Add(assetsPath + ext.CodeName + ext.AssetExtension, ext.CodeName + ext.AssetExtension);
+                        ext.ResourceToFile(assetsPath + ext.CodeName + ext.AssetExtension);
+                        ext.ResourcePath = ModLoaderGlobals.ModAssetsFolderName + @"\" + ext.CodeName + ext.AssetExtension;
+                    }
+
+                    prop.Serialize(ref text);
+                    LineList.Add(text);
+                }
+            }
+
+            File.WriteAllLines(path, LineList);
+            return Assets;
+        }
+
         /// <summary>
         /// Saves the given Mod Crate using the given Modder to given path.
         /// </summary>
         public static void SaveSimpleCrateToFile(Modder mod, string path, ModCrate crate)
         {
+            string tempPath = ModLoaderGlobals.BaseDirectory + @"\" + ModLoaderGlobals.TempName;
+            string assetsPath = tempPath + @"\" + ModLoaderGlobals.ModAssetsFolderName  + @"\";
+
+            Directory.CreateDirectory(tempPath);
+            Directory.CreateDirectory(assetsPath);
+
             List<string> LineList_Info = new List<string>();
 
             LineList_Info.Add(string.Format("{0}{1}{2}", Prop_Name, Separator, crate.Name));
@@ -561,36 +600,40 @@ namespace CrateModLoader
             LineList_Info.Add(string.Format("{0}{1}{2}", Prop_CML_Version, Separator, crate.CML_Version));
             LineList_Info.Add(string.Format("{0}{1}{2}", Prop_Game, Separator, crate.TargetGame));
 
-            File.WriteAllLines(Path.Combine(ModLoaderGlobals.BaseDirectory, InfoFileName), LineList_Info);
+            File.WriteAllLines(Path.Combine(tempPath, InfoFileName), LineList_Info);
 
-            SaveSettingsToFile(mod, Path.Combine(ModLoaderGlobals.BaseDirectory, SettingsFileName), false);
+            Dictionary<string, string> Assets = SaveSettingsToCrate(mod, Path.Combine(tempPath, SettingsFileName), false);
 
             if (crate.HasIcon)
             {
-                File.Copy(crate.IconPath, Path.Combine(ModLoaderGlobals.BaseDirectory, IconFileName));
+                File.Copy(crate.IconPath, Path.Combine(tempPath, IconFileName));
                 //crate.Icon.Save(Path.Combine(ModLoaderGlobals.BaseDirectory, IconFileName));
             }
 
+            string zipFolderName = ModLoaderGlobals.ModAssetsFolderName + @"\";
             using (FileStream fileStream = new FileStream(path, FileMode.Create))
             {
                 using (ZipArchive zip = new ZipArchive(fileStream, ZipArchiveMode.Create))
                 {
-                    zip.CreateEntryFromFile(Path.Combine(ModLoaderGlobals.BaseDirectory, InfoFileName), InfoFileName);
-                    zip.CreateEntryFromFile(Path.Combine(ModLoaderGlobals.BaseDirectory, SettingsFileName), SettingsFileName);
+                    zip.CreateEntryFromFile(Path.Combine(tempPath, InfoFileName), InfoFileName);
+                    zip.CreateEntryFromFile(Path.Combine(tempPath, SettingsFileName), SettingsFileName);
                     if (crate.HasIcon)
                     {
-                        zip.CreateEntryFromFile(Path.Combine(ModLoaderGlobals.BaseDirectory, IconFileName), IconFileName);
+                        zip.CreateEntryFromFile(Path.Combine(tempPath, IconFileName), IconFileName);
+                    }
+                    if (Assets.Count > 0)
+                    {
+                        zip.CreateEntry(zipFolderName);
+                        foreach (KeyValuePair<string, string> pair in Assets)
+                        {
+                            zip.CreateEntryFromFile(pair.Key, zipFolderName + pair.Value);
+                        }
                     }
                 }
             }
 
             //cleanup
-            File.Delete(Path.Combine(ModLoaderGlobals.BaseDirectory, InfoFileName));
-            File.Delete(Path.Combine(ModLoaderGlobals.BaseDirectory, SettingsFileName));
-            if (crate.HasIcon)
-            {
-                File.Delete(Path.Combine(ModLoaderGlobals.BaseDirectory, IconFileName));
-            }
+            Directory.Delete(tempPath, true);
 
         }
 
@@ -658,11 +701,17 @@ namespace CrateModLoader
                 return;
             }
 
+            ModCrate crate = null;
+            if (isModCrate)
+            {
+                crate = LoadMetadata(file);
+            }
+
             foreach (ModPropertyBase prop in mod.Props)
             {
                 if (Settings.ContainsKey(prop.CodeName))
                 {
-                    prop.DeSerialize(Settings[prop.CodeName], null);
+                    prop.DeSerialize(Settings[prop.CodeName], crate);
                     prop.HasChanged = true;
                 }
             }

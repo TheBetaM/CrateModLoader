@@ -49,5 +49,7 @@ namespace CrateModLoader
         /// <summary> Path to mods' folder. Ends with '\' </summary>
         public static string ModDirectory = BaseDirectory + @"Mods\";
 
+        public static string ModAssetsFolderName = "modassets";
+
     }
 }

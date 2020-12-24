@@ -13,11 +13,13 @@ namespace CrateModGames.GameSpecific.Rayman3
         {
             BrowseFilter = "Image Files (*.png;*.bmp)|*.png;*.bmp|";
             PreloadBonus = true;
+            AssetExtension = ".png";
         }
         public ModProp_TextureFile(bool b, string name, string desc) : base(b, name, desc)
         {
             BrowseFilter = "Image Files (*.png;*.bmp)|*.png;*.bmp|";
             PreloadBonus = true;
+            AssetExtension = ".png";
         }
 
         public override bool TryResource(string path)
@@ -29,13 +31,16 @@ namespace CrateModGames.GameSpecific.Rayman3
 
             try
             {
-                Bitmap img = new Bitmap(path);
+                Bitmap temp = new Bitmap(path);
 
-                if (img != null)
+                if (temp != null)
                 {
+                    Bitmap img = new Bitmap(temp);
                     Resource = img;
+                    temp.Dispose();
                     return true;
                 }
+                temp.Dispose();
             }
             catch
             {
