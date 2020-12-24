@@ -58,18 +58,18 @@ namespace CrateModLoader
                 if (inputDirectoryMode)
                 {
                     if (!Metadata.CanBuildROMfromFolder)
-                        throw new NotImplementedException();
+                        throw new NotImplementedException("Building a ROM from a folder of this console is not supported yet.");
                 }
                 else
                 {
                     if (!Metadata.CanBuildROMfromROM)
-                        throw new NotImplementedException();
+                        throw new NotImplementedException("Building a ROM from a ROM of this console is not supported yet.");
                 }
             }
             else
             {
                 if (!Metadata.CanBuildFolder)
-                    throw new NotImplementedException();
+                    throw new NotImplementedException("Building a folder of this console is not supported yet.");
             }
         }
 

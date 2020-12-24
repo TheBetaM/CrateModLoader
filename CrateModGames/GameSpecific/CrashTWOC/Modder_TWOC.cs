@@ -16,7 +16,7 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
                 {
                     ConsoleMode.PS2,
                     //ConsoleMode.GCN,
-                    ConsoleMode.XBOX,
+                    //ConsoleMode.XBOX,
                 },
             API_Credit = string.Empty,
             API_Link = string.Empty,
@@ -78,7 +78,7 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
         public static ModPropOption Option_RandCratesRemoved = new ModPropOption("Random Crates Removed", "Crates are randomly removed in each level. The box counter is adjusted accordingly.");
         public static ModPropOption Option_RandEnemyPaths = new ModPropOption("Randomize Enemy Paths", "Reverses paths of random enemies.");
         public static ModPropOption Option_RandEnemiesRemoved = new ModPropOption("Random Enemies Removed", "Enemies are randomly removed in each level.");
-        public static ModPropOption Option_RandMusic = new ModPropOption("Randomize Music", "Music tracks are shuffled around.") //not tested
+        public static ModPropOption Option_RandMusic = new ModPropOption("Randomize Music", "Music tracks are shuffled around.") //works on xbox
         { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN, ConsoleMode.XBOX }, };
 
         public static ModPropOption Option_RandWumpaCrates = new ModPropOption("Random Wumpa Are Random Crates", "Wumpas are randomly turned into crates in each level. The box counter is adjusted accordingly.")
@@ -505,7 +505,7 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
             }
             else
             {
-                musicPath = ConsolePipeline.ExtractedPath + @"sfx\Music\";
+                musicPath = ConsolePipeline.ExtractedPath + @"Crashdat\sfx\Music\";
                 ext = ".wav";
                 if (MusicNames.Contains(Music_GC_Extra))
                 {

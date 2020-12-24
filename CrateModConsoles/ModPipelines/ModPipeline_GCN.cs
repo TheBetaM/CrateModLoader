@@ -18,8 +18,7 @@ namespace CrateModLoader.ModPipelines
             Console = ConsoleMode.GCN,
             Layer = 0,
             NeedsDetection = true,
-            CanBuildROMfromFolder = false, // to fix: Incorrect paths because of product code folder
-            CanBuildFolder = false, // to fix: incorrect paths
+            CanBuildROMfromFolder = false, // to fix: Incorrect root path because of missing product code folder ("/temp/files" instead of "/temp/<productCode>/files")
         };
 
         public ModPipeline_GCN()

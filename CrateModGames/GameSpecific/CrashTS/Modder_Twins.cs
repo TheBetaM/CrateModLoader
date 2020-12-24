@@ -152,8 +152,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
         public static ModPropOption Option_RandGemLocations = new ModPropOption(Twins_Text.Rand_GemLocations, Twins_Text.Rand_GemLocationsDesc);
         public static ModPropOption Option_RandCharacterParams = new ModPropOption(Twins_Text.Rand_CharParams, Twins_Text.Rand_CharParamsDesc);
         public static ModPropOption Option_RandSurfaces = new ModPropOption(Twins_Text.Rand_SurfaceParams, Twins_Text.Rand_SurfaceParamsDesc);
-        public static ModPropOption Option_RandStartingChunk = new ModPropOption(Twins_Text.Rand_StartingLevel, Twins_Text.Rand_StartingLevelDesc)
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 }, };
+        public static ModPropOption Option_RandStartingChunk = new ModPropOption(Twins_Text.Rand_StartingLevel, Twins_Text.Rand_StartingLevelDesc);
         public static ModPropOption Option_FlyingKick = new ModPropOption(Twins_Text.Mod_FlyingKick, Twins_Text.Mod_FlyingKickDesc);
         public static ModPropOption Option_StompKick = new ModPropOption(Twins_Text.Mod_StompKick, Twins_Text.Mod_StompKickDesc);
         public static ModPropOption Option_DoubleJumpCortex = new ModPropOption(Twins_Text.Mod_CortexDoubleJump, Twins_Text.Mod_CortexDoubleJumpDesc);
@@ -169,7 +168,8 @@ namespace CrateModLoader.GameSpecific.CrashTS
         public static ModPropOption Option_RandPantsColor = new ModPropOption(Twins_Text.Rand_PantsColor, Twins_Text.Rand_PantsColorDesc)
         { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 }, };
         public static ModPropOption Option_RandomizeMusic = new ModPropOption(Twins_Text.Rand_Music, Twins_Text.Rand_MusicDesc);
-        public static ModPropOption Option_RandWorldPalette = new ModPropOption(Twins_Text.Rand_WorldPalette, Twins_Text.Rand_WorldPaletteDesc);
+        public static ModPropOption Option_RandWorldPalette = new ModPropOption(Twins_Text.Rand_WorldPalette, Twins_Text.Rand_WorldPaletteDesc)
+        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 }, };
         [ModCategory((int)ModProps.Misc)]
         public static ModPropOption Option_GreyscaleWorld = new ModPropOption(Twins_Text.Mod_GreyscaleWorld, Twins_Text.Mod_GreyscaleWorldDesc)
         { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 }, ModMenuOnly = true, };

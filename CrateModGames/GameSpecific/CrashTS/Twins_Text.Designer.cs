@@ -1312,7 +1312,7 @@ namespace CrateModGames.GameSpecific.CrashTS {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Explosions only take away a mask..
+        ///   Looks up a localized string similar to Crate explosions only take away a mask..
         /// </summary>
         internal static string Mod_ClassicExplosionDamageDesc {
             get {

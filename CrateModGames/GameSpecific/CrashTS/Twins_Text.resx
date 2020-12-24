@@ -199,7 +199,7 @@
     <value>Classic Explosion Damage</value>
   </data>
   <data name="Mod_ClassicExplosionDamageDesc" xml:space="preserve">
-    <value>Explosions only take away a mask.</value>
+    <value>Crate explosions only take away a mask.</value>
   </data>
   <data name="Mod_ClassicHealth" xml:space="preserve">
     <value>Classic Health</value>

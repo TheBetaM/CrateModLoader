@@ -304,7 +304,7 @@ namespace CrateModLoader.GameSpecific.Crash2
                                         byte SetA = ent.Settings[1].ValueA;
                                         int SetB = ent.Settings[1].ValueB;
 
-                                        int cratePreset = rand.Next(8);
+                                        int cratePreset = rand.Next(6);
 
                                         switch (cratePreset)
                                         {

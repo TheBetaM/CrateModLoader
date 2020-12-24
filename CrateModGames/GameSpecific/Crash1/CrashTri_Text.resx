@@ -247,7 +247,7 @@
     <value>Colors used in objects are shuffled around.</value>
   </data>
   <data name="Rand_ObjectPalette" xml:space="preserve">
-    <value>Swizzle Object Palette</value>
+    <value>Randomize Object Palette</value>
   </data>
   <data name="Rand_ObjectPaletteDesc" xml:space="preserve">
     <value>Swizzle the object colors into a random shade.</value>
@@ -298,7 +298,7 @@
     <value>Randomize World Palette</value>
   </data>
   <data name="Rand_WorldPalette1" xml:space="preserve">
-    <value>Swizzle World Palette</value>
+    <value>Randomize World Palette</value>
   </data>
   <data name="Rand_WorldPaletteDesc" xml:space="preserve">
     <value>The scenery color palette is randomized in each level.</value>

@@ -19,7 +19,7 @@ namespace CrateModGames.GameSpecific.Crash1 {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class CrashTri_Text {
@@ -448,7 +448,7 @@ namespace CrateModGames.GameSpecific.Crash1 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Swizzle Object Palette.
+        ///   Looks up a localized string similar to Randomize Object Palette.
         /// </summary>
         internal static string Rand_ObjectPalette {
             get {
@@ -601,7 +601,7 @@ namespace CrateModGames.GameSpecific.Crash1 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Swizzle World Palette.
+        ///   Looks up a localized string similar to Randomize World Palette.
         /// </summary>
         internal static string Rand_WorldPalette1 {
             get {

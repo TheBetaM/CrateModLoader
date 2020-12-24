@@ -312,7 +312,7 @@ namespace CrateModLoader.GameSpecific.Crash3
                                         byte SetA = ent.Settings[1].ValueA;
                                         int SetB = ent.Settings[1].ValueB;
 
-                                        int cratePreset = rand.Next(8);
+                                        int cratePreset = rand.Next(6);
 
                                         switch (cratePreset)
                                         {
@@ -2572,6 +2572,7 @@ namespace CrateModLoader.GameSpecific.Crash3
                         {
                             foreach (Entity ent in zone.Entities)
                             {
+                                ent.Name = null; // may need the extra space
                                 if (ent.Type != null && ent.Subtype != null)
                                 {
                                     foreach (EntityTypePair pair in EnemiesToRemove)

@@ -19,7 +19,7 @@ Features:
 - Version and seed visible in the Credits screen
 Mod Menu:
 - Individual character and kart physics parameters
-- UI Textures
+- UI Textures, icons
   
 Crash Twinsanity
 Supported: All PS2 versions (.ISO format), All XBOX versions (.ISO format)
@@ -29,23 +29,31 @@ API by NeoKesha, Smartkin, ManDude, BetaM and Marko. (https://github.com/Smartki
 Features:  
 - Randomize Individual Crates
 - Randomize Gem Locations   
-- Randomize Level Music  
 - Randomize Character Parameters  
+- Randomize Surface Parameters
+- Randomize Starting Level
 - Enable Flying Kick for Crash  
 - Enable Stomp Kick for Crash (Flying Kick variation)  
 - Enable Double Jump for Cortex  
 - Enable Double Jump for Nina  
 - Enable Unused Enemies  
 - Switch Characters At Will
+- Classic Slide Jump for Crash
 - Classic Health
 - Classic Explosion Damage
-- Untextured World
+- Unlocked Camera Everywhere
+- Randomize Level Music  
+- Randomize Pants Color
+- Ranodmize World Palette (PS2)
 - Greyscale World (PS2)
+- Untextured World
 - Version and seed visible in the Autosave Disabled screen  
 Mod Menu:
-- Randomize Crate Types  
-- Individual character parameters
-- Starting chunk
+- Additional features  
+- Individual character parameters  
+- Starting/Credits chunk settings  
+- Customize Pants Color 
+- UI textures, icons, galleries  
   
 Crash Tag Team Racing
 Supported: All PS2 versions (.ISO format), All GC versions (.ISO format), All PSP versions (.ISO format), All XBOX versions (.ISO format)  
@@ -67,9 +75,13 @@ Supported: All PS2 versions (.ISO format), All GC versions (.ISO format), All XB
 Mod abbreviation: Rayman3  
 Features:
 - Randomize Level Order (Any amount of Levels)  
-- Randomize Outfit Visuals (GC Only)  
-- New Game Into 2D Nightmare (GC Only)  
-- Remove Intro Videos (GC Only)  
+- Randomize Sub-Level Order
+- Randomize Outfit Colors (GCN)
+- Randomize Copter Colors (GCN)
+- Randomize HUD Colors (GCN)
+- Randomize Outfit Visuals (GCN)  
+- New Game Into 2D Nightmare (GCN)  
+- Remove Intro Videos (GCN)  
 Mod Menu:
 - Rayman Textures
 - UI and other common Textures
@@ -82,16 +94,15 @@ Features:
 - Backwards Levels
 - Random Levels Are Backwards
 - Randomize Crate Contents
+- Randomize Wooden Crates
+- Random/All Crates Are Invisible
 - Randomize Boss Levels
-- Wider Camera Field-Of-View
 - Randomize World Colors
 - Randomize World Palette
 - Randomize Sound Effects  
 - Version and seed visible in the Main Menu
 Mod Menu:
-- All Crates Are Blank
-- All Crates Are Wumpa
-- Randomize Camera Field-Of-View
+- Additional features
   
 Crash Bandicoot 2: Cortex Strikes Back
 Supported: All PS1 versions (.BIN/.ISO formats)  
@@ -99,10 +110,15 @@ Mod abbreviation: Crash2
 API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)  
 Features:  
 - Randomize Warp Room Exits
-- Backwards Levels 
+- Backwards Levels (Beta)  
 - Random Levels Are Backwards
+- Randomize Wooden Crates
 - Randomize Crate Contents
+- Randomize Crate Parameters
+- Random/All Crates Are Invisible
 - Randomize Crate Counter
+- Random Crates Removed
+- Random Enemies Removed
 - Randomize Boss Levels
 - Wider Camera Field-Of-View
 - Ranodmize Pants Color
@@ -110,54 +126,56 @@ Features:
 - Randomize World Palette
 - Greyscale World
 - Untextured World
-- Randomize Sound Effects  
+- Randomize Sound Effects 
+- Randomize Stremaed Audio  
 - Randomize World Textures
 - Randomize Object Colors
 - Randomize Object Textures
 - Randomize Streamed Audio
 - Version and seed visible in the Pause screen in the Warp Room (English only)  
 Mod Menu:
-- All Crates Are Blank
-- All Crates Are Wumpa
-- Randomize Camera Field-Of-View
-- Customize Pants Color
+- Additional features  
+- Customize Pants Color  
   
 Crash Bandicoot: Warped
 Supported: All PS1 versions (.BIN/.ISO formats)  
 Mod abbreviation: Crash3  
 API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)  
 Features:  
-- Backwards Levels
+- Backwards Levels (Beta)  
 - Random Levels Are Backwards
+- Randomize Wooden Crates
 - Randomize Crate Contents
+- Randomize Crate Parameters
+- Random/All Crates Are Invisible
+- Random Crates Removed
 - Randomize Crate Counter
+- Random Enemies Removed
 - Wider Camera Field-Of-View
+- Remove Warp Room Barriers
 - Randomize World Colors
 - Randomize World Palette
 - Greyscale World
 - Untextured World
 - Randomize Sound Effects 
+- Randomize Stremaed Audio  
 - Randomize World Textures
 - Randomize Object Colors
 - Randomize Object Textures
 - Randomize Streamed Audio
 - Version and seed visible in the Pause screen in the Warp Room (English only)  
 Mod Menu:
-- All Crates Are Blank
-- All Crates Are Wumpa
-- Randomize Camera Field-Of-View
+- Additional features  
 - Customize Pants Color
 
 Crash Bandicoot: The Wrath Of Cortex
-Supported: All PS2 versions (.BIN/.ISO format), All XBOX versions (.ISO format) (GC not supported yet)  
+Supported: All PS2 versions (.BIN/.ISO format) (XBOX, GC not supported yet)  
 Mod abbreviation: CrashTWOC  
 Features:  
 - Randomize Wooden Crates  
 - Random Crates Removed  
-- Random Wumpa Are Crates  
 - Randomize Enemy Paths  
 - Random Enemies Removed  
-- Randomize Music (XBOX)  
 
 CTR: Crash Team Racing
 Supported: All PS1 versions (.BIN/.ISO formats)  

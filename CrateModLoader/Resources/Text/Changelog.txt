@@ -6,7 +6,7 @@ General
 - Select games' data can now be preloaded allowing an extended Mod Menu+.
 
 New games supported:
-- Crash Bandicoot: The Wrath Of Cortex
+- Crash Bandicoot: The Wrath Of Cortex (PS2)
 
 Crash Nitro Kart
 - Mod Menu+ enabled (All) - Change UI textures, icons
@@ -19,8 +19,7 @@ Crash Twinsanity
 - New feature: Classic Health
 - New feature: Unlocked Camera Everywhere
 - New feature: Randomize Surface Parameters
-- New feature: Randomize Starting Level (PS2)
-- New feature: Skip Cutscenes
+- New feature: Randomize Starting Level
 - New feature: Untextured World
 - New feature: Greyscale World (PS2)
 - New feature: Randomize World Palette (PS2)
@@ -36,7 +35,7 @@ Crash Tag Team Racing
 - Randomize Race Laps: Rings of Uranus now randomized between 3 and 12 laps.
 
 Rayman 3: Hoodlum Havoc
-- Mod Menu+ enabled (GCN) - Change UI textures, icons
+- Mod Menu+ enabled (GCN) - Change outfit, UI textures, icons
 - New feature: Randomize Sub-Level Order
 - New feature: Randomize Outfit Colors (GCN)
 - New feature: Randomize Copter Colors (GCN)
@@ -53,7 +52,7 @@ Crash Bandicoot 2: Cortex Strikes Back
 - New feature: Randomize Wooden Crates
 - New feature: Random Crates Removed
 - New feature: Randomize Crate Parameters
-- New feature: Random Enemies Removed
+- New feature: Random/All Enemies Removed
 - New feature: Random/All Crates Are Invisible
 - New feature: Randomize World Textures
 - New feature: Randomize Object Colors
@@ -69,7 +68,7 @@ Crash Bandicoot: WARPED
 - New feature: Randomize Wooden Crates
 - New feature: Random Crates Removed
 - New feature: Randomize Crate Parameters
-- New feature: Random Enemies Removed
+- New feature: Random/All Enemies Removed
 - New feature: Remove Warp Room Barriers
 - New feature: Random/All Crates Are Invisible
 - New feature: Randomize World Textures

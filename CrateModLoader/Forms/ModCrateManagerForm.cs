@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using System.IO;
+using System.IO.Compression;
 using CrateModAPI.Resources.Text;
 
 namespace CrateModLoader
@@ -106,11 +107,8 @@ namespace CrateModLoader
             {
                 label_author.Text = ModLoaderText.ModCrateManagerAuthorText + " " + ModProgram.SupportedMods[index].Author;
                 label_desc.Text = ModProgram.SupportedMods[index].Desc;
-                if (!ModProgram.SupportedMods[index].HasIcon)
-                {
-                    pictureBox_ModIcon.Image = Properties.Resources.cml_icon;
-                }
-                else
+                pictureBox_ModIcon.Image = Properties.Resources.cml_icon;
+                if (ModProgram.SupportedMods[index].HasIcon)
                 {
                     if (ModProgram.SupportedMods[index].IsFolder)
                     {
@@ -118,10 +116,17 @@ namespace CrateModLoader
                     }
                     else
                     {
-                        // todo: extract icon
-                        pictureBox_ModIcon.Image = Properties.Resources.cml_icon;
+                        using (ZipArchive archive = ZipFile.OpenRead(ModProgram.SupportedMods[index].Path))
+                        {
+                            foreach (ZipArchiveEntry entry in archive.Entries)
+                            {
+                                if (entry.Name.ToLower() == ModCrates.IconFileName)
+                                {
+                                    pictureBox_ModIcon.Image = Image.FromStream(entry.Open());
+                                }
+                            }
+                        }
                     }
-                    //pictureBox_ModIcon.Image = ModCrates.SupportedMods[index].Icon;
                 }
             }
         }
