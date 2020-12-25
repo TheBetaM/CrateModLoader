@@ -168,4 +168,10 @@
   <data name="Rand_InvisibleCratesDesc" xml:space="preserve">
     <value>Random crates are invisible until you attack or jump on them.</value>
   </data>
+  <data name="Rand_LightCol" xml:space="preserve">
+    <value>Randomize Lighting Color</value>
+  </data>
+  <data name="Rand_LightColDesc" xml:space="preserve">
+    <value>The color of the default lighting is randomized.</value>
+  </data>
 </root>
