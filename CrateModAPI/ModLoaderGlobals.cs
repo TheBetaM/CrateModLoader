@@ -38,8 +38,8 @@ namespace CrateModLoader
         public static int RandomizerSeed = 0;
 
         /// <summary> String used to show which version of CML the modded game was built with. Should be under 10 characters. </summary>
-        public const string ProgramVersion = "v1.3.0";
-        public const uint ProgramVersionSimple = 6;
+        public const string ProgramVersion = "v1.3.1";
+        public const uint ProgramVersionSimple = 7;
         /// <summary> Name of the folder used to hold game data during the modding process. Folder will be created in the program's directory. </summary>
         public const string TempName = "temp";
         /// <summary> Base directory of the program. </summary>
