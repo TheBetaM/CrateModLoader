@@ -1,4 +1,89 @@
 # Crate Mod Loader Changelog  
+
+## 1.3.0
+
+General  
+- PS2 ROM building is now supported internally (Thanks to Smartkin).  
+- Options are now handled the same as Mod Menu properties allowing them to be set by Mod Crates and enabling variations and choices like difficulty settings in Mod Menus.  
+- Select games' data can now be preloaded allowing an extended Mod Menu+.  
+  
+New games supported:  
+- Crash Bandicoot: The Wrath Of Cortex (PS2)  
+  
+Crash Nitro Kart  
+- Mod Menu+ enabled (All) - Change UI textures, icons  
+- Mod Menu: More understandable names and descriptions  
+  
+Crash Twinsanity  
+- Mod Menu+ enabled (PS2) - Change UI textures, icons  
+- New feature: Classic Explosion Damage  
+- New feature: Classic Slide Jump for Crash  
+- New feature: Classic Health  
+- New feature: Unlocked Camera Everywhere  
+- New feature: Randomize Surface Parameters  
+- New feature: Randomize Starting Level  
+- New feature: Untextured World  
+- New feature: Greyscale World (PS2)  
+- New feature: Randomize World Palette (PS2)  
+- New feature: Randomize Pants Color (PS2)  
+- Mod Menu: More understandable names and descriptions  
+- Mod Menu: Added a few more character parameters  
+- Pants color can now be customized in the Mod Menu.  
+- Fixed default values for character health.  
+- Switch Characters At Will: Now detaches Cortex before switching to him to improve stability.  
+- Randomize Character Parameters: No longer changes jump parameteres.  
+  
+Crash Tag Team Racing  
+- Randomize Race Laps: Rings of Uranus now randomized between 3 and 12 laps.  
+  
+Rayman 3: Hoodlum Havoc  
+- Mod Menu+ enabled (GCN) - Change outfit, UI textures, icons  
+- New feature: Randomize Sub-Level Order  
+- New feature: Randomize Outfit Colors (GCN)  
+- New feature: Randomize Copter Colors (GCN)  
+- New feature: Randomize HUD Colors (GCN)  
+  
+Crash Bandicoot  
+- New feature: Randomize Wooden Crates  
+- New feature: Random/All Crates Are Invisible  
+- New feature: Randomize Lighting Color  
+- Backwards Hog Levels: Removed checkpoints since they didn't work anyway.  
+- Randomize Crate Contents: No longer randomizes boulder levels.  
+- Backwards Levels: Wider Camera Field-Of-View enabled by default for backwards levels. (normal FOV for forward levels)  
+  
+Crash Bandicoot 2: Cortex Strikes Back  
+- New feature: Randomize Wooden Crates  
+- New feature: Random Crates Removed  
+- New feature: Randomize Crate Parameters  
+- New feature: Random/All Enemies Removed  
+- New feature: Random/All Crates Are Invisible  
+- New feature: Randomize World Textures  
+- New feature: Randomize Object Colors  
+- New feature: Randomize Object Textures  
+- New feature: Randomize Streamed Audio  
+- New feature: Swizzle Object Palette  
+- New feature: Greyscale Objects  
+- New feature: Randomize Pants Color  
+- Pants color can now be customized in the Mod Menu.  
+- Randomize Crate Counter: Adjusted minimum counts to prevent impossible scenarios.  
+  
+Crash Bandicoot: WARPED  
+- New feature: Randomize Wooden Crates  
+- New feature: Random Crates Removed  
+- New feature: Randomize Crate Parameters  
+- New feature: Random/All Enemies Removed  
+- New feature: Remove Warp Room Barriers  
+- New feature: Random/All Crates Are Invisible  
+- New feature: Randomize World Textures  
+- New feature: Randomize Object Colors  
+- New feature: Randomize Object Textures  
+- New feature: Randomize Streamed Audio  
+- New feature: Swizzle Object Palette  
+- New feature: Greyscale Objects  
+- New feature: Randomize Pants Color  
+- Pants color can now be customized in the Mod Menu.  
+- Randomize Crate Counter: Adjusted minimum counts to prevent impossible scenarios.  
+- Backwards Levels: Disabled Tell No Tales due to exiting problems.  
   
 ## 1.2.1
 

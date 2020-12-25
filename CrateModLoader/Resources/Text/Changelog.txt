@@ -44,6 +44,7 @@ Rayman 3: Hoodlum Havoc
 Crash Bandicoot
 - New feature: Randomize Wooden Crates
 - New feature: Random/All Crates Are Invisible
+- New feature: Randomize Lighting Color
 - Backwards Hog Levels: Removed checkpoints since they didn't work anyway.
 - Randomize Crate Contents: No longer randomizes boulder levels.
 - Backwards Levels: Wider Camera Field-Of-View enabled by default for backwards levels. (normal FOV for forward levels)

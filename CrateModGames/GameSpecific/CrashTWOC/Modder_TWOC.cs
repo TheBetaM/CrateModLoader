@@ -75,7 +75,8 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
         };
 
         public static ModPropOption Option_RandCrates = new ModPropOption("Randomize Wooden Crates", "The types of wooden crates are randomized.");
-        public static ModPropOption Option_RandCratesRemoved = new ModPropOption("Random Crates Removed", "Crates are randomly removed in each level. The box counter is adjusted accordingly.");
+        public static ModPropOption Option_RandCratesRemoved = new ModPropOption("Random Crates Removed", "Wooden crates are randomly removed in each level. The box counter is adjusted accordingly.")
+        { Hidden = true, };
         public static ModPropOption Option_RandEnemyPaths = new ModPropOption("Randomize Enemy Paths", "Reverses paths of random enemies.");
         public static ModPropOption Option_RandEnemiesRemoved = new ModPropOption("Random Enemies Removed", "Enemies are randomly removed in each level.");
         public static ModPropOption Option_RandMusic = new ModPropOption("Randomize Music", "Music tracks are shuffled around.") //works on xbox
@@ -547,7 +548,7 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
             TWOC_File_CRT.CrateType.Life,
             TWOC_File_CRT.CrateType.Pickup,
             TWOC_File_CRT.CrateType.Proximity,
-            TWOC_File_CRT.CrateType.TNT,
+            //TWOC_File_CRT.CrateType.TNT,
         };
         public List<TWOC_File_CRT.CrateType> CratesToInsert = new List<TWOC_File_CRT.CrateType>()
         {
@@ -616,7 +617,7 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
             TWOC_File_CRT.CrateType.Life,
             TWOC_File_CRT.CrateType.Pickup,
             TWOC_File_CRT.CrateType.Proximity,
-            TWOC_File_CRT.CrateType.Nitro,
+            //TWOC_File_CRT.CrateType.Nitro,
             TWOC_File_CRT.CrateType.Reinforced,
             TWOC_File_CRT.CrateType.Checkpoint,
             TWOC_File_CRT.CrateType.Slot,
@@ -808,6 +809,8 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
                 "space wa-wa",
                 "space py-ro",
                 "atlas crunch",
+                "turtle",
+
             };
 
 

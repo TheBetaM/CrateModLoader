@@ -99,6 +99,7 @@ Features:
 - Randomize Boss Levels
 - Randomize World Colors
 - Randomize World Palette
+- Randomize Lighting Color
 - Randomize Sound Effects  
 - Version and seed visible in the Main Menu
 Mod Menu:
@@ -173,7 +174,6 @@ Supported: All PS2 versions (.BIN/.ISO format) (XBOX, GC not supported yet)
 Mod abbreviation: CrashTWOC  
 Features:  
 - Randomize Wooden Crates  
-- Random Crates Removed  
 - Randomize Enemy Paths  
 - Random Enemies Removed  
 
