@@ -138,6 +138,12 @@
   <data name="Mod_BackwardsLevelsDesc" xml:space="preserve">
     <value>All onfoot levels start at the end and end at the start. There are minimal design changes to ensure levels are beatable. The game is 100% completable.</value>
   </data>
+  <data name="Mod_EnableDog" xml:space="preserve">
+    <value>Enable Unused Enemies</value>
+  </data>
+  <data name="Mod_EnableDogDesc" xml:space="preserve">
+    <value>Enables unused enemies in "Heavy Machinery".</value>
+  </data>
   <data name="Mod_InvisibleCrates" xml:space="preserve">
     <value>All Crates Are Invisible</value>
   </data>

@@ -2436,5 +2436,15 @@ namespace CrateModLoader.GameSpecific.Crash1
                 BitConv.ToInt16(zone.Header, 0x376, b2);
             }
         }
+
+        public static void Mod_EnableDog(NSF nsf)
+        {
+            GOOLEntry dog = nsf.FindEID<GOOLEntry>(Entry.ENameToEID("Dog_C"));
+            if (dog != null)
+            {
+                dog.Instructions[0].Value = 0xBE0 | (0xBE0<<12) | (0x81 << 24);
+                dog.Instructions[1].Value = 0xBE0 | (0xBE0<<12) | (0x81 << 24);
+            }
+        }
     }
 }

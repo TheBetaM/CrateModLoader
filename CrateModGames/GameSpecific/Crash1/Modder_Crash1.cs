@@ -59,6 +59,7 @@ namespace CrateModLoader.GameSpecific.Crash1
         public static ModPropOption Option_RandInvisibleCrates = new ModPropOption(Crash1_Text.Rand_InvisibleCrates, Crash1_Text.Rand_InvisibleCratesDesc);
         public static ModPropOption Option_RandBosses = new ModPropOption(Crash1_Text.Rand_BossLevels, Crash1_Text.Rand_BossLevelsDesc);
         public static ModPropOption Option_RandLightCol = new ModPropOption(Crash1_Text.Rand_LightCol, Crash1_Text.Rand_LightColDesc);
+        public static ModPropOption Option_EnableDog = new ModPropOption(Crash1_Text.Mod_EnableDog, Crash1_Text.Mod_EnableDog);
         public static ModPropOption Option_CameraBigFOV = new ModPropOption(CrashTri_Text.Mod_CameraWideFOV, CrashTri_Text.Mod_CameraWideFOVDesc) { Hidden = true, };
         
         public static ModPropOption Option_RandSounds = new ModPropOption(CrashTri_Text.Rand_SFX, CrashTri_Text.Rand_SFXDesc);
@@ -196,6 +197,8 @@ namespace CrateModLoader.GameSpecific.Crash1
                     if (Option_RandPantsColor.Enabled || Prop_PantsColor.HasChanged) Crash1_Mods.Mod_PantsColor(nsf, PantsColor);
                     if (Option_RandSounds.Enabled) CrashTri_Common.Mod_RandomizeADIO(nsf, rand);
                     if (Option_RandLightCol.Enabled) Crash1_Mods.Mod_RandomLightColor(nsf, rand);
+
+                    if (NSF_Level == Crash1_Levels.L16_HeavyMachinery && Option_EnableDog.Enabled) Crash1_Mods.Mod_EnableDog(nsf);
 
                     Crash1_Mods.Mod_Metadata(nsf, nsd, NSF_Level, GameRegion.Region);
                 }

@@ -124,6 +124,24 @@ namespace CrateModGames.GameSpecific.Crash1 {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enable Unused Enemies.
+        /// </summary>
+        internal static string Mod_EnableDog {
+            get {
+                return ResourceManager.GetString("Mod_EnableDog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enables unused enemies in &quot;Heavy Machinery&quot;..
+        /// </summary>
+        internal static string Mod_EnableDogDesc {
+            get {
+                return ResourceManager.GetString("Mod_EnableDogDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All Crates Are Invisible.
         /// </summary>
         internal static string Mod_InvisibleCrates {
