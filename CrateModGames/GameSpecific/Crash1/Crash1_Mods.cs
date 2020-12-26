@@ -397,7 +397,6 @@ namespace CrateModLoader.GameSpecific.Crash1
             {
                 return;
             }
-            Mod_CameraFOV(nsf, rand, false);
             if (VehicleLevelsList.Contains(level))
             {
                 Mod_HogLevelsBackwards(nsf, nsd, level);
@@ -408,6 +407,7 @@ namespace CrateModLoader.GameSpecific.Crash1
                 Mod_RandomizeBosses(nsf, nsd, level, rand, true);
                 return;
             }
+            Mod_CameraFOV(nsf, rand, false);
 
             OldEntity CrashEntity = null;
             OldZoneEntry CrashZone = null;
@@ -2264,31 +2264,35 @@ namespace CrateModLoader.GameSpecific.Crash1
             // if there's a way to switch to the beta map at some point...
             // re: doubtful, seems no functional code remains, only leftover data
             // TODO : IsldC fully controls the map
+
+            int LevelCount = 35;
+
             List<int> LevelsToReplace = new List<int>();
-            for (int i = 0; i < 35; i++)
+            for (int i = 0; i < LevelCount; i++)
             {
                 LevelsToReplace.Add(i);
             }
             List<int> LevelsRand = new List<int>();
-            for (int i = 0; i < 35; i++)
+            for (int i = 0; i < LevelCount; i++)
             {
                 int r = rand.Next(LevelsToReplace.Count);
                 LevelsRand.Add(LevelsToReplace[r]);
                 LevelsToReplace.RemoveAt(r);
             }
 
-            
-            foreach (MapEntry mapzone in nsf.GetEntries<MapEntry>())
+            List<int> OrigValues = new List<int>();
+
+            GOOLEntry map = nsf.FindEID<GOOLEntry>(Entry.ENameToEID("IsldC"));
+            if (map != null)
             {
-                if (mapzone.EName == "3MapP" || mapzone.EName == "2MapP" || mapzone.EName == "1MapP")
+                for (int i = 0; i < LevelCount; i++)
                 {
-                    for (int i = 0; i < mapzone.Entities.Count; i++)
-                    {
-                        if (mapzone.Entities[i].Type == 44)
-                        {
-                            // nothing we can do, MapOC is deleted.....
-                        }
-                    }
+                    OrigValues.Add(map.Instructions[37 + (i * 9)].Value);
+                }
+
+                for (int i = 0; i < LevelCount; i++)
+                {
+                    map.Instructions[37 + (i * 9)].Value = OrigValues[LevelsRand[i]];
                 }
             }
         }
