@@ -407,7 +407,10 @@ namespace CrateModLoader.GameSpecific.Crash1
                 Mod_RandomizeBosses(nsf, nsd, level, rand, true);
                 return;
             }
-            Mod_CameraFOV(nsf, rand, false);
+            if (!ChaseLevelsList.Contains(level))
+            {
+                Mod_CameraFOV(nsf, rand, false);
+            }
 
             OldEntity CrashEntity = null;
             OldZoneEntry CrashZone = null;
@@ -2261,11 +2264,7 @@ namespace CrateModLoader.GameSpecific.Crash1
                 return;
             }
 
-            // if there's a way to switch to the beta map at some point...
-            // re: doubtful, seems no functional code remains, only leftover data
-            // TODO : IsldC fully controls the map
-
-            int LevelCount = 35;
+            int LevelCount = 34;
 
             List<int> LevelsToReplace = new List<int>();
             for (int i = 0; i < LevelCount; i++)
@@ -2282,18 +2281,66 @@ namespace CrateModLoader.GameSpecific.Crash1
 
             List<int> OrigValues = new List<int>();
 
+            int CortexID = 30;
+
             GOOLEntry map = nsf.FindEID<GOOLEntry>(Entry.ENameToEID("IsldC"));
             if (map != null)
             {
-                for (int i = 0; i < LevelCount; i++)
+                for (int i = 0; i < LevelCount + 1; i++)
                 {
-                    OrigValues.Add(map.Instructions[37 + (i * 9)].Value);
+                    if (i != CortexID)
+                    {
+                        OrigValues.Add(map.Instructions[37 + (i * 9)].Value);
+                    }
                 }
 
-                for (int i = 0; i < LevelCount; i++)
+                for (int i = 0; i < LevelCount + 1; i++)
                 {
-                    map.Instructions[37 + (i * 9)].Value = OrigValues[LevelsRand[i]];
+                    if (i != CortexID)
+                    {
+                        if (i > CortexID)
+                        {
+                            map.Instructions[37 + (i * 9)].Value = OrigValues[LevelsRand[i - 1]];
+                        }
+                        else
+                        {
+                            map.Instructions[37 + (i * 9)].Value = OrigValues[LevelsRand[i]];
+                        }
+                    }
                 }
+            }
+        }
+
+        public static void Mod_AddStormyAscent(NSF nsf, OldNSD nsd, Crash1_Levels level)
+        {
+            if (level == Crash1_Levels.MapMainMenu)
+            {
+                GOOLEntry map = nsf.FindEID<GOOLEntry>(Entry.ENameToEID("IsldC"));
+                if (map != null)
+                {
+                    map.Instructions[298].Value = 0x11822e51; //0x118 XX e51 - XX level ID
+                }
+            }
+            else if (level == Crash1_Levels.L28_StormyAscent)
+            {
+                // remove bugged tokens from the level
+                foreach (OldZoneEntry zone in nsf.GetEntries<OldZoneEntry>())
+                {
+                    foreach (OldEntity ent in zone.Entities)
+                    {
+                        if (ent.Type == 34)
+                        {
+                            if (ent.VecX == (short)CrateContentTypes.Token_Cortex)
+                            {
+                                ent.VecX = 0;
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                return;
             }
         }
 

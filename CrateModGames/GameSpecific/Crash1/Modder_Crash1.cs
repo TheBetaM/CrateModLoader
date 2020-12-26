@@ -49,6 +49,7 @@ namespace CrateModLoader.GameSpecific.Crash1
         };
 
         public static ModPropOption Option_RandMap = new ModPropOption("Randomize Level Order", "Shuffle the order of which levels you enter.");
+        public static ModPropOption Option_AddStormyAscent = new ModPropOption("Replace The Great Hall With Stormy Ascent", "Works with all other features like Backwards Levels and Randomize Level Order. (Tokens removed from the level to ensure stability)");
         public static ModPropOption Option_RandCrates = new ModPropOption(CrashTri_Text.Rand_Crates, CrashTri_Text.Rand_CratesDesc);
         public static ModPropOption Option_BackwardsLevels = new ModPropOption(Crash1_Text.Mod_BackwardsLevels, Crash1_Text.Mod_BackwardsLevelsDesc);
         public static ModPropOption Option_RandBackwardsLevels = new ModPropOption(Crash1_Text.Rand_BackwardsLevels, Crash1_Text.Rand_BackwardsLevelsDesc);
@@ -188,6 +189,7 @@ namespace CrateModLoader.GameSpecific.Crash1
                     if (Option_RandInvisibleCrates.Enabled) Crash1_Mods.Mod_InvisibleCrates(nsf, rand, NSF_Level, true);
                     if (Option_InvisibleCrates.Enabled) Crash1_Mods.Mod_InvisibleCrates(nsf, rand, NSF_Level, false);
                     if (Option_RandBosses.Enabled) Crash1_Mods.Mod_RandomizeBosses(nsf, nsd, NSF_Level, rand, false);
+                    if (Option_AddStormyAscent.Enabled) Crash1_Mods.Mod_AddStormyAscent(nsf, nsd, NSF_Level);
                     if (Option_RandMap.Enabled) Crash1_Mods.Mod_RandomizeMap(nsf, nsd, NSF_Level, rand);
                     if (Option_RandWorldPalette.Enabled) CrashTri_Common.Mod_Scenery_Swizzle(nsf, rand);
                     if (Option_GreyscaleWorld.Enabled) CrashTri_Common.Mod_Scenery_Greyscale(nsf);
