@@ -2233,143 +2233,54 @@ namespace CrateModLoader.GameSpecific.Crash3
 
         }
 
-        public static void Mod_RandomizeWRButtons(NSF nsf, NewNSD nsd, Crash3_Levels level, Random rand)
+        public static void Mod_RandomizeWarpRoom(NSF nsf, NewNSD nsd, Crash3_Levels level, Random rand)
         {
             if (level != Crash3_Levels.WarpRoom)
             {
                 return;
             }
 
+            int LevelCount = 35;
+
             List<int> LevelsToReplace = new List<int>();
-            for (int i = 0; i < 35; i ++)
+            for (int i = 0; i < LevelCount; i ++)
             {
                 LevelsToReplace.Add(i);
             }
             List<int> LevelsRand = new List<int>();
-            for (int i = 0; i < 35; i++)
+            for (int i = 0; i < LevelCount; i++)
             {
                 int r = rand.Next(LevelsToReplace.Count);
                 LevelsRand.Add(LevelsToReplace[r]);
                 LevelsToReplace.RemoveAt(r);
             }
 
-            List<int> LevelsIgnore = new List<int>();
-            LevelsIgnore.Add(7);
-            LevelsIgnore.Add(8);
-            LevelsIgnore.Add(9);
+            List<int> OrigValues = new List<int>();
 
-            List<int> LevelsToReplace1 = new List<int>();
-            for (int i = 3; i < 38; i++)
-            {
-                if (!LevelsIgnore.Contains(i))
-                    LevelsToReplace1.Add(i);
-            }
-            int MaxLevelCount = LevelsToReplace1.Count;
+            int CortexID = 30;
 
-            List<int> LevelsRand1 = new List<int>();
-            for (int i = 0; i < MaxLevelCount; i++)
+            GOOLEntry warp = nsf.FindEID<GOOLEntry>(Entry.ENameToEID("ButOC"));
+            if (warp != null)
             {
-                int r = rand.Next(LevelsToReplace1.Count);
-                LevelsRand1.Add(LevelsToReplace1[r]);
-                LevelsToReplace1.RemoveAt(r);
-            }
-            for (int i = 3; i < 38; i++)
-            {
-                if (!LevelsIgnore.Contains(i))
-                    LevelsToReplace1.Add(i);
-            }
-
-            List<int> BarReplace = new List<int>();
-            for (int i = 2; i < 6; i++)
-            {
-                BarReplace.Add(i);
-            }
-            List<int> BarRand = new List<int>();
-            for (int i = 0; i < 4; i++)
-            {
-                int r = rand.Next(BarReplace.Count);
-                BarRand.Add(BarReplace[r]);
-                BarReplace.RemoveAt(r);
-            }
-            int BarOne = rand.Next(5);
-            int BarID = 0;
-
-            foreach (Chunk chunk in nsf.Chunks)
-            {
-                if (chunk is NormalChunk zonechunk)
+                for (int i = 0; i < LevelCount + 1; i++)
                 {
-                    foreach (Entry entry in zonechunk.Entries)
+                    if (i != CortexID)
                     {
-                        if (entry is NewZoneEntry zone)
-                        {
-                            for (int i = 0; i < zone.Entities.Count; i++)
-                            {
-
-                                if (zone.Entities[i].Type != null && zone.Entities[i].Subtype != null)
-                                {
-                                    if (zone.Entities[i].Type == 73 && (int)zone.Entities[i].Subtype < 35) // button
-                                    {
-
-                                        for (int a = 0; a < LevelsToReplace1.Count; a++)
-                                        {
-                                            if (LevelsToReplace1[a] == zone.Entities[i].Settings[0].ValueB)
-                                            {
-                                                zone.Entities[i].Settings[0] = new EntitySetting(0, LevelsRand1[a]);
-                                                //Console.WriteLine(zone.Entities[i].Name + ": " + LevelsRand1[a]);
-                                                break;
-                                            }
-                                        }
-                                        
-                                        //zone.Entities[i].Subtype = LevelsRand[(int)zone.Entities[i].Subtype]; // buttons don't appear if it's not the right warp room
-                                    }
-                                    else if (zone.Entities[i].Type == 26 && zone.Entities[i].Subtype == 2) //barrier
-                                    {
-                                        int target = BarRand[(int)zone.Entities[i].Settings[1].ValueA - 2];
-                                        if (BarOne + 1 == (int)zone.Entities[i].Settings[1].ValueA)
-                                        {
-                                            zone.Entities[i].Positions.Clear();
-                                            zone.Entities[i].Positions.Add(new EntityPosition(3000, 1969, 630));
-                                            zone.Entities[i].Settings[0] = new EntitySetting(10, 0);
-
-                                            BarID = (int)zone.Entities[i].ID;
-                                            zone.Entities[i].ID = 85;
-                                        }
-                                        zone.Entities[i].Settings[1] = new EntitySetting((byte)BarRand[(int)zone.Entities[i].Settings[1].ValueA - 2], 0);
-                                    }
-                                }
-
-
-                            }
-                        }
+                        OrigValues.Add(warp.Instructions[10 + (i * 8)].Value);
                     }
                 }
-            }
 
-            foreach (Chunk chunk in nsf.Chunks)
-            {
-                if (chunk is NormalChunk zonechunk)
+                for (int i = 0; i < LevelCount + 1; i++)
                 {
-                    foreach (Entry entry in zonechunk.Entries)
+                    if (i != CortexID)
                     {
-                        if (entry is NewZoneEntry zone && BarID != 0)
+                        if (i > CortexID)
                         {
-                            if (zone.EName == "00_2Z")
-                            {
-                                AddToDrawList(ref nsf, ref zone, BarID);
-                            }
-
-                            for (int i = 0; i < zone.Entities.Count; i++)
-                            {
-
-                                if (zone.Entities[i].Type != null && zone.Entities[i].Subtype != null)
-                                {
-                                    if (zone.Entities[i].Type == 0 && zone.Entities[i].Subtype == 0)
-                                    {
-                                        zone.Entities[i].ID = BarID;
-                                    }
-                                }
-
-                            }
+                            warp.Instructions[10 + (i * 8)].Value = OrigValues[LevelsRand[i - 1]];
+                        }
+                        else
+                        {
+                            warp.Instructions[10 + (i * 8)].Value = OrigValues[LevelsRand[i]];
                         }
                     }
                 }

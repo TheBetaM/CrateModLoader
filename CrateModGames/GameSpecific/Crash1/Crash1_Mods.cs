@@ -2280,6 +2280,7 @@ namespace CrateModLoader.GameSpecific.Crash1
             }
 
             List<int> OrigValues = new List<int>();
+            List<int> OrigValues_LevelName = new List<int>();
 
             int CortexID = 30;
 
@@ -2291,6 +2292,7 @@ namespace CrateModLoader.GameSpecific.Crash1
                     if (i != CortexID)
                     {
                         OrigValues.Add(map.Instructions[37 + (i * 9)].Value);
+                        OrigValues_LevelName.Add(map.Instructions[41 + (i * 9)].Value);
                     }
                 }
 
@@ -2301,17 +2303,19 @@ namespace CrateModLoader.GameSpecific.Crash1
                         if (i > CortexID)
                         {
                             map.Instructions[37 + (i * 9)].Value = OrigValues[LevelsRand[i - 1]];
+                            map.Instructions[41 + (i * 9)].Value = OrigValues_LevelName[LevelsRand[i - 1]];
                         }
                         else
                         {
                             map.Instructions[37 + (i * 9)].Value = OrigValues[LevelsRand[i]];
+                            map.Instructions[41 + (i * 9)].Value = OrigValues_LevelName[LevelsRand[i]];
                         }
                     }
                 }
             }
         }
 
-        public static void Mod_AddStormyAscent(NSF nsf, OldNSD nsd, Crash1_Levels level)
+        public static void Mod_AddStormyAscent(NSF nsf, OldNSD nsd, Crash1_Levels level, RegionType region)
         {
             if (level == Crash1_Levels.MapMainMenu)
             {
@@ -2319,6 +2323,20 @@ namespace CrateModLoader.GameSpecific.Crash1
                 if (map != null)
                 {
                     map.Instructions[298].Value = 0x11822e51; //0x118 XX e51 - XX level ID
+
+                    if (region == RegionType.NTSC_U || region == RegionType.PAL)
+                    {
+                        for (int i = map.Anims.Length - 15; i > 0; i--)
+                        {
+                            string s = System.Text.Encoding.Default.GetString(map.Anims, i, 14);
+                            if (s.Contains("THE GREAT HALL"))
+                            {
+                                InsertStringsInByteArray(ref map.Anims, i, 14, new List<string>() {
+                                "STORMY ASCENT ",
+                            });
+                            }
+                        }
+                    }
                 }
             }
             else if (level == Crash1_Levels.L28_StormyAscent)

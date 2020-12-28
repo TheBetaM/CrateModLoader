@@ -50,7 +50,8 @@ namespace CrateModLoader.GameSpecific.Crash3
             },
         };
 
-        public static ModPropOption Option_RandCrates = new ModPropOption(CrashTri_Text.Rand_WoodenCrates, CrashTri_Text.Rand_WoodenCratesDesc);
+        public static ModPropOption Option_RandCrates = new ModPropOption(CrashTri_Text.Rand_WoodenCrates, CrashTri_Text.Rand_WoodenCratesDesc) { ModMenuOnly = true };
+        public static ModPropOption Option_RandWarpRoom = new ModPropOption("Randomize Level Order", "") { Hidden = true };
         public static ModPropOption Option_RandCratesMissing = new ModPropOption(CrashTri_Text.Rand_CratesRemoved, CrashTri_Text.Rand_CratesRemovedDesc);
         public static ModPropOption Option_RandEnemiesMissing = new ModPropOption(CrashTri_Text.Rand_EnemiesRemoved, CrashTri_Text.Rand_EnemiesRemovedDesc); 
         public static ModPropOption Option_BackwardsLevels = new ModPropOption(Crash3_Text.Mod_BackwardsLevels, Crash3_Text.Mod_BackwardsLevelsDesc);
@@ -95,7 +96,6 @@ namespace CrateModLoader.GameSpecific.Crash3
         public static ModPropOption Option_AllEnemiesAreCrates = new ModPropOption(Crash3_Text.Mod_EnemyCrates, Crash3_Text.Mod_EnemyCratesDesc) { ModMenuOnly = true, Hidden = true };
         public static ModPropOption Option_RandEnemiesAreCrates = new ModPropOption(CrashTri_Text.Rand_EnemyCrates, CrashTri_Text.Rand_EnemyCratesDesc) { Hidden = true }; //unfinished
         public static ModPropOption Option_UntexturedObj = new ModPropOption("Untextured Objects", "") { Hidden = true }; // broken
-        public static ModPropOption Option_RandWarpRoom = new ModPropOption(Crash3_Text.Rand_WarpRoom, Crash3_Text.Rand_WarpRoomDesc) { Hidden = true }; //unstable, unfinished
         public static ModPropOption Option_RandFlyingLevels = new ModPropOption(Crash3_Text.Rand_FlyingLevels, Crash3_Text.Rand_FlyingLevelsDesc) { Hidden = true }; //unfinished
         public static ModPropOption Option_RandBikeLevels = new ModPropOption("Randomize Bike Levels", "") { Hidden = true };
         public static ModPropOption Option_RandBosses = new ModPropOption("Randomize Boss Levels", "") { Hidden = true };
@@ -181,7 +181,7 @@ namespace CrateModLoader.GameSpecific.Crash3
                 Crash3_Levels NSF_Level = GetLevelFromNSF(nsfFile.Name);
 
                 if (Option_AllCratesWumpa.Enabled) Crash3_Mods.Mod_TurnCratesIntoWumpa(nsf, rand);
-                if (Option_RandWarpRoom.Enabled) Crash3_Mods.Mod_RandomizeWRButtons(nsf, nsd, NSF_Level, rand);
+                if (Option_RandWarpRoom.Enabled) Crash3_Mods.Mod_RandomizeWarpRoom(nsf, nsd, NSF_Level, rand);
                 if (Option_BackwardsLevels.Enabled || Option_RandBackwardsLevels.Enabled) Crash3_Mods.Mod_BackwardsLevels(nsf, nsd, NSF_Level, Option_RandBackwardsLevels.Enabled, rand);
                 if (Option_CameraBigFOV.Enabled || Option_RandCameraFOV.Enabled) Crash3_Mods.Mod_CameraFOV(nsf, rand, Option_RandCameraFOV.Enabled);
                 if (Option_AllCratesBlank.Enabled) Crash3_Mods.Mod_AllWoodCrates(nsf, rand);

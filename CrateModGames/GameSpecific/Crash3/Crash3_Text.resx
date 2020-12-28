@@ -121,7 +121,7 @@
     <value>Crash Bandicoot: WARPED</value>
   </data>
   <data name="Mod_BackwardsLevels" xml:space="preserve">
-    <value>Backwards Levels (Beta)</value>
+    <value>Backwards Levels (Beta) (Any%)</value>
   </data>
   <data name="Mod_BackwardsLevelsDesc" xml:space="preserve">
     <value>Most levels start at the end and end at the start. There are minimal design changes to ensure levels are beatable. The game is NOT 105% completable.</value>
@@ -133,7 +133,7 @@
     <value>Remove all barriers in the Warp Room, allowing you to enter warp rooms early. Stepping on a button from a later hub grants powerups from the previous hubs.</value>
   </data>
   <data name="Rand_BackwardsLevels" xml:space="preserve">
-    <value>Random Levels Are Backwards</value>
+    <value>Random Levels Are Backwards (Any%)</value>
   </data>
   <data name="Rand_BackwardsLevelsDesc" xml:space="preserve">
     <value>Any supported level has a random chance of being backwards. The game is NOT 105% completable.</value>

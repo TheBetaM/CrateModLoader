@@ -1750,7 +1750,7 @@ namespace CrateModLoader.GameSpecific.Crash2
             }
         }
 
-        public static void Mod_RandomizeWarpRoom(NSF nsf, NSD nsd, Crash2_Levels level, Random rand)
+        public static void Mod_RandomizeWarpRoomExits(NSF nsf, NSD nsd, Crash2_Levels level, Random rand)
         {
             if (level != Crash2_Levels.WarpRoom && level != Crash2_Levels.WarpRoom2 && level != Crash2_Levels.WarpRoom3 && level != Crash2_Levels.WarpRoom4 && level != Crash2_Levels.WarpRoom5)
             {
@@ -3055,6 +3055,61 @@ namespace CrateModLoader.GameSpecific.Crash2
                     }
                 }
             }
+        }
+
+        public static void Mod_RandomizeWarpRoom(NSF nsf, NSD nsd, Crash2_Levels level, Random rand)
+        {
+            if (level != Crash2_Levels.WarpRoom)
+            {
+                return;
+            }
+
+            int LevelCount = 35;
+
+            List<int> LevelsToReplace = new List<int>();
+            for (int i = 0; i < LevelCount; i++)
+            {
+                LevelsToReplace.Add(i);
+            }
+            List<int> LevelsRand = new List<int>();
+            for (int i = 0; i < LevelCount; i++)
+            {
+                int r = rand.Next(LevelsToReplace.Count);
+                LevelsRand.Add(LevelsToReplace[r]);
+                LevelsToReplace.RemoveAt(r);
+            }
+
+            List<int> OrigValues = new List<int>();
+
+            int CortexID = 30;
+
+            GOOLEntry warp = nsf.FindEID<GOOLEntry>(Entry.ENameToEID("ButOC"));
+            if (warp != null)
+            {
+                for (int i = 0; i < LevelCount + 1; i++)
+                {
+                    if (i != CortexID)
+                    {
+                        OrigValues.Add(warp.Instructions[10 + (i * 8)].Value);
+                    }
+                }
+
+                for (int i = 0; i < LevelCount + 1; i++)
+                {
+                    if (i != CortexID)
+                    {
+                        if (i > CortexID)
+                        {
+                            warp.Instructions[10 + (i * 8)].Value = OrigValues[LevelsRand[i - 1]];
+                        }
+                        else
+                        {
+                            warp.Instructions[10 + (i * 8)].Value = OrigValues[LevelsRand[i]];
+                        }
+                    }
+                }
+            }
+
         }
 
         public static void Mod_PantsColor(NSF nsf, SceneryColor color)

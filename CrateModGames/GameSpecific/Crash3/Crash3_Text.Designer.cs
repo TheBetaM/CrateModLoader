@@ -19,7 +19,7 @@ namespace CrateModGames.GameSpecific.Crash3 {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Crash3_Text {
@@ -70,7 +70,7 @@ namespace CrateModGames.GameSpecific.Crash3 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Backwards Levels (Beta).
+        ///   Looks up a localized string similar to Backwards Levels (Beta) (Any%).
         /// </summary>
         internal static string Mod_BackwardsLevels {
             get {
@@ -124,7 +124,7 @@ namespace CrateModGames.GameSpecific.Crash3 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Random Levels Are Backwards.
+        ///   Looks up a localized string similar to Random Levels Are Backwards (Any%).
         /// </summary>
         internal static string Rand_BackwardsLevels {
             get {
