@@ -1573,7 +1573,7 @@ namespace CrateModLoader.GameSpecific.Crash1
             }
 
             Cache_Entry = new List<Entry>();
-            Cache_Standard_WillC = nsf.FindEID<GOOLEntry>(Entry.ENameToEID("WillC"));
+            Cache_Standard_WillC = nsf.GetEntry<GOOLEntry>("WillC");
 
             foreach (Chunk chunk in nsf.Chunks)
             {
@@ -2284,7 +2284,7 @@ namespace CrateModLoader.GameSpecific.Crash1
 
             int CortexID = 30;
 
-            GOOLEntry map = nsf.FindEID<GOOLEntry>(Entry.ENameToEID("IsldC"));
+            GOOLEntry map = nsf.GetEntry<GOOLEntry>("IsldC");
             if (map != null)
             {
                 for (int i = 0; i < LevelCount + 1; i++)
@@ -2319,7 +2319,7 @@ namespace CrateModLoader.GameSpecific.Crash1
         {
             if (level == Crash1_Levels.MapMainMenu)
             {
-                GOOLEntry map = nsf.FindEID<GOOLEntry>(Entry.ENameToEID("IsldC"));
+                GOOLEntry map = nsf.GetEntry<GOOLEntry>("IsldC");
                 if (map != null)
                 {
                     map.Instructions[298].Value = 0x11822e51; //0x118 XX e51 - XX level ID
@@ -2508,7 +2508,7 @@ namespace CrateModLoader.GameSpecific.Crash1
 
         public static void Mod_EnableDog(NSF nsf)
         {
-            GOOLEntry dog = nsf.FindEID<GOOLEntry>(Entry.ENameToEID("Dog_C"));
+            GOOLEntry dog = nsf.GetEntry<GOOLEntry>("Dog_C");
             if (dog != null)
             {
                 dog.Instructions[0].Value = 0xBE0 | (0xBE0<<12) | (0x81 << 24);
