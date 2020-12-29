@@ -43,6 +43,11 @@ namespace CrateModLoader.GameSpecific.Crash1
         B05_NBrio = 32,
         B06_Cortex = 33,
         MapMainMenu = 34,
+        L29_Cavern = 35,
+        Bonus_TawnaShort = 36,
+        Bonus_Brio = 37,
+        Bonus_TawnaLong = 38,
+        Bonus_Cortex = 39,
     }
 
     public static class Crash1_Mods
@@ -59,7 +64,7 @@ namespace CrateModLoader.GameSpecific.Crash1
             Life = 8,
             Aku = 9,
             Pickup = 10,
-            Pow = 11, //allegedly
+            Pow = 11, // same as TNT outside cavern
             Outline = 13,
             IronSpring = 15,
             AutoPickup = 17,
@@ -2315,6 +2320,81 @@ namespace CrateModLoader.GameSpecific.Crash1
             }
         }
 
+        static List<Crash1_Levels> BonusLevelsList = new List<Crash1_Levels>()
+        {
+            Crash1_Levels.Bonus_TawnaShort,
+            Crash1_Levels.Bonus_TawnaLong,
+            Crash1_Levels.Bonus_Cortex,
+            Crash1_Levels.Bonus_Brio,
+        };
+
+        public enum BonusLevels
+        {
+            Unk1 = 0,
+            Unk2 = 1,
+            Unk3 = 2,
+            Unk4 = 3,
+            Unk5 = 4,
+            Unk6 = 5,
+            Unk7 = 6,
+            Unk8 = 7,
+            Unk9 = 8,
+            Unk10 = 9,
+            Unk11 = 10,
+            Unk12 = 11,
+            Unk13 = 12,
+            Unk14 = 13,
+            Unk15 = 14,
+            Unk16 = 15,
+            Unk17 = 16,
+            Unk18 = 17,
+            Unk19 = 18,
+            Unk20 = 19,
+            Unk21 = 20,
+            Unk22 = 21,
+        }
+
+        static Dictionary<Crash1_Levels, BonusLevels[]> ValidBonuses = new Dictionary<Crash1_Levels, BonusLevels[]>()
+        {
+            [Crash1_Levels.Bonus_TawnaShort] = new BonusLevels[] { },
+        };
+
+        public static void Mod_RandomizeBonusRounds(NSF nsf, OldNSD nsd, Crash1_Levels level, Random rand)
+        {
+            if (!BonusLevelsList.Contains(level)) return;
+
+            int LevelCount = 22;
+
+            List<int> LevelsToReplace = new List<int>();
+            for (int i = 0; i < LevelCount; i++)
+            {
+                LevelsToReplace.Add(i);
+            }
+            List<int> LevelsRand = new List<int>();
+            for (int i = 0; i < LevelCount; i++)
+            {
+                int r = rand.Next(LevelsToReplace.Count);
+                LevelsRand.Add(LevelsToReplace[r]);
+                LevelsToReplace.RemoveAt(r);
+            }
+
+            List<int> OrigValues = new List<int>();
+
+            GOOLEntry map = nsf.GetEntry<GOOLEntry>("BonoC");
+            if (map != null)
+            {
+                for (int i = 0; i < LevelCount; i++)
+                {
+                    OrigValues.Add(map.Instructions[6097 + (i * 4)].Value);
+                }
+
+                for (int i = 0; i < LevelCount; i++)
+                {
+                    map.Instructions[6097 + (i * 4)].Value = OrigValues[LevelsRand[i]];
+                }
+            }
+        }
+
         public static void Mod_AddStormyAscent(NSF nsf, OldNSD nsd, Crash1_Levels level, RegionType region)
         {
             if (level == Crash1_Levels.MapMainMenu)
@@ -2355,6 +2435,71 @@ namespace CrateModLoader.GameSpecific.Crash1
                         }
                     }
                 }
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        public static void Mod_AddCavernLevel(NSF nsf, OldNSD nsd, Crash1_Levels level, RegionType region)
+        {
+            if (level == Crash1_Levels.MapMainMenu)
+            {
+                GOOLEntry map = nsf.GetEntry<GOOLEntry>("IsldC");
+                if (map != null)
+                {
+                    map.Instructions[82].Value = 0x11804e51; //0x118 XX e51 - XX level ID
+
+                    if (region == RegionType.NTSC_U || region == RegionType.PAL)
+                    {
+                        for (int i = map.Anims.Length - 10; i > 0; i--)
+                        {
+                            string s = System.Text.Encoding.Default.GetString(map.Anims, i, 9);
+                            if (s.Contains("PAPU PAPU"))
+                            {
+                                InsertStringsInByteArray(ref map.Anims, i, 9, new List<string>() {
+                                "CAVED IN ",
+                            });
+                            }
+                        }
+                    }
+                }
+            }
+            else if (level == Crash1_Levels.L29_Cavern)
+            {
+                OldEntity CrashEntity = null;
+                OldZoneEntry CrashZone = null;
+
+                for (int i = 0; i < nsf.Chunks.Count; i++)
+                {
+                    if (nsf.Chunks[i] is OldSoundChunk old)
+                    {
+                        List<Entry> sounds = new List<Entry>(old.Entries);
+                        nsf.Chunks[i] = new SoundChunk(sounds);
+                    }
+                }
+
+                foreach (OldZoneEntry zone in nsf.GetEntries<OldZoneEntry>())
+                {
+                    for (int i = 0; i < zone.Entities.Count; i++)
+                    {
+                        if (CrashEntity == null && zone.Entities[i].Type == 0 && zone.Entities[i].Subtype == 0)
+                        {
+                            CrashEntity = zone.Entities[i];
+                            CrashZone = zone;
+                        }
+                        else if (zone.Entities[i].Type == 3) // wumpa only
+                        {
+                            zone.Entities[i].Subtype = 16;
+                        }
+                    }
+                }
+
+                nsd.Camera = 0;
+                nsd.StartZone = CrashZone.EID;
+                nsd.ID = 0x04;
+
             }
             else
             {

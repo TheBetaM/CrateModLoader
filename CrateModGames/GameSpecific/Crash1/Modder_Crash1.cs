@@ -48,6 +48,7 @@ namespace CrateModLoader.GameSpecific.Crash1
             },
         };
 
+        public static ModPropOption Option_RandBonusRounds = new ModPropOption("Randomize Bonus Rounds", "") { Hidden = true, }; //todo
         public static ModPropOption Option_RandMap = new ModPropOption("Randomize Level Order", "Shuffle the order of which levels you enter. The Cortex boss is still the last level to play.");
         public static ModPropOption Option_AddStormyAscent = new ModPropOption("Add Stormy Ascent", "Replaces The Great Hall with Stormy Ascent. Works with all other features like Backwards Levels and Randomize Level Order. (Tokens removed from the level to ensure stability)");
         public static ModPropOption Option_RandCrates = new ModPropOption(CrashTri_Text.Rand_Crates, CrashTri_Text.Rand_CratesDesc);
@@ -84,6 +85,7 @@ namespace CrateModLoader.GameSpecific.Crash1
         public static ModPropColor Prop_PantsColor = new ModPropColor(new int[4] { 0, 0, 255, 255 }, "Pants Color", "")
         { Hidden = true };
 
+        public static ModPropOption Option_AddCavernLevel = new ModPropOption("Add Caved In", "Replaces Papu Papu with the unused cavern level.");// { Hidden = true, };
         public static ModPropOption Option_HogLevelsOnFoot = new ModPropOption("Hog Levels On Foot", "") { Hidden = true };
         public static ModPropOption Option_MirroredWorld = new ModPropOption("Mirrored World", "") { Hidden = true };
         public static ModPropOption Option_RandMirroredWorld = new ModPropOption("Random Levels Are Mirrored", "") { Hidden = true };
@@ -116,7 +118,7 @@ namespace CrateModLoader.GameSpecific.Crash1
 
             bool CachingPass = false;
             /*
-            if (GetOption(VehicleLevelsOnFoot))
+            if (Option_ReplaceTNTWithPOW.Enabled)
             {
                 CachingPass = true;
             }
@@ -135,13 +137,19 @@ namespace CrateModLoader.GameSpecific.Crash1
                 PantsColor = new OldSceneryColor((byte)(Prop_PantsColor.Value[0] * 255f), (byte)(Prop_PantsColor.Value[1] * 255f), (byte)(Prop_PantsColor.Value[2] * 255f), false);
             }
 
+            if (Option_AddCavernLevel.Enabled)
+            {
+                File.Delete(Path.Combine(ConsolePipeline.ExtractedPath, @"S0\S0000004.NSD"));
+                File.Copy(Path.Combine(ConsolePipeline.ExtractedPath, @"S0\S000000A.NSD"), Path.Combine(ConsolePipeline.ExtractedPath, @"S0\S0000004.NSD"));
+            }
+
             for (int i = 0; i < Math.Min(nsfs.Count, nsds.Count); ++i)
             {
                 FileInfo nsfFile = nsfs[i];
                 FileInfo nsdFile = nsds[i];
                 if (Path.GetFileNameWithoutExtension(nsfFile.Name) != Path.GetFileNameWithoutExtension(nsdFile.Name))
                 {
-                    //MessageBox.Show($"NSF/NSD file pair mismatch. First mismatch:\n\n{nsfFile.Name}\n{nsdFile.Name}");
+                    //MessageBox.Show($"NSF /NSD file pair mismatch. First mismatch:\n\n{nsfFile.Name}\n{nsdFile.Name}");
                     continue;
                 }
 
@@ -181,6 +189,7 @@ namespace CrateModLoader.GameSpecific.Crash1
                 {
                     if (Option_AllCratesWumpa.Enabled) Crash1_Mods.Mod_TurnCratesIntoWumpa(nsf, rand, NSF_Level);
                     if (Option_RandCrates.Enabled) Crash1_Mods.Mod_RandomCrates(nsf, rand, NSF_Level);
+                    if (Option_RandBonusRounds.Enabled) Crash1_Mods.Mod_RandomizeBonusRounds(nsf, nsd, NSF_Level, rand);
                     if (Option_BackwardsLevels.Enabled || Option_RandBackwardsLevels.Enabled) Crash1_Mods.Mod_BackwardsLevels(nsf, nsd, NSF_Level, Option_RandBackwardsLevels.Enabled, rand);
                     if (Option_BackwardsHogLevels.Enabled) Crash1_Mods.Mod_HogLevelsBackwards(nsf, nsd, NSF_Level);
                     if (Option_CameraBigFOV.Enabled || Option_RandCameraFOV.Enabled) Crash1_Mods.Mod_CameraFOV(nsf, rand, Option_RandCameraFOV.Enabled);
@@ -190,6 +199,7 @@ namespace CrateModLoader.GameSpecific.Crash1
                     if (Option_InvisibleCrates.Enabled) Crash1_Mods.Mod_InvisibleCrates(nsf, rand, NSF_Level, false);
                     if (Option_RandBosses.Enabled) Crash1_Mods.Mod_RandomizeBosses(nsf, nsd, NSF_Level, rand, false);
                     if (Option_AddStormyAscent.Enabled) Crash1_Mods.Mod_AddStormyAscent(nsf, nsd, NSF_Level, GameRegion.Region);
+                    if (Option_AddCavernLevel.Enabled) Crash1_Mods.Mod_AddCavernLevel(nsf, nsd, NSF_Level, GameRegion.Region);
                     if (Option_RandMap.Enabled) Crash1_Mods.Mod_RandomizeMap(nsf, nsd, NSF_Level, rand);
                     if (Option_RandWorldPalette.Enabled) CrashTri_Common.Mod_Scenery_Swizzle(nsf, rand);
                     if (Option_GreyscaleWorld.Enabled) CrashTri_Common.Mod_Scenery_Greyscale(nsf);
@@ -278,6 +288,12 @@ namespace CrateModLoader.GameSpecific.Crash1
             "1F",
             //Other
             "19",
+            "04",
+            //Bonus
+            "24",
+            "25",
+            "33",
+            "34",
         };
 
         internal Crash1_Levels GetLevelFromNSF(string nsf_name)

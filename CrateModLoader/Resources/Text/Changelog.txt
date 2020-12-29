@@ -3,12 +3,13 @@
 Crash Bandicoot
 - New feature: Enable Unused Enemies
 - New feature: Randomize Level Order
-- New feature: Replace The Great Hall With Stormy Ascent
+- New feature: Add Stormy Ascent
 
 Crash Bandicoot 2: Cortex Strikes Back
 - Randomize World Textures: Fixed not being able to build using this feature
 
 Crash Bandicoot: WARPED
+- New feature: Randomize Level Order
 - Randomize World Textures: Fixed not being able to build using this feature
 
 1.3.0

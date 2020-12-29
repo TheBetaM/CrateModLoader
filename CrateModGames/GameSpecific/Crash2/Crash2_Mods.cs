@@ -3083,7 +3083,7 @@ namespace CrateModLoader.GameSpecific.Crash2
 
             int CortexID = 30;
 
-            GOOLEntry warp = nsf.FindEID<GOOLEntry>(Entry.ENameToEID("ButOC"));
+            GOOLEntry warp = nsf.GetEntry<GOOLEntry>("ButOC");
             if (warp != null)
             {
                 for (int i = 0; i < LevelCount + 1; i++)

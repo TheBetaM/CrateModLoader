@@ -51,7 +51,7 @@ namespace CrateModLoader.GameSpecific.Crash3
         };
 
         public static ModPropOption Option_RandCrates = new ModPropOption(CrashTri_Text.Rand_WoodenCrates, CrashTri_Text.Rand_WoodenCratesDesc) { ModMenuOnly = true };
-        public static ModPropOption Option_RandWarpRoom = new ModPropOption("Randomize Level Order", "") { Hidden = true };
+        public static ModPropOption Option_RandWarpRoom = new ModPropOption("Randomize Level Order", "Shuffles levels around (except for secret levels and ones with secret entrances). The last level is still the Cortex boss."); //{ Hidden = true };
         public static ModPropOption Option_RandCratesMissing = new ModPropOption(CrashTri_Text.Rand_CratesRemoved, CrashTri_Text.Rand_CratesRemovedDesc);
         public static ModPropOption Option_RandEnemiesMissing = new ModPropOption(CrashTri_Text.Rand_EnemiesRemoved, CrashTri_Text.Rand_EnemiesRemovedDesc); 
         public static ModPropOption Option_BackwardsLevels = new ModPropOption(Crash3_Text.Mod_BackwardsLevels, Crash3_Text.Mod_BackwardsLevelsDesc);
