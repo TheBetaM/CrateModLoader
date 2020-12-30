@@ -1,5 +1,8 @@
 1.3.1
 
+General
+- Fixed not being able to build unsupported games
+
 Crash Bandicoot
 - New feature: Enable Unused Enemies
 - New feature: Randomize Level Order

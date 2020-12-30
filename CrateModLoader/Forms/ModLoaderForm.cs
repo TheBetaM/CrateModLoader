@@ -454,10 +454,13 @@ namespace CrateModLoader
             DragDrop += ModLoaderForm_DragDrop;
             DragEnter += ModLoaderForm_DragEnter;
 
-            button_openModMenu.Enabled = ModProgram.Modder.ModMenuEnabled;
+            if (ModProgram.Modder != null)
+            {
+                button_openModMenu.Enabled = ModProgram.Modder.ModMenuEnabled;
+            }
             button_modTools.Enabled = false;//true;
 
-            if (!ModProgram.GamePreloaded && ModProgram.Modder.CanPreloadGame 
+            if (ModProgram.Modder != null && !ModProgram.GamePreloaded && ModProgram.Modder.CanPreloadGame 
                 && (ModProgram.Modder.PreloadConsoles.Count == 0 || ModProgram.Modder.PreloadConsoles.Contains(ModProgram.Pipeline.Metadata.Console)))
             {
                 button_downloadMods.Enabled = true;

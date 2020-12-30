@@ -2269,15 +2269,15 @@ namespace CrateModLoader.GameSpecific.Crash1
                 return;
             }
 
-            int LevelCount = 34;
+            int LevelCount = 33;
 
             List<int> LevelsToReplace = new List<int>();
-            for (int i = 0; i < LevelCount; i++)
+            for (int i = 0; i < LevelCount - 1; i++)
             {
                 LevelsToReplace.Add(i);
             }
             List<int> LevelsRand = new List<int>();
-            for (int i = 0; i < LevelCount; i++)
+            for (int i = 0; i < LevelCount - 1; i++)
             {
                 int r = rand.Next(LevelsToReplace.Count);
                 LevelsRand.Add(LevelsToReplace[r]);
@@ -2287,33 +2287,59 @@ namespace CrateModLoader.GameSpecific.Crash1
             List<int> OrigValues = new List<int>();
             List<int> OrigValues_LevelName = new List<int>();
 
-            int CortexID = 30;
+            List<int> DontSwap = new List<int>()
+            {
+                30, //cortex
+                32, //dupe lights out
+            };
 
             GOOLEntry map = nsf.GetEntry<GOOLEntry>("IsldC");
             if (map != null)
             {
                 for (int i = 0; i < LevelCount + 1; i++)
                 {
-                    if (i != CortexID)
+                    if (!DontSwap.Contains(i))
                     {
                         OrigValues.Add(map.Instructions[37 + (i * 9)].Value);
                         OrigValues_LevelName.Add(map.Instructions[41 + (i * 9)].Value);
                     }
                 }
 
-                for (int i = 0; i < LevelCount + 1; i++)
+                for (int i = 0; i < LevelCount + 2; i++)
                 {
-                    if (i != CortexID)
+                    if (i != 30 && i != 32 && i != 34)
                     {
-                        if (i > CortexID)
+                        if (i > 30)
                         {
-                            map.Instructions[37 + (i * 9)].Value = OrigValues[LevelsRand[i - 1]];
-                            map.Instructions[41 + (i * 9)].Value = OrigValues_LevelName[LevelsRand[i - 1]];
+                            if (i > 32)
+                            {
+                                map.Instructions[37 + (i * 9)].Value = OrigValues[LevelsRand[i - 2]];
+                                map.Instructions[41 + (i * 9)].Value = OrigValues_LevelName[LevelsRand[i - 2]];
+                            }
+                            else
+                            {
+                                map.Instructions[37 + (i * 9)].Value = OrigValues[LevelsRand[i - 1]];
+                                map.Instructions[41 + (i * 9)].Value = OrigValues_LevelName[LevelsRand[i - 1]];
+                            }
                         }
                         else
                         {
                             map.Instructions[37 + (i * 9)].Value = OrigValues[LevelsRand[i]];
                             map.Instructions[41 + (i * 9)].Value = OrigValues_LevelName[LevelsRand[i]];
+                        }
+                    }
+                    else
+                    {
+                        // walking backwards in split paths sets the level ID differently for a second
+                        if (i == 32)
+                        {
+                            map.Instructions[37 + (i * 9)].Value = OrigValues[LevelsRand[24]];
+                            map.Instructions[41 + (i * 9)].Value = OrigValues_LevelName[LevelsRand[24]];
+                        }
+                        else if (i == 34)
+                        {
+                            map.Instructions[37 + (i * 9)].Value = OrigValues[LevelsRand[14]];
+                            map.Instructions[41 + (i * 9)].Value = OrigValues_LevelName[LevelsRand[14]];
                         }
                     }
                 }

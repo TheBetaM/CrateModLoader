@@ -230,21 +230,21 @@ namespace CrateModLoader
             //To make sure the seed matches
             ModLoaderGlobals.RandomizerSeed = RandomizerSeedBase;
             
-            if (Modder.ModCrateRegionCheck)
+            if (Modder != null && Modder.ModCrateRegionCheck)
             {
                 ModCrates.VerifyModCrates(SupportedMods, Game.ShortName, Modder.GameRegion);
             }
             ModCrates.InstallLayerMods(SupportedMods, Pipeline.ExtractedPath, 0);
-            Modder.EnabledModCrates = new List<ModCrate>();
-            foreach (ModCrate Mod in SupportedMods)
-            {
-                if (Mod.IsActivated)
-                {
-                    Modder.EnabledModCrates.Add(Mod);
-                }
-            }
             if (Modder != null)
             {
+                Modder.EnabledModCrates = new List<ModCrate>();
+                foreach (ModCrate Mod in SupportedMods)
+                {
+                    if (Mod.IsActivated)
+                    {
+                        Modder.EnabledModCrates.Add(Mod);
+                    }
+                }
                 ModCrates.InstallCrateSettings(SupportedMods, Modder);
                 Modder.StartModProcess();
             }
