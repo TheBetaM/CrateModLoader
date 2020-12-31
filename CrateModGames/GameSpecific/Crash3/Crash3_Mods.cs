@@ -2313,10 +2313,10 @@ namespace CrateModLoader.GameSpecific.Crash3
         };
         static List<Crash3_Levels> AllLevels = new List<Crash3_Levels>()
         {
-            Crash3_Levels.B02_Dingodile,
-            Crash3_Levels.B03_NTropy,
-            Crash3_Levels.B04_NGin,
-            Crash3_Levels.B01_TinyTiger,
+            //Crash3_Levels.B02_Dingodile,
+            //Crash3_Levels.B03_NTropy,
+            //Crash3_Levels.B04_NGin,
+            //Crash3_Levels.B01_TinyTiger,
             //Crash3_Levels.B05_Cortex,
             Crash3_Levels.L03_OrientExpress,
             Crash3_Levels.L01_ToadVillage,
@@ -3490,6 +3490,23 @@ namespace CrateModLoader.GameSpecific.Crash3
                                     }
                                 }
                             }
+                        }
+                    }
+                }
+            }
+        }
+
+        public static void Mod_AshedCrates(NSF nsf, Random rand, bool isRandom)
+        {
+            foreach (ModelEntry model in nsf.GetEntries<ModelEntry>())
+            {
+                if (model.EName.StartsWith("B") && (model.EName.EndsWith("10G") || model.EName.EndsWith("20G") || model.EName.EndsWith("30G") || model.EName.EndsWith("40G")))
+                {
+                    if (!isRandom || (isRandom && rand.Next(2) == 0))
+                    {
+                        for (int i = 0; i < model.Colors.Count; ++i)
+                        {
+                            model.Colors[i] = new SceneryColor(0, 0, 0, model.Colors[i].Extra);
                         }
                     }
                 }

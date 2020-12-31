@@ -3153,6 +3153,23 @@ namespace CrateModLoader.GameSpecific.Crash2
             }
         }
 
+        public static void Mod_AshedCrates(NSF nsf, Random rand, bool isRandom)
+        {
+            foreach (ModelEntry model in nsf.GetEntries<ModelEntry>())
+            {
+                if (model.EName.StartsWith("B") && (model.EName.EndsWith("10G") || model.EName.EndsWith("20G") || model.EName.EndsWith("30G") || model.EName.EndsWith("40G")))
+                {
+                    if (!isRandom || (isRandom && rand.Next(2) == 0))
+                    {
+                        for (int i = 0; i < model.Colors.Count; ++i)
+                        {
+                            model.Colors[i] = new SceneryColor(0, 0, 0, model.Colors[i].Extra);
+                        }
+                    }
+                }
+            }
+        }
+
         public static void Mod_Metadata(NSF nsf, NSD nsd, Crash2_Levels level, RegionType region)
         {
             if (level != Crash2_Levels.WarpRoom && level != Crash2_Levels.WarpRoom2 && level != Crash2_Levels.WarpRoom3 && level != Crash2_Levels.WarpRoom4 && level != Crash2_Levels.WarpRoom5)
