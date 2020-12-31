@@ -1470,6 +1470,59 @@ namespace CrateModLoader.GameSpecific.Crash1
                     }
 
                 }
+                else if (level == Crash1_Levels.L28_StormyAscent)
+                {
+                    if (zone.EName == "h2_yZ")
+                    {
+                        int crutchID = 290;
+                        CreateEntityStormyElevator((short)crutchID, 370, 619, 294, zone, 400);
+                    }
+                    else if (zone.EName == "h1_yZ")
+                    {
+                        zone.Entities.RemoveAt(2);
+                        int crutchID = 291;
+                        CreateEntityStormyElevator((short)crutchID, 160, 444, 294, zone, 400);
+                    }
+                    else if (zone.EName == "g5_yZ")
+                    {
+                        int crutchID = 292;
+                        CreateEntityStormyElevator((short)crutchID, 1250, -130, 294, zone, 400);
+                        crutchID = 293;
+                        CreateEntityStormyElevator((short)crutchID, 320, 669, 294, zone, 400);
+                    }
+                    else if (zone.EName == "g4_yZ")
+                    {
+                        zone.Entities.RemoveAt(1);
+                        int crutchID = 294;
+                        CreateEntityStormyElevator((short)crutchID, 1350, 94, 294, zone, 400);
+                    }
+                    else if (zone.EName == "g1_yZ")
+                    {
+                        // we need space!!!
+                        zone.Entities.RemoveAt(2);
+                    }
+                    else if (zone.EName == "f4_yZ")
+                    {
+                        // we need space!!!
+                        zone.Entities.RemoveAt(1);
+                    }
+                    else if (zone.EName == "j1_yZ")
+                    {
+                        // we need space!!!
+                        zone.Entities.RemoveAt(3);
+                        zone.Entities.RemoveAt(1);
+                    }
+                    else if (zone.EName == "i2_yZ")
+                    {
+                        // we need space!!!
+                        zone.Entities.RemoveAt(2);
+                    }
+                    else if (zone.EName == "i4_yZ")
+                    {
+                        // we need space!!!
+                        zone.Entities.RemoveAt(2);
+                    }
+                }
 
             }
 
@@ -1517,6 +1570,10 @@ namespace CrateModLoader.GameSpecific.Crash1
             else if (level == Crash1_Levels.L13_BoulderDash)
             {
                 CrashPos = new EntityPosition(CrashPos.X, (short)(CrashPos.Y - 230), CrashPos.Z);
+            }
+            else if (level == Crash1_Levels.L28_StormyAscent)
+            {
+                CrashPos = new EntityPosition((short)(CrashPos.X - 700), CrashPos.Y, CrashPos.Z);
             }
             else if (level == Crash1_Levels.L17_CortexPower || level == Crash1_Levels.L01_NSanityBeach)
             {
@@ -2259,6 +2316,26 @@ namespace CrateModLoader.GameSpecific.Crash1
         {
             OldEntity newentity = OldEntity.Load(new OldEntity(0x18, 3, 0, id, 0, 0, 0, 58, (byte)subtype, new List<EntityPosition>() { new EntityPosition(x, y, z) }, 0).Save());
 
+            zone.Entities.Add(newentity);
+        }
+
+        static void CreateEntityStormyElevator(short id, short x, short y, short z, OldZoneEntry zone, short height)
+        {
+            List<EntityPosition> path = new List<EntityPosition>() { new EntityPosition(x, y, z) };
+            path.Add(new EntityPosition(x, (short)(y + (height * 0.05)), z));
+            //path.Add(new EntityPosition(x, (short)(y + (height * 0.1)), z));
+            //path.Add(new EntityPosition(x, (short)(y + (height * 0.2)), z));
+            path.Add(new EntityPosition(x, (short)(y + (height * 0.3)), z));
+            //path.Add(new EntityPosition(x, (short)(y + (height * 0.4)), z));
+            //path.Add(new EntityPosition(x, (short)(y + (height * 0.5)), z));
+            //path.Add(new EntityPosition(x, (short)(y + (height * 0.6)), z));
+            path.Add(new EntityPosition(x, (short)(y + (height * 0.7)), z));
+            //path.Add(new EntityPosition(x, (short)(y + (height * 0.8)), z));
+            //path.Add(new EntityPosition(x, (short)(y + (height * 0.9)), z));
+            path.Add(new EntityPosition(x, (short)(y + (height * 0.95)), z));
+            path.Add(new EntityPosition(x, (short)(y + height), z));
+
+            OldEntity newentity = OldEntity.Load(new OldEntity(0x18, 3, 0, id, 120, 0, 0, 11, 6, path, 0).Save());
             zone.Entities.Add(newentity);
         }
 
