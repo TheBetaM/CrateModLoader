@@ -566,5 +566,52 @@ namespace CrateModLoader.GameSpecific
                 eids.RemoveAt(i);
             }
         }
+
+        public static List<SEP> Cache_MIDI = new List<SEP>();
+
+        public static void ResetCache()
+        {
+            Cache_MIDI = new List<SEP>();
+        }
+        public static void Cache_Music(NSF nsf)
+        {
+            foreach (MusicEntry music in nsf.GetEntries<MusicEntry>())
+            {
+                Cache_MIDI.Add(music.SEP);
+            }
+        }
+
+        public static void Randomize_Music(NSF nsf, Random rand)
+        {
+            List<MusicEntry> CacheEntryList = new List<MusicEntry>();
+
+            foreach (Chunk chunk in nsf.Chunks)
+            {
+                if (chunk is NormalChunk datachunk)
+                {
+                    for (int i = 0; i < datachunk.Entries.Count; i++)
+                    {
+                        if (datachunk.Entries[i] is MusicEntry music)
+                        {
+                            SEP target_track = Cache_MIDI[rand.Next(Cache_MIDI.Count)];
+                            MusicEntry CacheEntry = new MusicEntry(music.VHEID, music.VB0EID, music.VB1EID, music.VB2EID, music.VB3EID, music.VB4EID, music.VB5EID, music.VB6EID, music.VH, target_track, music.EID);
+                            CacheEntryList.Add(CacheEntry);
+                            datachunk.Entries.RemoveAt(i);
+                            i--;
+                        }
+                    }
+                }
+            }
+
+            if (CacheEntryList.Count > 0)
+            {
+                for (int i = 0; i < CacheEntryList.Count; i++)
+                {
+                    NormalChunk addchunk = new NormalChunk();
+                    addchunk.Entries.Add(CacheEntryList[i]);
+                    nsf.Chunks.Add(addchunk);
+                }
+            }
+        }
     }
 }

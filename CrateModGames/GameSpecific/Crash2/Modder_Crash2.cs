@@ -64,6 +64,7 @@ namespace CrateModLoader.GameSpecific.Crash2
         public static ModPropOption Option_RandBoxCount = new ModPropOption(CrashTri_Text.Rand_CrateCounter, CrashTri_Text.Rand_CrateCounterDesc);
         public static ModPropOption Option_RandBosses = new ModPropOption(Crash2_Text.Rand_BossLevels, Crash2_Text.Rand_BossLevelsDesc);
         public static ModPropOption Option_CameraBigFOV = new ModPropOption(CrashTri_Text.Mod_CameraWideFOV, CrashTri_Text.Mod_CameraWideFOVDesc);
+        public static ModPropOption Option_RandMusicTracks = new ModPropOption("Randomize Music Tracks", "Music tracks are randomized, still played using the level's instruments."); //only swaps midis
         public static ModPropOption Option_RandSounds = new ModPropOption(CrashTri_Text.Rand_SFX, CrashTri_Text.Rand_SFXDesc);
         public static ModPropOption Option_RandStreams = new ModPropOption(CrashTri_Text.Rand_Streams, CrashTri_Text.Rand_StreamsDesc);
         public static ModPropOption Option_RandPantsColor = new ModPropOption(CrashTri_Text.Rand_PantsColor, CrashTri_Text.Rand_PantsColorDesc);
@@ -106,7 +107,6 @@ namespace CrateModLoader.GameSpecific.Crash2
         public static ModPropOption Option_MirroredWorld = new ModPropOption("Mirrored World", "") { Hidden = true };
         public static ModPropOption Option_RandMirroredWorld = new ModPropOption("Random Levels Are Mirrored", "") { Hidden = true };
         public static ModPropOption Option_RandMusic = new ModPropOption("Randomize Music", "") { Hidden = true }; //shuffle tracks from different levels (must be identical to vanilla playback, just in a different level)
-        public static ModPropOption Option_RandMusicTracks = new ModPropOption("Randomize Music Tracks", "") { Hidden = true }; //only swap midis
         public static ModPropOption Option_RandMusicInstruments = new ModPropOption("Randomize Music Instruments", "") { Hidden = true }; //only swap wavebanks
 
         public Modder_Crash2()
@@ -137,6 +137,7 @@ namespace CrateModLoader.GameSpecific.Crash2
             {
                 CachingPass = true;
             }
+            CrashTri_Common.ResetCache();
 
             SceneryColor PantsColor = new SceneryColor(0, 0, 0);
             if (Option_RandPantsColor.Enabled)
@@ -191,7 +192,12 @@ namespace CrateModLoader.GameSpecific.Crash2
 
                 Crash2_Levels NSF_Level = GetLevelFromNSF(nsfFile.Name);
 
-                if (!CachingPass)
+                if (CachingPass)
+                {
+                    if (Option_RandMusicTracks.Enabled)
+                        CrashTri_Common.Cache_Music(nsf);
+                }
+                else
                 {
                     if (Option_AllCratesWumpa.Enabled) Crash2_Mods.Mod_TurnCratesIntoWumpa(nsf, rand);
                     if (Option_RandWarpRoom.Enabled) Crash2_Mods.Mod_RandomizeWarpRoom(nsf, nsd, NSF_Level, rand);
@@ -218,8 +224,7 @@ namespace CrateModLoader.GameSpecific.Crash2
                     if (Option_GreyscaleWorld.Enabled) CrashTri_Common.Mod_Scenery_Greyscale(nsf);
                     if (Option_RandWorldColors.Enabled) CrashTri_Common.Mod_Scenery_Rainbow(nsf, rand);
                     if (Option_UntexturedWorld.Enabled) CrashTri_Common.Mod_Scenery_Untextured(nsf);
-                    if (Option_RandMusic.Enabled || Option_RandMusicTracks.Enabled || Option_RandMusicInstruments.Enabled)
-                        Randomize_Music(nsf, rand, ref wavebankChunks, ref musicEntries, Option_RandMusic.Enabled, Option_RandMusicTracks.Enabled, Option_RandMusicInstruments.Enabled);
+                    if (NSF_Level != Crash2_Levels.Unknown && Option_RandMusicTracks.Enabled) CrashTri_Common.Randomize_Music(nsf, rand);
                     if (Option_RandSounds.Enabled) CrashTri_Common.Mod_RandomizeADIO(nsf, rand);
                     if (Option_RandWorldTex.Enabled) CrashTri_Common.Mod_RandomizeWGEOTex(nsf, rand);
                     if (Option_RandPantsColor.Enabled || Prop_PantsColor.HasChanged) Crash2_Mods.Mod_PantsColor(nsf, PantsColor);
@@ -233,10 +238,6 @@ namespace CrateModLoader.GameSpecific.Crash2
                     if (Option_UncoloredObj.Enabled) CrashTri_Common.Mod_RemoveObjectColors(nsf, rand);
 
                     Crash2_Mods.Mod_Metadata(nsf, nsd, NSF_Level, GameRegion.Region);
-                }
-                else
-                {
-                    if (Option_RandMusic.Enabled || Option_RandMusicTracks.Enabled || Option_RandMusicInstruments.Enabled) CacheMusic(nsf, ref wavebankChunks, ref musicEntries);
                 }
 
                 PatchNSD(nsf, nsd);

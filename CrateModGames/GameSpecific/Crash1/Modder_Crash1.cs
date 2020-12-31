@@ -63,7 +63,8 @@ namespace CrateModLoader.GameSpecific.Crash1
         public static ModPropOption Option_RandLightCol = new ModPropOption(Crash1_Text.Rand_LightCol, Crash1_Text.Rand_LightColDesc);
         public static ModPropOption Option_EnableDog = new ModPropOption(Crash1_Text.Mod_EnableDog, Crash1_Text.Mod_EnableDog);
         public static ModPropOption Option_CameraBigFOV = new ModPropOption(CrashTri_Text.Mod_CameraWideFOV, CrashTri_Text.Mod_CameraWideFOVDesc) { Hidden = true, };
-        
+
+        public static ModPropOption Option_RandMusicTracks = new ModPropOption("Randomize Music Tracks", "Music tracks are randomized, still played using the level's instruments."); //only swaps midis
         public static ModPropOption Option_RandSounds = new ModPropOption(CrashTri_Text.Rand_SFX, CrashTri_Text.Rand_SFXDesc);
         public static ModPropOption Option_RandWorldColors = new ModPropOption(CrashTri_Text.Rand_WorldColors, CrashTri_Text.Rand_WorldColorsDesc);
         public static ModPropOption Option_RandWorldPalette = new ModPropOption(CrashTri_Text.Rand_WorldPalette, CrashTri_Text.Rand_WorldPaletteDesc);
@@ -90,7 +91,6 @@ namespace CrateModLoader.GameSpecific.Crash1
         public static ModPropOption Option_MirroredWorld = new ModPropOption("Mirrored World", "") { Hidden = true };
         public static ModPropOption Option_RandMirroredWorld = new ModPropOption("Random Levels Are Mirrored", "") { Hidden = true };
         public static ModPropOption Option_RandMusic = new ModPropOption("Randomize Music", "") { Hidden = true }; //shuffle tracks from different levels (must be identical to vanilla playback, just in a different level)
-        public static ModPropOption Option_RandMusicTracks = new ModPropOption("Randomize Music Tracks", "") { Hidden = true }; //only swap midis
         public static ModPropOption Option_RandMusicInstruments = new ModPropOption("Randomize Music Instruments", "") { Hidden = true }; //only swap wavebanks
         public static ModPropOption Option_GreyscaleWorld = new ModPropOption("Greyscale World", "") { Hidden = true };
         public static ModPropOption Option_UntexturedWorld = new ModPropOption("Untextured/Greyscale World", "") { Hidden = true };
@@ -117,12 +117,13 @@ namespace CrateModLoader.GameSpecific.Crash1
             AppendFileInfoDir(nsfs, nsds, di); // this should return all NSF/NSD file pairs
 
             bool CachingPass = false;
-            /*
-            if (Option_ReplaceTNTWithPOW.Enabled)
+            CrashTri_Common.ResetCache();
+
+            if (Option_RandMusicTracks.Enabled)
             {
                 CachingPass = true;
             }
-            */
+            
 
             OldSceneryColor PantsColor = new OldSceneryColor(0, 0, 0, false);
             if (Option_RandPantsColor.Enabled)
@@ -184,6 +185,8 @@ namespace CrateModLoader.GameSpecific.Crash1
                 {
                     if (Option_HogLevelsOnFoot.Enabled) 
                         Crash1_Mods.Cache_NormalCrashData(nsf, nsd, NSF_Level);
+                    if (Option_RandMusicTracks.Enabled)
+                        CrashTri_Common.Cache_Music(nsf);
                 }
                 else
                 {
@@ -206,6 +209,7 @@ namespace CrateModLoader.GameSpecific.Crash1
                     if (Option_RandWorldColors.Enabled) CrashTri_Common.Mod_Scenery_Rainbow(nsf, rand);
                     if (Option_UntexturedWorld.Enabled) CrashTri_Common.Mod_Scenery_Untextured(nsf);
                     if (Option_RandPantsColor.Enabled || Prop_PantsColor.HasChanged) Crash1_Mods.Mod_PantsColor(nsf, PantsColor);
+                    if (NSF_Level != Crash1_Levels.MapMainMenu && Option_RandMusicTracks.Enabled) CrashTri_Common.Randomize_Music(nsf, rand);
                     if (Option_RandSounds.Enabled) CrashTri_Common.Mod_RandomizeADIO(nsf, rand);
                     if (Option_RandLightCol.Enabled) Crash1_Mods.Mod_RandomLightColor(nsf, rand);
 
