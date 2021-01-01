@@ -2339,25 +2339,44 @@ namespace CrateModLoader.GameSpecific.Crash1
             zone.Entities.Add(newentity);
         }
 
-        public static void Mod_RandomizeMap(NSF nsf, OldNSD nsd, Crash1_Levels level, Random rand)
+        public static void Mod_RandomizeMap(NSF nsf, OldNSD nsd, Crash1_Levels level, Random rand, RegionType region)
         {
             if (level != Crash1_Levels.MapMainMenu)
             {
                 return;
             }
 
-            int LevelCount = 33;
+            int LevelCount = 31;
 
             List<int> LevelsToReplace = new List<int>();
-            for (int i = 0; i < LevelCount - 1; i++)
+            List<int> LevelsRand = new List<int>();
+            for (int i = 0; i < LevelCount + 1; i++)
             {
                 LevelsToReplace.Add(i);
             }
-            List<int> LevelsRand = new List<int>();
+            List<int> LevelsToReplaceNoKeys = new List<int>(LevelsToReplace);
+            LevelsToReplaceNoKeys.Remove(25); // jaws
+            if (region == RegionType.NTSC_J)
+                LevelsToReplaceNoKeys.Remove(23); //sunset
+            else
+                LevelsToReplaceNoKeys.Remove(15); //sunset
+
+            // key unlock level 1
+            int rk = rand.Next(LevelsToReplaceNoKeys.Count);
+            LevelsRand.Add(LevelsToReplaceNoKeys[rk]);
+            LevelsToReplace.Remove(LevelsToReplaceNoKeys[rk]);
+            LevelsToReplaceNoKeys.RemoveAt(rk);
+
+            // key unlock level 2
+            rk = rand.Next(LevelsToReplaceNoKeys.Count);
+            LevelsRand.Add(LevelsToReplaceNoKeys[rk]);
+            LevelsToReplace.Remove(LevelsToReplaceNoKeys[rk]);
+            LevelsToReplaceNoKeys.RemoveAt(rk);
+
             for (int i = 0; i < LevelCount - 1; i++)
             {
                 int r = rand.Next(LevelsToReplace.Count);
-                LevelsRand.Add(LevelsToReplace[r]);
+                LevelsRand.Insert(0, LevelsToReplace[r]);
                 LevelsToReplace.RemoveAt(r);
             }
 
@@ -2373,7 +2392,7 @@ namespace CrateModLoader.GameSpecific.Crash1
             GOOLEntry map = nsf.GetEntry<GOOLEntry>("IsldC");
             if (map != null)
             {
-                for (int i = 0; i < LevelCount + 1; i++)
+                for (int i = 0; i < LevelCount + 3; i++)
                 {
                     if (!DontSwap.Contains(i))
                     {
@@ -2382,7 +2401,7 @@ namespace CrateModLoader.GameSpecific.Crash1
                     }
                 }
 
-                for (int i = 0; i < LevelCount + 2; i++)
+                for (int i = 0; i < LevelCount + 4; i++)
                 {
                     if (i != 30 && i != 32 && i != 34)
                     {

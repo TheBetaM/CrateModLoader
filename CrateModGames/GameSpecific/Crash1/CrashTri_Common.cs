@@ -583,7 +583,7 @@ namespace CrateModLoader.GameSpecific
 
         public static void Randomize_Music(NSF nsf, Random rand)
         {
-            List<MusicEntry> CacheEntryList = new List<MusicEntry>();
+            //List<MusicEntry> CacheEntryList = new List<MusicEntry>();
 
             foreach (Chunk chunk in nsf.Chunks)
             {
@@ -594,15 +594,39 @@ namespace CrateModLoader.GameSpecific
                         if (datachunk.Entries[i] is MusicEntry music)
                         {
                             SEP target_track = Cache_MIDI[rand.Next(Cache_MIDI.Count)];
+                            SEP this_track = music.SEP;
+                            List<SEQ> trackList = new List<SEQ>();
+
+                            for (int t = 0; t < this_track.SEQs.Count; t++)
+                            {
+                                int len = this_track.SEQs[t].Data.Length;
+                                byte[] new_track_data = target_track.SEQs[0].Data;
+                                int flen = Math.Min(len, new_track_data.Length);
+                                byte[] trimmed_data = new byte[flen];
+                                for (int b = 0; b < flen; b++)
+                                {
+                                    trimmed_data[b] = new_track_data[b];
+                                }
+
+                                SEQ track = new SEQ(target_track.SEQs[0].Resolution, target_track.SEQs[0].Tempo, target_track.SEQs[0].Rhythm, trimmed_data);
+                                trackList.Add(track);
+                            }
+
+                            this_track = new SEP(trackList);
+                            datachunk.Entries[i] = new MusicEntry(music.VHEID, music.VB0EID, music.VB1EID, music.VB2EID, music.VB3EID, music.VB4EID, music.VB5EID, music.VB6EID, music.VH, this_track, music.EID);
+
+                            /*
                             MusicEntry CacheEntry = new MusicEntry(music.VHEID, music.VB0EID, music.VB1EID, music.VB2EID, music.VB3EID, music.VB4EID, music.VB5EID, music.VB6EID, music.VH, target_track, music.EID);
                             CacheEntryList.Add(CacheEntry);
                             datachunk.Entries.RemoveAt(i);
                             i--;
+                            */
                         }
                     }
                 }
             }
 
+            /*
             if (CacheEntryList.Count > 0)
             {
                 for (int i = 0; i < CacheEntryList.Count; i++)
@@ -612,6 +636,7 @@ namespace CrateModLoader.GameSpecific
                     nsf.Chunks.Add(addchunk);
                 }
             }
+            */
         }
     }
 }
