@@ -1,109 +1,149 @@
 ﻿using DiscUtils.Iso9660;
 using System;
 using System.IO;
-using System.Diagnostics;
+using System.Collections.Generic;
+using System.ComponentModel;
 using CrateModLoader.Tools;
+using CrateModLoader.Tools.ISO;
 
 namespace CrateModLoader.ModPipelines
 {
 
-    public class ModPipeline_PSP : ModPipeline
+    public class ConsolePipeline_PS1 : ConsolePipeline
     {
 
-        public override ModPipelineInfo Metadata => new ModPipelineInfo()
+        public string ISO_Label = "";
+
+        public override ConsolePipelineInfo Metadata => new ConsolePipelineInfo()
         {
-            Console = ConsoleMode.PSP,
-            Layer = 0,
+            Console = ConsoleMode.PS1,
             NeedsDetection = true,
-            CanBuildROMfromFolder = false, // original file required for building
+            CanBuildROMfromFolder = false, // original file required for label
         };
 
         public override string TempPath => ModLoaderGlobals.BaseDirectory + ModLoaderGlobals.TempName + @"\";
-        public override string ProcessPath => ModLoaderGlobals.TempName + @"\PSP_GAME\USRDIR\";
+        public override string ProcessPath => ModLoaderGlobals.TempName + @"\";
 
-        public ModPipeline_PSP()
+        public ConsolePipeline_PS1()
         {
-
+            ISO_Label = "";
         }
 
         public override bool DetectROM(string inputPath, out string titleID, out uint regionID)
         {
+            bool found = false;
+            titleID = null;
             regionID = 0;
             using (FileStream isoStream = File.Open(inputPath, FileMode.Open))
             {
-                if (!CDReader.Detect(isoStream))
+                CDReader cd;
+                MemoryStream tempbin = null;
+
+                if (Path.GetExtension(inputPath).ToLower() == ".bin") // PS1 CD image
                 {
-                    titleID = null;
+                    tempbin = new MemoryStream();
+                    PSX2ISO.Run(isoStream, tempbin);
+                    cd = new CDReader(tempbin, true);
+                }
+                else if (!CDReader.Detect(isoStream))
+                {
                     return false;
                 }
                 else
                 {
-                    CDReader cd = new CDReader(isoStream, true);
-                    titleID = null;
-                    bool confirm = false;
-                    if (cd.FileExists(@"UMD_DATA.BIN"))
+                    cd = new CDReader(isoStream, true);
+                }
+
+                if (cd.FileExists(@"SYSTEM.CNF"))
+                {
+                    using (StreamReader sr = new StreamReader(cd.OpenFile(@"SYSTEM.CNF", FileMode.Open)))
                     {
-                        using (StreamReader sr = new StreamReader(cd.OpenFile(@"UMD_DATA.BIN", FileMode.Open)))
-                        {
-                            titleID = sr.ReadLine().Substring(0, 10);
-                        }
-                        confirm = true;
+                        titleID = sr.ReadLine();
+                        found = (titleID.Contains("BOOT ") || titleID.Contains("BOOT="));
                     }
-                    cd.Dispose();
-                    return confirm;
+                }
+                else
+                {
+                    found = false;
+                }
+
+                cd.Dispose();
+
+                if (tempbin != null)
+                {
+                    tempbin.Dispose();
+                    tempbin.Close();
                 }
             }
+            if (!found)
+            {
+                titleID = null;
+            }
+            return found;
         }
 
         public override bool DetectFolder(string inputPath, out string titleID, out uint regionID)
         {
+            titleID = null;
             regionID = 0;
-            string filePath = inputPath + @"UMD_DATA.BIN";
+            bool found = false;
+            string filePath = inputPath + @"SYSTEM.CNF";
             if (File.Exists(filePath))
             {
                 using (StreamReader sr = new StreamReader(filePath))
                 {
-                    titleID = sr.ReadLine().Substring(0, 10);
-                    return true;
+                    titleID = sr.ReadLine();
+                    found = (titleID.Contains("BOOT ") || titleID.Contains("BOOT="));
                 }
             }
-            titleID = null;
-            return false;
+            if (!found)
+            {
+                titleID = null;
+            }
+            return found;
         }
 
-        public override void Build(string inputPath, string outputPath)
+        public override void Build(string inputPath, string outputPath, BackgroundWorker worker)
         {
-            // Use WQSG_UMD (requires input ROM)
-            //File.Copy(ModLoaderGlobals.InputPath, ModLoaderGlobals.ToolsPath + "Game.iso");
+            // Use CDBuilder
+            CDBuilder isoBuild = new CDBuilder();
+            isoBuild.UseJoliet = true;
+            isoBuild.VolumeIdentifier = ISO_Label;
 
-            string args = "";
-            args += @"--iso=";
-            args += "\"" + ModLoaderGlobals.BaseDirectory + "/Tools/Game.iso\"";
-            args += " --file=\"";
-            args += inputPath + "PSP_GAME\"";
-            //args += " --log";
+            DirectoryInfo di = new DirectoryInfo(inputPath);
+            HashSet<FileStream> files = new HashSet<FileStream>();
 
-            Process ISOcreatorProcess = new Process();
-            ISOcreatorProcess.StartInfo.FileName = ModLoaderGlobals.ToolsPath + "WQSG_UMD.exe";
-            ISOcreatorProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            ISOcreatorProcess.StartInfo.Arguments = args;
-            ISOcreatorProcess.Start();
-            ISOcreatorProcess.WaitForExit();
+            foreach (DirectoryInfo dir in di.GetDirectories())
+            {
+                ISO_Common.Recursive_AddDirs(isoBuild, dir, dir.Name + @"\", files, true);
+            }
+            foreach (FileInfo file in di.GetFiles())
+            {
+                ISO_Common.AddFile(isoBuild, file, string.Empty, files, true);
+            }
 
-            File.Move(ModLoaderGlobals.ToolsPath + "Game.iso", outputPath);
+            using (FileStream output = new FileStream(outputPath, FileMode.Create, FileAccess.Write))
+            using (Stream input = isoBuild.Build())
+            {
+                ISO2PSX.Run(input, output);
+            }
+
+            //isoBuild.Build(outputPath);
+
+            foreach (FileStream file in files)
+            {
+                file.Close();
+            }
         }
 
-        public override void Extract(string inputPath, string outputPath)
+        public override void Extract(string inputPath, string outputPath, BackgroundWorker worker)
         {
-            //Needed to build
-            File.Copy(inputPath, ModLoaderGlobals.ToolsPath + "Game.iso");
-
             using (FileStream isoStream = File.Open(inputPath, FileMode.Open))
             {
                 FileInfo isoInfo = new FileInfo(inputPath);
                 CDReader cd;
                 FileStream tempbin = null;
-                if (Path.GetExtension(inputPath).ToLower() == ".bin")
+                if (Path.GetExtension(inputPath).ToLower() == ".bin") // PS1 CD image
                 {
                     FileStream binconvout = new FileStream(ModLoaderGlobals.BaseDirectory + "binconvout.iso", FileMode.Create, FileAccess.Write);
                     PSX2ISO.Run(isoStream, binconvout);
@@ -115,22 +155,7 @@ namespace CrateModLoader.ModPipelines
                 {
                     cd = new CDReader(isoStream, true);
                 }
-                //ModLoaderGlobals.ISO_Label = cd.VolumeLabel;
-
-                /* Sometimes doesn't work?
-                if (isoInfo.Length * 2 > GetTotalFreeSpace(ModLoaderGlobals.TempPath.Substring(0, 3)))
-                {
-                    cd.Dispose();
-                    throw new IOException("Extraction error: Not enough hard drive space where this program is!");
-                }
-                if (isoInfo.Length * 2 > GetTotalFreeSpace(ModLoaderGlobals.OutputPath.Substring(0, 3)))
-                {
-                    cd.Dispose();
-                    throw new IOException("Extraction error: Not enough hard drive space in the output path!");
-                }
-                */
-
-                //fileStream = cd.OpenFile(@"SYSTEM.CNF", FileMode.Open);
+                ISO_Label = cd.VolumeLabel;
 
                 if (!Directory.Exists(outputPath))
                 {

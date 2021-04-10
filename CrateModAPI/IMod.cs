@@ -7,16 +7,18 @@ namespace CrateModLoader
     interface IMod
     {
         bool Hidden { get; set; }
-        BackgroundWorker AsyncWorker { get; set; }
+        BackgroundWorker AsyncProcess { get; set; }
+        List<BackgroundWorker> AsyncWorkers { get; set; }
         bool IsBusy { get; }
-        List<ModPropertyBase> Props { get; set; }
-        List<ConsoleMode> SupportedConsoles { get; set; }
+        bool IsCaching { get; set; }
+        int Order { get; set; }
 
-        void BeforeProcess();
+        void StartCache(List<string> paths);
+        void StartMod(List<string> paths);
 
-        void Process(object sender, DoWorkEventArgs e);
+        void CachePass(object sender, DoWorkEventArgs e);
 
-        void AfterProcess();
+        void ModPass(object sender, DoWorkEventArgs e);
 
     }
 }

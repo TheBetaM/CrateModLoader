@@ -25,13 +25,13 @@ namespace CrateModLoader
     public abstract class Modder
     {
 
-        public List<Mod> Mods = new List<Mod>();
-        public List<ModPipeline> Pipelines = new List<ModPipeline>();
+        private List<IMod> Mods = new List<IMod>();
+        public List<ConsolePipeline> Pipelines = new List<ConsolePipeline>();
         public List<ModPropertyBase> Props = new List<ModPropertyBase>();
 
         // External
         public Assembly assembly;
-        public ModPipeline ConsolePipeline;
+        public ConsolePipeline ConsolePipeline;
         public RegionCode GameRegion;
         public List<ModCrate> EnabledModCrates = new List<ModCrate>();
 
@@ -127,17 +127,17 @@ namespace CrateModLoader
             {
                 if (!string.IsNullOrEmpty(type.Namespace) && type.Namespace.Contains(nameSpace))
                 {
-                    if (type.IsAssignableFrom(typeof(Mod)))
+                    if (type.IsAssignableFrom(typeof(IMod)))
                     {
-                        Mod mod = (Mod)Activator.CreateInstance(type);
+                        IMod mod = (IMod)Activator.CreateInstance(type);
                         if (!mod.Hidden)
                         {
                             Mods.Add(mod);
                         }
                     }
-                    else if (type.IsAssignableFrom(typeof(ModPipeline)))
+                    else if (type.IsAssignableFrom(typeof(ConsolePipeline)))
                     {
-                        ModPipeline pipeline = (ModPipeline)Activator.CreateInstance(type);
+                        ConsolePipeline pipeline = (ConsolePipeline)Activator.CreateInstance(type);
                         Pipelines.Add(pipeline);
                     }
                 }
@@ -162,13 +162,9 @@ namespace CrateModLoader
         {
             BackgroundWorker a = sender as BackgroundWorker;
 
-            foreach (Mod mod in Mods)
+            foreach (IMod mod in Mods)
             {
-                mod.BeforeProcess();
-            }
-            foreach (Mod mod in Mods)
-            {
-                mod.StartProcess();
+                mod.StartMod(null);
             }
 
             bool Active = true;
@@ -178,7 +174,7 @@ namespace CrateModLoader
             {
                 IsActive = false;
                 ModCount = 0;
-                foreach (Mod mod in Mods)
+                foreach (IMod mod in Mods)
                 {
                     if (mod.IsBusy)
                         IsActive = true;
@@ -187,7 +183,7 @@ namespace CrateModLoader
                         ModCount++;
                     }
                 }
-                a.ReportProgress(ModCount / Mods.Count);
+                a.ReportProgress((int)(((float)ModCount / Mods.Count) * 100));
                 if (!IsActive)
                     Active = false;
             }

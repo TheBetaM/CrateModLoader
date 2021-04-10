@@ -2,10 +2,10 @@
 
 namespace CrateModLoader
 {
-    interface IModPipeline
+    interface IConsolePipeline
     {
 
-        ModPipelineInfo Metadata { get; }
+        ConsolePipelineInfo Metadata { get; }
 
         BackgroundWorker AsyncWorker { get; set; }
         bool IsBusy { get; }
@@ -18,8 +18,8 @@ namespace CrateModLoader
 
         void PreStart(bool inputDirectoryMode, bool outputDirectoryMode);
 
-        void Extract(string inputPath, string outputPath);
+        void Extract(string inputPath, string outputPath, BackgroundWorker worker);
 
-        void Build(string inputPath, string outputPath);
+        void Build(string inputPath, string outputPath, BackgroundWorker worker);
     }
 }

@@ -1,17 +1,17 @@
 ﻿using System;
 using System.IO;
 using System.Diagnostics;
+using System.ComponentModel;
 
 namespace CrateModLoader.ModPipelines
 {
 
-    public class ModPipeline_XBOX360 : ModPipeline
+    public class ConsolePipeline_XBOX360 : ConsolePipeline
     {
 
-        public override ModPipelineInfo Metadata => new ModPipelineInfo()
+        public override ConsolePipelineInfo Metadata => new ConsolePipelineInfo()
         {
             Console = ConsoleMode.XBOX360,
-            Layer = 0,
             NeedsDetection = true,
             CanBuildROMfromFolder = false,
             CanBuildROMfromROM = false,
@@ -20,7 +20,7 @@ namespace CrateModLoader.ModPipelines
         public override string TempPath => ModLoaderGlobals.BaseDirectory + ModLoaderGlobals.TempName + @"\";
         public override string ProcessPath => ModLoaderGlobals.TempName + @"\";
 
-        public ModPipeline_XBOX360()
+        public ConsolePipeline_XBOX360()
         {
 
         }
@@ -131,13 +131,13 @@ namespace CrateModLoader.ModPipelines
             return false;
         }
 
-        public override void Build(string inputPath, string outputPath)
+        public override void Build(string inputPath, string outputPath, BackgroundWorker worker)
         {
             //todo
             throw new NotImplementedException();
         }
 
-        public override void Extract(string inputPath, string outputPath)
+        public override void Extract(string inputPath, string outputPath, BackgroundWorker worker)
         {
             // TODO: add free space checks
             string args = "-x ";

@@ -1,11 +1,12 @@
 ﻿using System;
 using System.IO;
 using System.Diagnostics;
+using System.ComponentModel;
 
 namespace CrateModLoader.ModPipelines
 {
 
-    public class ModPipeline_GCN : ModPipeline
+    public class ConsolePipeline_GCN : ConsolePipeline
     {
 
         public string ProductCode = "";
@@ -13,15 +14,14 @@ namespace CrateModLoader.ModPipelines
         public override string TempPath => ModLoaderGlobals.BaseDirectory + ModLoaderGlobals.TempName;
         public override string ProcessPath => ModLoaderGlobals.TempName + @"\P-" + ProductCode.Substring(0, 4) + @"\files\";
 
-        public override ModPipelineInfo Metadata => new ModPipelineInfo()
+        public override ConsolePipelineInfo Metadata => new ConsolePipelineInfo()
         {
             Console = ConsoleMode.GCN,
-            Layer = 0,
             NeedsDetection = true,
             CanBuildROMfromFolder = false, // to fix: Incorrect root path because of missing product code folder ("/temp/files" instead of "/temp/<productCode>/files")
         };
 
-        public ModPipeline_GCN()
+        public ConsolePipeline_GCN()
         {
             ProductCode = "";
         }
@@ -84,7 +84,7 @@ namespace CrateModLoader.ModPipelines
             return false;
         }
 
-        public override void Build(string inputPath, string outputPath)
+        public override void Build(string inputPath, string outputPath, BackgroundWorker worker)
         {
             // Use GCIT (Wiims ISO Tool doesn't work for this)
             string folderFix = ProductCode.Substring(0, 4);
@@ -109,7 +109,7 @@ namespace CrateModLoader.ModPipelines
             ISOcreatorProcess.WaitForExit();
         }
 
-        public override void Extract(string inputPath, string outputPath)
+        public override void Extract(string inputPath, string outputPath, BackgroundWorker worker)
         {
             // TODO: add free space checks
 

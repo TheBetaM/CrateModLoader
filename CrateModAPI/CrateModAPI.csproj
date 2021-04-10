@@ -37,25 +37,23 @@
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EventArgs.cs" />
+    <Compile Include="FileFilter.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="IMod.cs" />
     <Compile Include="ModCrates.cs" />
     <Compile Include="Modder.cs" />
     <Compile Include="ModLoader.cs" />
     <Compile Include="ModLoaderGlobals.cs" />
-    <Compile Include="ModPipelines\IModPipeline.cs" />
+    <Compile Include="ModParser.cs" />
+    <Compile Include="ConsolePipelines\IConsolePipeline.cs" />
     <Compile Include="ModPipelines\IO_Common.cs" />
-    <Compile Include="ModPipelines\ModPipeline.cs" />
+    <Compile Include="ConsolePipelines\ConsolePipeline.cs" />
     <Compile Include="Mod.cs" />
+    <Compile Include="ModPipelines\ModPipeline.cs" />
     <Compile Include="ModProperties\ModCategory.cs" />
     <Compile Include="ModProperties\ModPropBool.cs" />
     <Compile Include="ModProperties\ModPropColor.cs" />
@@ -79,7 +77,6 @@
       <DesignTime>True</DesignTime>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Resources\Text\ModLoaderText.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

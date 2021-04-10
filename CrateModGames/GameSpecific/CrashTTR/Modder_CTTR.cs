@@ -627,8 +627,8 @@ namespace CrateModLoader.GameSpecific.CrashTTR
             PrintHierarchy(CrashOnfootAnim1.RootChunk, 0);
 
             Shader[] shaders = CrashOnfootAnim1.RootChunk.GetChildren<Shader>();
-            ModelExporter.AddSkinnedModelWithAnimations(ref CrashOnfootAnim1.RootChunk.GetChildren<Skin>()[0], ref CrashOnfootAnim1.RootChunk.GetChildren<SkeletonCTTR>()[0], ref shaders);
-            ModelExporter.ExportModel(ModLoaderGlobals.ToolsPath + "out.dae");
+            //ModelExporter.AddSkinnedModelWithAnimations(ref CrashOnfootAnim1.RootChunk.GetChildren<Skin>()[0], ref CrashOnfootAnim1.RootChunk.GetChildren<SkeletonCTTR>()[0], ref shaders);
+            //ModelExporter.ExportModel(ModLoaderGlobals.ToolsPath + "out.dae");
 
             /*
             Console.WriteLine("\nNow saving...\n");

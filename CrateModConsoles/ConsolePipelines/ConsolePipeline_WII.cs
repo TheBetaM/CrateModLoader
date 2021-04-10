@@ -1,24 +1,24 @@
 ﻿using System;
 using System.IO;
 using System.Diagnostics;
+using System.ComponentModel;
 
 namespace CrateModLoader.ModPipelines
 {
 
-    public class ModPipeline_WII : ModPipeline
+    public class ConsolePipeline_WII : ConsolePipeline
     {
 
-        public override ModPipelineInfo Metadata => new ModPipelineInfo()
+        public override ConsolePipelineInfo Metadata => new ConsolePipelineInfo()
         {
             Console = ConsoleMode.WII,
-            Layer = 0,
             NeedsDetection = true,
         };
 
         public override string TempPath => ModLoaderGlobals.BaseDirectory + ModLoaderGlobals.TempName;
         public override string ProcessPath => ModLoaderGlobals.TempName + @"\DATA\files\";
 
-        public ModPipeline_WII()
+        public ConsolePipeline_WII()
         {
 
         }
@@ -79,7 +79,7 @@ namespace CrateModLoader.ModPipelines
             return false;
         }
 
-        public override void Build(string inputPath, string outputPath)
+        public override void Build(string inputPath, string outputPath, BackgroundWorker worker)
         {
             // Use Wiimms ISO Tool
             string args = "copy ";
@@ -100,7 +100,7 @@ namespace CrateModLoader.ModPipelines
             ISOcreatorProcess.WaitForExit();
         }
 
-        public override void Extract(string inputPath, string outputPath)
+        public override void Extract(string inputPath, string outputPath, BackgroundWorker worker)
         {
             // TODO: add free space checks
 

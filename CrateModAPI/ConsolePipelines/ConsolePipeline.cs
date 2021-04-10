@@ -4,13 +4,15 @@ using System.ComponentModel;
 
 namespace CrateModLoader
 {
-    // Extracts archives of game files (inside ROMs)
-    public abstract class ModPipeline
+    // A mod pipeline describes a process of extracting, rebuilding and detecting the format of a game file/folder or a container (archive) of game files.
+    public abstract class ConsolePipeline : IConsolePipeline
     {
-        public abstract ModPipelineInfo Metadata { get; }
+
+        public abstract ConsolePipelineInfo Metadata { get; }
 
         public BackgroundWorker AsyncWorker { get; set; }
-        public bool IsBusy { get { return AsyncWorker != null && AsyncWorker.IsBusy; } }
+        public bool ForceBusy = false;
+        public bool IsBusy { get { return (AsyncWorker != null && AsyncWorker.IsBusy) || ForceBusy; } }
 
         /// <summary> Full path to the extracted files' folder. Differs based on console, but always points to the same game data. Ends with '\' </summary>
         public string ExtractedPath
@@ -72,16 +74,25 @@ namespace CrateModLoader
             }
         }
 
-        public abstract void Extract(string inputPath, string outputPath);
+        // Use background worker if the extractor can iterate over files
+        public abstract void Extract(string inputPath, string outputPath, BackgroundWorker worker);
 
-        public abstract void Build(string inputPath, string outputPath);
+        // Use background worker if the builder can iterate over files
+        public abstract void Build(string inputPath, string outputPath, BackgroundWorker worker);
+
+        public void UpdateExtractProgress(BackgroundWorker worker, int FileCount, ref int FileIterator)
+        {
+            FileIterator++;
+            int p = (int)((FileIterator / (float)FileCount) * 25f);
+            if (p > 25) p = 25;
+            worker.ReportProgress(1 + p);
+        }
 
     }
 
-    public class ModPipelineInfo
+    public class ConsolePipelineInfo
     {
-        
-        public int Layer { get; set; }
+        public ConsoleMode Console { get; set; }
         public Assembly Assembly { get; set; }
 
         public bool NeedsDetection = false;

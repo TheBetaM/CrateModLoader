@@ -1,24 +1,24 @@
 ﻿using System;
 using System.IO;
 using System.Diagnostics;
+using System.ComponentModel;
 
 namespace CrateModLoader.ModPipelines
 {
 
-    public class ModPipeline_XBOX : ModPipeline
+    public class ConsolePipeline_XBOX : ConsolePipeline
     {
 
-        public override ModPipelineInfo Metadata => new ModPipelineInfo()
+        public override ConsolePipelineInfo Metadata => new ConsolePipelineInfo()
         {
             Console = ConsoleMode.XBOX,
-            Layer = 0,
             NeedsDetection = true,
         };
 
         public override string TempPath => ModLoaderGlobals.BaseDirectory + ModLoaderGlobals.TempName + @"\";
         public override string ProcessPath => ModLoaderGlobals.TempName + @"\";
 
-        public ModPipeline_XBOX()
+        public ConsolePipeline_XBOX()
         {
 
         }
@@ -139,7 +139,7 @@ namespace CrateModLoader.ModPipelines
             return false;
         }
 
-        public override void Build(string inputPath, string outputPath)
+        public override void Build(string inputPath, string outputPath, BackgroundWorker worker)
         {
             //Use extract-xiso
             string args = "-c ";
@@ -155,7 +155,7 @@ namespace CrateModLoader.ModPipelines
             ISOcreatorProcess.WaitForExit();
         }
 
-        public override void Extract(string inputPath, string outputPath)
+        public override void Extract(string inputPath, string outputPath, BackgroundWorker worker)
         {
             // TODO: add free space checks
             string args = "-x ";
