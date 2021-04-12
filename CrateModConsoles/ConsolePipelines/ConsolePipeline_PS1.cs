@@ -1,6 +1,8 @@
 ﻿using DiscUtils.Iso9660;
 using System;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.ComponentModel;
 using CrateModLoader.Tools;
@@ -24,6 +26,15 @@ namespace CrateModLoader.ModPipelines
         public override string TempPath => ModLoaderGlobals.BaseDirectory + ModLoaderGlobals.TempName + @"\";
         public override string ProcessPath => ModLoaderGlobals.TempName + @"\";
 
+        private string TempBinPath = ModLoaderGlobals.BaseDirectory + "binconvout.iso";
+        private BackgroundWorker GlobalWorker;
+        public bool isBINimage = false;
+        private int ExtractIterator = 0;
+        private int ExtractFileCount = 0;
+        private bool isExtracting = false;
+        private string extractInputPath;
+        private string extractOutputPath;
+
         public ConsolePipeline_PS1()
         {
             ISO_Label = "";
@@ -44,6 +55,7 @@ namespace CrateModLoader.ModPipelines
                     tempbin = new MemoryStream();
                     PSX2ISO.Run(isoStream, tempbin);
                     cd = new CDReader(tempbin, true);
+                    isBINimage = true;
                 }
                 else if (!CDReader.Detect(isoStream))
                 {
@@ -136,84 +148,198 @@ namespace CrateModLoader.ModPipelines
             }
         }
 
-        public override void Extract(string inputPath, string outputPath, BackgroundWorker worker)
+        private void Extractor_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            using (FileStream isoStream = File.Open(inputPath, FileMode.Open))
+            int prog_corrected = (int)((e.ProgressPercentage / 100f) * 25f);
+            GlobalWorker.ReportProgress(1 + prog_corrected);
+        }
+        private void Extractor_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            BackgroundWorker a = sender as BackgroundWorker;
+            a.DoWork -= Extractor_DoWork;
+            a.RunWorkerCompleted -= Extractor_RunWorkerCompleted;
+            a.ProgressChanged -= Extractor_ProgressChanged;
+
+            AsyncWorker = null;
+        }
+        private void Extractor_DoWork(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker worker = sender as BackgroundWorker;
+            Extractor_Work(worker);
+
+            int LastIterator = 0;
+
+            while (isExtracting)
             {
-                FileInfo isoInfo = new FileInfo(inputPath);
-                CDReader cd;
-                FileStream tempbin = null;
-                if (Path.GetExtension(inputPath).ToLower() == ".bin") // PS1 CD image
+                if (ExtractIterator != LastIterator)
                 {
-                    FileStream binconvout = new FileStream(ModLoaderGlobals.BaseDirectory + "binconvout.iso", FileMode.Create, FileAccess.Write);
+                    int p = (int)(((ExtractIterator / (float)ExtractFileCount) * 100f));
+                    worker.ReportProgress(p);
+                    LastIterator = ExtractIterator;
+                }
+                Thread.Sleep(100);
+            }
+
+        }
+        private async void Extractor_Work(BackgroundWorker a)
+        {
+
+            IList<Task> extractTaskList = new List<Task>();
+            Dictionary<string, string> Paths = new Dictionary<string, string>();
+            FileStream tempbin = null;
+            FileStream extract_isoStream = null;
+            CDReader extract_reader;
+            ExtractFileCount = 0;
+            ExtractIterator = 0;
+
+            // Mounting CDReader
+            if (isBINimage) // PS1 BIN image
+            {
+                using (FileStream isoStream = File.Open(extractInputPath, FileMode.Open))
+                {
+                    FileStream binconvout = new FileStream(TempBinPath, FileMode.Create, FileAccess.Write);
                     PSX2ISO.Run(isoStream, binconvout);
                     binconvout.Close();
-                    tempbin = new FileStream(ModLoaderGlobals.BaseDirectory + "binconvout.iso", FileMode.Open, FileAccess.Read);
-                    cd = new CDReader(tempbin, true);
+                    tempbin = new FileStream(TempBinPath, FileMode.Open, FileAccess.Read, FileShare.Read);
                 }
-                else
-                {
-                    cd = new CDReader(isoStream, true);
-                }
-                ISO_Label = cd.VolumeLabel;
+                extract_reader = new CDReader(tempbin, true);
+            }
+            else
+            {
+                extract_isoStream = File.Open(extractInputPath, FileMode.Open);
+                extract_reader = new CDReader(extract_isoStream, true);
+            }
+            ISO_Label = extract_reader.VolumeLabel;
 
-                if (!Directory.Exists(outputPath))
-                {
-                    Directory.CreateDirectory(outputPath);
-                }
+            if (!Directory.Exists(extractOutputPath))
+            {
+                Directory.CreateDirectory(extractOutputPath);
+            }
 
-                //Extracting ISO
-                Stream fileStreamFrom = null;
-                Stream fileStreamTo = null;
-                if (cd.GetDirectories("").Length > 0)
+            // Counting the files
+            if (extract_reader.GetDirectories("").Length > 0)
+            {
+                foreach (string directory in extract_reader.GetDirectories(""))
                 {
-                    foreach (string directory in cd.GetDirectories(""))
+                    if (extract_reader.GetDirectoryInfo(directory).GetFiles().Length > 0)
+                        foreach (string file in extract_reader.GetFiles(directory))
+                            ExtractFileCount++;
+                    if (extract_reader.GetDirectories(directory).Length > 0)
                     {
-                        Directory.CreateDirectory(outputPath + directory);
-                        if (cd.GetDirectoryInfo(directory).GetFiles().Length > 0)
-                        {
-                            foreach (string file in cd.GetFiles(directory))
-                            {
-                                fileStreamFrom = cd.OpenFile(file, FileMode.Open);
-                                string filename = outputPath + file;
-                                filename = filename.Replace(";1", string.Empty);
-                                fileStreamTo = File.Open(filename, FileMode.OpenOrCreate);
-                                fileStreamFrom.CopyTo(fileStreamTo);
-                                fileStreamFrom.Close();
-                                fileStreamTo.Close();
-                            }
-                        }
-                        if (cd.GetDirectories(directory).Length > 0)
-                        {
-                            Recursive_CreateDirs(cd, directory, fileStreamFrom, fileStreamTo);
-                        }
+                        Recursive_CountFiles(extract_reader, directory, ref ExtractFileCount);
                     }
-                }
-                if (cd.GetDirectoryInfo("").GetFiles().Length > 0)
-                {
-                    foreach (string file in cd.GetFiles(""))
-                    {
-                        fileStreamFrom = cd.OpenFile(file, FileMode.Open);
-                        string filename = outputPath + "/" + file;
-                        filename = filename.Replace(";1", string.Empty);
-                        fileStreamTo = File.Open(filename, FileMode.OpenOrCreate);
-                        fileStreamFrom.CopyTo(fileStreamTo);
-                        fileStreamFrom.Close();
-                        fileStreamTo.Close();
-                    }
-                }
-
-                cd.Dispose();
-
-                if (tempbin != null)
-                {
-                    tempbin.Dispose();
-                    File.Delete(ModLoaderGlobals.BaseDirectory + "binconvout.iso");
                 }
             }
+            if (extract_reader.GetDirectoryInfo("").GetFiles().Length > 0)
+            {
+                foreach (string file in extract_reader.GetFiles(""))
+                {
+                    ExtractFileCount++;
+                }
+            }
+
+            // Scanning file paths, creating directories
+            if (extract_reader.GetDirectories("").Length > 0)
+            {
+                foreach (string directory in extract_reader.GetDirectories(""))
+                {
+                    Directory.CreateDirectory(extractOutputPath + directory);
+                    if (extract_reader.GetDirectoryInfo(directory).GetFiles().Length > 0)
+                    {
+                        foreach (string file in extract_reader.GetFiles(directory))
+                        {
+                            string filename = extractOutputPath + file;
+                            filename = filename.Replace(";1", string.Empty);
+                            Paths.Add(file, filename);
+                        }
+                    }
+                    if (extract_reader.GetDirectories(directory).Length > 0)
+                    {
+                        Recursive_CreateDirs(extract_reader, directory, ref Paths);
+                    }
+                }
+            }
+            if (extract_reader.GetDirectoryInfo("").GetFiles().Length > 0)
+            {
+                foreach (string file in extract_reader.GetFiles(""))
+                {
+                    string filename = extractOutputPath + "/" + file;
+                    filename = filename.Replace(";1", string.Empty);
+                    Paths.Add(file, filename);
+                }
+            }
+
+            extract_reader.Dispose();
+            if (!isBINimage)
+            {
+                extract_isoStream.Close();
+            }
+
+            // Extracting files
+            foreach (KeyValuePair<string, string> Path in Paths)
+            {
+                extractTaskList.Add(ISO_ExtractAsync(Path.Key, Path.Value, a));
+            }
+
+            await Task.WhenAll(extractTaskList);
+
+            if (tempbin != null)
+            {
+                tempbin.Dispose();
+                File.Delete(TempBinPath);
+            }
+
+            isExtracting = false;
+
         }
 
-        private void Recursive_CreateDirs(CDReader cd, string dir, Stream fileStreamFrom, Stream fileStreamTo)
+        private async Task ISO_ExtractAsync(string file, string path, BackgroundWorker worker)
+        {
+            Stream fileStreamFrom = null;
+            Stream fileStreamTo = null;
+
+            string input = extractInputPath;
+            if (isBINimage)
+                input = TempBinPath;
+
+            // CDReader doesn't work in async, so this is the workaround
+            Stream iso = File.Open(input, FileMode.Open, FileAccess.Read, FileShare.Read);
+            CDReader cd = new CDReader(iso, true);
+
+            fileStreamFrom = cd.OpenFile(file, FileMode.Open);
+            fileStreamTo = File.Open(path, FileMode.OpenOrCreate);
+
+            await fileStreamFrom.CopyToAsync(fileStreamTo);
+            //fileStreamFrom.CopyTo(fileStreamTo);
+
+            fileStreamFrom.Close();
+            fileStreamTo.Close();
+
+            iso.Close();
+            cd.Dispose();
+
+            ExtractIterator++;
+        }
+
+        public override void Extract(string inputPath, string outputPath, BackgroundWorker worker)
+        {
+
+            GlobalWorker = worker;
+            extractInputPath = inputPath;
+            extractOutputPath = outputPath;
+            isExtracting = true;
+
+            AsyncWorker = new BackgroundWorker();
+            AsyncWorker.WorkerReportsProgress = true;
+            AsyncWorker.DoWork += new DoWorkEventHandler(Extractor_DoWork);
+            AsyncWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(Extractor_RunWorkerCompleted);
+            AsyncWorker.ProgressChanged += new ProgressChangedEventHandler(Extractor_ProgressChanged);
+            AsyncWorker.RunWorkerAsync();
+
+
+        }
+
+        private void Recursive_CreateDirs(CDReader cd, string dir, ref Dictionary<string, string> Paths)
         {
             foreach (string directory in cd.GetDirectories(dir))
             {
@@ -222,16 +348,31 @@ namespace CrateModLoader.ModPipelines
                 {
                     foreach (string file in cd.GetFiles(directory))
                     {
-                        fileStreamFrom = cd.OpenFile(file, FileMode.Open);
-                        fileStreamTo = File.Open(TempPath + @"\" + file, FileMode.OpenOrCreate);
-                        fileStreamFrom.CopyTo(fileStreamTo);
-                        fileStreamFrom.Close();
-                        fileStreamTo.Close();
+                        string filename = TempPath + @"\" + file;
+                        filename = filename.Replace(";1", string.Empty);
+                        Paths.Add(file, filename);
+                        //fileStreamFrom = cd.OpenFile(file, FileMode.Open);
+                        //fileStreamTo = File.Open(TempPath + @"\" + file, FileMode.OpenOrCreate);
+                        //UpdateExtractProgress(worker, FileCount, ref FileIterator);
                     }
                 }
                 if (cd.GetDirectories(directory).Length > 0)
                 {
-                    Recursive_CreateDirs(cd, directory, fileStreamFrom, fileStreamTo);
+                    Recursive_CreateDirs(cd, directory, ref Paths);
+                }
+            }
+        }
+
+        private void Recursive_CountFiles(CDReader cd, string dir, ref int FileCount)
+        {
+            foreach (string directory in cd.GetDirectories(dir))
+            {
+                if (cd.GetDirectoryInfo(directory).GetFiles().Length > 0)
+                    foreach (string file in cd.GetFiles(directory))
+                        FileCount++;
+                if (cd.GetDirectories(directory).Length > 0)
+                {
+                    Recursive_CountFiles(cd, directory, ref FileCount);
                 }
             }
         }

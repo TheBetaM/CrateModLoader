@@ -26,13 +26,16 @@ namespace CrateModLoader.ModPipelines
         public override string TempPath => ModLoaderGlobals.BaseDirectory + ModLoaderGlobals.TempName + @"\";
         public override string ProcessPath => ModLoaderGlobals.TempName + @"\";
 
+        private string TempBinPath = ModLoaderGlobals.BaseDirectory + "binconvout.iso";
         private BackgroundWorker GlobalWorker;
         public bool isCDimage = false;
-        private CDReader extract_reader;
-        private FileStream extract_isoStream;
         private int ExtractIterator = 0;
         private int ExtractFileCount = 0;
         private bool isExtracting = false;
+        private string buildInputPath;
+        private string buildOutputPath;
+        private string extractInputPath;
+        private string extractOutputPath;
 
         public ConsolePipeline_PS2()
         {
@@ -55,6 +58,7 @@ namespace CrateModLoader.ModPipelines
                     tempbin = new MemoryStream();
                     PSX2ISO.Run(isoStream, tempbin);
                     cd = new CDReader(tempbin, true);
+                    isCDimage = true;
                 }
                 else if (!CDReader.Detect(isoStream))
                 {
@@ -109,12 +113,6 @@ namespace CrateModLoader.ModPipelines
             }
             return found;
         }
-
-        private bool IO_Delay = false;
-        private string buildInputPath;
-        private string buildOutputPath;
-        private string extractInputPath;
-        private string extractOutputPath;
 
         private void Builder_DoWork(object sender, DoWorkEventArgs e)
         {
@@ -281,31 +279,26 @@ namespace CrateModLoader.ModPipelines
             IList<Task> extractTaskList = new List<Task>();
             Dictionary<string, string> Paths = new Dictionary<string, string>();
             FileStream tempbin = null;
+            FileStream extract_isoStream = null;
+            CDReader extract_reader;
             ExtractFileCount = 0;
             ExtractIterator = 0;
 
-            if (Path.GetExtension(extractInputPath).ToLower() == ".bin") // PS2 CD image (currently broken!!)
+            // Mounting CDReader
+            if (isCDimage) // PS2 CD image
             {
                 using (FileStream isoStream = File.Open(extractInputPath, FileMode.Open))
                 {
-                    FileStream binconvout = new FileStream(ModLoaderGlobals.BaseDirectory + "binconvout.iso", FileMode.Create, FileAccess.Write);
+                    FileStream binconvout = new FileStream(TempBinPath, FileMode.Create, FileAccess.Write);
                     PSX2ISO.Run(isoStream, binconvout);
                     binconvout.Close();
-                    tempbin = new FileStream(ModLoaderGlobals.BaseDirectory + "binconvout.iso", FileMode.Open, FileAccess.Read, FileShare.Read);
-                    isCDimage = true;
+                    tempbin = new FileStream(TempBinPath, FileMode.Open, FileAccess.Read, FileShare.Read);
                 }
-            }
-
-            extract_isoStream = File.Open(extractInputPath, FileMode.Open);
-
-            FileInfo isoInfo = new FileInfo(extractInputPath);
-
-            if (Path.GetExtension(extractInputPath).ToLower() == ".bin") // PS2 CD image
-            {
                 extract_reader = new CDReader(tempbin, true);
             }
             else
             {
+                extract_isoStream = File.Open(extractInputPath, FileMode.Open);
                 extract_reader = new CDReader(extract_isoStream, true);
             }
             ISO_Label = extract_reader.VolumeLabel;
@@ -369,7 +362,10 @@ namespace CrateModLoader.ModPipelines
             }
 
             extract_reader.Dispose();
-            extract_isoStream.Close();
+            if (!isCDimage)
+            {
+                extract_isoStream.Close();
+            }
 
             // Extracting files
             foreach (KeyValuePair<string, string> Path in Paths)
@@ -382,7 +378,7 @@ namespace CrateModLoader.ModPipelines
             if (tempbin != null)
             {
                 tempbin.Dispose();
-                File.Delete(ModLoaderGlobals.BaseDirectory + "binconvout.iso");
+                File.Delete(TempBinPath);
             }
 
             isExtracting = false;
@@ -394,8 +390,12 @@ namespace CrateModLoader.ModPipelines
             Stream fileStreamFrom = null;
             Stream fileStreamTo = null;
 
+            string input = extractInputPath;
+            if (isCDimage)
+                input = TempBinPath;
+
             // CDReader doesn't work in async, so this is the workaround
-            Stream iso = File.Open(extractInputPath, FileMode.Open, FileAccess.Read, FileShare.Read);
+            Stream iso = File.Open(input, FileMode.Open, FileAccess.Read, FileShare.Read);
             CDReader cd = new CDReader(iso, true);
 
             fileStreamFrom = cd.OpenFile(file, FileMode.Open);

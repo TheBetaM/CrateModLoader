@@ -1,9 +1,11 @@
 ﻿using DiscUtils.Iso9660;
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using System.ComponentModel;
 using System.IO;
 using System.Diagnostics;
+using System.Collections.Generic;
 using CrateModLoader.Tools;
 
 namespace CrateModLoader.ModPipelines
@@ -21,6 +23,13 @@ namespace CrateModLoader.ModPipelines
 
         public override string TempPath => ModLoaderGlobals.BaseDirectory + ModLoaderGlobals.TempName + @"\";
         public override string ProcessPath => ModLoaderGlobals.TempName + @"\PSP_GAME\USRDIR\";
+
+        private BackgroundWorker GlobalWorker;
+        private int ExtractIterator = 0;
+        private int ExtractFileCount = 0;
+        private bool isExtracting = false;
+        private string extractInputPath;
+        private string extractOutputPath;
 
         public ConsolePipeline_PSP()
         {
@@ -94,67 +103,171 @@ namespace CrateModLoader.ModPipelines
             File.Move(ModLoaderGlobals.ToolsPath + "Game.iso", outputPath);
         }
 
-        public override void Extract(string inputPath, string outputPath, BackgroundWorker worker)
+        private void Extractor_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            int prog_corrected = (int)((e.ProgressPercentage / 100f) * 25f);
+            GlobalWorker.ReportProgress(1 + prog_corrected);
+        }
+        private void Extractor_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            BackgroundWorker a = sender as BackgroundWorker;
+            a.DoWork -= Extractor_DoWork;
+            a.RunWorkerCompleted -= Extractor_RunWorkerCompleted;
+            a.ProgressChanged -= Extractor_ProgressChanged;
+
+            AsyncWorker = null;
+        }
+        private void Extractor_DoWork(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker worker = sender as BackgroundWorker;
+            Extractor_Work(worker);
+
+            int LastIterator = 0;
+
+            while (isExtracting)
+            {
+                if (ExtractIterator != LastIterator)
+                {
+                    int p = (int)(((ExtractIterator / (float)ExtractFileCount) * 100f));
+                    worker.ReportProgress(p);
+                    LastIterator = ExtractIterator;
+                }
+                Thread.Sleep(100);
+            }
+
+        }
+        private async void Extractor_Work(BackgroundWorker a)
         {
             //Needed to build
-            File.Copy(inputPath, ModLoaderGlobals.ToolsPath + "Game.iso");
+            File.Copy(extractInputPath, ModLoaderGlobals.ToolsPath + "Game.iso");
 
-            using (FileStream isoStream = File.Open(inputPath, FileMode.Open))
+            IList<Task> extractTaskList = new List<Task>();
+            Dictionary<string, string> Paths = new Dictionary<string, string>();
+            FileStream extract_isoStream = null;
+            CDReader extract_reader;
+            ExtractFileCount = 0;
+            ExtractIterator = 0;
+
+            // Mounting CDReader
+            extract_isoStream = File.Open(extractInputPath, FileMode.Open);
+            extract_reader = new CDReader(extract_isoStream, true);
+
+            if (!Directory.Exists(extractOutputPath))
             {
-                FileInfo isoInfo = new FileInfo(inputPath);
-                CDReader cd = new CDReader(isoStream, true);
-
-                if (!Directory.Exists(outputPath))
-                {
-                    Directory.CreateDirectory(outputPath);
-                }
-
-                //Extracting ISO
-                Stream fileStreamFrom = null;
-                Stream fileStreamTo = null;
-                if (cd.GetDirectories("").Length > 0)
-                {
-                    foreach (string directory in cd.GetDirectories(""))
-                    {
-                        Directory.CreateDirectory(outputPath + directory);
-                        if (cd.GetDirectoryInfo(directory).GetFiles().Length > 0)
-                        {
-                            foreach (string file in cd.GetFiles(directory))
-                            {
-                                fileStreamFrom = cd.OpenFile(file, FileMode.Open);
-                                string filename = outputPath + file;
-                                filename = filename.Replace(";1", string.Empty);
-                                fileStreamTo = File.Open(filename, FileMode.OpenOrCreate);
-                                fileStreamFrom.CopyTo(fileStreamTo);
-                                fileStreamFrom.Close();
-                                fileStreamTo.Close();
-                            }
-                        }
-                        if (cd.GetDirectories(directory).Length > 0)
-                        {
-                            Recursive_CreateDirs(cd, directory, fileStreamFrom, fileStreamTo);
-                        }
-                    }
-                }
-                if (cd.GetDirectoryInfo("").GetFiles().Length > 0)
-                {
-                    foreach (string file in cd.GetFiles(""))
-                    {
-                        fileStreamFrom = cd.OpenFile(file, FileMode.Open);
-                        string filename = outputPath + "/" + file;
-                        filename = filename.Replace(";1", string.Empty);
-                        fileStreamTo = File.Open(filename, FileMode.OpenOrCreate);
-                        fileStreamFrom.CopyTo(fileStreamTo);
-                        fileStreamFrom.Close();
-                        fileStreamTo.Close();
-                    }
-                }
-
-                cd.Dispose();
+                Directory.CreateDirectory(extractOutputPath);
             }
+
+            // Counting the files
+            if (extract_reader.GetDirectories("").Length > 0)
+            {
+                foreach (string directory in extract_reader.GetDirectories(""))
+                {
+                    if (extract_reader.GetDirectoryInfo(directory).GetFiles().Length > 0)
+                        foreach (string file in extract_reader.GetFiles(directory))
+                            ExtractFileCount++;
+                    if (extract_reader.GetDirectories(directory).Length > 0)
+                    {
+                        Recursive_CountFiles(extract_reader, directory, ref ExtractFileCount);
+                    }
+                }
+            }
+            if (extract_reader.GetDirectoryInfo("").GetFiles().Length > 0)
+            {
+                foreach (string file in extract_reader.GetFiles(""))
+                {
+                    ExtractFileCount++;
+                }
+            }
+
+            // Scanning file paths, creating directories
+            if (extract_reader.GetDirectories("").Length > 0)
+            {
+                foreach (string directory in extract_reader.GetDirectories(""))
+                {
+                    Directory.CreateDirectory(extractOutputPath + directory);
+                    if (extract_reader.GetDirectoryInfo(directory).GetFiles().Length > 0)
+                    {
+                        foreach (string file in extract_reader.GetFiles(directory))
+                        {
+                            string filename = extractOutputPath + file;
+                            filename = filename.Replace(";1", string.Empty);
+                            Paths.Add(file, filename);
+                        }
+                    }
+                    if (extract_reader.GetDirectories(directory).Length > 0)
+                    {
+                        Recursive_CreateDirs(extract_reader, directory, ref Paths);
+                    }
+                }
+            }
+            if (extract_reader.GetDirectoryInfo("").GetFiles().Length > 0)
+            {
+                foreach (string file in extract_reader.GetFiles(""))
+                {
+                    string filename = extractOutputPath + "/" + file;
+                    filename = filename.Replace(";1", string.Empty);
+                    Paths.Add(file, filename);
+                }
+            }
+
+            extract_reader.Dispose();
+            extract_isoStream.Close();
+
+            // Extracting files
+            foreach (KeyValuePair<string, string> Path in Paths)
+            {
+                extractTaskList.Add(ISO_ExtractAsync(Path.Key, Path.Value, a));
+            }
+
+            await Task.WhenAll(extractTaskList);
+
+            isExtracting = false;
+
         }
 
-        private void Recursive_CreateDirs(CDReader cd, string dir, Stream fileStreamFrom, Stream fileStreamTo)
+        private async Task ISO_ExtractAsync(string file, string path, BackgroundWorker worker)
+        {
+            Stream fileStreamFrom = null;
+            Stream fileStreamTo = null;
+
+            // CDReader doesn't work in async, so this is the workaround
+            Stream iso = File.Open(extractInputPath, FileMode.Open, FileAccess.Read, FileShare.Read);
+            CDReader cd = new CDReader(iso, true);
+
+            fileStreamFrom = cd.OpenFile(file, FileMode.Open);
+            fileStreamTo = File.Open(path, FileMode.OpenOrCreate);
+
+            await fileStreamFrom.CopyToAsync(fileStreamTo);
+            //fileStreamFrom.CopyTo(fileStreamTo);
+
+            fileStreamFrom.Close();
+            fileStreamTo.Close();
+
+            iso.Close();
+            cd.Dispose();
+
+            ExtractIterator++;
+        }
+
+        public override void Extract(string inputPath, string outputPath, BackgroundWorker worker)
+        {
+
+            GlobalWorker = worker;
+            extractInputPath = inputPath;
+            extractOutputPath = outputPath;
+            isExtracting = true;
+
+            AsyncWorker = new BackgroundWorker();
+            AsyncWorker.WorkerReportsProgress = true;
+            AsyncWorker.DoWork += new DoWorkEventHandler(Extractor_DoWork);
+            AsyncWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(Extractor_RunWorkerCompleted);
+            AsyncWorker.ProgressChanged += new ProgressChangedEventHandler(Extractor_ProgressChanged);
+            AsyncWorker.RunWorkerAsync();
+
+
+        }
+
+        private void Recursive_CreateDirs(CDReader cd, string dir, ref Dictionary<string, string> Paths)
         {
             foreach (string directory in cd.GetDirectories(dir))
             {
@@ -163,16 +276,28 @@ namespace CrateModLoader.ModPipelines
                 {
                     foreach (string file in cd.GetFiles(directory))
                     {
-                        fileStreamFrom = cd.OpenFile(file, FileMode.Open);
-                        fileStreamTo = File.Open(TempPath + @"\" + file, FileMode.OpenOrCreate);
-                        fileStreamFrom.CopyTo(fileStreamTo);
-                        fileStreamFrom.Close();
-                        fileStreamTo.Close();
+                        string filename = TempPath + @"\" + file;
+                        filename = filename.Replace(";1", string.Empty);
+                        Paths.Add(file, filename);
                     }
                 }
                 if (cd.GetDirectories(directory).Length > 0)
                 {
-                    Recursive_CreateDirs(cd, directory, fileStreamFrom, fileStreamTo);
+                    Recursive_CreateDirs(cd, directory, ref Paths);
+                }
+            }
+        }
+
+        private void Recursive_CountFiles(CDReader cd, string dir, ref int FileCount)
+        {
+            foreach (string directory in cd.GetDirectories(dir))
+            {
+                if (cd.GetDirectoryInfo(directory).GetFiles().Length > 0)
+                    foreach (string file in cd.GetFiles(directory))
+                        FileCount++;
+                if (cd.GetDirectories(directory).Length > 0)
+                {
+                    Recursive_CountFiles(cd, directory, ref FileCount);
                 }
             }
         }
