@@ -14,10 +14,10 @@ namespace CrateModLoader.GameSpecific.CrashTS
         public static ModPropString StartingChunk = new ModPropString(@"Levels\Earth\Hub\Beach", 0x17);
         public static ModPropString CreditsChunk = new ModPropString(@"Levels\Ice\Hub\LabExt", 0x22); //0x1C
         //public static ModPropString UnsafeStartingChunk = new ModPropString(@"Levels\Earth\Hub\Beach", 0x2D);
-        public static ModPropOption Option_SwapStartAndCreditsChunk = new ModPropOption(Twins_Text.Mod_SwapStartAndCreditsChunk, Twins_Text.Mod_SwapStartAndCreditsChunkDesc)
-        { ModMenuOnly = true, };
-        public static ModPropOption Option_StartAndCreditsSpawn = new ModPropOption(Twins_Text.Mod_StartAndCreditsSpawn, Twins_Text.Mod_StartAndCreditsSpawnDesc)
-        { ModMenuOnly = true, };
+        [ModMenuOnly]
+        public static ModPropOption Option_SwapStartAndCreditsChunk = new ModPropOption(Twins_Text.Mod_SwapStartAndCreditsChunk, Twins_Text.Mod_SwapStartAndCreditsChunkDesc);
+        [ModMenuOnly]
+        public static ModPropOption Option_StartAndCreditsSpawn = new ModPropOption(Twins_Text.Mod_StartAndCreditsSpawn, Twins_Text.Mod_StartAndCreditsSpawnDesc);
 
         //EXE patching support based on Twinsanity Editor code
         internal struct ExecutablePatchInfo

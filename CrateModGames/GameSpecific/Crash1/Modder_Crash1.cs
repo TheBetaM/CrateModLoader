@@ -70,14 +70,16 @@ namespace CrateModLoader.GameSpecific.Crash1
         public static ModPropOption Option_RandWorldPalette = new ModPropOption(CrashTri_Text.Rand_WorldPalette, CrashTri_Text.Rand_WorldPaletteDesc);
 
         // less used
-        [ModCategory(1)]
-        public static ModPropOption Option_AllEnemiesMissing = new ModPropOption("All Enemies Removed", "") { Hidden = true, }; // { ModMenuOnly = true };
-        [ModCategory(1)]
-        public static ModPropOption Option_AllCratesBlank = new ModPropOption(CrashTri_Text.Mod_AllCratesBlank, CrashTri_Text.Mod_AllCratesBlankDesc) { ModMenuOnly = true };
-        [ModCategory(1)]
-        public static ModPropOption Option_AllCratesWumpa = new ModPropOption(Crash1_Text.Mod_AllCratesWumpa, Crash1_Text.Mod_AllCratesWumpaDesc) { ModMenuOnly = true };
-        [ModCategory(1)]
-        public static ModPropOption Option_RandCameraFOV = new ModPropOption(Crash1_Text.Rand_CameraFOV, Crash1_Text.Rand_CameraFOVDesc) { ModMenuOnly = true };
+        [ModCategory(1), ModMenuOnly]
+        public static ModPropOption Option_AllEnemiesMissing = new ModPropOption("All Enemies Removed", "") { Hidden = true, };
+        [ModCategory(1), ModMenuOnly]
+        public static ModPropOption Option_AllCratesBlank = new ModPropOption(CrashTri_Text.Mod_AllCratesBlank, CrashTri_Text.Mod_AllCratesBlankDesc);
+        [ModCategory(1), ModMenuOnly]
+        public static ModPropOption Option_AllCratesWumpa = new ModPropOption(Crash1_Text.Mod_AllCratesWumpa, Crash1_Text.Mod_AllCratesWumpaDesc);
+        [ModCategory(1), ModMenuOnly]
+        public static ModPropOption Option_RandCameraFOV = new ModPropOption(Crash1_Text.Rand_CameraFOV, Crash1_Text.Rand_CameraFOVDesc);
+        [ModCategory(1), ModMenuOnly]
+        public static ModPropOption Option_InvisibleWorld = new ModPropOption("Invisible World (Beta)", "The scenery is invisible.");
 
         // unfinished
         public static ModPropOption Option_RandPantsColor = new ModPropOption("Randomize Pants Color", "") { Hidden = true };
@@ -208,6 +210,7 @@ namespace CrateModLoader.GameSpecific.Crash1
                     if (Option_GreyscaleWorld.Enabled) CrashTri_Common.Mod_Scenery_Greyscale(nsf);
                     if (Option_RandWorldColors.Enabled) CrashTri_Common.Mod_Scenery_Rainbow(nsf, rand);
                     if (Option_UntexturedWorld.Enabled) CrashTri_Common.Mod_Scenery_Untextured(nsf);
+                    if (Option_InvisibleWorld.Enabled) CrashTri_Common.Mod_Scenery_Invisible(nsf);
                     if (Option_RandPantsColor.Enabled || Prop_PantsColor.HasChanged) Crash1_Mods.Mod_PantsColor(nsf, PantsColor);
                     if (NSF_Level != Crash1_Levels.MapMainMenu && Option_RandMusicTracks.Enabled) CrashTri_Common.Randomize_Music(nsf, rand);
                     if (Option_RandSounds.Enabled) CrashTri_Common.Mod_RandomizeADIO(nsf, rand);

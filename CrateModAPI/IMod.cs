@@ -4,21 +4,15 @@ using System.ComponentModel;
 
 namespace CrateModLoader
 {
-    interface IMod
+    public interface IMod
     {
         bool Hidden { get; set; }
-        BackgroundWorker AsyncProcess { get; set; }
-        List<BackgroundWorker> AsyncWorkers { get; set; }
-        bool IsBusy { get; }
-        bool IsCaching { get; set; }
+        bool IsBusy { get; set; }
+        bool NeedsCachePass { get; }
         int Order { get; set; }
 
-        void StartCache(List<string> paths);
-        void StartMod(List<string> paths);
-
-        void CachePass(object sender, DoWorkEventArgs e);
-
-        void ModPass(object sender, DoWorkEventArgs e);
-
+        void QuickPass();
+        void CachePass();
+        void ModPass();
     }
 }

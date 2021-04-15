@@ -24,9 +24,6 @@ namespace CrateModLoader
     /// </summary>
     public abstract class Modder
     {
-
-        private List<IMod> Mods = new List<IMod>();
-        public List<ConsolePipeline> Pipelines = new List<ConsolePipeline>();
         public List<ModPropertyBase> Props = new List<ModPropertyBase>();
 
         // External
@@ -70,21 +67,69 @@ namespace CrateModLoader
                             if (Props[Props.Count - 1].Category == null)
                             {
                                 ModCategory chunkAttr = (ModCategory)field.GetCustomAttribute(typeof(ModCategory), false);
+                                if (chunkAttr == null)
+                                {
+                                    chunkAttr = (ModCategory)field.DeclaringType.GetCustomAttribute(typeof(ModCategory), false);
+                                }
                                 if (chunkAttr != null)
                                 {
                                     Props[Props.Count - 1].Category = chunkAttr.ID;
                                 }
                                 else
                                 {
-                                    ModCategory typeAttr = (ModCategory)field.DeclaringType.GetCustomAttribute(typeof(ModCategory), false);
-                                    if (typeAttr != null)
-                                    {
-                                        Props[Props.Count - 1].Category = typeAttr.ID;
-                                    }
-                                    else
-                                    {
-                                        Props[Props.Count - 1].Category = 0;
-                                    }
+                                    Props[Props.Count - 1].Category = 0;
+                                }
+                            }
+
+                            if (!Props[Props.Count - 1].ModMenuOnly)
+                            {
+                                ModMenuOnly chunkAttr = (ModMenuOnly)field.GetCustomAttribute(typeof(ModMenuOnly), false);
+                                if (chunkAttr == null)
+                                {
+                                    chunkAttr = (ModMenuOnly)field.DeclaringType.GetCustomAttribute(typeof(ModMenuOnly), false);
+                                }
+                                if (chunkAttr != null)
+                                {
+                                    Props[Props.Count - 1].ModMenuOnly = true;
+                                }
+                            }
+
+                            if (Props[Props.Count - 1].AllowedConsoles == null)
+                            {
+                                ModAllowedConsoles ListConsoles = (ModAllowedConsoles)field.GetCustomAttribute(typeof(ModAllowedConsoles), false);
+                                if (ListConsoles == null)
+                                {
+                                    ListConsoles = (ModAllowedConsoles)field.DeclaringType.GetCustomAttribute(typeof(ModAllowedConsoles), false);
+                                }
+                                if (ListConsoles != null)
+                                {
+                                    Props[Props.Count - 1].AllowedConsoles = ListConsoles.Allowed;
+                                }
+                            }
+
+                            if (Props[Props.Count - 1].AllowedRegions == null)
+                            {
+                                ModAllowedRegions ListRegions = (ModAllowedRegions)field.GetCustomAttribute(typeof(ModAllowedRegions), false);
+                                if (ListRegions == null)
+                                {
+                                    ListRegions = (ModAllowedRegions)field.DeclaringType.GetCustomAttribute(typeof(ModAllowedRegions), false);
+                                }
+                                if (ListRegions != null)
+                                {
+                                    Props[Props.Count - 1].AllowedRegions = ListRegions.Allowed;
+                                }
+                            }
+
+                            if (!Props[Props.Count - 1].Hidden)
+                            {
+                                ModHidden chunkAttr = (ModHidden)field.GetCustomAttribute(typeof(ModHidden), false);
+                                if (chunkAttr == null)
+                                {
+                                    chunkAttr = (ModHidden)field.DeclaringType.GetCustomAttribute(typeof(ModHidden), false);
+                                }
+                                if (chunkAttr != null)
+                                {
+                                    Props[Props.Count - 1].ModMenuOnly = true;
                                 }
                             }
 
@@ -113,6 +158,18 @@ namespace CrateModLoader
             }
         }
 
+        public abstract void StartModProcess();
+
+        public virtual void StartPreload() { } // Optional method to preload variables and resources from the game to the Mod Menu+
+
+        // Multithreading stuff
+
+        public List<Mod> Mods = new List<Mod>();
+        public List<IModParser> ModParsers = new List<IModParser>();
+        public List<ModPipeline> Pipelines = new List<ModPipeline>();
+        public Random RandomState; // <- todo consolidate all Random() calls for multithreading!!
+
+
         public void PopulateModsPipelines()
         {
             Mods.Clear();
@@ -127,26 +184,22 @@ namespace CrateModLoader
             {
                 if (!string.IsNullOrEmpty(type.Namespace) && type.Namespace.Contains(nameSpace))
                 {
-                    if (type.IsAssignableFrom(typeof(IMod)))
+                    if (type.IsAssignableFrom(typeof(Mod)))
                     {
-                        IMod mod = (IMod)Activator.CreateInstance(type);
+                        Mod mod = (Mod)Activator.CreateInstance(type);
                         if (!mod.Hidden)
                         {
                             Mods.Add(mod);
                         }
                     }
-                    else if (type.IsAssignableFrom(typeof(ConsolePipeline)))
+                    else if (type.IsAssignableFrom(typeof(ModPipeline)))
                     {
-                        ConsolePipeline pipeline = (ConsolePipeline)Activator.CreateInstance(type);
+                        ModPipeline pipeline = (ModPipeline)Activator.CreateInstance(type);
                         Pipelines.Add(pipeline);
                     }
                 }
             }
         }
-
-        public abstract void StartModProcess();
-
-        public virtual void StartPreload() { } // Optional method to preload variables and resources from the game to the Mod Menu+
 
         public void StartProcess()
         {
@@ -164,7 +217,7 @@ namespace CrateModLoader
 
             foreach (IMod mod in Mods)
             {
-                mod.StartMod(null);
+                mod.ModPass();
             }
 
             bool Active = true;

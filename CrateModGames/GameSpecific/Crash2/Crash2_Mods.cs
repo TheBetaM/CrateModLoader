@@ -3155,15 +3155,33 @@ namespace CrateModLoader.GameSpecific.Crash2
 
         public static void Mod_AshedCrates(NSF nsf, Random rand, bool isRandom)
         {
-            foreach (ModelEntry model in nsf.GetEntries<ModelEntry>())
+            if (!isRandom)
             {
-                if (model.EName.StartsWith("B") && (model.EName.EndsWith("10G") || model.EName.EndsWith("20G") || model.EName.EndsWith("30G") || model.EName.EndsWith("40G")))
+                // easier to just cover up the model
+                foreach (ModelEntry model in nsf.GetEntries<ModelEntry>())
                 {
-                    if (!isRandom || (isRandom && rand.Next(2) == 0))
+                    if (model.EName.StartsWith("B") && (model.EName.EndsWith("10G") || model.EName.EndsWith("20G") || model.EName.EndsWith("30G") || model.EName.EndsWith("40G")))
                     {
                         for (int i = 0; i < model.Colors.Count; ++i)
                         {
                             model.Colors[i] = new SceneryColor(0, 0, 0, model.Colors[i].Extra);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                // todo: per entity model switch (using outline crate flag stuff?)
+                foreach (ModelEntry model in nsf.GetEntries<ModelEntry>())
+                {
+                    if (model.EName.StartsWith("B") && (model.EName.EndsWith("10G") || model.EName.EndsWith("20G") || model.EName.EndsWith("30G") || model.EName.EndsWith("40G")))
+                    {
+                        if (rand.Next(2) == 0)
+                        {
+                            for (int i = 0; i < model.Colors.Count; ++i)
+                            {
+                                model.Colors[i] = new SceneryColor(0, 0, 0, model.Colors[i].Extra);
+                            }
                         }
                     }
                 }

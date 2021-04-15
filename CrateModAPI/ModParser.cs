@@ -7,8 +7,20 @@ using System.Threading;
 namespace CrateModLoader
 {
     // Parses files into API specifc classes
-    public abstract class ModParser<T>
+    public abstract class ModParser<T> : IModParser
     {
+
+
+        public virtual bool TryParse(string Path)
+        {
+            return false;
+        }
+
+        public virtual bool TryParse(Stream Stream)
+        {
+            return false;
+        }
+
 
     }
 }

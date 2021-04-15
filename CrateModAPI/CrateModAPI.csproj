@@ -44,6 +44,7 @@
     <Compile Include="FileFilter.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="IMod.cs" />
+    <Compile Include="IModParser.cs" />
     <Compile Include="ModCrates.cs" />
     <Compile Include="Modder.cs" />
     <Compile Include="ModLoader.cs" />
@@ -54,7 +55,7 @@
     <Compile Include="ConsolePipelines\ConsolePipeline.cs" />
     <Compile Include="Mod.cs" />
     <Compile Include="ModPipelines\ModPipeline.cs" />
-    <Compile Include="ModProperties\ModCategory.cs" />
+    <Compile Include="ModProperties\ModPropertyAttributes.cs" />
     <Compile Include="ModProperties\ModPropBool.cs" />
     <Compile Include="ModProperties\ModPropColor.cs" />
     <Compile Include="ModProperties\ModProperty.cs" />

@@ -551,6 +551,29 @@ namespace CrateModLoader.GameSpecific
             }
         }
 
+        public static void Mod_Scenery_Invisible(NSF nsf)
+        {
+            // Well, "invisible" without being disruptive to stability
+            foreach (SceneryEntry entry in nsf.GetEntries<SceneryEntry>())
+            {
+                entry.XOffset = int.MaxValue - 1;
+                entry.YOffset = int.MinValue + 1;
+                entry.ZOffset = int.MaxValue - 1;
+            }
+            foreach (NewSceneryEntry entry in nsf.GetEntries<NewSceneryEntry>())
+            {
+                entry.XOffset = int.MaxValue - 1;
+                entry.YOffset = int.MinValue + 1;
+                entry.ZOffset = int.MaxValue - 1;
+            }
+            foreach (OldSceneryEntry entry in nsf.GetEntries<OldSceneryEntry>())
+            {
+                entry.XOffset = int.MaxValue - 1;
+                entry.YOffset = int.MinValue + 1;
+                entry.ZOffset = int.MaxValue - 1;
+            }
+        }
+
         public static void Mod_RandomizeSDIO(NSF nsf, Random rand)
         {
             var streams = nsf.GetEntries<SpeechEntry>();

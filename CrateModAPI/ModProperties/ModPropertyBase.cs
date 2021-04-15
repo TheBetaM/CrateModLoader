@@ -28,6 +28,9 @@ namespace CrateModLoader
         /// <summary> True if preload extends functionality </summary>
         public bool PreloadBonus = false;
 
+        /// <summary> (for ModPropOption) True if it doesn't show up in the quick options in the main window </summary>
+        public bool ModMenuOnly = false;
+
         /// <summary> Region list for the property to be allowed for </summary>
         public List<RegionType> AllowedRegions { get; set; }
 

@@ -94,252 +94,178 @@ namespace CrateModLoader.GameSpecific.Rayman3
 
         public static ModPropOption Option_RandLevelOrderAll = new ModPropOption(Rayman3_Text.Rand_LevelOrder2, Rayman3_Text.Rand_LevelOrder2Desc);
         public static ModPropOption Option_RandLevelOrder = new ModPropOption(Rayman3_Text.Rand_LevelOrder, Rayman3_Text.Rand_LevelOrderDesc);
-        public static ModPropOption Option_RandOutfitVisuals = new ModPropOption(Rayman3_Text.Rand_OutfitVisuals, Rayman3_Text.Rand_OutfitVisualsDesc)
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        public static ModPropOption Option_RandOutfitColors = new ModPropOption(Rayman3_Text.Rand_OutfitColors, Rayman3_Text.Rand_OutfitColorsDesc)
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        public static ModPropOption Option_RandCopterColors = new ModPropOption(Rayman3_Text.Rand_CopterColors, Rayman3_Text.Rand_CopterColorsDesc)
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        public static ModPropOption Option_RandHUDColors = new ModPropOption(Rayman3_Text.Rand_HUDColors, Rayman3_Text.Rand_HUDColorsDesc)
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
+        public static ModPropOption Option_RandOutfitVisuals = new ModPropOption(Rayman3_Text.Rand_OutfitVisuals, Rayman3_Text.Rand_OutfitVisualsDesc);
+        [ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModPropOption Option_RandOutfitColors = new ModPropOption(Rayman3_Text.Rand_OutfitColors, Rayman3_Text.Rand_OutfitColorsDesc);
+        [ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModPropOption Option_RandCopterColors = new ModPropOption(Rayman3_Text.Rand_CopterColors, Rayman3_Text.Rand_CopterColorsDesc);
+        [ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModPropOption Option_RandHUDColors = new ModPropOption(Rayman3_Text.Rand_HUDColors, Rayman3_Text.Rand_HUDColorsDesc);
+        [ModAllowedConsoles(ConsoleMode.GCN)]
         public static ModPropOption Option_RandWorldColors = new ModPropOption(Rayman3_Text.Rand_WorldColors, Rayman3_Text.Rand_WorldColorsDesc)
-        { Hidden = true, AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, }; // works in some levels, broken in others
-        public static ModPropOption Option_NewGameNightmare = new ModPropOption(Rayman3_Text.Mod_NewGameNightmare, Rayman3_Text.Mod_NewGameNightmareDesc)
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        public static ModPropOption Option_RemoveIntroVideos = new ModPropOption(1, Rayman3_Text.Mod_RemoveIntroVideo, Rayman3_Text.Mod_RemoveIntroVideoDesc)
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        
+        { Hidden = true, }; // works in some levels, broken in others
+        [ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModPropOption Option_NewGameNightmare = new ModPropOption(Rayman3_Text.Mod_NewGameNightmare, Rayman3_Text.Mod_NewGameNightmareDesc);
+        [ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModPropOption Option_RemoveIntroVideos = new ModPropOption(1, Rayman3_Text.Mod_RemoveIntroVideo, Rayman3_Text.Mod_RemoveIntroVideoDesc);
 
-        [ModCategory((int)R3_ModProps.Textures_Loading)]
-        public static ModProp_TextureFile Texture_Load_Gear = new ModProp_TextureFile(false, "Loading - Gear", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_Loading)]
-        public static ModProp_TextureFile Texture_Load_01 = new ModProp_TextureFile(false, "Loading - 01", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_Loading)]
-        public static ModProp_TextureFile Texture_Load_02 = new ModProp_TextureFile(false, "Loading - 02", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_Loading)]
-        public static ModProp_TextureFile Texture_Load_03 = new ModProp_TextureFile(false, "Loading - 03", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_Loading)]
-        public static ModProp_TextureFile Texture_Load_04 = new ModProp_TextureFile(false, "Loading - 04", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_Loading)]
-        public static ModProp_TextureFile Texture_Load_05 = new ModProp_TextureFile(false, "Loading - 05", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_Loading)]
-        public static ModProp_TextureFile Texture_Load_06 = new ModProp_TextureFile(false, "Loading - 06", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_Loading)]
-        public static ModProp_TextureFile Texture_Load_07 = new ModProp_TextureFile(false, "Loading - 07", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_Loading)]
-        public static ModProp_TextureFile Texture_Load_08 = new ModProp_TextureFile(false, "Loading - 08", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
 
-        [ModCategory((int)R3_ModProps.Textures_Menu)]
-        public static ModProp_TextureFile Texture_Menu_Overlay = new ModProp_TextureFile(false, "Pause Menu Overlay", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_Menu)]
-        public static ModProp_TextureFile Texture_Menu_Icons = new ModProp_TextureFile(false, "Pause Menu Sprites", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_Menu)]
-        public static ModProp_TextureFile Texture_Menu_Icon_Level1 = new ModProp_TextureFile(false, "Icon - The Fairy Council", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_Menu)]
-        public static ModProp_TextureFile Texture_Menu_Icon_Level2 = new ModProp_TextureFile(false, "Icon - Clearleaf Forest", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_Menu)]
-        public static ModProp_TextureFile Texture_Menu_Icon_Level3 = new ModProp_TextureFile(false, "Icon - The Bog of Murk", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_Menu)]
-        public static ModProp_TextureFile Texture_Menu_Icon_Level4 = new ModProp_TextureFile(false, "Icon - The Land of the Livid Dead", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_Menu)]
-        public static ModProp_TextureFile Texture_Menu_Icon_Level5 = new ModProp_TextureFile(false, "Icon - The Desert of the Knaaren", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_Menu)]
-        public static ModProp_TextureFile Texture_Menu_Icon_Level6 = new ModProp_TextureFile(false, "Icon - The Longest Shortcut", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_Menu)]
-        public static ModProp_TextureFile Texture_Menu_Icon_Level7 = new ModProp_TextureFile(false, "Icon - The Summit Beyond the Clouds", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_Menu)]
-        public static ModProp_TextureFile Texture_Menu_Icon_Level8 = new ModProp_TextureFile(false, "Icon - Hoodlum Headquarters", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_Menu)]
-        public static ModProp_TextureFile Texture_Menu_Icon_Level9 = new ModProp_TextureFile(false, "Icon - The Tower of the Leptys", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_Menu)]
-        public static ModProp_TextureFile Texture_Menu_Icon_Lum = new ModProp_TextureFile(false, "Icon - Black Lum", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_Menu)]
-        public static ModProp_TextureFile Texture_Menu_Icon_Options = new ModProp_TextureFile(false, "Icon - Options", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_Menu)]
-        public static ModProp_TextureFile Texture_Menu_Icon_Rayman = new ModProp_TextureFile(false, "Icon - Rayman", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_Menu)]
-        public static ModProp_TextureFile Texture_Menu_Icon_Murfy = new ModProp_TextureFile(false, "Icon - Murfy", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_Menu)]
-        public static ModProp_TextureFile Texture_Menu_Icon_Videos = new ModProp_TextureFile(false, "Icon - Videos", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_Menu)]
-        public static ModProp_TextureFile Texture_Menu_Icon_Camera = new ModProp_TextureFile(false, "Icon - Camera", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_Menu)]
-        public static ModProp_TextureFile Texture_Menu_Icon_Plum = new ModProp_TextureFile(false, "Icon - Minigames", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_Menu)]
-        public static ModProp_TextureFile Texture_Menu_Icons_Videos = new ModProp_TextureFile(false, "Video Icons", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_Menu)]
-        public static ModProp_TextureFile Texture_Menu_Icons_Misc = new ModProp_TextureFile(false, "Misc. Icons", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
+        [ModCategory((int)R3_ModProps.Textures_Loading), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_Load_Gear = new ModProp_TextureFile(false, "Loading - Gear", "");
+        [ModCategory((int)R3_ModProps.Textures_Loading), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_Load_01 = new ModProp_TextureFile(false, "Loading - 01", "");
+        [ModCategory((int)R3_ModProps.Textures_Loading), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_Load_02 = new ModProp_TextureFile(false, "Loading - 02", "");
+        [ModCategory((int)R3_ModProps.Textures_Loading), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_Load_03 = new ModProp_TextureFile(false, "Loading - 03", "");
+        [ModCategory((int)R3_ModProps.Textures_Loading), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_Load_04 = new ModProp_TextureFile(false, "Loading - 04", "");
+        [ModCategory((int)R3_ModProps.Textures_Loading), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_Load_05 = new ModProp_TextureFile(false, "Loading - 05", "");
+        [ModCategory((int)R3_ModProps.Textures_Loading), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_Load_06 = new ModProp_TextureFile(false, "Loading - 06", "");
+        [ModCategory((int)R3_ModProps.Textures_Loading), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_Load_07 = new ModProp_TextureFile(false, "Loading - 07", "");
+        [ModCategory((int)R3_ModProps.Textures_Loading), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_Load_08 = new ModProp_TextureFile(false, "Loading - 08", "");
 
-        [ModCategory((int)R3_ModProps.Textures_General)]
-        public static ModProp_TextureFile Texture_General_Font = new ModProp_TextureFile(false, "Font", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_General)]
-        public static ModProp_TextureFile Texture_General_Popup01 = new ModProp_TextureFile(false, "Combo Popup 01", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_General)]
-        public static ModProp_TextureFile Texture_General_Popup02 = new ModProp_TextureFile(false, "Combo Popup 02", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_General)]
-        public static ModProp_TextureFile Texture_General_Popup03 = new ModProp_TextureFile(false, "Combo Popup 03", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_General)]
-        public static ModProp_TextureFile Texture_General_ComboScores = new ModProp_TextureFile(false, "Combo Scores", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_General)]
-        public static ModProp_TextureFile Texture_General_Damage01 = new ModProp_TextureFile(false, "Damage Popup 01", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_General)]
-        public static ModProp_TextureFile Texture_General_Damage02 = new ModProp_TextureFile(false, "Damage Popup 02", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_General)]
-        public static ModProp_TextureFile Texture_General_Damage03 = new ModProp_TextureFile(false, "Damage Popup 03", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_General)]
-        public static ModProp_TextureFile Texture_General_Damage04 = new ModProp_TextureFile(false, "Damage Popup 04", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_General)]
-        public static ModProp_TextureFile Texture_General_Arrow = new ModProp_TextureFile(false, "Arrow", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_General)]
-        public static ModProp_TextureFile Texture_General_ScoreDisplay = new ModProp_TextureFile(false, "Score Display", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_General)]
-        public static ModProp_TextureFile Texture_General_TeensieBG = new ModProp_TextureFile(false, "Teensie Background", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_General)]
-        public static ModProp_TextureFile Texture_General_TeensieLocked = new ModProp_TextureFile(false, "Teensie Locked", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_General)]
-        public static ModProp_TextureFile Texture_General_TeensieUnlocked = new ModProp_TextureFile(false, "Teensie Unlocked", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_General)]
-        public static ModProp_TextureFile Texture_General_ResultStarOn = new ModProp_TextureFile(false, "Result Star On", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_General)]
-        public static ModProp_TextureFile Texture_General_ResultStarOff = new ModProp_TextureFile(false, "Result Star Off", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_General)]
-        public static ModProp_TextureFile Texture_General_ResultMurfy = new ModProp_TextureFile(false, "Result Murfy", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_General)]
-        public static ModProp_TextureFile Texture_General_GradientBG = new ModProp_TextureFile(false, "Gradient Background", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_General)]
-        public static ModProp_TextureFile Texture_General_AimingNear = new ModProp_TextureFile(false, "Aiming Reticle Near", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_General)]
-        public static ModProp_TextureFile Texture_General_AimingFar = new ModProp_TextureFile(false, "Aiming Reticle Far", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_General)]
-        public static ModProp_TextureFile Texture_General_AimingArrow01 = new ModProp_TextureFile(false, "Aiming Arrow 01", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_General)]
-        public static ModProp_TextureFile Texture_General_AimingArrow02 = new ModProp_TextureFile(false, "Aiming Arrow 02", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_General)]
-        public static ModProp_TextureFile Texture_General_AimingArrow03 = new ModProp_TextureFile(false, "Aiming Arrow 03", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_General)]
-        public static ModProp_TextureFile Texture_General_HUDElements = new ModProp_TextureFile(false, "Display Elements", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_General)]
-        public static ModProp_TextureFile Texture_General_GameOver = new ModProp_TextureFile(false, "Game Over", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_General)]
-        public static ModProp_TextureFile Texture_General_RedLum01 = new ModProp_TextureFile(false, "Red Lum 01", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_General)]
-        public static ModProp_TextureFile Texture_General_RedLum02 = new ModProp_TextureFile(false, "Red Lum 02", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_General)]
-        public static ModProp_TextureFile Texture_General_RedLum03 = new ModProp_TextureFile(false, "Red Lum 03", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_General)]
-        public static ModProp_TextureFile Texture_General_RedLum04 = new ModProp_TextureFile(false, "Red Lum 04", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
+        [ModCategory((int)R3_ModProps.Textures_Menu), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_Menu_Overlay = new ModProp_TextureFile(false, "Pause Menu Overlay", "");
+        [ModCategory((int)R3_ModProps.Textures_Menu), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_Menu_Icons = new ModProp_TextureFile(false, "Pause Menu Sprites", "");
+        [ModCategory((int)R3_ModProps.Textures_Menu), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_Menu_Icon_Level1 = new ModProp_TextureFile(false, "Icon - The Fairy Council", "");
+        [ModCategory((int)R3_ModProps.Textures_Menu), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_Menu_Icon_Level2 = new ModProp_TextureFile(false, "Icon - Clearleaf Forest", "");
+        [ModCategory((int)R3_ModProps.Textures_Menu), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_Menu_Icon_Level3 = new ModProp_TextureFile(false, "Icon - The Bog of Murk", "");
+        [ModCategory((int)R3_ModProps.Textures_Menu), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_Menu_Icon_Level4 = new ModProp_TextureFile(false, "Icon - The Land of the Livid Dead", "");
+        [ModCategory((int)R3_ModProps.Textures_Menu), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_Menu_Icon_Level5 = new ModProp_TextureFile(false, "Icon - The Desert of the Knaaren", "");
+        [ModCategory((int)R3_ModProps.Textures_Menu), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_Menu_Icon_Level6 = new ModProp_TextureFile(false, "Icon - The Longest Shortcut", "");
+        [ModCategory((int)R3_ModProps.Textures_Menu), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_Menu_Icon_Level7 = new ModProp_TextureFile(false, "Icon - The Summit Beyond the Clouds", "");
+        [ModCategory((int)R3_ModProps.Textures_Menu), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_Menu_Icon_Level8 = new ModProp_TextureFile(false, "Icon - Hoodlum Headquarters", "");
+        [ModCategory((int)R3_ModProps.Textures_Menu), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_Menu_Icon_Level9 = new ModProp_TextureFile(false, "Icon - The Tower of the Leptys", "");
+        [ModCategory((int)R3_ModProps.Textures_Menu), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_Menu_Icon_Lum = new ModProp_TextureFile(false, "Icon - Black Lum", "");
+        [ModCategory((int)R3_ModProps.Textures_Menu), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_Menu_Icon_Options = new ModProp_TextureFile(false, "Icon - Options", "");
+        [ModCategory((int)R3_ModProps.Textures_Menu), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_Menu_Icon_Rayman = new ModProp_TextureFile(false, "Icon - Rayman", "");
+        [ModCategory((int)R3_ModProps.Textures_Menu), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_Menu_Icon_Murfy = new ModProp_TextureFile(false, "Icon - Murfy", "");
+        [ModCategory((int)R3_ModProps.Textures_Menu), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_Menu_Icon_Videos = new ModProp_TextureFile(false, "Icon - Videos", "");
+        [ModCategory((int)R3_ModProps.Textures_Menu), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_Menu_Icon_Camera = new ModProp_TextureFile(false, "Icon - Camera", "");
+        [ModCategory((int)R3_ModProps.Textures_Menu), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_Menu_Icon_Plum = new ModProp_TextureFile(false, "Icon - Minigames", "");
+        [ModCategory((int)R3_ModProps.Textures_Menu), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_Menu_Icons_Videos = new ModProp_TextureFile(false, "Video Icons", "");
+        [ModCategory((int)R3_ModProps.Textures_Menu), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_Menu_Icons_Misc = new ModProp_TextureFile(false, "Misc. Icons", "");
 
-        [ModCategory((int)R3_ModProps.Textures_General)]
-        public static ModProp_TextureFile Texture_General_Outfit_Normal = new ModProp_TextureFile(false, "Outfit - Normal", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_General)]
-        public static ModProp_TextureFile Texture_General_Copter_Normal = new ModProp_TextureFile(false, "Copter - Normal", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
+        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_General_Font = new ModProp_TextureFile(false, "Font", "");
+        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_General_Popup01 = new ModProp_TextureFile(false, "Combo Popup 01", "");
+        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_General_Popup02 = new ModProp_TextureFile(false, "Combo Popup 02", "");
+        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_General_Popup03 = new ModProp_TextureFile(false, "Combo Popup 03", "");
+        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_General_ComboScores = new ModProp_TextureFile(false, "Combo Scores", "");
+        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_General_Damage01 = new ModProp_TextureFile(false, "Damage Popup 01", "");
+        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_General_Damage02 = new ModProp_TextureFile(false, "Damage Popup 02", "");
+        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_General_Damage03 = new ModProp_TextureFile(false, "Damage Popup 03", "");
+        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_General_Damage04 = new ModProp_TextureFile(false, "Damage Popup 04", "");
+        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_General_Arrow = new ModProp_TextureFile(false, "Arrow", "");
+        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_General_ScoreDisplay = new ModProp_TextureFile(false, "Score Display", "");
+        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_General_TeensieBG = new ModProp_TextureFile(false, "Teensie Background", "");
+        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_General_TeensieLocked = new ModProp_TextureFile(false, "Teensie Locked", "");
+        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_General_TeensieUnlocked = new ModProp_TextureFile(false, "Teensie Unlocked", "");
+        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_General_ResultStarOn = new ModProp_TextureFile(false, "Result Star On", "");
+        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_General_ResultStarOff = new ModProp_TextureFile(false, "Result Star Off", "");
+        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_General_ResultMurfy = new ModProp_TextureFile(false, "Result Murfy", "");
+        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_General_GradientBG = new ModProp_TextureFile(false, "Gradient Background", "");
+        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_General_AimingNear = new ModProp_TextureFile(false, "Aiming Reticle Near", "");
+        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_General_AimingFar = new ModProp_TextureFile(false, "Aiming Reticle Far", "");
+        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_General_AimingArrow01 = new ModProp_TextureFile(false, "Aiming Arrow 01", "");
+        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_General_AimingArrow02 = new ModProp_TextureFile(false, "Aiming Arrow 02", "");
+        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_General_AimingArrow03 = new ModProp_TextureFile(false, "Aiming Arrow 03", "");
+        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_General_HUDElements = new ModProp_TextureFile(false, "Display Elements", "");
+        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_General_GameOver = new ModProp_TextureFile(false, "Game Over", "");
+        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_General_RedLum01 = new ModProp_TextureFile(false, "Red Lum 01", "");
+        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_General_RedLum02 = new ModProp_TextureFile(false, "Red Lum 02", "");
+        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_General_RedLum03 = new ModProp_TextureFile(false, "Red Lum 03", "");
+        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_General_RedLum04 = new ModProp_TextureFile(false, "Red Lum 04", "");
 
-        [ModCategory((int)R3_ModProps.Textures_General)]
-        public static ModProp_TextureFile Texture_General_Outfit_Vortex = new ModProp_TextureFile(false, "Outfit - Vortex (Green)", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_General)]
-        public static ModProp_TextureFile Texture_General_Copter_Vortex = new ModProp_TextureFile(false, "Copter - Vortex (Green)", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_General)]
-        public static ModProp_TextureFile Texture_General_Fist_Vortex = new ModProp_TextureFile(false, "Fist - Vortex (Green)", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
+        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_General_Outfit_Normal = new ModProp_TextureFile(false, "Outfit - Normal", "");
+        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_General_Copter_Normal = new ModProp_TextureFile(false, "Copter - Normal", "");
 
-        [ModCategory((int)R3_ModProps.Textures_General)]
-        public static ModProp_TextureFile Texture_General_Outfit_HeavyMetalFist = new ModProp_TextureFile(false, "Outfit - Heavy Metal Fist (Red)", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_General)]
-        public static ModProp_TextureFile Texture_General_Copter_HeavyMetalFist = new ModProp_TextureFile(false, "Copter - Heavy Metal Fist (Red)", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_General)]
-        public static ModProp_TextureFile Texture_General_Fist_HeavyMetalFist = new ModProp_TextureFile(false, "Fist - Heavy Metal Fist (Red)", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
+        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_General_Outfit_Vortex = new ModProp_TextureFile(false, "Outfit - Vortex (Green)", "");
+        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_General_Copter_Vortex = new ModProp_TextureFile(false, "Copter - Vortex (Green)", "");
+        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_General_Fist_Vortex = new ModProp_TextureFile(false, "Fist - Vortex (Green)", "");
 
-        [ModCategory((int)R3_ModProps.Textures_General)]
-        public static ModProp_TextureFile Texture_General_Outfit_LockJaw = new ModProp_TextureFile(false, "Outfit - LockJaw (Blue)", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_General)]
-        public static ModProp_TextureFile Texture_General_Copter_LockJaw = new ModProp_TextureFile(false, "Copter - LockJaw (Blue)", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_General)]
-        public static ModProp_TextureFile Texture_General_Fist_LockJaw = new ModProp_TextureFile(false, "Fist - LockJaw (Blue)", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
+        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_General_Outfit_HeavyMetalFist = new ModProp_TextureFile(false, "Outfit - Heavy Metal Fist (Red)", "");
+        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_General_Copter_HeavyMetalFist = new ModProp_TextureFile(false, "Copter - Heavy Metal Fist (Red)", "");
+        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_General_Fist_HeavyMetalFist = new ModProp_TextureFile(false, "Fist - Heavy Metal Fist (Red)", "");
 
-        [ModCategory((int)R3_ModProps.Textures_General)]
-        public static ModProp_TextureFile Texture_General_Outfit_ShockRocket = new ModProp_TextureFile(false, "Outfit - Shock Rocket (Orange)", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_General)]
-        public static ModProp_TextureFile Texture_General_Copter_ShockRocket = new ModProp_TextureFile(false, "Copter - Shock Rocket (Orange)", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_General)]
-        public static ModProp_TextureFile Texture_General_Fist_ShockRocket = new ModProp_TextureFile(false, "Fist - Shock Rocket (Orange)", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
+        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_General_Outfit_LockJaw = new ModProp_TextureFile(false, "Outfit - LockJaw (Blue)", "");
+        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_General_Copter_LockJaw = new ModProp_TextureFile(false, "Copter - LockJaw (Blue)", "");
+        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_General_Fist_LockJaw = new ModProp_TextureFile(false, "Fist - LockJaw (Blue)", "");
 
-        [ModCategory((int)R3_ModProps.Textures_General)]
-        public static ModProp_TextureFile Texture_General_Outfit_ThrottleCopter = new ModProp_TextureFile(false, "Outfit - Throttle Copter (Yellow)", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
-        [ModCategory((int)R3_ModProps.Textures_General)]
-        public static ModProp_TextureFile Texture_General_Copter_ThrottleCopter = new ModProp_TextureFile(false, "Copter - Throttle Copter (Yellow)", "")
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.GCN }, };
+        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_General_Outfit_ShockRocket = new ModProp_TextureFile(false, "Outfit - Shock Rocket (Orange)", "");
+        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_General_Copter_ShockRocket = new ModProp_TextureFile(false, "Copter - Shock Rocket (Orange)", "");
+        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_General_Fist_ShockRocket = new ModProp_TextureFile(false, "Fist - Shock Rocket (Orange)", "");
+
+        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_General_Outfit_ThrottleCopter = new ModProp_TextureFile(false, "Outfit - Throttle Copter (Yellow)", "");
+        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
+        public static ModProp_TextureFile Texture_General_Copter_ThrottleCopter = new ModProp_TextureFile(false, "Copter - Throttle Copter (Yellow)", "");
 
         public Modder_Rayman3()
         {

@@ -165,16 +165,15 @@ namespace CrateModLoader.GameSpecific.CrashTS
         public static ModPropOption Option_UnlockedCamera = new ModPropOption(Twins_Text.Mod_UnlockedCamera, Twins_Text.Mod_UnlockedCameraDesc);
         public static ModPropOption Option_SkipCutscenes = new ModPropOption(Twins_Text.Mod_SkipCutscenes, Twins_Text.Mod_SkipCutscenesDesc) { Hidden = true, };
 
-        public static ModPropOption Option_RandPantsColor = new ModPropOption(Twins_Text.Rand_PantsColor, Twins_Text.Rand_PantsColorDesc)
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 }, };
+        [ModAllowedConsoles(ConsoleMode.PS2)]
+        public static ModPropOption Option_RandPantsColor = new ModPropOption(Twins_Text.Rand_PantsColor, Twins_Text.Rand_PantsColorDesc);
         public static ModPropOption Option_RandomizeMusic = new ModPropOption(Twins_Text.Rand_Music, Twins_Text.Rand_MusicDesc);
-        public static ModPropOption Option_RandWorldPalette = new ModPropOption(Twins_Text.Rand_WorldPalette, Twins_Text.Rand_WorldPaletteDesc)
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 }, };
-        [ModCategory((int)ModProps.Misc)]
-        public static ModPropOption Option_GreyscaleWorld = new ModPropOption(Twins_Text.Mod_GreyscaleWorld, Twins_Text.Mod_GreyscaleWorldDesc)
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 }, ModMenuOnly = true, };
-        public static ModPropOption Option_GreyscaleDimension = new ModPropOption(Twins_Text.Mod_GreyscaleDimension, Twins_Text.Mod_GreyscaleDimensionDesc)
-        { AllowedConsoles = new List<ConsoleMode>() { ConsoleMode.PS2 },  };
+        [ModAllowedConsoles(ConsoleMode.PS2)]
+        public static ModPropOption Option_RandWorldPalette = new ModPropOption(Twins_Text.Rand_WorldPalette, Twins_Text.Rand_WorldPaletteDesc);
+        [ModCategory((int)ModProps.Misc), ModMenuOnly, ModAllowedConsoles(ConsoleMode.PS2)]
+        public static ModPropOption Option_GreyscaleWorld = new ModPropOption(Twins_Text.Mod_GreyscaleWorld, Twins_Text.Mod_GreyscaleWorldDesc);
+        [ModAllowedConsoles(ConsoleMode.PS2)]
+        public static ModPropOption Option_GreyscaleDimension = new ModPropOption(Twins_Text.Mod_GreyscaleDimension, Twins_Text.Mod_GreyscaleDimensionDesc);
         public static ModPropOption Option_UntexturedWorld = new ModPropOption(Twins_Text.Mod_UntexturedWorld, Twins_Text.Mod_UntexturedWorldDesc);
 
         [ModCategory((int)ModProps.Misc)]
@@ -183,8 +182,8 @@ namespace CrateModLoader.GameSpecific.CrashTS
 
         //unfinished
         public static ModPropOption Option_RandomWumpaCrates = new ModPropOption(Twins_Text.Rand_WumpaIntoCrates, Twins_Text.Rand_WumpaIntoCratesDesc) { Hidden = true, };
-        [ModCategory((int)ModProps.Misc)]
-        public static ModPropOption Option_AllWumpaCrates = new ModPropOption(Twins_Text.Mod_WumpaIntoCrates, Twins_Text.Mod_WumpaIntoCratesDesc) { ModMenuOnly = true, Hidden = true, };
+        [ModCategory((int)ModProps.Misc), ModMenuOnly]
+        public static ModPropOption Option_AllWumpaCrates = new ModPropOption(Twins_Text.Mod_WumpaIntoCrates, Twins_Text.Mod_WumpaIntoCratesDesc) { Hidden = true, };
         public static ModPropOption Option_ClassicCrates = new ModPropOption(Twins_Text.Mod_ClassicCratePersistence, Twins_Text.Mod_ClassicCratePersistenceDesc) // TODO
         { Hidden = true, };
         
