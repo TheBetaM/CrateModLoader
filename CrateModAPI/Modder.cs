@@ -36,7 +36,7 @@ namespace CrateModLoader
         public bool ModMenuEnabled => Props.Count > 0;
         public bool ModCrateRegionCheck = false; // A game might require some type of verification (i.e. file integrity, region matching) before installing layer0 mod crates.
         public virtual bool CanPreloadGame => false;
-        public List<ConsoleMode> PreloadConsoles = new List<ConsoleMode>();
+        public virtual List<ConsoleMode> PreloadConsoles => null;
         public bool IsBusy { get { return AsyncWorker != null && AsyncWorker.IsBusy; } }
 
         public abstract Game Game { get; }
@@ -164,16 +164,86 @@ namespace CrateModLoader
 
         // Multithreading stuff
 
-        public List<Mod> Mods = new List<Mod>();
-        public List<IModParser> ModParsers = new List<IModParser>();
-        public List<ModPipeline> Pipelines = new List<ModPipeline>();
+        //public List<Mod> Mods = new List<Mod>();
+        //public List<IModParser> ModParsers = new List<IModParser>();
+        //public List<ModPipeline> Pipelines = new List<ModPipeline>();
         public Random RandomState; // <- todo consolidate all Random() calls for multithreading!!
+        public List<ModPropertyBase> ActiveProps = new List<ModPropertyBase>();
 
+        public bool NeedsCachePass()
+        {
+            foreach (ModPropertyBase Prop in ActiveProps)
+            {
+                if (Prop.TargetMod.NeedsCachePass)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public void LoadActiveProps()
+        {
+            ActiveProps = new List<ModPropertyBase>();
+
+            foreach (ModPropertyBase Prop in Props)
+            {
+                if (Prop.TargetMod != null && (Prop.HasChanged || (Prop is ModPropOption opt && opt.Enabled)))
+                {
+                    ActiveProps.Add(Prop);
+                }
+            }
+
+            //Console.WriteLine("Active Props: " + ActiveProps.Count);
+        }
+
+        public void BeforeCachePass()
+        {
+            foreach (ModPropertyBase Prop in ActiveProps)
+            {
+                Prop.TargetMod.BeforeCachePass();
+            }
+        }
+        public void StartCachePass(object value)
+        {
+            foreach (ModPropertyBase Prop in ActiveProps)
+            {
+                Prop.TargetMod.CachePass(value);
+            }
+        }
+        public void BeforeModPass()
+        {
+            foreach (ModPropertyBase Prop in ActiveProps)
+            {
+                Prop.TargetMod.BeforeModPass();
+            }
+        }
+        public void StartModPass(object value)
+        {
+            foreach (ModPropertyBase Prop in ActiveProps)
+            {
+                Prop.TargetMod.ModPass(value);
+            }
+        }
+        public void BeforeQuickPass()
+        {
+            foreach (ModPropertyBase Prop in ActiveProps)
+            {
+                Prop.TargetMod.BeforeQuickPass();
+            }
+        }
+        public void StartQuickPass(object value)
+        {
+            foreach (ModPropertyBase Prop in ActiveProps)
+            {
+                Prop.TargetMod.QuickPass(value);
+            }
+        }
 
         public void PopulateModsPipelines()
         {
-            Mods.Clear();
-            Pipelines.Clear();
+            //Mods.Clear();
+            //Pipelines.Clear();
 
             // Populate mod and pipeline list automatically from namespace
             Assembly asm = assembly;
@@ -189,71 +259,18 @@ namespace CrateModLoader
                         Mod mod = (Mod)Activator.CreateInstance(type);
                         if (!mod.Hidden)
                         {
-                            Mods.Add(mod);
+                            //Mods.Add(mod);
                         }
                     }
                     else if (type.IsAssignableFrom(typeof(ModPipeline)))
                     {
                         ModPipeline pipeline = (ModPipeline)Activator.CreateInstance(type);
-                        Pipelines.Add(pipeline);
+                        //Pipelines.Add(pipeline);
                     }
                 }
             }
         }
 
-        public void StartProcess()
-        {
-            AsyncWorker = new BackgroundWorker();
-            AsyncWorker.WorkerReportsProgress = true;
-            AsyncWorker.DoWork += new DoWorkEventHandler(Process);
-            AsyncWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(ProcessCompleted);
-            AsyncWorker.ProgressChanged += new ProgressChangedEventHandler(ProcessProgressChanged);
-            AsyncWorker.RunWorkerAsync();
-        }
-
-        public virtual void Process(object sender, DoWorkEventArgs e)
-        {
-            BackgroundWorker a = sender as BackgroundWorker;
-
-            foreach (IMod mod in Mods)
-            {
-                mod.ModPass();
-            }
-
-            bool Active = true;
-            bool IsActive = false;
-            int ModCount = 0;
-            while (Active)
-            {
-                IsActive = false;
-                ModCount = 0;
-                foreach (IMod mod in Mods)
-                {
-                    if (mod.IsBusy)
-                        IsActive = true;
-                    else
-                    {
-                        ModCount++;
-                    }
-                }
-                a.ReportProgress((int)(((float)ModCount / Mods.Count) * 100));
-                if (!IsActive)
-                    Active = false;
-            }
-
-        }
-
-        private void ProcessCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            AsyncWorker = null;
-        }
-
-        private void ProcessProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            BackgroundWorker a = sender as BackgroundWorker;
-
-            //ModLoaderGlobals.ModProgram.UpdateProcessMessage(string.Format("{0} {1}%",ModLoaderText.Process_Step2, e.ProgressPercentage));
-        }
-
+        
     }
 }

@@ -91,6 +91,7 @@ namespace CrateModLoader.GameSpecific.Rayman3
             },
         };
         public override bool CanPreloadGame => true;
+        public override List<ConsoleMode> PreloadConsoles => new List<ConsoleMode>() { ConsoleMode.GCN, };
 
         public static ModPropOption Option_RandLevelOrderAll = new ModPropOption(Rayman3_Text.Rand_LevelOrder2, Rayman3_Text.Rand_LevelOrder2Desc);
         public static ModPropOption Option_RandLevelOrder = new ModPropOption(Rayman3_Text.Rand_LevelOrder, Rayman3_Text.Rand_LevelOrderDesc);
@@ -269,7 +270,7 @@ namespace CrateModLoader.GameSpecific.Rayman3
 
         public Modder_Rayman3()
         {
-            PreloadConsoles = new List<ConsoleMode>() { ConsoleMode.GCN, };
+
         }
 
         internal string basePath = "";

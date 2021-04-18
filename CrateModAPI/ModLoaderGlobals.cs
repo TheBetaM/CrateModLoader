@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace CrateModLoader
 {
@@ -51,5 +52,46 @@ namespace CrateModLoader
 
         public static string ModAssetsFolderName = "modassets";
 
+        //Common credits
+        public static string Contributor_BetaM = "BetaM";
+        public static string Contributor_ManDude = "ManDude";
+
+    }
+
+    public class CreditContributors
+    {
+        public List<string> Contributors;
+
+        public CreditContributors(params string[] list)
+        {
+            Contributors = new List<string>(list);
+        }
+
+        public override string ToString()
+        {
+            string Credit = string.Empty;
+            if (Contributors.Count > 0)
+            {
+                if (Contributors.Count > 1)
+                {
+                    for (int i = 0; i < Contributors.Count; i++)
+                    {
+                        if (i != Contributors.Count - 1)
+                        {
+                            Credit += Contributors[i];
+                        }
+                        else
+                        {
+                            Credit += Contributors[i] + ", ";
+                        }
+                    }
+                }
+                else
+                {
+                    Credit = Contributors[0];
+                }
+            }
+            return Credit;
+        }
     }
 }

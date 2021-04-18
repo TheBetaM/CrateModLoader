@@ -1,360 +1,77 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using Twinsanity;
+using CrateModGames.GameSpecific.CrashTS;
 
-namespace CrateModLoader.GameSpecific.CrashTS
+namespace CrateModLoader.GameSpecific.CrashTS.Mods
 {
-    public static class Twins_Randomizers
+    // todo: test
+    public class TS_Rand_CharParams : ModStruct<ChunkInfoRM>
     {
+        public override string Name => Twins_Text.Rand_CharParams;
+        public override string Description => Twins_Text.Rand_CharParamsDesc;
+        public override CreditContributors Contributors => new CreditContributors(ModLoaderGlobals.Contributor_BetaM);
 
-        public static void RM_Randomize_Crates(TwinsFile RM_Archive, ChunkType chunkType, ref Random randState, ref List<uint> CrateReplaceList, ref List<uint> randCrateList)
+        internal List<uint> musicTypes = new List<uint>();
+        internal List<uint> randMusicList = new List<uint>();
+
+        public override void BeforeModPass()
         {
-            List<ChunkType> BannedChunks = new List<ChunkType>()
-            {
-                ChunkType.School_Rooftop_BusChase,
-            };
-            if (BannedChunks.Contains(chunkType))
-                return;
+            Random randState = new Random();
 
-            randState = new Random((ModLoaderGlobals.RandomizerSeed + (int)chunkType) % int.MaxValue);
-            List<uint> lifecrates = new List<uint>
-            {
-                (uint)ObjectID.EXTRALIFECRATE,
-                (uint)ObjectID.EXTRALIFECRATECORTEX,
-                (uint)ObjectID.EXTRALIFECRATENINA
-            };
-            for (uint section_id = (uint)RM_Sections.Instances1; section_id <= (uint)RM_Sections.Instances8; section_id++)
-            {
-                if (!RM_Archive.ContainsItem(section_id)) continue;
-                TwinsSection section = RM_Archive.GetItem<TwinsSection>(section_id);
-                if (section.Records.Count > 0)
-                {
-                    if (!section.ContainsItem((uint)RM_Instance_Sections.ObjectInstance)) continue;
-                    TwinsSection instances = section.GetItem<TwinsSection>((uint)RM_Instance_Sections.ObjectInstance);
-                    for (int i = 0; i < instances.Records.Count; ++i)
-                    {
-                        Instance instance = (Instance)instances.Records[i];
-                        for (int d = 0; d < CrateReplaceList.Count; d++)
-                        {
-                            if (instance.ObjectID == CrateReplaceList[d])
-                            {
-                                int target_item = randState.Next(0, randCrateList.Count);
-                                if (randCrateList[target_item] == (int)ObjectID.EXTRALIFECRATE)
-                                {
-                                    int target_life = randState.Next(0, lifecrates.Count);
-                                    target_item = (int)lifecrates[target_life];
-                                }
-                                else
-                                {
-                                    target_item = (int)randCrateList[target_item];
-                                }
-
-                                if (target_item == (int)ObjectID.AMMOCRATESMALL)
-                                {
-                                    instance.Flags = 0x4011E;
-                                    instance.UnkI322 = new List<float>() { 1, 50, 10 };
-                                }
-                                else if (target_item == (int)ObjectID.BASICCRATE)
-                                {
-                                    instance.Flags = 0x811E;
-                                }
-                                else if (target_item == (int)ObjectID.EXTRALIFECRATE || target_item == (int)ObjectID.EXTRALIFECRATECORTEX || target_item == (int)ObjectID.EXTRALIFECRATENINA)
-                                {
-                                    instance.Flags = 0x81DE;
-                                }
-                                else if (target_item == (int)ObjectID.WOODENSPRINGCRATE)
-                                {
-                                    instance.Flags = 0x811E;
-                                }
-                                else if (target_item == (int)ObjectID.REINFORCEDWOODENCRATE)
-                                {
-                                    instance.Flags = 0xD91E;
-                                }
-                                else if (target_item == (int)ObjectID.AKUAKUCRATE)
-                                {
-                                    instance.Flags = 0x811E;
-                                }
-                                else if (target_item == (int)ObjectID.IRONCRATE)
-                                {
-                                    instance.Flags = 0x7D1E;
-                                }
-                                else if (target_item == (int)ObjectID.IRONSPRINGCRATE)
-                                {
-                                    instance.Flags = 0x7D1E;
-                                }
-                                else if (target_item == (int)ObjectID.MULTIPLEHITCRATE)
-                                {
-                                    instance.Flags = 0x811E;
-                                }
-                                else if (target_item == (int)ObjectID.SURPRISECRATE)
-                                {
-                                    instance.Flags = 0x811E;
-                                }
-                                else if (target_item == (int)ObjectID.TNTCRATE)
-                                {
-                                    instance.Flags = 0x811E;
-                                }
-                                else if (target_item == (int)ObjectID.NITROCRATE)
-                                {
-                                    instance.Flags = 0x811E;
-                                }
-
-                                instance.ObjectID = (ushort)target_item;
-                                break;
-                            }
-                        }
-                        instances.Records[i] = instance;
-                    }
-                }
-            }
+            Twins_Randomize_Character((int)CharacterID.Crash, ref randState);
+            Twins_Randomize_Character((int)CharacterID.Cortex, ref randState);
+            Twins_Randomize_Character((int)CharacterID.Nina, ref randState);
         }
 
-        public static void RM_Randomize_Gems(TwinsFile RM_Archive, ChunkType chunkType, ref List<uint> gemObjectList)
+        private void Twins_Randomize_Character(int charID, ref Random randState)
         {
-            if (chunkType == ChunkType.Invalid)
-            {
-                Console.WriteLine("INVALID CHUNK FILE: " + RM_Archive.FileName);
-                return;
-            }
-
-            // Part 1: Remove existing gems
-
-            for (uint section_id = (uint)RM_Sections.Instances1; section_id <= (uint)RM_Sections.Instances8; section_id++)
-            {
-                if (!RM_Archive.ContainsItem(section_id)) continue;
-                TwinsSection section = RM_Archive.GetItem<TwinsSection>(section_id);
-                if (section.Records.Count > 0)
-                {
-                    if (!section.ContainsItem((uint)RM_Instance_Sections.ObjectInstance)) continue;
-                    TwinsSection instances = section.GetItem<TwinsSection>((uint)RM_Instance_Sections.ObjectInstance);
-                    for (int i = 0; i < instances.Records.Count; ++i)
-                    {
-                        Instance instance = (Instance)instances.Records[i];
-                        for (int d = 0; d < gemObjectList.Count; d++)
-                        {
-                            if (instance.ObjectID == gemObjectList[d])
-                            {
-                                instance.Pos.Y = instance.Pos.Y - 1000f; //todo: figure out how to get rid of them gracefully
-
-                                /* Used this to generate vanilla gem locations instead of checking one-by-one
-                                if (instance.ObjectID == (ushort)GemID.GEM_BLUE)
-                                {
-                                    Console.WriteLine("new TwinsGem(ChunkType." + chunkType + ",GemType.GEM_BLUE,new Vector3(" + instance.Pos.X + "f," + instance.Pos.Y + "f," + instance.Pos.Z + "f)),");
-                                }
-                                */
-
-                                break;
-                            }
-                        }
-                        instances.Records[i] = instance;
-                    }
-                }
-            }
-
-            // Part 2: Add new gems
-            uint gem_section_id = (uint)RM_Sections.Instances1;
-            if (!RM_Archive.ContainsItem(gem_section_id)) return;
-            TwinsSection instances_group = RM_Archive.GetItem<TwinsSection>(gem_section_id);
-            TwinsSection instances_section;
-            if (instances_group.Records.Count > 0)
-            {
-                if (!instances_group.ContainsItem((uint)RM_Instance_Sections.ObjectInstance)) return;
-                instances_section = instances_group.GetItem<TwinsSection>((uint)RM_Instance_Sections.ObjectInstance);
-            }
-            else
+            if (charID == (int)CharacterID.Mechabandicoot)
             {
                 return;
             }
 
+            Twins_Data_Characters.CharInts_SpawnHealth.Value[charID] = (uint)randState.Next(1, 4);
+            //Twins_Data_Characters.CharFloats_AirGravity.Value[charID] = randState.Next(40, 60);
+            Twins_Data_Characters.CharFloats_WalkSpeed.Value[charID] = randState.Next(20, 60) / 10f;
+            Twins_Data_Characters.CharFloats_RunSpeed.Value[charID] = randState.Next(7, 14);
+            Twins_Data_Characters.CharFloats_SpinThrowForwardForce.Value[charID] = randState.Next(7, 15);
+            Twins_Data_Characters.CharFloats_SpinLength.Value[charID] = randState.Next(25, 100) / 100f;
+            Twins_Data_Characters.CharFloats_SpinDelay.Value[charID] = randState.Next(10, 20) / 100f;
+            //Twins_Data_Characters.CharFloats_JumpAirSpeed.Value[charID] = randState.Next(6, 10);
+            //Twins_Data_Characters.CharFloats_JumpHeight.Value[charID] = randState.Next(13, 18);
+            Twins_Data_Characters.CharFloats_CrawlSpeed.Value[charID] = randState.Next(125, 400) / 100f;
+            Twins_Data_Characters.CharFloats_SlideSpeed.Value[charID] = randState.Next(10, 24);
 
-            for (int i = 0; i < Twins_Data.All_Gems.Count; i++)
+            if (charID == (int)CharacterID.Crash)
             {
-                if (Twins_Data.All_Gems[i].chunk == chunkType)
-                {
-                    Instance NewGem = new Instance();
-                    NewGem.Pos = new Pos(Twins_Data.All_Gems[i].pos.X, Twins_Data.All_Gems[i].pos.Y, Twins_Data.All_Gems[i].pos.Z, 1f);
-                    if (Twins_Data.All_Gems[i].type == GemType.GEM_BLUE)
-                    {
-                        NewGem.ObjectID = (ushort)GemID.GEM_BLUE;
-                    }
-                    else if (Twins_Data.All_Gems[i].type == GemType.GEM_CLEAR)
-                    {
-                        NewGem.ObjectID = (ushort)GemID.GEM_CLEAR;
-                    }
-                    else if (Twins_Data.All_Gems[i].type == GemType.GEM_GREEN)
-                    {
-                        NewGem.ObjectID = (ushort)GemID.GEM_GREEN;
-                    }
-                    else if (Twins_Data.All_Gems[i].type == GemType.GEM_PURPLE)
-                    {
-                        NewGem.ObjectID = (ushort)GemID.GEM_PURPLE;
-                    }
-                    else if (Twins_Data.All_Gems[i].type == GemType.GEM_RED)
-                    {
-                        NewGem.ObjectID = (ushort)GemID.GEM_RED;
-                    }
-                    else if (Twins_Data.All_Gems[i].type == GemType.GEM_YELLOW)
-                    {
-                        NewGem.ObjectID = (ushort)GemID.GEM_YELLOW;
-                    }
-                    NewGem.ID = (uint)instances_section.Records.Count;
-                    NewGem.SomeNum1 = 10;
-                    NewGem.SomeNum2 = 10;
-                    NewGem.SomeNum3 = 10;
-                    NewGem.AfterOID = uint.MaxValue;
-                    NewGem.Flags = 0x1CE;
-                    NewGem.UnkI322 = new List<float>() { 1 };
-                    NewGem.UnkI323 = new List<uint>() { 0, 255, (uint)Twins_Data.All_Gems[i].type };
-
-                    instances_section.Records.Add(NewGem);
-                }
+                //Twins_Data_Characters.CharFloats_DoubleJumpHeight.Value[charID] = CharFloats_JumpHeight.Value[charID] + randState.Next(1, 5);
+                //Twins_Data_Characters.CharFloats_SlideJumpUnk24.Value[charID] = randState.Next(9, 16);
+                Twins_Data_Characters.CharFloats_BodyslamHangTime.Value[charID] = randState.Next(20, 60) / 100f;
             }
+            else if (charID == (int)CharacterID.Cortex)
+            {
+                Twins_Data_Characters.CharFloats_StrafingSpeed.Value[charID] = randState.Next(3, 10);
+                Twins_Data_Characters.CharFloats_GunChargeTime.Value[charID] = randState.Next(10, 100) / 100f;
+                Twins_Data_Characters.CharFloats_GunTimeBetweenChargedShots.Value[charID] = randState.Next(10, 100) / 100f;
+                Twins_Data_Characters.CharFloats_GunTimeBetweenShots.Value[charID] = randState.Next(2, 10) / 100f;
+            }
+            else if (charID == (int)CharacterID.Nina)
+            {
+
+            }
+            else if (charID == (int)CharacterID.Mechabandicoot)
+            {
+                Twins_Data_Characters.CharFloats_WalkSpeed.Value[charID] = randState.Next(120, 240) / 10f;
+                Twins_Data_Characters.CharFloats_RunSpeed.Value[charID] = 0;
+            }
+
         }
 
-        public static void RM_Randomize_Music(TwinsFile RM_Archive, ref List<uint> musicTypes, ref List<uint> randMusicList)
+        public override void ModPass(ChunkInfoRM info)
         {
-            for (uint section_id = (uint)RM_Sections.Instances1; section_id <= (uint)RM_Sections.Instances8; section_id++)
-            {
-                if (!RM_Archive.ContainsItem(section_id)) continue;
-                TwinsSection section = RM_Archive.GetItem<TwinsSection>(section_id);
-                if (section.Records.Count > 0)
-                {
-                    if (!section.ContainsItem((uint)RM_Instance_Sections.ObjectInstance)) continue;
-                    TwinsSection instances = section.GetItem<TwinsSection>((uint)RM_Instance_Sections.ObjectInstance);
-                    for (int i = 0; i < instances.Records.Count; ++i)
-                    {
-                        Instance instance = (Instance)instances.Records[i];
-                        if (instance.ObjectID == (ushort)ObjectID.DJ)
-                        {
-                            uint sourceMusic = instance.UnkI323[0];
-                            uint targetMusic = (uint)MusicID.TitleTheme;
-                            for (int m = 0; m < musicTypes.Count; m++)
-                            {
-                                if (musicTypes[m] == sourceMusic)
-                                {
-                                    targetMusic = randMusicList[m];
-                                }
-                            }
-                            instance.UnkI323 = new List<uint>() { targetMusic, 255, instance.UnkI323[2] };
+            TwinsFile RM_Archive = info.File;
 
-                            break;
-                        }
-                        else if (instance.ObjectID == (ushort)ObjectID.DJ_TRIGGERABLE)
-                        {
-                            uint sourceMusic = instance.UnkI323[0];
-                            uint targetMusic = (uint)MusicID.TitleTheme;
-                            for (int m = 0; m < musicTypes.Count; m++)
-                            {
-                                if (musicTypes[m] == sourceMusic)
-                                {
-                                    targetMusic = randMusicList[m];
-                                }
-                            }
-                            instance.UnkI323 = new List<uint>() { targetMusic, 255 };
-
-                            break;
-                        }
-                        instances.Records[i] = instance;
-                    }
-                }
-            }
-        }
-
-        public static void RM_Randomize_Enemies(TwinsFile RM_Archive, ChunkType chunkType, ref Random randState, ref List<ObjectID> EnemyReplaceList, ref List<ObjectID> EnemyInsertList)
-        {
-            List<ObjectID> importedObjects = new List<ObjectID>();
-            bool EnemyFound = false;
-            for (uint section_id = (uint)RM_Sections.Instances1; section_id <= (uint)RM_Sections.Instances8; section_id++)
-            {
-                if (!RM_Archive.ContainsItem(section_id)) continue;
-                TwinsSection section = RM_Archive.GetItem<TwinsSection>(section_id);
-                if (section.Records.Count > 0)
-                {
-                    if (!section.ContainsItem((uint)RM_Instance_Sections.ObjectInstance)) continue;
-                    TwinsSection instances = section.GetItem<TwinsSection>((uint)RM_Instance_Sections.ObjectInstance);
-                    for (int i = 0; i < instances.Records.Count; ++i)
-                    {
-                        Instance instance = (Instance)instances.Records[i];
-                        for (int obj = 0; obj < EnemyReplaceList.Count; obj++)
-                        {
-                            if (instance.ObjectID == (uint)EnemyReplaceList[obj])
-                            {
-                                EnemyFound = true;
-                            }
-                        }
-                        if (EnemyFound)
-                        {
-                            int targetPos = randState.Next(0, EnemyInsertList.Count);
-                            ObjectID targetObjectID = EnemyInsertList[targetPos];
-                            Twins_Data.ImportGameObject(ref RM_Archive, targetObjectID, ref importedObjects);
-                            InstanceTemplate template = Twins_Data.GetInstanceTemplateByObjectID(targetObjectID);
-                            if (template.ObjectID == 0 && template.Properties == 0) //&& instance.SomeNum1 == 0)
-                            {
-                                // For objects that are placed at runtime
-                                template = new InstanceTemplate()
-                                {
-                                    ObjectID = (ushort)targetObjectID,
-                                    InstancesNum = 10,
-                                    PathsNum = 10,
-                                    PositionsNum = 10,
-                                    Properties = 0x188B2E,
-                                    Flags = new List<uint>() { 10000 },
-                                    FloatVars = new List<float>() { 1, 25, 1.4f, 15, 100, 0, 6, 6 },
-                                    IntVars = new List<uint>() { 0, 0, 1 },
-                                    InstanceIDs = new List<ushort>(),
-                                    PathIDs = new List<ushort>(),
-                                    PositionIDs = new List<ushort>(),
-                                };
-                            }
-                            instance.ObjectID = template.ObjectID;
-                            instance.SomeNum1 = template.InstancesNum;
-                            instance.SomeNum2 = template.PathsNum;
-                            instance.SomeNum3 = template.PositionsNum;
-                            instance.Flags = template.Properties;
-                            instance.UnkI321 = template.Flags;
-                            instance.UnkI322 = template.FloatVars;
-                            instance.UnkI323 = template.IntVars;
-                            instance.InstanceIDs = new List<ushort>();
-                            /*
-                            if (template.InstanceIDs.Count > 0)
-                            {
-                                for (int a = 0; a < template.InstanceIDs.Count; a++)
-                                {
-                                    instance.InstanceIDs.Add(0);
-                                }
-                            }
-                            */
-                            instance.PathIDs = new List<ushort>();
-                            /*
-                            if (template.PathIDs.Count > 0)
-                            {
-                                for (int a = 0; a < template.PathIDs.Count; a++)
-                                {
-                                    instance.PathIDs.Add(0);
-                                }
-                            }
-                            */
-                            instance.PositionIDs = new List<ushort>();
-                            /*
-                            if (template.PositionIDs.Count > 0)
-                            {
-                                for (int a = 0; a < template.PositionIDs.Count; a++)
-                                {
-                                    instance.PositionIDs.Add(0);
-                                }
-                            }
-                            */
-                        }
-                        instances.Records[i] = instance;
-                        EnemyFound = false;
-                    }
-                }
-            }
-        }
-
-        public static void RM_Randomize_CharacterInstanceStats(TwinsFile RM_Archive)
-        {
             for (uint section_id = (uint)RM_Sections.Instances1; section_id <= (uint)RM_Sections.Instances8; section_id++)
             {
                 if (!RM_Archive.ContainsItem(section_id)) continue;
@@ -670,226 +387,5 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 }
             }
         }
-
-
-        public static void RM_Randomize_PantsColor(TwinsFile RM_Archive, Color PantsColor)
-        {
-            if (RM_Archive.Type != TwinsFile.FileType.RM2) return;
-            if (!RM_Archive.ContainsItem(11)) return;
-            TwinsSection section = RM_Archive.GetItem<TwinsSection>(11);
-            if (section.ContainsItem((uint)RM_Graphics_Sections.Textures) && section.Records.Count > 0)
-            {
-                TwinsSection tex_section = section.GetItem<TwinsSection>((uint)RM_Graphics_Sections.Textures);
-
-                foreach (TwinsItem item in tex_section.Records)
-                {
-                    if (item.ID == 0x0B75575C || item.ID == 0x0325A8A8)
-                    {
-                        Texture tex = (Texture)item;
-                        for (int i = 0; i < tex.RawData.Length; i++)
-                        {
-                            if (tex.RawData[i].B > tex.RawData[i].R + 8 && tex.RawData[i].B > tex.RawData[i].G + 8)
-                            {
-                                float intensity = tex.RawData[i].B / 255f;
-                                tex.RawData[i] = Color.FromArgb(tex.RawData[i].A, (int)(PantsColor.R * intensity), (int)(PantsColor.G * intensity), (int)(PantsColor.B * intensity));
-                            }
-                        }
-                        tex.UpdateImageData();
-                    }
-                }
-
-            }
-        }
-
-        public static List<DefaultEnums.SurfaceTypes> SurfacesToChange = new List<DefaultEnums.SurfaceTypes>()
-        {
-            DefaultEnums.SurfaceTypes.SURF_DEFAULT,
-            DefaultEnums.SurfaceTypes.SURF_GENERIC_MEDIUM_SLIPPY,
-            DefaultEnums.SurfaceTypes.SURF_GENERIC_MEDIUM_SLIPPY_RIGID_ONLY,
-            DefaultEnums.SurfaceTypes.SURF_GENERIC_SLIGHTLY_SLIPPY,
-            DefaultEnums.SurfaceTypes.SURF_ICE,
-            DefaultEnums.SurfaceTypes.SURF_ICE_LOW_SLIPPY,
-            DefaultEnums.SurfaceTypes.SURF_NORMAL_GRASS,
-            DefaultEnums.SurfaceTypes.SURF_NORMAL_METAL,
-            DefaultEnums.SurfaceTypes.SURF_NORMAL_MUD,
-            DefaultEnums.SurfaceTypes.SURF_NORMAL_ROCK,
-            DefaultEnums.SurfaceTypes.SURF_NORMAL_SAND,
-            DefaultEnums.SurfaceTypes.SURF_NORMAL_SNOW,
-            DefaultEnums.SurfaceTypes.SURF_NORMAL_STONE_TILES,
-            DefaultEnums.SurfaceTypes.SURF_NORMAL_WOOD,
-            DefaultEnums.SurfaceTypes.SURF_SLIPPY_METAL,
-            DefaultEnums.SurfaceTypes.SURF_SLIPPY_ROCK,
-            //DefaultEnums.SurfaceTypes.SURF_STICKY_SNOW,
-        };
-
-        public static List<DefaultEnums.SurfaceTypes> SurfacesToPlace = new List<DefaultEnums.SurfaceTypes>()
-        {
-            DefaultEnums.SurfaceTypes.SURF_DEFAULT,
-            DefaultEnums.SurfaceTypes.SURF_GENERIC_MEDIUM_SLIPPY,
-            DefaultEnums.SurfaceTypes.SURF_GENERIC_MEDIUM_SLIPPY_RIGID_ONLY,
-            DefaultEnums.SurfaceTypes.SURF_GENERIC_SLIGHTLY_SLIPPY,
-            DefaultEnums.SurfaceTypes.SURF_ICE,
-            DefaultEnums.SurfaceTypes.SURF_ICE_LOW_SLIPPY,
-            DefaultEnums.SurfaceTypes.SURF_NORMAL_GRASS,
-            DefaultEnums.SurfaceTypes.SURF_NORMAL_METAL,
-            DefaultEnums.SurfaceTypes.SURF_NORMAL_MUD,
-            DefaultEnums.SurfaceTypes.SURF_NORMAL_ROCK,
-            DefaultEnums.SurfaceTypes.SURF_NORMAL_SAND,
-            DefaultEnums.SurfaceTypes.SURF_NORMAL_SNOW,
-            DefaultEnums.SurfaceTypes.SURF_NORMAL_STONE_TILES,
-            DefaultEnums.SurfaceTypes.SURF_NORMAL_WOOD,
-            DefaultEnums.SurfaceTypes.SURF_SLIPPY_METAL,
-            DefaultEnums.SurfaceTypes.SURF_SLIPPY_ROCK,
-            //DefaultEnums.SurfaceTypes.SURF_STICKY_SNOW,
-        };
-
-        public static void RM_Randomize_Surfaces(TwinsFile RM_Archive, Dictionary<int, int> randList)
-        {
-
-            if (!RM_Archive.ContainsItem(9)) return;
-            TwinsItem section = RM_Archive.GetItem<TwinsItem>(9);
-            ColData colData = (ColData)section;
-
-            for (int i = 0; i < colData.Tris.Count; i++)
-            {
-                if (randList.ContainsKey(colData.Tris[i].Surface))
-                {
-                    colData.Tris[i] = new ColData.ColTri()
-                    {
-                        Surface = randList[colData.Tris[i].Surface],
-                        Vert1 = colData.Tris[i].Vert1,
-                        Vert2 = colData.Tris[i].Vert2,
-                        Vert3 = colData.Tris[i].Vert3,
-                    };
-                }
-            }
-
-        }
-
-        public static List<ObjectID> CratesForWumpaToTurnInto = new List<ObjectID>()
-        {
-            ObjectID.AKUAKUCRATE,
-            ObjectID.BASICCRATE,
-            ObjectID.EXTRALIFECRATE,
-            ObjectID.MULTIPLEHITCRATE,
-            ObjectID.NITROCRATE,
-            ObjectID.SURPRISECRATE,
-            ObjectID.TNTCRATE,
-            ObjectID.WOODENSPRINGCRATE,
-        };
-
-        public static void RM_WumpaIntoRandomCrates(TwinsFile RM_Archive, ChunkType chunkType, ref Random randState, bool isRandom)
-        {
-            List<ChunkType> BannedChunks = new List<ChunkType>()
-            {
-                ChunkType.AltEarth_Core_Throne,
-                ChunkType.School_Rooftop_BusChase,
-                ChunkType.School_Rooftop_Roof01,
-                ChunkType.School_Rooftop_Roof02,
-                ChunkType.School_Rooftop_Roof03,
-                ChunkType.School_Rooftop_Roof04,
-                ChunkType.School_Rooftop_Roof05,
-                ChunkType.School_Rooftop_RoofCor1,
-                ChunkType.School_Rooftop_RoofCor2,
-            };
-            if (BannedChunks.Contains(chunkType))
-                return;
-
-            List<uint> lifecrates = new List<uint>
-            {
-                (uint)ObjectID.EXTRALIFECRATE,
-                (uint)ObjectID.EXTRALIFECRATECORTEX,
-                (uint)ObjectID.EXTRALIFECRATENINA
-            };
-            randState = new Random((ModLoaderGlobals.RandomizerSeed + (int)chunkType) % int.MaxValue);
-            for (uint section_id = (uint)RM_Sections.Instances1; section_id <= (uint)RM_Sections.Instances8; section_id++)
-            {
-                if (!RM_Archive.ContainsItem(section_id)) continue;
-                TwinsSection section = RM_Archive.GetItem<TwinsSection>(section_id);
-                if (section.Records.Count > 0)
-                {
-                    if (!section.ContainsItem((uint)RM_Instance_Sections.ObjectInstance)) continue;
-                    TwinsSection instances = section.GetItem<TwinsSection>((uint)RM_Instance_Sections.ObjectInstance);
-                    for (int i = 0; i < instances.Records.Count; ++i)
-                    {
-                        Instance instance = (Instance)instances.Records[i];
-
-                        if (instance.ObjectID == (ushort)ObjectID.REDWUMPA)
-                        {
-                            if (!isRandom || (isRandom && randState.Next(2) == 0))
-                            {
-                                int target_item = randState.Next(0, CratesForWumpaToTurnInto.Count);
-                                if (CratesForWumpaToTurnInto[target_item] == ObjectID.EXTRALIFECRATE)
-                                {
-                                    int target_life = randState.Next(0, lifecrates.Count);
-                                    target_item = (int)lifecrates[target_life];
-                                }
-                                else
-                                {
-                                    target_item = (int)CratesForWumpaToTurnInto[target_item];
-                                }
-
-                                instance.UnkI322 = new List<float>() { 1, 50, 0 };
-
-                                if (target_item == (int)ObjectID.AMMOCRATESMALL)
-                                {
-                                    instance.Flags = 0x4011E;
-                                    instance.UnkI322 = new List<float>() { 1, 50, 10 };
-                                }
-                                else if (target_item == (int)ObjectID.BASICCRATE)
-                                {
-                                    instance.Flags = 0x811E;
-                                }
-                                else if (target_item == (int)ObjectID.EXTRALIFECRATE || target_item == (int)ObjectID.EXTRALIFECRATECORTEX || target_item == (int)ObjectID.EXTRALIFECRATENINA)
-                                {
-                                    instance.Flags = 0x81DE;
-                                }
-                                else if (target_item == (int)ObjectID.WOODENSPRINGCRATE)
-                                {
-                                    instance.Flags = 0x811E;
-                                }
-                                else if (target_item == (int)ObjectID.REINFORCEDWOODENCRATE)
-                                {
-                                    instance.Flags = 0xD91E;
-                                }
-                                else if (target_item == (int)ObjectID.AKUAKUCRATE)
-                                {
-                                    instance.Flags = 0x811E;
-                                }
-                                else if (target_item == (int)ObjectID.IRONCRATE)
-                                {
-                                    instance.Flags = 0x7D1E;
-                                }
-                                else if (target_item == (int)ObjectID.IRONSPRINGCRATE)
-                                {
-                                    instance.Flags = 0x7D1E;
-                                }
-                                else if (target_item == (int)ObjectID.MULTIPLEHITCRATE)
-                                {
-                                    instance.Flags = 0x811E;
-                                }
-                                else if (target_item == (int)ObjectID.SURPRISECRATE)
-                                {
-                                    instance.Flags = 0x811E;
-                                }
-                                else if (target_item == (int)ObjectID.TNTCRATE)
-                                {
-                                    instance.Flags = 0x811E;
-                                }
-                                else if (target_item == (int)ObjectID.NITROCRATE)
-                                {
-                                    instance.Flags = 0x811E;
-                                }
-
-                                instance.ObjectID = (ushort)target_item;
-                            }
-                        }
-
-                        instances.Records[i] = instance;
-                    }
-                }
-            }
-        }
-
     }
 }

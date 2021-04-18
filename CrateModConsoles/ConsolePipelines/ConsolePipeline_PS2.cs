@@ -402,7 +402,7 @@ namespace CrateModLoader.ModPipelines
             fileStreamTo = File.Open(path, FileMode.OpenOrCreate);
 
             await fileStreamFrom.CopyToAsync(fileStreamTo);
-            //fileStreamFrom.CopyTo(fileStreamTo);
+            //fileStreamFrom.CopyTo(fileStreamTo); // uncomment to disable async
 
             fileStreamFrom.Close();
             fileStreamTo.Close();

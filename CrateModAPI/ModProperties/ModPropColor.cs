@@ -32,6 +32,24 @@ namespace CrateModLoader.ModProperties
                 DefaultValue[i] = Value[i];
             }
         }
+        public ModPropColor(Mod mod, int[] c) : base(c, mod.Name, mod.Description)
+        {
+            DefaultValue = new int[Value.Length];
+            for (int i = 0; i < Value.Length; i++)
+            {
+                DefaultValue[i] = Value[i];
+            }
+            TargetMod = mod;
+        }
+        public ModPropColor(Mod mod, int[] c, string name, string desc) : base(c, name, desc)
+        {
+            DefaultValue = new int[Value.Length];
+            for (int i = 0; i < Value.Length; i++)
+            {
+                DefaultValue[i] = Value[i];
+            }
+            TargetMod = mod;
+        }
 
         public override void ResetToDefault()
         {

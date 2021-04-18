@@ -98,15 +98,44 @@
     <Compile Include="GameSpecific\CrashTeamRacing\Modder_CTR.cs" />
     <Compile Include="GameSpecific\CrashTitans\Modder_Titans.cs" />
     <Compile Include="GameSpecific\CrashTS\Modder_Twins.cs" />
-    <Compile Include="GameSpecific\CrashTS\Twins_Data.cs" />
-    <Compile Include="GameSpecific\CrashTS\Twins_Data_Characters.cs" />
-    <Compile Include="GameSpecific\CrashTS\Twins_Data_Objects.cs" />
-    <Compile Include="GameSpecific\CrashTS\Twins_Data_Scripts.cs" />
-    <Compile Include="GameSpecific\CrashTS\Twins_Data_Textures.cs" />
-    <Compile Include="GameSpecific\CrashTS\Twins_Data_Textures_Galleries.cs" />
-    <Compile Include="GameSpecific\CrashTS\Twins_Mods.cs" />
-    <Compile Include="GameSpecific\CrashTS\Twins_Randomizers.cs" />
-    <Compile Include="GameSpecific\CrashTS\Twins_Settings.cs" />
+    <Compile Include="GameSpecific\CrashTS\Mods\TS_ChangeCreditsChunk.cs" />
+    <Compile Include="GameSpecific\CrashTS\Mods\TS_ChangeStartingChunk.cs" />
+    <Compile Include="GameSpecific\CrashTS\Mods\TS_ClassicExplosions.cs" />
+    <Compile Include="GameSpecific\CrashTS\Mods\TS_ClassicHealth.cs" />
+    <Compile Include="GameSpecific\CrashTS\Mods\TS_CortexDoubleJump.cs" />
+    <Compile Include="GameSpecific\CrashTS\Mods\TS_EnableClassicSlideJump.cs" />
+    <Compile Include="GameSpecific\CrashTS\Mods\TS_EnableFlyingKick.cs" />
+    <Compile Include="GameSpecific\CrashTS\Mods\TS_EnableHiddenEnemies.cs" />
+    <Compile Include="GameSpecific\CrashTS\Mods\TS_EnableStompKick.cs" />
+    <Compile Include="GameSpecific\CrashTS\Mods\TS_GreyscaleDimension.cs" />
+    <Compile Include="GameSpecific\CrashTS\Mods\TS_GreyscaleWorld.cs" />
+    <Compile Include="GameSpecific\CrashTS\Mods\TS_Metadata.cs" />
+    <Compile Include="GameSpecific\CrashTS\Mods\TS_NinaDoubleJump.cs" />
+    <Compile Include="GameSpecific\CrashTS\Mods\TS_StartSpawnCredits.cs" />
+    <Compile Include="GameSpecific\CrashTS\Mods\TS_SwapStartCreditsSpawn.cs" />
+    <Compile Include="GameSpecific\CrashTS\Properties\TS_Props_Misc.cs" />
+    <Compile Include="GameSpecific\CrashTS\Randomizers\TS_Rand_CharParams.cs" />
+    <Compile Include="GameSpecific\CrashTS\Randomizers\TS_Rand_Crates.cs" />
+    <Compile Include="GameSpecific\CrashTS\Randomizers\TS_Rand_Enemies.cs" />
+    <Compile Include="GameSpecific\CrashTS\Randomizers\TS_Rand_GemLocations.cs" />
+    <Compile Include="GameSpecific\CrashTS\Randomizers\TS_Rand_Music.cs" />
+    <Compile Include="GameSpecific\CrashTS\Randomizers\TS_Rand_PantsColor.cs" />
+    <Compile Include="GameSpecific\CrashTS\Randomizers\TS_Rand_StartingChunk.cs" />
+    <Compile Include="GameSpecific\CrashTS\Randomizers\TS_Rand_Surdaces.cs" />
+    <Compile Include="GameSpecific\CrashTS\Randomizers\TS_Rand_WorldPalette.cs" />
+    <Compile Include="GameSpecific\CrashTS\Mods\TS_SkipCutscenes.cs" />
+    <Compile Include="GameSpecific\CrashTS\Mods\TS_SwitchCharacters.cs" />
+    <Compile Include="GameSpecific\CrashTS\Mods\TS_UnlockedCamera.cs" />
+    <Compile Include="GameSpecific\CrashTS\Mods\TS_UntexturedWorld.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\Twins_Common.cs" />
+    <Compile Include="GameSpecific\CrashTS\Randomizers\TS_Rand_WumpaIntoCrates.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\Twins_Data.cs" />
+    <Compile Include="GameSpecific\CrashTS\Properties\Twins_Data_Characters.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\Twins_Data_Objects.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\Twins_Data_Scripts.cs" />
+    <Compile Include="GameSpecific\CrashTS\Properties\Twins_Data_Textures.cs" />
+    <Compile Include="GameSpecific\CrashTS\Properties\Twins_Data_Textures_Galleries.cs" />
+    <Compile Include="GameSpecific\CrashTS\Properties\TS_Props_Main.cs" />
     <Compile Include="GameSpecific\CrashTS\Twins_Text.Designer.cs">
       <DependentUpon>Twins_Text.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -310,5 +339,6 @@
       <LastGenOutput>Rayman3_Text.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

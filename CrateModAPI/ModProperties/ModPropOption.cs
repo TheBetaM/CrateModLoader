@@ -39,6 +39,14 @@ namespace CrateModLoader.ModProperties
         {
 
         }
+        public ModPropOption(Mod mod) : base(0, mod.Name, mod.Description)
+        {
+            TargetMod = mod;
+        }
+        public ModPropOption(Mod mod, int defaultVal) : base(defaultVal, mod.Name, mod.Description)
+        {
+            TargetMod = mod;
+        }
 
         public void SetItemCount()
         {

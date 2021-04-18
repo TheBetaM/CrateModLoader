@@ -1,28 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using Twinsanity;
 
 namespace CrateModLoader.GameSpecific.CrashTS
 {
-    static partial class Twins_Data
-    {
-        public static List<GameObject> allObjects = new List<GameObject>();
-
-        public static GameObject GetGameObjectByID(ObjectID objID)
-        {
-            for (int i = 0; i < allObjects.Count; i++)
-            {
-                if (allObjects[i].ID == (uint)objID)
-                {
-                    return allObjects[i];
-                }
-            }
-
-            return allObjects[0];
-        }
-
-    }
-
     public enum ObjectID
     {
         CRASH = 0,

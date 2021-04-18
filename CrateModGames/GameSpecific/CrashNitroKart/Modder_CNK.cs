@@ -93,7 +93,7 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
                 [(int)ModProps.Textures] = "Textures",
             }
         };
-        public override bool CanPreloadGame => true;
+        //public override bool CanPreloadGame => true;
 
         public static ModPropOption Option_RandAdventure = new ModPropOption(CNK_Text.Rand_Adventure, CNK_Text.Rand_AdventureDesc);
         public static ModPropOption Option_RandCharStats = new ModPropOption(CNK_Text.Rand_CharacterStats, CNK_Text.Rand_CharacterStatsDesc);
