@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Twinsanity;
 using CrateModGames.GameSpecific.CrashTS;
+using System.Threading.Tasks;
 //Twinsanity API by NeoKesha, Smartkin, ManDude, BetaM and Marko (https://github.com/Smartkin/twinsanity-editor)
 /* 
  * Mod Layers:
@@ -82,6 +83,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
         };
         public override bool CanPreloadGame => true;
         public override List<ConsoleMode> PreloadConsoles => new List<ConsoleMode>() { ConsoleMode.PS2, };
+        public override bool AsyncProcess => true;
 
         public Modder_Twins() { }
 
@@ -94,32 +96,72 @@ namespace CrateModLoader.GameSpecific.CrashTS
         private int CurrentPass = 0;
         private bool EditingRM = false;
         private bool EditingSM = false;
+        private bool MainBusy = false;
 
         public override void StartModProcess()
         {
+            ProcessBusy = true;
+
+            AsyncStart();
+        }
+
+        public async void AsyncStart()
+        {
+            UpdateProcessMessage("Extracting CRASH.BD...");
+
             // Extract BD (PS2 only)
             SetupBD();
 
             // Mod files
             ModProcess();
 
+            while (MainBusy || PassBusy)
+            {
+                await Task.Delay(100);
+            }
+
+            UpdateProcessMessage("Building CRASH.BD...");
+
             // Build BD
             BuildBD();
+
+            ProcessBusy = false;
         }
 
-        void ModProcess()
+        private async void ModProcess()
         {
+            MainBusy = true;
+
             //Start Modding
             randState = new Random(ModLoaderGlobals.RandomizerSeed);
+
 
             LoadActiveProps();
             EditingRM = CheckModsForRM();
             EditingSM = CheckModsForSM();
 
+            // Discovering files
+            Dictionary<string, bool> Paths = new Dictionary<string, bool>();
+
+            if (EditingRM)
+            {
+                Paths.Add(bdPath + @"Startup\Default.rm" + extensionMod, false);
+            }
+
+            DirectoryInfo di = new DirectoryInfo(bdPath + "/Levels/");
+            foreach (DirectoryInfo dir in di.EnumerateDirectories())
+            {
+                Recursive_LoadLevels(dir, ref Paths);
+            }
+            PassCount = Paths.Count;
+
+            UpdateProcessMessage("Patching executable...");
             PatchEXE(ConsolePipeline.Metadata.Console, GameRegion.Region);
 
+            UpdateProcessMessage("Installing Mod Crates...");
             ModCrates.InstallLayerMods(EnabledModCrates, bdPath, 1);
 
+            //todo
             foreach (ModPropertyBase prop in Props)
             {
                 if (prop.HasChanged)
@@ -137,29 +179,38 @@ namespace CrateModLoader.GameSpecific.CrashTS
 
             while (CurrentPass < 2)
             {
+                PassIterator = 0;
+                PassBusy = true;
                 if (CurrentPass == 0)
                 {
+                    UpdateProcessMessage("Cache Pass");
                     BeforeCachePass();
                 }
                 else if (CurrentPass == 1)
                 {
+                    UpdateProcessMessage("Mod Pass");
                     BeforeModPass();
                 }
 
-                EditLevel(bdPath + @"Startup\Default.rm" + extensionMod, false);
+                IList<Task> editTaskList = new List<Task>();
 
-                DirectoryInfo di = new DirectoryInfo(bdPath + "/Levels/");
-                foreach (DirectoryInfo dir in di.EnumerateDirectories())
+                foreach (KeyValuePair<string, bool> Path in Paths)
                 {
-                    Recursive_LoadLevels(dir);
+                    editTaskList.Add(EditLevel(Path.Key, Path.Value));
                 }
 
+                await Task.WhenAll(editTaskList);
+
                 CurrentPass++;
+                PassBusy = false;
             }
 
             Twins_Data.cachedGameObjects.Clear();
 
+            UpdateProcessMessage("Modding textures...");
             Twins_Data_Textures.Textures_Mod(bdPath, GameRegion.Region);
+
+            MainBusy = false;
         }
 
         public override void StartPreload()
@@ -171,9 +222,9 @@ namespace CrateModLoader.GameSpecific.CrashTS
             }
         }
 
-        void EditLevel(string path, bool isSM)
+        private async Task EditLevel(string path, bool isSM)
         {
-            Console.WriteLine("Editing: " + path);
+            //Console.WriteLine("Editing: " + path);
 
             TwinsFile RM_Archive = new TwinsFile();
             if (!isSM)
@@ -210,23 +261,25 @@ namespace CrateModLoader.GameSpecific.CrashTS
             }
 
             RM_Archive.SaveFile(path);
+
+            PassIterator++;
         }
 
-        void Recursive_LoadLevels(DirectoryInfo di)
+        void Recursive_LoadLevels(DirectoryInfo di, ref Dictionary<string, bool> Paths)
         {
             foreach (DirectoryInfo dir in di.EnumerateDirectories())
             {
-                Recursive_LoadLevels(dir);
+                Recursive_LoadLevels(dir, ref Paths);
             }
             foreach (FileInfo file in di.EnumerateFiles())
             {
                 if (EditingRM && (file.Extension.ToLower() == ".rm2" || file.Extension.ToLower() == ".rmx"))
                 {
-                    EditLevel(file.FullName, false);
+                    Paths.Add(file.FullName, false);
                 }
                 else if (EditingSM && (file.Extension.ToLower() == ".sm2" || file.Extension.ToLower() == ".smx"))
                 {
-                    EditLevel(file.FullName, true);
+                    Paths.Add(file.FullName, true);
                 }
             }
         }

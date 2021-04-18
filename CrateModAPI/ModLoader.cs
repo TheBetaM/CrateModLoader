@@ -229,7 +229,6 @@ namespace CrateModLoader
             }
         }
 
-        // NO LONGER USED IN FAVOR OF EXTRACTING AND PROCESSING AT THE SAME TIME!
         public void EditGame(BackgroundWorker worker)
         {
             //To make sure the seed matches
@@ -251,7 +250,10 @@ namespace CrateModLoader
                     }
                 }
                 ModCrates.InstallCrateSettings(SupportedMods, Modder);
-                Modder.StartModProcess();
+                if (!Modder.AsyncProcess)
+                {
+                    Modder.StartModProcess();
+                }
             }
         }
 
@@ -419,6 +421,15 @@ namespace CrateModLoader
             a.ReportProgress(26);
 
             EditGame(a);
+            if (Modder != null && Modder.AsyncProcess)
+            {
+                Modder.StartAsyncProcess();
+            }
+            while (Modder.IsBusy)
+            {
+                a.ReportProgress(26);
+                Thread.Sleep(100);
+            }
 
             a.ReportProgress(74);
 
@@ -478,7 +489,19 @@ namespace CrateModLoader
             }
             else if (e.ProgressPercentage < 74)
             {
-                UpdateProcessMessage(ModLoaderText.Process_Step2);
+                string msg = ModLoaderText.Process_Step2;
+                if (Modder != null)
+                {
+                    if (Modder.ProcessBusy)
+                    {
+                        msg += Modder.ProcessMessage;
+                    }
+                    if (Modder.PassBusy)
+                    {
+                        msg += string.Format($" ({Modder.PassIterator}/{Modder.PassCount} files)");
+                    }
+                }
+                UpdateProcessMessage(msg);
             }
             else if (e.ProgressPercentage == 74)
             {

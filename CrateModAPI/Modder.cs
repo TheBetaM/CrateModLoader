@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.ComponentModel;
+using System.Threading;
 using CrateModLoader.ModProperties;
 using CrateModAPI.Resources.Text;
 
@@ -32,12 +33,10 @@ namespace CrateModLoader
         public RegionCode GameRegion;
         public List<ModCrate> EnabledModCrates = new List<ModCrate>();
 
-        public BackgroundWorker AsyncWorker = null;
         public bool ModMenuEnabled => Props.Count > 0;
         public bool ModCrateRegionCheck = false; // A game might require some type of verification (i.e. file integrity, region matching) before installing layer0 mod crates.
         public virtual bool CanPreloadGame => false;
         public virtual List<ConsoleMode> PreloadConsoles => null;
-        public bool IsBusy { get { return AsyncWorker != null && AsyncWorker.IsBusy; } }
 
         public abstract Game Game { get; }
 
@@ -169,6 +168,18 @@ namespace CrateModLoader
         //public List<ModPipeline> Pipelines = new List<ModPipeline>();
         public Random RandomState; // <- todo consolidate all Random() calls for multithreading!!
         public List<ModPropertyBase> ActiveProps = new List<ModPropertyBase>();
+        public virtual bool AsyncProcess => false; // delete this after implementing async for all games
+        public bool IsBusy { get; set; }
+        public bool PassBusy { get; set; }
+        public bool ProcessBusy { get; set; }
+        public string ProcessMessage { get; set; }
+        public int PassIterator { get; set; }
+        public int PassCount { get; set; }
+
+        public void UpdateProcessMessage(string msg)
+        {
+            ProcessMessage = msg;
+        }
 
         public bool NeedsCachePass()
         {
@@ -271,6 +282,44 @@ namespace CrateModLoader
             }
         }
 
-        
+
+        public void StartAsyncProcess()
+        {
+            IsBusy = true;
+
+            BackgroundWorker asyncWorker = new BackgroundWorker();
+            asyncWorker.WorkerReportsProgress = true;
+            asyncWorker.DoWork += new DoWorkEventHandler(AsyncWorker_DoWork);
+            asyncWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(AsyncWorker_RunWorkerCompleted);
+            asyncWorker.ProgressChanged += new ProgressChangedEventHandler(AsyncWorker_ProgressChanged);
+            asyncWorker.RunWorkerAsync();
+        }
+
+        private void AsyncWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker a = sender as BackgroundWorker;
+
+            StartModProcess();
+            while (ProcessBusy || PassBusy)
+            {
+                Thread.Sleep(100);
+            }
+
+            IsBusy = false;
+        }
+
+        private void AsyncWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            BackgroundWorker a = sender as BackgroundWorker;
+            a.DoWork -= AsyncWorker_DoWork;
+            a.RunWorkerCompleted -= AsyncWorker_RunWorkerCompleted;
+            a.ProgressChanged -= AsyncWorker_ProgressChanged;
+        }
+
+        private void AsyncWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+
+        }
+
     }
 }
