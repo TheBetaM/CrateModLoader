@@ -94,6 +94,8 @@ namespace CrateModLoader.GameSpecific.CrashTS
 
         internal Random randState = new Random();
         private int CurrentPass = 0;
+        private float PassPercentMod = 39f;
+        private int PassPercentAdd = 10;
         private bool EditingRM = false;
         private bool EditingSM = false;
         private bool MainBusy = false;
@@ -107,7 +109,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
 
         public async void AsyncStart()
         {
-            UpdateProcessMessage("Extracting CRASH.BD...");
+            UpdateProcessMessage("Extracting CRASH.BD...", 0);
 
             // Extract BD (PS2 only)
             SetupBD();
@@ -120,7 +122,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 await Task.Delay(100);
             }
 
-            UpdateProcessMessage("Building CRASH.BD...");
+            UpdateProcessMessage("Building CRASH.BD...", 95);
 
             // Build BD
             BuildBD();
@@ -155,10 +157,10 @@ namespace CrateModLoader.GameSpecific.CrashTS
             }
             PassCount = Paths.Count;
 
-            UpdateProcessMessage("Patching executable...");
+            UpdateProcessMessage("Patching executable...", 4);
             PatchEXE(ConsolePipeline.Metadata.Console, GameRegion.Region);
 
-            UpdateProcessMessage("Installing Mod Crates...");
+            UpdateProcessMessage("Installing Mod Crates...", 5);
             ModCrates.InstallLayerMods(EnabledModCrates, bdPath, 1);
 
             //todo
@@ -173,9 +175,13 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 }
             }
 
+            bool NeedsCache = NeedsCachePass();
             CurrentPass = 0;
-            if (!NeedsCachePass())
+            if (!NeedsCache)
+            {
+                PassPercentMod = 83f;
                 CurrentPass++;
+            }
 
             while (CurrentPass < 2)
             {
@@ -183,12 +189,25 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 PassBusy = true;
                 if (CurrentPass == 0)
                 {
-                    UpdateProcessMessage("Cache Pass");
+                    PassPercentMod = 39f;
+                    PassPercentAdd = 10;
+                    UpdateProcessMessage("Cache Pass", 10);
                     BeforeCachePass();
                 }
                 else if (CurrentPass == 1)
                 {
-                    UpdateProcessMessage("Mod Pass");
+                    if (NeedsCache)
+                    {
+                        PassPercentMod = 43f;
+                        PassPercentAdd = 50;
+                        UpdateProcessMessage("Mod Pass", 50);
+                    }
+                    else
+                    {
+                        PassPercentMod = 83f;
+                        UpdateProcessMessage("Mod Pass", 10);
+                    }
+                    
                     BeforeModPass();
                 }
 
@@ -207,7 +226,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
 
             Twins_Data.cachedGameObjects.Clear();
 
-            UpdateProcessMessage("Modding textures...");
+            UpdateProcessMessage("Modding textures...", 94);
             Twins_Data_Textures.Textures_Mod(bdPath, GameRegion.Region);
 
             MainBusy = false;
@@ -225,44 +244,52 @@ namespace CrateModLoader.GameSpecific.CrashTS
         private async Task EditLevel(string path, bool isSM)
         {
             //Console.WriteLine("Editing: " + path);
-
-            TwinsFile RM_Archive = new TwinsFile();
-            if (!isSM)
+            TwinsFile.FileType FileType = rmType;
+            if (isSM) FileType = smType;
+            
+            await Task.Run(
+            () => 
             {
-                RM_Archive.LoadFile(path, rmType);
-                ChunkInfoRM chunk = new ChunkInfoRM(RM_Archive, ChunkPathToType(path));
+                TwinsFile Archive = new TwinsFile();
+                Archive.LoadFile(path, FileType);
 
-                switch (CurrentPass)
+                if (!isSM)
                 {
-                    case 0:
-                        StartCachePass(chunk);
-                        break;
-                    default:
-                    case 1:
-                        StartModPass(chunk);
-                        break;
-                }
-            }
-            else
-            {
-                RM_Archive.LoadFile(path, smType);
-                ChunkInfoSM chunk = new ChunkInfoSM(RM_Archive, ChunkPathToType(path));
+                    ChunkInfoRM chunk = new ChunkInfoRM(Archive, ChunkPathToType(path));
 
-                switch (CurrentPass)
+                    switch (CurrentPass)
+                    {
+                        case 0:
+                            StartCachePass(chunk);
+                            break;
+                        default:
+                        case 1:
+                            StartModPass(chunk);
+                            break;
+                    }
+                }
+                else
                 {
-                    case 0:
-                        StartCachePass(chunk);
-                        break;
-                    default:
-                    case 1:
-                        StartModPass(chunk);
-                        break;
-                }
-            }
+                    ChunkInfoSM chunk = new ChunkInfoSM(Archive, ChunkPathToType(path));
 
-            RM_Archive.SaveFile(path);
+                    switch (CurrentPass)
+                    {
+                        case 0:
+                            StartCachePass(chunk);
+                            break;
+                        default:
+                        case 1:
+                            StartModPass(chunk);
+                            break;
+                    }
+                }
+
+                    Archive.SaveFile(path);
+                }
+            );
 
             PassIterator++;
+            PassPercent = (int)((PassIterator / (float)PassCount) * PassPercentMod) + PassPercentAdd;
         }
 
         void Recursive_LoadLevels(DirectoryInfo di, ref Dictionary<string, bool> Paths)

@@ -427,7 +427,8 @@ namespace CrateModLoader
             }
             while (Modder.IsBusy)
             {
-                a.ReportProgress(26);
+                int PPerc = (int)(Modder.PassPercent * 0.48f);
+                a.ReportProgress(26 + PPerc);
                 Thread.Sleep(100);
             }
 
@@ -494,7 +495,7 @@ namespace CrateModLoader
                 {
                     if (Modder.ProcessBusy)
                     {
-                        msg += Modder.ProcessMessage;
+                        msg += string.Format($"({Modder.PassPercent}%) {Modder.ProcessMessage}");
                     }
                     if (Modder.PassBusy)
                     {

@@ -175,10 +175,15 @@ namespace CrateModLoader
         public string ProcessMessage { get; set; }
         public int PassIterator { get; set; }
         public int PassCount { get; set; }
+        public int PassPercent { get; set; }
 
-        public void UpdateProcessMessage(string msg)
+        public void UpdateProcessMessage(string msg, int? per = null)
         {
             ProcessMessage = msg;
+            if (per != null)
+            {
+                PassPercent = (int)per;
+            }
         }
 
         public bool NeedsCachePass()
