@@ -2,9 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using CrateModGames.GameSpecific.Crash3;
-using CrateModGames.GameSpecific.Crash1;
-using CrateModLoader.ModProperties;
 //Crash 3 API by chekwob and ManDude (https://github.com/cbhacks/CrashEdit)
 //Version number and seed are displayed in the pause menu in the Warp Room.
 
@@ -13,111 +10,9 @@ namespace CrateModLoader.GameSpecific.Crash3
     public sealed class Modder_Crash3 : Modder
     {
 
-        public override Game Game => new Game()
-        {
-            Name = Crash3_Text.GameTitle,
-            ShortName = "Crash3",
-            Consoles = new List<ConsoleMode>
-                {
-                    ConsoleMode.PS1
-                },
-            API_Credit = CrashTri_Text.API_Credit,
-            API_Link = "https://github.com/cbhacks/CrashEdit",
-            RegionID = new Dictionary<ConsoleMode, RegionCode[]>()
-            {
-                [ConsoleMode.PS1] = new RegionCode[]
-                {
-                    new RegionCode() {
-                    Name = @"SCUS_942.44",
-                    Region = RegionType.NTSC_U,
-                    ExecName = "SCUS_942.44",
-                    CodeName = "SCUS_94244", },
-                    new RegionCode() {
-                    Name = @"SCES_014.20",
-                    Region = RegionType.PAL,
-                    ExecName = "SCES_014.20",
-                    CodeName = "SCES_01420", },
-                    new RegionCode() {
-                    Name = @"SCPS_100.73",
-                    Region = RegionType.NTSC_J,
-                    ExecName = "SCPS_100.73",
-                    CodeName = "SCPS_10073", },
-                },
-            },
-            PropertyCategories = new Dictionary<int, string>()
-            {
-                [0] = "Options",
-            },
-        };
-
-        
-        public static ModPropOption Option_RandWarpRoom = new ModPropOption("Randomize Level Order", "Shuffles levels around (except for secret levels and ones with secret entrances). The last level is still the Cortex boss."); //{ Hidden = true };
-        public static ModPropOption Option_BackwardsLevels = new ModPropOption(Crash3_Text.Mod_BackwardsLevels, Crash3_Text.Mod_BackwardsLevelsDesc);
-        public static ModPropOption Option_RandBackwardsLevels = new ModPropOption(CrashTri_Text.Rand_BackwardsLevels, CrashTri_Text.Rand_BackwardsLevelsDesc);
-        public static ModPropOption Option_RandEnemiesMissing = new ModPropOption(CrashTri_Text.Rand_EnemiesRemoved, CrashTri_Text.Rand_EnemiesRemovedDesc);
-        public static ModPropOption Option_RandCratesMissing = new ModPropOption(CrashTri_Text.Rand_CratesRemoved, CrashTri_Text.Rand_CratesRemovedDesc);
-        public static ModPropOption Option_InvisibleCrates = new ModPropOption(CrashTri_Text.Mod_InvisibleCrates, CrashTri_Text.Mod_InvisibleCratesDesc);
-        public static ModPropOption Option_RandInvisibleCrates = new ModPropOption(CrashTri_Text.Rand_InvisibleCrates, CrashTri_Text.Rand_InvisibleCratesDesc);
-        public static ModPropOption Option_AllCratesAshed = new ModPropOption("All Crates Are Covered Up", "All crates are covered up to look the same on the outside in each level.");
-        public static ModPropOption Option_RandCratesAshed = new ModPropOption("Random Crate Types Are Covered Up", "Random crate types are covered up to look the same on the outside in each level.");
-        public static ModPropOption Option_RandCrateContents = new ModPropOption(CrashTri_Text.Rand_CrateContents, CrashTri_Text.Rand_CrateContentsDesc);
-        public static ModPropOption Option_RandCrateParams = new ModPropOption(CrashTri_Text.Rand_CrateParams, CrashTri_Text.Rand_CrateParamsDesc);
-        public static ModPropOption Option_RandBoxCount = new ModPropOption(CrashTri_Text.Rand_CrateCounter, CrashTri_Text.Rand_CrateCounterDesc);
-        public static ModPropOption Option_CameraBigFOV = new ModPropOption(CrashTri_Text.Mod_CameraWideFOV, CrashTri_Text.Mod_CameraWideFOVDesc);
-        public static ModPropOption Option_RemoveWarpRoomBarriers = new ModPropOption(Crash3_Text.Mod_RemoveWarpRoomWalls, Crash3_Text.Mod_RemoveWarpRoomWallsDesc);
-        public static ModPropOption Option_RandMusicTracks = new ModPropOption("Randomize Music Tracks", "Music tracks are randomized, still played using the level's instruments."); //only swaps midis
-        public static ModPropOption Option_RandSounds = new ModPropOption(CrashTri_Text.Rand_SFX, CrashTri_Text.Rand_SFXDesc);
-        public static ModPropOption Option_RandStreams = new ModPropOption(CrashTri_Text.Rand_Streams, CrashTri_Text.Rand_StreamsDesc);
-        public static ModPropOption Option_RandPantsColor = new ModPropOption(CrashTri_Text.Rand_PantsColor, CrashTri_Text.Rand_PantsColorDesc);
-        public static ModPropOption Option_RandWorldColors = new ModPropOption(CrashTri_Text.Rand_WorldColors, CrashTri_Text.Rand_WorldColorsDesc);
-        public static ModPropOption Option_RandWorldPalette = new ModPropOption(CrashTri_Text.Rand_WorldPalette, CrashTri_Text.Rand_WorldPaletteDesc);
-        public static ModPropOption Option_GreyscaleWorld = new ModPropOption(CrashTri_Text.Mod_GreyscaleWorld, CrashTri_Text.Mod_GreyscaleWorldDesc);
-        public static ModPropOption Option_UntexturedWorld = new ModPropOption(CrashTri_Text.Mod_UntexturedWorld, CrashTri_Text.Mod_UntexturedWorldDesc);
-        public static ModPropOption Option_RandWorldTex = new ModPropOption(CrashTri_Text.Rand_WorldTex, CrashTri_Text.Rand_WorldTexDesc);
-        public static ModPropOption Option_RandObjPalette = new ModPropOption(CrashTri_Text.Rand_ObjectPalette, CrashTri_Text.Rand_ObjectPaletteDesc);
-
-        [ModCategory(1)]
-        public static ModPropColor Prop_PantsColor = new ModPropColor(new int[4] { 0, 0, 255, 255 }, CrashTri_Text.Prop_PantsColor, CrashTri_Text.Prop_PantsColorDesc);
-
-        // less used
-        [ModCategory(1), ModMenuOnly]
-        public static ModPropOption Option_RandCrates = new ModPropOption(CrashTri_Text.Rand_WoodenCrates, CrashTri_Text.Rand_WoodenCratesDesc);
-        [ModCategory(1), ModMenuOnly]
-        public static ModPropOption Option_AllEnemiesMissing = new ModPropOption(CrashTri_Text.Mod_RemoveEnemies, CrashTri_Text.Mod_RemoveEnemies);
-        [ModCategory(1), ModMenuOnly]
-        public static ModPropOption Option_RandObjCol = new ModPropOption(CrashTri_Text.Rand_ObjCol, CrashTri_Text.Rand_ObjColDesc);
-        [ModCategory(1), ModMenuOnly]
-        public static ModPropOption Option_RandObjTex = new ModPropOption(CrashTri_Text.Rand_ObjTex, CrashTri_Text.Rand_ObjTexDesc);
-        [ModCategory(1), ModMenuOnly]
-        public static ModPropOption Option_UncoloredObj = new ModPropOption(CrashTri_Text.Mod_GreyscaleObjects, CrashTri_Text.Mod_GreyscaleObjectsDesc);
-        [ModCategory(1), ModMenuOnly]
-        public static ModPropOption Option_AllCratesBlank = new ModPropOption(CrashTri_Text.Mod_AllCratesBlank, CrashTri_Text.Mod_AllCratesBlankDesc);
-        [ModCategory(1), ModMenuOnly]
-        public static ModPropOption Option_AllCratesWumpa = new ModPropOption(CrashTri_Text.Mod_AllCratesWumpa, CrashTri_Text.Mod_AllCratesWumpaDesc);
-        [ModCategory(1), ModMenuOnly]
-        public static ModPropOption Option_RandCameraFOV = new ModPropOption(CrashTri_Text.Rand_CameraFOV, CrashTri_Text.Rand_CameraFOVDesc);
-        [ModCategory(1), ModMenuOnly]
-        public static ModPropOption Option_InvisibleWorld = new ModPropOption("Invisible World (Beta)", "The scenery is invisible.");
-
-        //unfinished
-        [ModCategory(1), ModMenuOnly]
-        public static ModPropOption Option_AllEnemiesAreCrates = new ModPropOption(Crash3_Text.Mod_EnemyCrates, Crash3_Text.Mod_EnemyCratesDesc) { Hidden = true };
-        public static ModPropOption Option_RandEnemiesAreCrates = new ModPropOption(CrashTri_Text.Rand_EnemyCrates, CrashTri_Text.Rand_EnemyCratesDesc) { Hidden = true }; //unfinished
-        public static ModPropOption Option_UntexturedObj = new ModPropOption("Untextured Objects", "") { Hidden = true }; // broken
-        public static ModPropOption Option_RandFlyingLevels = new ModPropOption(Crash3_Text.Rand_FlyingLevels, Crash3_Text.Rand_FlyingLevelsDesc) { Hidden = true }; //unfinished
-        public static ModPropOption Option_RandBikeLevels = new ModPropOption("Randomize Bike Levels", "") { Hidden = true };
-        public static ModPropOption Option_RandBosses = new ModPropOption("Randomize Boss Levels", "") { Hidden = true };
-        public static ModPropOption Option_VehicleLevelsOnFoot = new ModPropOption("Vehicle Levels On Foot", "") { Hidden = true };
-        public static ModPropOption Option_MirroredWorld = new ModPropOption("Mirrored World", "") { Hidden = true };
-        public static ModPropOption Option_RandMirroredWorld = new ModPropOption("Random Levels Are Mirrored", "") { Hidden = true };
-        public static ModPropOption Option_RandMusic = new ModPropOption("Randomize Music", "") { Hidden = true }; //shuffle tracks from different levels (must be identical to vanilla playback, just in a different level)
-        public static ModPropOption Option_RandMusicInstruments = new ModPropOption("Randomize Music Instruments", "") { Hidden = true }; //only swap wavebanks
-
         public Modder_Crash3()
         {
-
             ModCrateRegionCheck = true;
-            
         }
 
         public override void StartModProcess()
@@ -132,20 +27,20 @@ namespace CrateModLoader.GameSpecific.Crash3
             Random rand = new Random(ModLoaderGlobals.RandomizerSeed);
 
             SceneryColor PantsColor = new SceneryColor(0, 0, 0);
-            if (Option_RandPantsColor.Enabled)
+            if (Crash3_Props_Main.Option_RandPantsColor.Enabled)
             {
                 PantsColor = new SceneryColor((byte)rand.Next(256), (byte)rand.Next(256), (byte)rand.Next(256), 0);
                 // just so that it doesn't affect gameplay randomizers
                 rand = new Random(ModLoaderGlobals.RandomizerSeed);
             }
 
-            if (Prop_PantsColor.HasChanged)
+            if (Crash3_Props_Misc.Prop_PantsColor.HasChanged)
             {
-                PantsColor = new SceneryColor((byte)Prop_PantsColor.R, (byte)Prop_PantsColor.G, (byte)Prop_PantsColor.B, 0);
+                PantsColor = new SceneryColor((byte)Crash3_Props_Misc.Prop_PantsColor.R, (byte)Crash3_Props_Misc.Prop_PantsColor.G, (byte)Crash3_Props_Misc.Prop_PantsColor.B, 0);
             }
 
             bool CachingPass = false;
-            if (Option_RandMusic.Enabled || Option_RandMusicTracks.Enabled || Option_RandMusicInstruments.Enabled)
+            if (Crash3_Props_Main.Option_RandMusic.Enabled || Crash3_Props_Main.Option_RandMusicTracks.Enabled || Crash3_Props_Main.Option_RandMusicInstruments.Enabled)
             {
                 CachingPass = true;
             }
@@ -196,48 +91,48 @@ namespace CrateModLoader.GameSpecific.Crash3
 
                 if (CachingPass)
                 {
-                    if (Option_RandMusicTracks.Enabled)
+                    if (Crash3_Props_Main.Option_RandMusicTracks.Enabled)
                         CrashTri_Common.Cache_Music(nsf);
                 }
                 else
                 {
-                    if (Option_AllCratesWumpa.Enabled) Crash3_Mods.Mod_TurnCratesIntoWumpa(nsf, rand);
-                    if (Option_RandWarpRoom.Enabled) Crash3_Mods.Mod_RandomizeWarpRoom(nsf, nsd, NSF_Level, rand);
-                    if (Option_BackwardsLevels.Enabled || Option_RandBackwardsLevels.Enabled) Crash3_Mods.Mod_BackwardsLevels(nsf, nsd, NSF_Level, Option_RandBackwardsLevels.Enabled, rand);
-                    if (Option_CameraBigFOV.Enabled || Option_RandCameraFOV.Enabled) Crash3_Mods.Mod_CameraFOV(nsf, rand, Option_RandCameraFOV.Enabled);
-                    if (Option_AllCratesBlank.Enabled) Crash3_Mods.Mod_AllWoodCrates(nsf, rand);
-                    if (Option_RandCrates.Enabled) Crash3_Mods.Rand_WoodenCrates(nsf, rand, NSF_Level);
-                    if (Option_RandBosses.Enabled) Crash3_Mods.Mod_RandomizeBosses(nsf, nsd, NSF_Level, rand, false);
-                    if (Option_RandFlyingLevels.Enabled) Crash3_Mods.Mod_RandomizeFlyingLevels(nsf, nsd, NSF_Level, rand, false);
-                    if (Option_RandBoxCount.Enabled) Crash3_Mods.Rand_BoxCount(nsf, rand, NSF_Level);
-                    if (Option_AllEnemiesMissing.Enabled) Crash3_Mods.Mod_RemoveEnemies(nsf, rand, NSF_Level, false);
-                    if (Option_RandEnemiesAreCrates.Enabled) Crash3_Mods.Mod_EnemyCrates(nsf, rand, NSF_Level, true);
-                    if (Option_AllEnemiesAreCrates.Enabled) Crash3_Mods.Mod_EnemyCrates(nsf, rand, NSF_Level, false);
-                    if (Option_RandEnemiesMissing.Enabled) Crash3_Mods.Mod_RemoveEnemies(nsf, rand, NSF_Level, true);
-                    if (Option_RandCratesMissing.Enabled) Crash3_Mods.Rand_CratesMissing(nsf, rand);
-                    if (Option_RandCrateContents.Enabled) Crash3_Mods.Mod_RandomCrateContents(nsf, rand);
-                    if (Option_RandCrateParams.Enabled) Crash3_Mods.Mod_RandomCrateParams(nsf, rand, NSF_Level);
-                    if (Option_RandInvisibleCrates.Enabled) Crash3_Mods.Mod_InvisibleCrates(nsf, rand, NSF_Level, true);
-                    if (Option_InvisibleCrates.Enabled) Crash3_Mods.Mod_InvisibleCrates(nsf, rand, NSF_Level, false);
-                    if (Option_RemoveWarpRoomBarriers.Enabled) Crash3_Mods.Mod_RemoveBarriers(nsf, NSF_Level);
+                    if (Crash3_Props_Misc.Option_AllCratesWumpa.Enabled) Crash3_Mods.Mod_TurnCratesIntoWumpa(nsf, rand);
+                    if (Crash3_Props_Main.Option_RandWarpRoom.Enabled) Crash3_Mods.Mod_RandomizeWarpRoom(nsf, nsd, NSF_Level, rand);
+                    if (Crash3_Props_Main.Option_BackwardsLevels.Enabled || Crash3_Props_Main.Option_RandBackwardsLevels.Enabled) Crash3_Mods.Mod_BackwardsLevels(nsf, nsd, NSF_Level, Crash3_Props_Main.Option_RandBackwardsLevels.Enabled, rand);
+                    if (Crash3_Props_Main.Option_CameraBigFOV.Enabled || Crash3_Props_Misc.Option_RandCameraFOV.Enabled) Crash3_Mods.Mod_CameraFOV(nsf, rand, Crash3_Props_Misc.Option_RandCameraFOV.Enabled);
+                    if (Crash3_Props_Misc.Option_AllCratesBlank.Enabled) Crash3_Mods.Mod_AllWoodCrates(nsf, rand);
+                    if (Crash3_Props_Misc.Option_RandCrates.Enabled) Crash3_Mods.Rand_WoodenCrates(nsf, rand, NSF_Level);
+                    if (Crash3_Props_Main.Option_RandBosses.Enabled) Crash3_Mods.Mod_RandomizeBosses(nsf, nsd, NSF_Level, rand, false);
+                    if (Crash3_Props_Main.Option_RandFlyingLevels.Enabled) Crash3_Mods.Mod_RandomizeFlyingLevels(nsf, nsd, NSF_Level, rand, false);
+                    if (Crash3_Props_Main.Option_RandBoxCount.Enabled) Crash3_Mods.Rand_BoxCount(nsf, rand, NSF_Level);
+                    if (Crash3_Props_Misc.Option_AllEnemiesMissing.Enabled) Crash3_Mods.Mod_RemoveEnemies(nsf, rand, NSF_Level, false);
+                    if (Crash3_Props_Main.Option_RandEnemiesAreCrates.Enabled) Crash3_Mods.Mod_EnemyCrates(nsf, rand, NSF_Level, true);
+                    if (Crash3_Props_Misc.Option_AllEnemiesAreCrates.Enabled) Crash3_Mods.Mod_EnemyCrates(nsf, rand, NSF_Level, false);
+                    if (Crash3_Props_Main.Option_RandEnemiesMissing.Enabled) Crash3_Mods.Mod_RemoveEnemies(nsf, rand, NSF_Level, true);
+                    if (Crash3_Props_Main.Option_RandCratesMissing.Enabled) Crash3_Mods.Rand_CratesMissing(nsf, rand);
+                    if (Crash3_Props_Main.Option_RandCrateContents.Enabled) Crash3_Mods.Mod_RandomCrateContents(nsf, rand);
+                    if (Crash3_Props_Main.Option_RandCrateParams.Enabled) Crash3_Mods.Mod_RandomCrateParams(nsf, rand, NSF_Level);
+                    if (Crash3_Props_Main.Option_RandInvisibleCrates.Enabled) Crash3_Mods.Mod_InvisibleCrates(nsf, rand, NSF_Level, true);
+                    if (Crash3_Props_Main.Option_InvisibleCrates.Enabled) Crash3_Mods.Mod_InvisibleCrates(nsf, rand, NSF_Level, false);
+                    if (Crash3_Props_Main.Option_RemoveWarpRoomBarriers.Enabled) Crash3_Mods.Mod_RemoveBarriers(nsf, NSF_Level);
                     
-                    if (Option_RandWorldPalette.Enabled) CrashTri_Common.Mod_Scenery_Swizzle(nsf, rand);
-                    if (Option_GreyscaleWorld.Enabled) CrashTri_Common.Mod_Scenery_Greyscale(nsf);
-                    if (Option_RandWorldColors.Enabled) CrashTri_Common.Mod_Scenery_Rainbow(nsf, rand);
-                    if (Option_UntexturedWorld.Enabled) CrashTri_Common.Mod_Scenery_Untextured(nsf);
-                    if (Option_InvisibleWorld.Enabled) CrashTri_Common.Mod_Scenery_Invisible(nsf);
-                    if (Option_RandWorldTex.Enabled) CrashTri_Common.Mod_RandomizeWGEOTex(nsf, rand);
-                    if (Option_RandPantsColor.Enabled || Prop_PantsColor.HasChanged) Crash3_Mods.Mod_PantsColor(nsf, PantsColor);
-                    if (Option_RandObjCol.Enabled) CrashTri_Common.Mod_RandomizeTGEOCol(nsf, rand);
-                    if (Option_AllCratesAshed.Enabled) Crash3_Mods.Mod_AshedCrates(nsf, rand, false);
-                    if (Option_RandCratesAshed.Enabled) Crash3_Mods.Mod_AshedCrates(nsf, rand, true);
-                    if (Option_RandObjTex.Enabled) CrashTri_Common.Mod_RandomizeTGEOTex(nsf, rand);
-                    if (NSF_Level != Crash3_Levels.Unknown && Option_RandMusicTracks.Enabled) CrashTri_Common.Randomize_Music(nsf, rand);
-                    if (Option_RandSounds.Enabled) CrashTri_Common.Mod_RandomizeADIO(nsf, rand);
-                    if (Option_RandStreams.Enabled) CrashTri_Common.Mod_RandomizeSDIO(nsf, rand);
-                    if (Option_RandObjPalette.Enabled) CrashTri_Common.Mod_SwizzleObjectColors(nsf, rand);
-                    if (Option_UntexturedObj.Enabled) CrashTri_Common.Mod_RemoveTGEOTex(nsf, rand);
-                    if (Option_UncoloredObj.Enabled) CrashTri_Common.Mod_RemoveObjectColors(nsf, rand);
+                    if (Crash3_Props_Main.Option_RandWorldPalette.Enabled) CrashTri_Common.Mod_Scenery_Swizzle(nsf, rand);
+                    if (Crash3_Props_Main.Option_GreyscaleWorld.Enabled) CrashTri_Common.Mod_Scenery_Greyscale(nsf);
+                    if (Crash3_Props_Main.Option_RandWorldColors.Enabled) CrashTri_Common.Mod_Scenery_Rainbow(nsf, rand);
+                    if (Crash3_Props_Main.Option_UntexturedWorld.Enabled) CrashTri_Common.Mod_Scenery_Untextured(nsf);
+                    if (Crash3_Props_Misc.Option_InvisibleWorld.Enabled) CrashTri_Common.Mod_Scenery_Invisible(nsf);
+                    if (Crash3_Props_Main.Option_RandWorldTex.Enabled) CrashTri_Common.Mod_RandomizeWGEOTex(nsf, rand);
+                    if (Crash3_Props_Main.Option_RandPantsColor.Enabled || Crash3_Props_Misc.Prop_PantsColor.HasChanged) Crash3_Mods.Mod_PantsColor(nsf, PantsColor);
+                    if (Crash3_Props_Misc.Option_RandObjCol.Enabled) CrashTri_Common.Mod_RandomizeTGEOCol(nsf, rand);
+                    if (Crash3_Props_Main.Option_AllCratesAshed.Enabled) Crash3_Mods.Mod_AshedCrates(nsf, rand, false);
+                    if (Crash3_Props_Main.Option_RandCratesAshed.Enabled) Crash3_Mods.Mod_AshedCrates(nsf, rand, true);
+                    if (Crash3_Props_Misc.Option_RandObjTex.Enabled) CrashTri_Common.Mod_RandomizeTGEOTex(nsf, rand);
+                    if (NSF_Level != Crash3_Levels.Unknown && Crash3_Props_Main.Option_RandMusicTracks.Enabled) CrashTri_Common.Randomize_Music(nsf, rand);
+                    if (Crash3_Props_Main.Option_RandSounds.Enabled) CrashTri_Common.Mod_RandomizeADIO(nsf, rand);
+                    if (Crash3_Props_Main.Option_RandStreams.Enabled) CrashTri_Common.Mod_RandomizeSDIO(nsf, rand);
+                    if (Crash3_Props_Main.Option_RandObjPalette.Enabled) CrashTri_Common.Mod_SwizzleObjectColors(nsf, rand);
+                    if (Crash3_Props_Main.Option_UntexturedObj.Enabled) CrashTri_Common.Mod_RemoveTGEOTex(nsf, rand);
+                    if (Crash3_Props_Misc.Option_UncoloredObj.Enabled) CrashTri_Common.Mod_RemoveObjectColors(nsf, rand);
 
                     Crash3_Mods.Mod_Metadata(nsf, nsd, NSF_Level, GameRegion.Region);
                 }

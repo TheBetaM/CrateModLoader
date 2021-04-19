@@ -11,7 +11,6 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
     {
         public override string Name => Twins_Text.Rand_StartingLevel;
         public override string Description => Twins_Text.Rand_StartingLevelDesc;
-        public override CreditContributors Contributors => new CreditContributors(ModLoaderGlobals.Contributor_BetaM);
 
         internal List<uint> musicTypes = new List<uint>();
         internal List<uint> randMusicList = new List<uint>();
@@ -46,7 +45,7 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
 
         public override void ModPass(ExecutableInfo executable)
         {
-            Random randState = new Random();
+            Random randState = new Random(ModLoaderGlobals.RandomizerSeed);
             ChunkType randChunk = possibleStartingChunks[randState.Next(possibleStartingChunks.Count)];
             for (int i = 0; i < Twins_Data.All_Chunks.Count; i++)
             {

@@ -4,8 +4,6 @@ using System.Drawing;
 using System.IO;
 using CrateModLoader;
 using CrateModLoader.ModProperties;
-using CrateModLoader.GameSpecific.CrashTS;
-using CrateModGames.GameSpecific.Rayman3;
 using Twinsanity;
 using Twinsanity.Items;
 

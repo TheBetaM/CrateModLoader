@@ -10,7 +10,6 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
     {
         public override string Name => Twins_Text.Rand_SurfaceParams;
         public override string Description => Twins_Text.Rand_SurfaceParamsDesc;
-        public override CreditContributors Contributors => new CreditContributors(ModLoaderGlobals.Contributor_BetaM);
 
         internal Dictionary<int, int> randSurfaces = new Dictionary<int, int>();
 
@@ -59,7 +58,7 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
 
         public override void BeforeModPass()
         {
-            Random randState = new Random();
+            Random randState = new Random(ModLoaderGlobals.RandomizerSeed);
             randSurfaces = new Dictionary<int, int>();
             for (int i = 0; i < SurfacesToChange.Count; i++)
             {

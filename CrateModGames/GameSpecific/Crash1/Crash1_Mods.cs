@@ -5,51 +5,6 @@ using System.Collections.Generic;
 namespace CrateModLoader.GameSpecific.Crash1
 {
 
-    public enum Crash1_Levels
-    {
-        Unknown = -1,
-        L01_NSanityBeach = 4,
-        L02_JungleRollers = 5,
-        L03_GreatGate = 9,
-        L04_Boulders = 6,
-        L05_Upstream = 7,
-        L06_RollingStones = 12,
-        L07_HogWild = 8,
-        L08_NativeFortress = 15,
-        L09_UpTheCreek = 14,
-        L10_LostCity = 19,
-        L11_TempleRuins = 16,
-        L12_RoadToNowhere = 11,
-        L13_BoulderDash = 10,
-        L14_WholeHog = 18,
-        L15_SunsetVista = 21,
-        L16_HeavyMachinery = 2,
-        L17_CortexPower = 0,
-        L18_GeneratorRoom = 1,
-        L19_ToxicWaste = 3,
-        L20_HighRoad = 13,
-        L21_SlipperyClimb = 26,
-        L22_LightsOut = 22,
-        L23_FumblingInTheDark = 24,
-        L24_JawsOfDarkness = 17,
-        L25_CastleMachinery = 27,
-        L26_TheLab = 23,
-        L27_GreatHall = 25,
-        L28_StormyAscent = 20,
-        B01_PapuPapu = 28,
-        B02_RipperRoo = 29,
-        B03_KoalaKong = 30,
-        B04_Pinstripe = 31,
-        B05_NBrio = 32,
-        B06_Cortex = 33,
-        MapMainMenu = 34,
-        L29_Cavern = 35,
-        Bonus_TawnaShort = 36,
-        Bonus_Brio = 37,
-        Bonus_TawnaLong = 38,
-        Bonus_Cortex = 39,
-    }
-
     public static class Crash1_Mods
     {
         public enum CrateSubTypes

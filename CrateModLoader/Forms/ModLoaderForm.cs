@@ -461,7 +461,7 @@ namespace CrateModLoader
             button_modTools.Enabled = false;//true;
 
             if (ModProgram.Modder != null && !ModProgram.GamePreloaded && ModProgram.Modder.CanPreloadGame 
-                && (ModProgram.Modder.PreloadConsoles != null && ModProgram.Modder.PreloadConsoles.Contains(ModProgram.Pipeline.Metadata.Console)))
+                && (ModProgram.Modder.PreloadConsoles == null || ModProgram.Modder.PreloadConsoles.Contains(ModProgram.Pipeline.Metadata.Console)))
             {
                 button_downloadMods.Enabled = true;
             }
@@ -548,7 +548,7 @@ namespace CrateModLoader
             button_randomizeSeed.Enabled = button_randomizeSeed.Visible = button_modTools.Visible = button_downloadMods.Visible = true;
 
             if (!ModProgram.GamePreloaded && ModProgram.Modder.CanPreloadGame
-                && (ModProgram.Modder.PreloadConsoles != null || ModProgram.Modder.PreloadConsoles.Contains(ModProgram.Pipeline.Metadata.Console)))
+                && (ModProgram.Modder.PreloadConsoles == null || ModProgram.Modder.PreloadConsoles.Contains(ModProgram.Pipeline.Metadata.Console)))
             {
                 button_downloadMods.Enabled = true;
             }

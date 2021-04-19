@@ -527,11 +527,9 @@ namespace CrateModLoader
             {
                 foreach (Type type in assembly.GetTypes())
                 {
-                    if (type.IsAbstract || !typeof(Modder).IsAssignableFrom(type)) // only get non-abstract modders
+                    if (type.IsAbstract || !typeof(Game).IsAssignableFrom(type)) // only get non-abstract modders
                         continue;
-                    Modder modder = (Modder)Activator.CreateInstance(type);
-                    Game game = modder.Game;
-                    game.ModderClass = type;
+                    Game game = (Game)Activator.CreateInstance(type);
 
                     SupportedGames.Add(game, assembly);
                 }
@@ -601,6 +599,7 @@ namespace CrateModLoader
                         {
                             RegionNotSupported = false;
                             Modder = (Modder)Activator.CreateInstance(game.ModderClass);
+                            Modder.SourceGame = game;
                             Game = game;
                             TargetRegion = r;
                             break;
@@ -615,6 +614,7 @@ namespace CrateModLoader
                         if (serial.Contains(r.Name))
                         {
                             Modder = (Modder)Activator.CreateInstance(game.ModderClass);
+                            Modder.SourceGame = game;
                             Game = game;
                             TargetRegion = r;
                             break;

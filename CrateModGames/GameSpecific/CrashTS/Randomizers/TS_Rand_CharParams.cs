@@ -10,18 +10,22 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
     {
         public override string Name => Twins_Text.Rand_CharParams;
         public override string Description => Twins_Text.Rand_CharParamsDesc;
-        public override CreditContributors Contributors => new CreditContributors(ModLoaderGlobals.Contributor_BetaM);
 
         internal List<uint> musicTypes = new List<uint>();
         internal List<uint> randMusicList = new List<uint>();
 
+        public bool isSet = false;
+
         public override void BeforeModPass()
         {
-            Random randState = new Random();
+            if (!isSet)
+            {
+                Random randState = new Random(ModLoaderGlobals.RandomizerSeed);
 
-            Twins_Randomize_Character((int)CharacterID.Crash, ref randState);
-            Twins_Randomize_Character((int)CharacterID.Cortex, ref randState);
-            Twins_Randomize_Character((int)CharacterID.Nina, ref randState);
+                Twins_Randomize_Character((int)CharacterID.Crash, ref randState);
+                Twins_Randomize_Character((int)CharacterID.Cortex, ref randState);
+                Twins_Randomize_Character((int)CharacterID.Nina, ref randState);
+            }
         }
 
         private void Twins_Randomize_Character(int charID, ref Random randState)

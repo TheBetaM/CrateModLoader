@@ -10,13 +10,12 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
     {
         public override string Name => Twins_Text.Rand_WorldPalette;
         public override string Description => Twins_Text.Rand_WorldPaletteDesc;
-        public override CreditContributors Contributors => new CreditContributors(ModLoaderGlobals.Contributor_BetaM);
 
         private ColorSwizzleData Swiz;
 
         public override void BeforeModPass()
         {
-            Swiz = new ColorSwizzleData(new Random());
+            Swiz = new ColorSwizzleData(new Random(ModLoaderGlobals.RandomizerSeed));
         }
 
         public override void ModPass(ChunkInfoSM info)

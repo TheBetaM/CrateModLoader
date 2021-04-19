@@ -11,7 +11,6 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
     {
         public override string Name => Twins_Text.Mod_SwapStartAndCreditsChunk;
         public override string Description => Twins_Text.Mod_SwapStartAndCreditsChunkDesc;
-        public override CreditContributors Contributors => new CreditContributors(ModLoaderGlobals.Contributor_BetaM);
 
         private Dictionary<ExecutableIndex, int> StartLevelPathOff = new Dictionary<ExecutableIndex, int>()
         {

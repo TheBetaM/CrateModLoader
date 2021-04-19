@@ -10,7 +10,6 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
     {
         public override string Name => Twins_Text.Mod_SwitchCharacters;
         public override string Description => Twins_Text.Mod_SwitchCharactersDesc;
-        public override CreditContributors Contributors => new CreditContributors(ModLoaderGlobals.Contributor_BetaM);
         public override bool NeedsCachePass => true;
 
         private Script StrafeLeft = null;

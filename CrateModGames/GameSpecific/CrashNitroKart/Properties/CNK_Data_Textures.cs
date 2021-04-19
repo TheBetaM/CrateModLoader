@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using CrateModLoader.ModProperties;
-using CrateModGames.GameSpecific.Rayman3;
 
 namespace CrateModLoader.GameSpecific.CrashNitroKart
 {

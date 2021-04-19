@@ -11,13 +11,12 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
     {
         public override string Name => Twins_Text.Rand_PantsColor;
         public override string Description => Twins_Text.Rand_PantsColorDesc;
-        public override CreditContributors Contributors => new CreditContributors(ModLoaderGlobals.Contributor_BetaM);
 
         private Color PantsColor;
 
         public override void BeforeModPass()
         {
-            Random randState = new Random();
+            Random randState = new Random(ModLoaderGlobals.RandomizerSeed);
             PantsColor = Color.FromArgb(255, randState.Next(256), randState.Next(256), randState.Next(256));
 
             if (TS_Props_Misc.Prop_PantsColor.HasChanged)

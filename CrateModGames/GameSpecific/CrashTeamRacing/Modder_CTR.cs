@@ -5,7 +5,6 @@ using CTRFramework;
 using CTRFramework.Lang;
 using CTRFramework.Shared;
 using bigtool;
-using CrateModLoader.ModProperties;
 //CTR API by DCxDemo (https://github.com/DCxDemo/CTR-tools) 
 /* Mod Layers:
  * 1: BIGFILE.BIG contents
@@ -15,50 +14,11 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
 {
     public sealed class Modder_CTR : Modder
     {
-        internal const int RandomizeAdvCharacters = 0;
-
-        public override Game Game => new Game()
-        {
-            Name = "CTR: Crash Team Racing",
-            ShortName = "CrashTR",
-            Consoles = new List<ConsoleMode>
-                {
-                    ConsoleMode.PS1
-                },
-            API_Credit = "API by DCxDemo",
-            API_Link = "https://github.com/DCxDemo/CTR-tools",
-            RegionID = new Dictionary<ConsoleMode, RegionCode[]>()
-            {
-                [ConsoleMode.PS1] = new RegionCode[]
-                {
-                    new RegionCode() {
-                    Name = @"SCUS_944.26",
-                    Region = RegionType.NTSC_U,
-                    ExecName = "SCUS_944.26",
-                    CodeName = "SCUS_94426", },
-                    new RegionCode() {
-                    Name = @"SCES_021.05",
-                    Region = RegionType.PAL,
-                    ExecName = "SCES_021.05",
-                    CodeName = "SCES_02105", },
-                    new RegionCode() {
-                    Name = @"SCPS_101.18",
-                    Region = RegionType.NTSC_J,
-                    ExecName = "SCPS_101.18",
-                    CodeName = "SCPS_10118", },
-                },
-            },
-        };
 
         public Modder_CTR()
         {
 
         }
-
-        public static ModPropOption Option_RandCharacters = new ModPropOption("Randomize Drivers", "") { Hidden = true, };
-        public static ModPropOption Option_RandTracks = new ModPropOption("Randomize Track Order (Any%)", "Shuffles all tracks around. CTR letters don't spawn in bonus tracks so 101% is not possible.") { Hidden = true, }; // unstable
-        public static ModPropOption Option_RandTracks101 = new ModPropOption("Randomize Track Order (101%)", "Shuffles all tracks (except bonus tracks) around.") { Hidden = true, }; // unstable
-        public static ModPropOption Option_RandTracksWithDupes = new ModPropOption("Randomize Tracks (With Duplicates)", "Shuffles tracks around, which can repeat.") { Hidden = true, };
 
         private string basePath = "";
 
@@ -70,6 +30,8 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
             basePath = ConsolePipeline.ExtractedPath;
 
             bigtool.BIG big;
+
+            UpdateProcessMessage("Extracting BIGFILE.BIG...", 5);
 
             switch (GameRegion.Region)
             {
@@ -88,6 +50,36 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
             }
 
             ModProcess();
+
+            UpdateProcessMessage("Building BIGFILE.BIG...", 90);
+
+            File.Move(ModLoaderGlobals.BaseDirectory + path_Bigfile, basePath + path_Bigfile);
+
+            bigtool.BIG big1 = new bigtool.BIG();
+            big1.Build(basePath, basePath + path_Bigfile);
+
+            UpdateProcessMessage("Removing temporary files...", 95);
+
+            // Extraction cleanup
+            if (Directory.Exists(basePath + @"BIGFILE\"))
+            {
+                DirectoryInfo di = new DirectoryInfo(basePath + @"BIGFILE\");
+
+                foreach (FileInfo file in di.EnumerateFiles())
+                {
+                    file.Delete();
+                }
+                foreach (DirectoryInfo dir in di.EnumerateDirectories())
+                {
+                    dir.Delete(true);
+                }
+
+                Directory.Delete(basePath + @"BIGFILE\");
+            }
+            if (File.Exists(basePath + path_Bigfile))
+            {
+                File.Delete(basePath + path_Bigfile);
+            }
         }
 
         void ModProcess()
@@ -95,15 +87,17 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
             Random rand = new Random(ModLoaderGlobals.RandomizerSeed);
 
             string path_extr = ConsolePipeline.ExtractedPath + @"BIGFILE\";
-
+            UpdateProcessMessage("Installing Mod Crates: Layer 1...", 6);
             ModCrates.InstallLayerMods(EnabledModCrates, path_extr, 1);
 
-            if ((Option_RandTracks.Enabled || Option_RandTracks101.Enabled) && Directory.Exists(path_extr + @"levels\tracks\island1"))
+            UpdateProcessMessage("Mod Pass", 50);
+
+            if ((CTR_Props_Main.Option_RandTracks.Enabled || CTR_Props_Main.Option_RandTracks101.Enabled) && Directory.Exists(path_extr + @"levels\tracks\island1"))
             {
                 List<int> LevelInd = new List<int>();
                 List<int> LevelRand = new List<int>();
                 int maxLevel = TrackFolderNames.Count;
-                if (Option_RandTracks101.Enabled)
+                if (CTR_Props_Main.Option_RandTracks101.Enabled)
                 {
                     maxLevel -= 2;
                 }
@@ -127,6 +121,7 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
                 }
             }
 
+            #region Mod_Metadata
             LNG lng = new LNG(path_extr + @"lang\en.lng");
             string[] lang_lines = File.ReadAllLines(path_extr + @"lang\en.txt", System.Text.Encoding.Default);
             for (int i = 0; i < lang_lines.Length; i++)
@@ -155,40 +150,7 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
                 lng1.ConvertTXT(path_extr + @"lang\en2.txt");
                 File.Delete(path_extr + @"lang\en2.txt");
             }
-
-            EndModProcess();
-        }
-
-        void EndModProcess()
-        {
-            string path_Bigfile = "BIGFILE.TXT";
-
-            File.Move(ModLoaderGlobals.BaseDirectory + path_Bigfile, basePath + path_Bigfile);
-
-            bigtool.BIG big = new bigtool.BIG();
-            big.Build(basePath, basePath + path_Bigfile);
-
-            // Extraction cleanup
-            if (Directory.Exists(basePath + @"BIGFILE\"))
-            {
-                DirectoryInfo di = new DirectoryInfo(basePath + @"BIGFILE\");
-
-                foreach (FileInfo file in di.EnumerateFiles())
-                {
-                    file.Delete();
-                }
-                foreach (DirectoryInfo dir in di.EnumerateDirectories())
-                {
-                    dir.Delete(true);
-                }
-
-                Directory.Delete(basePath + @"BIGFILE\");
-            }
-            if (File.Exists(basePath + path_Bigfile))
-            {
-                File.Delete(basePath + path_Bigfile);
-            }
-
+            #endregion
 
         }
 

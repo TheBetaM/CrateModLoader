@@ -10,7 +10,6 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
     {
         public override string Name => Twins_Text.Rand_WumpaIntoCrates;
         public override string Description => Twins_Text.Rand_WumpaIntoCratesDesc;
-        public override CreditContributors Contributors => new CreditContributors(ModLoaderGlobals.Contributor_BetaM);
         public override bool Hidden => true;
 
         private bool isRandom = true;

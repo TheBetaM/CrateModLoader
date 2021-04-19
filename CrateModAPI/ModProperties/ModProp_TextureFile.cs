@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using CrateModLoader.ModProperties;
 using System.IO;
 using System.Drawing;
 
-namespace CrateModGames.GameSpecific.Rayman3
+namespace CrateModLoader.ModProperties
 {
     public class ModProp_TextureFile : ModPropExternalResource<Bitmap>
     {

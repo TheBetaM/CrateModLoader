@@ -10,7 +10,6 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
     {
         public override string Name => "Randomize Enemies (Soundless)";
         public override string Description => "";
-        public override CreditContributors Contributors => new CreditContributors(ModLoaderGlobals.Contributor_BetaM);
         public override bool Hidden => true;
         public override bool NeedsCachePass => true;
 

@@ -2,6 +2,8 @@
 
 General
 - PS1, PS2, PSP and Folder mode extraction step is now multithreaded
+- Moddding step is now multithreaded (where possible)
+- More detailed process visuals
 - Fixed not being able to build unsupported games
 
 Crash Bandicoot

@@ -31,14 +31,13 @@ namespace CrateModLoader
         public Assembly assembly;
         public ConsolePipeline ConsolePipeline;
         public RegionCode GameRegion;
+        public Game SourceGame;
         public List<ModCrate> EnabledModCrates = new List<ModCrate>();
 
         public bool ModMenuEnabled => Props.Count > 0;
         public bool ModCrateRegionCheck = false; // A game might require some type of verification (i.e. file integrity, region matching) before installing layer0 mod crates.
         public virtual bool CanPreloadGame => false;
         public virtual List<ConsoleMode> PreloadConsoles => null;
-
-        public abstract Game Game { get; }
 
         public Modder() { }
 
@@ -136,9 +135,9 @@ namespace CrateModLoader
                             {
                                 Props[Props.Count - 1].Name = field.Name;
                             }
-                            if (Game.TextClass != null)
+                            if (SourceGame != null && SourceGame.TextClass != null)
                             {
-                                foreach (MethodInfo text in Game.TextClass.GetRuntimeMethods())
+                                foreach (MethodInfo text in SourceGame.TextClass.GetRuntimeMethods())
                                 {
                                     if (text.Name == "get_" + field.Name)
                                     {

@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using Pure3D;
 using Pure3D.Chunks;
-using CrateModGames.GameSpecific.CrashTTR;
-using CrateModLoader.ModProperties;
 //RCF API by NeoKesha
 //Pure3D API by BetaM (based on https://github.com/handsomematt/Pure3D)
 /* 
@@ -59,111 +57,6 @@ namespace CrateModLoader.GameSpecific.CrashTTR
         internal string path_RCF_english = "";
         internal string path_RCF_movies = "";
         internal string basePath = "";
-
-        public override Game Game => new Game()
-        {
-            Name = CTTR_Text.GameTitle,
-            ShortName = "CrashTTR",
-            Consoles = new List<ConsoleMode>
-                {
-                    ConsoleMode.PS2,
-                    ConsoleMode.GCN,
-                    ConsoleMode.PSP,
-                    ConsoleMode.XBOX,
-                },
-            API_Credit = CTTR_Text.API_Credit,
-            API_Link = string.Empty,
-            TextClass = typeof(CTTR_Text),
-            RegionID = new Dictionary<ConsoleMode, RegionCode[]>()
-            {
-                [ConsoleMode.PS2] = new RegionCode[]
-                {
-                    new RegionCode() {
-                    Name = @"SLUS_211.91",
-                    Region = RegionType.NTSC_U,
-                    ExecName = "SLUS_211.91",
-                    CodeName = "SLUS_21191", },
-                    new RegionCode() {
-                    Name = @"SLES_534.39",
-                    Region = RegionType.PAL,
-                    ExecName = "SLES_534.39",
-                    CodeName = "SLES_53439", },
-                    new RegionCode() {
-                    Name = @"SLPM_660.90",
-                    Region = RegionType.NTSC_J,
-                    ExecName = "SLPM_660.90",
-                    CodeName = "SLPM_66090", },
-                },
-                [ConsoleMode.GCN] = new RegionCode[]
-                {
-                    new RegionCode() {
-                    Name = "G9RE",
-                    Region = RegionType.NTSC_U },
-                    new RegionCode() {
-                    Name = "G9RH",
-                    Region = RegionType.PAL },
-                    new RegionCode() {
-                    Name = "G9RJ",
-                    Region = RegionType.NTSC_J },
-                    new RegionCode() {
-                    Name = "G9RD",
-                    Region = RegionType.PAL },
-                    new RegionCode() {
-                    Name = "G9RF",
-                    Region = RegionType.PAL },
-                    new RegionCode() {
-                    Name = "G9RP",
-                    Region = RegionType.PAL },
-                },
-                [ConsoleMode.PSP] = new RegionCode[]
-                {
-                    new RegionCode() {
-                    Name = "ULUS-10044",
-                    Region = RegionType.NTSC_U },
-                    new RegionCode() {
-                    Name = "ULES-00168",
-                    Region = RegionType.PAL },
-                    new RegionCode() {
-                    Name = "ULJM-05036",
-                    Region = RegionType.NTSC_J },
-                },
-                [ConsoleMode.XBOX] = new RegionCode[]
-                {
-                    new RegionCode() {
-                    Name = "Crash Tag Team Racing",
-                    Region = RegionType.NTSC_U,
-                    RegionNumber = 7, },
-                    new RegionCode() {
-                    Name = "Crash Tag Team Racing",
-                    Region = RegionType.PAL,
-                    RegionNumber = 4, },
-                },
-            },
-            PropertyCategories = new Dictionary<int, string>()
-            {
-                [0] = "Options",
-                [1] = "Misc.",
-            },
-        };
-
-        public static ModPropOption Option_RandCharacters = new ModPropOption(CTTR_Text.Rand_PlatformingCharacter, CTTR_Text.Rand_PlatformingCharacterDesc);// todo: change missions to unlock crash and cortex if they're not in the starting pool
-        public static ModPropOption Option_RandTrackEntrances = new ModPropOption(CTTR_Text.Rand_TrackEntrances, CTTR_Text.Rand_TrackEntrancesDesc); // todo: arenas
-        public static ModPropOption Option_RandMinigames = new ModPropOption(CTTR_Text.Rand_Minigames, CTTR_Text.Rand_MinigamesDesc); // todo: minigame challenges aswell
-        public static ModPropOption Option_RandRaceLaps = new ModPropOption(CTTR_Text.Rand_RaceLaps, CTTR_Text.Rand_RaceLapsDesc);
-        public static ModPropOption Option_NoSequenceBreaks = new ModPropOption(CTTR_Text.Mod_PreventSkips, CTTR_Text.Mod_PreventSkipsDesc);
-
-        public static ModPropOption Option_RandHubEntrances = new ModPropOption("Randomize Hub Entrances", "") { Hidden = true }; // todo: gem keys in missionobjectives_x and platforming_objects, unlock failure message, key missions
-        public static ModPropOption Option_RandMissions = new ModPropOption("Randomize Missions", "") { Hidden = true }; // todo, genericobjectives, missionobjectives_x, level NIS+NPC
-        public static ModPropOption Option_RandCarStats = new ModPropOption("Randomize Car Stats", "") { Hidden = true }; // todo: vehicles, levels/common for speed tier values
-        public static ModPropOption Option_RandBattleKOs = new ModPropOption("Randomize Battle KO's", "") { Hidden = true }; // doesn't work?
-        public static ModPropOption Option_RandCrashinator = new ModPropOption("Randomize Crashinator", "") { Hidden = true }; // todo: kamikaze
-        public static ModPropOption Option_RandRunAndGun = new ModPropOption("Randomize Run & Gun", "") { Hidden = true }; // todo: railshooter
-        public static ModPropOption Option_RandStuntArena = new ModPropOption("Randomize Stunt Arena", "") { Hidden = true }; //todo: permanent_objects, stunt_objects
-        public static ModPropOption Option_RandSurfParams = new ModPropOption("Randomize Surface Parameters", "") { Hidden = true }; //todo: car_effect_objects
-        public static ModPropOption Option_RandPowerupDist = new ModPropOption("Randomize Powerup Distribution", "") { Hidden = true }; // todo: driving_objects
-        public static ModPropOption Option_RandPowerupEffects = new ModPropOption("Randomize Powerup Effects", "") { Hidden = true }; //todo: driving_objects
-        public static ModPropOption Option_RandWeapons = new ModPropOption("Randomize Weapons", "") { Hidden = true }; // todo: turretmotifs
-        public static ModPropOption Option_RandNPCLocations = new ModPropOption("Randomize NPC Locations", "") { Hidden = true }; // todo: NPC - locator list
 
         public Modder_CTTR()
         {
@@ -391,7 +284,7 @@ namespace CrateModLoader.GameSpecific.CrashTTR
         void EditDefaultAndCommon()
         {
             randChars = new List<int>();
-            if (Option_RandCharacters.Enabled)
+            if (CTTR_Props_Main.Option_RandCharacters.Enabled)
             {
                 int maxPlayableCharacters = 2;
 
@@ -448,7 +341,7 @@ namespace CrateModLoader.GameSpecific.CrashTTR
             */
             randTracks = new List<int>();
             randMinigames = new List<int>();
-            if (Option_RandTrackEntrances.Enabled)
+            if (CTTR_Props_Main.Option_RandTrackEntrances.Enabled)
             {
                 List<int> possibleTracks = new List<int>();
 
@@ -478,7 +371,7 @@ namespace CrateModLoader.GameSpecific.CrashTTR
                 }
             }
             randLaps = new List<int>();
-            if (Option_RandRaceLaps.Enabled)
+            if (CTTR_Props_Main.Option_RandRaceLaps.Enabled)
             {
                 for (int i = 0; i < 15; i++)
                 {
@@ -571,9 +464,9 @@ namespace CrateModLoader.GameSpecific.CrashTTR
 
             ModCrates.InstallLayerMods(EnabledModCrates, path_extr, 1);
 
-            CTTR_Settings.ParseSettings(path_extr);
+            ParseSettings(path_extr);
 
-            if (Option_RandCharacters.Enabled)
+            if (CTTR_Props_Main.Option_RandCharacters.Enabled)
             {
                 CTTR_Randomizers.Randomize_Characters(path_extr, randChars);
             }
@@ -583,15 +476,15 @@ namespace CrateModLoader.GameSpecific.CrashTTR
                 CTTR_Randomizers.Randomize_Hubs(path_extr, randHubs, randGems);
             }
             */
-            if (Option_RandTrackEntrances.Enabled)
+            if (CTTR_Props_Main.Option_RandTrackEntrances.Enabled)
             {
                 CTTR_Randomizers.Randomize_Tracks(path_extr, randTracks);
             }
-            if (Option_RandMinigames.Enabled)
+            if (CTTR_Props_Main.Option_RandMinigames.Enabled)
             {
                 CTTR_Randomizers.Randomize_Minigames(path_extr, randMinigames);
             }
-            if (Option_RandRaceLaps.Enabled)
+            if (CTTR_Props_Main.Option_RandRaceLaps.Enabled)
             {
                 CTTR_Randomizers.Randomize_Race_Laps(path_extr, randLaps);
             }
@@ -601,7 +494,7 @@ namespace CrateModLoader.GameSpecific.CrashTTR
                 CTTR_Randomizers.Randomize_Battle_KOs(path_extr, randKOs);
             }
             */
-            if (Option_NoSequenceBreaks.Enabled)
+            if (CTTR_Props_Main.Option_NoSequenceBreaks.Enabled)
             {
                 CTTR_Mods.Mod_PreventSequenceBreaks(path_extr);
             }
@@ -646,5 +539,55 @@ namespace CrateModLoader.GameSpecific.CrashTTR
                 PrintHierarchy(child, indent + 1);
         }
 
+        void ParseSettings(string path_extr)
+        {
+            // example setting
+            if (CTTR_Props_Misc.RaceLaps.HasChanged)
+            {
+                if (System.IO.File.Exists(path_extr + @"design\startup.god"))
+                {
+                    string[] startup_lines = System.IO.File.ReadAllLines(path_extr + @"design\startup.god");
+                    List<string> LineList = new List<string>();
+                    for (int i = 0; i < startup_lines.Length; i++)
+                    {
+                        LineList.Add(startup_lines[i]);
+                    }
+
+                    int LevelListStart = 0;
+                    for (int i = 0; i < LineList.Count; i++)
+                    {
+                        if (LineList[i] == "function GetLevelList()")
+                        {
+                            LevelListStart = i + 2;
+                            break;
+                        }
+                    }
+                    LineList[LevelListStart] = "{\"adventure1\",ThemeAdventure,TypeRace," + CTTR_Props_Misc.RaceLaps.Value[0] + ",true},";
+                    LineList[LevelListStart + 1] = "{\"adventure2\",ThemeAdventure,TypeRace," + CTTR_Props_Misc.RaceLaps.Value[1] + ",true},";
+                    LineList[LevelListStart + 2] = "{\"adventure3\",ThemeAdventure,TypeRace," + CTTR_Props_Misc.RaceLaps.Value[2] + ",true},";
+                    LineList[LevelListStart + 4] = "{\"fairy1\",ThemeFairy,TypeRace," + CTTR_Props_Misc.RaceLaps.Value[3] + ",true},";
+                    LineList[LevelListStart + 5] = "{\"fairy2\",ThemeFairy,TypeRace," + CTTR_Props_Misc.RaceLaps.Value[4] + ",true},";
+                    LineList[LevelListStart + 6] = "{\"fairy3\",ThemeFairy,TypeRace," + CTTR_Props_Misc.RaceLaps.Value[5] + ",true},";
+                    LineList[LevelListStart + 9] = "{\"dino1\",ThemeDino,TypeRace," + CTTR_Props_Misc.RaceLaps.Value[6] + ",true},";
+                    LineList[LevelListStart + 10] = "{\"dino2\",ThemeDino,TypeRace," + CTTR_Props_Misc.RaceLaps.Value[7] + ",true},";
+                    LineList[LevelListStart + 11] = "{\"dino3\",ThemeDino,TypeRace," + CTTR_Props_Misc.RaceLaps.Value[8] + ",true},";
+                    LineList[LevelListStart + 13] = "{\"egypt1\",ThemeEgypt,TypeRace," + CTTR_Props_Misc.RaceLaps.Value[9] + ",true},";
+                    LineList[LevelListStart + 14] = "{\"egypt2\",ThemeEgypt,TypeRace," + CTTR_Props_Misc.RaceLaps.Value[10] + ",true},";
+                    LineList[LevelListStart + 15] = "{\"egypt3\",ThemeEgypt,TypeRace," + CTTR_Props_Misc.RaceLaps.Value[11] + ",true},";
+                    LineList[LevelListStart + 17] = "{\"solar1\",ThemeSolar,TypeRace," + CTTR_Props_Misc.RaceLaps.Value[12] + ",true},";
+                    LineList[LevelListStart + 18] = "{\"solar2\",ThemeSolar,TypeRace," + CTTR_Props_Misc.RaceLaps.Value[13] + ",true},";
+                    LineList[LevelListStart + 19] = "{\"solar3\",ThemeSolar,TypeRace," + CTTR_Props_Misc.RaceLaps.Value[14] + ",true},";
+
+                    startup_lines = new string[LineList.Count];
+                    for (int i = 0; i < LineList.Count; i++)
+                    {
+                        startup_lines[i] = LineList[i];
+                    }
+
+                    System.IO.File.WriteAllLines(path_extr + @"design\startup.god", startup_lines);
+
+                }
+            }
+        }
     }
 }

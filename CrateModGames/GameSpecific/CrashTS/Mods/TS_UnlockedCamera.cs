@@ -9,7 +9,6 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
     {
         public override string Name => Twins_Text.Mod_UnlockedCamera;
         public override string Description => Twins_Text.Mod_UnlockedCameraDesc;
-        public override CreditContributors Contributors => new CreditContributors(ModLoaderGlobals.Contributor_BetaM);
 
         public override void ModPass(ChunkInfoRM info)
         {

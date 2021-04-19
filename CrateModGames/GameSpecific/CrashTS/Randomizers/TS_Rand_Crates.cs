@@ -10,7 +10,6 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
     {
         public override string Name => Twins_Text.Rand_Crates;
         public override string Description => Twins_Text.Rand_CratesDesc;
-        public override CreditContributors Contributors => new CreditContributors(ModLoaderGlobals.Contributor_BetaM);
         public override bool NeedsCachePass => true;
 
         internal List<uint> CrateReplaceList = new List<uint>();
@@ -20,7 +19,7 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
 
         public override void BeforeCachePass()
         {
-            Random randState = new Random();
+            Random randState = new Random(ModLoaderGlobals.RandomizerSeed);
 
             if (TS_Props_Main.Option_RandCrates.Value == 1)
             {

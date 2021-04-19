@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Twinsanity;
-using CrateModGames.GameSpecific.CrashTS;
+using CrateModLoader.GameSpecific.CrashTS.Mods;
 using System.Threading.Tasks;
 //Twinsanity API by NeoKesha, Smartkin, ManDude, BetaM and Marko (https://github.com/Smartkin/twinsanity-editor)
 /* 
@@ -25,62 +25,6 @@ namespace CrateModLoader.GameSpecific.CrashTS
 
     public sealed class Modder_Twins : Modder
     {
-
-        public override Game Game => new Game()
-        {
-            Name = Twins_Text.GameTitle,
-            ShortName = "CrashTS",
-            Consoles = new List<ConsoleMode>
-                {
-                    ConsoleMode.PS2,
-                    ConsoleMode.XBOX,
-                },
-            API_Credit = Twins_Text.API_Credit,
-            API_Link = "https://github.com/Smartkin/twinsanity-editor",
-            TextClass = typeof(Twins_Text),
-            RegionID = new Dictionary<ConsoleMode, RegionCode[]>()
-            {
-                [ConsoleMode.PS2] = new RegionCode[]
-                {
-                    new RegionCode() {
-                    Name = @"SLUS_209.09",
-                    Region = RegionType.NTSC_U,
-                    ExecName = "SLUS_209.09",
-                    CodeName = "SLUS_20909", },
-                    new RegionCode() {
-                    Name = @"SLES_525.68",
-                    Region = RegionType.PAL,
-                    ExecName = "SLES_525.68",
-                    CodeName = "SLES_52568", },
-                    new RegionCode() {
-                    Name = @"SLPM_658.01",
-                    Region = RegionType.NTSC_J,
-                    ExecName = "SLPM_658.01",
-                    CodeName = "SLPM_65801", },
-                },
-                [ConsoleMode.XBOX] = new RegionCode[]
-                {
-                    new RegionCode() {
-                    Name = "Crash Twinsanity",
-                    Region = RegionType.NTSC_U,
-                    RegionNumber = 7,
-                    ExecName = "default.xbe" },
-                    new RegionCode() {
-                    Name = "Crash Twinsanity",
-                    Region = RegionType.PAL,
-                    RegionNumber = 4,
-                    ExecName = "default.xbe" },
-                },
-            },
-            PropertyCategories = new Dictionary<int, string>()
-            {
-                [(int)ModProps.Options] = "Options",
-                [(int)ModProps.Misc] = "Misc.",
-                [(int)ModProps.Character] = "Character",
-                [(int)ModProps.Textures] = "Textures",
-                [(int)ModProps.Galleries] = "Galleries",
-            }
-        };
         public override bool CanPreloadGame => true;
         public override List<ConsoleMode> PreloadConsoles => new List<ConsoleMode>() { ConsoleMode.PS2, };
         public override bool AsyncProcess => true;
@@ -92,7 +36,6 @@ namespace CrateModLoader.GameSpecific.CrashTS
         internal TwinsFile.FileType rmType = TwinsFile.FileType.RM2;
         internal TwinsFile.FileType smType = TwinsFile.FileType.SM2;
 
-        internal Random randState = new Random();
         private int CurrentPass = 0;
         private float PassPercentMod = 39f;
         private int PassPercentAdd = 10;
@@ -135,8 +78,6 @@ namespace CrateModLoader.GameSpecific.CrashTS
             MainBusy = true;
 
             //Start Modding
-            randState = new Random(ModLoaderGlobals.RandomizerSeed);
-
 
             LoadActiveProps();
             EditingRM = CheckModsForRM();
@@ -160,17 +101,20 @@ namespace CrateModLoader.GameSpecific.CrashTS
             UpdateProcessMessage("Patching executable...", 4);
             PatchEXE(ConsolePipeline.Metadata.Console, GameRegion.Region);
 
-            UpdateProcessMessage("Installing Mod Crates...", 5);
+            UpdateProcessMessage("Installing Mod Crates: Layer 1...", 5);
             ModCrates.InstallLayerMods(EnabledModCrates, bdPath, 1);
 
-            //todo
+            //could be better...
             foreach (ModPropertyBase prop in Props)
             {
                 if (prop.HasChanged)
                 {
                     if (prop.Category == (int)ModProps.Character)
                     {
-                        bool Edit_AllCharacters = true;
+                        TS_Props_Main.Option_RandCharacterParams.Value = 1;
+                        TS_Props_Main.Option_RandCharacterParams.HasChanged = true;
+                        TS_Rand_CharParams PMod = (TS_Rand_CharParams)TS_Props_Main.Option_RandCharacterParams.TargetMod;
+                        PMod.isSet = true;
                     }
                 }
             }

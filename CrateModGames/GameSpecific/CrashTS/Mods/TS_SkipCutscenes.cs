@@ -10,7 +10,6 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
     {
         public override string Name => Twins_Text.Mod_SkipCutscenes;
         public override string Description => Twins_Text.Mod_SkipCutscenesDesc;
-        public override CreditContributors Contributors => new CreditContributors(ModLoaderGlobals.Contributor_BetaM);
         public override bool Hidden => true;
         public override bool NeedsCachePass => true;
 

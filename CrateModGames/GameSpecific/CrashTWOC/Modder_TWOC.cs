@@ -1,104 +1,12 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
-using CrateModLoader.ModProperties;
 
 namespace CrateModLoader.GameSpecific.CrashTWOC
 {
     public sealed class Modder_TWOC : Modder
     {
-
-        public override Game Game => new Game()
-        {
-            Name = "Crash Bandicoot: The Wrath of Cortex",
-            ShortName = "CrashTWOC",
-            Consoles = new List<ConsoleMode>
-                {
-                    ConsoleMode.PS2,
-                    //ConsoleMode.GCN,
-                    //ConsoleMode.XBOX,
-                },
-            API_Credit = string.Empty,
-            API_Link = string.Empty,
-            RegionID = new Dictionary<ConsoleMode, RegionCode[]>()
-            {
-                [ConsoleMode.PS2] = new RegionCode[]
-                {
-                    new RegionCode() {
-                    Name = @"SLUS_202.38",
-                    Region = RegionType.NTSC_U,
-                    ExecName = "SLUS_202.38",
-                    CodeName = "SLUS_20238", },
-                    new RegionCode() {
-                    Name = @"SLES_503.86",
-                    Region = RegionType.PAL,
-                    ExecName = "SLES_503.86",
-                    CodeName = "SLES_50386", },
-                    new RegionCode() {
-                    Name = @"SLPM_740.03",
-                    Region = RegionType.NTSC_J,
-                    ExecName = "SLPM_740.03",
-                    CodeName = "SLPM_74003", },
-                },
-                [ConsoleMode.GCN] = new RegionCode[]
-                {
-                    new RegionCode() {
-                    Name = "GCBE7D",
-                    Region = RegionType.NTSC_U },
-                    new RegionCode() {
-                    Name = "GCBP7D",
-                    Region = RegionType.PAL },
-                    new RegionCode() {
-                    Name = "GCBJA4",
-                    Region = RegionType.NTSC_J },
-                },
-                [ConsoleMode.XBOX] = new RegionCode[]
-                {
-                    new RegionCode() {
-                        Name = "Crash Bandicoot: tWoC",
-                        Region = RegionType.NTSC_U,
-                        RegionNumber = 1, },
-                    new RegionCode() {
-                        Name = "Crash Bandicoot: tWoC",
-                        Region = RegionType.NTSC_U,
-                        RegionNumber = 7, },
-                    new RegionCode() {
-                        Name = "Crash Bandicoot: tWoC",
-                        Region = RegionType.PAL,
-                        RegionNumber = 4, },
-                },
-            },
-            PropertyCategories = new Dictionary<int, string>()
-            {
-                [0] = "Options",
-            },
-        };
-
-        public static ModPropOption Option_RandCrates = new ModPropOption("Randomize Wooden Crates", "The types of wooden crates are randomized.");
-        public static ModPropOption Option_RandCratesRemoved = new ModPropOption("Random Crates Removed", "Wooden crates are randomly removed in each level. The box counter is adjusted accordingly.")
-        { Hidden = true, };
-        public static ModPropOption Option_RandEnemyPaths = new ModPropOption("Randomize Enemy Paths", "Reverses paths of random enemies.");
-        public static ModPropOption Option_RandEnemiesRemoved = new ModPropOption("Random Enemies Removed", "Enemies are randomly removed in each level.");
-        [ModAllowedConsoles(ConsoleMode.GCN, ConsoleMode.XBOX)]
-        public static ModPropOption Option_RandMusic = new ModPropOption("Randomize Music", "Music tracks are shuffled around."); //works on xbox
-
-        public static ModPropOption Option_RandWumpaCrates = new ModPropOption("Random Wumpa Are Random Crates", "Wumpas are randomly turned into crates in each level. The box counter is adjusted accordingly.")
-        { Hidden = true, }; //todo: new box positions are off
-        public static ModPropOption Option_RandEnemyCrates = new ModPropOption("Random Enemies Are Random Crates", "Enemies are randomly turned into random cratesin each level. The box counter is adjusted accordingly.")
-        { Hidden = true, }; //todo
-        [ModMenuOnly]
-        public static ModPropOption Option_AllEnemyCrates = new ModPropOption("All Enemies Are Random Crates", "The box counter is adjusted accordingly.")
-        { Hidden = true, }; //todo
-        public static ModPropOption Option_RandLevelOrder = new ModPropOption("Randomize Level Order", "") //todo, unbeatable levels, enemies not spawning, etc.
-        { Hidden = true, };
-        public static ModPropOption Option_SphereLevelsOnFoot = new ModPropOption("Atlasphere Levels On Foot", "") //todo: camera!!!
-        { Hidden = true, };
-        
-
-        public Modder_TWOC()
-        {
-
-        }
+        public Modder_TWOC() { }
 
         public override void StartModProcess()
         {
@@ -115,23 +23,23 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
         {
             Random rand = new Random(ModLoaderGlobals.RandomizerSeed);
 
-            if (Option_RandCrates.Enabled)
+            if (TWOC_Props_Main.Option_RandCrates.Enabled)
                 Rand_RandomizeCrates(rand);
-            if (Option_RandWumpaCrates.Enabled)
+            if (TWOC_Props_Main.Option_RandWumpaCrates.Enabled)
                 Rand_WumpaCrates(rand);
-            if (Option_RandCratesRemoved.Enabled)
+            if (TWOC_Props_Main.Option_RandCratesRemoved.Enabled)
                 Rand_CratesRemoved(rand);
-            if (Option_RandLevelOrder.Enabled)
+            if (TWOC_Props_Main.Option_RandLevelOrder.Enabled)
                 Mod_RandomizeLevelOrder(rand);
-            if (Option_RandEnemiesRemoved.Enabled)
+            if (TWOC_Props_Main.Option_RandEnemiesRemoved.Enabled)
                 Rand_EnemiesRemoved(rand);
-            if (Option_RandEnemyPaths.Enabled)
+            if (TWOC_Props_Main.Option_RandEnemyPaths.Enabled)
                 Rand_EnemyPaths(rand);
-            if (Option_SphereLevelsOnFoot.Enabled)
+            if (TWOC_Props_Main.Option_SphereLevelsOnFoot.Enabled)
             {
                 Mod_ReplaceLevel(TWOC_Levels.L03_Bamboozled, TWOC_Levels.L14_EskimoRoll);
             }
-            if (Option_RandMusic.Enabled)
+            if (TWOC_Props_Main.Option_RandMusic.Enabled)
                 Mod_RandomizeMusic(rand);
         }
 

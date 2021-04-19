@@ -10,7 +10,6 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
     {
         public override string Name => Twins_Text.Rand_GemLocations;
         public override string Description => Twins_Text.Rand_GemLocationsDesc;
-        public override CreditContributors Contributors => new CreditContributors(ModLoaderGlobals.Contributor_BetaM);
 
         internal List<uint> gemObjectList = new List<uint>();
 
@@ -391,7 +390,7 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
         {
             GemList = new List<TwinsGem>();
 
-            Random randState = new Random();
+            Random randState = new Random(ModLoaderGlobals.RandomizerSeed);
 
             List<GemType> GemsToGo = new List<GemType>();
             List<TwinsGem> PossibleLocations = new List<TwinsGem>();

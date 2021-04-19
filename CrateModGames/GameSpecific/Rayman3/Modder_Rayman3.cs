@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Diagnostics;
 using System.Drawing;
-using CrateModLoader.ModProperties;
-using CrateModGames.GameSpecific.Rayman3;
 
 namespace CrateModLoader.GameSpecific.Rayman3
 {
@@ -18,260 +16,10 @@ namespace CrateModLoader.GameSpecific.Rayman3
 
     public sealed class Modder_Rayman3 : Modder
     {
-        public override Game Game => new Game()
-        {
-            Name = Rayman3_Text.GameTitle,
-            ShortName = "Rayman3",
-            Consoles = new List<ConsoleMode>
-                {
-                    ConsoleMode.GCN,
-                    ConsoleMode.PS2,
-                    ConsoleMode.XBOX,
-                    //ConsoleMode.PC,
-                },
-            API_Credit = string.Empty,
-            API_Link = string.Empty,
-            RegionID = new Dictionary<ConsoleMode, RegionCode[]>()
-            {
-                [ConsoleMode.PS2] = new RegionCode[]
-                {
-                    new RegionCode() {
-                    Name = "SLUS_206.01",
-                    Region = RegionType.NTSC_U,
-                    ExecName = "SLUS_206.01",
-                    CodeName = "SLUS_20601", },
-                    new RegionCode() {
-                    Name = "SLES_512.22",
-                    Region = RegionType.PAL,
-                    ExecName = "SLES_512.22",
-                    CodeName = "SLES_51222", },
-                },
-                [ConsoleMode.GCN] = new RegionCode[]
-                {
-                    new RegionCode() {
-                    Name = "GRHE",
-                    Region = RegionType.NTSC_U },
-                    new RegionCode() {
-                    Name = "GRHP",
-                    Region = RegionType.PAL },
-                },
-                [ConsoleMode.XBOX] = new RegionCode[]
-                {
-                    new RegionCode() {
-                    Name = "Rayman 3",
-                    Region = RegionType.NTSC_U,
-                    RegionNumber = 3, },
-                    new RegionCode() {
-                    Name = "Rayman 3",
-                    Region = RegionType.PAL,
-                    RegionNumber = 4, },
-                },
-                [ConsoleMode.PC] = new RegionCode[]
-                {
-                    new RegionCode() {
-                    Name = "Rayman3.exe",
-                    Region = RegionType.Global },
-                    new RegionCode() {
-                    Name = "rayman3.exe",
-                    Region = RegionType.Global },
-                    new RegionCode() {
-                    Name = "RAYMAN3.EXE",
-                    Region = RegionType.Global },
-                    new RegionCode() {
-                    Name = "Rayman3.EXE",
-                    Region = RegionType.Global },
-                },
-            },
-            PropertyCategories = new Dictionary<int, string>()
-            {
-                [0] = "Options",
-                [(int)R3_ModProps.Textures_Loading] = "Textures - Loading",
-                [(int)R3_ModProps.Textures_Menu] = "Textures - Menu",
-                [(int)R3_ModProps.Textures_General] = "Textures - General",
-            },
-        };
         public override bool CanPreloadGame => true;
         public override List<ConsoleMode> PreloadConsoles => new List<ConsoleMode>() { ConsoleMode.GCN, };
 
-        public static ModPropOption Option_RandLevelOrderAll = new ModPropOption(Rayman3_Text.Rand_LevelOrder2, Rayman3_Text.Rand_LevelOrder2Desc);
-        public static ModPropOption Option_RandLevelOrder = new ModPropOption(Rayman3_Text.Rand_LevelOrder, Rayman3_Text.Rand_LevelOrderDesc);
-        public static ModPropOption Option_RandOutfitVisuals = new ModPropOption(Rayman3_Text.Rand_OutfitVisuals, Rayman3_Text.Rand_OutfitVisualsDesc);
-        [ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModPropOption Option_RandOutfitColors = new ModPropOption(Rayman3_Text.Rand_OutfitColors, Rayman3_Text.Rand_OutfitColorsDesc);
-        [ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModPropOption Option_RandCopterColors = new ModPropOption(Rayman3_Text.Rand_CopterColors, Rayman3_Text.Rand_CopterColorsDesc);
-        [ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModPropOption Option_RandHUDColors = new ModPropOption(Rayman3_Text.Rand_HUDColors, Rayman3_Text.Rand_HUDColorsDesc);
-        [ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModPropOption Option_RandWorldColors = new ModPropOption(Rayman3_Text.Rand_WorldColors, Rayman3_Text.Rand_WorldColorsDesc)
-        { Hidden = true, }; // works in some levels, broken in others
-        [ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModPropOption Option_NewGameNightmare = new ModPropOption(Rayman3_Text.Mod_NewGameNightmare, Rayman3_Text.Mod_NewGameNightmareDesc);
-        [ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModPropOption Option_RemoveIntroVideos = new ModPropOption(1, Rayman3_Text.Mod_RemoveIntroVideo, Rayman3_Text.Mod_RemoveIntroVideoDesc);
-
-
-        [ModCategory((int)R3_ModProps.Textures_Loading), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_Load_Gear = new ModProp_TextureFile(false, "Loading - Gear", "");
-        [ModCategory((int)R3_ModProps.Textures_Loading), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_Load_01 = new ModProp_TextureFile(false, "Loading - 01", "");
-        [ModCategory((int)R3_ModProps.Textures_Loading), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_Load_02 = new ModProp_TextureFile(false, "Loading - 02", "");
-        [ModCategory((int)R3_ModProps.Textures_Loading), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_Load_03 = new ModProp_TextureFile(false, "Loading - 03", "");
-        [ModCategory((int)R3_ModProps.Textures_Loading), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_Load_04 = new ModProp_TextureFile(false, "Loading - 04", "");
-        [ModCategory((int)R3_ModProps.Textures_Loading), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_Load_05 = new ModProp_TextureFile(false, "Loading - 05", "");
-        [ModCategory((int)R3_ModProps.Textures_Loading), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_Load_06 = new ModProp_TextureFile(false, "Loading - 06", "");
-        [ModCategory((int)R3_ModProps.Textures_Loading), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_Load_07 = new ModProp_TextureFile(false, "Loading - 07", "");
-        [ModCategory((int)R3_ModProps.Textures_Loading), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_Load_08 = new ModProp_TextureFile(false, "Loading - 08", "");
-
-        [ModCategory((int)R3_ModProps.Textures_Menu), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_Menu_Overlay = new ModProp_TextureFile(false, "Pause Menu Overlay", "");
-        [ModCategory((int)R3_ModProps.Textures_Menu), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_Menu_Icons = new ModProp_TextureFile(false, "Pause Menu Sprites", "");
-        [ModCategory((int)R3_ModProps.Textures_Menu), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_Menu_Icon_Level1 = new ModProp_TextureFile(false, "Icon - The Fairy Council", "");
-        [ModCategory((int)R3_ModProps.Textures_Menu), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_Menu_Icon_Level2 = new ModProp_TextureFile(false, "Icon - Clearleaf Forest", "");
-        [ModCategory((int)R3_ModProps.Textures_Menu), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_Menu_Icon_Level3 = new ModProp_TextureFile(false, "Icon - The Bog of Murk", "");
-        [ModCategory((int)R3_ModProps.Textures_Menu), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_Menu_Icon_Level4 = new ModProp_TextureFile(false, "Icon - The Land of the Livid Dead", "");
-        [ModCategory((int)R3_ModProps.Textures_Menu), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_Menu_Icon_Level5 = new ModProp_TextureFile(false, "Icon - The Desert of the Knaaren", "");
-        [ModCategory((int)R3_ModProps.Textures_Menu), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_Menu_Icon_Level6 = new ModProp_TextureFile(false, "Icon - The Longest Shortcut", "");
-        [ModCategory((int)R3_ModProps.Textures_Menu), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_Menu_Icon_Level7 = new ModProp_TextureFile(false, "Icon - The Summit Beyond the Clouds", "");
-        [ModCategory((int)R3_ModProps.Textures_Menu), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_Menu_Icon_Level8 = new ModProp_TextureFile(false, "Icon - Hoodlum Headquarters", "");
-        [ModCategory((int)R3_ModProps.Textures_Menu), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_Menu_Icon_Level9 = new ModProp_TextureFile(false, "Icon - The Tower of the Leptys", "");
-        [ModCategory((int)R3_ModProps.Textures_Menu), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_Menu_Icon_Lum = new ModProp_TextureFile(false, "Icon - Black Lum", "");
-        [ModCategory((int)R3_ModProps.Textures_Menu), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_Menu_Icon_Options = new ModProp_TextureFile(false, "Icon - Options", "");
-        [ModCategory((int)R3_ModProps.Textures_Menu), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_Menu_Icon_Rayman = new ModProp_TextureFile(false, "Icon - Rayman", "");
-        [ModCategory((int)R3_ModProps.Textures_Menu), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_Menu_Icon_Murfy = new ModProp_TextureFile(false, "Icon - Murfy", "");
-        [ModCategory((int)R3_ModProps.Textures_Menu), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_Menu_Icon_Videos = new ModProp_TextureFile(false, "Icon - Videos", "");
-        [ModCategory((int)R3_ModProps.Textures_Menu), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_Menu_Icon_Camera = new ModProp_TextureFile(false, "Icon - Camera", "");
-        [ModCategory((int)R3_ModProps.Textures_Menu), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_Menu_Icon_Plum = new ModProp_TextureFile(false, "Icon - Minigames", "");
-        [ModCategory((int)R3_ModProps.Textures_Menu), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_Menu_Icons_Videos = new ModProp_TextureFile(false, "Video Icons", "");
-        [ModCategory((int)R3_ModProps.Textures_Menu), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_Menu_Icons_Misc = new ModProp_TextureFile(false, "Misc. Icons", "");
-
-        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_General_Font = new ModProp_TextureFile(false, "Font", "");
-        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_General_Popup01 = new ModProp_TextureFile(false, "Combo Popup 01", "");
-        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_General_Popup02 = new ModProp_TextureFile(false, "Combo Popup 02", "");
-        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_General_Popup03 = new ModProp_TextureFile(false, "Combo Popup 03", "");
-        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_General_ComboScores = new ModProp_TextureFile(false, "Combo Scores", "");
-        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_General_Damage01 = new ModProp_TextureFile(false, "Damage Popup 01", "");
-        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_General_Damage02 = new ModProp_TextureFile(false, "Damage Popup 02", "");
-        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_General_Damage03 = new ModProp_TextureFile(false, "Damage Popup 03", "");
-        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_General_Damage04 = new ModProp_TextureFile(false, "Damage Popup 04", "");
-        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_General_Arrow = new ModProp_TextureFile(false, "Arrow", "");
-        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_General_ScoreDisplay = new ModProp_TextureFile(false, "Score Display", "");
-        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_General_TeensieBG = new ModProp_TextureFile(false, "Teensie Background", "");
-        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_General_TeensieLocked = new ModProp_TextureFile(false, "Teensie Locked", "");
-        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_General_TeensieUnlocked = new ModProp_TextureFile(false, "Teensie Unlocked", "");
-        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_General_ResultStarOn = new ModProp_TextureFile(false, "Result Star On", "");
-        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_General_ResultStarOff = new ModProp_TextureFile(false, "Result Star Off", "");
-        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_General_ResultMurfy = new ModProp_TextureFile(false, "Result Murfy", "");
-        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_General_GradientBG = new ModProp_TextureFile(false, "Gradient Background", "");
-        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_General_AimingNear = new ModProp_TextureFile(false, "Aiming Reticle Near", "");
-        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_General_AimingFar = new ModProp_TextureFile(false, "Aiming Reticle Far", "");
-        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_General_AimingArrow01 = new ModProp_TextureFile(false, "Aiming Arrow 01", "");
-        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_General_AimingArrow02 = new ModProp_TextureFile(false, "Aiming Arrow 02", "");
-        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_General_AimingArrow03 = new ModProp_TextureFile(false, "Aiming Arrow 03", "");
-        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_General_HUDElements = new ModProp_TextureFile(false, "Display Elements", "");
-        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_General_GameOver = new ModProp_TextureFile(false, "Game Over", "");
-        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_General_RedLum01 = new ModProp_TextureFile(false, "Red Lum 01", "");
-        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_General_RedLum02 = new ModProp_TextureFile(false, "Red Lum 02", "");
-        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_General_RedLum03 = new ModProp_TextureFile(false, "Red Lum 03", "");
-        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_General_RedLum04 = new ModProp_TextureFile(false, "Red Lum 04", "");
-
-        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_General_Outfit_Normal = new ModProp_TextureFile(false, "Outfit - Normal", "");
-        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_General_Copter_Normal = new ModProp_TextureFile(false, "Copter - Normal", "");
-
-        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_General_Outfit_Vortex = new ModProp_TextureFile(false, "Outfit - Vortex (Green)", "");
-        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_General_Copter_Vortex = new ModProp_TextureFile(false, "Copter - Vortex (Green)", "");
-        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_General_Fist_Vortex = new ModProp_TextureFile(false, "Fist - Vortex (Green)", "");
-
-        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_General_Outfit_HeavyMetalFist = new ModProp_TextureFile(false, "Outfit - Heavy Metal Fist (Red)", "");
-        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_General_Copter_HeavyMetalFist = new ModProp_TextureFile(false, "Copter - Heavy Metal Fist (Red)", "");
-        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_General_Fist_HeavyMetalFist = new ModProp_TextureFile(false, "Fist - Heavy Metal Fist (Red)", "");
-
-        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_General_Outfit_LockJaw = new ModProp_TextureFile(false, "Outfit - LockJaw (Blue)", "");
-        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_General_Copter_LockJaw = new ModProp_TextureFile(false, "Copter - LockJaw (Blue)", "");
-        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_General_Fist_LockJaw = new ModProp_TextureFile(false, "Fist - LockJaw (Blue)", "");
-
-        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_General_Outfit_ShockRocket = new ModProp_TextureFile(false, "Outfit - Shock Rocket (Orange)", "");
-        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_General_Copter_ShockRocket = new ModProp_TextureFile(false, "Copter - Shock Rocket (Orange)", "");
-        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_General_Fist_ShockRocket = new ModProp_TextureFile(false, "Fist - Shock Rocket (Orange)", "");
-
-        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_General_Outfit_ThrottleCopter = new ModProp_TextureFile(false, "Outfit - Throttle Copter (Yellow)", "");
-        [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModProp_TextureFile Texture_General_Copter_ThrottleCopter = new ModProp_TextureFile(false, "Copter - Throttle Copter (Yellow)", "");
-
-        public Modder_Rayman3()
-        {
-
-        }
+        public Modder_Rayman3() { }
 
         internal string basePath = "";
 
@@ -299,30 +47,30 @@ namespace CrateModLoader.GameSpecific.Rayman3
 
             randState = new Random(ModLoaderGlobals.RandomizerSeed);
 
-            if (Option_RandLevelOrderAll.Enabled)
+            if (Rayman3_Props_Main.Option_RandLevelOrderAll.Enabled)
             {
                 Randomize_Level_Order(false);
             }
-            else if (Option_RandLevelOrder.Enabled)
+            else if (Rayman3_Props_Main.Option_RandLevelOrder.Enabled)
             {
                 Randomize_Level_Order(true);
             }
 
-            if (Option_RemoveIntroVideos.Enabled)
+            if (Rayman3_Props_Main.Option_RemoveIntroVideos.Enabled)
             {
                 Remove_Intro_Videos();
             }
 
             Custom_Texture_Handle();
 
-            if (Option_RandCopterColors.Enabled)
+            if (Rayman3_Props_Main.Option_RandCopterColors.Enabled)
                 Rand_Copter_Colors(randState);
-            if (Option_RandHUDColors.Enabled)
+            if (Rayman3_Props_Main.Option_RandHUDColors.Enabled)
                 Rand_HUD_Colors(randState);
-            if (Option_RandOutfitColors.Enabled)
+            if (Rayman3_Props_Main.Option_RandOutfitColors.Enabled)
                 Rand_Outfit_Colors(randState);
 
-            if (Option_RandWorldColors.Enabled)
+            if (Rayman3_Props_Main.Option_RandWorldColors.Enabled)
             {
                 DirectoryInfo di = new DirectoryInfo(basePath);
                 foreach (DirectoryInfo dir in di.GetDirectories())
@@ -331,7 +79,7 @@ namespace CrateModLoader.GameSpecific.Rayman3
                 }
             }
 
-            if (Option_NewGameNightmare.Enabled)
+            if (Rayman3_Props_Main.Option_NewGameNightmare.Enabled)
             {
                 Replace_Intro_With_Nightmare();
             }
@@ -573,53 +321,53 @@ namespace CrateModLoader.GameSpecific.Rayman3
 
                 File.Delete(basePath + @"fix.tpl");
 
-                Texture_General_Fist_LockJaw.ResourceToFile(basePath + @"fix.tpl.mm4.png");
-                Texture_General_Outfit_ThrottleCopter.ResourceToFile(basePath + @"fix.tpl.mm6.png");
-                Texture_General_Outfit_Normal.ResourceToFile(basePath + @"fix.tpl.mm7.png");
-                Texture_General_Outfit_HeavyMetalFist.ResourceToFile(basePath + @"fix.tpl.mm8.png");
-                Texture_General_Outfit_LockJaw.ResourceToFile(basePath + @"fix.tpl.mm9.png");
-                Texture_General_Outfit_Vortex.ResourceToFile(basePath + @"fix.tpl.mm10.png");
-                Texture_General_Outfit_ShockRocket.ResourceToFile(basePath + @"fix.tpl.mm11.png");
-                Texture_General_Fist_Vortex.ResourceToFile(basePath + @"fix.tpl.mm13.png");
-                Texture_General_Copter_Normal.ResourceToFile(basePath + @"fix.tpl.mm15.png");
-                Texture_General_Copter_LockJaw.ResourceToFile(basePath + @"fix.tpl.mm17.png");
-                Texture_General_Copter_ShockRocket.ResourceToFile(basePath + @"fix.tpl.mm16.png");
-                Texture_General_Copter_HeavyMetalFist.ResourceToFile(basePath + @"fix.tpl.mm18.png");
-                Texture_General_Copter_Vortex.ResourceToFile(basePath + @"fix.tpl.mm19.png");
-                Texture_General_Fist_ShockRocket.ResourceToFile(basePath + @"fix.tpl.mm20.png");
-                Texture_General_Copter_ThrottleCopter.ResourceToFile(basePath + @"fix.tpl.mm21.png");
-                Texture_General_Fist_HeavyMetalFist.ResourceToFile(basePath + @"fix.tpl.mm22.png");
-                Texture_General_RedLum01.ResourceToFile(basePath + @"fix.tpl.mm24.png");
-                Texture_General_RedLum02.ResourceToFile(basePath + @"fix.tpl.mm25.png");
-                Texture_General_RedLum03.ResourceToFile(basePath + @"fix.tpl.mm26.png");
-                Texture_General_RedLum04.ResourceToFile(basePath + @"fix.tpl.mm23.png");
-                Texture_General_GameOver.ResourceToFile(basePath + @"fix.tpl.mm27.png");
-                Texture_General_HUDElements.ResourceToFile(basePath + @"fix.tpl.mm29.png");
-                Texture_General_AimingNear.ResourceToFile(basePath + @"fix.tpl.mm39.png");
-                Texture_General_AimingArrow01.ResourceToFile(basePath + @"fix.tpl.mm40.png");
-                Texture_General_AimingArrow02.ResourceToFile(basePath + @"fix.tpl.mm41.png");
-                Texture_General_AimingArrow03.ResourceToFile(basePath + @"fix.tpl.mm42.png");
-                Texture_General_AimingFar.ResourceToFile(basePath + @"fix.tpl.mm43.png");
-                Texture_General_ResultStarOff.ResourceToFile(basePath + @"fix.tpl.mm46.png");
-                Texture_General_GradientBG.ResourceToFile(basePath + @"fix.tpl.mm47.png");
-                Texture_General_ResultMurfy.ResourceToFile(basePath + @"fix.tpl.mm48.png");
-                Texture_General_ResultStarOn.ResourceToFile(basePath + @"fix.tpl.mm49.png");
-                Texture_General_TeensieUnlocked.ResourceToFile(basePath + @"fix.tpl.mm53.png");
-                Texture_General_TeensieLocked.ResourceToFile(basePath + @"fix.tpl.mm54.png");
-                Texture_General_TeensieBG.ResourceToFile(basePath + @"fix.tpl.mm55.png");
-                Texture_General_ScoreDisplay.ResourceToFile(basePath + @"fix.tpl.mm56.png");
-                Texture_General_Arrow.ResourceToFile(basePath + @"fix.tpl.mm62.png");
-                Texture_General_Damage01.ResourceToFile(basePath + @"fix.tpl.mm64.png");
-                Texture_General_Damage02.ResourceToFile(basePath + @"fix.tpl.mm66.png");
-                Texture_General_Damage03.ResourceToFile(basePath + @"fix.tpl.mm68.png");
-                Texture_General_Damage04.ResourceToFile(basePath + @"fix.tpl.mm70.png");
-                Texture_General_ComboScores.ResourceToFile(basePath + @"fix.tpl.mm71.png");
-                Texture_General_Popup01.ResourceToFile(basePath + @"fix.tpl.mm72.png");
-                Texture_General_Popup02.ResourceToFile(basePath + @"fix.tpl.mm73.png");
-                Texture_General_Popup03.ResourceToFile(basePath + @"fix.tpl.mm74.png");
-                Texture_General_Font.ResourceToFile(basePath + @"fix.tpl.png");
+                Rayman3_Textures_General.Texture_General_Fist_LockJaw.ResourceToFile(basePath + @"fix.tpl.mm4.png");
+                Rayman3_Textures_General.Texture_General_Outfit_ThrottleCopter.ResourceToFile(basePath + @"fix.tpl.mm6.png");
+                Rayman3_Textures_General.Texture_General_Outfit_Normal.ResourceToFile(basePath + @"fix.tpl.mm7.png");
+                Rayman3_Textures_General.Texture_General_Outfit_HeavyMetalFist.ResourceToFile(basePath + @"fix.tpl.mm8.png");
+                Rayman3_Textures_General.Texture_General_Outfit_LockJaw.ResourceToFile(basePath + @"fix.tpl.mm9.png");
+                Rayman3_Textures_General.Texture_General_Outfit_Vortex.ResourceToFile(basePath + @"fix.tpl.mm10.png");
+                Rayman3_Textures_General.Texture_General_Outfit_ShockRocket.ResourceToFile(basePath + @"fix.tpl.mm11.png");
+                Rayman3_Textures_General.Texture_General_Fist_Vortex.ResourceToFile(basePath + @"fix.tpl.mm13.png");
+                Rayman3_Textures_General.Texture_General_Copter_Normal.ResourceToFile(basePath + @"fix.tpl.mm15.png");
+                Rayman3_Textures_General.Texture_General_Copter_LockJaw.ResourceToFile(basePath + @"fix.tpl.mm17.png");
+                Rayman3_Textures_General.Texture_General_Copter_ShockRocket.ResourceToFile(basePath + @"fix.tpl.mm16.png");
+                Rayman3_Textures_General.Texture_General_Copter_HeavyMetalFist.ResourceToFile(basePath + @"fix.tpl.mm18.png");
+                Rayman3_Textures_General.Texture_General_Copter_Vortex.ResourceToFile(basePath + @"fix.tpl.mm19.png");
+                Rayman3_Textures_General.Texture_General_Fist_ShockRocket.ResourceToFile(basePath + @"fix.tpl.mm20.png");
+                Rayman3_Textures_General.Texture_General_Copter_ThrottleCopter.ResourceToFile(basePath + @"fix.tpl.mm21.png");
+                Rayman3_Textures_General.Texture_General_Fist_HeavyMetalFist.ResourceToFile(basePath + @"fix.tpl.mm22.png");
+                Rayman3_Textures_General.Texture_General_RedLum01.ResourceToFile(basePath + @"fix.tpl.mm24.png");
+                Rayman3_Textures_General.Texture_General_RedLum02.ResourceToFile(basePath + @"fix.tpl.mm25.png");
+                Rayman3_Textures_General.Texture_General_RedLum03.ResourceToFile(basePath + @"fix.tpl.mm26.png");
+                Rayman3_Textures_General.Texture_General_RedLum04.ResourceToFile(basePath + @"fix.tpl.mm23.png");
+                Rayman3_Textures_General.Texture_General_GameOver.ResourceToFile(basePath + @"fix.tpl.mm27.png");
+                Rayman3_Textures_General.Texture_General_HUDElements.ResourceToFile(basePath + @"fix.tpl.mm29.png");
+                Rayman3_Textures_General.Texture_General_AimingNear.ResourceToFile(basePath + @"fix.tpl.mm39.png");
+                Rayman3_Textures_General.Texture_General_AimingArrow01.ResourceToFile(basePath + @"fix.tpl.mm40.png");
+                Rayman3_Textures_General.Texture_General_AimingArrow02.ResourceToFile(basePath + @"fix.tpl.mm41.png");
+                Rayman3_Textures_General.Texture_General_AimingArrow03.ResourceToFile(basePath + @"fix.tpl.mm42.png");
+                Rayman3_Textures_General.Texture_General_AimingFar.ResourceToFile(basePath + @"fix.tpl.mm43.png");
+                Rayman3_Textures_General.Texture_General_ResultStarOff.ResourceToFile(basePath + @"fix.tpl.mm46.png");
+                Rayman3_Textures_General.Texture_General_GradientBG.ResourceToFile(basePath + @"fix.tpl.mm47.png");
+                Rayman3_Textures_General.Texture_General_ResultMurfy.ResourceToFile(basePath + @"fix.tpl.mm48.png");
+                Rayman3_Textures_General.Texture_General_ResultStarOn.ResourceToFile(basePath + @"fix.tpl.mm49.png");
+                Rayman3_Textures_General.Texture_General_TeensieUnlocked.ResourceToFile(basePath + @"fix.tpl.mm53.png");
+                Rayman3_Textures_General.Texture_General_TeensieLocked.ResourceToFile(basePath + @"fix.tpl.mm54.png");
+                Rayman3_Textures_General.Texture_General_TeensieBG.ResourceToFile(basePath + @"fix.tpl.mm55.png");
+                Rayman3_Textures_General.Texture_General_ScoreDisplay.ResourceToFile(basePath + @"fix.tpl.mm56.png");
+                Rayman3_Textures_General.Texture_General_Arrow.ResourceToFile(basePath + @"fix.tpl.mm62.png");
+                Rayman3_Textures_General.Texture_General_Damage01.ResourceToFile(basePath + @"fix.tpl.mm64.png");
+                Rayman3_Textures_General.Texture_General_Damage02.ResourceToFile(basePath + @"fix.tpl.mm66.png");
+                Rayman3_Textures_General.Texture_General_Damage03.ResourceToFile(basePath + @"fix.tpl.mm68.png");
+                Rayman3_Textures_General.Texture_General_Damage04.ResourceToFile(basePath + @"fix.tpl.mm70.png");
+                Rayman3_Textures_General.Texture_General_ComboScores.ResourceToFile(basePath + @"fix.tpl.mm71.png");
+                Rayman3_Textures_General.Texture_General_Popup01.ResourceToFile(basePath + @"fix.tpl.mm72.png");
+                Rayman3_Textures_General.Texture_General_Popup02.ResourceToFile(basePath + @"fix.tpl.mm73.png");
+                Rayman3_Textures_General.Texture_General_Popup03.ResourceToFile(basePath + @"fix.tpl.mm74.png");
+                Rayman3_Textures_General.Texture_General_Font.ResourceToFile(basePath + @"fix.tpl.png");
 
-                if (Option_RandOutfitColors.Enabled)
+                if (Rayman3_Props_Main.Option_RandOutfitColors.Enabled)
                 {
                     //Shuffle outfit textures
                     string[] outfitFiles = new string[] { "fix.tpl.mm7.png", "fix.tpl.mm8.png", "fix.tpl.mm9.png", "fix.tpl.mm10.png", "fix.tpl.mm11.png" };
@@ -666,26 +414,26 @@ namespace CrateModLoader.GameSpecific.Rayman3
                 GCN_ExportTextures(basePath + @"menu.tpl");
                 File.Delete(basePath + @"menu.tpl");
 
-                Texture_Menu_Overlay.ResourceToFile(basePath + @"menu.tpl.png");
-                Texture_Menu_Icons.ResourceToFile(basePath + @"menu.tpl.mm1.png");
-                Texture_Menu_Icon_Level1.ResourceToFile(basePath + @"menu.tpl.mm2.png");
-                Texture_Menu_Icon_Level2.ResourceToFile(basePath + @"menu.tpl.mm3.png");
-                Texture_Menu_Icon_Level3.ResourceToFile(basePath + @"menu.tpl.mm4.png");
-                Texture_Menu_Icon_Level4.ResourceToFile(basePath + @"menu.tpl.mm5.png");
-                Texture_Menu_Icon_Level5.ResourceToFile(basePath + @"menu.tpl.mm6.png");
-                Texture_Menu_Icon_Level6.ResourceToFile(basePath + @"menu.tpl.mm7.png");
-                Texture_Menu_Icon_Level7.ResourceToFile(basePath + @"menu.tpl.mm8.png");
-                Texture_Menu_Icon_Level8.ResourceToFile(basePath + @"menu.tpl.mm9.png");
-                Texture_Menu_Icon_Level9.ResourceToFile(basePath + @"menu.tpl.mm10.png");
-                Texture_Menu_Icon_Lum.ResourceToFile(basePath + @"menu.tpl.mm11.png");
-                Texture_Menu_Icon_Options.ResourceToFile(basePath + @"menu.tpl.mm12.png");
-                Texture_Menu_Icon_Rayman.ResourceToFile(basePath + @"menu.tpl.mm13.png");
-                Texture_Menu_Icon_Murfy.ResourceToFile(basePath + @"menu.tpl.mm14.png");
-                Texture_Menu_Icon_Videos.ResourceToFile(basePath + @"menu.tpl.mm15.png");
-                Texture_Menu_Icon_Camera.ResourceToFile(basePath + @"menu.tpl.mm16.png");
-                Texture_Menu_Icon_Plum.ResourceToFile(basePath + @"menu.tpl.mm17.png");
-                Texture_Menu_Icons_Videos.ResourceToFile(basePath + @"menu.tpl.mm18.png");
-                Texture_Menu_Icons_Misc.ResourceToFile(basePath + @"menu.tpl.mm19.png");
+                Rayman3_Textures_Menu.Texture_Menu_Overlay.ResourceToFile(basePath + @"menu.tpl.png");
+                Rayman3_Textures_Menu.Texture_Menu_Icons.ResourceToFile(basePath + @"menu.tpl.mm1.png");
+                Rayman3_Textures_Menu.Texture_Menu_Icon_Level1.ResourceToFile(basePath + @"menu.tpl.mm2.png");
+                Rayman3_Textures_Menu.Texture_Menu_Icon_Level2.ResourceToFile(basePath + @"menu.tpl.mm3.png");
+                Rayman3_Textures_Menu.Texture_Menu_Icon_Level3.ResourceToFile(basePath + @"menu.tpl.mm4.png");
+                Rayman3_Textures_Menu.Texture_Menu_Icon_Level4.ResourceToFile(basePath + @"menu.tpl.mm5.png");
+                Rayman3_Textures_Menu.Texture_Menu_Icon_Level5.ResourceToFile(basePath + @"menu.tpl.mm6.png");
+                Rayman3_Textures_Menu.Texture_Menu_Icon_Level6.ResourceToFile(basePath + @"menu.tpl.mm7.png");
+                Rayman3_Textures_Menu.Texture_Menu_Icon_Level7.ResourceToFile(basePath + @"menu.tpl.mm8.png");
+                Rayman3_Textures_Menu.Texture_Menu_Icon_Level8.ResourceToFile(basePath + @"menu.tpl.mm9.png");
+                Rayman3_Textures_Menu.Texture_Menu_Icon_Level9.ResourceToFile(basePath + @"menu.tpl.mm10.png");
+                Rayman3_Textures_Menu.Texture_Menu_Icon_Lum.ResourceToFile(basePath + @"menu.tpl.mm11.png");
+                Rayman3_Textures_Menu.Texture_Menu_Icon_Options.ResourceToFile(basePath + @"menu.tpl.mm12.png");
+                Rayman3_Textures_Menu.Texture_Menu_Icon_Rayman.ResourceToFile(basePath + @"menu.tpl.mm13.png");
+                Rayman3_Textures_Menu.Texture_Menu_Icon_Murfy.ResourceToFile(basePath + @"menu.tpl.mm14.png");
+                Rayman3_Textures_Menu.Texture_Menu_Icon_Videos.ResourceToFile(basePath + @"menu.tpl.mm15.png");
+                Rayman3_Textures_Menu.Texture_Menu_Icon_Camera.ResourceToFile(basePath + @"menu.tpl.mm16.png");
+                Rayman3_Textures_Menu.Texture_Menu_Icon_Plum.ResourceToFile(basePath + @"menu.tpl.mm17.png");
+                Rayman3_Textures_Menu.Texture_Menu_Icons_Videos.ResourceToFile(basePath + @"menu.tpl.mm18.png");
+                Rayman3_Textures_Menu.Texture_Menu_Icons_Misc.ResourceToFile(basePath + @"menu.tpl.mm19.png");
 
                 GCN_ImportTextures(basePath + @"menu.tpl.png");
             }
@@ -697,42 +445,42 @@ namespace CrateModLoader.GameSpecific.Rayman3
                 {
                     GCN_ExportTextures(lsbinpath + @"lodmeca.tpl");
                     File.Delete(lsbinpath + @"lodmeca.tpl");
-                    Texture_Load_Gear.ResourceToFile(lsbinpath + @"lodmeca.tpl.png");
+                    Rayman3_Textures_Loading.Texture_Load_Gear.ResourceToFile(lsbinpath + @"lodmeca.tpl.png");
                     GCN_ImportTextures(lsbinpath + @"lodmeca.tpl.png");
                 }
                 if (File.Exists(lsbinpath + @"lodps2_01.tpl"))
                 {
                     GCN_ExportTextures(lsbinpath + @"lodps2_01.tpl");
                     File.Delete(lsbinpath + @"lodps2_01.tpl");
-                    Texture_Load_01.ResourceToFile(lsbinpath + @"lodps2_01.tpl.png");
+                    Rayman3_Textures_Loading.Texture_Load_01.ResourceToFile(lsbinpath + @"lodps2_01.tpl.png");
                     GCN_ImportTextures(lsbinpath + @"lodps2_01.tpl.png");
                     GCN_ExportTextures(lsbinpath + @"lodps2_02.tpl");
                     File.Delete(lsbinpath + @"lodps2_02.tpl");
-                    Texture_Load_02.ResourceToFile(lsbinpath + @"lodps2_02.tpl.png");
+                    Rayman3_Textures_Loading.Texture_Load_02.ResourceToFile(lsbinpath + @"lodps2_02.tpl.png");
                     GCN_ImportTextures(lsbinpath + @"lodps2_02.tpl.png");
                     GCN_ExportTextures(lsbinpath + @"lodps2_03.tpl");
                     File.Delete(lsbinpath + @"lodps2_03.tpl");
-                    Texture_Load_03.ResourceToFile(lsbinpath + @"lodps2_03.tpl.png");
+                    Rayman3_Textures_Loading.Texture_Load_03.ResourceToFile(lsbinpath + @"lodps2_03.tpl.png");
                     GCN_ImportTextures(lsbinpath + @"lodps2_03.tpl.png");
                     GCN_ExportTextures(lsbinpath + @"lodps2_04.tpl");
                     File.Delete(lsbinpath + @"lodps2_04.tpl");
-                    Texture_Load_04.ResourceToFile(lsbinpath + @"lodps2_04.tpl.png");
+                    Rayman3_Textures_Loading.Texture_Load_04.ResourceToFile(lsbinpath + @"lodps2_04.tpl.png");
                     GCN_ImportTextures(lsbinpath + @"lodps2_04.tpl.png");
                     GCN_ExportTextures(lsbinpath + @"lodps2_05.tpl");
                     File.Delete(lsbinpath + @"lodps2_05.tpl");
-                    Texture_Load_05.ResourceToFile(lsbinpath + @"lodps2_05.tpl.png");
+                    Rayman3_Textures_Loading.Texture_Load_05.ResourceToFile(lsbinpath + @"lodps2_05.tpl.png");
                     GCN_ImportTextures(lsbinpath + @"lodps2_05.tpl.png");
                     GCN_ExportTextures(lsbinpath + @"lodps2_06.tpl");
                     File.Delete(lsbinpath + @"lodps2_06.tpl");
-                    Texture_Load_06.ResourceToFile(lsbinpath + @"lodps2_06.tpl.png");
+                    Rayman3_Textures_Loading.Texture_Load_06.ResourceToFile(lsbinpath + @"lodps2_06.tpl.png");
                     GCN_ImportTextures(lsbinpath + @"lodps2_06.tpl.png");
                     GCN_ExportTextures(lsbinpath + @"lodps2_07.tpl");
                     File.Delete(lsbinpath + @"lodps2_07.tpl");
-                    Texture_Load_07.ResourceToFile(lsbinpath + @"lodps2_07.tpl.png");
+                    Rayman3_Textures_Loading.Texture_Load_07.ResourceToFile(lsbinpath + @"lodps2_07.tpl.png");
                     GCN_ImportTextures(lsbinpath + @"lodps2_07.tpl.png");
                     GCN_ExportTextures(lsbinpath + @"lodps2_08.tpl");
                     File.Delete(lsbinpath + @"lodps2_08.tpl");
-                    Texture_Load_08.ResourceToFile(lsbinpath + @"lodps2_08.tpl.png");
+                    Rayman3_Textures_Loading.Texture_Load_08.ResourceToFile(lsbinpath + @"lodps2_08.tpl.png");
                     GCN_ImportTextures(lsbinpath + @"lodps2_08.tpl.png");
                 }
             }
@@ -1036,51 +784,51 @@ namespace CrateModLoader.GameSpecific.Rayman3
                 GCN_ExportTextures(basePath + @"fix.tpl");
                 File.Delete(basePath + @"fix.tpl");
 
-                Texture_General_Fist_LockJaw.FileToResource(basePath + @"fix.tpl.mm4.png");
-                Texture_General_Outfit_ThrottleCopter.FileToResource(basePath + @"fix.tpl.mm6.png");
-                Texture_General_Outfit_Normal.FileToResource(basePath + @"fix.tpl.mm7.png");
-                Texture_General_Outfit_HeavyMetalFist.FileToResource(basePath + @"fix.tpl.mm8.png");
-                Texture_General_Outfit_LockJaw.FileToResource(basePath + @"fix.tpl.mm9.png");
-                Texture_General_Outfit_Vortex.FileToResource(basePath + @"fix.tpl.mm10.png");
-                Texture_General_Outfit_ShockRocket.FileToResource(basePath + @"fix.tpl.mm11.png");
-                Texture_General_Fist_Vortex.FileToResource(basePath + @"fix.tpl.mm13.png");
-                Texture_General_Copter_Normal.FileToResource(basePath + @"fix.tpl.mm15.png");
-                Texture_General_Copter_LockJaw.FileToResource(basePath + @"fix.tpl.mm17.png");
-                Texture_General_Copter_ShockRocket.FileToResource(basePath + @"fix.tpl.mm16.png");
-                Texture_General_Copter_HeavyMetalFist.FileToResource(basePath + @"fix.tpl.mm18.png");
-                Texture_General_Copter_Vortex.FileToResource(basePath + @"fix.tpl.mm19.png");
-                Texture_General_Fist_ShockRocket.FileToResource(basePath + @"fix.tpl.mm20.png");
-                Texture_General_Copter_ThrottleCopter.FileToResource(basePath + @"fix.tpl.mm21.png");
-                Texture_General_Fist_HeavyMetalFist.FileToResource(basePath + @"fix.tpl.mm22.png");
-                Texture_General_RedLum01.FileToResource(basePath + @"fix.tpl.mm24.png");
-                Texture_General_RedLum02.FileToResource(basePath + @"fix.tpl.mm25.png");
-                Texture_General_RedLum03.FileToResource(basePath + @"fix.tpl.mm26.png");
-                Texture_General_RedLum04.FileToResource(basePath + @"fix.tpl.mm23.png");
-                Texture_General_GameOver.FileToResource(basePath + @"fix.tpl.mm27.png");
-                Texture_General_HUDElements.FileToResource(basePath + @"fix.tpl.mm29.png");
-                Texture_General_AimingNear.FileToResource(basePath + @"fix.tpl.mm39.png");
-                Texture_General_AimingArrow01.FileToResource(basePath + @"fix.tpl.mm40.png");
-                Texture_General_AimingArrow02.FileToResource(basePath + @"fix.tpl.mm41.png");
-                Texture_General_AimingArrow03.FileToResource(basePath + @"fix.tpl.mm42.png");
-                Texture_General_AimingFar.FileToResource(basePath + @"fix.tpl.mm43.png");
-                Texture_General_ResultStarOff.FileToResource(basePath + @"fix.tpl.mm46.png");
-                Texture_General_GradientBG.FileToResource(basePath + @"fix.tpl.mm47.png");
-                Texture_General_ResultMurfy.FileToResource(basePath + @"fix.tpl.mm48.png");
-                Texture_General_ResultStarOn.FileToResource(basePath + @"fix.tpl.mm49.png");
-                Texture_General_TeensieUnlocked.FileToResource(basePath + @"fix.tpl.mm53.png");
-                Texture_General_TeensieLocked.FileToResource(basePath + @"fix.tpl.mm54.png");
-                Texture_General_TeensieBG.FileToResource(basePath + @"fix.tpl.mm55.png");
-                Texture_General_ScoreDisplay.FileToResource(basePath + @"fix.tpl.mm56.png");
-                Texture_General_Arrow.FileToResource(basePath + @"fix.tpl.mm62.png");
-                Texture_General_Damage01.FileToResource(basePath + @"fix.tpl.mm64.png");
-                Texture_General_Damage02.FileToResource(basePath + @"fix.tpl.mm66.png");
-                Texture_General_Damage03.FileToResource(basePath + @"fix.tpl.mm68.png");
-                Texture_General_Damage04.FileToResource(basePath + @"fix.tpl.mm70.png");
-                Texture_General_ComboScores.FileToResource(basePath + @"fix.tpl.mm71.png");
-                Texture_General_Popup01.FileToResource(basePath + @"fix.tpl.mm72.png");
-                Texture_General_Popup02.FileToResource(basePath + @"fix.tpl.mm73.png");
-                Texture_General_Popup03.FileToResource(basePath + @"fix.tpl.mm74.png");
-                Texture_General_Font.FileToResource(basePath + @"fix.tpl.png");
+                Rayman3_Textures_General.Texture_General_Fist_LockJaw.FileToResource(basePath + @"fix.tpl.mm4.png");
+                Rayman3_Textures_General.Texture_General_Outfit_ThrottleCopter.FileToResource(basePath + @"fix.tpl.mm6.png");
+                Rayman3_Textures_General.Texture_General_Outfit_Normal.FileToResource(basePath + @"fix.tpl.mm7.png");
+                Rayman3_Textures_General.Texture_General_Outfit_HeavyMetalFist.FileToResource(basePath + @"fix.tpl.mm8.png");
+                Rayman3_Textures_General.Texture_General_Outfit_LockJaw.FileToResource(basePath + @"fix.tpl.mm9.png");
+                Rayman3_Textures_General.Texture_General_Outfit_Vortex.FileToResource(basePath + @"fix.tpl.mm10.png");
+                Rayman3_Textures_General.Texture_General_Outfit_ShockRocket.FileToResource(basePath + @"fix.tpl.mm11.png");
+                Rayman3_Textures_General.Texture_General_Fist_Vortex.FileToResource(basePath + @"fix.tpl.mm13.png");
+                Rayman3_Textures_General.Texture_General_Copter_Normal.FileToResource(basePath + @"fix.tpl.mm15.png");
+                Rayman3_Textures_General.Texture_General_Copter_LockJaw.FileToResource(basePath + @"fix.tpl.mm17.png");
+                Rayman3_Textures_General.Texture_General_Copter_ShockRocket.FileToResource(basePath + @"fix.tpl.mm16.png");
+                Rayman3_Textures_General.Texture_General_Copter_HeavyMetalFist.FileToResource(basePath + @"fix.tpl.mm18.png");
+                Rayman3_Textures_General.Texture_General_Copter_Vortex.FileToResource(basePath + @"fix.tpl.mm19.png");
+                Rayman3_Textures_General.Texture_General_Fist_ShockRocket.FileToResource(basePath + @"fix.tpl.mm20.png");
+                Rayman3_Textures_General.Texture_General_Copter_ThrottleCopter.FileToResource(basePath + @"fix.tpl.mm21.png");
+                Rayman3_Textures_General.Texture_General_Fist_HeavyMetalFist.FileToResource(basePath + @"fix.tpl.mm22.png");
+                Rayman3_Textures_General.Texture_General_RedLum01.FileToResource(basePath + @"fix.tpl.mm24.png");
+                Rayman3_Textures_General.Texture_General_RedLum02.FileToResource(basePath + @"fix.tpl.mm25.png");
+                Rayman3_Textures_General.Texture_General_RedLum03.FileToResource(basePath + @"fix.tpl.mm26.png");
+                Rayman3_Textures_General.Texture_General_RedLum04.FileToResource(basePath + @"fix.tpl.mm23.png");
+                Rayman3_Textures_General.Texture_General_GameOver.FileToResource(basePath + @"fix.tpl.mm27.png");
+                Rayman3_Textures_General.Texture_General_HUDElements.FileToResource(basePath + @"fix.tpl.mm29.png");
+                Rayman3_Textures_General.Texture_General_AimingNear.FileToResource(basePath + @"fix.tpl.mm39.png");
+                Rayman3_Textures_General.Texture_General_AimingArrow01.FileToResource(basePath + @"fix.tpl.mm40.png");
+                Rayman3_Textures_General.Texture_General_AimingArrow02.FileToResource(basePath + @"fix.tpl.mm41.png");
+                Rayman3_Textures_General.Texture_General_AimingArrow03.FileToResource(basePath + @"fix.tpl.mm42.png");
+                Rayman3_Textures_General.Texture_General_AimingFar.FileToResource(basePath + @"fix.tpl.mm43.png");
+                Rayman3_Textures_General.Texture_General_ResultStarOff.FileToResource(basePath + @"fix.tpl.mm46.png");
+                Rayman3_Textures_General.Texture_General_GradientBG.FileToResource(basePath + @"fix.tpl.mm47.png");
+                Rayman3_Textures_General.Texture_General_ResultMurfy.FileToResource(basePath + @"fix.tpl.mm48.png");
+                Rayman3_Textures_General.Texture_General_ResultStarOn.FileToResource(basePath + @"fix.tpl.mm49.png");
+                Rayman3_Textures_General.Texture_General_TeensieUnlocked.FileToResource(basePath + @"fix.tpl.mm53.png");
+                Rayman3_Textures_General.Texture_General_TeensieLocked.FileToResource(basePath + @"fix.tpl.mm54.png");
+                Rayman3_Textures_General.Texture_General_TeensieBG.FileToResource(basePath + @"fix.tpl.mm55.png");
+                Rayman3_Textures_General.Texture_General_ScoreDisplay.FileToResource(basePath + @"fix.tpl.mm56.png");
+                Rayman3_Textures_General.Texture_General_Arrow.FileToResource(basePath + @"fix.tpl.mm62.png");
+                Rayman3_Textures_General.Texture_General_Damage01.FileToResource(basePath + @"fix.tpl.mm64.png");
+                Rayman3_Textures_General.Texture_General_Damage02.FileToResource(basePath + @"fix.tpl.mm66.png");
+                Rayman3_Textures_General.Texture_General_Damage03.FileToResource(basePath + @"fix.tpl.mm68.png");
+                Rayman3_Textures_General.Texture_General_Damage04.FileToResource(basePath + @"fix.tpl.mm70.png");
+                Rayman3_Textures_General.Texture_General_ComboScores.FileToResource(basePath + @"fix.tpl.mm71.png");
+                Rayman3_Textures_General.Texture_General_Popup01.FileToResource(basePath + @"fix.tpl.mm72.png");
+                Rayman3_Textures_General.Texture_General_Popup02.FileToResource(basePath + @"fix.tpl.mm73.png");
+                Rayman3_Textures_General.Texture_General_Popup03.FileToResource(basePath + @"fix.tpl.mm74.png");
+                Rayman3_Textures_General.Texture_General_Font.FileToResource(basePath + @"fix.tpl.png");
 
             }
             else if (File.Exists(basePath + @"FIX.TBF"))
@@ -1094,26 +842,26 @@ namespace CrateModLoader.GameSpecific.Rayman3
                 GCN_ExportTextures(basePath + @"menu.tpl");
                 File.Delete(basePath + @"menu.tpl");
 
-                Texture_Menu_Overlay.FileToResource(basePath + @"menu.tpl.png");
-                Texture_Menu_Icons.FileToResource(basePath + @"menu.tpl.mm1.png");
-                Texture_Menu_Icon_Level1.FileToResource(basePath + @"menu.tpl.mm2.png");
-                Texture_Menu_Icon_Level2.FileToResource(basePath + @"menu.tpl.mm3.png");
-                Texture_Menu_Icon_Level3.FileToResource(basePath + @"menu.tpl.mm4.png");
-                Texture_Menu_Icon_Level4.FileToResource(basePath + @"menu.tpl.mm5.png");
-                Texture_Menu_Icon_Level5.FileToResource(basePath + @"menu.tpl.mm6.png");
-                Texture_Menu_Icon_Level6.FileToResource(basePath + @"menu.tpl.mm7.png");
-                Texture_Menu_Icon_Level7.FileToResource(basePath + @"menu.tpl.mm8.png");
-                Texture_Menu_Icon_Level8.FileToResource(basePath + @"menu.tpl.mm9.png");
-                Texture_Menu_Icon_Level9.FileToResource(basePath + @"menu.tpl.mm10.png");
-                Texture_Menu_Icon_Lum.FileToResource(basePath + @"menu.tpl.mm11.png");
-                Texture_Menu_Icon_Options.FileToResource(basePath + @"menu.tpl.mm12.png");
-                Texture_Menu_Icon_Rayman.FileToResource(basePath + @"menu.tpl.mm13.png");
-                Texture_Menu_Icon_Murfy.FileToResource(basePath + @"menu.tpl.mm14.png");
-                Texture_Menu_Icon_Videos.FileToResource(basePath + @"menu.tpl.mm15.png");
-                Texture_Menu_Icon_Camera.FileToResource(basePath + @"menu.tpl.mm16.png");
-                Texture_Menu_Icon_Plum.FileToResource(basePath + @"menu.tpl.mm17.png");
-                Texture_Menu_Icons_Videos.FileToResource(basePath + @"menu.tpl.mm18.png");
-                Texture_Menu_Icons_Misc.FileToResource(basePath + @"menu.tpl.mm19.png");
+                Rayman3_Textures_Menu.Texture_Menu_Overlay.FileToResource(basePath + @"menu.tpl.png");
+                Rayman3_Textures_Menu.Texture_Menu_Icons.FileToResource(basePath + @"menu.tpl.mm1.png");
+                Rayman3_Textures_Menu.Texture_Menu_Icon_Level1.FileToResource(basePath + @"menu.tpl.mm2.png");
+                Rayman3_Textures_Menu.Texture_Menu_Icon_Level2.FileToResource(basePath + @"menu.tpl.mm3.png");
+                Rayman3_Textures_Menu.Texture_Menu_Icon_Level3.FileToResource(basePath + @"menu.tpl.mm4.png");
+                Rayman3_Textures_Menu.Texture_Menu_Icon_Level4.FileToResource(basePath + @"menu.tpl.mm5.png");
+                Rayman3_Textures_Menu.Texture_Menu_Icon_Level5.FileToResource(basePath + @"menu.tpl.mm6.png");
+                Rayman3_Textures_Menu.Texture_Menu_Icon_Level6.FileToResource(basePath + @"menu.tpl.mm7.png");
+                Rayman3_Textures_Menu.Texture_Menu_Icon_Level7.FileToResource(basePath + @"menu.tpl.mm8.png");
+                Rayman3_Textures_Menu.Texture_Menu_Icon_Level8.FileToResource(basePath + @"menu.tpl.mm9.png");
+                Rayman3_Textures_Menu.Texture_Menu_Icon_Level9.FileToResource(basePath + @"menu.tpl.mm10.png");
+                Rayman3_Textures_Menu.Texture_Menu_Icon_Lum.FileToResource(basePath + @"menu.tpl.mm11.png");
+                Rayman3_Textures_Menu.Texture_Menu_Icon_Options.FileToResource(basePath + @"menu.tpl.mm12.png");
+                Rayman3_Textures_Menu.Texture_Menu_Icon_Rayman.FileToResource(basePath + @"menu.tpl.mm13.png");
+                Rayman3_Textures_Menu.Texture_Menu_Icon_Murfy.FileToResource(basePath + @"menu.tpl.mm14.png");
+                Rayman3_Textures_Menu.Texture_Menu_Icon_Videos.FileToResource(basePath + @"menu.tpl.mm15.png");
+                Rayman3_Textures_Menu.Texture_Menu_Icon_Camera.FileToResource(basePath + @"menu.tpl.mm16.png");
+                Rayman3_Textures_Menu.Texture_Menu_Icon_Plum.FileToResource(basePath + @"menu.tpl.mm17.png");
+                Rayman3_Textures_Menu.Texture_Menu_Icons_Videos.FileToResource(basePath + @"menu.tpl.mm18.png");
+                Rayman3_Textures_Menu.Texture_Menu_Icons_Misc.FileToResource(basePath + @"menu.tpl.mm19.png");
 
             }
 
@@ -1124,34 +872,34 @@ namespace CrateModLoader.GameSpecific.Rayman3
                 {
                     GCN_ExportTextures(lsbinpath + @"lodmeca.tpl");
                     File.Delete(lsbinpath + @"lodmeca.tpl");
-                    Texture_Load_Gear.FileToResource(lsbinpath + @"lodmeca.tpl.png");
+                    Rayman3_Textures_Loading.Texture_Load_Gear.FileToResource(lsbinpath + @"lodmeca.tpl.png");
                 }
                 if (File.Exists(lsbinpath + @"lodps2_01.tpl"))
                 {
                     GCN_ExportTextures(lsbinpath + @"lodps2_01.tpl");
                     File.Delete(lsbinpath + @"lodps2_01.tpl");
-                    Texture_Load_01.FileToResource(lsbinpath + @"lodps2_01.tpl.png");
+                    Rayman3_Textures_Loading.Texture_Load_01.FileToResource(lsbinpath + @"lodps2_01.tpl.png");
                     GCN_ExportTextures(lsbinpath + @"lodps2_02.tpl");
                     File.Delete(lsbinpath + @"lodps2_02.tpl");
-                    Texture_Load_02.FileToResource(lsbinpath + @"lodps2_02.tpl.png");
+                    Rayman3_Textures_Loading.Texture_Load_02.FileToResource(lsbinpath + @"lodps2_02.tpl.png");
                     GCN_ExportTextures(lsbinpath + @"lodps2_03.tpl");
                     File.Delete(lsbinpath + @"lodps2_03.tpl");
-                    Texture_Load_03.FileToResource(lsbinpath + @"lodps2_03.tpl.png");
+                    Rayman3_Textures_Loading.Texture_Load_03.FileToResource(lsbinpath + @"lodps2_03.tpl.png");
                     GCN_ExportTextures(lsbinpath + @"lodps2_04.tpl");
                     File.Delete(lsbinpath + @"lodps2_04.tpl");
-                    Texture_Load_04.FileToResource(lsbinpath + @"lodps2_04.tpl.png");
+                    Rayman3_Textures_Loading.Texture_Load_04.FileToResource(lsbinpath + @"lodps2_04.tpl.png");
                     GCN_ExportTextures(lsbinpath + @"lodps2_05.tpl");
                     File.Delete(lsbinpath + @"lodps2_05.tpl");
-                    Texture_Load_05.FileToResource(lsbinpath + @"lodps2_05.tpl.png");
+                    Rayman3_Textures_Loading.Texture_Load_05.FileToResource(lsbinpath + @"lodps2_05.tpl.png");
                     GCN_ExportTextures(lsbinpath + @"lodps2_06.tpl");
                     File.Delete(lsbinpath + @"lodps2_06.tpl");
-                    Texture_Load_06.FileToResource(lsbinpath + @"lodps2_06.tpl.png");
+                    Rayman3_Textures_Loading.Texture_Load_06.FileToResource(lsbinpath + @"lodps2_06.tpl.png");
                     GCN_ExportTextures(lsbinpath + @"lodps2_07.tpl");
                     File.Delete(lsbinpath + @"lodps2_07.tpl");
-                    Texture_Load_07.FileToResource(lsbinpath + @"lodps2_07.tpl.png");
+                    Rayman3_Textures_Loading.Texture_Load_07.FileToResource(lsbinpath + @"lodps2_07.tpl.png");
                     GCN_ExportTextures(lsbinpath + @"lodps2_08.tpl");
                     File.Delete(lsbinpath + @"lodps2_08.tpl");
-                    Texture_Load_08.FileToResource(lsbinpath + @"lodps2_08.tpl.png");
+                    Rayman3_Textures_Loading.Texture_Load_08.FileToResource(lsbinpath + @"lodps2_08.tpl.png");
                 }
             }
         }

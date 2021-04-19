@@ -5,19 +5,18 @@ using CrateModGames.GameSpecific.CrashTS;
 
 namespace CrateModLoader.GameSpecific.CrashTS.Mods
 {
-    // todo: use modder's Random state, randomize per file
+    // todo: test
     public class TS_Rand_Music : ModStruct<ChunkInfoRM>
     {
         public override string Name => Twins_Text.Rand_Music;
         public override string Description => Twins_Text.Rand_MusicDesc;
-        public override CreditContributors Contributors => new CreditContributors(ModLoaderGlobals.Contributor_BetaM);
 
         internal List<uint> musicTypes = new List<uint>();
         internal List<uint> randMusicList = new List<uint>();
 
         public override void BeforeModPass()
         {
-            Random randState = new Random();
+            Random randState = new Random(ModLoaderGlobals.RandomizerSeed);
             List<uint> temp_musicList = new List<uint>();
 
             musicTypes.Add((uint)MusicID.Academy);

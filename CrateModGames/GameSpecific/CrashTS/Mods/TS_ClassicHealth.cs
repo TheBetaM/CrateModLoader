@@ -9,7 +9,6 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
     {
         public override string Name => Twins_Text.Mod_ClassicHealth;
         public override string Description => Twins_Text.Mod_ClassicHealthDesc;
-        public override CreditContributors Contributors => new CreditContributors(ModLoaderGlobals.Contributor_BetaM);
 
         public override void ModPass(ChunkInfoRM info)
         {
