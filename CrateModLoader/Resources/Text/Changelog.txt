@@ -10,6 +10,9 @@ General
 Crash Twinsanity
 - Improved feature compatibility with modded levels in Mod Crates
 
+CTR: Crash Team Racing
+- Updated CTR Framework API (Mod Crates will need to be updated)
+
 Crash Bandicoot
 - New feature: Enable Unused Enemies
 - New feature: Randomize Level Order

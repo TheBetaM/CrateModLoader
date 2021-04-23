@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using CTRFramework.Lang;
+using CTRFramework.Shared;
 
 namespace CrateModLoader.GameSpecific.CrashTeamRacing
 {
     public class CTR_Metadata : ModStruct<string>
     {
+        // todo improve this
         public override void ModPass(string path_extr)
         {
-            LNG lng = new LNG(path_extr + @"lang\en.lng");
+            LNG lng = LNG.FromFile(path_extr + @"lang\en.lng");
+            lng.Export(path_extr + @"lang\en.txt");
+
             string[] lang_lines = File.ReadAllLines(path_extr + @"lang\en.txt", Encoding.Default);
             for (int i = 0; i < lang_lines.Length; i++)
             {
@@ -20,12 +24,16 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
                 }
             }
             File.WriteAllLines(path_extr + @"lang\en.txt", lang_lines, Encoding.Default);
-            lng.ConvertTXT(path_extr + @"lang\en.txt");
+
+            LNG after = LNG.FromText(File.ReadAllLines(path_extr + @"lang\en.txt", Encoding.Default), true);
             File.Delete(path_extr + @"lang\en.txt");
+            after.Save(path_extr + @"lang\en.lng");
 
             if (File.Exists(path_extr + @"lang\en2.lng"))
             {
-                LNG lng1 = new LNG(path_extr + @"lang\en2.lng");
+                LNG lng1 = LNG.FromFile(path_extr + @"lang\en2.lng");
+                lng1.Export(path_extr + @"lang\en2.txt");
+
                 string[] lang_lines1 = File.ReadAllLines(path_extr + @"lang\en2.txt", Encoding.Default);
                 for (int i = 0; i < lang_lines1.Length; i++)
                 {
@@ -35,9 +43,12 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
                     }
                 }
                 File.WriteAllLines(path_extr + @"lang\en2.txt", lang_lines1, Encoding.Default);
-                lng1.ConvertTXT(path_extr + @"lang\en2.txt");
+
+                LNG after1 = LNG.FromText(File.ReadAllLines(path_extr + @"lang\en2.txt", Encoding.Default), true);
                 File.Delete(path_extr + @"lang\en2.txt");
+                after1.Save(path_extr + @"lang\en2.lng");
             }
+            
         }
     }
 }
