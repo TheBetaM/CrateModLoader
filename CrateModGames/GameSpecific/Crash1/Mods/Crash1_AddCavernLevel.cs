@@ -13,6 +13,13 @@ namespace CrateModLoader.GameSpecific.Crash1.Mods
 
         public override void ModPass(NSF_Pair pair)
         {
+            /*
+        * if (Crash1_Props_Main.Option_AddCavernLevel.Enabled)
+           {
+               File.Delete(Path.Combine(ConsolePipeline.ExtractedPath, @"S0\S0000004.NSD"));
+               File.Copy(Path.Combine(ConsolePipeline.ExtractedPath, @"S0\S000000A.NSD"), Path.Combine(ConsolePipeline.ExtractedPath, @"S0\S0000004.NSD"));
+           }
+        */
             if (pair.LevelC1 == Crash1_Levels.MapMainMenu)
             {
                 GOOLEntry map = pair.nsf.GetEntry<GOOLEntry>("IsldC");

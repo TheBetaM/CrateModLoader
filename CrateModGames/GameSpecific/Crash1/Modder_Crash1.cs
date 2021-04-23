@@ -2,123 +2,176 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
+using System.Threading;
 //Crash 1 API by chekwob and ManDude (https://github.com/cbhacks/CrashEdit)
+/*
+ * Mod Passes:
+ * NSF_Pair -> NSF and NSD pair
+ */
 
 namespace CrateModLoader.GameSpecific.Crash1
 {
     public sealed class Modder_Crash1 : Modder
     {
         public override bool ModCrateRegionCheck => true;
+        public override bool AsyncProcess => true;
+        private bool MainBusy = false;
+        private int CurrentPass = 0;
+        private float PassPercentMod = 49f;
+        private int PassPercentAdd = 1;
 
         public Modder_Crash1() { }
 
         public override void StartModProcess()
         {
-            Random rand = new Random(ModLoaderGlobals.RandomizerSeed);
+            ProcessBusy = true;
+
+            AsyncStart();
+        }
+
+        public async void AsyncStart()
+        {
+            UpdateProcessMessage("Starting...", 0);
+
+            // Mod files
+            ModProcess();
+
+            while (MainBusy || PassBusy)
+            {
+                await Task.Delay(100);
+            }
+
+            ProcessBusy = false;
+        }
+
+        public async void ModProcess()
+        {
+            MainBusy = true;
 
             List<FileInfo> nsfs = new List<FileInfo>();
             List<FileInfo> nsds = new List<FileInfo>();
             DirectoryInfo di = new DirectoryInfo(ConsolePipeline.ExtractedPath);
+
             AppendFileInfoDir(nsfs, nsds, di); // this should return all NSF/NSD file pairs
+            PassCount = nsfs.Count;
 
-            bool CachingPass = false;
-            //CrashTri_Common.ResetCache();
-
-            if (Crash1_Props_Main.Option_RandMusicTracks.Enabled)
+            bool NeedsCache = NeedsCachePass();
+            CurrentPass = 0;
+            if (!NeedsCache)
             {
-                CachingPass = true;
+                PassPercentMod = 99f;
+                CurrentPass++;
             }
 
-            if (Crash1_Props_Main.Option_AddCavernLevel.Enabled)
+            while (CurrentPass < 2)
             {
-                File.Delete(Path.Combine(ConsolePipeline.ExtractedPath, @"S0\S0000004.NSD"));
-                File.Copy(Path.Combine(ConsolePipeline.ExtractedPath, @"S0\S000000A.NSD"), Path.Combine(ConsolePipeline.ExtractedPath, @"S0\S0000004.NSD"));
-            }
-
-            for (int i = 0; i < Math.Min(nsfs.Count, nsds.Count); ++i)
-            {
-                FileInfo nsfFile = nsfs[i];
-                FileInfo nsdFile = nsds[i];
-                if (Path.GetFileNameWithoutExtension(nsfFile.Name) != Path.GetFileNameWithoutExtension(nsdFile.Name))
+                PassIterator = 0;
+                PassBusy = true;
+                if (CurrentPass == 0)
                 {
-                    //MessageBox.Show($"NSF /NSD file pair mismatch. First mismatch:\n\n{nsfFile.Name}\n{nsdFile.Name}");
-                    continue;
+                    PassPercentMod = 49f;
+                    PassPercentAdd = 1;
+                    UpdateProcessMessage("Cache Pass", 1);
+                    BeforeCachePass();
+                }
+                else if (CurrentPass == 1)
+                {
+                    if (NeedsCache)
+                    {
+                        PassPercentMod = 50f;
+                        PassPercentAdd = 50;
+                        UpdateProcessMessage("Mod Pass", 50);
+                    }
+                    else
+                    {
+                        PassPercentMod = 99f;
+                        UpdateProcessMessage("Mod Pass", 1);
+                    }
+
+                    BeforeModPass();
                 }
 
-                NSF nsf;
-                OldNSD nsd;
+                IList<Task> editTaskList = new List<Task>();
+
+                for (int i = 0; i < nsfs.Count; i++)
+                {
+                    editTaskList.Add(EditLevel(nsfs, nsds, i));
+                }
+
+                await Task.WhenAll(editTaskList);
+
+                CurrentPass++;
+                PassBusy = false;
+            }
+
+            MainBusy = false;
+
+        }
+
+        private async Task EditLevel(List<FileInfo> nsfs, List<FileInfo> nsds, int iter)
+        {
+            //Console.WriteLine("Editing: " + path);
+            NSF_Pair pair;
+            NSF nsf = null;
+            OldNSD nsd = null;
+            bool skip = false;
+            string nsf_filename = nsfs[iter].FullName;
+            string nsd_filename = nsds[iter].FullName;
+
+            //await Task.Run(
+            //() =>
+            //{
+
+
                 try
                 {
-                    nsf = NSF.LoadAndProcess(File.ReadAllBytes(nsfFile.FullName), GameVersion.Crash1);
-                    nsd = OldNSD.Load(File.ReadAllBytes(nsdFile.FullName));
+                    nsf = NSF.LoadAndProcess(File.ReadAllBytes(nsf_filename), GameVersion.Crash1);
+                    nsd = OldNSD.Load(File.ReadAllBytes(nsd_filename));
                 }
                 catch (Exception ex)
                 {
                     if (ex is LoadAbortedException)
                     {
-                        Console.WriteLine("Crash: LoadAbortedException: " + nsfFile.Name + "\n" + ex.Message);
-                        continue;
-                        //return;
+                        Console.WriteLine("Crash: LoadAbortedException: " + nsfs[iter].Name + "\n" + ex.Message);
+                        skip = true;
                     }
                     else if (ex is LoadSkippedException)
                     {
-                        Console.WriteLine("Crash: LoadSkippedException: " + nsfFile.Name + "\n" + ex.Message);
-                        continue;
-                        //return;
+                        Console.WriteLine("Crash: LoadSkippedException: " + nsfs[iter].Name + "\n" + ex.Message);
+                        skip = true;
                     }
                     else
                         throw;
                 }
 
-                Crash1_Levels NSF_Level = GetLevelFromNSF(nsfFile.Name);
-                
-                if (CachingPass)
+                if (!skip)
                 {
-                    //if (Crash1_Props_Main.Option_RandMusicTracks.Enabled)
-                        //CrashTri_Common.Cache_Music(nsf);
-                }
-                else
-                {
-                    //if (Crash1_Props_Misc.Option_AllCratesWumpa.Enabled) Crash1_Mods.Mod_TurnCratesIntoWumpa(nsf, rand, NSF_Level);
-                    //if (Crash1_Props_Main.Option_RandCrates.Enabled) Crash1_Mods.Mod_RandomCrates(nsf, rand, NSF_Level);
-                    //if (Crash1_Props_Main.Option_RandBonusRounds.Enabled) Crash1_Mods.Mod_RandomizeBonusRounds(nsf, nsd, NSF_Level, rand);
-                    //if (Crash1_Props_Main.Option_BackwardsLevels.Enabled || Crash1_Props_Main.Option_RandBackwardsLevels.Enabled) Crash1_Mods.Mod_BackwardsLevels(nsf, nsd, NSF_Level, Crash1_Props_Main.Option_RandBackwardsLevels.Enabled, rand);
-                    //if (Crash1_Props_Main.Option_BackwardsHogLevels.Enabled) Crash1_Mods.Mod_HogLevelsBackwards(nsf, nsd, NSF_Level);
-                    //if (Crash1_Props_Main.Option_CameraBigFOV.Enabled || Crash1_Props_Misc.Option_RandCameraFOV.Enabled) Crash1_Mods.Mod_CameraFOV(nsf, rand, Crash1_Props_Misc.Option_RandCameraFOV.Enabled);
-                    //if (Crash1_Props_Misc.Option_AllCratesBlank.Enabled) Crash1_Mods.Mod_RandomWoodCrates(nsf, rand, NSF_Level);
-                    //if (Crash1_Props_Main.Option_RandCrateContents.Enabled) Crash1_Mods.Mod_RandomCrateContents(nsf, rand, NSF_Level);
-                    //if (Crash1_Props_Main.Option_RandInvisibleCrates.Enabled) Crash1_Mods.Mod_InvisibleCrates(nsf, rand, NSF_Level, true);
-                    //if (Crash1_Props_Main.Option_InvisibleCrates.Enabled) Crash1_Mods.Mod_InvisibleCrates(nsf, rand, NSF_Level, false);
-                    //if (Crash1_Props_Main.Option_RandBosses.Enabled) Crash1_Mods.Mod_RandomizeBosses(nsf, nsd, NSF_Level, rand, false);
-                    //if (Crash1_Props_Main.Option_AddStormyAscent.Enabled) Crash1_Mods.Mod_AddStormyAscent(nsf, nsd, NSF_Level, GameRegion.Region);
-                    //if (Crash1_Props_Main.Option_AddCavernLevel.Enabled) Crash1_Mods.Mod_AddCavernLevel(nsf, nsd, NSF_Level, GameRegion.Region);
-                    //if (Crash1_Props_Main.Option_RandMap.Enabled) Crash1_Mods.Mod_RandomizeMap(nsf, nsd, NSF_Level, rand, GameRegion.Region);
-                    //if (Crash1_Props_Main.Option_RandWorldPalette.Enabled) CrashTri_Common.Mod_Scenery_Swizzle(nsf, rand);
-                    //if (Crash1_Props_Main.Option_GreyscaleWorld.Enabled) CrashTri_Common.Mod_Scenery_Greyscale(nsf);
-                    //if (Crash1_Props_Main.Option_RandWorldColors.Enabled) CrashTri_Common.Mod_Scenery_Rainbow(nsf, rand);
-                    //if (Crash1_Props_Main.Option_UntexturedWorld.Enabled) CrashTri_Common.Mod_Scenery_Untextured(nsf);
-                    //if (Crash1_Props_Misc.Option_InvisibleWorld.Enabled) CrashTri_Common.Mod_Scenery_Invisible(nsf);
-                    //if (Crash1_Props_Main.Option_RandPantsColor.Enabled || Crash1_Props_Misc.Prop_PantsColor.HasChanged) Crash1_Mods.Mod_PantsColor(nsf, PantsColor);
-                    //if (NSF_Level != Crash1_Levels.MapMainMenu && Crash1_Props_Main.Option_RandMusicTracks.Enabled) CrashTri_Common.Randomize_Music(nsf, rand);
-                    //if (Crash1_Props_Main.Option_RandSounds.Enabled) CrashTri_Common.Mod_RandomizeADIO(nsf, rand);
-                    //if (Crash1_Props_Main.Option_RandLightCol.Enabled) Crash1_Mods.Mod_RandomLightColor(nsf, rand);
+                    Crash1_Levels NSF_Level = GetLevelFromNSF(nsfs[iter].Name);
+                    pair = new NSF_Pair(nsf, nsd, NSF_Level, GameRegion.Region);
 
-                    //if (NSF_Level == Crash1_Levels.L16_HeavyMachinery && Crash1_Props_Main.Option_EnableDog.Enabled) Crash1_Mods.Mod_EnableDog(nsf);
+                    switch (CurrentPass)
+                    {
+                        case 0:
+                            StartCachePass(pair);
+                            break;
+                        default:
+                        case 1:
+                            StartModPass(pair);
+                            break;
+                    }
 
-                    //Crash1_Mods.Mod_Metadata(nsf, nsd, NSF_Level, GameRegion.Region);
+                    PatchNSD(nsf, nsd);
+
+                    File.WriteAllBytes(nsf_filename, nsf.Save());
+                    File.WriteAllBytes(nsd_filename, nsd.Save());
                 }
 
-                PatchNSD(nsf, nsd);
+            //}
+            //);
 
-                File.WriteAllBytes(nsfFile.FullName, nsf.Save());
-                File.WriteAllBytes(nsdFile.FullName, nsd.Save());
-
-                if (CachingPass && i == Math.Min(nsfs.Count, nsds.Count) - 1)
-                {
-                    CachingPass = false;
-                    i = -1;
-                }
-            }
+            PassIterator++;
+            PassPercent = (int)((PassIterator / (float)PassCount) * PassPercentMod) + PassPercentAdd;
         }
 
         private void AppendFileInfoDir(IList<FileInfo> nsfpaths, IList<FileInfo> nsdpaths, DirectoryInfo di)
