@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using CrateModGames.GameSpecific.Crash1;
+using CrateModGames.GameSpecific.Crash1.TrilogyCommon;
 using CrateModGames.GameSpecific.Crash2;
 
 namespace CrateModLoader.GameSpecific.Crash2

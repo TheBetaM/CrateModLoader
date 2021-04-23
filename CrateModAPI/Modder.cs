@@ -10,9 +10,9 @@ namespace CrateModLoader
 {
     /*
      * Adding a game:
-     * 1. Make a new modder class that inherits this abstract class. (ensure that the modder's namespace is CrateModLoader.GameSpecific.??? to avoid bugs)
-     * 2. Override its Game member with the appropriate info in the getter. 
-     * 3. Override StartModProcess (at least, there are more modding functions that can be overriden but are optional).
+     * 1. Make a new Modder class that inherits this abstract class. (ensure that the modder's namespace is CrateModLoader.GameSpecific.??? to avoid bugs)
+     * 2. Make a new Game class that inherits the Game abstract class. 
+     * 3. Override StartModProcess (there are more modding functions that can be overriden but are optional).
      * (optional) 4. Localize game title, API credit, and options using text resources.
      * (optional) 5. Create ModProperty variables for automatic Mod Menu setup.
      * (optional) 6. Add ModPropOption variables for quick options in the main window.
@@ -35,9 +35,25 @@ namespace CrateModLoader
         public List<ModCrate> EnabledModCrates = new List<ModCrate>();
 
         public bool ModMenuEnabled => Props.Count > 0;
-        public bool ModCrateRegionCheck = false; // A game might require some type of verification (i.e. file integrity, region matching) before installing layer0 mod crates.
+        public virtual bool ModCrateRegionCheck => false; // A game might require some type of verification (i.e. file integrity, region matching) before installing layer0 mod crates.
         public virtual bool CanPreloadGame => false;
         public virtual List<ConsoleMode> PreloadConsoles => null;
+
+        // Multithreading stuff
+
+        //public List<Mod> Mods = new List<Mod>();
+        //public List<IModParser> ModParsers = new List<IModParser>();
+        //public List<ModPipeline> Pipelines = new List<ModPipeline>();
+        public Random RandomState; // <- todo consolidate all Random() calls for multithreading!!
+        public List<ModPropertyBase> ActiveProps = new List<ModPropertyBase>();
+        public virtual bool AsyncProcess => false; // delete this after implementing async for all games
+        public bool IsBusy { get; set; }
+        public bool PassBusy { get; set; }
+        public bool ProcessBusy { get; set; }
+        public string ProcessMessage { get; set; }
+        public int PassIterator { get; set; }
+        public int PassCount { get; set; }
+        public int PassPercent { get; set; }
 
         public Modder() { }
 
@@ -160,22 +176,6 @@ namespace CrateModLoader
 
         public virtual void StartPreload() { } // Optional method to preload variables and resources from the game to the Mod Menu+
 
-        // Multithreading stuff
-
-        //public List<Mod> Mods = new List<Mod>();
-        //public List<IModParser> ModParsers = new List<IModParser>();
-        //public List<ModPipeline> Pipelines = new List<ModPipeline>();
-        public Random RandomState; // <- todo consolidate all Random() calls for multithreading!!
-        public List<ModPropertyBase> ActiveProps = new List<ModPropertyBase>();
-        public virtual bool AsyncProcess => false; // delete this after implementing async for all games
-        public bool IsBusy { get; set; }
-        public bool PassBusy { get; set; }
-        public bool ProcessBusy { get; set; }
-        public string ProcessMessage { get; set; }
-        public int PassIterator { get; set; }
-        public int PassCount { get; set; }
-        public int PassPercent { get; set; }
-
         public void UpdateProcessMessage(string msg, int? per = null)
         {
             ProcessMessage = msg;
@@ -240,52 +240,6 @@ namespace CrateModLoader
                 Prop.TargetMod.ModPass(value);
             }
         }
-        public void BeforeQuickPass()
-        {
-            foreach (ModPropertyBase Prop in ActiveProps)
-            {
-                Prop.TargetMod.BeforeQuickPass();
-            }
-        }
-        public void StartQuickPass(object value)
-        {
-            foreach (ModPropertyBase Prop in ActiveProps)
-            {
-                Prop.TargetMod.QuickPass(value);
-            }
-        }
-
-        public void PopulateModsPipelines()
-        {
-            //Mods.Clear();
-            //Pipelines.Clear();
-
-            // Populate mod and pipeline list automatically from namespace
-            Assembly asm = assembly;
-
-            string nameSpace = GetType().Namespace;
-
-            foreach (Type type in asm.GetTypes())
-            {
-                if (!string.IsNullOrEmpty(type.Namespace) && type.Namespace.Contains(nameSpace))
-                {
-                    if (type.IsAssignableFrom(typeof(Mod)))
-                    {
-                        Mod mod = (Mod)Activator.CreateInstance(type);
-                        if (!mod.Hidden)
-                        {
-                            //Mods.Add(mod);
-                        }
-                    }
-                    else if (type.IsAssignableFrom(typeof(ModPipeline)))
-                    {
-                        ModPipeline pipeline = (ModPipeline)Activator.CreateInstance(type);
-                        //Pipelines.Add(pipeline);
-                    }
-                }
-            }
-        }
-
 
         public void StartAsyncProcess()
         {

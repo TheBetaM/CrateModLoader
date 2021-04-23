@@ -29,20 +29,7 @@ namespace CrateModLoader
             }
         }
 
-        public sealed override void QuickPass(object value)
-        {
-            if (value is T)
-            {
-                QuickPass((T)value);
-            }
-            else
-            {
-                return;
-            }
-        }
-
         public virtual void CachePass(T value) { }
-        public virtual void QuickPass(T value) { }
         public abstract void ModPass(T value);
     }
 }

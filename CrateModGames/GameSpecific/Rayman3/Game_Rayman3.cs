@@ -72,9 +72,9 @@ namespace CrateModLoader.GameSpecific.Rayman3
         public override Dictionary<int, string> PropertyCategories => new Dictionary<int, string>()
         {
             [0] = "Options",
-            [(int)R3_ModProps.Textures_Loading] = "Textures - Loading",
-            [(int)R3_ModProps.Textures_Menu] = "Textures - Menu",
-            [(int)R3_ModProps.Textures_General] = "Textures - General",
+            [(int)ModProps.Textures_Loading] = "Textures - Loading",
+            [(int)ModProps.Textures_Menu] = "Textures - Menu",
+            [(int)ModProps.Textures_General] = "Textures - General",
         };
     }
 }

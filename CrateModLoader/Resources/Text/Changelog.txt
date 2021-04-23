@@ -3,14 +3,20 @@
 General
 - PS1, PS2, PSP and Folder mode extraction step is now multithreaded
 - Moddding step is now multithreaded (where possible)
+- Every randomizer is now handled independently from each other (Before - Seed of randomizer feature 1 affects seed of randomizer feature 2; After - the same seed results in the same result for feature 2 regardless of whether feature 1 is enabled)
 - More detailed process visuals
 - Fixed not being able to build unsupported games
+
+Crash Twinsanity
+- Improved feature compatibility with modded levels in Mod Crates
 
 Crash Bandicoot
 - New feature: Enable Unused Enemies
 - New feature: Randomize Level Order
 - New feature: Add Stormy Ascent
 - New feature: Randomize Music Tracks
+- New feature: Randomize Crate Parameters
+- New feature: Random Crates Removed
 - New feature: Invisible World
 
 Crash Bandicoot 2: Cortex Strikes Back

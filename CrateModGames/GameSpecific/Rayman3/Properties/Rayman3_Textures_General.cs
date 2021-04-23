@@ -4,7 +4,7 @@ using CrateModLoader.ModProperties;
 using CrateModGames.GameSpecific.Rayman3;
 namespace CrateModLoader.GameSpecific.Rayman3
 {
-    [ModCategory((int)R3_ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
+    [ModCategory((int)ModProps.Textures_General), ModAllowedConsoles(ConsoleMode.GCN)]
     public static class Rayman3_Textures_General
     {
         public static ModProp_TextureFile Texture_General_Font = new ModProp_TextureFile(false, "Font", "");

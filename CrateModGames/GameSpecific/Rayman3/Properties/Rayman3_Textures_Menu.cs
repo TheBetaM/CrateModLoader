@@ -4,7 +4,7 @@ using CrateModLoader.ModProperties;
 using CrateModGames.GameSpecific.Rayman3;
 namespace CrateModLoader.GameSpecific.Rayman3
 {
-    [ModCategory((int)R3_ModProps.Textures_Menu), ModAllowedConsoles(ConsoleMode.GCN)]
+    [ModCategory((int)ModProps.Textures_Menu), ModAllowedConsoles(ConsoleMode.GCN)]
     public static class Rayman3_Textures_Menu
     {
         public static ModProp_TextureFile Texture_Menu_Overlay = new ModProp_TextureFile(false, "Pause Menu Overlay", "");

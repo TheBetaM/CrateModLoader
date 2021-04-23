@@ -52,8 +52,45 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameSpecific\Crash1\Common\Crash1_Common.cs" />
-    <Compile Include="GameSpecific\Crash1\Crash1_Mods.cs" />
-    <Compile Include="GameSpecific\Crash1\CrashTri_Text.Designer.cs">
+    <Compile Include="GameSpecific\Crash1\Mods\Crash1_AddCavernLevel.cs" />
+    <Compile Include="GameSpecific\Crash1\Mods\Crash1_AddStormyAscent.cs" />
+    <Compile Include="GameSpecific\Crash1\Mods\Crash1_BackwardsHogLevels.cs" />
+    <Compile Include="GameSpecific\Crash1\Randomizers\Crash1_Rand_BackwardsLevels.cs" />
+    <Compile Include="GameSpecific\Crash1\Mods\Crash1_EnableDog.cs" />
+    <Compile Include="GameSpecific\Crash1\Mods\Crash1_Metadata.cs" />
+    <Compile Include="GameSpecific\Crash1\Randomizers\Crash1_Rand_BonusRounds.cs" />
+    <Compile Include="GameSpecific\Crash1\Randomizers\Crash1_Rand_BossPaths.cs" />
+    <Compile Include="GameSpecific\Crash1\Randomizers\Crash1_Rand_LightColor.cs" />
+    <Compile Include="GameSpecific\Crash1\Randomizers\Crash1_Rand_Map.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Mods\CrashTri_Crates_AllBlank.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Mods\CrashTri_Objects_Greyscale.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Mods\CrashTri_Objects_Untextured.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Randomizers\CrashTri_Rand_AshedCrates.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Randomizers\CrashTri_Rand_Audio.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Randomizers\CrashTri_Rand_BoxCounter.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Randomizers\CrashTri_Rand_CameraFOV.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Randomizers\CrashTri_Rand_CrateContents.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Randomizers\CrashTri_Rand_CrateParams.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Randomizers\CrashTri_Rand_CratesIntoWumpa.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Randomizers\CrashTri_Rand_EnemyCrates.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Randomizers\CrashTri_Rand_EnemyPaths.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Randomizers\CrashTri_Rand_MirrorLevel.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Randomizers\CrashTri_Rand_PantsColor.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Randomizers\CrashTri_Rand_InvisibleCrates.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Randomizers\CrashTri_Rand_Music.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Randomizers\CrashTri_Rand_ObjectColors.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Randomizers\CrashTri_Rand_ObjectPalette.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Randomizers\CrashTri_Rand_ObjectTextures.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Randomizers\CrashTri_Rand_RemoveEnemies.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Randomizers\CrashTri_Rand_StreamedAudio.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Randomizers\CrashTri_Rand_WoodenCrates.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Randomizers\CrashTri_Rand_WorldTex.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Mods\CrashTri_Scenery_Greyscale.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Mods\CrashTri_Scenery_Invisible.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Randomizers\CrashTri_Scenery_Rainbow.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Randomizers\CrashTri_Scenery_Swizzle.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Mods\CrashTri_Scenery_Untextured.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\CrashTri_Text.Designer.cs">
       <DependentUpon>CrashTri_Text.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -63,12 +100,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="GameSpecific\Crash1\CrashTri_Common.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\CrashTri_Common.cs" />
     <Compile Include="GameSpecific\Crash1\Game_Crash1.cs" />
     <Compile Include="GameSpecific\Crash1\Modder_Crash1.cs" />
     <Compile Include="GameSpecific\Crash1\Properties\Crash1_Props_Main.cs" />
     <Compile Include="GameSpecific\Crash1\Properties\Crash1_Props_Misc.cs" />
-    <Compile Include="GameSpecific\Crash2\Crash2_Mods.cs" />
+    <Compile Include="GameSpecific\Crash2\Common\Crash2_Common.cs" />
     <Compile Include="GameSpecific\Crash2\Crash2_Text.Designer.cs">
       <DependentUpon>Crash2_Text.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -76,9 +113,15 @@
     </Compile>
     <Compile Include="GameSpecific\Crash2\Game_Crash2.cs" />
     <Compile Include="GameSpecific\Crash2\Modder_Crash2.cs" />
+    <Compile Include="GameSpecific\Crash2\Mods\Crash2_Metadata.cs" />
+    <Compile Include="GameSpecific\Crash2\Mods\Crash2_VehicleLevelsOnFoot.cs" />
     <Compile Include="GameSpecific\Crash2\Properties\Crash2_Props_Main.cs" />
     <Compile Include="GameSpecific\Crash2\Properties\Crash2_Props_Misc.cs" />
-    <Compile Include="GameSpecific\Crash3\Crash3_Mods.cs" />
+    <Compile Include="GameSpecific\Crash2\Randomizers\Crash2_Rand_BackwardsLevels.cs" />
+    <Compile Include="GameSpecific\Crash2\Randomizers\Crash2_Rand_BossPaths.cs" />
+    <Compile Include="GameSpecific\Crash2\Randomizers\Crash2_Rand_WarpRoom.cs" />
+    <Compile Include="GameSpecific\Crash2\Randomizers\Crash2_Rand_WarpRoomExits.cs" />
+    <Compile Include="GameSpecific\Crash3\Common\Crash3_Common.cs" />
     <Compile Include="GameSpecific\Crash3\Crash3_Text.Designer.cs">
       <DependentUpon>Crash3_Text.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -86,15 +129,27 @@
     </Compile>
     <Compile Include="GameSpecific\Crash3\Game_Crash3.cs" />
     <Compile Include="GameSpecific\Crash3\Modder_Crash3.cs" />
+    <Compile Include="GameSpecific\Crash3\Mods\Crash3_Metadata.cs" />
+    <Compile Include="GameSpecific\Crash3\Mods\Crash3_RemoveBarriers.cs" />
     <Compile Include="GameSpecific\Crash3\Properties\Crash3_Props_Main.cs" />
     <Compile Include="GameSpecific\Crash3\Properties\Crash3_Props_Misc.cs" />
+    <Compile Include="GameSpecific\Crash3\Randomizers\Crash3_Rand_BackwardsLevels.cs" />
+    <Compile Include="GameSpecific\Crash3\Randomizers\Crash3_Rand_BossPatterns.cs" />
+    <Compile Include="GameSpecific\Crash3\Randomizers\Crash3_Rand_FlyingLevels.cs" />
+    <Compile Include="GameSpecific\Crash3\Randomizers\Crash3_Rand_WarpRoom.cs" />
     <Compile Include="GameSpecific\CrashBash\Game_CrashBash.cs" />
     <Compile Include="GameSpecific\CrashBash\Modder_Bash.cs" />
     <Compile Include="GameSpecific\CrashMoM\Game_CrashMoM.cs" />
     <Compile Include="GameSpecific\CrashMoM\Modder_MoM.cs" />
-    <Compile Include="GameSpecific\CrashNitroKart\Common\CNK_Data.cs" />
-    <Compile Include="GameSpecific\CrashNitroKart\Common\CNK_Data_Adventure.cs" />
+    <Compile Include="GameSpecific\CrashMoM\Mods\MoM_Metadata.cs" />
+    <Compile Include="GameSpecific\CrashMoM\Properties\MoM_Props_Main.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\Common\CNK_Common.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\Game_CrashNK.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\Mods\CNK_DisableFadeout.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\Mods\CNK_DisablePopups.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\Mods\CNK_Metadata.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\Mods\CNK_NoIntro.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\Mods\CNK_SpeedUpMaskHints.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\Properties\CNK_Data_DriverStats.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\Properties\CNK_Data_KartStats.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\Properties\CNK_Data_Powerups.cs" />
@@ -107,14 +162,28 @@
     </Compile>
     <Compile Include="GameSpecific\CrashNitroKart\Modder_CNK.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\Properties\CNK_Props_Main.cs" />
-    <Compile Include="GameSpecific\CrashTeamRacing\BIG.cs" />
-    <Compile Include="GameSpecific\CrashTeamRacing\CTRFile.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\Randomizers\CNK_Rand_Adventure.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\Randomizers\CNK_Rand_CharacterStats.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\Randomizers\CNK_Rand_Drivers.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\Randomizers\CNK_Rand_Karts.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\Randomizers\CNK_Rand_KartStats.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\Randomizers\CNK_Rand_Music.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\Randomizers\CNK_Rand_PowerupDistribution.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\Randomizers\CNK_Rand_PowerupEffects.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\Randomizers\CNK_Rand_SurfaceParams.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Common\BIG.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Common\CTRFile.cs" />
     <Compile Include="GameSpecific\CrashTeamRacing\Game_CrashTR.cs" />
     <Compile Include="GameSpecific\CrashTeamRacing\Modder_CTR.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Mods\CTR_Metadata.cs" />
     <Compile Include="GameSpecific\CrashTeamRacing\Properties\CTR_Props_Main.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Randomizers\CTR_Rand_Tracks.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Randomizers\CTR_Rand_Tracks101.cs" />
     <Compile Include="GameSpecific\CrashTitans\Game_CrashTitans.cs" />
     <Compile Include="GameSpecific\CrashTitans\Modder_Titans.cs" />
+    <Compile Include="GameSpecific\CrashTitans\Mods\Titans_TestMod.cs" />
     <Compile Include="GameSpecific\CrashTitans\Properties\Titans_Props_Main.cs" />
+    <Compile Include="GameSpecific\CrashTitans\Randomizers\Titans_Rand_EpisodeOrder.cs" />
     <Compile Include="GameSpecific\CrashTS\Game_CrashTS.cs" />
     <Compile Include="GameSpecific\CrashTS\Modder_Twins.cs" />
     <Compile Include="GameSpecific\CrashTS\Mods\TS_ChangeCreditsChunk.cs" />
@@ -160,10 +229,8 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="GameSpecific\CrashTTR\CTTR_Data.cs" />
-    <Compile Include="GameSpecific\CrashTTR\CTTR_Data_Text.cs" />
-    <Compile Include="GameSpecific\CrashTTR\CTTR_Mods.cs" />
-    <Compile Include="GameSpecific\CrashTTR\CTTR_Randomizers.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Common\CTTR_Data.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Common\CTTR_Data_Text.cs" />
     <Compile Include="GameSpecific\CrashTTR\CTTR_Text.Designer.cs">
       <DependentUpon>CTTR_Text.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -171,6 +238,9 @@
     </Compile>
     <Compile Include="GameSpecific\CrashTTR\Game_CrashTTR.cs" />
     <Compile Include="GameSpecific\CrashTTR\Modder_CTTR.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Mods\CTTR_Metadata.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Mods\CTTR_PreventSequenceBreaks.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Mods\CTTR_TestMod.cs" />
     <Compile Include="GameSpecific\CrashTTR\Properties\CTTR_Props_Main.cs" />
     <Compile Include="GameSpecific\CrashTTR\Properties\CTTR_Props_Misc.cs" />
     <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunk.cs" />
@@ -285,20 +355,44 @@
     <Compile Include="GameSpecific\CrashTTR\Pure3D\File.cs" />
     <Compile Include="GameSpecific\CrashTTR\Pure3D\Types.cs" />
     <Compile Include="GameSpecific\CrashTTR\Pure3D\Util.cs" />
-    <Compile Include="GameSpecific\CrashTTR\RCF.cs" />
-    <Compile Include="GameSpecific\CrashTTR\RCF_Manager.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Common\RCF.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Common\RCF_Manager.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Randomizers\CTTR_Rand_BattleKOs.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Randomizers\CTTR_Rand_HubEntrances.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Randomizers\CTTR_Rand_MinigameEntrances.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Randomizers\CTTR_Rand_PlatformingCharacter.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Randomizers\CTTR_Rand_RaceLaps.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Randomizers\CTTR_Rand_TrackEntrances.cs" />
+    <Compile Include="GameSpecific\CrashTWOC\Common\TWOC_Common.cs" />
     <Compile Include="GameSpecific\CrashTWOC\Game_CrashTWOC.cs" />
     <Compile Include="GameSpecific\CrashTWOC\Modder_TWOC.cs" />
+    <Compile Include="GameSpecific\CrashTWOC\Mods\TWOC_Mod_SwapLevels.cs" />
     <Compile Include="GameSpecific\CrashTWOC\Properties\TWOC_Props_Main.cs" />
-    <Compile Include="GameSpecific\CrashTWOC\TWOC_File_AI.cs" />
-    <Compile Include="GameSpecific\CrashTWOC\TWOC_File_CRT.cs" />
-    <Compile Include="GameSpecific\CrashTWOC\TWOC_File_WMP.cs" />
+    <Compile Include="GameSpecific\CrashTWOC\Randomizers\TWOC_Rand_Crates.cs" />
+    <Compile Include="GameSpecific\CrashTWOC\Randomizers\TWOC_Rand_CratesRemoved.cs" />
+    <Compile Include="GameSpecific\CrashTWOC\Randomizers\TWOC_Rand_EnemiesRemoved.cs" />
+    <Compile Include="GameSpecific\CrashTWOC\Randomizers\TWOC_Rand_EnemyPaths.cs" />
+    <Compile Include="GameSpecific\CrashTWOC\Randomizers\TWOC_Rand_LevelOrder.cs" />
+    <Compile Include="GameSpecific\CrashTWOC\Randomizers\TWOC_Rand_Music.cs" />
+    <Compile Include="GameSpecific\CrashTWOC\Randomizers\TWOC_Rand_WumpaIntoCrates.cs" />
+    <Compile Include="GameSpecific\CrashTWOC\Common\TWOC_File_AI.cs" />
+    <Compile Include="GameSpecific\CrashTWOC\Common\TWOC_File_CRT.cs" />
+    <Compile Include="GameSpecific\CrashTWOC\Common\TWOC_File_WMP.cs" />
+    <Compile Include="GameSpecific\Rayman3\Common\Ray3_Common.cs" />
     <Compile Include="GameSpecific\Rayman3\Game_Rayman3.cs" />
     <Compile Include="GameSpecific\Rayman3\Modder_Rayman3.cs" />
+    <Compile Include="GameSpecific\Rayman3\Mods\Ray3_RemoveIntroVideos.cs" />
+    <Compile Include="GameSpecific\Rayman3\Mods\Ray3_Start2DNightmare.cs" />
     <Compile Include="GameSpecific\Rayman3\Properties\Rayman3_Props_Main.cs" />
     <Compile Include="GameSpecific\Rayman3\Properties\Rayman3_Textures_General.cs" />
     <Compile Include="GameSpecific\Rayman3\Properties\Rayman3_Textures_Loading.cs" />
     <Compile Include="GameSpecific\Rayman3\Properties\Rayman3_Textures_Menu.cs" />
+    <Compile Include="GameSpecific\Rayman3\Randomizers\Ray3_Rand_CopterColors.cs" />
+    <Compile Include="GameSpecific\Rayman3\Randomizers\Ray3_Rand_HUDColors.cs" />
+    <Compile Include="GameSpecific\Rayman3\Randomizers\Ray3_Rand_LevelOrder.cs" />
+    <Compile Include="GameSpecific\Rayman3\Randomizers\Ray3_Rand_OutfitColors.cs" />
+    <Compile Include="GameSpecific\Rayman3\Randomizers\Ray3_Rand_OutfitVisuals.cs" />
+    <Compile Include="GameSpecific\Rayman3\Randomizers\Ray3_Rand_WorldColors.cs" />
     <Compile Include="GameSpecific\Rayman3\Rayman3_Text.Designer.cs">
       <DependentUpon>Rayman3_Text.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -332,7 +426,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="GameSpecific\Crash1\CrashTri_Text.resx">
+    <EmbeddedResource Include="GameSpecific\Crash1\TrilogyCommon\CrashTri_Text.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>CrashTri_Text.Designer.cs</LastGenOutput>
     </EmbeddedResource>
@@ -366,30 +460,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="GameSpecific\Crash1\Mods\" />
-    <Folder Include="GameSpecific\Crash1\Randomizers\" />
-    <Folder Include="GameSpecific\Crash2\Mods\" />
-    <Folder Include="GameSpecific\Crash2\Randomizers\" />
-    <Folder Include="GameSpecific\Crash3\Mods\" />
-    <Folder Include="GameSpecific\Crash3\Randomizers\" />
     <Folder Include="GameSpecific\CrashBash\Mods\" />
     <Folder Include="GameSpecific\CrashBash\Properties\" />
     <Folder Include="GameSpecific\CrashBash\Randomizers\" />
-    <Folder Include="GameSpecific\CrashMoM\Mods\" />
-    <Folder Include="GameSpecific\CrashMoM\Properties\" />
     <Folder Include="GameSpecific\CrashMoM\Randomizers\" />
-    <Folder Include="GameSpecific\CrashNitroKart\Mods\" />
-    <Folder Include="GameSpecific\CrashNitroKart\Randomizers\" />
-    <Folder Include="GameSpecific\CrashTeamRacing\Mods\" />
-    <Folder Include="GameSpecific\CrashTeamRacing\Randomizers\" />
-    <Folder Include="GameSpecific\CrashTitans\Mods\" />
-    <Folder Include="GameSpecific\CrashTitans\Randomizers\" />
-    <Folder Include="GameSpecific\CrashTTR\Mods\" />
-    <Folder Include="GameSpecific\CrashTTR\Randomizers\" />
-    <Folder Include="GameSpecific\CrashTWOC\Mods\" />
-    <Folder Include="GameSpecific\CrashTWOC\Randomizers\" />
-    <Folder Include="GameSpecific\Rayman3\Mods\" />
-    <Folder Include="GameSpecific\Rayman3\Randomizers\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

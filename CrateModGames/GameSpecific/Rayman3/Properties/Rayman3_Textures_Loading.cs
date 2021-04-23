@@ -4,7 +4,7 @@ using CrateModLoader.ModProperties;
 using CrateModGames.GameSpecific.Rayman3;
 namespace CrateModLoader.GameSpecific.Rayman3
 {
-    [ModCategory((int)R3_ModProps.Textures_Loading), ModAllowedConsoles(ConsoleMode.GCN)]
+    [ModCategory((int)ModProps.Textures_Loading), ModAllowedConsoles(ConsoleMode.GCN)]
     public static class Rayman3_Textures_Loading
     {
         public static ModProp_TextureFile Texture_Load_Gear = new ModProp_TextureFile(false, "Loading - Gear", "");

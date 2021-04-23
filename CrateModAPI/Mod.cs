@@ -4,9 +4,8 @@ using System.Collections.Generic;
 namespace CrateModLoader
 {
     // A mod describes the process of modifying a processed structure or file(s).
-    // Pass 1 (Quick): Right after extracting the file (can not rely on other files or cached data existing)
-    // Pass 2 (Cache): After extracting all files
-    // Pass 3 (Mod): After Pass 2 for all files
+    // Pass 1 (Cache): After extracting all files
+    // Pass 2 (Mod): After Pass 2 for all files
     public abstract class Mod : IMod
     {
         // Metadata
@@ -25,13 +24,10 @@ namespace CrateModLoader
         public bool IsBusy { get; set; }
         public int Order { get; set; } // order of execution
 
-        public virtual void QuickPass(object value) { } // Pass 1 (Quick): Right after extracting the file (can not rely on other files or cached data existing)
-        public virtual void CachePass(object value) { } // Pass 2 (Cache): After extracting all files
-        public abstract void ModPass(object value); // Pass 3 (Mod): After Pass 2 for all files
+        public virtual void CachePass(object value) { } // Pass 1 (Cache): After extracting all files
+        public abstract void ModPass(object value); // Pass 2 (Mod): After all files were processed for Cache pass
 
         public virtual void Init() { }
-        public virtual void BeforeQuickPass() { }
-        public virtual void AfterQuickPass() { }
         public virtual void BeforeCachePass() { }
         public virtual void AfterCachePass() { }
         public virtual void BeforeModPass() { }

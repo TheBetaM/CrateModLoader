@@ -1,0 +1,315 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="API_Credit" xml:space="preserve">
+    <value>API by chekwob and ManDude</value>
+  </data>
+  <data name="Mod_AllCratesBlank" xml:space="preserve">
+    <value>All Crates Are Blank</value>
+  </data>
+  <data name="Mod_AllCratesBlankDesc" xml:space="preserve">
+    <value>All regular crates are replaced with Blank ones.</value>
+  </data>
+  <data name="Mod_AllCratesWumpa" xml:space="preserve">
+    <value>All Crates Are Wumpa</value>
+  </data>
+  <data name="Mod_AllCratesWumpaDesc" xml:space="preserve">
+    <value>All regular crates are replaced with Wumpa fruit.</value>
+  </data>
+  <data name="Mod_CameraWideFOV" xml:space="preserve">
+    <value>Wider Camera Field-Of-View</value>
+  </data>
+  <data name="Mod_CameraWideFOVDesc" xml:space="preserve">
+    <value>The camera is further away from the player than normal (recommended for Backwards Levels)</value>
+  </data>
+  <data name="Mod_GreyscaleObjects" xml:space="preserve">
+    <value>Greyscale Objects</value>
+  </data>
+  <data name="Mod_GreyscaleObjectsDesc" xml:space="preserve">
+    <value>The object colors are greyed out.</value>
+  </data>
+  <data name="Mod_GreyscaleWorld" xml:space="preserve">
+    <value>Greyscale World</value>
+  </data>
+  <data name="Mod_GreyscaleWorldDesc" xml:space="preserve">
+    <value>The scenery colors are greyed out.</value>
+  </data>
+  <data name="Mod_InvisibleCrates" xml:space="preserve">
+    <value>All Crates Are Invisible</value>
+  </data>
+  <data name="Mod_InvisibleCratesDesc" xml:space="preserve">
+    <value>All crates are invisible until you touch them.</value>
+  </data>
+  <data name="Mod_RemoveEnemies" xml:space="preserve">
+    <value>Remove All Enemies</value>
+  </data>
+  <data name="Mod_RemoveEnemiesDesc" xml:space="preserve">
+    <value>All enemies and hazaards are removed.</value>
+  </data>
+  <data name="Mod_UntexturedWorld" xml:space="preserve">
+    <value>Untextured World</value>
+  </data>
+  <data name="Mod_UntexturedWorldDesc" xml:space="preserve">
+    <value>The scenery's textures are disabled (only colors remain).</value>
+  </data>
+  <data name="Prop_PantsColor" xml:space="preserve">
+    <value>Pants Color</value>
+  </data>
+  <data name="Prop_PantsColorDesc" xml:space="preserve">
+    <value>Modify the color of Crash's pants.</value>
+  </data>
+  <data name="Rand_BackwardsLevels" xml:space="preserve">
+    <value>Random Levels Are Backwards</value>
+  </data>
+  <data name="Rand_BackwardsLevelsDesc" xml:space="preserve">
+    <value>Any supported level has a random chance of being backwards.</value>
+  </data>
+  <data name="Rand_CameraFOV" xml:space="preserve">
+    <value>Randomize Camera Field-Of-View</value>
+  </data>
+  <data name="Rand_CameraFOVDesc" xml:space="preserve">
+    <value>The distance between the camera and the player is randomized.</value>
+  </data>
+  <data name="Rand_CrateContents" xml:space="preserve">
+    <value>Randomize Crate Contents</value>
+  </data>
+  <data name="Rand_CrateContentsDesc" xml:space="preserve">
+    <value>Contents of regular crates are randomized between different amounts of Wumpa, an extra life, and a mask.</value>
+  </data>
+  <data name="Rand_CrateCounter" xml:space="preserve">
+    <value>Randomize Crate Counter</value>
+  </data>
+  <data name="Rand_CrateCounterDesc" xml:space="preserve">
+    <value>Randomize the number of required crates to break to get a gem in each level. Breaking more crates than required will not grant a gem. Overridden by Random/All Enemies Are Random Crates and Random Crates Removed.</value>
+  </data>
+  <data name="Rand_CrateParams" xml:space="preserve">
+    <value>Randomize Crate Parameters</value>
+  </data>
+  <data name="Rand_CrateParamsDesc" xml:space="preserve">
+    <value>Crates have randomized parameters.</value>
+  </data>
+  <data name="Rand_Crates" xml:space="preserve">
+    <value>Randomize Wooden Crates</value>
+  </data>
+  <data name="Rand_CratesDesc" xml:space="preserve">
+    <value>Randomizes wooden crate types from available ones in each level.</value>
+  </data>
+  <data name="Rand_CratesRemoved" xml:space="preserve">
+    <value>Random Crates Removed</value>
+  </data>
+  <data name="Rand_CratesRemovedDesc" xml:space="preserve">
+    <value>A random amount of crates is removed in each level. The box counter is adjusted accordingly.</value>
+  </data>
+  <data name="Rand_EnemiesRemoved" xml:space="preserve">
+    <value>Random Enemies Removed</value>
+  </data>
+  <data name="Rand_EnemiesRemovedDesc" xml:space="preserve">
+    <value>Random enemies and hazards are removed in each level.</value>
+  </data>
+  <data name="Rand_EnemyCrates" xml:space="preserve">
+    <value>Random Enemies Are Random Crates (Beta)</value>
+  </data>
+  <data name="Rand_EnemyCratesDesc" xml:space="preserve">
+    <value>Random enemies and hazards are turned into random crates in each level. The box counter is adjusted accordingly.</value>
+  </data>
+  <data name="Rand_EnemyPaths" xml:space="preserve">
+    <value>Randomize Enemy Paths</value>
+  </data>
+  <data name="Rand_EnemyPathsDesc" xml:space="preserve">
+    <value>Paths of enemies are randomized.</value>
+  </data>
+  <data name="Rand_InvisibleCrates" xml:space="preserve">
+    <value>Random Crates Are Invisible</value>
+  </data>
+  <data name="Rand_InvisibleCratesDesc" xml:space="preserve">
+    <value>Random crates are invisible until you touch them.</value>
+  </data>
+  <data name="Rand_ObjCol" xml:space="preserve">
+    <value>Randomize Object Colors</value>
+  </data>
+  <data name="Rand_ObjColDesc" xml:space="preserve">
+    <value>Colors used in objects are shuffled around.</value>
+  </data>
+  <data name="Rand_ObjectPalette" xml:space="preserve">
+    <value>Randomize Object Palette</value>
+  </data>
+  <data name="Rand_ObjectPaletteDesc" xml:space="preserve">
+    <value>Swizzle the object colors into a random shade.</value>
+  </data>
+  <data name="Rand_ObjTex" xml:space="preserve">
+    <value>Randomize Object Textures</value>
+  </data>
+  <data name="Rand_ObjTexDesc" xml:space="preserve">
+    <value>Textures and animated textures used in objects are shuffled around.</value>
+  </data>
+  <data name="Rand_PantsColor" xml:space="preserve">
+    <value>Randomize Pants Color</value>
+  </data>
+  <data name="Rand_PantsColorDesc" xml:space="preserve">
+    <value>Randomize the color of Crash's pants.</value>
+  </data>
+  <data name="Rand_SFX" xml:space="preserve">
+    <value>Randomize Sound Effects</value>
+  </data>
+  <data name="Rand_SFXDesc" xml:space="preserve">
+    <value>The sound effects in each level are randomized between each other.</value>
+  </data>
+  <data name="Rand_Streams" xml:space="preserve">
+    <value>Randomize Streamed Audio (Cutscenes, etc.)</value>
+  </data>
+  <data name="Rand_StreamsDesc" xml:space="preserve">
+    <value>The streamed audio used for cutscenes and Aku Aku hints is randomly shuffled around in each level.</value>
+  </data>
+  <data name="Rand_WoodenCrates" xml:space="preserve">
+    <value>Randomize Wooden Crates</value>
+  </data>
+  <data name="Rand_WoodenCratesDesc" xml:space="preserve">
+    <value>The types of some wooden crates are randomized.</value>
+  </data>
+  <data name="Rand_WorldColors" xml:space="preserve">
+    <value>Randomize World Colors</value>
+  </data>
+  <data name="Rand_WorldColors1" xml:space="preserve">
+    <value>Randomize World Colors</value>
+  </data>
+  <data name="Rand_WorldColorsDesc" xml:space="preserve">
+    <value>The scenery colors are randomized in each level.</value>
+  </data>
+  <data name="Rand_WorldColorsDesc1" xml:space="preserve">
+    <value>The scenery colors are randomized in each level.</value>
+  </data>
+  <data name="Rand_WorldPalette" xml:space="preserve">
+    <value>Randomize World Palette</value>
+  </data>
+  <data name="Rand_WorldPalette1" xml:space="preserve">
+    <value>Randomize World Palette</value>
+  </data>
+  <data name="Rand_WorldPaletteDesc" xml:space="preserve">
+    <value>The scenery color palette is randomized in each level.</value>
+  </data>
+  <data name="Rand_WorldPaletteDesc1" xml:space="preserve">
+    <value>Swizzle the scenery colors into a random shade.</value>
+  </data>
+  <data name="Rand_WorldTex" xml:space="preserve">
+    <value>Randomize World Textures</value>
+  </data>
+  <data name="Rand_WorldTexDesc" xml:space="preserve">
+    <value>Textures and animated textures used in scenery are shuffled around.</value>
+  </data>
+</root>

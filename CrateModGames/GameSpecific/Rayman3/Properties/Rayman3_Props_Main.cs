@@ -7,22 +7,22 @@ namespace CrateModLoader.GameSpecific.Rayman3
 {
     public static class Rayman3_Props_Main
     {
-        public static ModPropOption Option_RandLevelOrderAll = new ModPropOption(Rayman3_Text.Rand_LevelOrder2, Rayman3_Text.Rand_LevelOrder2Desc);
-        public static ModPropOption Option_RandLevelOrder = new ModPropOption(Rayman3_Text.Rand_LevelOrder, Rayman3_Text.Rand_LevelOrderDesc);
-        public static ModPropOption Option_RandOutfitVisuals = new ModPropOption(Rayman3_Text.Rand_OutfitVisuals, Rayman3_Text.Rand_OutfitVisualsDesc);
+        public static ModPropOption Option_RandLevelOrderAll = new ModPropOption(new Ray3_Rand_LevelOrder(false), Rayman3_Text.Rand_LevelOrder2, Rayman3_Text.Rand_LevelOrder2Desc);
+        public static ModPropOption Option_RandLevelOrder = new ModPropOption(new Ray3_Rand_LevelOrder(true));
+        public static ModPropOption Option_RandOutfitVisuals = new ModPropOption(new Ray3_Rand_OutfitVisuals());
         [ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModPropOption Option_RandOutfitColors = new ModPropOption(Rayman3_Text.Rand_OutfitColors, Rayman3_Text.Rand_OutfitColorsDesc);
+        public static ModPropOption Option_RandOutfitColors = new ModPropOption(new Ray3_Rand_OutfitColors());
         [ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModPropOption Option_RandCopterColors = new ModPropOption(Rayman3_Text.Rand_CopterColors, Rayman3_Text.Rand_CopterColorsDesc);
+        public static ModPropOption Option_RandCopterColors = new ModPropOption(new Ray3_Rand_CopterColors());
         [ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModPropOption Option_RandHUDColors = new ModPropOption(Rayman3_Text.Rand_HUDColors, Rayman3_Text.Rand_HUDColorsDesc);
+        public static ModPropOption Option_RandHUDColors = new ModPropOption(new Ray3_Rand_HUDColors());
         [ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModPropOption Option_RandWorldColors = new ModPropOption(Rayman3_Text.Rand_WorldColors, Rayman3_Text.Rand_WorldColorsDesc)
+        public static ModPropOption Option_RandWorldColors = new ModPropOption(new Ray3_Rand_WorldColors())
         { Hidden = true, }; // works in some levels, broken in others
         [ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModPropOption Option_NewGameNightmare = new ModPropOption(Rayman3_Text.Mod_NewGameNightmare, Rayman3_Text.Mod_NewGameNightmareDesc);
+        public static ModPropOption Option_NewGameNightmare = new ModPropOption(new Ray3_Start2DNightmare());
         [ModAllowedConsoles(ConsoleMode.GCN)]
-        public static ModPropOption Option_RemoveIntroVideos = new ModPropOption(1, Rayman3_Text.Mod_RemoveIntroVideo, Rayman3_Text.Mod_RemoveIntroVideoDesc);
+        public static ModPropOption Option_RemoveIntroVideos = new ModPropOption(new Ray3_RemoveIntroVideo(), 1);
 
     }
 }

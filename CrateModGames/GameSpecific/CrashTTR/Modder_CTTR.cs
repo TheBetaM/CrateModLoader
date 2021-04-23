@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using Pure3D;
-using Pure3D.Chunks;
 //RCF API by NeoKesha
 //Pure3D API by BetaM (based on https://github.com/handsomematt/Pure3D)
 /* 
  * Mod Layers:
  * 1: All .RCF file contents (only replace files)
+ * Mod Passes:
+ * string -> extraction path
  */
 
 namespace CrateModLoader.GameSpecific.CrashTTR
@@ -58,20 +57,7 @@ namespace CrateModLoader.GameSpecific.CrashTTR
         internal string path_RCF_movies = "";
         internal string basePath = "";
 
-        public Modder_CTTR()
-        {
-
-        }
-
-        public Random randState = new Random();
-
-        private List<int> randChars = new List<int>();
-        private List<int> randHubs = new List<int>();
-        private List<int> randTracks = new List<int>();
-        private List<int> randMinigames = new List<int>();
-        private List<int> randLaps = new List<int>();
-        private List<int> randKOs = new List<int>();
-        private List<int> randGems = new List<int>();
+        public Modder_CTTR() { }
 
         public void SetPaths(ConsoleMode console, string exec_name = "")
         {
@@ -270,131 +256,9 @@ namespace CrateModLoader.GameSpecific.CrashTTR
             SetPaths(ConsolePipeline.Metadata.Console, GameRegion.ExecName);
             basePath = ConsolePipeline.ExtractedPath;
 
+            BeforeModPass();
+
             RCF_Manager.cachedRCF = null;
-
-            randState = new Random(ModLoaderGlobals.RandomizerSeed);
-
-            EditDefaultAndCommon();
-
-            CTTR_Randomizers.targetCharAnim = null;
-            CTTR_Randomizers.targetIdleAnim = null;
-
-        }
-
-        void EditDefaultAndCommon()
-        {
-            randChars = new List<int>();
-            if (CTTR_Props_Main.Option_RandCharacters.Enabled)
-            {
-                int maxPlayableCharacters = 2;
-
-                List<int> possibleChars = new List<int>();
-                
-                for (int i = 0; i < 8; i++)
-                {
-                    possibleChars.Add(i);
-                }
-
-                for (int i = 0; i < maxPlayableCharacters; i++)
-                {
-                    int targetChar = possibleChars[randState.Next(0, possibleChars.Count)];
-                    randChars.Add(targetChar);
-                    possibleChars.Remove(targetChar);
-                }
-            }
-            randHubs = new List<int>();
-            randGems = new List<int>();
-            /*
-            if (GetOption(RandomizeHubs))
-            {
-                List<int> possibleHubs = new List<int>();
-
-                for (int i = 1; i < 6; i++)
-                {
-                    possibleHubs.Add(i);
-                }
-
-                for (int i = 0; i < 5; i++)
-                {
-                    int targetHub = possibleHubs[randState.Next(0, possibleHubs.Count)];
-                    randHubs.Add(targetHub);
-                    possibleHubs.Remove(targetHub);
-                }
-                List<int> possibleGems = new List<int>();
-
-                possibleGems.Add(0);
-                possibleGems.Add(1);
-                possibleGems.Add(2);
-                possibleGems.Add(4);
-                possibleGems.Add(5);
-                for (int i = 0; i < 5; i++)
-                {
-                    int targetGem = possibleGems[randState.Next(0, possibleGems.Count)];
-                    randGems.Add(targetGem);
-                    possibleGems.Remove(targetGem);
-                    if (i == 2)
-                    {
-                        randGems.Add(3);
-                    }
-                }
-            }
-            */
-            randTracks = new List<int>();
-            randMinigames = new List<int>();
-            if (CTTR_Props_Main.Option_RandTrackEntrances.Enabled)
-            {
-                List<int> possibleTracks = new List<int>();
-
-                for (int i = 0; i < 15; i++)
-                {
-                    possibleTracks.Add(i);
-                }
-
-                for (int i = 0; i < 15; i++)
-                {
-                    int targetTrack = possibleTracks[randState.Next(0, possibleTracks.Count)];
-                    randTracks.Add(targetTrack);
-                    possibleTracks.Remove(targetTrack);
-                }
-                List<int> possibleMinigames = new List<int>();
-
-                for (int i = 0; i < 8; i++)
-                {
-                    possibleMinigames.Add(i);
-                }
-
-                for (int i = 0; i < 8; i++)
-                {
-                    int targetMinigame = possibleMinigames[randState.Next(0, possibleMinigames.Count)];
-                    randMinigames.Add(targetMinigame);
-                    possibleMinigames.Remove(targetMinigame);
-                }
-            }
-            randLaps = new List<int>();
-            if (CTTR_Props_Main.Option_RandRaceLaps.Enabled)
-            {
-                for (int i = 0; i < 15; i++)
-                {
-                    if (i == 12) // Rings of Uranus
-                    {
-                        randLaps.Add(randState.Next(3, 13));
-                    }
-                    else
-                    {
-                        randLaps.Add(randState.Next(1, 7));
-                    }
-                }
-            }
-            randKOs = new List<int>();
-            /*
-            if (GetOption(RandomizeBattleKOs))
-            {
-                for (int i = 0; i < 5; i++)
-                {
-                    randKOs.Add(randState.Next(5, 20));
-                }
-            }
-            */
 
             List<string> all_RCF = new List<string> {
                 path_RCF_default,
@@ -464,130 +328,9 @@ namespace CrateModLoader.GameSpecific.CrashTTR
 
             ModCrates.InstallLayerMods(EnabledModCrates, path_extr, 1);
 
-            ParseSettings(path_extr);
-
-            if (CTTR_Props_Main.Option_RandCharacters.Enabled)
-            {
-                CTTR_Randomizers.Randomize_Characters(path_extr, randChars);
-            }
-            /*
-            if (GetOption(RandomizeHubs))
-            {
-                CTTR_Randomizers.Randomize_Hubs(path_extr, randHubs, randGems);
-            }
-            */
-            if (CTTR_Props_Main.Option_RandTrackEntrances.Enabled)
-            {
-                CTTR_Randomizers.Randomize_Tracks(path_extr, randTracks);
-            }
-            if (CTTR_Props_Main.Option_RandMinigames.Enabled)
-            {
-                CTTR_Randomizers.Randomize_Minigames(path_extr, randMinigames);
-            }
-            if (CTTR_Props_Main.Option_RandRaceLaps.Enabled)
-            {
-                CTTR_Randomizers.Randomize_Race_Laps(path_extr, randLaps);
-            }
-            /*
-            if (GetOption(RandomizeBattleKOs))
-            {
-                CTTR_Randomizers.Randomize_Battle_KOs(path_extr, randKOs);
-            }
-            */
-            if (CTTR_Props_Main.Option_NoSequenceBreaks.Enabled)
-            {
-                CTTR_Mods.Mod_PreventSequenceBreaks(path_extr);
-            }
-            CTTR_Mods.Mod_EditCredits(basePath);
+            StartModPass(path_extr);
 
             RCF_Manager.Pack(basePath + path, path_extr);
-        }
-
-        public void OpenModMenu()
-        {
-
-            /*
-            basePath = ModLoaderGlobals.ToolsPath;
-            RCF_Manager.Extract(basePath + @"frontend.rcf", basePath + @"temp\");
-
-            RCF_Manager.Pack(basePath + @"exfrontend.rcf", basePath + @"temp\");
-            */
-
-
-            
-            Pure3D.File CrashOnfootAnim1 = new Pure3D.File();
-            CrashOnfootAnim1.Load(ModLoaderGlobals.ToolsPath + "file.p3d");
-            PrintHierarchy(CrashOnfootAnim1.RootChunk, 0);
-
-            Shader[] shaders = CrashOnfootAnim1.RootChunk.GetChildren<Shader>();
-            //ModelExporter.AddSkinnedModelWithAnimations(ref CrashOnfootAnim1.RootChunk.GetChildren<Skin>()[0], ref CrashOnfootAnim1.RootChunk.GetChildren<SkeletonCTTR>()[0], ref shaders);
-            //ModelExporter.ExportModel(ModLoaderGlobals.ToolsPath + "out.dae");
-
-            /*
-            Console.WriteLine("\nNow saving...\n");
-            CrashOnfootAnim1.Save(ModLoaderGlobals.ToolsPath + "file1.p3d");
-            */
-            
-
-        }
-
-        void PrintHierarchy(Chunk chunk, int indent)
-        {
-            Console.WriteLine("{1}{0}", chunk.ToString(), new string('\t', indent));
-
-            foreach (var child in chunk.Children)
-                PrintHierarchy(child, indent + 1);
-        }
-
-        void ParseSettings(string path_extr)
-        {
-            // example setting
-            if (CTTR_Props_Misc.RaceLaps.HasChanged)
-            {
-                if (System.IO.File.Exists(path_extr + @"design\startup.god"))
-                {
-                    string[] startup_lines = System.IO.File.ReadAllLines(path_extr + @"design\startup.god");
-                    List<string> LineList = new List<string>();
-                    for (int i = 0; i < startup_lines.Length; i++)
-                    {
-                        LineList.Add(startup_lines[i]);
-                    }
-
-                    int LevelListStart = 0;
-                    for (int i = 0; i < LineList.Count; i++)
-                    {
-                        if (LineList[i] == "function GetLevelList()")
-                        {
-                            LevelListStart = i + 2;
-                            break;
-                        }
-                    }
-                    LineList[LevelListStart] = "{\"adventure1\",ThemeAdventure,TypeRace," + CTTR_Props_Misc.RaceLaps.Value[0] + ",true},";
-                    LineList[LevelListStart + 1] = "{\"adventure2\",ThemeAdventure,TypeRace," + CTTR_Props_Misc.RaceLaps.Value[1] + ",true},";
-                    LineList[LevelListStart + 2] = "{\"adventure3\",ThemeAdventure,TypeRace," + CTTR_Props_Misc.RaceLaps.Value[2] + ",true},";
-                    LineList[LevelListStart + 4] = "{\"fairy1\",ThemeFairy,TypeRace," + CTTR_Props_Misc.RaceLaps.Value[3] + ",true},";
-                    LineList[LevelListStart + 5] = "{\"fairy2\",ThemeFairy,TypeRace," + CTTR_Props_Misc.RaceLaps.Value[4] + ",true},";
-                    LineList[LevelListStart + 6] = "{\"fairy3\",ThemeFairy,TypeRace," + CTTR_Props_Misc.RaceLaps.Value[5] + ",true},";
-                    LineList[LevelListStart + 9] = "{\"dino1\",ThemeDino,TypeRace," + CTTR_Props_Misc.RaceLaps.Value[6] + ",true},";
-                    LineList[LevelListStart + 10] = "{\"dino2\",ThemeDino,TypeRace," + CTTR_Props_Misc.RaceLaps.Value[7] + ",true},";
-                    LineList[LevelListStart + 11] = "{\"dino3\",ThemeDino,TypeRace," + CTTR_Props_Misc.RaceLaps.Value[8] + ",true},";
-                    LineList[LevelListStart + 13] = "{\"egypt1\",ThemeEgypt,TypeRace," + CTTR_Props_Misc.RaceLaps.Value[9] + ",true},";
-                    LineList[LevelListStart + 14] = "{\"egypt2\",ThemeEgypt,TypeRace," + CTTR_Props_Misc.RaceLaps.Value[10] + ",true},";
-                    LineList[LevelListStart + 15] = "{\"egypt3\",ThemeEgypt,TypeRace," + CTTR_Props_Misc.RaceLaps.Value[11] + ",true},";
-                    LineList[LevelListStart + 17] = "{\"solar1\",ThemeSolar,TypeRace," + CTTR_Props_Misc.RaceLaps.Value[12] + ",true},";
-                    LineList[LevelListStart + 18] = "{\"solar2\",ThemeSolar,TypeRace," + CTTR_Props_Misc.RaceLaps.Value[13] + ",true},";
-                    LineList[LevelListStart + 19] = "{\"solar3\",ThemeSolar,TypeRace," + CTTR_Props_Misc.RaceLaps.Value[14] + ",true},";
-
-                    startup_lines = new string[LineList.Count];
-                    for (int i = 0; i < LineList.Count; i++)
-                    {
-                        startup_lines[i] = LineList[i];
-                    }
-
-                    System.IO.File.WriteAllLines(path_extr + @"design\startup.god", startup_lines);
-
-                }
-            }
         }
     }
 }

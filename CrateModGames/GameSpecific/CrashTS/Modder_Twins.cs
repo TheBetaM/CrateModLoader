@@ -8,6 +8,11 @@ using System.Threading.Tasks;
 /* 
  * Mod Layers:
  * 1: Extracted BD/BH archive files (PS2 only, same as layer 0 on XBOX)
+ * Mod Passes:
+ * ChunkInfoRM -> All RM files
+ * ChunkInfoSM -> All SM files
+ * ChunkInfoFull -> All RM/SM file pairs (not yet implemented)
+ * ExecutableInfo -> Executable file paths and associated metadata
  */
 
 namespace CrateModLoader.GameSpecific.CrashTS
@@ -78,8 +83,6 @@ namespace CrateModLoader.GameSpecific.CrashTS
             MainBusy = true;
 
             //Start Modding
-
-            LoadActiveProps();
             EditingRM = CheckModsForRM();
             EditingSM = CheckModsForSM();
 

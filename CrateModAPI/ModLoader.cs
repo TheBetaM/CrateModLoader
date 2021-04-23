@@ -249,6 +249,7 @@ namespace CrateModLoader
                         Modder.EnabledModCrates.Add(Mod);
                     }
                 }
+                Modder.LoadActiveProps();
                 ModCrates.InstallCrateSettings(SupportedMods, Modder);
                 if (!Modder.AsyncProcess)
                 {

@@ -10,7 +10,8 @@ namespace CrateModLoader.GameSpecific.CrashTTR
     {
         public static string[] TrackNames = Enum.GetNames(typeof(TrackID));
 
-        public static ModPropNamedUIntArray RaceLaps = new ModPropNamedUIntArray(new uint[]
+        public static ModPropNamedUIntArray RaceLaps = new ModPropNamedUIntArray(new CTTR_Rand_RaceLaps(true),
+            new uint[]
         {
             3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 9, 3, 3
         }, TrackNames);

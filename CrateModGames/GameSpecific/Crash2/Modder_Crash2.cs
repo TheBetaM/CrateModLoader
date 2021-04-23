@@ -9,12 +9,9 @@ namespace CrateModLoader.GameSpecific.Crash2
 {
     public sealed class Modder_Crash2 : Modder
     {
+        public override bool ModCrateRegionCheck => true;
 
-        public Modder_Crash2()
-        {
-            ModCrateRegionCheck = true;
-
-        }
+        public Modder_Crash2() { }
 
         public override void StartModProcess()
         {
@@ -34,27 +31,14 @@ namespace CrateModLoader.GameSpecific.Crash2
             AppendFileInfoDir(nsfs, nsds, di); // this should return all NSF/NSD file pairs
 
             bool CachingPass = false;
-            if (Crash2_Props_Main.Option_RandMusic.Enabled || Crash2_Props_Main.Option_RandMusicTracks.Enabled || Crash2_Props_Main.Option_RandMusicInstruments.Enabled)
-            {
-                CachingPass = true;
-            }
-            CrashTri_Common.ResetCache();
+            //if (Crash2_Props_Main.Option_RandMusic.Enabled || Crash2_Props_Main.Option_RandMusicTracks.Enabled || Crash2_Props_Main.Option_RandMusicInstruments.Enabled)
+            //{
+            //    CachingPass = true;
+            //}
+            //CrashTri_Common.ResetCache();
 
-            SceneryColor PantsColor = new SceneryColor(0, 0, 0);
-            if (Crash2_Props_Main.Option_RandPantsColor.Enabled)
-            {
-                PantsColor = new SceneryColor((byte)rand.Next(256), (byte)rand.Next(256), (byte)rand.Next(256), 0);
-                // just so that it doesn't affect gameplay randomizers
-                rand = new Random(ModLoaderGlobals.RandomizerSeed);
-            }
-
-            if (Crash2_Props_Misc.Prop_PantsColor.HasChanged)
-            {
-                PantsColor = new SceneryColor((byte)Crash2_Props_Misc.Prop_PantsColor.R, (byte)Crash2_Props_Misc.Prop_PantsColor.G, (byte)Crash2_Props_Misc.Prop_PantsColor.B, 0);
-            }
-
-            List<List<WavebankChunk>> wavebankChunks = new List<List<WavebankChunk>>();
-            List<List<MusicEntry>> musicEntries = new List<List<MusicEntry>>();
+            //List<List<WavebankChunk>> wavebankChunks = new List<List<WavebankChunk>>();
+            //List<List<MusicEntry>> musicEntries = new List<List<MusicEntry>>();
 
             for (int i = 0; i < Math.Min(nsfs.Count, nsds.Count); ++i)
             {
@@ -95,51 +79,51 @@ namespace CrateModLoader.GameSpecific.Crash2
 
                 if (CachingPass)
                 {
-                    if (Crash2_Props_Main.Option_RandMusicTracks.Enabled)
-                        CrashTri_Common.Cache_Music(nsf);
+                    //if (Crash2_Props_Main.Option_RandMusicTracks.Enabled)
+                        //CrashTri_Common.Cache_Music(nsf);
                 }
                 else
                 {
-                    if (Crash2_Props_Misc.Option_AllCratesWumpa.Enabled) Crash2_Mods.Mod_TurnCratesIntoWumpa(nsf, rand);
-                    if (Crash2_Props_Main.Option_RandWarpRoom.Enabled) Crash2_Mods.Mod_RandomizeWarpRoom(nsf, nsd, NSF_Level, rand);
-                    if (Crash2_Props_Main.Option_RandWarpRoomExits.Enabled) Crash2_Mods.Mod_RandomizeWarpRoomExits(nsf, nsd, NSF_Level, rand);
-                    if (Crash2_Props_Main.Option_BackwardsLevels.Enabled || Crash2_Props_Main.Option_RandBackwardsLevels.Enabled) Crash2_Mods.Mod_BackwardsLevels(nsf, nsd, NSF_Level, Crash2_Props_Main.Option_RandBackwardsLevels.Enabled, rand);
-                    if (Crash2_Props_Main.Option_VehicleLevelsOnFoot.Enabled && !Crash2_Props_Main.Option_BackwardsLevels.Enabled) Crash2_Mods.Mod_VehicleLevelsOnFoot(nsf, nsd, NSF_Level);
-                    if (Crash2_Props_Main.Option_CameraBigFOV.Enabled || Crash2_Props_Misc.Option_RandCameraFOV.Enabled) Crash2_Mods.Mod_CameraFOV(nsf, rand, Crash2_Props_Misc.Option_RandCameraFOV.Enabled);
-                    if (Crash2_Props_Misc.Option_AllCratesBlank.Enabled) Crash2_Mods.Mod_RandomWoodCrates(nsf, rand);
-                    if (Crash2_Props_Misc.Option_RandCrates.Enabled) Crash2_Mods.Rand_WoodenCrates(nsf, rand, NSF_Level);
-                    if (Crash2_Props_Main.Option_RandBosses.Enabled) Crash2_Mods.Mod_RandomizeBosses(nsf, nsd, NSF_Level, rand, false);
-                    if (Crash2_Props_Main.Option_RandBoxCount.Enabled) Crash2_Mods.Rand_BoxCount(nsf, rand, NSF_Level);
-                    if (Crash2_Props_Misc.Option_AllEnemiesMissing.Enabled) Crash2_Mods.Mod_RemoveEnemies(nsf, rand, NSF_Level, false);
-                    if (Crash2_Props_Main.Option_RandEnemiesAreCrates.Enabled) Crash2_Mods.Mod_EnemyCrates(nsf, rand, NSF_Level, true);
-                    if (Crash2_Props_Misc.Option_AllEnemiesAreCrates.Enabled) Crash2_Mods.Mod_EnemyCrates(nsf, rand, NSF_Level, false);
-                    if (Crash2_Props_Main.Option_RandEnemiesMissing.Enabled) Crash2_Mods.Mod_RemoveEnemies(nsf, rand, NSF_Level, true);
-                    if (Crash2_Props_Misc.Option_RandEnemyPaths.Enabled) Crash2_Mods.Rand_EnemyPaths(nsf, rand, NSF_Level);
-                    if (Crash2_Props_Main.Option_RandCratesMissing.Enabled) Crash2_Mods.Rand_CratesMissing(nsf, rand);
-                    if (Crash2_Props_Main.Option_RandCrateContents.Enabled) Crash2_Mods.Mod_RandomCrateContents(nsf, rand);
-                    if (Crash2_Props_Main.Option_RandCrateParams.Enabled) Crash2_Mods.Mod_RandomCrateParams(nsf, rand, NSF_Level);
-                    if (Crash2_Props_Main.Option_RandInvisibleCrates.Enabled) Crash2_Mods.Mod_InvisibleCrates(nsf, rand, NSF_Level, true);
-                    if (Crash2_Props_Main.Option_InvisibleCrates.Enabled) Crash2_Mods.Mod_InvisibleCrates(nsf, rand, NSF_Level, false);
-                    if (Crash2_Props_Main.Option_MirroredWorld.Enabled || Crash2_Props_Main.Option_RandMirroredWorld.Enabled) Mod_MirrorLevel(nsf, nsd, rand, Crash2_Props_Main.Option_RandMirroredWorld.Enabled);
-                    if (Crash2_Props_Main.Option_RandWorldPalette.Enabled) CrashTri_Common.Mod_Scenery_Swizzle(nsf, rand);
-                    if (Crash2_Props_Main.Option_GreyscaleWorld.Enabled) CrashTri_Common.Mod_Scenery_Greyscale(nsf);
-                    if (Crash2_Props_Main.Option_RandWorldColors.Enabled) CrashTri_Common.Mod_Scenery_Rainbow(nsf, rand);
-                    if (Crash2_Props_Main.Option_UntexturedWorld.Enabled) CrashTri_Common.Mod_Scenery_Untextured(nsf);
-                    if (Crash2_Props_Misc.Option_InvisibleWorld.Enabled) CrashTri_Common.Mod_Scenery_Invisible(nsf);
-                    if (NSF_Level != Crash2_Levels.Unknown && Crash2_Props_Main.Option_RandMusicTracks.Enabled) CrashTri_Common.Randomize_Music(nsf, rand);
-                    if (Crash2_Props_Main.Option_RandSounds.Enabled) CrashTri_Common.Mod_RandomizeADIO(nsf, rand);
-                    if (Crash2_Props_Main.Option_RandWorldTex.Enabled) CrashTri_Common.Mod_RandomizeWGEOTex(nsf, rand);
-                    if (Crash2_Props_Main.Option_RandPantsColor.Enabled || Crash2_Props_Misc.Prop_PantsColor.HasChanged) Crash2_Mods.Mod_PantsColor(nsf, PantsColor);
-                    if (Crash2_Props_Misc.Option_RandObjCol.Enabled) CrashTri_Common.Mod_RandomizeTGEOCol(nsf, rand);
-                    if (Crash2_Props_Main.Option_AllCratesAshed.Enabled) Crash2_Mods.Mod_AshedCrates(nsf, rand, false);
-                    if (Crash2_Props_Main.Option_RandCratesAshed.Enabled) Crash2_Mods.Mod_AshedCrates(nsf, rand, true);
-                    if (Crash2_Props_Misc.Option_RandObjTex.Enabled) CrashTri_Common.Mod_RandomizeTGEOTex(nsf, rand);
-                    if (Crash2_Props_Main.Option_RandStreams.Enabled) CrashTri_Common.Mod_RandomizeSDIO(nsf, rand);
-                    if (Crash2_Props_Main.Option_RandObjPalette.Enabled) CrashTri_Common.Mod_SwizzleObjectColors(nsf, rand);
-                    if (Crash2_Props_Main.Option_UntexturedObj.Enabled) CrashTri_Common.Mod_RemoveTGEOTex(nsf, rand);
-                    if (Crash2_Props_Misc.Option_UncoloredObj.Enabled) CrashTri_Common.Mod_RemoveObjectColors(nsf, rand);
+                    //if (Crash2_Props_Misc.Option_AllCratesWumpa.Enabled) Crash2_Mods.Mod_TurnCratesIntoWumpa(nsf, rand);
+                    //if (Crash2_Props_Main.Option_RandWarpRoom.Enabled) Crash2_Mods.Mod_RandomizeWarpRoom(nsf, nsd, NSF_Level, rand);
+                    //if (Crash2_Props_Main.Option_RandWarpRoomExits.Enabled) Crash2_Mods.Mod_RandomizeWarpRoomExits(nsf, nsd, NSF_Level, rand);
+                    //if (Crash2_Props_Main.Option_BackwardsLevels.Enabled || Crash2_Props_Main.Option_RandBackwardsLevels.Enabled) Crash2_Mods.Mod_BackwardsLevels(nsf, nsd, NSF_Level, Crash2_Props_Main.Option_RandBackwardsLevels.Enabled, rand);
+                    //if (Crash2_Props_Main.Option_VehicleLevelsOnFoot.Enabled && !Crash2_Props_Main.Option_BackwardsLevels.Enabled) Crash2_Mods.Mod_VehicleLevelsOnFoot(nsf, nsd, NSF_Level);
+                    //if (Crash2_Props_Main.Option_CameraBigFOV.Enabled || Crash2_Props_Misc.Option_RandCameraFOV.Enabled) Crash2_Mods.Mod_CameraFOV(nsf, rand, Crash2_Props_Misc.Option_RandCameraFOV.Enabled);
+                    //if (Crash2_Props_Misc.Option_AllCratesBlank.Enabled) Crash2_Mods.Mod_RandomWoodCrates(nsf, rand);
+                    //if (Crash2_Props_Misc.Option_RandCrates.Enabled) Crash2_Mods.Rand_WoodenCrates(nsf, rand, NSF_Level);
+                    //if (Crash2_Props_Main.Option_RandBosses.Enabled) Crash2_Mods.Mod_RandomizeBosses(nsf, nsd, NSF_Level, rand, false);
+                    //if (Crash2_Props_Main.Option_RandBoxCount.Enabled) Crash2_Mods.Rand_BoxCount(nsf, rand, NSF_Level);
+                    //if (Crash2_Props_Misc.Option_AllEnemiesMissing.Enabled) Crash2_Mods.Mod_RemoveEnemies(nsf, rand, NSF_Level, false);
+                    //if (Crash2_Props_Main.Option_RandEnemiesAreCrates.Enabled) Crash2_Mods.Mod_EnemyCrates(nsf, rand, NSF_Level, true);
+                    //if (Crash2_Props_Misc.Option_AllEnemiesAreCrates.Enabled) Crash2_Mods.Mod_EnemyCrates(nsf, rand, NSF_Level, false);
+                    //if (Crash2_Props_Main.Option_RandEnemiesMissing.Enabled) Crash2_Mods.Mod_RemoveEnemies(nsf, rand, NSF_Level, true);
+                    //if (Crash2_Props_Misc.Option_RandEnemyPaths.Enabled) Crash2_Mods.Rand_EnemyPaths(nsf, rand, NSF_Level);
+                    //if (Crash2_Props_Main.Option_RandCratesMissing.Enabled) Crash2_Mods.Rand_CratesMissing(nsf, rand);
+                    //if (Crash2_Props_Main.Option_RandCrateContents.Enabled) Crash2_Mods.Mod_RandomCrateContents(nsf, rand);
+                    //if (Crash2_Props_Main.Option_RandCrateParams.Enabled) Crash2_Mods.Mod_RandomCrateParams(nsf, rand, NSF_Level);
+                    //if (Crash2_Props_Main.Option_RandInvisibleCrates.Enabled) Crash2_Mods.Mod_InvisibleCrates(nsf, rand, NSF_Level, true);
+                    //if (Crash2_Props_Main.Option_InvisibleCrates.Enabled) Crash2_Mods.Mod_InvisibleCrates(nsf, rand, NSF_Level, false);
+                    //if (Crash2_Props_Main.Option_MirroredWorld.Enabled || Crash2_Props_Main.Option_RandMirroredWorld.Enabled) Mod_MirrorLevel(nsf, nsd, rand, Crash2_Props_Main.Option_RandMirroredWorld.Enabled);
+                    //if (Crash2_Props_Main.Option_RandWorldPalette.Enabled) CrashTri_Common.Mod_Scenery_Swizzle(nsf, rand);
+                    //if (Crash2_Props_Main.Option_GreyscaleWorld.Enabled) CrashTri_Common.Mod_Scenery_Greyscale(nsf);
+                    //if (Crash2_Props_Main.Option_RandWorldColors.Enabled) CrashTri_Common.Mod_Scenery_Rainbow(nsf, rand);
+                    //if (Crash2_Props_Main.Option_UntexturedWorld.Enabled) CrashTri_Common.Mod_Scenery_Untextured(nsf);
+                    //if (Crash2_Props_Misc.Option_InvisibleWorld.Enabled) CrashTri_Common.Mod_Scenery_Invisible(nsf);
+                    //if (NSF_Level != Crash2_Levels.Unknown && Crash2_Props_Main.Option_RandMusicTracks.Enabled) CrashTri_Common.Randomize_Music(nsf, rand);
+                    //if (Crash2_Props_Main.Option_RandSounds.Enabled) CrashTri_Common.Mod_RandomizeADIO(nsf, rand);
+                    //if (Crash2_Props_Main.Option_RandWorldTex.Enabled) CrashTri_Common.Mod_RandomizeWGEOTex(nsf, rand);
+                    //if (Crash2_Props_Main.Option_RandPantsColor.Enabled || Crash2_Props_Misc.Prop_PantsColor.HasChanged) Crash2_Mods.Mod_PantsColor(nsf, PantsColor);
+                    //if (Crash2_Props_Misc.Option_RandObjCol.Enabled) CrashTri_Common.Mod_RandomizeTGEOCol(nsf, rand);
+                    //if (Crash2_Props_Main.Option_AllCratesAshed.Enabled) Crash2_Mods.Mod_AshedCrates(nsf, rand, false);
+                    //if (Crash2_Props_Main.Option_RandCratesAshed.Enabled) Crash2_Mods.Mod_AshedCrates(nsf, rand, true);
+                    //if (Crash2_Props_Misc.Option_RandObjTex.Enabled) CrashTri_Common.Mod_RandomizeTGEOTex(nsf, rand);
+                    //if (Crash2_Props_Main.Option_RandStreams.Enabled) CrashTri_Common.Mod_RandomizeSDIO(nsf, rand);
+                    //if (Crash2_Props_Main.Option_RandObjPalette.Enabled) CrashTri_Common.Mod_SwizzleObjectColors(nsf, rand);
+                    //if (Crash2_Props_Main.Option_UntexturedObj.Enabled) CrashTri_Common.Mod_RemoveTGEOTex(nsf, rand);
+                    //if (Crash2_Props_Misc.Option_UncoloredObj.Enabled) CrashTri_Common.Mod_RemoveObjectColors(nsf, rand);
 
-                    Crash2_Mods.Mod_Metadata(nsf, nsd, NSF_Level, GameRegion.Region);
+                    //Crash2_Mods.Mod_Metadata(nsf, nsd, NSF_Level, GameRegion.Region);
                 }
 
                 PatchNSD(nsf, nsd);
@@ -231,142 +215,16 @@ namespace CrateModLoader.GameSpecific.Crash2
             }
         }
 
-        internal string[] Crash2_LevelFileNames = new string[]
-        {
-            "0A",
-            "0C",
-            "0D",
-            "0E",
-            "0F",
-            "10",
-            "11",
-            "12",
-            "13",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "1A",
-            "1B",
-            "1D",
-            "1E",
-            "1F",
-            "20",
-            "21",
-            "22",
-            "23",
-            "24",
-            "25",
-            "26",
-            "27",
-            //Bosses
-            "06",
-            "08",
-            "03",
-            "09",
-            "07",
-            //Other
-            "02",
-            "2D",
-            "2E",
-            "2F",
-            "30",
-        };
-
         internal Crash2_Levels GetLevelFromNSF(string NSf_Name)
         {
-            for (int i = 0; i < Crash2_LevelFileNames.Length; i++)
+            for (int i = 0; i < Crash2_Common.Crash2_LevelFileNames.Length; i++)
             {
-                if (NSf_Name.Contains("S00000" + Crash2_LevelFileNames[i]))
+                if (NSf_Name.Contains("S00000" + Crash2_Common.Crash2_LevelFileNames[i]))
                 {
                     return (Crash2_Levels)i;
                 }
             }
             return Crash2_Levels.Unknown;
-        }
-
-        internal void CacheMusic(NSF nsf, ref List<List<WavebankChunk>> wavebankChunks, ref List<List<MusicEntry>> musicEntries)
-        {
-            List<WavebankChunk> waveBanks = new List<WavebankChunk>();
-            List<MusicEntry> musicFiles = new List<MusicEntry>();
-            foreach (Chunk chunk in nsf.Chunks)
-            {
-                if (chunk is NormalChunk normchunk)
-                {
-                    foreach (Entry entry in normchunk.Entries)
-                    {
-                        if (entry is MusicEntry music)
-                        {
-                            musicFiles.Add(music);
-                        }
-                    }
-                }
-                else if (chunk is WavebankChunk wavechunk)
-                {
-                    waveBanks.Add(wavechunk);
-                }
-            }
-            wavebankChunks.Add(waveBanks);
-            musicEntries.Add(musicFiles);
-        }
-
-        internal void Randomize_Music(NSF nsf, Random rand, ref List<List<WavebankChunk>> wavebankChunks, ref List<List<MusicEntry>> musicEntries, bool RandomMusic, bool RandomTracks, bool RandomInstruments)
-        {
-            //unfinished
-            foreach (Chunk chunk in nsf.Chunks)
-            {
-                if (chunk is NormalChunk normchunk)
-                {
-                    foreach (Entry entry in normchunk.Entries)
-                    {
-                        if (entry is MusicEntry music)
-                        {
-                            
-                        }
-                    }
-                }
-                else if (chunk is WavebankChunk wavechunk)
-                {
-                    
-                }
-            }
-        }
-
-        internal void Mod_MirrorLevel(NSF nsf, NSD nsd, Random rand, bool isRandom)
-        {
-            //unfinished
-
-            foreach (Chunk chunk in nsf.Chunks)
-            {
-                if (chunk is NormalChunk zonechunk)
-                {
-                    foreach (Entry entry in zonechunk.Entries)
-                    {
-                        if (entry is ZoneEntry zone)
-                        {
-                            
-                        }
-                        else if (entry is SceneryEntry scen)
-                        {
-                            for (int i = 0; i < scen.Vertices.Count; i++)
-                            {
-                                SceneryVertex vertex = scen.Vertices[i];
-                                int x = -vertex.X;
-                                int y = vertex.Y;
-                                int z = vertex.Z;
-                                int unknownx = vertex.UnknownX;
-                                int unknowny = vertex.UnknownY;
-                                int unknownz = vertex.UnknownZ;
-                                int color = vertex.Color;
-                                scen.Vertices[i] = new SceneryVertex(x, y, z, unknownx, unknowny, unknownz);
-                            }
-                        }
-                    }
-                }
-            }
-
-            nsd.Spawns[0].SpawnX = -nsd.Spawns[0].SpawnX;
         }
 
     }
