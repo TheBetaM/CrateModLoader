@@ -5,7 +5,7 @@ using CrateModGames.GameSpecific.CrashNitroKart;
 
 namespace CrateModLoader.GameSpecific.CrashNitroKart
 {
-    public class CNK_Rand_CharacterStats : ModStruct<string>
+    public class CNK_Rand_CharacterStats : ModStruct<CSV>
     {
         public override string Name => CNK_Text.Rand_CharacterStats;
         public override string Description => CNK_Text.Rand_CharacterStatsDesc;
@@ -119,60 +119,69 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
 
         }
 
-        public override void ModPass(string path_gob_extracted)
+        public override void ModPass(CSV file)
         {
-            string[] csv_kartphysicscharacter;
-
-            for (int csv_pos = 0; csv_pos < CNK_Common.DriverTypes.Length; csv_pos++)
+            if (file.FullName.ToLower().Contains("common/physics/kp") || file.FullName.ToLower().Contains(@"common\physics\kp"))
             {
-                csv_kartphysicscharacter = File.ReadAllLines(path_gob_extracted + "common/physics/kp" + CNK_Common.DriverTypes[csv_pos] + ".csv");
+                int csv_pos = 0;
+                for (int p = 0; p < CNK_Common.DriverTypes.Length; p++)
+                {
+                    if (file.Name.ToLower().Contains("kp" + CNK_Common.DriverTypes[p]))
+                    {
+                        csv_pos = p;
+                        break;
+                    }
+                }
+                List<List<string>> table = file.Table;
 
-                csv_kartphysicscharacter[(int)KartPhysicsCharacterRows.c_AccelerationGainNormal] = CNK_Common.Float_To_CSV_Line(CNK_Data_DriverStats.c_AccelerationGainNormal.Value[csv_pos]);
-                csv_kartphysicscharacter[(int)KartPhysicsCharacterRows.c_AccelerationGainWumpa] = CNK_Common.Float_To_CSV_Line(CNK_Data_DriverStats.c_AccelerationGainWumpa.Value[csv_pos]);
-                csv_kartphysicscharacter[(int)KartPhysicsCharacterRows.c_BoostInfo_eBOOST_AKU_DROP] = CNK_Common.FloatArray2_To_CSV_Line(CNK_Data_DriverStats.c_BoostInfo_eBOOST_AKU_DROP.Value, csv_pos);
-                csv_kartphysicscharacter[(int)KartPhysicsCharacterRows.c_BoostInfo_eBOOST_JUMP_LARGE] = CNK_Common.FloatArray2_To_CSV_Line(CNK_Data_DriverStats.c_BoostInfo_eBOOST_JUMP_LARGE.Value, csv_pos);
-                csv_kartphysicscharacter[(int)KartPhysicsCharacterRows.c_BoostInfo_eBOOST_JUMP_MEDIUM] = CNK_Common.FloatArray2_To_CSV_Line(CNK_Data_DriverStats.c_BoostInfo_eBOOST_JUMP_MEDIUM.Value, csv_pos);
-                csv_kartphysicscharacter[(int)KartPhysicsCharacterRows.c_BoostInfo_eBOOST_JUMP_SMALL] = CNK_Common.FloatArray2_To_CSV_Line(CNK_Data_DriverStats.c_BoostInfo_eBOOST_JUMP_SMALL.Value, csv_pos);
-                csv_kartphysicscharacter[(int)KartPhysicsCharacterRows.c_BoostInfo_eBOOST_PAD] = CNK_Common.FloatArray2_To_CSV_Line(CNK_Data_DriverStats.c_BoostInfo_eBOOST_PAD.Value, csv_pos);
-                csv_kartphysicscharacter[(int)KartPhysicsCharacterRows.c_BoostInfo_eBOOST_SLIDE_1] = CNK_Common.FloatArray2_To_CSV_Line(CNK_Data_DriverStats.c_BoostInfo_eBOOST_SLIDE_1.Value, csv_pos);
-                csv_kartphysicscharacter[(int)KartPhysicsCharacterRows.c_BoostInfo_eBOOST_SLIDE_2] = CNK_Common.FloatArray2_To_CSV_Line(CNK_Data_DriverStats.c_BoostInfo_eBOOST_SLIDE_2.Value, csv_pos);
-                csv_kartphysicscharacter[(int)KartPhysicsCharacterRows.c_BoostInfo_eBOOST_SLIDE_3] = CNK_Common.FloatArray2_To_CSV_Line(CNK_Data_DriverStats.c_BoostInfo_eBOOST_SLIDE_3.Value, csv_pos);
-                csv_kartphysicscharacter[(int)KartPhysicsCharacterRows.c_BoostInfo_eBOOST_START] = CNK_Common.FloatArray2_To_CSV_Line(CNK_Data_DriverStats.c_BoostInfo_eBOOST_START.Value, csv_pos);
-                csv_kartphysicscharacter[(int)KartPhysicsCharacterRows.c_BoostInfo_eBOOST_SUPER_ENGINE] = CNK_Common.FloatArray2_To_CSV_Line(CNK_Data_DriverStats.c_BoostInfo_eBOOST_SUPER_ENGINE.Value, csv_pos);
-                csv_kartphysicscharacter[(int)KartPhysicsCharacterRows.c_BoostInfo_eBOOST_TURBOBOOST] = CNK_Common.FloatArray2_To_CSV_Line(CNK_Data_DriverStats.c_BoostInfo_eBOOST_TURBOBOOST.Value, csv_pos);
-                csv_kartphysicscharacter[(int)KartPhysicsCharacterRows.c_BoostInfo_eBOOST_TURBOBOOST_JUICED] = CNK_Common.FloatArray2_To_CSV_Line(CNK_Data_DriverStats.c_BoostInfo_eBOOST_TURBOBOOST_JUICED.Value, csv_pos);
-                csv_kartphysicscharacter[(int)KartPhysicsCharacterRows.c_BoostMaxImpulsePerSecond] = CNK_Common.Float_To_CSV_Line(CNK_Data_DriverStats.c_BoostMaxImpulsePerSecond.Value[csv_pos]);
-                csv_kartphysicscharacter[(int)KartPhysicsCharacterRows.c_BoostSlidePushAngle] = CNK_Common.Float_To_CSV_Line(CNK_Data_DriverStats.c_BoostSlidePushAngle.Value[csv_pos]);
-                csv_kartphysicscharacter[(int)KartPhysicsCharacterRows.c_BoostSlidePushTime] = CNK_Common.Float_To_CSV_Line(CNK_Data_DriverStats.c_BoostSlidePushTime.Value[csv_pos]);
-                csv_kartphysicscharacter[(int)KartPhysicsCharacterRows.c_BrakeForce] = CNK_Common.Float_To_CSV_Line(CNK_Data_DriverStats.c_BrakeForce.Value[csv_pos]);
-                csv_kartphysicscharacter[(int)KartPhysicsCharacterRows.c_HiTurnFriction] = CNK_Common.FloatArray2_To_CSV_Line(CNK_Data_DriverStats.c_HiTurnFriction.Value, csv_pos);
-                csv_kartphysicscharacter[(int)KartPhysicsCharacterRows.c_HiTurnStartAngle] = CNK_Common.Float_To_CSV_Line(CNK_Data_DriverStats.c_HiTurnStartAngle.Value[csv_pos]);
-                csv_kartphysicscharacter[(int)KartPhysicsCharacterRows.c_InAirTurnRateNormal] = CNK_Common.Float_To_CSV_Line(CNK_Data_DriverStats.c_InAirTurnRateNormal.Value[csv_pos]);
-                csv_kartphysicscharacter[(int)KartPhysicsCharacterRows.c_InAirTurnRateWumpa] = CNK_Common.Float_To_CSV_Line(CNK_Data_DriverStats.c_InAirTurnRateWumpa.Value[csv_pos]);
-                csv_kartphysicscharacter[(int)KartPhysicsCharacterRows.c_MaxForwardSpeedNormal] = CNK_Common.Float_To_CSV_Line(CNK_Data_DriverStats.c_MaxForwardSpeedNormal.Value[csv_pos]);
-                csv_kartphysicscharacter[(int)KartPhysicsCharacterRows.c_MaxForwardSpeedWumpa] = CNK_Common.Float_To_CSV_Line(CNK_Data_DriverStats.c_MaxForwardSpeedWumpa.Value[csv_pos]);
-                csv_kartphysicscharacter[(int)KartPhysicsCharacterRows.c_NormalFriction] = CNK_Common.FloatArray2_To_CSV_Line(CNK_Data_DriverStats.c_NormalFriction.Value, csv_pos);
-                csv_kartphysicscharacter[(int)KartPhysicsCharacterRows.c_SlideFrictionHigh] = CNK_Common.FloatArray2_To_CSV_Line(CNK_Data_DriverStats.c_SlideFrictionHigh.Value, csv_pos);
-                csv_kartphysicscharacter[(int)KartPhysicsCharacterRows.c_SlideFrictionLow] = CNK_Common.FloatArray2_To_CSV_Line(CNK_Data_DriverStats.c_SlideFrictionLow.Value, csv_pos);
-                csv_kartphysicscharacter[(int)KartPhysicsCharacterRows.c_SlideFrictionNorm] = CNK_Common.FloatArray2_To_CSV_Line(CNK_Data_DriverStats.c_SlideFrictionNorm.Value, csv_pos);
-                csv_kartphysicscharacter[(int)KartPhysicsCharacterRows.c_SlideMaxAngle] = CNK_Common.Float_To_CSV_Line(CNK_Data_DriverStats.c_SlideMaxAngle.Value[csv_pos]);
-                csv_kartphysicscharacter[(int)KartPhysicsCharacterRows.c_SlideMinAngle] = CNK_Common.Float_To_CSV_Line(CNK_Data_DriverStats.c_SlideMinAngle.Value[csv_pos]);
-                csv_kartphysicscharacter[(int)KartPhysicsCharacterRows.c_SlideTurnRateAwayFromSlide] = CNK_Common.Float_To_CSV_Line(CNK_Data_DriverStats.c_SlideTurnRateAwayFromSlide.Value[csv_pos]);
-                csv_kartphysicscharacter[(int)KartPhysicsCharacterRows.c_SlideTurnRateInToSlide] = CNK_Common.Float_To_CSV_Line(CNK_Data_DriverStats.c_SlideTurnRateInToSlide.Value[csv_pos]);
-                csv_kartphysicscharacter[(int)KartPhysicsCharacterRows.c_TurnDecellForce] = CNK_Common.Float_To_CSV_Line(CNK_Data_DriverStats.c_TurnDecellForce.Value[csv_pos]);
-                csv_kartphysicscharacter[(int)KartPhysicsCharacterRows.c_TurnDecellForceMax] = CNK_Common.Float_To_CSV_Line(CNK_Data_DriverStats.c_TurnDecellForceMax.Value[csv_pos]);
-                csv_kartphysicscharacter[(int)KartPhysicsCharacterRows.c_TurnDecellSpeed] = CNK_Common.Float_To_CSV_Line(CNK_Data_DriverStats.c_TurnDecellSpeed.Value[csv_pos]);
-                csv_kartphysicscharacter[(int)KartPhysicsCharacterRows.c_TurnRateAccel] = CNK_Common.Float_To_CSV_Line(CNK_Data_DriverStats.c_TurnRateAccel.Value[csv_pos]);
-                csv_kartphysicscharacter[(int)KartPhysicsCharacterRows.c_TurnRateBrake] = CNK_Common.Float_To_CSV_Line(CNK_Data_DriverStats.c_TurnRateBrake.Value[csv_pos]);
-                csv_kartphysicscharacter[(int)KartPhysicsCharacterRows.c_TurnRateNormal] = CNK_Common.Float_To_CSV_Line(CNK_Data_DriverStats.c_TurnRateNormal.Value[csv_pos]);
-                csv_kartphysicscharacter[(int)KartPhysicsCharacterRows.c_TurnRateWumpa] = CNK_Common.Float_To_CSV_Line(CNK_Data_DriverStats.c_TurnRateWumpa.Value[csv_pos]);
-                csv_kartphysicscharacter[(int)KartPhysicsCharacterRows.c_UIStats_Acceleration] = CNK_Common.Float_To_CSV_Line(CNK_Data_DriverStats.c_UIStats_Acceleration.Value[csv_pos]);
-                csv_kartphysicscharacter[(int)KartPhysicsCharacterRows.c_UIStats_Speed] = CNK_Common.Float_To_CSV_Line(CNK_Data_DriverStats.c_UIStats_Speed.Value[csv_pos]);
-                csv_kartphysicscharacter[(int)KartPhysicsCharacterRows.c_UIStats_Turn] = CNK_Common.Float_To_CSV_Line(CNK_Data_DriverStats.c_UIStats_Turn.Value[csv_pos]);
-                csv_kartphysicscharacter[(int)KartPhysicsCharacterRows.c_UIStats_MaxValue] = CNK_Common.Float_To_CSV_Line(CNK_Data_DriverStats.c_UIStats_MaxValue.Value[csv_pos]);
+                table[(int)KartPhysicsCharacterRows.c_AccelerationGainNormal][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_DriverStats.c_AccelerationGainNormal.Value[csv_pos]);
+                table[(int)KartPhysicsCharacterRows.c_AccelerationGainNormal][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_DriverStats.c_AccelerationGainNormal.Value[csv_pos]);
+                table[(int)KartPhysicsCharacterRows.c_AccelerationGainWumpa][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_DriverStats.c_AccelerationGainWumpa.Value[csv_pos]);
+                table[(int)KartPhysicsCharacterRows.c_BoostInfo_eBOOST_AKU_DROP] = CNK_Common.FloatArray2_To_CSV_FullLine(CNK_Data_DriverStats.c_BoostInfo_eBOOST_AKU_DROP.Value, csv_pos);
+                table[(int)KartPhysicsCharacterRows.c_BoostInfo_eBOOST_JUMP_LARGE] = CNK_Common.FloatArray2_To_CSV_FullLine(CNK_Data_DriverStats.c_BoostInfo_eBOOST_JUMP_LARGE.Value, csv_pos);
+                table[(int)KartPhysicsCharacterRows.c_BoostInfo_eBOOST_JUMP_MEDIUM] = CNK_Common.FloatArray2_To_CSV_FullLine(CNK_Data_DriverStats.c_BoostInfo_eBOOST_JUMP_MEDIUM.Value, csv_pos);
+                table[(int)KartPhysicsCharacterRows.c_BoostInfo_eBOOST_JUMP_SMALL] = CNK_Common.FloatArray2_To_CSV_FullLine(CNK_Data_DriverStats.c_BoostInfo_eBOOST_JUMP_SMALL.Value, csv_pos);
+                table[(int)KartPhysicsCharacterRows.c_BoostInfo_eBOOST_PAD] = CNK_Common.FloatArray2_To_CSV_FullLine(CNK_Data_DriverStats.c_BoostInfo_eBOOST_PAD.Value, csv_pos);
+                table[(int)KartPhysicsCharacterRows.c_BoostInfo_eBOOST_SLIDE_1] = CNK_Common.FloatArray2_To_CSV_FullLine(CNK_Data_DriverStats.c_BoostInfo_eBOOST_SLIDE_1.Value, csv_pos);
+                table[(int)KartPhysicsCharacterRows.c_BoostInfo_eBOOST_SLIDE_2] = CNK_Common.FloatArray2_To_CSV_FullLine(CNK_Data_DriverStats.c_BoostInfo_eBOOST_SLIDE_2.Value, csv_pos);
+                table[(int)KartPhysicsCharacterRows.c_BoostInfo_eBOOST_SLIDE_3] = CNK_Common.FloatArray2_To_CSV_FullLine(CNK_Data_DriverStats.c_BoostInfo_eBOOST_SLIDE_3.Value, csv_pos);
+                table[(int)KartPhysicsCharacterRows.c_BoostInfo_eBOOST_START] = CNK_Common.FloatArray2_To_CSV_FullLine(CNK_Data_DriverStats.c_BoostInfo_eBOOST_START.Value, csv_pos);
+                table[(int)KartPhysicsCharacterRows.c_BoostInfo_eBOOST_SUPER_ENGINE] = CNK_Common.FloatArray2_To_CSV_FullLine(CNK_Data_DriverStats.c_BoostInfo_eBOOST_SUPER_ENGINE.Value, csv_pos);
+                table[(int)KartPhysicsCharacterRows.c_BoostInfo_eBOOST_TURBOBOOST] = CNK_Common.FloatArray2_To_CSV_FullLine(CNK_Data_DriverStats.c_BoostInfo_eBOOST_TURBOBOOST.Value, csv_pos);
+                table[(int)KartPhysicsCharacterRows.c_BoostInfo_eBOOST_TURBOBOOST_JUICED] = CNK_Common.FloatArray2_To_CSV_FullLine(CNK_Data_DriverStats.c_BoostInfo_eBOOST_TURBOBOOST_JUICED.Value, csv_pos);
+                table[(int)KartPhysicsCharacterRows.c_BoostMaxImpulsePerSecond][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_DriverStats.c_BoostMaxImpulsePerSecond.Value[csv_pos]);
+                table[(int)KartPhysicsCharacterRows.c_BoostSlidePushAngle][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_DriverStats.c_BoostSlidePushAngle.Value[csv_pos]);
+                table[(int)KartPhysicsCharacterRows.c_BoostSlidePushTime][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_DriverStats.c_BoostSlidePushTime.Value[csv_pos]);
+                table[(int)KartPhysicsCharacterRows.c_BrakeForce][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_DriverStats.c_BrakeForce.Value[csv_pos]);
+                table[(int)KartPhysicsCharacterRows.c_HiTurnFriction] = CNK_Common.FloatArray2_To_CSV_FullLine(CNK_Data_DriverStats.c_HiTurnFriction.Value, csv_pos);
+                table[(int)KartPhysicsCharacterRows.c_HiTurnStartAngle][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_DriverStats.c_HiTurnStartAngle.Value[csv_pos]);
+                table[(int)KartPhysicsCharacterRows.c_InAirTurnRateNormal][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_DriverStats.c_InAirTurnRateNormal.Value[csv_pos]);
+                table[(int)KartPhysicsCharacterRows.c_InAirTurnRateWumpa][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_DriverStats.c_InAirTurnRateWumpa.Value[csv_pos]);
+                table[(int)KartPhysicsCharacterRows.c_MaxForwardSpeedNormal][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_DriverStats.c_MaxForwardSpeedNormal.Value[csv_pos]);
+                table[(int)KartPhysicsCharacterRows.c_MaxForwardSpeedWumpa][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_DriverStats.c_MaxForwardSpeedWumpa.Value[csv_pos]);
+                table[(int)KartPhysicsCharacterRows.c_NormalFriction] = CNK_Common.FloatArray2_To_CSV_FullLine(CNK_Data_DriverStats.c_NormalFriction.Value, csv_pos);
+                table[(int)KartPhysicsCharacterRows.c_SlideFrictionHigh] = CNK_Common.FloatArray2_To_CSV_FullLine(CNK_Data_DriverStats.c_SlideFrictionHigh.Value, csv_pos);
+                table[(int)KartPhysicsCharacterRows.c_SlideFrictionLow] = CNK_Common.FloatArray2_To_CSV_FullLine(CNK_Data_DriverStats.c_SlideFrictionLow.Value, csv_pos);
+                table[(int)KartPhysicsCharacterRows.c_SlideFrictionNorm] = CNK_Common.FloatArray2_To_CSV_FullLine(CNK_Data_DriverStats.c_SlideFrictionNorm.Value, csv_pos);
+                table[(int)KartPhysicsCharacterRows.c_SlideMaxAngle][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_DriverStats.c_SlideMaxAngle.Value[csv_pos]);
+                table[(int)KartPhysicsCharacterRows.c_SlideMinAngle][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_DriverStats.c_SlideMinAngle.Value[csv_pos]);
+                table[(int)KartPhysicsCharacterRows.c_SlideTurnRateAwayFromSlide][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_DriverStats.c_SlideTurnRateAwayFromSlide.Value[csv_pos]);
+                table[(int)KartPhysicsCharacterRows.c_SlideTurnRateInToSlide][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_DriverStats.c_SlideTurnRateInToSlide.Value[csv_pos]);
+                table[(int)KartPhysicsCharacterRows.c_TurnDecellForce][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_DriverStats.c_TurnDecellForce.Value[csv_pos]);
+                table[(int)KartPhysicsCharacterRows.c_TurnDecellForceMax][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_DriverStats.c_TurnDecellForceMax.Value[csv_pos]);
+                table[(int)KartPhysicsCharacterRows.c_TurnDecellSpeed][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_DriverStats.c_TurnDecellSpeed.Value[csv_pos]);
+                table[(int)KartPhysicsCharacterRows.c_TurnRateAccel][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_DriverStats.c_TurnRateAccel.Value[csv_pos]);
+                table[(int)KartPhysicsCharacterRows.c_TurnRateBrake][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_DriverStats.c_TurnRateBrake.Value[csv_pos]);
+                table[(int)KartPhysicsCharacterRows.c_TurnRateNormal][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_DriverStats.c_TurnRateNormal.Value[csv_pos]);
+                table[(int)KartPhysicsCharacterRows.c_TurnRateWumpa][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_DriverStats.c_TurnRateWumpa.Value[csv_pos]);
+                table[(int)KartPhysicsCharacterRows.c_UIStats_Acceleration][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_DriverStats.c_UIStats_Acceleration.Value[csv_pos]);
+                table[(int)KartPhysicsCharacterRows.c_UIStats_Speed][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_DriverStats.c_UIStats_Speed.Value[csv_pos]);
+                table[(int)KartPhysicsCharacterRows.c_UIStats_Turn][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_DriverStats.c_UIStats_Turn.Value[csv_pos]);
+                table[(int)KartPhysicsCharacterRows.c_UIStats_MaxValue][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_DriverStats.c_UIStats_MaxValue.Value[csv_pos]);
 
-                File.WriteAllLines(path_gob_extracted + "common/physics/kp" + CNK_Common.DriverTypes[csv_pos] + ".csv", csv_kartphysicscharacter);
+
             }
+
         }
 
     }

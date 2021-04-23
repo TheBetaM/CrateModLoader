@@ -5,7 +5,7 @@ using CrateModGames.GameSpecific.CrashNitroKart;
 
 namespace CrateModLoader.GameSpecific.CrashNitroKart
 {
-    public class CNK_Rand_Adventure : ModStruct<string>
+    public class CNK_Rand_Adventure : ModStruct<CSV>
     {
         public override string Name => CNK_Text.Rand_Adventure;
         public override string Description => CNK_Text.Rand_AdventureDesc;
@@ -275,132 +275,166 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
             CNK_Randomize_ReqsRewards(randState);
         }
 
-        public override void ModPass(string path_gob_extracted)
+        public override void ModPass(CSV file)
         {
-            string[] csv_advtracksmanager = File.ReadAllLines(path_gob_extracted + "common/gameprogression/adventuretracksmanager.csv");
-            List<string> csv_AdvTracksManager_LineList = new List<string>();
-            for (int i = 0; i < 14; i++)
+            if (file.Name.ToLower() == "adventuretracksmanager.csv")
             {
-                csv_AdvTracksManager_LineList.Add(csv_advtracksmanager[i]);
-            }
+                List<List<string>> table = file.Table;
 
-            string cur_line = "";
-            for (int i = 0; i < Adv_TracksManager_EntryList.Count; i++)
-            {
-                cur_line = CNK_Common.PadInfoName[(int)Adv_TracksManager_EntryList[i].PadName] + ",," + CNK_Common.SubModeName[(int)Adv_TracksManager_EntryList[i].Submode] + ",," + CNK_Common.RewardName[(int)Adv_TracksManager_EntryList[i].RewardNeeded] + ",," + Adv_TracksManager_EntryList[i].NumberNeeded.ToString();
-                csv_AdvTracksManager_LineList.Add(cur_line);
-            }
-            csv_AdvTracksManager_LineList.Add("");
-
-            csv_advtracksmanager = new string[csv_AdvTracksManager_LineList.Count];
-            for (int i = 0; i < csv_AdvTracksManager_LineList.Count; i++)
-            {
-                csv_advtracksmanager[i] = csv_AdvTracksManager_LineList[i];
-            }
-
-            File.WriteAllLines(path_gob_extracted + "common/gameprogression/adventuretracksmanager.csv", csv_advtracksmanager);
-
-            string[] csv_goalstorewards = File.ReadAllLines(path_gob_extracted + "common/gameprogression/goalstorewardsconverter.csv");
-
-            List<string> csv_GoalsToRewards_LineList = new List<string>();
-            for (int i = 0; i < 6; i++)
-            {
-                csv_GoalsToRewards_LineList.Add(csv_goalstorewards[i]);
-            }
-
-            cur_line = "";
-            for (int i = 0; i < Adv_GoalsToRewards_EntryList.Count; i++)
-            {
-                cur_line = CNK_Common.TrackName[(int)Adv_GoalsToRewards_EntryList[i].Track] + "," + CNK_Common.SubModeName[(int)Adv_GoalsToRewards_EntryList[i].Submode] + "," + CNK_Common.RewardName[(int)Adv_GoalsToRewards_EntryList[i].Reward];
-                csv_GoalsToRewards_LineList.Add(cur_line);
-            }
-            csv_GoalsToRewards_LineList.Add("end_rewards,,");
-            csv_GoalsToRewards_LineList.Add("");
-
-            csv_goalstorewards = new string[csv_GoalsToRewards_LineList.Count];
-            for (int i = 0; i < csv_GoalsToRewards_LineList.Count; i++)
-            {
-                csv_goalstorewards[i] = csv_GoalsToRewards_LineList[i];
-            }
-
-            File.WriteAllLines(path_gob_extracted + "common/gameprogression/goalstorewardsconverter.csv", csv_goalstorewards);
-
-
-            string[] csv_warppadinfo = File.ReadAllLines(path_gob_extracted + "common/gameprogression/warppadinfo.csv");
-
-            List<string> csv_WarpPadInfo_LineList = new List<string>();
-            for (int i = 0; i < 6; i++)
-            {
-                csv_WarpPadInfo_LineList.Add(csv_warppadinfo[i]);
-            }
-
-            cur_line = "";
-            for (int i = 0; i < Adv_WarpPadInfo_EntryList.Count; i++)
-            {
-                cur_line = CNK_Common.PadInfoName[(int)Adv_WarpPadInfo_EntryList[i].PadName] + ",";
-                cur_line += PadInfoDescTypes[(int)Adv_WarpPadInfo_EntryList[i].PadDesc] + ",";
-                cur_line += CNK_Common.TrackName[(int)Adv_WarpPadInfo_EntryList[i].Track] + ",";
-                cur_line += PadInfoEventName[(int)Adv_WarpPadInfo_EntryList[i].isWarpGate] + ",";
-                cur_line += PadInfoEventName[(int)Adv_WarpPadInfo_EntryList[i].PrimaryActEvent] + ",";
-                cur_line += PadInfoEventName[(int)Adv_WarpPadInfo_EntryList[i].SecondaryEvent] + ",";
-                cur_line += PadInfoEventName[(int)Adv_WarpPadInfo_EntryList[i].LockedEvent] + ",";
-                cur_line += PadInfoEventName[(int)Adv_WarpPadInfo_EntryList[i].LockedEvent2] + ",";
-                cur_line += PadInfoEventName[(int)Adv_WarpPadInfo_EntryList[i].BaseRewardEvent[0]];
-                if (Adv_WarpPadInfo_EntryList[i].BaseRewardEvent.Length > 1)
+                for (int i = 0; i < Adv_TracksManager_EntryList.Count; i++)
                 {
-                    cur_line += ";" + PadInfoEventName[(int)Adv_WarpPadInfo_EntryList[i].BaseRewardEvent[1]];
+                    List<string> cur_line = new List<string>() {
+                        CNK_Common.PadInfoName[(int)Adv_TracksManager_EntryList[i].PadName],
+                        "",
+                        CNK_Common.SubModeName[(int)Adv_TracksManager_EntryList[i].Submode],
+                        "",
+                        CNK_Common.RewardName[(int)Adv_TracksManager_EntryList[i].RewardNeeded],
+                        "",
+                        Adv_TracksManager_EntryList[i].NumberNeeded.ToString(),
+                    };
+
+                    int x = i + 14;
+                    table[i] = cur_line;
                 }
-                if (Adv_WarpPadInfo_EntryList[i].BaseRewardEvent.Length > 2)
+                
+            }
+            else if (file.Name.ToLower() == "goalstorewardsconverter.csv")
+            {
+                List<List<string>> table = file.Table;
+
+                int start_rewards = 0;
+                int end_rewards = 0;
+                for (int i = 0; i < table.Count; i++)
                 {
-                    cur_line += ";" + PadInfoEventName[(int)Adv_WarpPadInfo_EntryList[i].BaseRewardEvent[2]];
+                    if (table[i][0] == "start_rewards")
+                    {
+                        start_rewards = i;
+                    }
+                    if (table[i][0] == "end_rewards")
+                    {
+                        end_rewards = i;
+                    }
                 }
-                cur_line += ",";
-                cur_line += PadInfoEventName[(int)Adv_WarpPadInfo_EntryList[i].RelicWonEvent] + ",";
-                cur_line += PadInfoEventName[(int)Adv_WarpPadInfo_EntryList[i].TokenWonEvent[0]];
-                if (Adv_WarpPadInfo_EntryList[i].TokenWonEvent.Length > 1)
+                for (int i = 1; i < end_rewards - start_rewards; i++)
                 {
-                    cur_line += ";" + PadInfoEventName[(int)Adv_WarpPadInfo_EntryList[i].TokenWonEvent[1]];
+                    table.RemoveAt(start_rewards + 1);
                 }
-                csv_WarpPadInfo_LineList.Add(cur_line);
-            }
-            csv_WarpPadInfo_LineList.Add("end_padinfo,,,,,,,,,,");
-            csv_WarpPadInfo_LineList.Add("");
 
-            for (int i = 62; i < 79; i++)
+                for (int i = 0; i < Adv_GoalsToRewards_EntryList.Count; i++)
+                {
+                    List<string> cur_line = new List<string>() {
+                        CNK_Common.TrackName[(int)Adv_GoalsToRewards_EntryList[i].Track],
+                        CNK_Common.SubModeName[(int)Adv_GoalsToRewards_EntryList[i].Submode],
+                        CNK_Common.RewardName[(int)Adv_GoalsToRewards_EntryList[i].Reward],
+                    };
+                    table.Insert(start_rewards + 1, cur_line);
+                }
+
+            }
+            else if (file.Name.ToLower() == "warppadinfo.csv")
             {
-                csv_WarpPadInfo_LineList.Add(csv_warppadinfo[i]);
+                List<List<string>> table = file.Table;
+
+                int start_padinfo = 0;
+                int end_padinfo = 0;
+                for (int i = 0; i < table.Count; i++)
+                {
+                    if (table[i][0] == "start_padinfo")
+                    {
+                        start_padinfo = i;
+                    }
+                    if (table[i][0] == "end_padinfo")
+                    {
+                        end_padinfo = i;
+                    }
+                }
+                for (int i = 1; i < end_padinfo - start_padinfo; i++)
+                {
+                    table.RemoveAt(start_padinfo + 1);
+                }
+
+                for (int i = 0; i < Adv_WarpPadInfo_EntryList.Count; i++)
+                {
+                    List<string> cur_line = new List<string>() {
+                        CNK_Common.PadInfoName[(int)Adv_WarpPadInfo_EntryList[i].PadName],
+                        PadInfoDescTypes[(int)Adv_WarpPadInfo_EntryList[i].PadDesc],
+                        CNK_Common.TrackName[(int)Adv_WarpPadInfo_EntryList[i].Track],
+                        PadInfoEventName[(int)Adv_WarpPadInfo_EntryList[i].isWarpGate],
+                        PadInfoEventName[(int)Adv_WarpPadInfo_EntryList[i].PrimaryActEvent],
+                        PadInfoEventName[(int)Adv_WarpPadInfo_EntryList[i].SecondaryEvent],
+                        PadInfoEventName[(int)Adv_WarpPadInfo_EntryList[i].LockedEvent],
+                        PadInfoEventName[(int)Adv_WarpPadInfo_EntryList[i].LockedEvent2],
+                    };
+                    if (Adv_WarpPadInfo_EntryList[i].BaseRewardEvent.Length > 2)
+                    {
+                        cur_line.Add(PadInfoEventName[(int)Adv_WarpPadInfo_EntryList[i].BaseRewardEvent[0]] + ";" + 
+                            PadInfoEventName[(int)Adv_WarpPadInfo_EntryList[i].BaseRewardEvent[1]] + ";" + 
+                            PadInfoEventName[(int)Adv_WarpPadInfo_EntryList[i].BaseRewardEvent[2]]);
+                    }
+                    else if (Adv_WarpPadInfo_EntryList[i].BaseRewardEvent.Length > 1)
+                    {
+                        cur_line.Add(PadInfoEventName[(int)Adv_WarpPadInfo_EntryList[i].BaseRewardEvent[0]] + ";" +
+                            PadInfoEventName[(int)Adv_WarpPadInfo_EntryList[i].BaseRewardEvent[1]] + ";");
+                    }
+                    else
+                    {
+                        cur_line.Add(PadInfoEventName[(int)Adv_WarpPadInfo_EntryList[i].BaseRewardEvent[0]]);
+                    }
+                    
+                    cur_line.Add(PadInfoEventName[(int)Adv_WarpPadInfo_EntryList[i].RelicWonEvent]);
+                    
+                    if (Adv_WarpPadInfo_EntryList[i].TokenWonEvent.Length > 1)
+                    {
+                        cur_line.Add(PadInfoEventName[(int)Adv_WarpPadInfo_EntryList[i].TokenWonEvent[0]] +
+                            ";" + PadInfoEventName[(int)Adv_WarpPadInfo_EntryList[i].TokenWonEvent[1]]);
+                    }
+                    else
+                    {
+                        cur_line.Add(PadInfoEventName[(int)Adv_WarpPadInfo_EntryList[i].TokenWonEvent[0]]);
+                    }
+
+                    table.Insert(start_padinfo + 1, cur_line);
+                }
+                
             }
-
-            csv_WarpPadInfo_LineList.Add("");
-
-            csv_warppadinfo = new string[csv_WarpPadInfo_LineList.Count];
-            for (int i = 0; i < csv_WarpPadInfo_LineList.Count; i++)
+            else if (file.Name.ToLower() == "adventurecup.csv")
             {
-                csv_warppadinfo[i] = csv_WarpPadInfo_LineList[i];
+                List<List<string>> table = file.Table;
+
+                table[10] = new List<string>()
+                {
+                    CNK_Common.TrackName[(int)GemCup_Red[0]],
+                    CNK_Common.TrackName[(int)GemCup_Green[0]],
+                    CNK_Common.TrackName[(int)GemCup_Blue[0]],
+                    CNK_Common.TrackName[(int)GemCup_Purple[0]],
+                    CNK_Common.TrackName[(int)GemCup_Yellow[0]],
+                    "",
+                    "",
+                };
+
+                table[11] = new List<string>()
+                {
+                    CNK_Common.TrackName[(int)GemCup_Red[1]],
+                    CNK_Common.TrackName[(int)GemCup_Green[1]],
+                    CNK_Common.TrackName[(int)GemCup_Blue[1]],
+                    CNK_Common.TrackName[(int)GemCup_Purple[1]],
+                    CNK_Common.TrackName[(int)GemCup_Yellow[1]],
+                    "",
+                    "",
+                };
+
+                table[12] = new List<string>()
+                {
+                    CNK_Common.TrackName[(int)GemCup_Red[2]],
+                    CNK_Common.TrackName[(int)GemCup_Green[2]],
+                    CNK_Common.TrackName[(int)GemCup_Blue[2]],
+                    CNK_Common.TrackName[(int)GemCup_Purple[2]],
+                    CNK_Common.TrackName[(int)GemCup_Yellow[2]],
+                    "",
+                    "",
+                };
+
             }
-
-            File.WriteAllLines(path_gob_extracted + "common/gameprogression/warppadinfo.csv", csv_warppadinfo);
-
-            string[] csv_AdventureCup = File.ReadAllLines(path_gob_extracted + "common/gameprogression/adventurecup.csv");
-
-            List<string> csv_AdventureCup_LineList = new List<string>();
-            for (int i = 0; i < 10; i++)
-            {
-                csv_AdventureCup_LineList.Add(csv_AdventureCup[i]);
-            }
-
-            csv_AdventureCup_LineList.Add(CNK_Common.TrackName[(int)GemCup_Red[0]] + "," + CNK_Common.TrackName[(int)GemCup_Green[0]] + "," + CNK_Common.TrackName[(int)GemCup_Blue[0]] + "," + CNK_Common.TrackName[(int)GemCup_Purple[0]] + "," + CNK_Common.TrackName[(int)GemCup_Yellow[0]] + ",");
-            csv_AdventureCup_LineList.Add(CNK_Common.TrackName[(int)GemCup_Red[1]] + "," + CNK_Common.TrackName[(int)GemCup_Green[1]] + "," + CNK_Common.TrackName[(int)GemCup_Blue[1]] + "," + CNK_Common.TrackName[(int)GemCup_Purple[1]] + "," + CNK_Common.TrackName[(int)GemCup_Yellow[1]] + ",");
-            csv_AdventureCup_LineList.Add(CNK_Common.TrackName[(int)GemCup_Red[2]] + "," + CNK_Common.TrackName[(int)GemCup_Green[2]] + "," + CNK_Common.TrackName[(int)GemCup_Blue[2]] + "," + CNK_Common.TrackName[(int)GemCup_Purple[2]] + "," + CNK_Common.TrackName[(int)GemCup_Yellow[2]] + ",");
-            csv_AdventureCup_LineList.Add("");
-
-            csv_AdventureCup = new string[csv_AdventureCup_LineList.Count];
-            for (int i = 0; i < csv_AdventureCup_LineList.Count; i++)
-            {
-                csv_AdventureCup[i] = csv_AdventureCup_LineList[i];
-            }
-
-            File.WriteAllLines(path_gob_extracted + "common/gameprogression/adventurecup.csv", csv_AdventureCup);
         }
 
         public void CNK_Randomize_ReqsRewards(Random randState)

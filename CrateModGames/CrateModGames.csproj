@@ -144,6 +144,7 @@
     <Compile Include="GameSpecific\CrashMoM\Mods\MoM_Metadata.cs" />
     <Compile Include="GameSpecific\CrashMoM\Properties\MoM_Props_Main.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\Common\CNK_Common.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\Common\CSV_Table.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\Game_CrashNK.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\Mods\CNK_DisableFadeout.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\Mods\CNK_DisablePopups.cs" />

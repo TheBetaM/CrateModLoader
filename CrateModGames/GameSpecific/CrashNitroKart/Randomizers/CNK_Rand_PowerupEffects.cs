@@ -5,7 +5,7 @@ using CrateModGames.GameSpecific.CrashNitroKart;
 
 namespace CrateModLoader.GameSpecific.CrashNitroKart
 {
-    public class CNK_Rand_PowerupEffects : ModStruct<string>
+    public class CNK_Rand_PowerupEffects : ModStruct<CSV>
     {
         public override string Name => CNK_Text.Rand_PowerupEffects;
         public override string Description => CNK_Text.Rand_PowerupEffectsDesc;
@@ -25,233 +25,192 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
             CNK_Randomize_StaticShock(randState);
         }
 
-        public override void ModPass(string path_gob_extracted)
+        public override void ModPass(CSV file)
         {
-
-            bool Editing_CSV_PowerShield = true;
-            bool Editing_CSV_BowlingBomb = true;
-            bool Editing_CSV_FreezingMine = true;
-            bool Editing_CSV_HomingMissle = true;
-            bool Editing_CSV_InvincMask = true;
-            bool Editing_CSV_RedEye = true;
-            bool Editing_CSV_TNT = true;
-            bool Editing_CSV_Tornado = true;
-            bool Editing_CSV_TurboBoost = true;
-            bool Editing_CSV_StaticShock = true;
-
-            if (Editing_CSV_PowerShield)
+            if (file.Name.ToLower().Contains("powershield"))
             {
-                string[] csv_PowerShield = File.ReadAllLines(path_gob_extracted + "common/weapons/powershield.csv");
-
-                csv_PowerShield[1] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.PowerShield_m_Time.Value) + ",,,,# float ,# m_Time,";
-                csv_PowerShield[2] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.PowerShield_m_RangeForZapping.Value) + ",,,,# float,# m_RangeForZapping,\"#15, 10\"";
-                csv_PowerShield[3] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.PowerShield_m_ZapSpeed.Value) + ",,,,# float,# m_ZapSpeed,";
-                csv_PowerShield[4] = CNK_Common.FloatArray_To_CSV_Line(CNK_Data_Powerups.PowerShield_m_ColorNonJuiced.Value) + ",,# vec3f,# m_ColorNonJuiced,";
-                csv_PowerShield[5] = CNK_Common.FloatArray_To_CSV_Line(CNK_Data_Powerups.PowerShield_m_ColorJuiced.Value) + ",,# vec3f,# m_ColorJuiced,";
-                csv_PowerShield[6] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.PowerShield_m_ColRadius.Value) + ",,,,# float,# m_ColRadius,";
-
-                File.WriteAllLines(path_gob_extracted + "common/weapons/powershield.csv", csv_PowerShield);
+                List<List<string>> table = file.Table;
+                table[1][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.PowerShield_m_Time.Value);
+                table[2][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.PowerShield_m_RangeForZapping.Value);
+                table[3][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.PowerShield_m_ZapSpeed.Value);
+                table[4] = CNK_Common.FloatArray_To_CSV_FullLine(CNK_Data_Powerups.PowerShield_m_ColorNonJuiced.Value);
+                table[5] = CNK_Common.FloatArray_To_CSV_FullLine(CNK_Data_Powerups.PowerShield_m_ColorJuiced.Value);
+                table[6][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.PowerShield_m_ColRadius.Value);
             }
-            if (Editing_CSV_BowlingBomb)
+            if (file.Name.ToLower().Contains("bowlingbomb"))
             {
-                string[] csv_BowlingBomb = File.ReadAllLines(path_gob_extracted + "common/weapons/bowlingbomb.csv");
-
-                csv_BowlingBomb[1] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.BowlingBomb_m_Speed.Value) + ",,,,,,,";
-                csv_BowlingBomb[2] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.BowlingBomb_m_Acceleration.Value) + ",,,,,,,";
-                csv_BowlingBomb[3] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.BowlingBomb_m_AccelerationJuiced.Value) + ",,,,,,,";
-                csv_BowlingBomb[4] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.BowlingBomb_m_Mass.Value) + ",,,,,,,";
-                csv_BowlingBomb[5] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.BowlingBomb_m_Radius.Value) + ",,,,,,,";
-                csv_BowlingBomb[6] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.BowlingBomb_m_AirGravity.Value) + ",,,,,,,";
-                csv_BowlingBomb[7] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.BowlingBomb_m_GroundGravity.Value) + ",,,,,,,";
-                csv_BowlingBomb[8] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.BowlingBomb_m_AirGravityMaglev.Value) + ",,,,,,,";
-                csv_BowlingBomb[9] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.BowlingBomb_m_GroundGravityMaglev.Value) + ",,,,,,,";
-                csv_BowlingBomb[10] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.BowlingBomb_m_TurnSpeed.Value) + ",,,,,,,";
-                csv_BowlingBomb[11] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.BowlingBomb_m_TurnSpeedJuiced.Value) + ",,,,,,,";
-                csv_BowlingBomb[12] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.BowlingBomb_m_ViewRange.Value) + ",,,,,,,";
-                csv_BowlingBomb[13] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.BowlingBomb_m_RangeInFront.Value) + ",,,,,,,";
-                csv_BowlingBomb[14] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.BowlingBomb_m_NormalWumpaLoss.Value) + ",,,,,,,";
-                csv_BowlingBomb[15] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.BowlingBomb_m_JuicedWumpaLoss.Value) + ",,,,,,,";
-                csv_BowlingBomb[16] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.BowlingBomb_m_ExplosionBlastRadius.Value) + ",,,,,,,";
-                csv_BowlingBomb[17] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.BowlingBomb_m_ExplosionBlastRadiusJuiced.Value) + ",,,,,,,";
-                csv_BowlingBomb[18] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.BowlingBomb_m_DragCoef.Value) + ",,,,,,,";
-                csv_BowlingBomb[19] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.BowlingBomb_m_EasyLatFriction.Value) + ",,,,,,,";
-                csv_BowlingBomb[20] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.BowlingBomb_m_EasyLongFriction.Value) + ",,,,,,,";
-                csv_BowlingBomb[21] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.BowlingBomb_m_HardLatFriction.Value) + ",,,,,,,";
-                csv_BowlingBomb[22] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.BowlingBomb_m_HardLongFriction.Value) + ",,,,,,,";
-                csv_BowlingBomb[23] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.BowlingBomb_m_BackSpeed.Value) + ",,,,,,,";
-                csv_BowlingBomb[24] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.BowlingBomb_m_ExplScale.Value) + ",,,,,,,";
-                csv_BowlingBomb[25] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.BowlingBomb_m_ExplScaleJuiced.Value) + ",,,,,,,";
-
-                File.WriteAllLines(path_gob_extracted + "common/weapons/bowlingbomb.csv", csv_BowlingBomb);
+                List<List<string>> table = file.Table;
+                table[1][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.BowlingBomb_m_Speed.Value);
+                table[2][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.BowlingBomb_m_Acceleration.Value);
+                table[3][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.BowlingBomb_m_AccelerationJuiced.Value);
+                table[4][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.BowlingBomb_m_Mass.Value);
+                table[5][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.BowlingBomb_m_Radius.Value);
+                table[6][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.BowlingBomb_m_AirGravity.Value);
+                table[7][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.BowlingBomb_m_GroundGravity.Value);
+                table[8][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.BowlingBomb_m_AirGravityMaglev.Value);
+                table[9][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.BowlingBomb_m_GroundGravityMaglev.Value);
+                table[10][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.BowlingBomb_m_TurnSpeed.Value);
+                table[11][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.BowlingBomb_m_TurnSpeedJuiced.Value);
+                table[12][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.BowlingBomb_m_ViewRange.Value);
+                table[13][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.BowlingBomb_m_RangeInFront.Value);
+                table[14][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.BowlingBomb_m_NormalWumpaLoss.Value);
+                table[15][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.BowlingBomb_m_JuicedWumpaLoss.Value);
+                table[16][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.BowlingBomb_m_ExplosionBlastRadius.Value);
+                table[17][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.BowlingBomb_m_ExplosionBlastRadiusJuiced.Value);
+                table[18][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.BowlingBomb_m_DragCoef.Value);
+                table[19][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.BowlingBomb_m_EasyLatFriction.Value);
+                table[20][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.BowlingBomb_m_EasyLongFriction.Value);
+                table[21][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.BowlingBomb_m_HardLatFriction.Value);
+                table[22][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.BowlingBomb_m_HardLongFriction.Value);
+                table[23][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.BowlingBomb_m_BackSpeed.Value);
+                table[24][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.BowlingBomb_m_ExplScale.Value);
+                table[25][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.BowlingBomb_m_ExplScaleJuiced.Value);
             }
-            if (Editing_CSV_FreezingMine)
+            if (file.Name.ToLower().Contains("freezingmine"))
             {
-                string[] csv_FreezingMine = File.ReadAllLines(path_gob_extracted + "common/weapons/freezingmine.csv");
-
-                csv_FreezingMine[1] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.FreezingMine_m_NormalFreezeTime.Value) + ",,,,,,,";
-                csv_FreezingMine[2] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.FreezingMine_m_JuicedFreezeTime.Value) + ",,,,,,,";
-                csv_FreezingMine[3] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.FreezingMine_m_NormalWumpaFruitLost.Value) + ",,,,,,,";
-                csv_FreezingMine[4] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.FreezingMine_m_JuicedWumpaFruitLost.Value) + ",,,,,,,";
-                csv_FreezingMine[5] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.FreezingMine_m_ThrowDistance.Value) + ",,,,,,,";
-                csv_FreezingMine[6] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.FreezingMine_m_ThrowSpeedFactor.Value) + ",,,,,,,";
-                csv_FreezingMine[7] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.FreezingMine_m_BlastRadius.Value) + ",,,,,,,";
-                csv_FreezingMine[8] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.FreezingMine_m_BlastRadiusJuiced.Value) + ",,,,,,,";
-                csv_FreezingMine[9] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.FreezingMine_m_ExplScale.Value) + ",,,,,,,";
-                csv_FreezingMine[10] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.FreezingMine_m_ExplScaleJuiced.Value) + ",,,,,,,";
-
-                File.WriteAllLines(path_gob_extracted + "common/weapons/freezingmine.csv", csv_FreezingMine);
+                List<List<string>> table = file.Table;
+                table[1][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.FreezingMine_m_NormalFreezeTime.Value);
+                table[2][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.FreezingMine_m_JuicedFreezeTime.Value);
+                table[3][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.FreezingMine_m_NormalWumpaFruitLost.Value);
+                table[4][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.FreezingMine_m_JuicedWumpaFruitLost.Value);
+                table[5][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.FreezingMine_m_ThrowDistance.Value);
+                table[6][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.FreezingMine_m_ThrowSpeedFactor.Value);
+                table[7][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.FreezingMine_m_BlastRadius.Value);
+                table[8][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.FreezingMine_m_BlastRadiusJuiced.Value);
+                table[9][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.FreezingMine_m_ExplScale.Value);
+                table[10][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.FreezingMine_m_ExplScaleJuiced.Value);
             }
-            if (Editing_CSV_HomingMissle)
+            if (file.Name.ToLower().Contains("homingmissile"))
             {
-                string[] csv_HomingMissle = File.ReadAllLines(path_gob_extracted + "common/weapons/homingmissile.csv");
-
-                csv_HomingMissle[1] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.HomingMissle_m_TrackingFrontDistance.Value) + ",,,,,,,";
-                csv_HomingMissle[2] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.HomingMissle_m_MaxSpeed.Value) + ",,,,,,,";
-                csv_HomingMissle[3] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.HomingMissle_m_MaxSpeedJuiced.Value) + ",,,,,,,";
-                csv_HomingMissle[4] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.HomingMissle_m_TimeLimit.Value) + ",,,,,,,";
-                csv_HomingMissle[5] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.HomingMissle_m_AirGravityNormal.Value) + ",,,,,,,";
-                csv_HomingMissle[6] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.HomingMissle_m_GroundGravityNormal.Value) + ",,,,,,,";
-                csv_HomingMissle[7] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.HomingMissle_m_AirGravityMaglev.Value) + ",,,,,,,";
-                csv_HomingMissle[8] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.HomingMissle_m_GroundGravityMaglev.Value) + ",,,,,,,";
-                csv_HomingMissle[9] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.HomingMissle_m_Acceleration.Value) + ",,,,,,,";
-                csv_HomingMissle[10] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.HomingMissle_m_AccelerationJuiced.Value) + ",,,,,,,";
-                csv_HomingMissle[11] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.HomingMissle_m_TurnSpeed.Value) + ",,,,,,,";
-                csv_HomingMissle[12] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.HomingMissle_m_TurnSpeedJuiced.Value) + ",,,,,,,";
-                csv_HomingMissle[13] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.HomingMissle_m_Mass.Value) + ",,,,,,,";
-                csv_HomingMissle[14] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.HomingMissle_m_Radius.Value) + ",,,,,,,";
-                csv_HomingMissle[15] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.HomingMissle_m_DelayTrackingUpdate.Value) + ",,,,,,,";
-                csv_HomingMissle[16] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.HomingMissle_m_ViewRange.Value) + ",,,,,,,";
-                csv_HomingMissle[17] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.HomingMissle_m_RangeInFront.Value) + ",,,,,,,";
-                csv_HomingMissle[18] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.HomingMissle_m_RangeInBack.Value) + ",,,,,,,";
-                csv_HomingMissle[19] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.HomingMissle_m_NormalWumpaLoss.Value) + ",,,,,,,";
-                csv_HomingMissle[20] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.HomingMissle_m_JuicedWumpaLoss.Value) + ",,,,,,,";
-                csv_HomingMissle[21] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.HomingMissle_m_ExplosionBlastRadius.Value) + ",,,,,,,";
-                csv_HomingMissle[22] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.HomingMissle_m_ExplosionBlastRadiusJuiced.Value) + ",,,,,,,";
-                csv_HomingMissle[23] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.HomingMissle_m_DragCoef.Value) + ",,,,,,,";
-                csv_HomingMissle[24] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.HomingMissle_m_EasyLatFriction.Value) + ",,,,,,,";
-                csv_HomingMissle[25] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.HomingMissle_m_EasyLongFriction.Value) + ",,,,,,,";
-                csv_HomingMissle[26] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.HomingMissle_m_HardLatFriction.Value) + ",,,,,,,";
-                csv_HomingMissle[27] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.HomingMissle_m_HardLongFriction.Value) + ",,,,,,,";
-                csv_HomingMissle[28] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.HomingMissle_m_DecayTime.Value) + ",,,,,,,";
-                csv_HomingMissle[29] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.HomingMissle_m_DecaySpeed.Value) + ",,,,,,,";
-                csv_HomingMissle[30] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.HomingMissle_m_DecayMin.Value) + ",,,,,,,";
-                csv_HomingMissle[31] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.HomingMissle_m_ExplScale.Value) + ",,,,,,,";
-                csv_HomingMissle[32] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.HomingMissle_m_ExplScaleJuiced.Value) + ",,,,,,,";
-
-                File.WriteAllLines(path_gob_extracted + "common/weapons/homingmissile.csv", csv_HomingMissle);
+                List<List<string>> table = file.Table;
+                table[1][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.HomingMissle_m_TrackingFrontDistance.Value);
+                table[2][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.HomingMissle_m_MaxSpeed.Value);
+                table[3][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.HomingMissle_m_MaxSpeedJuiced.Value);
+                table[4][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.HomingMissle_m_TimeLimit.Value);
+                table[5][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.HomingMissle_m_AirGravityNormal.Value);
+                table[6][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.HomingMissle_m_GroundGravityNormal.Value);
+                table[7][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.HomingMissle_m_AirGravityMaglev.Value);
+                table[8][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.HomingMissle_m_GroundGravityMaglev.Value);
+                table[9][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.HomingMissle_m_Acceleration.Value);
+                table[10][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.HomingMissle_m_AccelerationJuiced.Value);
+                table[11][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.HomingMissle_m_TurnSpeed.Value);
+                table[12][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.HomingMissle_m_TurnSpeedJuiced.Value);
+                table[13][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.HomingMissle_m_Mass.Value);
+                table[14][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.HomingMissle_m_Radius.Value);
+                table[15][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.HomingMissle_m_DelayTrackingUpdate.Value);
+                table[16][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.HomingMissle_m_ViewRange.Value);
+                table[17][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.HomingMissle_m_RangeInFront.Value);
+                table[18][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.HomingMissle_m_RangeInBack.Value);
+                table[19][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.HomingMissle_m_NormalWumpaLoss.Value);
+                table[20][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.HomingMissle_m_JuicedWumpaLoss.Value);
+                table[21][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.HomingMissle_m_ExplosionBlastRadius.Value);
+                table[22][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.HomingMissle_m_ExplosionBlastRadiusJuiced.Value);
+                table[23][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.HomingMissle_m_DragCoef.Value);
+                table[24][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.HomingMissle_m_EasyLatFriction.Value);
+                table[25][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.HomingMissle_m_EasyLongFriction.Value);
+                table[26][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.HomingMissle_m_HardLatFriction.Value);
+                table[27][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.HomingMissle_m_HardLongFriction.Value);
+                table[28][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.HomingMissle_m_DecayTime.Value);
+                table[29][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.HomingMissle_m_DecaySpeed.Value);
+                table[30][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.HomingMissle_m_DecayMin.Value);
+                table[31][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.HomingMissle_m_ExplScale.Value);
+                table[32][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.HomingMissle_m_ExplScaleJuiced.Value);
             }
-            if (Editing_CSV_InvincMask)
+            if (file.Name.ToLower().Contains("invincibilitymask"))
             {
-                string[] csv_InvincMask = File.ReadAllLines(path_gob_extracted + "common/weapons/invincibilitymask.csv");
-
-                csv_InvincMask[1] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.InvincMask_m_NormalTime.Value) + ",,,,,,,";
-                csv_InvincMask[2] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.InvincMask_m_JuicedTime.Value) + ",,,,,,,";
-                csv_InvincMask[3] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.InvincMask_m_NormalTimeTeamed.Value) + ",,,,,,,";
-                csv_InvincMask[4] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.InvincMask_m_JuicedTimeTeamed.Value) + ",,,,,,,";
-                csv_InvincMask[5] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.InvincMask_m_NormalWumpaLoss.Value) + ",,,,,,,";
-                csv_InvincMask[6] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.InvincMask_m_JuicedWumpaLoss.Value) + ",,,,,,,";
-                csv_InvincMask[7] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.InvincMask_m_TeamSpeed.Value) + ",,,,,,,";
-                csv_InvincMask[8] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.InvincMask_m_TeamBlastRange.Value) + ",,,,,,,";
-                csv_InvincMask[9] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.InvincMask_m_TeamMeterFull.Value) + ",,,,,,,";
-                csv_InvincMask[10] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.InvincMask_m_ExplScale.Value) + ",,,,,,,";
-                csv_InvincMask[11] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.InvincMask_m_ExplScaleJuiced.Value) + ",,,,,,,";
-                csv_InvincMask[12] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.InvincMask_m_ColRadius.Value) + ",,,,,,,";
-
-                File.WriteAllLines(path_gob_extracted + "common/weapons/invincibilitymask.csv", csv_InvincMask);
+                List<List<string>> table = file.Table;
+                table[1][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.InvincMask_m_NormalTime.Value);
+                table[2][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.InvincMask_m_JuicedTime.Value);
+                table[3][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.InvincMask_m_NormalTimeTeamed.Value);
+                table[4][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.InvincMask_m_JuicedTimeTeamed.Value);
+                table[5][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.InvincMask_m_NormalWumpaLoss.Value);
+                table[6][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.InvincMask_m_JuicedWumpaLoss.Value);
+                table[7][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.InvincMask_m_TeamSpeed.Value);
+                table[8][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.InvincMask_m_TeamBlastRange.Value);
+                table[9][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.InvincMask_m_TeamMeterFull.Value);
+                table[10][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.InvincMask_m_ExplScale.Value);
+                table[11][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.InvincMask_m_ExplScaleJuiced.Value);
+                table[12][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.InvincMask_m_ColRadius.Value);
             }
-            if (Editing_CSV_RedEye)
+            if (file.Name.ToLower().Contains("redeye"))
             {
-                string[] csv_RedEye = File.ReadAllLines(path_gob_extracted + "common/weapons/redeye.csv");
-
-                csv_RedEye[1] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.RedEye_Acceleration.Value) + ",,,,,,,";
-                csv_RedEye[2] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.RedEye_Deceleration.Value) + ",,,,,,,";
-                csv_RedEye[3] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.RedEye_MaxSpeed.Value) + ",,,,,,,";
-                csv_RedEye[4] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.RedEye_MinSpeed.Value) + ",,,,,,,";
-                csv_RedEye[5] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.RedEye_TurnSpeed.Value) + ",,,,,,,";
-                csv_RedEye[6] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.RedEye_Explosion_Radius.Value) + ",,,,,,,";
-                csv_RedEye[7] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.RedEye_TurnSpeedJuiced.Value) + ",,,,,,,";
-                csv_RedEye[8] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.RedEye_Explosion_Radius_Juiced.Value) + ",,,,,,,";
-                csv_RedEye[9] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.RedEye_Expl_Scale.Value) + ",,,,,,,";
-                csv_RedEye[10] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.RedEye_Expl_Scale_Juiced.Value) + ",,,,,,,";
-                csv_RedEye[11] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.RedEye_FullSpeedTurnSlowdown.Value) + ",,,,,,,";
-
-                File.WriteAllLines(path_gob_extracted + "common/weapons/redeye.csv", csv_RedEye);
+                List<List<string>> table = file.Table;
+                table[1][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.RedEye_Acceleration.Value);
+                table[2][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.RedEye_Deceleration.Value);
+                table[3][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.RedEye_MaxSpeed.Value);
+                table[4][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.RedEye_MinSpeed.Value);
+                table[5][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.RedEye_TurnSpeed.Value);
+                table[6][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.RedEye_Explosion_Radius.Value);
+                table[7][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.RedEye_TurnSpeedJuiced.Value);
+                table[8][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.RedEye_Explosion_Radius_Juiced.Value);
+                table[9][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.RedEye_Expl_Scale.Value);
+                table[10][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.RedEye_Expl_Scale_Juiced.Value);
+                table[11][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.RedEye_FullSpeedTurnSlowdown.Value);
             }
-            if (Editing_CSV_TNT)
+            if (file.Name.ToLower().Contains("tntcrate"))
             {
-                string[] csv_TNT = File.ReadAllLines(path_gob_extracted + "common/weapons/tntcrate.csv");
-
-                csv_TNT[1] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.TNT_m_Time.Value) + ",,,,,,,";
-                csv_TNT[2] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.TNT_m_TimeBeforeHiddenChar.Value) + ",,,,,,,";
-                csv_TNT[3] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.TNT_m_TimeHiddenChar.Value) + ",,,,,,,";
-                csv_TNT[4] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.TNT_m_NormalWumpaLoss.Value) + ",,,,,,,";
-                csv_TNT[5] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.TNT_m_JuicedWumpaLoss.Value) + ",,,,,,,";
-                csv_TNT[6] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.TNT_m_ExplosionBlastRadius.Value) + ",,,,,,,";
-                csv_TNT[7] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.TNT_m_ExplScale.Value) + ",,,,,,,";
-                csv_TNT[10] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.TNT_m_ExplScaleJuiced.Value) + ",,,,,,,";
-
-                File.WriteAllLines(path_gob_extracted + "common/weapons/tntcrate.csv", csv_TNT);
+                List<List<string>> table = file.Table;
+                table[1][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.TNT_m_Time.Value);
+                table[2][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.TNT_m_TimeBeforeHiddenChar.Value);
+                table[3][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.TNT_m_TimeHiddenChar.Value);
+                table[4][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.TNT_m_NormalWumpaLoss.Value);
+                table[5][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.TNT_m_JuicedWumpaLoss.Value);
+                table[6][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.TNT_m_ExplosionBlastRadius.Value);
+                table[7][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.TNT_m_ExplScale.Value);
+                table[10][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.TNT_m_ExplScaleJuiced.Value);
             }
-            if (Editing_CSV_Tornado)
+            if (file.Name.ToLower().Contains("tornado"))
             {
-                string[] csv_Tornado = File.ReadAllLines(path_gob_extracted + "common/weapons/tornado.csv");
-
-                csv_Tornado[1] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.Tornado_m_TrackingFrontDistance.Value) + ",,,,,,,";
-                csv_Tornado[2] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.Tornado_m_MaxSpeed.Value) + ",,,,,,,";
-                csv_Tornado[3] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.Tornado_m_MaxSpeedJuiced.Value) + ",,,,,,,";
-                csv_Tornado[4] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.Tornado_m_MaxSpeedWithKart.Value) + ",,,,,,,";
-                csv_Tornado[5] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.Tornado_m_TimeLimit.Value) + ",,,,,,,";
-                csv_Tornado[6] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.Tornado_m_AirGravity.Value) + ",,,,,,,";
-                csv_Tornado[7] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.Tornado_m_GroundGravity.Value) + ",,,,,,,";
-                csv_Tornado[8] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.Tornado_m_AirGravityMaglev.Value) + ",,,,,,,";
-                csv_Tornado[9] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.Tornado_m_GroundGravityMaglev.Value) + ",,,,,,,";
-                csv_Tornado[10] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.Tornado_m_Acceleration.Value) + ",,,,,,,";
-                csv_Tornado[11] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.Tornado_m_AccelerationJuiced.Value) + ",,,,,,,";
-                csv_Tornado[12] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.Tornado_m_TurnSpeed.Value) + ",,,,,,,";
-                csv_Tornado[13] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.Tornado_m_TurnSpeedJuiced.Value) + ",,,,,,,";
-                csv_Tornado[14] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.Tornado_m_Mass.Value) + ",,,,,,,";
-                csv_Tornado[15] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.Tornado_m_Radius.Value) + ",,,,,,,";
-                csv_Tornado[16] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.Tornado_m_DelayTrackingUpdate.Value) + ",,,,,,,";
-                csv_Tornado[17] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.Tornado_m_ViewRange.Value) + ",,,,,,,";
-                csv_Tornado[18] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.Tornado_m_RangeInFront.Value) + ",,,,,,,";
-                csv_Tornado[19] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.Tornado_m_RangeInBack.Value) + ",,,,,,,";
-                csv_Tornado[20] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.Tornado_m_LiftTime.Value) + ",,,,,,,";
-                csv_Tornado[21] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.Tornado_m_LiftForce.Value) + ",,,,,,,";
-                csv_Tornado[22] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.Tornado_m_FizzleTime.Value) + ",,,,,,,";
-                csv_Tornado[23] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.Tornado_m_NormalWumpaLoss.Value) + ",,,,,,,";
-                csv_Tornado[24] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.Tornado_m_JuicedWumpaLoss.Value) + ",,,,,,,";
-                csv_Tornado[25] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.Tornado_m_DragCoef.Value) + ",,,,,,,";
-                csv_Tornado[26] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.Tornado_m_EasyLatFriction.Value) + ",,,,,,,";
-                csv_Tornado[27] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.Tornado_m_EasyLongFriction.Value) + ",,,,,,,";
-                csv_Tornado[28] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.Tornado_m_HardLatFriction.Value) + ",,,,,,,";
-                csv_Tornado[29] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.Tornado_m_HardLongFriction.Value) + ",,,,,,,";
-                csv_Tornado[30] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.Tornado_m_TargetAllDistance.Value) + ",,,,,,,";
-                csv_Tornado[31] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.Tornado_m_ViewRangleOfTarget.Value) + ",,,,,,,";
-
-                File.WriteAllLines(path_gob_extracted + "common/weapons/tornado.csv", csv_Tornado);
+                List<List<string>> table = file.Table;
+                table[1][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.Tornado_m_TrackingFrontDistance.Value);
+                table[2][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.Tornado_m_MaxSpeed.Value);
+                table[3][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.Tornado_m_MaxSpeedJuiced.Value);
+                table[4][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.Tornado_m_MaxSpeedWithKart.Value);
+                table[5][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.Tornado_m_TimeLimit.Value);
+                table[6][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.Tornado_m_AirGravity.Value);
+                table[7][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.Tornado_m_GroundGravity.Value);
+                table[8][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.Tornado_m_AirGravityMaglev.Value);
+                table[9][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.Tornado_m_GroundGravityMaglev.Value);
+                table[10][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.Tornado_m_Acceleration.Value);
+                table[11][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.Tornado_m_AccelerationJuiced.Value);
+                table[12][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.Tornado_m_TurnSpeed.Value);
+                table[13][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.Tornado_m_TurnSpeedJuiced.Value);
+                table[14][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.Tornado_m_Mass.Value);
+                table[15][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.Tornado_m_Radius.Value);
+                table[16][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.Tornado_m_DelayTrackingUpdate.Value);
+                table[17][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.Tornado_m_ViewRange.Value);
+                table[18][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.Tornado_m_RangeInFront.Value);
+                table[19][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.Tornado_m_RangeInBack.Value);
+                table[20][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.Tornado_m_LiftTime.Value);
+                table[21][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.Tornado_m_LiftForce.Value);
+                table[22][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.Tornado_m_FizzleTime.Value);
+                table[23][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.Tornado_m_NormalWumpaLoss.Value);
+                table[24][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.Tornado_m_JuicedWumpaLoss.Value);
+                table[25][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.Tornado_m_DragCoef.Value);
+                table[26][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.Tornado_m_EasyLatFriction.Value);
+                table[27][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.Tornado_m_EasyLongFriction.Value);
+                table[28][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.Tornado_m_HardLatFriction.Value);
+                table[29][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.Tornado_m_HardLongFriction.Value);
+                table[30][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.Tornado_m_TargetAllDistance.Value);
+                table[31][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.Tornado_m_ViewRangleOfTarget.Value);
             }
-            if (Editing_CSV_TurboBoost)
+            if (file.Name.ToLower().Contains("turboboost"))
             {
-                string[] csv_TurboBoost = File.ReadAllLines(path_gob_extracted + "common/weapons/turboboost.csv");
-
-                csv_TurboBoost[1] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.TurboBoost_m_NormalTime.Value) + ",,,,,,,";
-                csv_TurboBoost[2] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.TurboBoost_m_JuicedTime.Value) + ",,,,,,,";
-
-                File.WriteAllLines(path_gob_extracted + "common/weapons/turboboost.csv", csv_TurboBoost);
+                List<List<string>> table = file.Table;
+                table[1][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.TurboBoost_m_NormalTime.Value);
+                table[2][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.TurboBoost_m_JuicedTime.Value);
             }
-            if (Editing_CSV_StaticShock)
+            if (file.Name.ToLower().Contains("staticshock"))
             {
-                string[] csv_StaticShock = File.ReadAllLines(path_gob_extracted + "common/weapons/staticshock.csv");
-
-                csv_StaticShock[1] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.StaticShock_m_NormalTime.Value) + ",,,,,,,";
-                csv_StaticShock[2] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.StaticShock_m_JuicedTime.Value) + ",,,,,,,";
-                csv_StaticShock[3] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.StaticShock_m_NormalWumpaLoss.Value) + ",,,,,,,";
-                csv_StaticShock[4] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.StaticShock_m_JuicedWumpaLoss.Value) + ",,,,,,,";
-                csv_StaticShock[5] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.StaticShock_m_HomingSpeed.Value) + ",,,,,,,";
-                csv_StaticShock[6] = CNK_Common.Float_To_CSV_Line(CNK_Data_Powerups.StaticShock_m_DistanceForHome.Value) + ",,,,,,,";
-
-                File.WriteAllLines(path_gob_extracted + "common/weapons/staticshock.csv", csv_StaticShock);
+                List<List<string>> table = file.Table;
+                table[1][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.StaticShock_m_NormalTime.Value);
+                table[2][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.StaticShock_m_JuicedTime.Value);
+                table[3][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.StaticShock_m_NormalWumpaLoss.Value);
+                table[4][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.StaticShock_m_JuicedWumpaLoss.Value);
+                table[5][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.StaticShock_m_HomingSpeed.Value);
+                table[6][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.StaticShock_m_DistanceForHome.Value);
             }
+
         }
 
         public void CNK_Randomize_StaticShock(Random randState)

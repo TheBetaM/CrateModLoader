@@ -5,25 +5,23 @@ using CrateModGames.GameSpecific.CrashNitroKart;
 
 namespace CrateModLoader.GameSpecific.CrashNitroKart
 {
-    public class CNK_Rand_Music : ModStruct<string>
+    //unfinished, music.csv doesn't seem to affect the game?
+    public class CNK_Rand_Music : ModStruct<CSV>
     {
         public override string Name => "Randomize Music";
 
+        private Random randState;
+
         public override void BeforeModPass()
         {
-            
-
+            randState = new Random(ModLoaderGlobals.RandomizerSeed);
         }
 
-        public override void ModPass(string path_gob_extracted)
+        public override void ModPass(CSV file)
         {
-            Random randState = new Random(ModLoaderGlobals.RandomizerSeed);
-            string[] csv_music = File.ReadAllLines(path_gob_extracted + "common/audio/music.csv");
-
-            List<string> csv_Music_LineList = new List<string>();
-            for (int i = 0; i < 12; i++)
+            if (file.Name != "music.csv")
             {
-                csv_Music_LineList.Add(csv_music[i]);
+                return;
             }
 
             List<TrackID> TrackList = new List<TrackID>()
@@ -73,6 +71,7 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
             string extra = ",0,MusicBalance,0.8";
             string extraf = "f,0,MusicBalance,0.8";
 
+            /*
             csv_Music_LineList.Add(CNK_Common.TrackName[(int)TrackList[0]] + "," + CNK_Common.TrackName[(int)RandTracks[0]] + extra);
             csv_Music_LineList.Add(CNK_Common.TrackName[(int)TrackList[0]] + "f," + CNK_Common.TrackName[(int)RandTracks[0]] + extraf);
             csv_Music_LineList.Add(CNK_Common.TrackName[(int)TrackList[1]] + "," + CNK_Common.TrackName[(int)RandTracks[1]] + extra);
@@ -124,14 +123,8 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
             csv_Music_LineList.Add(CNK_Common.TrackName[(int)TrackList[12]] + "f," + CNK_Common.TrackName[(int)RandTracks[12]] + extraf);
 
             csv_Music_LineList.Add("");
+            */
 
-            csv_music = new string[csv_Music_LineList.Count];
-            for (int i = 0; i < csv_Music_LineList.Count; i++)
-            {
-                csv_music[i] = csv_Music_LineList[i];
-            }
-
-            File.WriteAllLines(path_gob_extracted + "common/audio/music.csv", csv_music);
         }
 
     }

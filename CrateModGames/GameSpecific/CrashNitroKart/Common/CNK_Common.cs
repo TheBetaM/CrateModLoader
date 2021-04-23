@@ -837,6 +837,20 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
         }
     }
 
+    public class CNK_GenericMod
+    {
+        public string extrPath;
+        public string mainPath;
+        public ConsoleMode console;
+
+        public CNK_GenericMod(string ext, string main, ConsoleMode cons)
+        {
+            extrPath = ext;
+            mainPath = main;
+            console = cons;
+        }
+    }
+
     public static class CNK_Common
     {
 
@@ -915,6 +929,12 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
             cur_line += ",";
             return cur_line;
         }
+        public static string Float_To_CSV_Word(float targetfloat)
+        {
+            string cur_line = String.Format("{0:0.#########}", targetfloat);
+            cur_line = cur_line.Replace(',', '.'); // For some reason String.Format is still not enough
+            return cur_line;
+        }
         public static string FloatArray_To_CSV_Line(float[] targetfloat)
         {
             string cur_line = "";
@@ -931,6 +951,21 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
             }
             cur_line += ",";
             return cur_line;
+        }
+        public static List<string> FloatArray_To_CSV_FullLine(float[] targetfloat)
+        {
+            List<string> line = new List<string>();
+            string[] line_vars = new string[targetfloat.Length];
+            for (int i = 0; i < targetfloat.Length; i++)
+            {
+                line_vars[i] = String.Format("{0:0.#########}", targetfloat[i]);
+                line_vars[i] = line_vars[i].Replace(',', '.'); // For some reason String.Format is still not enough
+            }
+            for (int i = 0; i < targetfloat.Length; i++)
+            {
+                line.Add(line_vars[i]);
+            }
+            return line;
         }
         public static string FloatArray2_To_CSV_Line(float[,] targetfloat, int targetCharacter)
         {
@@ -949,10 +984,30 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
             cur_line += ",";
             return cur_line;
         }
+        public static List<string> FloatArray2_To_CSV_FullLine(float[,] targetfloat, int targetCharacter)
+        {
+            List<string> line = new List<string>();
+            string[] line_vars = new string[targetfloat.GetLength(1)];
+            for (int i = 0; i < targetfloat.GetLength(1); i++)
+            {
+                line_vars[i] = String.Format("{0:0.#########}", targetfloat[targetCharacter, i]);
+                line_vars[i] = line_vars[i].Replace(',', '.'); // For some reason String.Format is still not enough
+            }
+            for (int i = 0; i < targetfloat.GetLength(1); i++)
+            {
+                line.Add(line_vars[i]);
+            }
+            return line;
+        }
         public static string Int_To_CSV_Line(int targetInt)
         {
             string cur_line = targetInt.ToString();
             cur_line += ",";
+            return cur_line;
+        }
+        public static string Int_To_CSV_Word(int targetInt)
+        {
+            string cur_line = targetInt.ToString();
             return cur_line;
         }
         public static string CSV_WeaponSelection_RowID_To_RowText(WeaponSelectionRows RowID, float[] RowTable)
@@ -1000,6 +1055,34 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
             row_text += Float_To_CSV_Line(RowTable[(int)PowerupTypes.STATICSHOCK_X3]);
 
             return row_text;
+        }
+        public static List<string> CSV_WeaponSelection_RowID_To_Row(WeaponSelectionRows RowID, float[] RowTable)
+        {
+            List<string> row = new List<string>();
+            row.Add("");
+            row.Add("");
+            row.Add(Float_To_CSV_Word(RowTable[(int)PowerupTypes.EXPLOSIVE_CRATE]));
+            row.Add(Float_To_CSV_Word(RowTable[(int)PowerupTypes.FREEZING_MINE]));
+            row.Add(Float_To_CSV_Word(RowTable[(int)PowerupTypes.HOMING_MISSLE]));
+            row.Add(Float_To_CSV_Word(RowTable[(int)PowerupTypes.BOWLING_BOMB]));
+            row.Add(Float_To_CSV_Word(RowTable[(int)PowerupTypes.TORNADO]));
+            row.Add(Float_To_CSV_Word(RowTable[(int)PowerupTypes.STATIC_SHOCK]));
+            row.Add(Float_To_CSV_Word(RowTable[(int)PowerupTypes.POWER_SHIELD]));
+            row.Add(Float_To_CSV_Word(RowTable[(int)PowerupTypes.INVINCIBILITY_MASK]));
+            row.Add(Float_To_CSV_Word(RowTable[(int)PowerupTypes.INVISIBILITY]));
+            row.Add(Float_To_CSV_Word(RowTable[(int)PowerupTypes.VOODOO_DOLL]));
+            row.Add(Float_To_CSV_Word(RowTable[(int)PowerupTypes.TROPY_CLOCKS]));
+            row.Add(Float_To_CSV_Word(RowTable[(int)PowerupTypes.TURBO_BOOSTS]));
+            row.Add(Float_To_CSV_Word(RowTable[(int)PowerupTypes.SUPER_ENGINE]));
+            row.Add(Float_To_CSV_Word(RowTable[(int)PowerupTypes.REDEYE]));
+            row.Add(Float_To_CSV_Word(RowTable[(int)PowerupTypes.HOMING_MISSLE_X3]));
+            row.Add(Float_To_CSV_Word(RowTable[(int)PowerupTypes.BOWLING_BOMB_X3]));
+            row.Add(Float_To_CSV_Word(RowTable[(int)PowerupTypes.TURBO_BOOST_X3]));
+            row.Add(Float_To_CSV_Word(RowTable[(int)PowerupTypes.EXPCRATE_X3]));
+            row.Add(Float_To_CSV_Word(RowTable[(int)PowerupTypes.FREEZEMINE_X3]));
+            row.Add(Float_To_CSV_Word(RowTable[(int)PowerupTypes.STATICSHOCK_X3]));
+
+            return row;
         }
     }
 }

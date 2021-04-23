@@ -5,15 +5,15 @@ using CrateModGames.GameSpecific.CrashNitroKart;
 
 namespace CrateModLoader.GameSpecific.CrashNitroKart
 {
-    public class CNK_NoIntro : ModStruct<string>
+    public class CNK_NoIntro : ModStruct<CNK_GenericMod>
     {
         public override string Name => CNK_Text.Mod_RemoveIntroVideos;
         public override string Description => CNK_Text.Mod_RemoveIntroVideosDesc;
 
-        public override void ModPass(string path_gob_extracted)
+        public override void ModPass(CNK_GenericMod mod)
         {
-            string path = path_gob_extracted; //to fix: ConsolePipeline.ExtractedPath
-            ConsoleMode console = ConsoleMode.PS2; //to fix: ConsolePipeline.Metadata.Console
+            string path = mod.mainPath;
+            ConsoleMode console = mod.console; 
 
             if (console == ConsoleMode.PS2)
             {

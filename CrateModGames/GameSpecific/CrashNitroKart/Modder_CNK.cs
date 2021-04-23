@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
 //CNK Tools/API by BetaM, ManDude and eezstreet.
 /* 
  * Mod Layers:
  * 1: ASSETS.GOB contents
  * Mod Passes:
- * string -> GOB extraction path
+ * CNK_GenericMod -> extraction paths, console metadata
+ * CSV -> CSV table data
+ * IGB -> to be implemented
  */
 
 namespace CrateModLoader.GameSpecific.CrashNitroKart
@@ -25,11 +28,41 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
     public sealed class Modder_CNK : Modder
     {
         public override bool CanPreloadGame => true;
+        public override bool AsyncProcess => true;
+
+        private int CurrentPass = 0;
+        private float PassPercentMod = 39f;
+        private int PassPercentAdd = 10;
+        private bool EditingRM = false;
+        private bool EditingSM = false;
+        private bool MainBusy = false;
 
         public Modder_CNK() { }
 
         public override void StartModProcess()
         {
+            ProcessBusy = true;
+
+            AsyncStart();
+        }
+
+        public async void AsyncStart()
+        {
+            // Mod files
+            ModProcess();
+
+            while (MainBusy || PassBusy)
+            {
+                await Task.Delay(100);
+            }
+
+            ProcessBusy = false;
+        }
+
+        public async void ModProcess()
+        {
+            MainBusy = true;
+
             string path_gob_extracted = "";
             string relativePath = ConsolePipeline.ProcessPath;
             string extrPath = ConsolePipeline.ExtractedPath;
@@ -96,16 +129,73 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
                 }
             }
 
-            UpdateProcessMessage("Mod Pass", 25);
+            List<FileInfo> Files = new List<FileInfo>();
+            DirectoryInfo adi = new DirectoryInfo(path_gob_extracted);
+            foreach (DirectoryInfo dir in adi.EnumerateDirectories())
+            {
+                Recursive_LoadCSV(dir, ref Files);
+            }
+            PassCount = Files.Count;
+
+            //Generic mods
+            CNK_GenericMod generic = new CNK_GenericMod(path_gob_extracted, ConsolePipeline.ExtractedPath, ConsolePipeline.Metadata.Console);
             BeforeModPass();
+            StartModPass(generic);
 
-            StartModPass(path_gob_extracted);
+            bool NeedsCache = NeedsCachePass();
+            CurrentPass = 0;
+            if (!NeedsCache)
+            {
+                PassPercentMod = 83f;
+                CurrentPass++;
+            }
 
-            UpdateProcessMessage("Handling custom textures...", 70);
+            while (CurrentPass < 2)
+            {
+                PassIterator = 0;
+                PassBusy = true;
+                if (CurrentPass == 0)
+                {
+                    PassPercentMod = 39f;
+                    PassPercentAdd = 10;
+                    UpdateProcessMessage("Cache Pass", 10);
+                    BeforeCachePass();
+                }
+                else if (CurrentPass == 1)
+                {
+                    if (NeedsCache)
+                    {
+                        PassPercentMod = 43f;
+                        PassPercentAdd = 50;
+                        UpdateProcessMessage("Mod Pass", 50);
+                    }
+                    else
+                    {
+                        PassPercentMod = 83f;
+                        UpdateProcessMessage("Mod Pass", 10);
+                    }
+
+                    BeforeModPass();
+                }
+
+                IList<Task> editTaskList = new List<Task>();
+
+                foreach (FileInfo file in Files)
+                {
+                    editTaskList.Add(EditCSV(file));
+                }
+
+                await Task.WhenAll(editTaskList);
+
+                CurrentPass++;
+                PassBusy = false;
+            }
+
+            UpdateProcessMessage("Handling custom textures...", 95);
 
             HandleTextures(path_gob_extracted);
 
-            UpdateProcessMessage("Building ASSETS.GOB...", 90);
+            UpdateProcessMessage("Building ASSETS.GOB...", 97);
 
             #region Build GOB
             GobExtract = new Process();
@@ -124,7 +214,7 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
             #endregion
 
             // Extraction cleanup
-            UpdateProcessMessage("Removing temporary files...", 95);
+            UpdateProcessMessage("Removing temporary files...", 99);
             if (Directory.Exists(path_gob_extracted))
             {
                 DirectoryInfo di = new DirectoryInfo(path_gob_extracted);
@@ -147,6 +237,51 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
                 }
 
             }
+
+            MainBusy = false;
+        }
+
+        void Recursive_LoadCSV(DirectoryInfo di, ref List<FileInfo> Files)
+        {
+            foreach (DirectoryInfo dir in di.EnumerateDirectories())
+            {
+                Recursive_LoadCSV(dir, ref Files);
+            }
+            foreach (FileInfo file in di.EnumerateFiles())
+            {
+                if (file.Extension.ToLower() == ".csv")
+                {
+                    Files.Add(file);
+                }
+            }
+        }
+
+        private async Task EditCSV(FileInfo file)
+        {
+            //Console.WriteLine("Editing: " + path);
+
+            await Task.Run(
+            () =>
+            {
+                CSV table = new CSV(file);
+
+                switch (CurrentPass)
+                {
+                    case 0:
+                        StartCachePass(table);
+                        break;
+                    default:
+                    case 1:
+                        StartModPass(table);
+                        break;
+                }
+
+                table.Write();
+            }
+            );
+
+            PassIterator++;
+            PassPercent = (int)((PassIterator / (float)PassCount) * PassPercentMod) + PassPercentAdd;
         }
 
         void HandleTextures(string path_gob_extracted)

@@ -5,22 +5,21 @@ using CrateModGames.GameSpecific.CrashNitroKart;
 
 namespace CrateModLoader.GameSpecific.CrashNitroKart
 {
-    public class CNK_SpeedUpMaskHints : ModStruct<string>
+    public class CNK_SpeedUpMaskHints : ModStruct<CSV>
     {
         public override string Name => CNK_Text.Mod_SpeedUpMaskHint;
         public override string Description => CNK_Text.Mod_SpeedUpMaskHintDesc;
 
-        public override void ModPass(string path_gob_extracted)
+        public override void ModPass(CSV file)
         {
-            string[] csv_HintsConfig = File.ReadAllLines(path_gob_extracted + "common/hints/config.csv");
-
-            csv_HintsConfig[5] = "500,# Boom duration";
-            csv_HintsConfig[6] = "250,# Rotation duration";
-            csv_HintsConfig[7] = "0.12,# Rotation speed";
-            csv_HintsConfig[9] = "500,# Wait for end of smoke delay";
-            csv_HintsConfig[10] = "250,# Camera move time";
-
-            File.WriteAllLines(path_gob_extracted + "common/hints/config.csv", csv_HintsConfig);
+            if (file.FullName.Contains("/hints/config.csv") || file.FullName.Contains("/hints/config.csv"))
+            {
+                file.Table[5][0] = "500";
+                file.Table[6][0] = "250";
+                file.Table[7][0] = "0.12";
+                file.Table[9][0] = "500";
+                file.Table[10][0] = "250";
+            }
         }
 
     }

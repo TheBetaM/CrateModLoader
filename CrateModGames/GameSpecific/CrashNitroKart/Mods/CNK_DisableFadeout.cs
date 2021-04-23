@@ -5,63 +5,22 @@ using CrateModGames.GameSpecific.CrashNitroKart;
 
 namespace CrateModLoader.GameSpecific.CrashNitroKart
 {
-    public class CNK_DisableFadeout : ModStruct<string>
+    public class CNK_DisableFadeout : ModStruct<CSV>
     {
         public override string Name => CNK_Text.Mod_DisableFadeout;
         public override string Description => CNK_Text.Mod_DisableFadeoutDesc;
 
-        public override void ModPass(string path_gob_extracted)
+        public override void ModPass(CSV file)
         {
-            DirectoryInfo dir_hud = new DirectoryInfo(path_gob_extracted + "common/hud/");
-            foreach (FileInfo file in dir_hud.EnumerateFiles())
+            if (file.FullName.Contains("/hud/") || file.FullName.Contains(@"\hud\"))
             {
-                string[] csv_HUD_Config = File.ReadAllLines(file.FullName);
-
-                if (csv_HUD_Config[0] == "[FaderStuff],Fader")
+                for (int i = 0; i < file.Table.Count; i++)
                 {
-                    csv_HUD_Config[0] = "";
-                }
-                if (csv_HUD_Config[1] == "player,0")
-                {
-                    csv_HUD_Config[1] = "";
-                }
-                if (csv_HUD_Config[1] == "player,0 0")
-                {
-                    csv_HUD_Config[1] = "";
-                }
-                if (csv_HUD_Config[0] == "[FadeStuff],Fader")
-                {
-                    csv_HUD_Config[0] = "";
-                }
-
-                File.WriteAllLines(file.FullName, csv_HUD_Config);
-            }
-
-            if (Directory.Exists(path_gob_extracted + "hud/"))
-            {
-                dir_hud = new DirectoryInfo(path_gob_extracted + "hud/");
-                foreach (FileInfo file in dir_hud.EnumerateFiles())
-                {
-                    string[] csv_HUD_Config = File.ReadAllLines(file.FullName);
-
-                    if (csv_HUD_Config[0] == "[FaderStuff],Fader")
+                    if (file.Table[i][0] == "[FaderStuff]" || file.Table[i][0] == "[FadeStuff]")
                     {
-                        csv_HUD_Config[0] = "";
+                        file.Table[i] = new List<string>() { "" };
+                        file.Table[i + 1] = new List<string>() { "" };
                     }
-                    if (csv_HUD_Config[1] == "player,0")
-                    {
-                        csv_HUD_Config[1] = "";
-                    }
-                    if (csv_HUD_Config[1] == "player,0 0")
-                    {
-                        csv_HUD_Config[1] = "";
-                    }
-                    if (csv_HUD_Config[0] == "[FadeStuff],Fader")
-                    {
-                        csv_HUD_Config[0] = "";
-                    }
-
-                    File.WriteAllLines(file.FullName, csv_HUD_Config);
                 }
             }
         }
