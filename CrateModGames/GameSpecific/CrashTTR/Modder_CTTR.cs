@@ -13,6 +13,8 @@ namespace CrateModLoader.GameSpecific.CrashTTR
 {
     public sealed class Modder_CTTR : Modder
     {
+        public override bool NoAsyncProcess => true;
+
         internal string path_RCF_default = "";
         internal string path_RCF_common = "";
         internal string path_RCF_frontend = "";
@@ -258,8 +260,6 @@ namespace CrateModLoader.GameSpecific.CrashTTR
 
             BeforeModPass();
 
-            RCF_Manager.cachedRCF = null;
-
             List<string> all_RCF = new List<string> {
                 path_RCF_default,
                 path_RCF_common,
@@ -324,13 +324,14 @@ namespace CrateModLoader.GameSpecific.CrashTTR
         void Modify_RCF(string path)
         {
             string path_extr = basePath + @"cml_extr\";
-            RCF_Manager.Extract(basePath + path, path_extr);
+            RCF_Manager rcf = new RCF_Manager(basePath + path_RCF_frontend);
+            rcf.Extract(basePath + path, path_extr);
 
             ModCrates.InstallLayerMods(EnabledModCrates, path_extr, 1);
 
             StartModPass(path_extr);
 
-            RCF_Manager.Pack(basePath + path, path_extr);
+            rcf.Pack(basePath + path, path_extr);
         }
     }
 }

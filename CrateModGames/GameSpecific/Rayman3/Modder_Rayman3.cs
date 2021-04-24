@@ -18,6 +18,7 @@ namespace CrateModLoader.GameSpecific.Rayman3
 
     public sealed class Modder_Rayman3 : Modder
     {
+        public override bool NoAsyncProcess => true;
         public override bool CanPreloadGame => true;
         public override List<ConsoleMode> PreloadConsoles => new List<ConsoleMode>() { ConsoleMode.GCN, };
 
@@ -25,15 +26,15 @@ namespace CrateModLoader.GameSpecific.Rayman3
 
         public override void StartModProcess()
         {
-            string basePath = "";
+            string basePath = ConsolePipeline.ExtractedPath;
             if (ConsolePipeline.Metadata.Console == ConsoleMode.PS2)
-                basePath = ConsolePipeline.ExtractedPath + @"DATABIN\";
+                basePath += @"DATABIN\";
             else if (ConsolePipeline.Metadata.Console == ConsoleMode.GCN)
-                basePath = ConsolePipeline.ExtractedPath + @"GAMEDATABIN\";
+                basePath += @"GAMEDATABIN\";
             else if (ConsolePipeline.Metadata.Console  == ConsoleMode.XBOX)
-                basePath = ConsolePipeline.ExtractedPath + @"gamedatabin\";
+                basePath += @"gamedatabin\";
             else if (ConsolePipeline.Metadata.Console == ConsoleMode.PC)
-                basePath = ConsolePipeline.ExtractedPath + @"Gamedatabin\";
+                basePath += @"Gamedatabin\";
 
             Ray3_Common.ExtPath = ConsolePipeline.ExtractedPath;
 

@@ -1,7 +1,7 @@
-﻿using RadcoreCementFile;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using CrateModLoader.GameSpecific.CrashTTR;
 //RCF API by NeoKesha
 /* Mod Layers:
@@ -14,25 +14,60 @@ namespace CrateModLoader.GameSpecific.CrashMoM
 {
     public sealed class Modder_MoM : Modder
     {
+        private bool MainBusy = false;
+        private int CurrentPass = 0;
+        private float PassPercentMod = 49f;
+        private int PassPercentAdd = 1;
+
         public Modder_MoM() { }
 
         public override void StartModProcess()
         {
+            ProcessBusy = true;
+
+            AsyncStart();
+        }
+
+        public async void AsyncStart()
+        {
+            UpdateProcessMessage("Starting...", 0);
+
+            // Mod files
+            ModProcess();
+
+            while (MainBusy || PassBusy)
+            {
+                await Task.Delay(100);
+            }
+
+            ProcessBusy = false;
+        }
+
+        public async void ModProcess()
+        {
+            MainBusy = true;
+
             string path_RCF_frontend = "DEFAULT.RCF";
             string basePath = ConsolePipeline.ExtractedPath;
-            RCF_Manager.cachedRCF = null;
+            RCF_Manager rcf = new RCF_Manager(basePath + path_RCF_frontend);
 
             if (ConsolePipeline.Metadata.Console != ConsoleMode.PS2)
                 path_RCF_frontend = "default.rcf";
 
-            string path_extr = basePath + @"cml_extr\";
+            string path_extr = basePath + @"default_ex\";
             UpdateProcessMessage("Extracting DEFAULT.RCF...", 5);
-            RCF_Manager.Extract(basePath + path_RCF_frontend, path_extr);
 
-            UpdateProcessMessage("Installing Mod Crates: Layer 1...", 6);
+            PassIterator = 0;
+            PassPercent = 0;
+            PassCount = 1;
+            PassBusy = true;
+            await rcf.ExtractAsync(this, basePath + path_RCF_frontend, path_extr);
+            PassBusy = false;
+
+            UpdateProcessMessage("Installing Mod Crates: Layer 1...", 26);
             ModCrates.InstallLayerMods(EnabledModCrates, path_extr, 1);
 
-            UpdateProcessMessage("Cache Pass", 25);
+            UpdateProcessMessage("Cache Pass", 27);
 
             BeforeCachePass();
 
@@ -44,8 +79,17 @@ namespace CrateModLoader.GameSpecific.CrashMoM
 
             StartModPass(path_extr);
 
-            UpdateProcessMessage("Building DEFAULT.RCF...", 95);
-            RCF_Manager.Pack(basePath + path_RCF_frontend, path_extr);
+            UpdateProcessMessage("Packing DEFAULT.RCF...", 75);
+
+            PassIterator = 0;
+            PassPercent = 50;
+            PassCount = 1;
+            PassBusy = true;
+            await rcf.PackAsync(basePath + path_RCF_frontend, path_extr);
+            PassBusy = false;
+            
+
+            MainBusy = false;
         }
     }
 }

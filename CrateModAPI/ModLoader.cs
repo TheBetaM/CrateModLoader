@@ -251,7 +251,7 @@ namespace CrateModLoader
                 }
                 Modder.LoadActiveProps();
                 ModCrates.InstallCrateSettings(SupportedMods, Modder);
-                if (!Modder.AsyncProcess)
+                if (Modder.NoAsyncProcess)
                 {
                     Modder.StartModProcess();
                 }
@@ -422,15 +422,15 @@ namespace CrateModLoader
             a.ReportProgress(26);
 
             EditGame(a);
-            if (Modder != null && Modder.AsyncProcess)
+            if (Modder != null && !Modder.NoAsyncProcess)
             {
                 Modder.StartAsyncProcess();
-            }
-            while (Modder.IsBusy)
-            {
-                int PPerc = (int)(Modder.PassPercent * 0.48f);
-                a.ReportProgress(26 + PPerc);
-                Thread.Sleep(100);
+                while (Modder.IsBusy)
+                {
+                    int PPerc = (int)(Modder.PassPercent * 0.48f);
+                    a.ReportProgress(26 + PPerc);
+                    Thread.Sleep(100);
+                }
             }
 
             a.ReportProgress(74);

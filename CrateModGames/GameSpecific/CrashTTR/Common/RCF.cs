@@ -1,6 +1,10 @@
 ﻿using System;
 using System.IO;
-// RCF API by NeoKesha
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using CrateModLoader;
+using DiscUtils;
+// RCF API by NeoKesha and BetaM
 // Converted from VisualBasic
 
 namespace RadcoreCementFile
@@ -315,6 +319,69 @@ namespace RadcoreCementFile
             RCF.Close();
             return;
         }
+
+        private Modder meta;
+        public async Task ExtractRCFAsync(Modder mod, string Path)
+        {
+            if (!File.Exists(RCF_Path))
+                return;
+            if (Path[Path.Length - 1] != '\\')
+                Path += @"\";
+
+            meta = mod;
+
+            IList<Task> editTaskList = new List<Task>();
+
+            meta.PassCount = (int)Header.Files;
+            for (Int32 i = 0; i <= Header.Files - 1; i++)
+            {
+                editTaskList.Add(ExtractFileAsync(Path, i));
+            }
+
+            await Task.WhenAll(editTaskList);
+
+        }
+        private async Task ExtractFileAsync(string Path, int i)
+        {
+            FileStream RCF = new FileStream(RCF_Path, FileMode.Open, FileAccess.Read, FileShare.Read);
+            RCF.Seek(Header.T1File[Header.T2File[i].Ref].Offset, SeekOrigin.Begin);
+
+            string check = Path;
+            string[] Folders = Header.T2File[i].Name.Split('\\');
+            for (Int32 j = 0; j <= Folders.Length - 2; j++)
+            {
+                check += Folders[j] + @"\";
+                if (!Directory.Exists(check))
+                    Directory.CreateDirectory(check);
+            }
+            check += Folders[Folders.Length - 1];
+            //Console.WriteLine("RCF Extract: " + check + " size: " + (int)Header.T1File[Header.T2File[i].Ref].Size);
+            Stream File = System.IO.File.Open(check, FileMode.Create); 
+            byte[] Data = new byte[(int)Header.T1File[Header.T2File[i].Ref].Size];
+            try
+            {
+                await RCF.ReadAsync(Data, 0, (int)Header.T1File[Header.T2File[i].Ref].Size);
+            }
+            catch
+            {
+                Console.WriteLine("Read Error: " + check);
+            }
+            try
+            {
+                await File.WriteAsync(Data, 0, (int)Header.T1File[Header.T2File[i].Ref].Size);
+            }
+            catch
+            {
+                Console.WriteLine("Write Error: " + check);
+            }
+
+            File.Close();
+            RCF.Close();
+
+            meta.PassIterator++;
+            meta.PassPercent = (int)((meta.PassIterator / (float)meta.PassCount) * 20f) + 5;
+        }
+
         /// <summary>
         ///     ''' Uses T1 index
         ///     ''' </summary>
@@ -438,10 +505,164 @@ namespace RadcoreCementFile
                     NRCFWriter.Write(File.ReadAllBytes(Header.T2File[Header.T1File[i].Pos].External));
             }
             NRCFWriter.Close();
+            NRCFWriter2.Close();
             NRCF.Close();
 
             return;
         }
+
+        // Requires all files to be extracted and paths loaded into T2File[].External
+        public async Task PackAsync(string NewPath, string FolderPath, UInt32 Alignment = 2048)
+        {
+            if (NewPath == RCF_Path)
+                return;
+
+            FileStream NRCF = new FileStream(NewPath, FileMode.Create, FileAccess.Write, FileShare.Write);
+            BinaryWriter NRCFWriter = new BinaryWriter(NRCF);
+            BinaryWriter2 NRCFWriter2 = new BinaryWriter2(NRCF);
+            //Console.WriteLine("RCF: Recalculating...");
+            Recalculate(Alignment);
+            for (Int32 i = 0; i <= 31; i++)
+            {
+                if (i < Header.signature.Length)
+                    NRCFWriter.Write(Header.signature[i]);
+                else
+                    NRCFWriter.Write(System.Convert.ToByte(0));
+            }
+            //Console.WriteLine("RCF: Writing header...");
+            NRCFWriter.Write(Header.Flag1);
+            NRCFWriter.Write(Header.Flag2);
+            NRCFWriter.Write(Header.Flag3);
+            NRCFWriter.Write(Header.Flag4);
+
+            if (!Header.Flag3)
+            {
+                NRCFWriter.Write(Header.T1Offset);
+                NRCFWriter.Write(Header.T1Size);
+                NRCFWriter.Write(Header.T2Offset);
+                NRCFWriter.Write(Header.T2Size);
+                NRCFWriter.Write(Header.Gap1);
+                NRCFWriter.Write(Header.Files);
+                NRCF.Position = Header.T1Offset;
+                for (Int32 i = 0; i <= Header.Files - 1; i++)
+                {
+                    NRCFWriter.Write(Header.T1File[i].ID);
+                    NRCFWriter.Write(Header.T1File[i].Offset);
+                    NRCFWriter.Write(Header.T1File[i].Size);
+                }
+            }
+            else
+            {
+                NRCFWriter2.WriteBigEndian(Header.T1Offset);
+                NRCFWriter2.WriteBigEndian(Header.T1Size);
+                NRCFWriter2.WriteBigEndian(Header.T2Offset);
+                NRCFWriter2.WriteBigEndian(Header.T2Size);
+                NRCFWriter2.WriteBigEndian(Header.Gap1);
+                NRCFWriter2.WriteBigEndian(Header.Files);
+                NRCF.Position = Header.T1Offset;
+
+                if (Header.Flag2)
+                {
+                    for (Int32 i = 0; i <= Header.Files - 1; i++)
+                    {
+                        NRCFWriter2.WriteBigEndian(Header.T1File[i].ID);
+                        NRCFWriter2.WriteBigEndian(Header.T1File[i].Offset);
+                        NRCFWriter2.WriteBigEndian(Header.T1File[i].Size);
+                    }
+                }
+                else
+                {
+                    // CTTR GC frontend.rcf - compression handling not yet implemented
+                    for (Int32 i = 0; i <= Header.Files - 1; i++)
+                    {
+                        NRCFWriter2.WriteBigEndian(Header.T1File[i].ID);
+                        NRCFWriter2.WriteBigEndian(Header.T1File[i].Offset);
+                        NRCFWriter2.WriteBigEndian(Header.T1File[i].CompressedSize);
+                        NRCFWriter2.WriteBigEndian(Header.T1File[i].Size);
+                        NRCFWriter2.WriteBigEndian(Header.T1File[i].CompressionFlag);
+                    }
+                }
+            }
+
+            NRCF.Position = Header.T2Offset;
+            NRCFWriter.Write(Header.NamesAligment);
+            NRCFWriter.Write(Header.Gap2);
+            for (Int32 i = 0; i <= Header.Files - 1; i++)
+            {
+                NRCFWriter.Write(Header.T2File[i].SomeShit1);
+                NRCFWriter.Write(Header.T2File[i].Align);
+                NRCFWriter.Write(Header.T2File[i].Gap1);
+                NRCFWriter.Write(Header.T2File[i].NameLen);
+                for (Int32 j = 0; j <= Header.T2File[i].NameLen - 2; j++)
+                    NRCFWriter.Write(System.Convert.ToChar(Header.T2File[i].Name[j]));
+                NRCFWriter.Write(Header.T2File[i].Gap2);
+            }
+
+            NRCFWriter.Close();
+            NRCFWriter2.Close();
+            NRCF.Close();
+
+            IList<Task> editTaskList = new List<Task>();
+
+            meta.PassCount = (int)Header.Files;
+            for (Int32 i = 0; i <= Header.Files - 1; i++)
+            {
+                if (Header.T2File[Header.T1File[i].Pos].External == "")
+                    throw new Exception("Missing external file: " + Header.T2File[Header.T1File[i].Pos].Name);
+                else
+                    editTaskList.Add(PackFileAsync(NewPath, i));
+            }
+
+            await Task.WhenAll(editTaskList);
+
+        }
+
+        public long DirSize(DirectoryInfo d)
+        {
+            long size = 0;
+            foreach (FileInfo file in d.EnumerateFiles())
+            {
+                size += file.Length;
+            }
+            foreach (DirectoryInfo di in d.EnumerateDirectories())
+            {
+                size += DirSize(di);
+            }
+            return size;
+        }
+
+        private async Task PackFileAsync(string outpath, int i)
+        {
+            FileStream ext = new FileStream(Header.T2File[Header.T1File[i].Pos].External, FileMode.Open, FileAccess.Read, FileShare.Read);
+
+            Stream rcf = System.IO.File.Open(outpath, FileMode.Open, FileAccess.Write, FileShare.Write);
+            rcf.Seek((int)Header.T1File[i].Offset, SeekOrigin.Begin);
+            byte[] Data = new byte[ext.Length];
+            try
+            {
+                await ext.ReadAsync(Data, 0, Data.Length);
+            }
+            catch
+            {
+                Console.WriteLine("Read Error");
+            }
+            try
+            {
+                await rcf.WriteAsync(Data, 0, Data.Length);
+            }
+            catch
+            {
+                Console.WriteLine("Write Error");
+            }
+
+            rcf.Close();
+            ext.Close();
+
+            meta.PassIterator++;
+            meta.PassPercent = (int)((meta.PassIterator / (float)meta.PassCount) * 25f) + 75;
+        }
+
+
         public void Recalculate(UInt32 Alignment = 2048)
         {
             Header.NamesAligment = Alignment;

@@ -28,7 +28,6 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
     public sealed class Modder_CNK : Modder
     {
         public override bool CanPreloadGame => true;
-        public override bool AsyncProcess => true;
 
         private int CurrentPass = 0;
         private float PassPercentMod = 39f;

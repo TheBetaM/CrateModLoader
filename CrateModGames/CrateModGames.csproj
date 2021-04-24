@@ -38,6 +38,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>GameSpecific\CrashTeamRacing\CTRFramework.dll</HintPath>
     </Reference>
+    <Reference Include="DiscUtils">
+      <HintPath>..\CrateModConsoles\Tools\DiscUtils.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>GameSpecific\CrashTeamRacing\Newtonsoft.Json.dll</HintPath>

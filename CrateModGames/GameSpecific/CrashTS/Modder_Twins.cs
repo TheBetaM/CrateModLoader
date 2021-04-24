@@ -32,7 +32,6 @@ namespace CrateModLoader.GameSpecific.CrashTS
     {
         public override bool CanPreloadGame => true;
         public override List<ConsoleMode> PreloadConsoles => new List<ConsoleMode>() { ConsoleMode.PS2, };
-        public override bool AsyncProcess => true;
 
         public Modder_Twins() { }
 

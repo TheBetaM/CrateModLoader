@@ -15,7 +15,6 @@ namespace CrateModLoader.GameSpecific.Crash1
     public sealed class Modder_Crash1 : Modder
     {
         public override bool ModCrateRegionCheck => true;
-        public override bool AsyncProcess => true;
         private bool MainBusy = false;
         private int CurrentPass = 0;
         private float PassPercentMod = 49f;

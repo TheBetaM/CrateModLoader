@@ -14,7 +14,6 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
 {
     public sealed class Modder_TWOC : Modder
     {
-        public override bool AsyncProcess => true;
         private bool MainBusy = false;
         private int CurrentPass = 0;
         private float PassPercentMod = 49f;
