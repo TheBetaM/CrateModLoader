@@ -5,7 +5,7 @@ using System.IO;
 namespace CrateModLoader.GameSpecific.CrashTWOC
 {
     // todo: test
-    public class TWOC_Rand_CratesRemoved : ModStruct<string>
+    public class TWOC_Rand_CratesRemoved : ModStruct<TWOC_File_CRT>
     {
         public override string Name => "Random Crates Removed";
         public override string Description => "Wooden crates are randomly removed in each level. The box counter is adjusted accordingly.";
@@ -26,55 +26,29 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
             TWOC_File_CRT.CrateType.Slot,
         };
 
-        public override void ModPass(string extrPath)
+        private Random rand;
+
+        public override void BeforeModPass()
         {
-            Random rand = new Random(ModLoaderGlobals.RandomizerSeed);
+            rand = new Random(ModLoaderGlobals.RandomizerSeed);
+        }
 
-            string LevelsPathA = @"LEVELS\A\";
-            string LevelsPathC = @"LEVELS\C\";
-            string Ext = ".CRT";
-            /*
-            if (ConsolePipeline.Metadata.Console != ConsoleMode.PS2)
+        public override void ModPass(TWOC_File_CRT CrateFile)
+        {
+            for (int g = 0; g < CrateFile.CrateGroups.Count; g++)
             {
-                LevelsPathA = LevelsPathA.ToLower();
-                LevelsPathC = LevelsPathC.ToLower();
-                Ext = Ext.ToLower();
-            }
-            else
-            {
-                Ext += ";1";
-            }
-            */
-
-            for (int i = 0; i < TWOC_Common.LevelNames.Length; i++)
-            {
-                string path = extrPath + LevelsPathA + TWOC_Common.LevelNames[i] + @"\" + TWOC_Common.FileNames[i] + Ext;
-                if (i > 24)
+                for (int c = 0; c < CrateFile.CrateGroups[g].Crates.Count; c++)
                 {
-                    path = extrPath + LevelsPathC + TWOC_Common.LevelNames[i] + @"\" + TWOC_Common.FileNames[i] + Ext;
-                }
-                if (File.Exists(path))
-                {
-                    TWOC_File_CRT CrateFile = new TWOC_File_CRT(path, false);
-
-                    for (int g = 0; g < CrateFile.CrateGroups.Count; g++)
+                    if (CratesToRemove.Contains(CrateFile.CrateGroups[g].Crates[c].Type) && rand.Next(2) == 0)
                     {
-                        for (int c = 0; c < CrateFile.CrateGroups[g].Crates.Count; c++)
-                        {
-                            if (CratesToRemove.Contains(CrateFile.CrateGroups[g].Crates[c].Type) && rand.Next(2) == 0)
-                            {
-                                CrateFile.CrateGroups[g].Crates.RemoveAt(c);
-                                c--;
-                            }
-                        }
-                        if (CrateFile.CrateGroups[g].Crates.Count == 0)
-                        {
-                            CrateFile.CrateGroups.RemoveAt(g);
-                            g--;
-                        }
+                        CrateFile.CrateGroups[g].Crates.RemoveAt(c);
+                        c--;
                     }
-
-                    CrateFile.Save(path);
+                }
+                if (CrateFile.CrateGroups[g].Crates.Count == 0)
+                {
+                    CrateFile.CrateGroups.RemoveAt(g);
+                    g--;
                 }
             }
         }

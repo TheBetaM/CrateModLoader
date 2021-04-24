@@ -56,6 +56,18 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
         }
     }
 
+    public class TWOC_GenericMod
+    {
+        public string mainPath;
+        public ConsoleMode console;
+
+        public TWOC_GenericMod(string main, ConsoleMode cons)
+        {
+            mainPath = main;
+            console = cons;
+        }
+    }
+
     public static class TWOC_Common
     {
         

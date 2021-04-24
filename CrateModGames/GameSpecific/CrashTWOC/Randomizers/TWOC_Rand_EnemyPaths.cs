@@ -5,7 +5,7 @@ using System.IO;
 namespace CrateModLoader.GameSpecific.CrashTWOC
 {
     // todo: test
-    public class TWOC_Rand_EnemyPaths : ModStruct<string>
+    public class TWOC_Rand_EnemyPaths : ModStruct<TWOC_File_AI>
     {
         public override string Name => "Randomize Enemy Paths";
         public override string Description => "Reverses paths of random enemies.";
@@ -47,46 +47,20 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
 
             };
 
-        public override void ModPass(string extrPath)
+        private Random rand;
+
+        public override void BeforeModPass()
         {
-            Random rand = new Random(ModLoaderGlobals.RandomizerSeed);
+            rand = new Random(ModLoaderGlobals.RandomizerSeed);
+        }
 
-            string LevelsPathA = @"LEVELS\A\";
-            string LevelsPathC = @"LEVELS\C\";
-            string Ext = ".AI";
-            /*
-            if (ConsolePipeline.Metadata.Console != ConsoleMode.PS2)
+        public override void ModPass(TWOC_File_AI AIFile)
+        {
+            for (int a = 0; a < AIFile.AI.Count; a++)
             {
-                LevelsPathA = LevelsPathA.ToLower();
-                LevelsPathC = LevelsPathC.ToLower();
-                Ext = Ext.ToLower();
-            }
-            else
-            {
-                Ext += ";1";
-            }
-            */
-
-            for (int i = 0; i < TWOC_Common.LevelNames.Length; i++)
-            {
-                string path = extrPath + LevelsPathA + TWOC_Common.LevelNames[i] + @"\" + TWOC_Common.FileNames[i] + Ext;
-                if (i > 24)
+                if (!BannedEnemies.Contains(AIFile.AI[a].Name) && rand.Next(2) == 0)
                 {
-                    path = extrPath + LevelsPathC + TWOC_Common.LevelNames[i] + @"\" + TWOC_Common.FileNames[i] + Ext;
-                }
-                if (File.Exists(path))
-                {
-                    TWOC_File_AI AIFile = new TWOC_File_AI(path, false);
-
-                    for (int a = 0; a < AIFile.AI.Count; a++)
-                    {
-                        if (!BannedEnemies.Contains(AIFile.AI[a].Name) && rand.Next(2) == 0)
-                        {
-                            AIFile.AI[a].Pos.Reverse();
-                        }
-                    }
-
-                    AIFile.Save(path);
+                    AIFile.AI[a].Pos.Reverse();
                 }
             }
         }

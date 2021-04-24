@@ -5,13 +5,16 @@ using System.IO;
 namespace CrateModLoader.GameSpecific.CrashTWOC
 {
     // todo: test
-    public class TWOC_SwapLevels : ModStruct<string>
+    public class TWOC_SwapLevels : ModStruct<TWOC_GenericMod>
     {
         public override string Name => "Atlasphere Levels On Foot";
         public override bool Hidden => true;
 
-        public override void ModPass(string extrPath)
+        public override void ModPass(TWOC_GenericMod mod)
         {
+            string extrPath = mod.mainPath;
+            ConsoleMode console = mod.console;
+
             Random rand = new Random(ModLoaderGlobals.RandomizerSeed);
 
             TWOC_Levels Level1 = TWOC_Levels.L03_Bamboozled;
@@ -19,13 +22,13 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
 
             string LevelsPathA = @"LEVELS\A\";
             string LevelsPathC = @"LEVELS\C\";
-            /*
-            if (ConsolePipeline.Metadata.Console != ConsoleMode.PS2)
+            
+            if (console != ConsoleMode.PS2)
             {
                 LevelsPathA = LevelsPathA.ToLower();
                 LevelsPathC = LevelsPathC.ToLower();
             }
-            */
+            
             int maxLevel = TWOC_Common.LevelNames.Length;
 
             string LevelPathIn = LevelsPathA;

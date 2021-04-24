@@ -5,23 +5,26 @@ using System.IO;
 namespace CrateModLoader.GameSpecific.CrashTWOC
 {
     // todo: test
-    public class TWOC_Rand_LevelOrder : ModStruct<string>
+    public class TWOC_Rand_LevelOrder : ModStruct<TWOC_GenericMod>
     {
         public override string Name => "Randomize Level Order";
         public override bool Hidden => true;
 
-        public override void ModPass(string extrPath)
+        public override void ModPass(TWOC_GenericMod mod)
         {
+            string extrPath = mod.mainPath;
+            ConsoleMode console = mod.console;
+
             Random rand = new Random(ModLoaderGlobals.RandomizerSeed);
             string LevelsPathA = @"LEVELS\A\";
             string LevelsPathC = @"LEVELS\C\";
-            /*
-            if (ConsolePipeline.Metadata.Console != ConsoleMode.PS2)
+            
+            if (console != ConsoleMode.PS2)
             {
                 LevelsPathA = LevelsPathA.ToLower();
                 LevelsPathC = LevelsPathC.ToLower();
             }
-            */
+            
             int maxLevel = TWOC_Common.LevelNames.Length; // - 5;
 
             List<TWOC_Levels> LevelsNoRand = new List<TWOC_Levels>()

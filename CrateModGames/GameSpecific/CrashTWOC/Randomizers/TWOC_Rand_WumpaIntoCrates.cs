@@ -4,7 +4,7 @@ using System.IO;
 
 namespace CrateModLoader.GameSpecific.CrashTWOC
 {
-    // todo: test
+    // unfinished (new box positions are off)
     public class TWOC_Rand_WumpaIntoCrates : ModStruct<string>
     {
         public override string Name => "Random Wumpa Are Random Crates";

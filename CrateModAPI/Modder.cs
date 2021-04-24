@@ -47,6 +47,7 @@ namespace CrateModLoader
         public Random RandomState; // <- todo consolidate all Random() calls for multithreading!!
         public List<ModPropertyBase> ActiveProps = new List<ModPropertyBase>();
         public virtual bool AsyncProcess => false; // delete this after implementing async for all games
+        public virtual bool NoAsyncProcess => false;
         public bool IsBusy { get; set; }
         public bool PassBusy { get; set; }
         public bool ProcessBusy { get; set; }

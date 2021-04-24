@@ -5,7 +5,7 @@ using System.IO;
 namespace CrateModLoader.GameSpecific.CrashTWOC
 {
     // todo: test
-    public class TWOC_Rand_Music : ModStruct<string>
+    public class TWOC_Rand_Music : ModStruct<TWOC_GenericMod>
     {
         public override string Name => "Randomize Music";
         public override string Description => "Music tracks are shuffled around.";
@@ -49,21 +49,23 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
             "WizardsL",
         };
 
-        public override void ModPass(string extrPath)
+        public override void ModPass(TWOC_GenericMod mod)
         {
+            string extrPath = mod.mainPath;
+            ConsoleMode console = mod.console;
+
             string Music_GC_Extra = "Gauntl2";
             Random rand = new Random(ModLoaderGlobals.RandomizerSeed);
-
-            /*
-            if (ConsolePipeline.Metadata.Console == ConsoleMode.PS2)
+            
+            if (console == ConsoleMode.PS2)
             {
                 return;
             }
-            */
+            
             string musicPath;
             string ext;
-            /*
-            if (ConsolePipeline.Metadata.Console == ConsoleMode.GCN)
+            
+            if (console == ConsoleMode.GCN)
             {
                 musicPath = extrPath + @"sfx\music\";
                 ext = ".adp";
@@ -74,14 +76,14 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
             }
             else
             {
-            */
+            
                 musicPath = extrPath + @"Crashdat\sfx\Music\";
                 ext = ".wav";
                 if (MusicNames.Contains(Music_GC_Extra))
                 {
                     MusicNames.Remove(Music_GC_Extra);
                 }
-            //}
+            }
 
             int maxCount = MusicNames.Count;
 
