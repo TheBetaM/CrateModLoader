@@ -173,12 +173,11 @@
     <Compile Include="GameSpecific\CrashNitroKart\Randomizers\CNK_Rand_PowerupDistribution.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\Randomizers\CNK_Rand_PowerupEffects.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\Randomizers\CNK_Rand_SurfaceParams.cs" />
-    <Compile Include="GameSpecific\CrashTeamRacing\Common\BIG.cs" />
-    <Compile Include="GameSpecific\CrashTeamRacing\Common\CTRFile.cs" />
     <Compile Include="GameSpecific\CrashTeamRacing\Game_CrashTR.cs" />
     <Compile Include="GameSpecific\CrashTeamRacing\Modder_CTR.cs" />
     <Compile Include="GameSpecific\CrashTeamRacing\Mods\CTR_Metadata.cs" />
     <Compile Include="GameSpecific\CrashTeamRacing\Properties\CTR_Props_Main.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Randomizers\CTR_Rand_PantsColor.cs" />
     <Compile Include="GameSpecific\CrashTeamRacing\Randomizers\CTR_Rand_Tracks.cs" />
     <Compile Include="GameSpecific\CrashTeamRacing\Randomizers\CTR_Rand_Tracks101.cs" />
     <Compile Include="GameSpecific\CrashTitans\Game_CrashTitans.cs" />
@@ -455,6 +454,7 @@
     <Folder Include="GameSpecific\CrashBash\Properties\" />
     <Folder Include="GameSpecific\CrashBash\Randomizers\" />
     <Folder Include="GameSpecific\CrashMoM\Randomizers\" />
+    <Folder Include="GameSpecific\CrashTeamRacing\Common\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
