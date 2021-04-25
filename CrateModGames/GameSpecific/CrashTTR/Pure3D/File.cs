@@ -7,6 +7,7 @@ namespace Pure3D
     public class File
     {
         public readonly Chunks.Root RootChunk;
+        public string FullName;
 
         public File()
         {
@@ -15,6 +16,7 @@ namespace Pure3D
 
         public void Load(string path)
         {
+            FullName = path;
             using (FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
                 Load(fileStream);
         }
@@ -40,7 +42,7 @@ namespace Pure3D
 
         public void Save(string path)
         {
-            using (FileStream fileStream = new FileStream(path, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite))
+            using (FileStream fileStream = new FileStream(path, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite))
             {
                 Save(fileStream);
             }

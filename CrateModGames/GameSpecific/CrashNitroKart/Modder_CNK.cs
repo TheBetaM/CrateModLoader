@@ -130,10 +130,7 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
 
             List<FileInfo> Files = new List<FileInfo>();
             DirectoryInfo adi = new DirectoryInfo(path_gob_extracted);
-            foreach (DirectoryInfo dir in adi.EnumerateDirectories())
-            {
-                Recursive_LoadCSV(dir, ref Files);
-            }
+            Recursive_LoadCSV(adi, ref Files);
             PassCount = Files.Count;
 
             //Generic mods

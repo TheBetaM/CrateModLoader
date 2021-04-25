@@ -437,7 +437,7 @@ namespace CrateModLoader
         /// <summary>
         /// Installs all active mods of the specified layer in the specified path
         /// </summary>
-        public static void InstallLayerMods(List<ModCrate> SupportedMods, string basePath, int layer)
+        public static void InstallLayerMods(List<ModCrate> SupportedMods, string basePath, int layer, bool onlyOverwrite = false)
         {
             for (int i = 0; i < SupportedMods.Count; i++)
             {
@@ -445,16 +445,16 @@ namespace CrateModLoader
                 {
                     if (!SupportedMods[i].IsFolder)
                     {
-                        InstallLayerMod(SupportedMods[i], basePath, layer);
+                        InstallLayerMod(SupportedMods[i], basePath, layer, onlyOverwrite);
                     }
                     else
                     {
-                        InstallLayerModFolder(SupportedMods[i], basePath, layer);
+                        InstallLayerModFolder(SupportedMods[i], basePath, layer, onlyOverwrite);
                     }
                 }
             }
         }
-        public static void InstallLayerMod(ModCrate Crate, string basePath, int layer)
+        public static void InstallLayerMod(ModCrate Crate, string basePath, int layer, bool onlyOverwrite)
         {
             using (ZipArchive archive = ZipFile.OpenRead(Crate.Path))
             {
@@ -471,20 +471,28 @@ namespace CrateModLoader
                                 string NewDir = entry.FullName.Substring(PathLen, entry.FullName.Length - PathLen - entry.Name.Length);
                                 string extrPath = entry.FullName.Substring(Crate.NestedPath.Length + LayerFolderName.Length + layer.ToString().Length);
                                 Directory.CreateDirectory(basePath + NewDir);
-                                entry.ExtractToFile(basePath + extrPath, true);
+                                bool allow = true;
+                                if (onlyOverwrite && !File.Exists(basePath + extrPath))
+                                {
+                                    allow = false;
+                                }
+                                if (allow)
+                                {
+                                    entry.ExtractToFile(basePath + extrPath, true);
+                                }
                             }
                         }
                     }
                 }
             }
         }
-        public static void InstallLayerModFolder(ModCrate Crate, string basePath, int layer)
+        public static void InstallLayerModFolder(ModCrate Crate, string basePath, int layer, bool onlyOverwrite)
         {
             DirectoryInfo dest = new DirectoryInfo(basePath);
             DirectoryInfo source = new DirectoryInfo(Crate.Path + @"\" + LayerFolderName + layer);
-            Recursive_CopyFiles(basePath, source, dest, "");
+            Recursive_CopyFiles(basePath, source, dest, "", onlyOverwrite);
         }
-        static void Recursive_CopyFiles(string basePath, DirectoryInfo di, DirectoryInfo dest, string buffer)
+        static void Recursive_CopyFiles(string basePath, DirectoryInfo di, DirectoryInfo dest, string buffer, bool onlyOverwrite)
         {
             string mainbuffer = buffer + @"\";
             foreach (DirectoryInfo dir in di.EnumerateDirectories())
@@ -495,12 +503,20 @@ namespace CrateModLoader
                 {
                     Directory.CreateDirectory(tempFolder);
                 }
-                Recursive_CopyFiles(basePath, dir, dest, buffer);
+                Recursive_CopyFiles(basePath, dir, dest, buffer, onlyOverwrite);
             }
             foreach (FileInfo file in di.EnumerateFiles())
             {
                 string relativePath = Path.Combine(dest.FullName, mainbuffer + @"\" + file.Name);
-                File.Copy(file.FullName, basePath + relativePath, true);
+                bool allow = true;
+                if (onlyOverwrite && !File.Exists(basePath + relativePath))
+                {
+                    allow = false;
+                }
+                if (allow)
+                {
+                    File.Copy(file.FullName, basePath + relativePath, true);
+                }
             }
         }
 

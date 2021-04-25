@@ -82,10 +82,7 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
             List<FileInfo> Files_CTR = new List<FileInfo>();
             List<FileInfo> Files_LEV = new List<FileInfo>();
             DirectoryInfo adi = new DirectoryInfo(path_extr);
-            foreach (DirectoryInfo dir in adi.EnumerateDirectories())
-            {
-                Recursive_LoadFiles(dir, ref Files_LNG, ref Files_CTR, ref Files_LEV);
-            }
+            Recursive_LoadFiles(adi, ref Files_LNG, ref Files_CTR, ref Files_LEV);
             PassCount = Files_LNG.Count;
             if (Editing_CTR)
             {

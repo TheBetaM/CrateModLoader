@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.IO;
+using Pure3D;
 //RCF API by NeoKesha
 //Pure3D API by BetaM (based on https://github.com/handsomematt/Pure3D)
 /* 
@@ -7,331 +10,360 @@ using System.Collections.Generic;
  * 1: All .RCF file contents (only replace files)
  * Mod Passes:
  * string -> extraction path
+ * god -> LUA scripts (plain text)
+ * mid -> roads (not yet implemented)
+ * p3d -> Pure3D files
+ * fig -> fight trees (plain text) (not yet implemented)
  */
 
 namespace CrateModLoader.GameSpecific.CrashTTR
 {
     public sealed class Modder_CTTR : Modder
     {
-        public override bool NoAsyncProcess => true;
-
-        internal string path_RCF_default = "";
-        internal string path_RCF_common = "";
-        internal string path_RCF_frontend = "";
-        //internal string path_executable = "";
-        internal string path_RCF_onfoot0 = "";
-        internal string path_RCF_onfoot1 = "";
-        internal string path_RCF_onfoot2 = "";
-        internal string path_RCF_onfoot3 = "";
-        internal string path_RCF_onfoot4 = ""; // PSP
-        internal string path_RCF_onfoot5 = "";
-        internal string path_RCF_onfoot6 = "";
-        internal string path_RCF_onfoot7 = ""; // GC
-        internal string path_RCF_advent1 = "";
-        internal string path_RCF_advent2 = "";
-        internal string path_RCF_advent3 = "";
-        internal string path_RCF_adventa = "";
-        internal string path_RCF_dino1 = "";
-        internal string path_RCF_dino2 = "";
-        internal string path_RCF_dino3 = "";
-        internal string path_RCF_dinoa = "";
-        internal string path_RCF_egypt1 = "";
-        internal string path_RCF_egypt2 = "";
-        internal string path_RCF_egypt3 = "";
-        internal string path_RCF_egypta = ""; // PSP/PS2
-        internal string path_RCF_fairy1 = "";
-        internal string path_RCF_fairy2 = "";
-        internal string path_RCF_fairy3 = "";
-        internal string path_RCF_fairys = "";
-        internal string path_RCF_solar1 = "";
-        internal string path_RCF_solar2 = "";
-        internal string path_RCF_solar3 = "";
-        internal string path_RCF_solars = "";
-        internal string path_RCF_0 = ""; // XBOX
-        internal string path_RCF_1 = ""; // XBOX
-        internal string path_RCF_2 = ""; // XBOX
-        internal string path_RCF_3 = ""; // XBOX
-        internal string path_RCF_4 = ""; // XBOX
-        internal string path_RCF_5 = ""; // XBOX
-        internal string path_RCF_6 = ""; // XBOX
-        internal string path_RCF_sound = "";
-        internal string path_RCF_english = "";
-        internal string path_RCF_movies = "";
-        internal string basePath = "";
+        private bool MainBusy = false;
+        private int CurrentPass = 0;
+        private float PassPercentMod = 22f;
+        private int PassPercentAdd = 30;
 
         public Modder_CTTR() { }
 
-        public void SetPaths(ConsoleMode console, string exec_name = "")
-        {
-            path_RCF_default = "";
-            path_RCF_common = "";
-            path_RCF_frontend = "";
-            //path_executable = "";
-            path_RCF_onfoot0 = "";
-            path_RCF_onfoot1 = "";
-            path_RCF_onfoot2 = "";
-            path_RCF_onfoot3 = "";
-            path_RCF_onfoot4 = "";
-            path_RCF_onfoot5 = "";
-            path_RCF_onfoot6 = "";
-            path_RCF_onfoot7 = "";
-            path_RCF_advent1 = "";
-            path_RCF_advent2 = "";
-            path_RCF_advent3 = "";
-            path_RCF_adventa = "";
-            path_RCF_dino1 = "";
-            path_RCF_dino2 = "";
-            path_RCF_dino3 = "";
-            path_RCF_dinoa = "";
-            path_RCF_egypt1 = "";
-            path_RCF_egypt2 = "";
-            path_RCF_egypt3 = "";
-            path_RCF_egypta = "";
-            path_RCF_fairy1 = "";
-            path_RCF_fairy2 = "";
-            path_RCF_fairy3 = "";
-            path_RCF_fairys = "";
-            path_RCF_solar1 = "";
-            path_RCF_solar2 = "";
-            path_RCF_solar3 = "";
-            path_RCF_solars = "";
-            path_RCF_0 = "";
-            path_RCF_1 = "";
-            path_RCF_2 = "";
-            path_RCF_3 = "";
-            path_RCF_4 = "";
-            path_RCF_5 = "";
-            path_RCF_6 = ""; 
-            path_RCF_sound = "";
-            path_RCF_english = "";
-            path_RCF_movies = "";
-
-            if (console == ConsoleMode.PS2)
-            {
-                //path_executable = exec_name;
-                path_RCF_default = @"ADEFAULT\DEFAULT.RCF";
-                path_RCF_advent1 = @"ADVENT\ADVENT1.RCF";
-                path_RCF_advent2 = @"ADVENT\ADVENT2.RCF";
-                path_RCF_advent3 = @"ADVENT\ADVENT3.RCF";
-                path_RCF_adventa = @"ADVENT\ADVENTA.RCF";
-                path_RCF_common = @"COMMON\COMMON.RCF";
-                path_RCF_dino1 = @"DINO\DINO1.RCF";
-                path_RCF_dino2 = @"DINO\DINO2.RCF";
-                path_RCF_dino3 = @"DINO\DINO3.RCF";
-                path_RCF_dinoa = @"DINO\DINOA.RCF";
-                path_RCF_egypt1 = @"EGYPT\EGYPT1.RCF";
-                path_RCF_egypt2 = @"EGYPT\EGYPT2.RCF";
-                path_RCF_egypt3 = @"EGYPT\EGYPT3.RCF";
-                path_RCF_egypta = @"EGYPT\EGYPTA.RCF";
-                path_RCF_english = @"ENGLISH.RCF";
-                path_RCF_fairy1 = @"FAIRY\FAIRY1.RCF";
-                path_RCF_fairy2 = @"FAIRY\FAIRY2.RCF";
-                path_RCF_fairy3 = @"FAIRY\FAIRY3.RCF";
-                path_RCF_fairys = @"FAIRY\FAIRYS.RCF";
-                path_RCF_frontend = @"COMMON\FRONTEND.RCF";
-                path_RCF_solar1 = @"SOLAR\SOLAR1.RCF";
-                path_RCF_solar2 = @"SOLAR\SOLAR2.RCF";
-                path_RCF_solar3 = @"SOLAR\SOLAR3.RCF";
-                path_RCF_solars = @"SOLAR\SOLARS.RCF";
-                path_RCF_onfoot0 = @"ONFOOT\ONFOOT.RCF";
-                path_RCF_onfoot1 = @"ONFOOT\ONFOOT1.RCF";
-                path_RCF_onfoot2 = @"ONFOOT\ONFOOT2.RCF";
-                path_RCF_onfoot3 = @"ONFOOT\ONFOOT3.RCF";
-                path_RCF_onfoot5 = @"ONFOOT\ONFOOT5.RCF";
-                path_RCF_onfoot6 = @"ONFOOT\ONFOOT6.RCF";
-                path_RCF_movies = @"MOVIES.RCF";
-            }
-            else if (console == ConsoleMode.PSP)
-            {
-                //path_executable = @"PSP_GAME\SYSDIR\BOOT.BIN";
-                path_RCF_default = @"adefault\default.rcf";
-                path_RCF_advent1 = @"advent\advent1.rcf";
-                path_RCF_advent2 = @"advent\advent2.rcf";
-                path_RCF_advent3 = @"advent\advent3.rcf";
-                path_RCF_adventa = @"advent\adventa.rcf";
-                path_RCF_common = @"common\common.rcf";
-                path_RCF_dino1 = @"dino\dino1.rcf";
-                path_RCF_dino2 = @"dino\dino2.rcf";
-                path_RCF_dino3 = @"dino\dino3.rcf";
-                path_RCF_dinoa = @"dino\dinoa.rcf";
-                path_RCF_egypt1 = @"egypt\egypt1.rcf";
-                path_RCF_egypt2 = @"egypt\egypt2.rcf";
-                path_RCF_egypt3 = @"egypt\egypt3.rcf";
-                path_RCF_egypta = @"egypt\egypta.rcf";
-                path_RCF_english = @"english.rcf";
-                path_RCF_fairy1 = @"fairy\fairy1.rcf";
-                path_RCF_fairy2 = @"fairy\fairy2.rcf";
-                path_RCF_fairy3 = @"fairy\fairy3.rcf";
-                path_RCF_fairys = @"fairy\fairys.rcf";
-                path_RCF_frontend = @"common\frontend.rcf";
-                path_RCF_solar1 = @"solar\solar1.rcf";
-                path_RCF_solar2 = @"solar\solar2.rcf";
-                path_RCF_solar3 = @"solar\solar3.rcf";
-                path_RCF_solars = @"solar\solars.rcf";
-                path_RCF_onfoot0 = @"onfoot\onfoot.rcf";
-                path_RCF_onfoot1 = @"onfoot\onfoot1.rcf";
-                path_RCF_onfoot2 = @"onfoot\onfoot2.rcf";
-                path_RCF_onfoot3 = @"onfoot\onfoot3.rcf";
-                path_RCF_onfoot4 = @"onfoot\onfoot4.rcf";
-                path_RCF_onfoot5 = @"onfoot\onfoot5.rcf";
-                path_RCF_onfoot6 = @"onfoot\onfoot6.rcf";
-                path_RCF_movies = @"movies.rcf";
-            }
-            else if (console == ConsoleMode.GCN)
-            {
-                // path_executable = @"sys\main.dol";
-                path_RCF_default = @"adefault\default.rcf";
-                path_RCF_advent1 = @"advent\advent1.rcf";
-                path_RCF_advent2 = @"advent\advent2.rcf";
-                path_RCF_advent3 = @"advent\advent3.rcf";
-                path_RCF_adventa = @"advent\adventa.rcf";
-                path_RCF_common = @"common\common.rcf";
-                path_RCF_dino1 = @"dino\dino1.rcf";
-                path_RCF_dino2 = @"dino\dino2.rcf";
-                path_RCF_dino3 = @"dino\dino3.rcf";
-                path_RCF_dinoa = @"dino\dinoa.rcf";
-                path_RCF_egypt1 = @"egypt\egypt1.rcf";
-                path_RCF_egypt2 = @"egypt\egypt2.rcf";
-                path_RCF_egypt3 = @"egypt\egypt3.rcf";
-                path_RCF_english = @"english.rcf";
-                path_RCF_fairy1 = @"fairy\fairy1.rcf";
-                path_RCF_fairy2 = @"fairy\fairy2.rcf";
-                path_RCF_fairy3 = @"fairy\fairy3.rcf";
-                path_RCF_fairys = @"fairy\fairys.rcf";
-                path_RCF_frontend = @"common\frontend.rcf";
-                path_RCF_solar1 = @"solar\solar1.rcf";
-                path_RCF_solar2 = @"solar\solar2.rcf";
-                path_RCF_solar3 = @"solar\solar3.rcf";
-                path_RCF_solars = @"solar\solars.rcf";
-                path_RCF_onfoot0 = @"onfoot\onfoot.rcf";
-                path_RCF_onfoot1 = @"onfoot\onfoot1.rcf";
-                path_RCF_onfoot2 = @"onfoot\onfoot2.rcf";
-                path_RCF_onfoot3 = @"onfoot\onfoot3.rcf";
-                path_RCF_onfoot5 = @"onfoot\onfoot5.rcf";
-                path_RCF_onfoot6 = @"onfoot\onfoot6.rcf";
-                path_RCF_onfoot7 = @"onfoot\onfoot7.rcf";
-                path_RCF_movies = @"movies.rcf";
-            }
-            else
-            {
-                //path_executable = @"default.xbe";
-                path_RCF_advent1 = @"advent\advent1.rcf";
-                path_RCF_advent2 = @"advent\advent2.rcf";
-                path_RCF_advent3 = @"advent\advent3.rcf";
-                path_RCF_adventa = @"advent\adventa.rcf";
-                path_RCF_common = @"common\common.rcf";
-                path_RCF_dino1 = @"dino\dino1.rcf";
-                path_RCF_dino2 = @"dino\dino2.rcf";
-                path_RCF_dino3 = @"dino\dino3.rcf";
-                path_RCF_dinoa = @"dino\dinoa.rcf";
-                path_RCF_egypt1 = @"egypt\egypt1.rcf";
-                path_RCF_egypt2 = @"egypt\egypt2.rcf";
-                path_RCF_egypt3 = @"egypt\egypt3.rcf";
-                path_RCF_fairy1 = @"fairy\fairy1.rcf";
-                path_RCF_fairy2 = @"fairy\fairy2.rcf";
-                path_RCF_fairy3 = @"fairy\fairy3.rcf";
-                path_RCF_fairys = @"fairy\fairys.rcf";
-                path_RCF_frontend = @"common\frontend.rcf";
-                path_RCF_solar1 = @"solar\solar1.rcf";
-                path_RCF_solar2 = @"solar\solar2.rcf";
-                path_RCF_solar3 = @"solar\solar3.rcf";
-                path_RCF_solars = @"solar\solars.rcf";
-                path_RCF_onfoot0 = @"onfoot\onfoot.rcf";
-                path_RCF_onfoot1 = @"onfoot\onfoot1.rcf";
-                path_RCF_onfoot2 = @"onfoot\onfoot2.rcf";
-                path_RCF_onfoot3 = @"onfoot\onfoot3.rcf";
-                path_RCF_onfoot5 = @"onfoot\onfoot5.rcf";
-                path_RCF_onfoot6 = @"onfoot\onfoot6.rcf";
-                path_RCF_0 = @"0\0.rcf";
-                path_RCF_1 = @"1\1.rcf";
-                path_RCF_2 = @"2\2.rcf";
-                path_RCF_3 = @"3\3.rcf";
-                path_RCF_4 = @"4\4.rcf";
-                path_RCF_5 = @"5\5.rcf";
-                path_RCF_6 = @"6\6.rcf";
-                path_RCF_sound = @"sound\sound.rcf";
-            }
-        }
-
         public override void StartModProcess()
         {
-            SetPaths(ConsolePipeline.Metadata.Console, GameRegion.ExecName);
-            basePath = ConsolePipeline.ExtractedPath;
+            ProcessBusy = true;
 
-            BeforeModPass();
-
-            List<string> all_RCF = new List<string> {
-                path_RCF_default,
-                path_RCF_common,
-                path_RCF_frontend,
-                path_RCF_onfoot0,
-                path_RCF_onfoot1,
-                path_RCF_onfoot2,
-                path_RCF_onfoot3,
-                path_RCF_onfoot4,
-                path_RCF_onfoot5,
-                path_RCF_onfoot6,
-                path_RCF_onfoot7,
-                path_RCF_advent1,
-                path_RCF_advent2,
-                path_RCF_advent3,
-                path_RCF_adventa,
-                path_RCF_dino1,
-                path_RCF_dino2,
-                path_RCF_dino3,
-                path_RCF_dinoa,
-                path_RCF_egypt1,
-                path_RCF_egypt2,
-                path_RCF_egypt3,
-                path_RCF_egypta,
-                path_RCF_fairy1,
-                path_RCF_fairy2,
-                path_RCF_fairy3,
-                path_RCF_fairys,
-                path_RCF_solar1,
-                path_RCF_solar2,
-                path_RCF_solar3,
-                path_RCF_solars,
-                path_RCF_0,
-                path_RCF_1,
-                path_RCF_2,
-                path_RCF_3,
-                path_RCF_4,
-                path_RCF_5,
-                path_RCF_6,
-                //path_RCF_sound,
-                //path_RCF_english,
-                //path_RCF_movies,
-            };
-
-            if (ModCrates.HasLayerModsActive(EnabledModCrates, 1)) // these take forever, so only if they're needed
-            {
-                all_RCF.Add(path_RCF_movies);
-                all_RCF.Add(path_RCF_english);
-                all_RCF.Add(path_RCF_sound);
-            }
-
-            for (int i = 0; i < all_RCF.Count; i++)
-            {
-                if (all_RCF[i] != "")
-                {
-                    Modify_RCF(all_RCF[i]);
-                }
-            }
-
+            AsyncStart();
         }
 
-        void Modify_RCF(string path)
+        public async void AsyncStart()
         {
-            string path_extr = basePath + @"cml_extr\";
-            RCF_Manager rcf = new RCF_Manager(basePath + path_RCF_frontend);
-            rcf.Extract(basePath + path, path_extr);
+            UpdateProcessMessage("Starting...", 0);
 
-            ModCrates.InstallLayerMods(EnabledModCrates, path_extr, 1);
+            // Mod files
+            ModProcess();
 
-            StartModPass(path_extr);
+            while (MainBusy || PassBusy)
+            {
+                await Task.Delay(100);
+            }
 
-            rcf.Pack(basePath + path, path_extr);
+            ProcessBusy = false;
+        }
+
+        public async void ModProcess()
+        {
+            MainBusy = true;
+
+            string basePath = ConsolePipeline.ExtractedPath;
+
+            bool Editing_P3D = CheckModsForP3D();
+            bool Editing_GOD = CheckModsForGOD();
+            bool Editing_FIG = CheckModsForFIG();
+            bool Editing_MID = CheckModsForMID();
+
+            //Extract all RCF
+            List<FileInfo> Files_RCF = new List<FileInfo>();
+            List<RCF_Manager> Managers = new List<RCF_Manager>();
+            DirectoryInfo adi = new DirectoryInfo(basePath);
+            Recursive_LocateRCFs(adi, ref Files_RCF);
+
+            List<string> RCF_Paths = new List<string>();
+            foreach (FileInfo file in Files_RCF)
+            {
+                RCF_Paths.Add(file.FullName);
+            }
+            PassCount = Files_RCF.Count;
+            PassIterator = 0;
+            PassPercent = 0;
+
+            UpdateProcessMessage("Extracting all RCF archives...", 5);
+            PassBusy = true;
+
+            IList<Task> extractTaskList = new List<Task>();
+
+            for (int i = 0; i < RCF_Paths.Count; i++)
+            {
+                Managers.Add(new RCF_Manager(this, RCF_Paths[i]));
+            }
+            for (int i = 0; i < RCF_Paths.Count; i++)
+            {
+                extractTaskList.Add(ExtractRCFAsync(RCF_Paths[i], i, Managers));
+            }
+
+            await Task.WhenAll(extractTaskList);
+            PassBusy = false;
+            int FileCount = PassCount;
+
+            // Mod all RCF
+            UpdateProcessMessage("Installing Mod Crates: Layer 1...", 26);
+            for (int i = 0; i < RCF_Paths.Count; i++)
+            {
+                // Only allowing overwrite at the moment
+                ModCrates.InstallLayerMods(EnabledModCrates, RCF_Paths[i].Substring(0, RCF_Paths[i].Length - 4) + @"\", 1, true);
+            }
+            
+            List<FileInfo> Files_GOD = new List<FileInfo>();
+            List<FileInfo> Files_MID = new List<FileInfo>();
+            List<FileInfo> Files_P3D = new List<FileInfo>();
+            List<FileInfo> Files_FIG = new List<FileInfo>();
+            DirectoryInfo bdi = new DirectoryInfo(basePath);
+            Recursive_LocateFiles(bdi, ref Files_GOD, ref Files_MID, ref Files_P3D, ref Files_FIG);
+            PassIterator = 0;
+            PassCount = 0;
+            if (Editing_GOD)
+            {
+                PassCount += Files_GOD.Count;
+            }
+            if (Editing_P3D)
+            {
+                PassCount += Files_P3D.Count;
+            }
+            if (Editing_MID)
+            {
+                PassCount += Files_MID.Count;
+            }
+            if (Editing_FIG)
+            {
+                PassCount += Files_FIG.Count;
+            }
+
+            bool NeedsCache = NeedsCachePass();
+            CurrentPass = 0;
+            if (!NeedsCache)
+            {
+                PassPercentMod = 83f;
+                CurrentPass++;
+            }
+
+            while (CurrentPass < 2)
+            {
+                PassIterator = 0;
+                PassBusy = true;
+                if (CurrentPass == 0)
+                {
+                    PassPercentMod = 22f;
+                    PassPercentAdd = 30;
+                    UpdateProcessMessage("Cache Pass", 30);
+                    BeforeCachePass();
+                }
+                else if (CurrentPass == 1)
+                {
+                    if (NeedsCache)
+                    {
+                        PassPercentMod = 22f;
+                        PassPercentAdd = 52;
+                        UpdateProcessMessage("Mod Pass", 52);
+                    }
+                    else
+                    {
+                        PassPercentMod = 44f;
+                        PassPercentAdd = 30;
+                        UpdateProcessMessage("Mod Pass", 30);
+                    }
+
+                    BeforeModPass();
+                }
+
+                IList<Task> editTaskList = new List<Task>();
+                if (Editing_GOD)
+                {
+                    foreach (FileInfo File in Files_GOD)
+                    {
+                        editTaskList.Add(Edit_GOD(File));
+                    }
+                }
+                if (Editing_P3D)
+                {
+                    foreach (FileInfo File in Files_P3D)
+                    {
+                        editTaskList.Add(Edit_P3D(File));
+                    }
+                }
+
+                await Task.WhenAll(editTaskList);
+
+                CurrentPass++;
+                PassBusy = false;
+            }
+
+            // Pack all RCF
+            UpdateProcessMessage("Packing all RCF archives...", 75);
+            PassBusy = true;
+            PassIterator = 0;
+            PassCount = FileCount;
+
+            IList<Task> packTaskList = new List<Task>();
+            for (int i = 0; i < RCF_Paths.Count; i++)
+            {
+                packTaskList.Add(PackRCFAsync(RCF_Paths[i], i, Managers));
+            }
+
+            await Task.WhenAll(packTaskList);
+            PassBusy = false;
+
+            MainBusy = false;
+        }
+
+        public async Task ExtractRCFAsync(string Path, int i, List<RCF_Manager> Managers)
+        { 
+            await Managers[i].ExtractAsync(this, Path, Path.Substring(0, Path.Length - 4) + @"\");
+        }
+        public async Task PackRCFAsync(string Path, int i, List<RCF_Manager> Managers)
+        {
+            await Managers[i].PackAsync(Path, Path.Substring(0, Path.Length - 4) + @"\");
+        }
+
+        private async Task Edit_GOD(FileInfo file)
+        {
+            //Console.WriteLine("Editing: " + path);
+
+            await Task.Run(
+            () =>
+            {
+                GOD_File lua = new GOD_File(file);
+
+                switch (CurrentPass)
+                {
+                    case 0:
+                        StartCachePass(lua);
+                        break;
+                    default:
+                    case 1:
+                        StartModPass(lua);
+                        break;
+                }
+
+                lua.Write();
+            }
+            );
+
+            PassIterator++;
+            PassPercent = (int)((PassIterator / (float)PassCount) * PassPercentMod) + PassPercentAdd;
+        }
+
+        private async Task Edit_P3D(FileInfo file)
+        {
+            //Console.WriteLine("Editing: " + path);
+            bool skip = false;
+
+            await Task.Run(
+            () =>
+            {
+                Pure3D.File lev = new Pure3D.File();
+                try
+                {
+                    lev.Load(file.FullName);
+                }
+                catch
+                {
+                    Console.WriteLine("Failed to load: " + file.FullName);
+                    skip = true;
+                }
+
+                if (!skip)
+                {
+                    switch (CurrentPass)
+                    {
+                        case 0:
+                            StartCachePass(lev);
+                            break;
+                        default:
+                        case 1:
+                            StartModPass(lev);
+                            break;
+                    }
+
+                    lev.Save(file.FullName);
+                }
+
+            }
+            );
+
+            PassIterator++;
+            PassPercent = (int)((PassIterator / (float)PassCount) * PassPercentMod) + PassPercentAdd;
+        }
+
+        bool CheckModsForGOD()
+        {
+            foreach (ModPropertyBase Prop in ActiveProps)
+            {
+                if (Prop.TargetMod is ModStruct<GOD_File> || Prop.TargetMod is ModStruct<Pure3D.File, GOD_File> || Prop.TargetMod is ModStruct<GOD_File, Pure3D.File>)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        bool CheckModsForP3D()
+        {
+            foreach (ModPropertyBase Prop in ActiveProps)
+            {
+                if (Prop.TargetMod is ModStruct<Pure3D.File> || Prop.TargetMod is ModStruct<Pure3D.File, GOD_File> || Prop.TargetMod is ModStruct<GOD_File, Pure3D.File>)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        bool CheckModsForMID()
+        {
+            // no struct yet
+            /*
+            foreach (ModPropertyBase Prop in ActiveProps)
+            {
+                if (Prop.TargetMod is ModStruct<FileInfo>)
+                {
+                    return true;
+                }
+            }
+            */
+            return false;
+        }
+        bool CheckModsForFIG()
+        {
+            // no struct yet
+            /*
+            foreach (ModPropertyBase Prop in ActiveProps)
+            {
+                if (Prop.TargetMod is ModStruct<FileInfo>)
+                {
+                    return true;
+                }
+            }
+            */
+            return false;
+        }
+
+
+        void Recursive_LocateRCFs(DirectoryInfo di, ref List<FileInfo> Files_RCF)
+        {
+            foreach (DirectoryInfo dir in di.EnumerateDirectories())
+            {
+                Recursive_LocateRCFs(dir, ref Files_RCF);
+            }
+            foreach (FileInfo file in di.EnumerateFiles())
+            {
+                if (file.Extension.ToLower() == ".rcf")
+                    Files_RCF.Add(file);
+            }
+        }
+
+        void Recursive_LocateFiles(DirectoryInfo di, ref List<FileInfo> Files_GOD, ref List<FileInfo> Files_MID, ref List<FileInfo> Files_P3D, ref List<FileInfo> Files_FIG)
+        {
+            foreach (DirectoryInfo dir in di.EnumerateDirectories())
+            {
+                Recursive_LocateFiles(dir, ref Files_GOD, ref Files_MID, ref Files_P3D, ref Files_FIG);
+            }
+            foreach (FileInfo file in di.EnumerateFiles())
+            {
+                if (file.Extension.ToLower() == ".god")
+                    Files_GOD.Add(file);
+                if (file.Extension.ToLower() == ".mid")
+                    Files_MID.Add(file);
+                if (file.Extension.ToLower() == ".p3d")
+                    Files_P3D.Add(file);
+                if (file.Extension.ToLower() == ".fig")
+                    Files_FIG.Add(file);
+            }
         }
     }
 }

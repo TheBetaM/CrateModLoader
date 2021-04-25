@@ -44,7 +44,6 @@ namespace CrateModLoader
         //public List<Mod> Mods = new List<Mod>();
         //public List<IModParser> ModParsers = new List<IModParser>();
         //public List<ModPipeline> Pipelines = new List<ModPipeline>();
-        public Random RandomState; // <- todo consolidate all Random() calls for multithreading!!
         public List<ModPropertyBase> ActiveProps = new List<ModPropertyBase>();
         public virtual bool NoAsyncProcess => false;
         public bool IsBusy { get; set; }

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using CrateModGames.GameSpecific.CrashTTR;
 
 namespace CrateModLoader.GameSpecific.CrashTTR
 {
-    public class CTTR_Rand_HubEntrances : ModStruct<string>
+    // unfinsihed, needs more logic
+    public class CTTR_Rand_HubEntrances : ModStruct<GOD_File>
     {
         public override string Name => "Randomize Hub Entrances";
 
@@ -54,45 +54,26 @@ namespace CrateModLoader.GameSpecific.CrashTTR
             */
         }
 
-        public override void ModPass(string path_extr)
+        public override void ModPass(GOD_File file)
         {
-            if (System.IO.File.Exists(path_extr + @"design\permanent\genericobjectives.god"))
+            if (file.Name.Contains(@"genericobjectives.god"))
             {
-                string[] objective_lines = System.IO.File.ReadAllLines(path_extr + @"design\permanent\genericobjectives.god");
-                List<string> LineList = new List<string>();
-                for (int i = 0; i < objective_lines.Length; i++)
-                {
-                    LineList.Add(objective_lines[i]);
-                }
-
-                int List_Start = 0;
-                int List_End = 0;
                 List<string> ChangeHubObjective = new List<string>();
                 for (int i = 0; i < 5; i++)
                 {
                     string targetHub = CTTR_Data.HubNamesSimple[i + 1];
-                    if (CTTR_Data.LUA_LoadObject(LineList, "Objective", "ChangeLevelMidwayTo" + targetHub, ref List_Start, ref List_End, ChangeHubObjective))
+
+                    LUA_Object obj = file.GetObject("Objective", "ChangeLevelMidwayTo" + targetHub);
+                    if (obj != null)
                     {
-                        ChangeHubObjective[ChangeHubObjective.Count - 3] = "this.AddAction_ChangeLevel(\"" + CTTR_Data.HubNames[randHubs[i]] + "\",\"StartLocationFromMidway\")";
-                        CTTR_Data.LUA_SaveObject(LineList, "Objective", "ChangeLevelMidwayTo" + targetHub, ChangeHubObjective);
+                        obj.Content[obj.Content.Count - 3] = "this.AddAction_ChangeLevel(\"" + CTTR_Data.HubNames[randHubs[i]] + "\",\"StartLocationFromMidway\")";
                     }
-                    ChangeHubObjective.Clear();
-                    if (CTTR_Data.LUA_LoadObject(LineList, "Objective", "ChangeLevel" + CTTR_Data.HubNamesSimple[randHubs[i]] + "ToMidway", ref List_Start, ref List_End, ChangeHubObjective))
+                    obj = file.GetObject("Objective", "ChangeLevel" + CTTR_Data.HubNamesSimple[randHubs[i]] + "ToMidway");
+                    if (obj != null)
                     {
-                        ChangeHubObjective[ChangeHubObjective.Count - 3] = "this.AddAction_ChangeLevel(\"onfoot_midway\",\"StartLocationFrom" + targetHub + "\")";
-                        CTTR_Data.LUA_SaveObject(LineList, "Objective", "ChangeLevel" + CTTR_Data.HubNamesSimple[randHubs[i]] + "ToMidway", ChangeHubObjective);
+                        obj.Content[obj.Content.Count - 3] = "this.AddAction_ChangeLevel(\"onfoot_midway\",\"StartLocationFrom" + targetHub + "\")";
                     }
-                    ChangeHubObjective.Clear();
                 }
-
-                objective_lines = new string[LineList.Count];
-                for (int i = 0; i < LineList.Count; i++)
-                {
-                    objective_lines[i] = LineList[i];
-                }
-
-                System.IO.File.WriteAllLines(path_extr + @"design\permanent\genericobjectives.god", objective_lines);
-
             }
             /* TODO: Gem Key randomization?
             for (int obj = 0; obj < CTTR_Data.MissionObjectiveTypes.Length; obj++)

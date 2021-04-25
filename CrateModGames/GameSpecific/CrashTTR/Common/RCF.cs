@@ -3,7 +3,6 @@ using System.IO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CrateModLoader;
-using DiscUtils;
 // RCF API by NeoKesha and BetaM
 // Converted from VisualBasic
 
@@ -332,7 +331,6 @@ namespace RadcoreCementFile
 
             IList<Task> editTaskList = new List<Task>();
 
-            meta.PassCount = (int)Header.Files;
             for (Int32 i = 0; i <= Header.Files - 1; i++)
             {
                 editTaskList.Add(ExtractFileAsync(Path, i));
@@ -514,8 +512,8 @@ namespace RadcoreCementFile
         // Requires all files to be extracted and paths loaded into T2File[].External
         public async Task PackAsync(string NewPath, string FolderPath, UInt32 Alignment = 2048)
         {
-            if (NewPath == RCF_Path)
-                return;
+            //if (NewPath == RCF_Path)
+                //return;
 
             FileStream NRCF = new FileStream(NewPath, FileMode.Create, FileAccess.Write, FileShare.Write);
             BinaryWriter NRCFWriter = new BinaryWriter(NRCF);
@@ -604,7 +602,6 @@ namespace RadcoreCementFile
 
             IList<Task> editTaskList = new List<Task>();
 
-            meta.PassCount = (int)Header.Files;
             for (Int32 i = 0; i <= Header.Files - 1; i++)
             {
                 if (Header.T2File[Header.T1File[i].Pos].External == "")

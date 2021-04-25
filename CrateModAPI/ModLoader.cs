@@ -428,6 +428,8 @@ namespace CrateModLoader
                 while (Modder.IsBusy)
                 {
                     int PPerc = (int)(Modder.PassPercent * 0.48f);
+                    if (PPerc > 47) PPerc = 47;
+                    if (PPerc < 0) PPerc = 0;
                     a.ReportProgress(26 + PPerc);
                     Thread.Sleep(100);
                 }

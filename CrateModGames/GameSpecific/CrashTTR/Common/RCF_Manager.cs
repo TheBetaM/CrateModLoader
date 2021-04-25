@@ -11,10 +11,11 @@ namespace CrateModLoader.GameSpecific.CrashTTR
         public RCF cachedRCF;
         public bool isBusy = false;
 
-        public RCF_Manager(string path)
+        public RCF_Manager(Modder meta, string path)
         {
             cachedRCF = new RCF();
             cachedRCF.OpenRCF(path);
+            meta.PassCount += (int)cachedRCF.Header.Files;
         }
 
         public void Extract(string path, string dest)
@@ -38,27 +39,15 @@ namespace CrateModLoader.GameSpecific.CrashTTR
             isBusy = true;
             // set externals
             DirectoryInfo source = new DirectoryInfo(path_extr);
-            Recursive_CheckFiles(path_extr, source, path_extr);
-
-            int error = 0;
-            for (int i = 0; i < cachedRCF.Header.Files; i++)
+            Recursive_CheckFiles(path_extr);
+            if (File.Exists(path))
             {
-                if (cachedRCF.Header.T2File[cachedRCF.Header.T1File[i].Pos].External == "")
-                {
-                    error++;
-                    Console.WriteLine("Missing external file: " + cachedRCF.Header.T2File[cachedRCF.Header.T1File[i].Pos].Name);
-                }
-            }
-            if (error != 0)
-            {
-                throw new Exception($"External paths failed, crashed and burned {error} times!");
+                File.Delete(path);
             }
 
-            await cachedRCF.PackAsync(path + "1", path_extr);
+            await cachedRCF.PackAsync(path, path_extr);
 
             // Extraction cleanup
-            File.Delete(path);
-            File.Move(path + "1", path);
             if (Directory.Exists(path_extr))
             {
                 DirectoryInfo di = new DirectoryInfo(path_extr);
@@ -90,7 +79,7 @@ namespace CrateModLoader.GameSpecific.CrashTTR
 
             // set externals
             DirectoryInfo source = new DirectoryInfo(path_extr);
-            Recursive_CheckFiles(path_extr, source, path_extr);
+            Recursive_CheckFiles(path_extr);
 
             cachedRCF.Pack(path + "1");
 
@@ -122,37 +111,29 @@ namespace CrateModLoader.GameSpecific.CrashTTR
             cachedRCF = null;
         }
 
-        public void Recursive_CheckFiles(string path_extr, DirectoryInfo di, string buffer)
+        public void Recursive_CheckFiles(string path_extr)
         {
-            string relativePath = buffer.Substring(path_extr.Length);
-            //Console.WriteLine(relativePath);
-
-            foreach (FileInfo file in di.EnumerateFiles())
+            for (int i = 0; i < cachedRCF.Header.T2File.Length; i++)
             {
-                for (int i = 0; i < cachedRCF.Header.T2File.Length; i++)
+                string name = cachedRCF.Header.T2File[i].Name;
+                if (name.StartsWith(@"\") || name.StartsWith(@"/"))
                 {
-                    if (cachedRCF.Header.T2File[i].Name == relativePath + @"\" + file.Name)
-                    {
-                        cachedRCF.Header.T2File[i].External = path_extr + relativePath + @"\" + file.Name;
-                        //Console.WriteLine("external correct " + cachedRCF.Header.T2File[i].External);
-                        break;
-                    }
-                    else if (relativePath == "" && cachedRCF.Header.T2File[i].Name == file.Name)
-                    {
-                        cachedRCF.Header.T2File[i].External = path_extr + relativePath + @"\" + file.Name;
-                        //Console.WriteLine("external correct " + cachedRCF.Header.T2File[i].External);
-                        break;
-                    }
+                    name = name.Substring(1);
+                }
+                string check = path_extr + cachedRCF.Header.T2File[i].Name;
+                if (File.Exists(check))
+                {
+                    cachedRCF.Header.T2File[i].External = check;
+                }
+                else
+                {
+                    Console.WriteLine(path_extr);
+                    Console.WriteLine(cachedRCF.Header.T2File[i].Name);
+                    Console.WriteLine(check);
+                    throw new Exception("External file not found for: " + cachedRCF.Header.T2File[i].Name);
                 }
             }
-
-            foreach (DirectoryInfo dir in di.EnumerateDirectories())
-            {
-                string newbuffer = Path.Combine(buffer, dir.Name);
-                Recursive_CheckFiles(path_extr, dir, newbuffer);
-            }
         }
-
 
     }
 }

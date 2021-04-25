@@ -65,10 +65,7 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
             List<FileInfo> Files_CRT = new List<FileInfo>();
             List<FileInfo> Files_WMP = new List<FileInfo>();
             DirectoryInfo adi = new DirectoryInfo(ConsolePipeline.ExtractedPath);
-            foreach (DirectoryInfo dir in adi.EnumerateDirectories())
-            {
-                Recursive_LoadFiles(dir, ref Files_AI, ref Files_CRT, ref Files_WMP);
-            }
+            Recursive_LoadFiles(adi, ref Files_AI, ref Files_CRT, ref Files_WMP);
             PassCount = 0;
             if (Editing_AI)
             {

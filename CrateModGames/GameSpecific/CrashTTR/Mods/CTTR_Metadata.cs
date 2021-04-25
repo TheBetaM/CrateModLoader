@@ -1,33 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 
 namespace CrateModLoader.GameSpecific.CrashTTR
 {
-    public class CTTR_Metadata : ModStruct<string>
+    public class CTTR_Metadata : ModStruct<GOD_File>
     {
-        public override void ModPass(string basePath)
+        public override void ModPass(GOD_File file)
         {
-            string path_extr = basePath + @"cml_extr\";
-            if (File.Exists(path_extr + @"design\levels\common\frontend.god"))
+            if (file.Name.Contains(@"frontend.god"))
             {
-
-                string[] frontend_lines = File.ReadAllLines(path_extr + @"design\levels\common\frontend.god");
-
+                LUA_Object obj = file.GetObject("Script", "LevelSetup");
                 // Editing credits to add CML metadata
-                for (int i = 0; i < frontend_lines.Length; i++)
+                if (obj != null)
                 {
-                    if (frontend_lines[i] == "screen.AddLine(\"\",0,\"\")")
+                    for (int i = 0; i < obj.Content.Count; i++)
                     {
-                        frontend_lines[i + 1] = "screen.AddLine(\"Crate Mod Loader " + ModLoaderGlobals.ProgramVersion + "\",0,\"\")";
-                        frontend_lines[i + 2] = "screen.AddLine(\"Seed: " + ModLoaderGlobals.RandomizerSeed + "\",0,\"\")";
-                        frontend_lines[i + 3] = "screen.AddLine(\"\",0,\"\")";
-                        frontend_lines[i + 4] = "screen.AddLineSpecial(\"creditscttr\",0,104,104,255,1.2,true)";
-                        break;
+                        if (obj.Content[i] == "screen.AddLine(\"\",0,\"\")")
+                        {
+                            obj.Content[i + 1] = "screen.AddLine(\"Crate Mod Loader " + ModLoaderGlobals.ProgramVersion + "\",0,\"\")";
+                            obj.Content[i + 2] = "screen.AddLine(\"Seed: " + ModLoaderGlobals.RandomizerSeed + "\",0,\"\")";
+                            break;
+                        }
                     }
                 }
-
-                File.WriteAllLines(path_extr + @"design\levels\common\frontend.god", frontend_lines);
             }
         }
     }
