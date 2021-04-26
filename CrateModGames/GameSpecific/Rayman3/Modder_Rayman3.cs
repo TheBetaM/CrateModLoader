@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.IO;
 /*
  * Mod Passes:
- * string -> extraction path
+ * Rayman3_GenericMod -> extraction path + console
+ * TPL_File -> texture archives
  */
 
 namespace CrateModLoader.GameSpecific.Rayman3
@@ -18,14 +20,39 @@ namespace CrateModLoader.GameSpecific.Rayman3
 
     public sealed class Modder_Rayman3 : Modder
     {
-        public override bool NoAsyncProcess => true;
         public override bool CanPreloadGame => true;
         public override List<ConsoleMode> PreloadConsoles => new List<ConsoleMode>() { ConsoleMode.GCN, };
+
+        private bool MainBusy = false;
+        private int CurrentPass = 0;
+        private float PassPercentMod = 90f;
+        private int PassPercentAdd = 5;
 
         public Modder_Rayman3() { }
 
         public override void StartModProcess()
         {
+            ProcessBusy = true;
+
+            AsyncStart();
+        }
+
+        public async void AsyncStart()
+        {
+            // Mod files
+            ModProcess();
+
+            while (MainBusy || PassBusy)
+            {
+                await Task.Delay(100);
+            }
+
+            ProcessBusy = false;
+        }
+
+        public async void ModProcess()
+        {
+            MainBusy = true;
             string basePath = ConsolePipeline.ExtractedPath;
             if (ConsolePipeline.Metadata.Console == ConsoleMode.PS2)
                 basePath += @"DATABIN\";
@@ -36,37 +63,137 @@ namespace CrateModLoader.GameSpecific.Rayman3
             else if (ConsolePipeline.Metadata.Console == ConsoleMode.PC)
                 basePath += @"Gamedatabin\";
 
-            Ray3_Common.ExtPath = ConsolePipeline.ExtractedPath;
+            List<FileInfo> Files_TPL = new List<FileInfo>();
+            DirectoryInfo adi = new DirectoryInfo(ConsolePipeline.ExtractedPath);
+            Recursive_LocateTPLs(adi, ref Files_TPL);
+            PassCount = Files_TPL.Count;
 
-            UpdateProcessMessage("Custom Textures...", 5);
-            // textures
-            Custom_Texture_Handle(basePath);
-            Ray3_Common.Recursive_PostCleanup(new DirectoryInfo(ConsolePipeline.ExtractedPath));
-
-            //mods
-            UpdateProcessMessage("Cache Pass", 25);
+            //Generic mods
+            Rayman3_GenericMod generic = new Rayman3_GenericMod(basePath, ConsolePipeline.Metadata.Console);
+            UpdateProcessMessage("Setting up mods...", 4);
             BeforeCachePass();
-
-            StartCachePass(basePath);
-
-            UpdateProcessMessage("Mod Pass", 50);
+            StartCachePass(generic);
             BeforeModPass();
+            StartModPass(generic);
 
-            StartModPass(basePath);
+            bool NeedsCache = NeedsCachePass();
+            CurrentPass = 0;
+            if (!NeedsCache)
+            {
+                PassPercentAdd = 5;
+                PassPercentMod = 90f;
+                CurrentPass++;
+            }
 
-            //cleanup
-            UpdateProcessMessage("Texture Cleanup...", 95);
-            Ray3_Common.Recursive_PostCleanup(new DirectoryInfo(ConsolePipeline.ExtractedPath));
+            while (CurrentPass < 2)
+            {
+                PassIterator = 0;
+                PassBusy = true;
+                if (CurrentPass == 0)
+                {
+                    PassPercentMod = 39f;
+                    PassPercentAdd = 10;
+                    UpdateProcessMessage("Cache Pass", 10);
+                    BeforeCachePass();
+                }
+                else if (CurrentPass == 1)
+                {
+                    if (NeedsCache)
+                    {
+                        PassPercentMod = 40f;
+                        PassPercentAdd = 50;
+                        UpdateProcessMessage("Mod Pass", 50);
+                    }
+                    else
+                    {
+                        PassPercentMod = 80f;
+                        UpdateProcessMessage("Mod Pass", 10);
+                    }
+
+                    BeforeModPass();
+                }
+
+                IList<Task> editTaskList = new List<Task>();
+
+                foreach (FileInfo file in Files_TPL)
+                {
+                    editTaskList.Add(Edit_TPL(file));
+                }
+
+                await Task.WhenAll(editTaskList);
+
+                CurrentPass++;
+                PassBusy = false;
+            }
+
+            MainBusy = false;
         }
 
-        void Custom_Texture_Handle(string basePath)
+        private async Task Edit_TPL(FileInfo file)
         {
-            if (File.Exists(basePath + @"fix.tpl"))
+            //Console.WriteLine("Editing: " + path);
+            string fileName = file.FullName;
+
+            await Task.Run(
+            () =>
             {
-                Ray3_Common.GCN_ExportTextures(basePath + @"fix.tpl");
+                Ray3_Common.GCN_ExportTextures(fileName);
+                File.Delete(fileName);
 
-                File.Delete(basePath + @"fix.tpl");
+                TPL_File tpl = new TPL_File(file.Name, fileName, file.Directory.FullName);
 
+                foreach (FileInfo ext in file.Directory.EnumerateFiles())
+                {
+                    if (ext.Extension.ToLower() == ".png" && ext.Name.Contains(file.Name))
+                    {
+                        tpl.Textures.Add(ext);
+                    }
+                }
+
+                Custom_Texture_Handle(tpl);
+
+                switch (CurrentPass)
+                {
+                    case 0:
+                        StartCachePass(tpl);
+                        break;
+                    default:
+                    case 1:
+                        StartModPass(tpl);
+                        break;
+                }
+
+                Ray3_Common.GCN_ImportTextures(fileName + @".png");
+
+                foreach (FileInfo ext in tpl.Textures)
+                {
+                    File.Delete(ext.FullName);
+                }
+            }
+            );
+
+            PassIterator++;
+            PassPercent = (int)((PassIterator / (float)PassCount) * PassPercentMod) + PassPercentAdd;
+        }
+
+        void Recursive_LocateTPLs(DirectoryInfo di, ref List<FileInfo> Files_TPL)
+        {
+            foreach (DirectoryInfo dir in di.EnumerateDirectories())
+            {
+                Recursive_LocateTPLs(dir, ref Files_TPL);
+            }
+            foreach (FileInfo file in di.EnumerateFiles())
+            {
+                if (file.Extension.ToLower() == ".tpl" && Ray3_Common.AllowedTPL.Contains(file.Name))
+                    Files_TPL.Add(file);
+            }
+        }
+
+        void Custom_Texture_Handle(TPL_File file)
+        {
+            if (file.Name.ToLower().Contains(@"fix.tpl"))
+            {
+                string basePath = file.FolderName;
                 Rayman3_Textures_General.Texture_General_Fist_LockJaw.ResourceToFile(basePath + @"fix.tpl.mm4.png");
                 Rayman3_Textures_General.Texture_General_Outfit_ThrottleCopter.ResourceToFile(basePath + @"fix.tpl.mm6.png");
                 Rayman3_Textures_General.Texture_General_Outfit_Normal.ResourceToFile(basePath + @"fix.tpl.mm7.png");
@@ -112,20 +239,10 @@ namespace CrateModLoader.GameSpecific.Rayman3
                 Rayman3_Textures_General.Texture_General_Popup02.ResourceToFile(basePath + @"fix.tpl.mm73.png");
                 Rayman3_Textures_General.Texture_General_Popup03.ResourceToFile(basePath + @"fix.tpl.mm74.png");
                 Rayman3_Textures_General.Texture_General_Font.ResourceToFile(basePath + @"fix.tpl.png");
-
-                Ray3_Common.GCN_ImportTextures(basePath + @"fix.tpl.png");
             }
-            else if (File.Exists(basePath + @"FIX.TBF"))
+            if (file.Name.ToLower().Contains(@"menu.tpl"))
             {
-                //Use TBF Tool
-            }
-
-            if (File.Exists(basePath + @"menu.tpl"))
-            {
-
-                Ray3_Common.GCN_ExportTextures(basePath + @"menu.tpl");
-                File.Delete(basePath + @"menu.tpl");
-
+                string basePath = file.FolderName;
                 Rayman3_Textures_Menu.Texture_Menu_Overlay.ResourceToFile(basePath + @"menu.tpl.png");
                 Rayman3_Textures_Menu.Texture_Menu_Icons.ResourceToFile(basePath + @"menu.tpl.mm1.png");
                 Rayman3_Textures_Menu.Texture_Menu_Icon_Level1.ResourceToFile(basePath + @"menu.tpl.mm2.png");
@@ -146,70 +263,51 @@ namespace CrateModLoader.GameSpecific.Rayman3
                 Rayman3_Textures_Menu.Texture_Menu_Icon_Plum.ResourceToFile(basePath + @"menu.tpl.mm17.png");
                 Rayman3_Textures_Menu.Texture_Menu_Icons_Videos.ResourceToFile(basePath + @"menu.tpl.mm18.png");
                 Rayman3_Textures_Menu.Texture_Menu_Icons_Misc.ResourceToFile(basePath + @"menu.tpl.mm19.png");
-
-                Ray3_Common.GCN_ImportTextures(basePath + @"menu.tpl.png");
             }
-
-            if (ConsolePipeline.Metadata.Console == ConsoleMode.GCN)
+            if (file.Name.ToLower().Contains(@"lodmeca.tpl"))
             {
-                string lsbinpath = ConsolePipeline.ExtractedPath + @"LSBIN\";
-                if (File.Exists(lsbinpath + @"lodmeca.tpl"))
-                {
-                    Ray3_Common.GCN_ExportTextures(lsbinpath + @"lodmeca.tpl");
-                    File.Delete(lsbinpath + @"lodmeca.tpl");
-                    Rayman3_Textures_Loading.Texture_Load_Gear.ResourceToFile(lsbinpath + @"lodmeca.tpl.png");
-                    Ray3_Common.GCN_ImportTextures(lsbinpath + @"lodmeca.tpl.png");
-                }
-                if (File.Exists(lsbinpath + @"lodps2_01.tpl"))
-                {
-                    Ray3_Common.GCN_ExportTextures(lsbinpath + @"lodps2_01.tpl");
-                    File.Delete(lsbinpath + @"lodps2_01.tpl");
-                    Rayman3_Textures_Loading.Texture_Load_01.ResourceToFile(lsbinpath + @"lodps2_01.tpl.png");
-                    Ray3_Common.GCN_ImportTextures(lsbinpath + @"lodps2_01.tpl.png");
-                    Ray3_Common.GCN_ExportTextures(lsbinpath + @"lodps2_02.tpl");
-                    File.Delete(lsbinpath + @"lodps2_02.tpl");
-                    Rayman3_Textures_Loading.Texture_Load_02.ResourceToFile(lsbinpath + @"lodps2_02.tpl.png");
-                    Ray3_Common.GCN_ImportTextures(lsbinpath + @"lodps2_02.tpl.png");
-                    Ray3_Common.GCN_ExportTextures(lsbinpath + @"lodps2_03.tpl");
-                    File.Delete(lsbinpath + @"lodps2_03.tpl");
-                    Rayman3_Textures_Loading.Texture_Load_03.ResourceToFile(lsbinpath + @"lodps2_03.tpl.png");
-                    Ray3_Common.GCN_ImportTextures(lsbinpath + @"lodps2_03.tpl.png");
-                    Ray3_Common.GCN_ExportTextures(lsbinpath + @"lodps2_04.tpl");
-                    File.Delete(lsbinpath + @"lodps2_04.tpl");
-                    Rayman3_Textures_Loading.Texture_Load_04.ResourceToFile(lsbinpath + @"lodps2_04.tpl.png");
-                    Ray3_Common.GCN_ImportTextures(lsbinpath + @"lodps2_04.tpl.png");
-                    Ray3_Common.GCN_ExportTextures(lsbinpath + @"lodps2_05.tpl");
-                    File.Delete(lsbinpath + @"lodps2_05.tpl");
-                    Rayman3_Textures_Loading.Texture_Load_05.ResourceToFile(lsbinpath + @"lodps2_05.tpl.png");
-                    Ray3_Common.GCN_ImportTextures(lsbinpath + @"lodps2_05.tpl.png");
-                    Ray3_Common.GCN_ExportTextures(lsbinpath + @"lodps2_06.tpl");
-                    File.Delete(lsbinpath + @"lodps2_06.tpl");
-                    Rayman3_Textures_Loading.Texture_Load_06.ResourceToFile(lsbinpath + @"lodps2_06.tpl.png");
-                    Ray3_Common.GCN_ImportTextures(lsbinpath + @"lodps2_06.tpl.png");
-                    Ray3_Common.GCN_ExportTextures(lsbinpath + @"lodps2_07.tpl");
-                    File.Delete(lsbinpath + @"lodps2_07.tpl");
-                    Rayman3_Textures_Loading.Texture_Load_07.ResourceToFile(lsbinpath + @"lodps2_07.tpl.png");
-                    Ray3_Common.GCN_ImportTextures(lsbinpath + @"lodps2_07.tpl.png");
-                    Ray3_Common.GCN_ExportTextures(lsbinpath + @"lodps2_08.tpl");
-                    File.Delete(lsbinpath + @"lodps2_08.tpl");
-                    Rayman3_Textures_Loading.Texture_Load_08.ResourceToFile(lsbinpath + @"lodps2_08.tpl.png");
-                    Ray3_Common.GCN_ImportTextures(lsbinpath + @"lodps2_08.tpl.png");
-                }
+                string basePath = file.FolderName;
+                Rayman3_Textures_Loading.Texture_Load_Gear.ResourceToFile(basePath + @"lodmeca.tpl.png");
             }
-        }
-
-        void Recursive_WorldColor(DirectoryInfo di, Random rand)
-        {
-            foreach(DirectoryInfo dir in di.GetDirectories())
+            if (file.Name.ToLower().Contains(@"lodps2_01.tpl"))
             {
-                Recursive_WorldColor(dir, rand);
+                string basePath = file.FolderName;
+                Rayman3_Textures_Loading.Texture_Load_01.ResourceToFile(basePath + @"lodps2_01.tpl.png");
             }
-            foreach (FileInfo file in di.GetFiles())
+            if (file.Name.ToLower().Contains(@"lodps2_02.tpl"))
             {
-                if (file.Extension.ToLower().Contains("tpl"))
-                {
-                    //Rand_World_Colors(di, file.FullName, rand);
-                }
+                string basePath = file.FolderName;
+                Rayman3_Textures_Loading.Texture_Load_02.ResourceToFile(basePath + @"lodps2_02.tpl.png");
+            }
+            if (file.Name.ToLower().Contains(@"lodps2_03.tpl"))
+            {
+                string basePath = file.FolderName;
+                Rayman3_Textures_Loading.Texture_Load_03.ResourceToFile(basePath + @"lodps2_03.tpl.png");
+            }
+            if (file.Name.ToLower().Contains(@"lodps2_04.tpl"))
+            {
+                string basePath = file.FolderName;
+                Rayman3_Textures_Loading.Texture_Load_04.ResourceToFile(basePath + @"lodps2_04.tpl.png");
+            }
+            if (file.Name.ToLower().Contains(@"lodps2_05.tpl"))
+            {
+                string basePath = file.FolderName;
+                Rayman3_Textures_Loading.Texture_Load_05.ResourceToFile(basePath + @"lodps2_05.tpl.png");
+            }
+            if (file.Name.ToLower().Contains(@"lodps2_06.tpl"))
+            {
+                string basePath = file.FolderName;
+                Rayman3_Textures_Loading.Texture_Load_06.ResourceToFile(basePath + @"lodps2_06.tpl.png");
+            }
+            if (file.Name.ToLower().Contains(@"lodps2_07.tpl"))
+            {
+                string basePath = file.FolderName;
+                Rayman3_Textures_Loading.Texture_Load_07.ResourceToFile(basePath + @"lodps2_07.tpl.png");
+            }
+            if (file.Name.ToLower().Contains(@"lodps2_08.tpl"))
+            {
+                string basePath = file.FolderName;
+                Rayman3_Textures_Loading.Texture_Load_08.ResourceToFile(basePath + @"lodps2_08.tpl.png");
             }
         }
 

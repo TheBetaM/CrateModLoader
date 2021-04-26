@@ -5,6 +5,7 @@ using CrateModGames.GameSpecific.Rayman3;
 
 namespace CrateModLoader.GameSpecific.Rayman3
 {
+    // unstable
     public class Ray3_Rand_WorldColors : ModStruct<string>
     {
         public override string Name => Rayman3_Text.Rand_WorldColors;
@@ -33,6 +34,21 @@ namespace CrateModLoader.GameSpecific.Rayman3
             }
 
             Ray3_Common.GCN_ImportTextures(filePath + ".png");
+        }
+
+        void Recursive_WorldColor(DirectoryInfo di, Random rand)
+        {
+            foreach (DirectoryInfo dir in di.GetDirectories())
+            {
+                Recursive_WorldColor(dir, rand);
+            }
+            foreach (FileInfo file in di.GetFiles())
+            {
+                if (file.Extension.ToLower().Contains("tpl"))
+                {
+                    //Rand_World_Colors(di, file.FullName, rand);
+                }
+            }
         }
     }
 }

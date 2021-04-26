@@ -95,6 +95,17 @@ namespace CrateModLoader.GameSpecific.Rayman3
         Tower5_Lept_15 = 47,
     }
 
+    public class Rayman3_GenericMod
+    {
+        public string mainPath;
+        public ConsoleMode console;
+
+        public Rayman3_GenericMod(string main, ConsoleMode cons)
+        {
+            mainPath = main;
+            console = cons;
+        }
+    }
 
     public static class Ray3_Common
     {
@@ -150,6 +161,21 @@ namespace CrateModLoader.GameSpecific.Rayman3
             "lept_15",
         };
 
+        public static List<string> AllowedTPL = new List<string>()
+        {
+            "menu.tpl",
+            "fix.tpl",
+            "lodmeca.tpl",
+            "lodps2_01.tpl",
+            "lodps2_02.tpl",
+            "lodps2_03.tpl",
+            "lodps2_04.tpl",
+            "lodps2_05.tpl",
+            "lodps2_06.tpl",
+            "lodps2_07.tpl",
+            "lodps2_08.tpl",
+        };
+
         public static void Recolor_Texture_File(string filePath, ColorSwizzleData Swiz)
         {
             Bitmap temp = new Bitmap(filePath);
@@ -183,14 +209,8 @@ namespace CrateModLoader.GameSpecific.Rayman3
             tex.Dispose();
         }
 
-        public static string ExtPath; // temporary!! remove this soon!
         public static void GCN_ExportTextures(string path, bool noCleanup = false)
         {
-            if (!noCleanup)
-            {
-                Recursive_PostCleanup(new DirectoryInfo(ExtPath));
-            }
-
             string args = "decode ";
             args += path;
 
@@ -228,19 +248,5 @@ namespace CrateModLoader.GameSpecific.Rayman3
             wimgt.WaitForExit();
         }
 
-        public static void Recursive_PostCleanup(DirectoryInfo di)
-        {
-            foreach (DirectoryInfo dir in di.GetDirectories())
-            {
-                Recursive_PostCleanup(dir);
-            }
-            foreach (FileInfo file in di.GetFiles())
-            {
-                if (file.Extension.ToLower().Contains("png"))
-                {
-                    file.Delete();
-                }
-            }
-        }
     }
 }

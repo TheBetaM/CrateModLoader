@@ -5,51 +5,48 @@ using CrateModGames.GameSpecific.Rayman3;
 
 namespace CrateModLoader.GameSpecific.Rayman3
 {
-    public class Ray3_Rand_OutfitColors : ModStruct<string>
+    public class Ray3_Rand_OutfitColors : ModStruct<TPL_File>
     {
         public override string Name => Rayman3_Text.Rand_OutfitColors;
         public override string Description => Rayman3_Text.Rand_OutfitColorsDesc;
 
-        public override void ModPass(string basePath)
+        public override void ModPass(TPL_File file)
         {
-            Random rand = new Random(ModLoaderGlobals.RandomizerSeed);
 
-            if (File.Exists(basePath + @"fix.tpl"))
+            if (file.Name.ToLower().Contains("fix.tpl"))
             {
-                Ray3_Common.GCN_ExportTextures(basePath + @"fix.tpl");
-
-                File.Delete(basePath + @"fix.tpl");
+                Random rand = new Random(ModLoaderGlobals.RandomizerSeed);
 
                 List<string> OutfitTex = new List<string>()
                 {
-                    "fix.tpl.mm4",
-                    "fix.tpl.mm6",
-                    "fix.tpl.mm7",
-                    "fix.tpl.mm8",
-                    "fix.tpl.mm9",
-                    "fix.tpl.mm10",
-                    "fix.tpl.mm11",
-                    "fix.tpl.mm13",
-                    "fix.tpl.mm20",
-                    "fix.tpl.mm21",
-                    "fix.tpl.mm22",
-                    "fix.tpl.mm57",
-                    "fix.tpl.mm58",
-                    "fix.tpl.mm59",
-                    "fix.tpl.mm60",
-                    "fix.tpl.mm61",
-                    "fix.tpl.mm63",
+                    "fix.tpl.mm4.png",
+                    "fix.tpl.mm6.png",
+                    "fix.tpl.mm7.png",
+                    "fix.tpl.mm8.png",
+                    "fix.tpl.mm9.png",
+                    "fix.tpl.mm10.png",
+                    "fix.tpl.mm11.png",
+                    "fix.tpl.mm13.png",
+                    "fix.tpl.mm20.png",
+                    "fix.tpl.mm21.png",
+                    "fix.tpl.mm22.png",
+                    "fix.tpl.mm57.png",
+                    "fix.tpl.mm58.png",
+                    "fix.tpl.mm59.png",
+                    "fix.tpl.mm60.png",
+                    "fix.tpl.mm61.png",
+                    "fix.tpl.mm63.png",
                 };
 
-                foreach (string fileName in OutfitTex)
+                for (int i = 0; i < file.Textures.Count; i++)
                 {
-                    //Color OutfitColor = Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256));
-                    ColorSwizzleData Swiz = new ColorSwizzleData(rand);
+                    if (OutfitTex.Contains(file.Textures[i].Name))
+                    {
+                        ColorSwizzleData Swiz = new ColorSwizzleData(rand);
 
-                    Ray3_Common.Recolor_Texture_File(basePath + fileName + ".png", Swiz);
+                        Ray3_Common.Recolor_Texture_File(file.Textures[i].FullName, Swiz);
+                    }
                 }
-
-                Ray3_Common.GCN_ImportTextures(basePath + @"fix.tpl.png");
             }
         }
     }

@@ -9,7 +9,6 @@ using Pure3D;
  * Mod Layers:
  * 1: All .RCF file contents (only replace files)
  * Mod Passes:
- * string -> extraction path
  * god -> LUA scripts (plain text)
  * mid -> roads (not yet implemented)
  * p3d -> Pure3D files
@@ -94,13 +93,15 @@ namespace CrateModLoader.GameSpecific.CrashTTR
             int FileCount = PassCount;
 
             // Mod all RCF
-            UpdateProcessMessage("Installing Mod Crates: Layer 1...", 26);
+            UpdateProcessMessage("Installing Mod Crates: Layer 1...", 25);
+            ModCrates.InstallLayerMods(EnabledModCrates, basePath, 1, true);
             for (int i = 0; i < RCF_Paths.Count; i++)
             {
                 // Only allowing overwrite at the moment
                 ModCrates.InstallLayerMods(EnabledModCrates, RCF_Paths[i].Substring(0, RCF_Paths[i].Length - 4) + @"\", 1, true);
             }
-            
+
+            UpdateProcessMessage("Preparing Mods...", 26);
             List<FileInfo> Files_GOD = new List<FileInfo>();
             List<FileInfo> Files_MID = new List<FileInfo>();
             List<FileInfo> Files_P3D = new List<FileInfo>();

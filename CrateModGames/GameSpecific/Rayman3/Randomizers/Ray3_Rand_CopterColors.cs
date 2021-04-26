@@ -5,39 +5,35 @@ using CrateModGames.GameSpecific.Rayman3;
 
 namespace CrateModLoader.GameSpecific.Rayman3
 {
-    public class Ray3_Rand_CopterColors : ModStruct<string>
+    public class Ray3_Rand_CopterColors : ModStruct<TPL_File>
     {
         public override string Name => Rayman3_Text.Rand_CopterColors;
         public override string Description => Rayman3_Text.Rand_CopterColorsDesc;
 
-        public override void ModPass(string basePath)
+        public override void ModPass(TPL_File file)
         {
-            Random rand = new Random(ModLoaderGlobals.RandomizerSeed);
-
-            if (File.Exists(basePath + @"fix.tpl"))
+            if (file.Name.ToLower().Contains("fix.tpl"))
             {
-                Ray3_Common.GCN_ExportTextures(basePath + @"fix.tpl");
-
-                File.Delete(basePath + @"fix.tpl");
+                Random rand = new Random(ModLoaderGlobals.RandomizerSeed);
 
                 List<string> CopterTex = new List<string>()
                 {
-                    "fix.tpl.mm15",
-                    "fix.tpl.mm16",
-                    "fix.tpl.mm17",
-                    "fix.tpl.mm18",
-                    "fix.tpl.mm19",
+                    "fix.tpl.mm15.png",
+                    "fix.tpl.mm16.png",
+                    "fix.tpl.mm17.png",
+                    "fix.tpl.mm18.png",
+                    "fix.tpl.mm19.png",
                 };
 
-                foreach (string fileName in CopterTex)
+                for (int i = 0; i < file.Textures.Count; i++)
                 {
-                    //Color CopterColor = Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256));
-                    ColorSwizzleData Swiz = new ColorSwizzleData(rand);
+                    if (CopterTex.Contains(file.Textures[i].Name))
+                    {
+                        ColorSwizzleData Swiz = new ColorSwizzleData(rand);
 
-                    Ray3_Common.Recolor_Texture_File(basePath + fileName + ".png", Swiz);
+                        Ray3_Common.Recolor_Texture_File(file.Textures[i].FullName, Swiz);
+                    }
                 }
-
-                Ray3_Common.GCN_ImportTextures(basePath + @"fix.tpl.png");
             }
         }
     }

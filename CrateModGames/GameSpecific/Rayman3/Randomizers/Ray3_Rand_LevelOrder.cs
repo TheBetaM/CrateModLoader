@@ -5,7 +5,7 @@ using CrateModGames.GameSpecific.Rayman3;
 
 namespace CrateModLoader.GameSpecific.Rayman3
 {
-    public class Ray3_Rand_LevelOrder : ModStruct<string>
+    public class Ray3_Rand_LevelOrder : ModStruct<Rayman3_GenericMod>
     {
         public override string Name => Rayman3_Text.Rand_LevelOrder;
         public override string Description => Rayman3_Text.Rand_LevelOrderDesc;
@@ -17,9 +17,10 @@ namespace CrateModLoader.GameSpecific.Rayman3
             anyLevels = any;
         }
 
-        public override void ModPass(string basePath)
+        public override void ModPass(Rayman3_GenericMod mod)
         {
-            ConsoleMode console = ConsoleMode.GCN; // to fix (meant to be ConsolePipeline.Metadata.Console)
+            string basePath = mod.mainPath;
+            ConsoleMode console = mod.console;
             Random randState = new Random(ModLoaderGlobals.RandomizerSeed);
             int minLevel = 1;
             int maxLevel = 46; //46

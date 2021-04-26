@@ -5,20 +5,18 @@ using CrateModGames.GameSpecific.Rayman3;
 
 namespace CrateModLoader.GameSpecific.Rayman3
 {
-    public class Ray3_Rand_OutfitVisuals : ModStruct<string>
+    public class Ray3_Rand_OutfitVisuals : ModStruct<TPL_File>
     {
         public override string Name => Rayman3_Text.Rand_OutfitVisuals;
         public override string Description => Rayman3_Text.Rand_OutfitVisualsDesc;
 
-        public override void ModPass(string basePath)
+        public override void ModPass(TPL_File file)
         {
-            Random randState = new Random(ModLoaderGlobals.RandomizerSeed);
 
-            if (File.Exists(basePath + @"fix.tpl"))
+            if (file.Name.ToLower().Contains("fix.tpl"))
             {
-                Ray3_Common.GCN_ExportTextures(basePath + @"fix.tpl");
-
-                File.Delete(basePath + @"fix.tpl");
+                Random randState = new Random(ModLoaderGlobals.RandomizerSeed);
+                string basePath = file.FolderName;
 
                 //Shuffle outfit textures
                 string[] outfitFiles = new string[] { "fix.tpl.mm7.png", "fix.tpl.mm8.png", "fix.tpl.mm9.png", "fix.tpl.mm10.png", "fix.tpl.mm11.png" };
@@ -48,8 +46,6 @@ namespace CrateModLoader.GameSpecific.Rayman3
                     File.Move(basePath + "copter" + RandList[targetpos] + ".png", basePath + copterFiles[i]);
                     RandList.RemoveAt(targetpos);
                 }
-
-                Ray3_Common.GCN_ImportTextures(basePath + @"fix.tpl.png");
             }
         }
     }

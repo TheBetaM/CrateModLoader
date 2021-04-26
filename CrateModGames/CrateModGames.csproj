@@ -381,6 +381,7 @@
     <Compile Include="GameSpecific\CrashTWOC\Common\TWOC_File_CRT.cs" />
     <Compile Include="GameSpecific\CrashTWOC\Common\TWOC_File_WMP.cs" />
     <Compile Include="GameSpecific\Rayman3\Common\Ray3_Common.cs" />
+    <Compile Include="GameSpecific\Rayman3\Common\TPL_File.cs" />
     <Compile Include="GameSpecific\Rayman3\Game_Rayman3.cs" />
     <Compile Include="GameSpecific\Rayman3\Modder_Rayman3.cs" />
     <Compile Include="GameSpecific\Rayman3\Mods\Ray3_RemoveIntroVideos.cs" />

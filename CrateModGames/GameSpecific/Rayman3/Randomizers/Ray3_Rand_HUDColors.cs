@@ -5,104 +5,101 @@ using CrateModGames.GameSpecific.Rayman3;
 
 namespace CrateModLoader.GameSpecific.Rayman3
 {
-    public class Ray3_Rand_HUDColors : ModStruct<string>
+    public class Ray3_Rand_HUDColors : ModStruct<TPL_File>
     {
         public override string Name => Rayman3_Text.Rand_HUDColors;
         public override string Description => Rayman3_Text.Rand_HUDColorsDesc;
 
-        public override void ModPass(string basePath)
+        private Random rand;
+
+        public override void BeforeModPass()
         {
-            Random rand = new Random(ModLoaderGlobals.RandomizerSeed);
+            rand = new Random(ModLoaderGlobals.RandomizerSeed);
+        }
 
-            if (File.Exists(basePath + @"fix.tpl"))
+        public override void ModPass(TPL_File file)
+        {
+
+            if (file.Name.ToLower().Contains("fix.tpl"))
             {
-                Ray3_Common.GCN_ExportTextures(basePath + @"fix.tpl");
-
-                File.Delete(basePath + @"fix.tpl");
 
                 List<List<string>> HUDTex = new List<List<string>>()
                 {
                     new List<string>() {
-                        "fix.tpl.mm27",
+                        "fix.tpl.mm27.png",
                     },
                     new List<string>() {
-                        "fix.tpl.mm29",
+                        "fix.tpl.mm29.png",
                     },
                     new List<string>() {
-                        "fix.tpl.mm39",
-                        "fix.tpl.mm40",
-                        "fix.tpl.mm41",
-                        "fix.tpl.mm42",
+                        "fix.tpl.mm39.png",
+                        "fix.tpl.mm40.png",
+                        "fix.tpl.mm41.png",
+                        "fix.tpl.mm42.png",
                     },
                     new List<string>() {
-                        "fix.tpl.mm43",
+                        "fix.tpl.mm43.png",
                     },
                     new List<string>() {
-                        "fix.tpl.mm47",
+                        "fix.tpl.mm47.png",
                     },
                     new List<string>() {
-                        "fix.tpl.mm46",
-                        "fix.tpl.mm49",
-                        "fix.tpl.mm53",
-                        "fix.tpl.mm54",
-                        "fix.tpl.mm55",
+                        "fix.tpl.mm46.png",
+                        "fix.tpl.mm49.png",
+                        "fix.tpl.mm53.png",
+                        "fix.tpl.mm54.png",
+                        "fix.tpl.mm55.png",
                     },
                     new List<string>() {
-                        "fix.tpl.mm56",
+                        "fix.tpl.mm56.png",
                     },
                     new List<string>() {
-                        "fix.tpl.mm71",
+                        "fix.tpl.mm71.png",
                     },
                     new List<string>() {
-                        "fix.tpl.mm72",
-                        "fix.tpl.mm73",
-                        "fix.tpl.mm74",
+                        "fix.tpl.mm72.png",
+                        "fix.tpl.mm73.png",
+                        "fix.tpl.mm74.png",
                     },
                 };
-
+                List<ColorSwizzleData> SwizData = new List<ColorSwizzleData>();
                 for (int i = 0; i < HUDTex.Count; i++)
                 {
-                    //Color targetColor = Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256));
-                    ColorSwizzleData Swiz = new ColorSwizzleData(rand);
-
-                    for (int t = 0; t < HUDTex[i].Count; t++)
-                    {
-                        Ray3_Common.Recolor_Texture_File(basePath + HUDTex[i][t] + ".png", Swiz);
-                    }
+                    SwizData.Add(new ColorSwizzleData(rand));
                 }
 
-                Ray3_Common.GCN_ImportTextures(basePath + @"fix.tpl.png");
-            }
-
-            string lsbinpath = Ray3_Common.ExtPath + @"LSBIN\";
-            if (File.Exists(lsbinpath + @"lodmeca.tpl"))
-            {
-                Ray3_Common.GCN_ExportTextures(lsbinpath + @"lodmeca.tpl");
-                File.Delete(lsbinpath + @"lodmeca.tpl");
-
-                //Color GearColor = Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256));
-                ColorSwizzleData Swiz = new ColorSwizzleData(rand);
-
-                Ray3_Common.Recolor_Texture_File(lsbinpath + @"lodmeca.tpl.png", Swiz);
-
-                Ray3_Common.GCN_ImportTextures(lsbinpath + @"lodmeca.tpl.png");
-            }
-            if (File.Exists(lsbinpath + @"lodps2_01.tpl"))
-            {
-                for (int i = 1; i < 9; i++)
+                for (int i = 0; i < file.Textures.Count; i++)
                 {
-                    //Color LoadColor = Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256));
-                    ColorSwizzleData Swiz = new ColorSwizzleData(rand);
+                    for (int x = 0; x < HUDTex.Count; x++)
+                    {
+                        if (HUDTex[x].Contains(file.Textures[i].Name))
+                        {
+                            Ray3_Common.Recolor_Texture_File(file.Textures[i].FullName, SwizData[x]);
+                        }
+                    }
+                }
+            }
 
-                    string filePath = lsbinpath + @"lodps2_0" + i + ".tpl";
-                    string pngPath = lsbinpath + @"lodps2_0" + i + ".tpl.png";
-
-                    Ray3_Common.GCN_ExportTextures(filePath);
-                    File.Delete(filePath);
-
-                    Ray3_Common.Recolor_Texture_File(pngPath, Swiz);
-
-                    Ray3_Common.GCN_ImportTextures(pngPath);
+            if (file.Name.ToLower().Contains("lodmeca.tpl"))
+            {
+                for (int i = 0; i < file.Textures.Count; i++)
+                {
+                    if (file.Textures[i].Name.Contains("lodmeca.tpl.png"))
+                    {
+                        ColorSwizzleData Swiz = new ColorSwizzleData(rand);
+                        Ray3_Common.Recolor_Texture_File(file.Textures[i].FullName, Swiz);
+                    }
+                }
+            }
+            if (file.Name.ToLower().Contains("lodps2_"))
+            {
+                for (int i = 0; i < file.Textures.Count; i++)
+                {
+                    if (file.Textures[i].Name.Contains("lodps2_"))
+                    {
+                        ColorSwizzleData Swiz = new ColorSwizzleData(rand);
+                        Ray3_Common.Recolor_Texture_File(file.Textures[i].FullName, Swiz);
+                    }
                 }
             }
         }
