@@ -48,6 +48,9 @@ Crash of the Titans
 - New feature: Randomize Cutscene Costumes
 - Crate Mod Loader info is now displayed ingame. (Credits)
 
+Crash Mind Over Mutant
+- New feature: Randomize Costume Visuals  
+
 1.3.0
 
 General

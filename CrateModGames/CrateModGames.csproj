@@ -143,7 +143,10 @@
     <Compile Include="GameSpecific\CrashMoM\Game_CrashMoM.cs" />
     <Compile Include="GameSpecific\CrashMoM\Modder_MoM.cs" />
     <Compile Include="GameSpecific\CrashMoM\Mods\MoM_Metadata.cs" />
+    <Compile Include="GameSpecific\CrashMoM\Mods\MoM_TestMod.cs" />
     <Compile Include="GameSpecific\CrashMoM\Properties\MoM_Props_Main.cs" />
+    <Compile Include="GameSpecific\CrashMoM\Randomizers\MoM_Rand_CostumeVisuals.cs" />
+    <Compile Include="GameSpecific\CrashMoM\Randomizers\MoM_Rand_CutsceneCostumes.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\Common\CNK_Common.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\Common\CSV_Table.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\Game_CrashNK.cs" />
@@ -471,7 +474,6 @@
     <Folder Include="GameSpecific\CrashBash\Mods\" />
     <Folder Include="GameSpecific\CrashBash\Properties\" />
     <Folder Include="GameSpecific\CrashBash\Randomizers\" />
-    <Folder Include="GameSpecific\CrashMoM\Randomizers\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

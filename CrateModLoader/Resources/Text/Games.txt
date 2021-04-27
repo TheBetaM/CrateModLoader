@@ -207,4 +207,5 @@ Mod abbreviation: CrashMOM
 Mod layers: 1 - Default.RCF contents (only replace files)
 API by BetaM and NeoKesha.  
 Features:    
+- Randomize Costume Visuals  
 - Version and seed visible in the Credits screen  
