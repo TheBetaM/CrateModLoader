@@ -24,7 +24,8 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
         public static ModPropOption Option_Rand_IcyTracks = new ModPropOption(new CTR_Rand_IcyTracks(true));
         public static ModPropOption Option_All_IcyTracks = new ModPropOption(new CTR_Rand_IcyTracks(false), "All Tracks Have Ice Physics", "") { Hidden = true, }; // not needed
         public static ModPropOption Option_OffroadDead = new ModPropOption(new CTR_OffroadDead(false));
-        public static ModPropOption Option_DisableWeather = new ModPropOption(new CTR_DisableWeather());
+        public static ModPropOption Option_DisableWeather = new ModPropOption(new CTR_DisableWeather()) { Hidden = true, };
+        public static ModPropOption Option_Rand_SurfaceParams = new ModPropOption(new CTR_Rand_SurfaceParams()) { Hidden = true, }; //works but sucks
         public static ModPropOption Option_Rand_WorldPalette = new ModPropOption(new CTR_Rand_WorldPalette());
         public static ModPropOption Option_Rand_InvisibleTracks = new ModPropOption(new CTR_Rand_InvisibleTrack(true)) { Hidden = true, }; // not working yet
         public static ModPropOption Option_All_InvisibleTracks = new ModPropOption(new CTR_Rand_InvisibleTrack(false), "All Tracks Are Invisible", "") { Hidden = true, };  // not working yet

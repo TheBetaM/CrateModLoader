@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.IO;
 using Pure3D;
-//RCF API by NeoKesha
+//RCF API by NeoKesha and BetaM
 //Pure3D API by BetaM (based on https://github.com/handsomematt/Pure3D)
 /* 
  * Mod Layers:

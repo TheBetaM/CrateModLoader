@@ -31,25 +31,19 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing.Mods
         public override void ModPass(Scene lev)
         {
             Random rand = new Random(ModLoaderGlobals.RandomizerSeed);
-            /*
+            
             foreach (PickupHeader pick in lev.pickups)
             {
-                /*
-                if (pick.Event == CTREvent.WarpPad)
-                {
-                    if (pick.Name == "warppad#9")
-                    {
-                        pick.Name = "warppad#3";
-                    }
-                }
                 
-                if (pick.Event == CTREvent.CrateWeapon || pick.Event == CTREvent.CrateFruit || pick.Event == CTREvent.CrateRelic1 || pick.Event == CTREvent.CrateRelic2 || pick.Event == CTREvent.CrateRelic3)
+                //if (pick.Event == CTREvent.WarpPad && pick.Name == "warppad#9")
+                //{       pick.Name = "warppad#3"; }
+                
+                if (pick.Event == CTREvent.CrateWeapon)
                 {
-                    double scale = rand.NextDouble() + 0.5d;
-                    pick.Scale = new Vector4s((short)(pick.Scale.X * scale), (short)(pick.Scale.Y * scale), (short)(pick.Scale.Z * scale), 0);
+                    pick.unk1 = 0xF;
                 }
             }
-            */
+            
             /*
             foreach (Vertex v in lev.verts)
             {

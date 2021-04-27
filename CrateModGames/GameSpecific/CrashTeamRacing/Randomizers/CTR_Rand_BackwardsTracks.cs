@@ -51,7 +51,7 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing.Mods
                     foreach (QuadBlock qb in lev.quads)
                     {
                         if (qb.trackPos != 0xFF)
-                            qb.trackPos = (byte)(0xFE - qb.trackPos);
+                            qb.trackPos = (byte)(maxpos - qb.trackPos);
                     }
 
                     foreach (PickupHeader pick in lev.pickups)

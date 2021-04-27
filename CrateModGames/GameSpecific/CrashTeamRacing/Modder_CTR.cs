@@ -316,6 +316,7 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
         {
             //Console.WriteLine("Editing: " + path);
             bool skip = false;
+            string fileName = file.FullName;
 
             await Task.Run(
             () =>
@@ -323,11 +324,11 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
                 Scene lev = null;
                 try
                 {
-                    lev = Scene.FromFile(file.FullName);
+                    lev = Scene.FromFile(fileName);
                 }
                 catch
                 {
-                    //Console.WriteLine("Failed to load LEV: " + file.FullName);
+                    Console.WriteLine("Failed to load LEV: " + fileName);
                     skip = true;
                 }
 
@@ -344,8 +345,7 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
                             break;
                     }
 
-                    //SaveLEV(lev, file.FullName);
-                    lev.Write(file.FullName);
+                    lev.Write(fileName);
                     lev.Dispose();
                 }
                 lev = null;
@@ -413,54 +413,6 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
 
             ModelPack mpk = ModelPack.FromFile(file.FullName);
             mpk.Extract(file.FullName, CtrVrm.FromFile(vrampath));
-        }
-
-        // From CTRFramework
-        private void SaveLEV(Scene scn, string path)
-        {
-            using (BinaryWriterEx bw = new BinaryWriterEx(File.OpenWrite(path)))
-            {
-
-                bw.Jump(4);
-
-                scn.header.Write(bw);
-
-                bw.Jump(scn.header.ptrRestartPts + 4);
-
-                foreach (Pose pa in scn.restartPts)
-                    pa.Write(bw);
-
-                bw.Jump(scn.header.ptrInstances + 4);
-
-                foreach (PickupHeader ph in scn.pickups)
-                    ph.Write(bw);
-
-
-                bw.Jump(scn.mesh.ptrVertices + 4);
-
-                foreach (Vertex v in scn.verts)
-                    v.Write(bw);
-
-
-                bw.Jump(scn.mesh.ptrQuadBlocks + 4);
-
-                foreach (QuadBlock qb in scn.quads)
-                    qb.Write(bw);
-
-                bw.Jump(scn.header.ptrVcolAnim + 4);
-
-                foreach (VertexAnim vc in scn.vertanims)
-                    vc.Write(bw);
-
-                bw.Jump(scn.mesh.ptrVisData + 4);
-
-                foreach (VisData v in scn.visdata)
-                    v.Write(bw);
-
-                bw.Jump(scn.header.ptrAiNav + 4);
-                scn.nav.Write(bw);
-
-            }
         }
     }
 }

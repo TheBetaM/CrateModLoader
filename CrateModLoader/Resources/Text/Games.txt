@@ -183,6 +183,12 @@ Mod abbreviation: CrashTR
 Mod layers: 1 - BIGFILE.BIG contents
 API by DCxDemo. (https://github.com/DCxDemo/CTR-tools)  
 Features:  
+- All Wooden Crates Are Wumpa Crates  
+- Randomize Crate Effects  
+- Random/All Tracks Have Moon Gravity  
+- Random Tracks Have Ice Physics  
+- Driving Offroad Respawns The Driver  
+- Randomize World Palette  
 - Version and seed visible in the Loading screen (English only)  
   
 Crash of the Titans
@@ -191,7 +197,9 @@ Mod abbreviation: CrashTitans
 Mod layers: 1 - Default.RCF contents (only replace files)
 API by BetaM and NeoKesha.   
 Features:   
-- Test mod: Increased camera FOV in Episode 1
+- Randomize Costume Visuals  
+- Randomize Cutscene Costumes  
+- Version and seed visible in the Credits screen  
   
 Crash Mind Over Mutant
 Supported: All PS2 versions (.ISO format), All Wii versions (.ISO/.WBFS formats), All PSP versions (.ISO format), All 360 versions (.ISO format)   
