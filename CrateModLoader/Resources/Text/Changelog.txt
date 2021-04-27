@@ -10,9 +10,6 @@ General
 Crash Twinsanity
 - Improved feature compatibility with modded levels in Mod Crates
 
-CTR: Crash Team Racing
-- Updated CTR Framework API (Mod Crates will need to be updated)
-
 Crash Bandicoot
 - New feature: Enable Unused Enemies
 - New feature: Randomize Level Order
@@ -34,6 +31,16 @@ Crash Bandicoot: WARPED
 - New feature: Randomize Music Tracks
 - New feature: Invisible World
 - Randomize World Textures: Fixed not being able to build using this feature
+
+CTR: Crash Team Racing
+- New feature: All Wooden Crates Are Wumpa Crates
+- New feature: Randomize Crate Effects
+- New feature: Random/All Tracks Have Moon Gravity
+- New feature: Random Tracks Have Ice Physics
+- New feature: Driving Offroad Is Prohibited
+- New feature: Disable Weather Effects
+- New feature: Randomize World Palette
+- Updated CTR Framework API (Mod Crates will need to be updated)
 
 1.3.0
 

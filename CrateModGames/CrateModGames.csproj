@@ -173,13 +173,25 @@
     <Compile Include="GameSpecific\CrashNitroKart\Randomizers\CNK_Rand_PowerupDistribution.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\Randomizers\CNK_Rand_PowerupEffects.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\Randomizers\CNK_Rand_SurfaceParams.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Common\CTR_Common.cs" />
     <Compile Include="GameSpecific\CrashTeamRacing\Game_CrashTR.cs" />
     <Compile Include="GameSpecific\CrashTeamRacing\Modder_CTR.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Mods\CTR_DisableWeather.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Mods\CTR_Lev_TestMod.cs" />
     <Compile Include="GameSpecific\CrashTeamRacing\Mods\CTR_Metadata.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Mods\CTR_NoWeaponCrates.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Mods\CTR_OffroadDead.cs" />
     <Compile Include="GameSpecific\CrashTeamRacing\Properties\CTR_Props_Main.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Randomizers\CTR_Rand_CrateEffects.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Randomizers\CTR_Rand_IcyTracks.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Randomizers\CTR_Rand_InvisibleTrack.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Randomizers\CTR_Rand_MoonGravity.cs" />
     <Compile Include="GameSpecific\CrashTeamRacing\Randomizers\CTR_Rand_PantsColor.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Randomizers\CTR_Rand_PickupLocations.cs" />
     <Compile Include="GameSpecific\CrashTeamRacing\Randomizers\CTR_Rand_Tracks.cs" />
     <Compile Include="GameSpecific\CrashTeamRacing\Randomizers\CTR_Rand_Tracks101.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Randomizers\CTR_Rand_WorldPalette.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Randomizers\CTR_Rand_BackwardsTracks.cs" />
     <Compile Include="GameSpecific\CrashTitans\Game_CrashTitans.cs" />
     <Compile Include="GameSpecific\CrashTitans\Modder_Titans.cs" />
     <Compile Include="GameSpecific\CrashTitans\Mods\Titans_TestMod.cs" />
@@ -456,7 +468,6 @@
     <Folder Include="GameSpecific\CrashBash\Properties\" />
     <Folder Include="GameSpecific\CrashBash\Randomizers\" />
     <Folder Include="GameSpecific\CrashMoM\Randomizers\" />
-    <Folder Include="GameSpecific\CrashTeamRacing\Common\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

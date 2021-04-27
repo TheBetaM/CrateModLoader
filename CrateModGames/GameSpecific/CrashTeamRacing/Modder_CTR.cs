@@ -66,6 +66,7 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
             {
                 BigFile big = BigFile.FromFile(Path.Combine(basePath, path_Bigfile));
                 big.Extract(path_extr);
+                big = null;
             }
             catch (Exception ex)
             {
@@ -78,6 +79,8 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
             bool Editing_LEV = CheckModsForLEV();
             bool Editing_CTR = CheckModsForCTR();
 
+            //DirectoryInfo cdi = new DirectoryInfo(path_extr);
+            //Recursive_ExtractMPKs(cdi, path_extr);
             List<FileInfo> Files_LNG = new List<FileInfo>();
             List<FileInfo> Files_CTR = new List<FileInfo>();
             List<FileInfo> Files_LEV = new List<FileInfo>();
@@ -142,15 +145,45 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
                         editTaskList.Add(Edit_CTR(File));
                     }
                 }
-                if (Editing_LEV)
-                {
-                    foreach (FileInfo File in Files_LEV)
-                    {
-                        editTaskList.Add(Edit_LEV(File));
-                    }
-                }
 
                 await Task.WhenAll(editTaskList);
+                editTaskList.Clear();
+
+                if (Editing_LEV)
+                {
+                    // massive memory hogs
+                    int LEV_Throttle = Files_LEV.Count / 5;
+                    for (int i = 0; i < LEV_Throttle; i++)
+                    {
+                        editTaskList.Add(Edit_LEV(Files_LEV[i]));
+                    }
+                    await Task.WhenAll(editTaskList);
+                    editTaskList.Clear();
+                    for (int i = LEV_Throttle; i < LEV_Throttle * 2; i++)
+                    {
+                        editTaskList.Add(Edit_LEV(Files_LEV[i]));
+                    }
+                    await Task.WhenAll(editTaskList);
+                    editTaskList.Clear();
+                    for (int i = LEV_Throttle * 2; i < LEV_Throttle * 3; i++)
+                    {
+                        editTaskList.Add(Edit_LEV(Files_LEV[i]));
+                    }
+                    await Task.WhenAll(editTaskList);
+                    editTaskList.Clear();
+                    for (int i = LEV_Throttle * 3; i < LEV_Throttle * 4; i++)
+                    {
+                        editTaskList.Add(Edit_LEV(Files_LEV[i]));
+                    }
+                    await Task.WhenAll(editTaskList);
+                    editTaskList.Clear();
+                    for (int i = LEV_Throttle * 4; i < Files_LEV.Count; i++)
+                    {
+                        editTaskList.Add(Edit_LEV(Files_LEV[i]));
+                    }
+                    await Task.WhenAll(editTaskList);
+                    editTaskList.Clear();
+                }
 
                 CurrentPass++;
                 PassBusy = false;
@@ -166,6 +199,7 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
             {
                 BigFile big = BigFile.FromFile(Path.Combine(basePath, path_txt));
                 big.Save(Path.Combine(basePath, path_Bigfile));
+                big = null;
             }
             catch (Exception ex)
             {
@@ -210,6 +244,18 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
                     Files_LEV.Add(file);
                 if (file.Extension.ToLower() == ".ctr")
                     Files_CTR.Add(file);
+            }
+        }
+        void Recursive_ExtractMPKs(DirectoryInfo di, string bigpath)
+        {
+            foreach (DirectoryInfo dir in di.EnumerateDirectories())
+            {
+                Recursive_ExtractMPKs(dir, bigpath);
+            }
+            foreach (FileInfo file in di.EnumerateFiles())
+            {
+                if (file.Extension.ToLower() == ".mpk")
+                    Extract_MPK(file, bigpath);
             }
         }
 
@@ -258,7 +304,7 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
                 }
 
                 lng.Save(file.FullName);
-
+                lng = null;
             }
             );
 
@@ -281,6 +327,7 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
                 }
                 catch
                 {
+                    //Console.WriteLine("Failed to load LEV: " + file.FullName);
                     skip = true;
                 }
 
@@ -297,9 +344,11 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
                             break;
                     }
 
-                    SaveLEV(lev, file.FullName);
+                    //SaveLEV(lev, file.FullName);
+                    lev.Write(file.FullName);
+                    lev.Dispose();
                 }
-
+                lev = null;
             }
             );
 
@@ -341,12 +390,29 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
 
                     model.Save(file.FullName.Substring(0, file.FullName.Length - file.Name.Length), file.Name);
                 }
-
+                model = null;
             }
             );
 
             PassIterator++;
             PassPercent = (int)((PassIterator / (float)PassCount) * PassPercentMod) + PassPercentAdd;
+        }
+
+        private void Extract_MPK(FileInfo file, string bigPath)
+        {
+            string vrampath = Path.ChangeExtension(file.FullName, "vrm");
+            if (!File.Exists(vrampath))
+            {
+                vrampath = bigPath + @"packs\shared.vrm";
+                if (!File.Exists(vrampath))
+                {
+                    Console.WriteLine("Warning! No vram file found.\r\nPlease put shared.vrm file with mpk you want to extract.");
+                    vrampath = "";
+                }
+            }
+
+            ModelPack mpk = ModelPack.FromFile(file.FullName);
+            mpk.Extract(file.FullName, CtrVrm.FromFile(vrampath));
         }
 
         // From CTRFramework
