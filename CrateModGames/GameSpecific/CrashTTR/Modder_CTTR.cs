@@ -42,7 +42,6 @@ namespace CrateModLoader.GameSpecific.CrashTTR
             }
             PassCount = Files_RCF.Count;
             PassIterator = 0;
-            PassPercent = 0;
 
             UpdateProcessMessage("Extracting all RCF archives...", 5);
             PassBusy = true;

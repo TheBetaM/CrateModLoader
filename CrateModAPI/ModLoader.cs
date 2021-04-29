@@ -498,7 +498,8 @@ namespace CrateModLoader
                 {
                     if (Modder.ProcessBusy)
                     {
-                        msg += string.Format($"({Modder.PassPercent}%) {Modder.ProcessMessage}");
+                        //msg += string.Format($"({Modder.PassPercent}%) {Modder.ProcessMessage}");
+                        msg += string.Format($" {Modder.ProcessMessage}");
                     }
                     if (Modder.PassBusy)
                     {

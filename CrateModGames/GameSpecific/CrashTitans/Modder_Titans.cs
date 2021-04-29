@@ -14,40 +14,19 @@ namespace CrateModLoader.GameSpecific.CrashTitans
 {
     public sealed class Modder_Titans : Modder
     {
-        private bool MainBusy = false;
         private int CurrentPass = 0;
         private float PassPercentMod = 49f;
         private int PassPercentAdd = 1;
 
-        public Modder_Titans() { }
-
         public override void StartModProcess()
         {
             ProcessBusy = true;
-
-            AsyncStart();
-        }
-
-        public async void AsyncStart()
-        {
-            UpdateProcessMessage("Starting...", 0);
-
-            // Mod files
             ModProcess();
-
-            while (MainBusy || PassBusy)
-            {
-                await Task.Delay(100);
-            }
-
-            ProcessBusy = false;
         }
 
         public async void ModProcess()
         {
-            MainBusy = true;
             PassIterator = 0;
-            PassPercent = 0;
             PassCount = 1;
 
             string path_RCF_frontend = "DEFAULT.RCF";
@@ -83,14 +62,13 @@ namespace CrateModLoader.GameSpecific.CrashTitans
             UpdateProcessMessage("Packing DEFAULT.RCF...", 75);
 
             PassIterator = 0;
-            PassPercent = 50;
             PassCount = FileCount;
             PassBusy = true;
             await rcf.PackAsync(basePath + path_RCF_frontend, path_extr);
             PassBusy = false;
 
 
-            MainBusy = false;
+            ProcessBusy = false;
         }
 
         

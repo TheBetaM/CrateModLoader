@@ -32,11 +32,6 @@ namespace CrateModLoader.GameSpecific.CrashTS
         public override bool CanPreloadGame => true;
         public override List<ConsoleMode> PreloadConsoles => new List<ConsoleMode>() { ConsoleMode.PS2, };
 
-        public string bdPath = "";
-        internal string extensionMod = "2";
-        internal TwinsFile.FileType rmType = TwinsFile.FileType.RM2;
-        internal TwinsFile.FileType smType = TwinsFile.FileType.SM2;
-
         public override void StartModProcess()
         {
             ProcessBusy = true;
@@ -45,12 +40,42 @@ namespace CrateModLoader.GameSpecific.CrashTS
 
         private async void ModProcess()
         {
+            string bdPath = bdPath = ConsolePipeline.ExtractedPath;
+            TwinsFile.FileType rmType = TwinsFile.FileType.RM2;
+            TwinsFile.FileType smType = TwinsFile.FileType.SM2;
+
+            #region Extract BD
             // Extract BD (PS2 only)
             UpdateProcessMessage("Extracting CRASH.BD...", 0);
-            SetupBD();
+            if (ConsolePipeline.Metadata.Console == ConsoleMode.PS2)
+            {
+                bdPath = System.IO.Path.Combine(ConsolePipeline.ExtractedPath, @"cml_extr\");
+                rmType = TwinsFile.FileType.RM2;
+                smType = TwinsFile.FileType.SM2;
+
+                Directory.CreateDirectory(bdPath);
+
+                PassIterator = 0;
+                PassCount = 0;
+                PassBusy = true;
+                BD_Archive Archive = new BD_Archive();
+                await Archive.ExtractAsync(this, System.IO.Path.Combine(ConsolePipeline.ExtractedPath, "CRASH6/CRASH.BD"), bdPath);
+                PassBusy = false;
+
+                //BDArchive.ExtractAll(System.IO.Path.Combine(ConsolePipeline.ExtractedPath, "CRASH6/CRASH"), bdPath);
+
+                File.Delete(System.IO.Path.Combine(ConsolePipeline.ExtractedPath, "CRASH6/CRASH.BD"));
+                File.Delete(System.IO.Path.Combine(ConsolePipeline.ExtractedPath, "CRASH6/CRASH.BH"));
+            }
+            else
+            {
+                rmType = TwinsFile.FileType.RMX;
+                smType = TwinsFile.FileType.SMX;
+            }
+            #endregion
 
             UpdateProcessMessage("Patching executable...", 4);
-            PatchEXE(ConsolePipeline.Metadata.Console, GameRegion.Region);
+            PatchEXE(bdPath, ConsolePipeline.Metadata.Console, GameRegion.Region);
 
             UpdateProcessMessage("Installing Mod Crates: Layer 1...", 5);
             ModCrates.InstallLayerMods(EnabledModCrates, bdPath, 1);
@@ -79,52 +104,20 @@ namespace CrateModLoader.GameSpecific.CrashTS
             UpdateProcessMessage("Modding textures...", 94);
             Twins_Data_Textures.Textures_Mod(bdPath, GameRegion.Region);
 
+            #region Build BD
             // Build BD
             UpdateProcessMessage("Building CRASH.BD...", 95);
-            BuildBD();
 
-            ProcessBusy = false;
-        }
-
-        public override void StartPreload()
-        {
-            SetupBD();
             if (ConsolePipeline.Metadata.Console == ConsoleMode.PS2)
             {
-                Twins_Data_Textures.Textures_Preload(bdPath, GameRegion.Region);
-            }
-        }
+                PassIterator = 0;
+                PassCount = 0;
+                PassBusy = true;
+                BD_Archive Archive = new BD_Archive();
+                await Archive.CompileAsync(this, System.IO.Path.Combine(ConsolePipeline.ExtractedPath, "CRASH6/CRASH.BD"), bdPath);
+                PassBusy = false;
 
-        void SetupBD()
-        {
-            if (ConsolePipeline.Metadata.Console == ConsoleMode.PS2)
-            {
-                bdPath = System.IO.Path.Combine(ConsolePipeline.ExtractedPath,  @"cml_extr\");
-                extensionMod = "2";
-                rmType = TwinsFile.FileType.RM2;
-                smType = TwinsFile.FileType.SM2;
-
-                Directory.CreateDirectory(bdPath);
-
-                BDArchive.ExtractAll(System.IO.Path.Combine(ConsolePipeline.ExtractedPath, "CRASH6/CRASH"), bdPath);
-
-                File.Delete(System.IO.Path.Combine(ConsolePipeline.ExtractedPath, "CRASH6/CRASH.BD"));
-                File.Delete(System.IO.Path.Combine(ConsolePipeline.ExtractedPath, "CRASH6/CRASH.BH"));
-            }
-            else
-            {
-                bdPath = ConsolePipeline.ExtractedPath;
-                extensionMod = "x";
-                rmType = TwinsFile.FileType.RMX;
-                smType = TwinsFile.FileType.SMX;
-            }
-        }
-
-        void BuildBD()
-        {
-            if (ConsolePipeline.Metadata.Console == ConsoleMode.PS2)
-            {
-                BDArchive.CompileAll(System.IO.Path.Combine(ConsolePipeline.ExtractedPath, "CRASH6/CRASH"), bdPath);
+                //BDArchive.CompileAll(System.IO.Path.Combine(ConsolePipeline.ExtractedPath, "CRASH6/CRASH"), bdPath);
 
                 // Get rid of extracted files
                 if (Directory.Exists(bdPath))
@@ -143,9 +136,29 @@ namespace CrateModLoader.GameSpecific.CrashTS
                     Directory.Delete(bdPath);
                 }
             }
+            #endregion
+
+            ProcessBusy = false;
         }
 
-        void PatchEXE(ConsoleMode console, RegionType region)
+        public override void StartPreload()
+        {
+            if (ConsolePipeline.Metadata.Console == ConsoleMode.PS2)
+            {
+                string bdPath = System.IO.Path.Combine(ConsolePipeline.ExtractedPath, @"cml_extr\");
+
+                Directory.CreateDirectory(bdPath);
+
+                BDArchive.ExtractAll(System.IO.Path.Combine(ConsolePipeline.ExtractedPath, "CRASH6/CRASH"), bdPath);
+
+                File.Delete(System.IO.Path.Combine(ConsolePipeline.ExtractedPath, "CRASH6/CRASH.BD"));
+                File.Delete(System.IO.Path.Combine(ConsolePipeline.ExtractedPath, "CRASH6/CRASH.BH"));
+
+                Twins_Data_Textures.Textures_Preload(bdPath, GameRegion.Region);
+            }
+        }
+
+        void PatchEXE(string bdPath, ConsoleMode console, RegionType region)
         {
             string filePath = System.IO.Path.Combine(ConsolePipeline.ExtractedPath, GameRegion.ExecName);
 

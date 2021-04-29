@@ -377,7 +377,7 @@ namespace RadcoreCementFile
             RCF.Close();
 
             meta.PassIterator++;
-            meta.PassPercent = (int)((meta.PassIterator / (float)meta.PassCount) * 20f) + 5;
+            //meta.PassPercent = (int)((meta.PassIterator / (float)meta.PassCount) * 20f) + 5;
         }
 
         /// <summary>
@@ -656,7 +656,7 @@ namespace RadcoreCementFile
             ext.Close();
 
             meta.PassIterator++;
-            meta.PassPercent = (int)((meta.PassIterator / (float)meta.PassCount) * 25f) + 75;
+            //meta.PassPercent = (int)((meta.PassIterator / (float)meta.PassCount) * 25f) + 75;
         }
 
 

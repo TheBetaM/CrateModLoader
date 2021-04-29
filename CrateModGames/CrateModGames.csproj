@@ -209,6 +209,7 @@
     <Compile Include="GameSpecific\CrashTitans\Randomizers\Titans_Rand_CostumeVisuals.cs" />
     <Compile Include="GameSpecific\CrashTitans\Randomizers\Titans_Rand_CutsceneCostumes.cs" />
     <Compile Include="GameSpecific\CrashTitans\Randomizers\Titans_Rand_EpisodeOrder.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\BD_Archive.cs" />
     <Compile Include="GameSpecific\CrashTS\Common\Parser_RM.cs" />
     <Compile Include="GameSpecific\CrashTS\Common\Parser_SM.cs" />
     <Compile Include="GameSpecific\CrashTS\Game_CrashTS.cs" />
@@ -413,6 +414,7 @@
     <Compile Include="GameSpecific\CrashTWOC\Common\TWOC_File_AI.cs" />
     <Compile Include="GameSpecific\CrashTWOC\Common\TWOC_File_CRT.cs" />
     <Compile Include="GameSpecific\CrashTWOC\Common\TWOC_File_WMP.cs" />
+    <Compile Include="GameSpecific\Rayman3\Common\Parser_TPL.cs" />
     <Compile Include="GameSpecific\Rayman3\Common\Ray3_Common.cs" />
     <Compile Include="GameSpecific\Rayman3\Common\TPL_File.cs" />
     <Compile Include="GameSpecific\Rayman3\Game_Rayman3.cs" />
