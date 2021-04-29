@@ -25,6 +25,19 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
                 Table.Add(new List<string>(split));
             }
         }
+        public CSV(string filePath)
+        {
+            string[] csv_lines = File.ReadAllLines(filePath);
+            Name = Path.GetFileName(filePath);
+            FullName = filePath;
+            Table = new List<List<string>>();
+
+            foreach (string line in csv_lines)
+            {
+                string[] split = line.Split(separator);
+                Table.Add(new List<string>(split));
+            }
+        }
 
         public void Write(string path = "")
         {

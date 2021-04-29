@@ -659,4 +659,30 @@ namespace CrateModLoader.GameSpecific.CrashTS
         }
 
     }
+
+    public static class Twins_Common
+    {
+        public static ChunkType ChunkPathToType(string path)
+        {
+            ChunkType type = ChunkType.Invalid;
+
+            for (int i = 0; i < Twins_Data.All_Chunks.Count; i++)
+            {
+                if (path.ToLower().Contains(Twins_Data.All_Chunks[i].Path.ToLower()))
+                {
+                    type = Twins_Data.All_Chunks[i].Chunk;
+                    break;
+                }
+            }
+
+            if (type == ChunkType.Invalid)
+            {
+                Console.WriteLine("invalid Chunk");
+                Console.WriteLine("any chunk path: " + Twins_Data.All_Chunks[0].Path.ToLower());
+                Console.WriteLine("file path: " + path.ToLower());
+            }
+
+            return type;
+        }
+    }
 }

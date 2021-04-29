@@ -66,6 +66,7 @@
     <Compile Include="GameSpecific\Crash1\TrilogyCommon\Mods\CrashTri_Crates_AllBlank.cs" />
     <Compile Include="GameSpecific\Crash1\TrilogyCommon\Mods\CrashTri_Objects_Greyscale.cs" />
     <Compile Include="GameSpecific\Crash1\TrilogyCommon\Mods\CrashTri_Objects_Untextured.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Parser_NSF.cs" />
     <Compile Include="GameSpecific\Crash1\TrilogyCommon\Randomizers\CrashTri_Rand_AshedCrates.cs" />
     <Compile Include="GameSpecific\Crash1\TrilogyCommon\Randomizers\CrashTri_Rand_Audio.cs" />
     <Compile Include="GameSpecific\Crash1\TrilogyCommon\Randomizers\CrashTri_Rand_BoxCounter.cs" />
@@ -149,6 +150,7 @@
     <Compile Include="GameSpecific\CrashMoM\Randomizers\MoM_Rand_CutsceneCostumes.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\Common\CNK_Common.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\Common\CSV_Table.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\Common\Parser_CSV.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\Game_CrashNK.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\Mods\CNK_DisableFadeout.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\Mods\CNK_DisablePopups.cs" />
@@ -177,6 +179,9 @@
     <Compile Include="GameSpecific\CrashNitroKart\Randomizers\CNK_Rand_PowerupEffects.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\Randomizers\CNK_Rand_SurfaceParams.cs" />
     <Compile Include="GameSpecific\CrashTeamRacing\Common\CTR_Common.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Common\Parser_CTR.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Common\Parser_LEV.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Common\Parser_LNG.cs" />
     <Compile Include="GameSpecific\CrashTeamRacing\Game_CrashTR.cs" />
     <Compile Include="GameSpecific\CrashTeamRacing\Modder_CTR.cs" />
     <Compile Include="GameSpecific\CrashTeamRacing\Mods\CTR_DisableWeather.cs" />
@@ -204,6 +209,8 @@
     <Compile Include="GameSpecific\CrashTitans\Randomizers\Titans_Rand_CostumeVisuals.cs" />
     <Compile Include="GameSpecific\CrashTitans\Randomizers\Titans_Rand_CutsceneCostumes.cs" />
     <Compile Include="GameSpecific\CrashTitans\Randomizers\Titans_Rand_EpisodeOrder.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\Parser_RM.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\Parser_SM.cs" />
     <Compile Include="GameSpecific\CrashTS\Game_CrashTS.cs" />
     <Compile Include="GameSpecific\CrashTS\Modder_Twins.cs" />
     <Compile Include="GameSpecific\CrashTS\Mods\TS_ChangeCreditsChunk.cs" />
@@ -252,6 +259,10 @@
     <Compile Include="GameSpecific\CrashTTR\Common\CTTR_Data.cs" />
     <Compile Include="GameSpecific\CrashTTR\Common\CTTR_Data_Text.cs" />
     <Compile Include="GameSpecific\CrashTTR\Common\GOD_File.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Common\Parser_FIG.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Common\Parser_GOD.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Common\Parser_MID.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Common\Parser_P3D.cs" />
     <Compile Include="GameSpecific\CrashTTR\CTTR_Text.Designer.cs">
       <DependentUpon>CTTR_Text.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -384,6 +395,9 @@
     <Compile Include="GameSpecific\CrashTTR\Randomizers\CTTR_Rand_PlatformingCharacter.cs" />
     <Compile Include="GameSpecific\CrashTTR\Randomizers\CTTR_Rand_RaceLaps.cs" />
     <Compile Include="GameSpecific\CrashTTR\Randomizers\CTTR_Rand_TrackEntrances.cs" />
+    <Compile Include="GameSpecific\CrashTWOC\Common\Parser_AI.cs" />
+    <Compile Include="GameSpecific\CrashTWOC\Common\Parser_CRT.cs" />
+    <Compile Include="GameSpecific\CrashTWOC\Common\Parser_WMP.cs" />
     <Compile Include="GameSpecific\CrashTWOC\Common\TWOC_Common.cs" />
     <Compile Include="GameSpecific\CrashTWOC\Game_CrashTWOC.cs" />
     <Compile Include="GameSpecific\CrashTWOC\Modder_TWOC.cs" />

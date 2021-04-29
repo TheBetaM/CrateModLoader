@@ -11,11 +11,11 @@ namespace CrateModLoader.GameSpecific.CrashTTR
         public string FullName;
         public List<LUA_Object> Objects;
 
-        public GOD_File(FileInfo file)
+        public GOD_File(string file)
         {
-            List<string> lines = new List<string>(File.ReadAllLines(file.FullName));
-            Name = file.Name;
-            FullName = file.FullName;
+            List<string> lines = new List<string>(File.ReadAllLines(file));
+            Name = Path.GetFileName(file);
+            FullName = file;
             Objects = new List<LUA_Object>();
 
             for (int i = 0; i < lines.Count; i++)

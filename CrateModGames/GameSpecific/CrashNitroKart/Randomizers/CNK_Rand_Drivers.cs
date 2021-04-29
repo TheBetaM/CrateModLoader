@@ -12,13 +12,9 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
 
         private Random randState;
 
-        public override void BeforeModPass()
-        {
-            randState = new Random(ModLoaderGlobals.RandomizerSeed);
-        }
-
         public override void ModPass(CNK_GenericMod mod)
         {
+            randState = new Random(ModLoaderGlobals.RandomizerSeed);
             string path_gob_extracted = mod.extrPath;
             ConsoleMode console = mod.console;
 

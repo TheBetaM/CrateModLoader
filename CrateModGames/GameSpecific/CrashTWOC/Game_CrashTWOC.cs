@@ -10,7 +10,7 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
         public override List<ConsoleMode> Consoles => new List<ConsoleMode>
                 {
                     ConsoleMode.PS2,
-                    //ConsoleMode.GCN,
+                    //ConsoleMode.GCN, // rebuilding the GC version makes it not boot for some reason...
                     //ConsoleMode.XBOX,
                 };
         public override Type ModderClass => typeof(Modder_TWOC);

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Threading.Tasks;
 //CNK Tools/API by BetaM, ManDude and eezstreet.
 /* 
  * Mod Layers:
@@ -29,39 +28,14 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
     {
         public override bool CanPreloadGame => true;
 
-        private int CurrentPass = 0;
-        private float PassPercentMod = 39f;
-        private int PassPercentAdd = 10;
-        private bool EditingRM = false;
-        private bool EditingSM = false;
-        private bool MainBusy = false;
-
-        public Modder_CNK() { }
-
         public override void StartModProcess()
         {
             ProcessBusy = true;
-
-            AsyncStart();
-        }
-
-        public async void AsyncStart()
-        {
-            // Mod files
             ModProcess();
-
-            while (MainBusy || PassBusy)
-            {
-                await Task.Delay(100);
-            }
-
-            ProcessBusy = false;
         }
 
         public async void ModProcess()
         {
-            MainBusy = true;
-
             string path_gob_extracted = "";
             string relativePath = ConsolePipeline.ProcessPath;
             string extrPath = ConsolePipeline.ExtractedPath;
@@ -128,64 +102,13 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
                 }
             }
 
-            List<FileInfo> Files = new List<FileInfo>();
-            DirectoryInfo adi = new DirectoryInfo(path_gob_extracted);
-            Recursive_LoadCSV(adi, ref Files);
-            PassCount = Files.Count;
-
             //Generic mods
             CNK_GenericMod generic = new CNK_GenericMod(path_gob_extracted, ConsolePipeline.ExtractedPath, ConsolePipeline.Metadata.Console);
-            BeforeModPass();
             StartModPass(generic);
 
-            bool NeedsCache = NeedsCachePass();
-            CurrentPass = 0;
-            if (!NeedsCache)
-            {
-                PassPercentMod = 83f;
-                CurrentPass++;
-            }
-
-            while (CurrentPass < 2)
-            {
-                PassIterator = 0;
-                PassBusy = true;
-                if (CurrentPass == 0)
-                {
-                    PassPercentMod = 39f;
-                    PassPercentAdd = 10;
-                    UpdateProcessMessage("Cache Pass", 10);
-                    BeforeCachePass();
-                }
-                else if (CurrentPass == 1)
-                {
-                    if (NeedsCache)
-                    {
-                        PassPercentMod = 43f;
-                        PassPercentAdd = 50;
-                        UpdateProcessMessage("Mod Pass", 50);
-                    }
-                    else
-                    {
-                        PassPercentMod = 83f;
-                        UpdateProcessMessage("Mod Pass", 10);
-                    }
-
-                    BeforeModPass();
-                }
-
-                IList<Task> editTaskList = new List<Task>();
-
-                foreach (FileInfo file in Files)
-                {
-                    editTaskList.Add(EditCSV(file));
-                }
-
-                await Task.WhenAll(editTaskList);
-
-                CurrentPass++;
-                PassBusy = false;
-            }
+            //Mods
+            FindFiles(new Parser_CSV(this));
+            await StartNewPass();
 
             UpdateProcessMessage("Handling custom textures...", 95);
 
@@ -234,50 +157,7 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
 
             }
 
-            MainBusy = false;
-        }
-
-        void Recursive_LoadCSV(DirectoryInfo di, ref List<FileInfo> Files)
-        {
-            foreach (DirectoryInfo dir in di.EnumerateDirectories())
-            {
-                Recursive_LoadCSV(dir, ref Files);
-            }
-            foreach (FileInfo file in di.EnumerateFiles())
-            {
-                if (file.Extension.ToLower() == ".csv")
-                {
-                    Files.Add(file);
-                }
-            }
-        }
-
-        private async Task EditCSV(FileInfo file)
-        {
-            //Console.WriteLine("Editing: " + path);
-
-            await Task.Run(
-            () =>
-            {
-                CSV table = new CSV(file);
-
-                switch (CurrentPass)
-                {
-                    case 0:
-                        StartCachePass(table);
-                        break;
-                    default:
-                    case 1:
-                        StartModPass(table);
-                        break;
-                }
-
-                table.Write();
-            }
-            );
-
-            PassIterator++;
-            PassPercent = (int)((PassIterator / (float)PassCount) * PassPercentMod) + PassPercentAdd;
+            ProcessBusy = false;
         }
 
         void HandleTextures(string path_gob_extracted)

@@ -33,6 +33,12 @@ namespace CrateModLoader
         Global, // Region-free or region-less
     }
 
+    public enum ModPass
+    {
+        Cache = 0,
+        Mod,
+    }
+
     public static class ModLoaderGlobals
     {
         /// <summary> Global Randomizer Seed, can be modified during modding. Max length - 10 characters </summary>

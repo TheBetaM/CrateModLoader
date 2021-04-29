@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using Twinsanity;
 using CrateModLoader.GameSpecific.CrashTS.Mods;
-using System.Threading.Tasks;
 //Twinsanity API by NeoKesha, Smartkin, ManDude, BetaM and Marko (https://github.com/Smartkin/twinsanity-editor)
 /* 
  * Mod Layers:
@@ -33,72 +32,22 @@ namespace CrateModLoader.GameSpecific.CrashTS
         public override bool CanPreloadGame => true;
         public override List<ConsoleMode> PreloadConsoles => new List<ConsoleMode>() { ConsoleMode.PS2, };
 
-        public Modder_Twins() { }
-
         public string bdPath = "";
         internal string extensionMod = "2";
         internal TwinsFile.FileType rmType = TwinsFile.FileType.RM2;
         internal TwinsFile.FileType smType = TwinsFile.FileType.SM2;
 
-        private int CurrentPass = 0;
-        private float PassPercentMod = 39f;
-        private int PassPercentAdd = 10;
-        private bool EditingRM = false;
-        private bool EditingSM = false;
-        private bool MainBusy = false;
-
         public override void StartModProcess()
         {
             ProcessBusy = true;
-
-            AsyncStart();
-        }
-
-        public async void AsyncStart()
-        {
-            UpdateProcessMessage("Extracting CRASH.BD...", 0);
-
-            // Extract BD (PS2 only)
-            SetupBD();
-
-            // Mod files
             ModProcess();
-
-            while (MainBusy || PassBusy)
-            {
-                await Task.Delay(100);
-            }
-
-            UpdateProcessMessage("Building CRASH.BD...", 95);
-
-            // Build BD
-            BuildBD();
-
-            ProcessBusy = false;
         }
 
         private async void ModProcess()
         {
-            MainBusy = true;
-
-            //Start Modding
-            EditingRM = CheckModsForRM();
-            EditingSM = CheckModsForSM();
-
-            // Discovering files
-            Dictionary<string, bool> Paths = new Dictionary<string, bool>();
-
-            if (EditingRM)
-            {
-                Paths.Add(bdPath + @"Startup\Default.rm" + extensionMod, false);
-            }
-
-            DirectoryInfo di = new DirectoryInfo(bdPath + "/Levels/");
-            foreach (DirectoryInfo dir in di.EnumerateDirectories())
-            {
-                Recursive_LoadLevels(dir, ref Paths);
-            }
-            PassCount = Paths.Count;
+            // Extract BD (PS2 only)
+            UpdateProcessMessage("Extracting CRASH.BD...", 0);
+            SetupBD();
 
             UpdateProcessMessage("Patching executable...", 4);
             PatchEXE(ConsolePipeline.Metadata.Console, GameRegion.Region);
@@ -121,61 +70,20 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 }
             }
 
-            bool NeedsCache = NeedsCachePass();
-            CurrentPass = 0;
-            if (!NeedsCache)
-            {
-                PassPercentMod = 83f;
-                CurrentPass++;
-            }
-
-            while (CurrentPass < 2)
-            {
-                PassIterator = 0;
-                PassBusy = true;
-                if (CurrentPass == 0)
-                {
-                    PassPercentMod = 39f;
-                    PassPercentAdd = 10;
-                    UpdateProcessMessage("Cache Pass", 10);
-                    BeforeCachePass();
-                }
-                else if (CurrentPass == 1)
-                {
-                    if (NeedsCache)
-                    {
-                        PassPercentMod = 43f;
-                        PassPercentAdd = 50;
-                        UpdateProcessMessage("Mod Pass", 50);
-                    }
-                    else
-                    {
-                        PassPercentMod = 83f;
-                        UpdateProcessMessage("Mod Pass", 10);
-                    }
-                    
-                    BeforeModPass();
-                }
-
-                IList<Task> editTaskList = new List<Task>();
-
-                foreach (KeyValuePair<string, bool> Path in Paths)
-                {
-                    editTaskList.Add(EditLevel(Path.Key, Path.Value));
-                }
-
-                await Task.WhenAll(editTaskList);
-
-                CurrentPass++;
-                PassBusy = false;
-            }
+            //Mods
+            FindFiles(new Parser_RM(this, rmType), new Parser_SM(this, smType));
+            await StartNewPass();
 
             Twins_Data.cachedGameObjects.Clear();
 
             UpdateProcessMessage("Modding textures...", 94);
             Twins_Data_Textures.Textures_Mod(bdPath, GameRegion.Region);
 
-            MainBusy = false;
+            // Build BD
+            UpdateProcessMessage("Building CRASH.BD...", 95);
+            BuildBD();
+
+            ProcessBusy = false;
         }
 
         public override void StartPreload()
@@ -185,99 +93,6 @@ namespace CrateModLoader.GameSpecific.CrashTS
             {
                 Twins_Data_Textures.Textures_Preload(bdPath, GameRegion.Region);
             }
-        }
-
-        private async Task EditLevel(string path, bool isSM)
-        {
-            //Console.WriteLine("Editing: " + path);
-            TwinsFile.FileType FileType = rmType;
-            if (isSM) FileType = smType;
-            
-            await Task.Run(
-            () => 
-            {
-                TwinsFile Archive = new TwinsFile();
-                Archive.LoadFile(path, FileType);
-
-                if (!isSM)
-                {
-                    ChunkInfoRM chunk = new ChunkInfoRM(Archive, ChunkPathToType(path));
-
-                    switch (CurrentPass)
-                    {
-                        case 0:
-                            StartCachePass(chunk);
-                            break;
-                        default:
-                        case 1:
-                            StartModPass(chunk);
-                            break;
-                    }
-                }
-                else
-                {
-                    ChunkInfoSM chunk = new ChunkInfoSM(Archive, ChunkPathToType(path));
-
-                    switch (CurrentPass)
-                    {
-                        case 0:
-                            StartCachePass(chunk);
-                            break;
-                        default:
-                        case 1:
-                            StartModPass(chunk);
-                            break;
-                    }
-                }
-
-                    Archive.SaveFile(path);
-                }
-            );
-
-            PassIterator++;
-            PassPercent = (int)((PassIterator / (float)PassCount) * PassPercentMod) + PassPercentAdd;
-        }
-
-        void Recursive_LoadLevels(DirectoryInfo di, ref Dictionary<string, bool> Paths)
-        {
-            foreach (DirectoryInfo dir in di.EnumerateDirectories())
-            {
-                Recursive_LoadLevels(dir, ref Paths);
-            }
-            foreach (FileInfo file in di.EnumerateFiles())
-            {
-                if (EditingRM && (file.Extension.ToLower() == ".rm2" || file.Extension.ToLower() == ".rmx"))
-                {
-                    Paths.Add(file.FullName, false);
-                }
-                else if (EditingSM && (file.Extension.ToLower() == ".sm2" || file.Extension.ToLower() == ".smx"))
-                {
-                    Paths.Add(file.FullName, true);
-                }
-            }
-        }
-
-        bool CheckModsForRM()
-        {
-            foreach (ModPropertyBase Prop in ActiveProps)
-            {
-                if (Prop.TargetMod is ModStruct<ChunkInfoRM>)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-        bool CheckModsForSM()
-        {
-            foreach (ModPropertyBase Prop in ActiveProps)
-            {
-                if (Prop.TargetMod is ModStruct<ChunkInfoSM>)
-                {
-                    return true;
-                }
-            }
-            return false;
         }
 
         void SetupBD()
@@ -370,27 +185,6 @@ namespace CrateModLoader.GameSpecific.CrashTS
             StartModPass(new ExecutableInfo(filePath, index, bdPath));
         }
 
-        private ChunkType ChunkPathToType(string path)
-        {
-            ChunkType type = ChunkType.Invalid;
 
-            for (int i = 0; i < Twins_Data.All_Chunks.Count; i++)
-            {
-                if (path.ToLower().Contains(Twins_Data.All_Chunks[i].Path.ToLower()))
-                {
-                    type = Twins_Data.All_Chunks[i].Chunk;
-                    break;
-                }
-            }
-
-            if (type == ChunkType.Invalid)
-            {
-                Console.WriteLine("invalid Chunk");
-                Console.WriteLine("any chunk path: " + Twins_Data.All_Chunks[0].Path.ToLower());
-                Console.WriteLine("file path: " + path.ToLower());
-            }
-
-            return type;
-        }
     }
 }

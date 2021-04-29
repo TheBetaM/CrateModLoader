@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.ComponentModel;
 using System.Threading;
+using System.Threading.Tasks;
+using System.IO;
 using CrateModLoader.ModProperties;
 using CrateModAPI.Resources.Text;
 
@@ -42,7 +44,7 @@ namespace CrateModLoader
         // Multithreading stuff
 
         //public List<Mod> Mods = new List<Mod>();
-        //public List<IModParser> ModParsers = new List<IModParser>();
+        public List<ModParserBase> ModParsers = new List<ModParserBase>();
         //public List<ModPipeline> Pipelines = new List<ModPipeline>();
         public List<ModPropertyBase> ActiveProps = new List<ModPropertyBase>();
         public virtual bool NoAsyncProcess => false;
@@ -202,13 +204,83 @@ namespace CrateModLoader
 
             foreach (ModPropertyBase Prop in Props)
             {
-                if (Prop.TargetMod != null && (Prop.HasChanged || (Prop is ModPropOption opt && opt.Enabled)))
+                if (Prop.TargetMod != null && ((Prop is ModPropOption opt && opt.Enabled)) || (!(Prop is ModPropOption) && Prop.HasChanged))
                 {
                     ActiveProps.Add(Prop);
                 }
             }
 
             //Console.WriteLine("Active Props: " + ActiveProps.Count);
+        }
+
+        public void FindFiles(params ModParserBase[] parsers)
+        {
+            ModParsers = new List<ModParserBase>(parsers);
+            PassCount = 0;
+            PassIterator = 0;
+            DirectoryInfo di = new DirectoryInfo(ConsolePipeline.ExtractedPath);
+            Recursive_LoadFiles(di);
+        }
+
+        void Recursive_LoadFiles(DirectoryInfo di)
+        {
+            foreach (DirectoryInfo dir in di.EnumerateDirectories())
+            {
+                Recursive_LoadFiles(dir);
+            }
+            foreach (FileInfo file in di.EnumerateFiles())
+            {
+                foreach (ModParserBase parser in ModParsers)
+                {
+                    if (!parser.SkipParser)
+                    {
+                        bool add = parser.AddFile(file);
+                        if (add) PassCount++;
+                    }
+                }
+            }
+        }
+
+        public async Task StartNewPass()
+        {
+            bool NeedsCache = NeedsCachePass();
+            int CurrentPass = 0;
+            if (!NeedsCache)
+            {
+                CurrentPass++;
+            }
+            PassBusy = true;
+
+            while (CurrentPass < 2)
+            {
+                PassIterator = 0;
+                if (CurrentPass == 0)
+                {
+                    UpdateProcessMessage("Cache Pass");
+                    BeforeCachePass();
+                }
+                else if (CurrentPass == 1)
+                {
+                    UpdateProcessMessage("Mod Pass");
+                    BeforeModPass();
+                }
+
+                IList<Task> editTaskList = new List<Task>();
+
+                foreach (ModParserBase parser in ModParsers)
+                {
+                    if (!parser.SkipParser)
+                    {
+                        editTaskList.Add(parser.StartPass());
+                    }
+                }
+
+                await Task.WhenAll(editTaskList);
+
+                editTaskList.Clear();
+                CurrentPass++;
+            }
+            PassBusy = false;
         }
 
         public void BeforeCachePass()
@@ -237,6 +309,19 @@ namespace CrateModLoader
             foreach (ModPropertyBase Prop in ActiveProps)
             {
                 Prop.TargetMod.ModPass(value);
+            }
+        }
+        public void StartPass(object value, ModPass pass = ModPass.Mod)
+        {
+            switch (pass)
+            {
+                case ModPass.Cache:
+                    StartCachePass(value);
+                    break;
+                default:
+                case ModPass.Mod:
+                    StartModPass(value);
+                    break;
             }
         }
 
