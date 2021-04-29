@@ -15,13 +15,7 @@ namespace CrateModLoader.GameSpecific.Crash3
     {
         public override bool ModCrateRegionCheck => true;
 
-        public override void StartModProcess()
-        {
-            ProcessBusy = true;
-            ModProcess();
-        }
-
-        public async void ModProcess()
+        public override async void StartModProcess()
         {
             FindFiles(new Parser_NSF(this, GameVersion.Crash3, GameRegion.Region));
             await StartNewPass();

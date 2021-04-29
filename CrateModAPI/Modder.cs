@@ -48,7 +48,7 @@ namespace CrateModLoader
         //public List<ModPipeline> Pipelines = new List<ModPipeline>();
         public List<ModPropertyBase> ActiveProps = new List<ModPropertyBase>();
         public virtual bool NoAsyncProcess => false;
-        public bool IsBusy { get; set; }
+        public bool IsBusy => ProcessBusy || PassBusy; //{ get; set; }
         public bool PassBusy { get; set; }
         public bool ProcessBusy { get; set; }
         public string ProcessMessage { get; set; }
@@ -173,7 +173,7 @@ namespace CrateModLoader
             }
         }
 
-        public abstract void StartModProcess();
+        public abstract void StartModProcess(); // Must put ProcessBusy = false; at the end!
 
         public virtual void StartPreload() { } // Optional method to preload variables and resources from the game to the Mod Menu+
 
@@ -325,42 +325,19 @@ namespace CrateModLoader
             }
         }
 
-        public void StartAsyncProcess()
-        {
-            IsBusy = true;
 
+        public void StartProcess()
+        {
+            ProcessBusy = true;
+
+            // UI doesn't update until an await if this isn't here
             BackgroundWorker asyncWorker = new BackgroundWorker();
-            asyncWorker.WorkerReportsProgress = true;
             asyncWorker.DoWork += new DoWorkEventHandler(AsyncWorker_DoWork);
-            asyncWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(AsyncWorker_RunWorkerCompleted);
-            asyncWorker.ProgressChanged += new ProgressChangedEventHandler(AsyncWorker_ProgressChanged);
             asyncWorker.RunWorkerAsync();
         }
-
         private void AsyncWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            BackgroundWorker a = sender as BackgroundWorker;
-
             StartModProcess();
-            while (ProcessBusy || PassBusy)
-            {
-                Thread.Sleep(100);
-            }
-
-            IsBusy = false;
-        }
-
-        private void AsyncWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            BackgroundWorker a = sender as BackgroundWorker;
-            a.DoWork -= AsyncWorker_DoWork;
-            a.RunWorkerCompleted -= AsyncWorker_RunWorkerCompleted;
-            a.ProgressChanged -= AsyncWorker_ProgressChanged;
-        }
-
-        private void AsyncWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-
         }
 
     }

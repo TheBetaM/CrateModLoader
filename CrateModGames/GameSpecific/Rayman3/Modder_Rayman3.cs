@@ -22,13 +22,7 @@ namespace CrateModLoader.GameSpecific.Rayman3
         public override bool CanPreloadGame => true;
         public override List<ConsoleMode> PreloadConsoles => new List<ConsoleMode>() { ConsoleMode.GCN, };
 
-        public override void StartModProcess()
-        {
-            ProcessBusy = true;
-            ModProcess();
-        }
-
-        public async void ModProcess()
+        public override async void StartModProcess()
         {
             string basePath = ConsolePipeline.ExtractedPath;
             if (ConsolePipeline.Metadata.Console == ConsoleMode.PS2)

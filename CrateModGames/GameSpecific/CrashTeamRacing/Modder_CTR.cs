@@ -19,13 +19,7 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
 {
     public sealed class Modder_CTR : Modder
     {
-        public override void StartModProcess()
-        {
-            ProcessBusy = true;
-            ModProcess();
-        }
-
-        public async void ModProcess()
+        public override async void StartModProcess()
         {
             string path_Bigfile = "BIGFILE.BIG";
             string path_txt = "BIGFILE.TXT";

@@ -32,13 +32,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
         public override bool CanPreloadGame => true;
         public override List<ConsoleMode> PreloadConsoles => new List<ConsoleMode>() { ConsoleMode.PS2, };
 
-        public override void StartModProcess()
-        {
-            ProcessBusy = true;
-            ModProcess();
-        }
-
-        private async void ModProcess()
+        public override async void StartModProcess()
         {
             string bdPath = bdPath = ConsolePipeline.ExtractedPath;
             TwinsFile.FileType rmType = TwinsFile.FileType.RM2;

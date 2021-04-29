@@ -28,13 +28,7 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
     {
         public override bool CanPreloadGame => true;
 
-        public override void StartModProcess()
-        {
-            ProcessBusy = true;
-            ModProcess();
-        }
-
-        public async void ModProcess()
+        public override async void StartModProcess()
         {
             string path_gob_extracted = "";
             string relativePath = ConsolePipeline.ProcessPath;

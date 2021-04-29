@@ -8,13 +8,7 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
 {
     public sealed class Modder_TWOC : Modder
     {
-        public override void StartModProcess()
-        {
-            ProcessBusy = true;
-            ModProcess();
-        }
-
-        public async void ModProcess()
+        public override async void StartModProcess()
         {
             //todo: Generic mods here
 

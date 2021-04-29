@@ -18,13 +18,7 @@ namespace CrateModLoader.GameSpecific.CrashMoM
         private float PassPercentMod = 49f;
         private int PassPercentAdd = 1;
 
-        public override void StartModProcess()
-        {
-            ProcessBusy = true;
-            ModProcess();
-        }
-
-        public async void ModProcess()
+        public override async void StartModProcess()
         {
             PassIterator = 0;
             PassCount = 1;

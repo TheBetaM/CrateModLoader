@@ -18,14 +18,7 @@ namespace CrateModLoader.GameSpecific.CrashTTR
 {
     public sealed class Modder_CTTR : Modder
     {
-        public override void StartModProcess()
-        {
-            ProcessBusy = true;
-
-            ModProcess();
-        }
-
-        public async void ModProcess()
+        public override async void StartModProcess()
         {
             string basePath = ConsolePipeline.ExtractedPath;
 
