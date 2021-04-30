@@ -38,6 +38,11 @@ namespace CrateModLoader
         Cache = 0,
         Mod,
     }
+    public enum PipelinePass
+    {
+        Extract = 0,
+        Build,
+    }
 
     public static class ModLoaderGlobals
     {

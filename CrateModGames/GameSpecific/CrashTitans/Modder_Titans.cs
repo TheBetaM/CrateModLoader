@@ -14,57 +14,26 @@ namespace CrateModLoader.GameSpecific.CrashTitans
 {
     public sealed class Modder_Titans : Modder
     {
-        private int CurrentPass = 0;
-        private float PassPercentMod = 49f;
-        private int PassPercentAdd = 1;
-
         public override async void StartModProcess()
         {
-            PassIterator = 0;
-            PassCount = 1;
-
-            string path_RCF_frontend = "DEFAULT.RCF";
-            string basePath = ConsolePipeline.ExtractedPath;
-            RCF_Manager rcf = new RCF_Manager(this, basePath + path_RCF_frontend);
-
-            if (ConsolePipeline.Metadata.Console != ConsoleMode.PS2)
-                path_RCF_frontend = "default.rcf";
-
-            string path_extr = basePath + @"default_ex\";
             UpdateProcessMessage("Extracting DEFAULT.RCF...", 5);
+            FindArchives(new Pipeline_RCF(this) { SecondaryList = new List<string>() { "default.rcf", "DEFAULT.RCF" } , SecondarySkip = false, });
+            await StartPipelines(PipelinePass.Extract);
 
-            PassBusy = true;
-            await rcf.ExtractAsync(this, basePath + path_RCF_frontend, path_extr);
-            PassBusy = false;
-            int FileCount = PassCount;
-
+            string path_extr = ConsolePipeline.ExtractedPath + @"default\";
             UpdateProcessMessage("Installing Mod Crates: Layer 1...", 26);
             ModCrates.InstallLayerMods(EnabledModCrates, path_extr, 1, true);
-
             UpdateProcessMessage("Cache Pass", 27);
-
             BeforeCachePass();
-
             StartCachePass(path_extr);
-
             UpdateProcessMessage("Mod Pass", 50);
-
             BeforeModPass();
-
             StartModPass(path_extr);
 
             UpdateProcessMessage("Packing DEFAULT.RCF...", 75);
-
-            PassIterator = 0;
-            PassCount = FileCount;
-            PassBusy = true;
-            await rcf.PackAsync(basePath + path_RCF_frontend, path_extr);
-            PassBusy = false;
-
+            await StartPipelines(PipelinePass.Build);
 
             ProcessBusy = false;
         }
-
-        
     }
 }

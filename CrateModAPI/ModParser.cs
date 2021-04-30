@@ -41,6 +41,7 @@ namespace CrateModLoader
 
         public override async Task StartPass(ModPass pass = ModPass.Mod)
         {
+            ExecutionSource.PassIterator = 0;
             IList<Task> editTaskList = new List<Task>();
             foreach (KeyValuePair<string, List<FileInfo>> list in FoundFiles)
             {

@@ -139,7 +139,7 @@ namespace CrateModLoader.ModPipelines
         private async void Extractor_Work(BackgroundWorker a)
         {
             //Needed to build
-            File.Copy(extractInputPath, ModLoaderGlobals.ToolsPath + "Game.iso");
+            File.Copy(extractInputPath, ModLoaderGlobals.ToolsPath + "Game.iso", true);
 
             IList<Task> extractTaskList = new List<Task>();
             Dictionary<string, string> Paths = new Dictionary<string, string>();

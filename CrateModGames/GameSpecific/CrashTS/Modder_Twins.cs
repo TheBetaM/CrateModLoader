@@ -35,36 +35,20 @@ namespace CrateModLoader.GameSpecific.CrashTS
         public override async void StartModProcess()
         {
             string bdPath = bdPath = ConsolePipeline.ExtractedPath;
-            TwinsFile.FileType rmType = TwinsFile.FileType.RM2;
-            TwinsFile.FileType smType = TwinsFile.FileType.SM2;
+            TwinsFile.FileType rmType = TwinsFile.FileType.RMX;
+            TwinsFile.FileType smType = TwinsFile.FileType.SMX;
 
             #region Extract BD
             // Extract BD (PS2 only)
-            UpdateProcessMessage("Extracting CRASH.BD...", 0);
             if (ConsolePipeline.Metadata.Console == ConsoleMode.PS2)
             {
-                bdPath = System.IO.Path.Combine(ConsolePipeline.ExtractedPath, @"cml_extr\");
+                UpdateProcessMessage("Extracting CRASH.BD...", 0);
+                bdPath = System.IO.Path.Combine(ConsolePipeline.ExtractedPath, @"CRASH6\CRASH\");
                 rmType = TwinsFile.FileType.RM2;
                 smType = TwinsFile.FileType.SM2;
 
-                Directory.CreateDirectory(bdPath);
-
-                PassIterator = 0;
-                PassCount = 0;
-                PassBusy = true;
-                BD_Archive Archive = new BD_Archive();
-                await Archive.ExtractAsync(this, System.IO.Path.Combine(ConsolePipeline.ExtractedPath, "CRASH6/CRASH.BD"), bdPath);
-                PassBusy = false;
-
-                //BDArchive.ExtractAll(System.IO.Path.Combine(ConsolePipeline.ExtractedPath, "CRASH6/CRASH"), bdPath);
-
-                File.Delete(System.IO.Path.Combine(ConsolePipeline.ExtractedPath, "CRASH6/CRASH.BD"));
-                File.Delete(System.IO.Path.Combine(ConsolePipeline.ExtractedPath, "CRASH6/CRASH.BH"));
-            }
-            else
-            {
-                rmType = TwinsFile.FileType.RMX;
-                smType = TwinsFile.FileType.SMX;
+                FindArchives(new Pipeline_BD(this));
+                await StartPipelines(PipelinePass.Extract);
             }
             #endregion
 
@@ -100,35 +84,10 @@ namespace CrateModLoader.GameSpecific.CrashTS
 
             #region Build BD
             // Build BD
-            UpdateProcessMessage("Building CRASH.BD...", 95);
-
             if (ConsolePipeline.Metadata.Console == ConsoleMode.PS2)
             {
-                PassIterator = 0;
-                PassCount = 0;
-                PassBusy = true;
-                BD_Archive Archive = new BD_Archive();
-                await Archive.CompileAsync(this, System.IO.Path.Combine(ConsolePipeline.ExtractedPath, "CRASH6/CRASH.BD"), bdPath);
-                PassBusy = false;
-
-                //BDArchive.CompileAll(System.IO.Path.Combine(ConsolePipeline.ExtractedPath, "CRASH6/CRASH"), bdPath);
-
-                // Get rid of extracted files
-                if (Directory.Exists(bdPath))
-                {
-                    DirectoryInfo di = new DirectoryInfo(bdPath);
-
-                    foreach (FileInfo file in di.EnumerateFiles())
-                    {
-                        file.Delete();
-                    }
-                    foreach (DirectoryInfo dir in di.EnumerateDirectories())
-                    {
-                        dir.Delete(true);
-                    }
-
-                    Directory.Delete(bdPath);
-                }
+                UpdateProcessMessage("Building CRASH.BD...", 95);
+                await StartPipelines(PipelinePass.Build);
             }
             #endregion
 

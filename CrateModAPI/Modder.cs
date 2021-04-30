@@ -45,7 +45,7 @@ namespace CrateModLoader
 
         //public List<Mod> Mods = new List<Mod>();
         public List<ModParserBase> ModParsers = new List<ModParserBase>();
-        //public List<ModPipeline> Pipelines = new List<ModPipeline>();
+        public List<ModPipelineBase> Pipelines = new List<ModPipelineBase>();
         public List<ModPropertyBase> ActiveProps = new List<ModPropertyBase>();
         public virtual bool NoAsyncProcess => false;
         public bool IsBusy => ProcessBusy || PassBusy; //{ get; set; }
@@ -221,6 +221,14 @@ namespace CrateModLoader
             DirectoryInfo di = new DirectoryInfo(ConsolePipeline.ExtractedPath);
             Recursive_LoadFiles(di);
         }
+        public void FindArchives(params ModPipelineBase[] pipelines)
+        {
+            Pipelines = new List<ModPipelineBase>(pipelines);
+            PassCount = 0;
+            PassIterator = 0;
+            DirectoryInfo di = new DirectoryInfo(ConsolePipeline.ExtractedPath);
+            Recursive_LoadArchives(di);
+        }
 
         void Recursive_LoadFiles(DirectoryInfo di)
         {
@@ -235,6 +243,24 @@ namespace CrateModLoader
                     if (!parser.SkipParser)
                     {
                         bool add = parser.AddFile(file);
+                        if (add) PassCount++;
+                    }
+                }
+            }
+        }
+        void Recursive_LoadArchives(DirectoryInfo di)
+        {
+            foreach (DirectoryInfo dir in di.EnumerateDirectories())
+            {
+                Recursive_LoadArchives(dir);
+            }
+            foreach (FileInfo file in di.EnumerateFiles())
+            {
+                foreach (ModPipelineBase pipeline in Pipelines)
+                {
+                    if (!pipeline.SkipPipeline)
+                    {
+                        bool add = pipeline.AddFile(file);
                         if (add) PassCount++;
                     }
                 }
@@ -280,6 +306,29 @@ namespace CrateModLoader
                 editTaskList.Clear();
                 CurrentPass++;
             }
+            PassBusy = false;
+        }
+
+        public async Task StartPipelines(PipelinePass pass)
+        {
+            PassBusy = true;
+            PassIterator = 0;
+            PassCount = 0;
+
+            IList<Task> TaskList = new List<Task>();
+
+            foreach (ModPipeline pipeline in Pipelines)
+            {
+                if (!pipeline.SkipPipeline)
+                {
+                    TaskList.Add(pipeline.StartPipeline(pass));
+                }
+            }
+
+            await Task.WhenAll(TaskList);
+
+            TaskList.Clear();
+
             PassBusy = false;
         }
 
@@ -338,6 +387,11 @@ namespace CrateModLoader
         private void AsyncWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             StartModProcess();
+
+            if (NoAsyncProcess)
+            {
+                ProcessBusy = false;
+            }
         }
 
     }

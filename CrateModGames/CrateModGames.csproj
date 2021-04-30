@@ -151,6 +151,7 @@
     <Compile Include="GameSpecific\CrashNitroKart\Common\CNK_Common.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\Common\CSV_Table.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\Common\Parser_CSV.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\Common\Pipeline_GOB.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\Game_CrashNK.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\Mods\CNK_DisableFadeout.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\Mods\CNK_DisablePopups.cs" />
@@ -182,6 +183,7 @@
     <Compile Include="GameSpecific\CrashTeamRacing\Common\Parser_CTR.cs" />
     <Compile Include="GameSpecific\CrashTeamRacing\Common\Parser_LEV.cs" />
     <Compile Include="GameSpecific\CrashTeamRacing\Common\Parser_LNG.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Common\Pipeline_BIG.cs" />
     <Compile Include="GameSpecific\CrashTeamRacing\Game_CrashTR.cs" />
     <Compile Include="GameSpecific\CrashTeamRacing\Modder_CTR.cs" />
     <Compile Include="GameSpecific\CrashTeamRacing\Mods\CTR_DisableWeather.cs" />
@@ -212,6 +214,7 @@
     <Compile Include="GameSpecific\CrashTS\Common\BD_Archive.cs" />
     <Compile Include="GameSpecific\CrashTS\Common\Parser_RM.cs" />
     <Compile Include="GameSpecific\CrashTS\Common\Parser_SM.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\Pipeline_BD.cs" />
     <Compile Include="GameSpecific\CrashTS\Game_CrashTS.cs" />
     <Compile Include="GameSpecific\CrashTS\Modder_Twins.cs" />
     <Compile Include="GameSpecific\CrashTS\Mods\TS_ChangeCreditsChunk.cs" />
@@ -264,6 +267,7 @@
     <Compile Include="GameSpecific\CrashTTR\Common\Parser_GOD.cs" />
     <Compile Include="GameSpecific\CrashTTR\Common\Parser_MID.cs" />
     <Compile Include="GameSpecific\CrashTTR\Common\Parser_P3D.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Common\Pipeline_RCF.cs" />
     <Compile Include="GameSpecific\CrashTTR\CTTR_Text.Designer.cs">
       <DependentUpon>CTTR_Text.resx</DependentUpon>
       <AutoGen>True</AutoGen>

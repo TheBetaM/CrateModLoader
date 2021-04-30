@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using CTRFramework;
+using CTRFramework.Vram;
 
 namespace CrateModLoader.GameSpecific.CrashTeamRacing
 {
@@ -73,6 +76,36 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
                 }
             }
             return string.Empty;
+        }
+
+        static void Recursive_ExtractMPKs(DirectoryInfo di, string bigpath)
+        {
+            foreach (DirectoryInfo dir in di.EnumerateDirectories())
+            {
+                Recursive_ExtractMPKs(dir, bigpath);
+            }
+            foreach (FileInfo file in di.EnumerateFiles())
+            {
+                if (file.Extension.ToLower() == ".mpk")
+                    Extract_MPK(file, bigpath);
+            }
+        }
+
+        public static void Extract_MPK(FileInfo file, string bigPath)
+        {
+            string vrampath = Path.ChangeExtension(file.FullName, "vrm");
+            if (!File.Exists(vrampath))
+            {
+                vrampath = bigPath + @"packs\shared.vrm";
+                if (!File.Exists(vrampath))
+                {
+                    Console.WriteLine("Warning! No vram file found.\r\nPlease put shared.vrm file with mpk you want to extract.");
+                    vrampath = "";
+                }
+            }
+
+            ModelPack mpk = ModelPack.FromFile(file.FullName);
+            mpk.Extract(file.FullName, CtrVrm.FromFile(vrampath));
         }
 
     }

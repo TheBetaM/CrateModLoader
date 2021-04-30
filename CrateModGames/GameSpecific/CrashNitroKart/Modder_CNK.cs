@@ -30,40 +30,13 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
 
         public override async void StartModProcess()
         {
-            string path_gob_extracted = "";
-            string relativePath = ConsolePipeline.ProcessPath;
-            string extrPath = ConsolePipeline.ExtractedPath;
+            string path_gob_extracted = ConsolePipeline.ExtractedPath + @"\ASSETS\";
 
             UpdateProcessMessage("Extracting ASSETS.GOB...", 5);
 
-            #region Extract GOB
-            Process GobExtract = new Process();
-            GobExtract.StartInfo.FileName = ModLoaderGlobals.ToolsPath + "gobextract.exe";
-            GobExtract.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            if (ConsolePipeline.Metadata.Console == ConsoleMode.GCN)
-            {
-                GobExtract.StartInfo.Arguments = relativePath + "assets.gob" + " " + relativePath + "cml_extr";
-            }
-            else
-            {
-                GobExtract.StartInfo.Arguments = relativePath + "ASSETS.GOB" + " " + relativePath + "cml_extr";
-            }
-            GobExtract.Start();
-            GobExtract.WaitForExit();
-
-            if (ConsolePipeline.Metadata.Console == ConsoleMode.PS2)
-            {
-                File.Delete(extrPath + "ASSETS.GFC");
-                File.Delete(extrPath + "ASSETS.GOB");
-            }
-            else
-            {
-                File.Delete(extrPath + "assets.gfc");
-                File.Delete(extrPath + "assets.gob");
-            }
-            #endregion
-
-            path_gob_extracted = extrPath + @"\cml_extr\";
+            //Extract GOB
+            FindArchives(new Pipeline_GOB(this));
+            await StartPipelines(PipelinePass.Extract);
 
             UpdateProcessMessage("Installing Mod Crates: Layer 1...", 6);
             ModCrates.InstallLayerMods(EnabledModCrates, path_gob_extracted, 1);
@@ -105,26 +78,11 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
             await StartNewPass();
 
             UpdateProcessMessage("Handling custom textures...", 95);
-
             HandleTextures(path_gob_extracted);
 
             UpdateProcessMessage("Building ASSETS.GOB...", 97);
-
-            #region Build GOB
-            GobExtract = new Process();
-            GobExtract.StartInfo.FileName = ModLoaderGlobals.ToolsPath + "gobextract.exe";
-            GobExtract.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            if (ConsolePipeline.Metadata.Console == ConsoleMode.PS2)
-            {
-                GobExtract.StartInfo.Arguments = relativePath + "ASSETS.GOB" + " " + relativePath + "cml_extr" + " -create 1";
-            }
-            else
-            {
-                GobExtract.StartInfo.Arguments = relativePath + "assets.gob" + " " + relativePath + "cml_extr" + " -create 1";
-            }
-            GobExtract.Start();
-            GobExtract.WaitForExit();
-            #endregion
+            //Build GOB
+            await StartPipelines(PipelinePass.Build);
 
             // Extraction cleanup
             UpdateProcessMessage("Removing temporary files...", 99);

@@ -56,6 +56,7 @@
     <Compile Include="ConsolePipelines\ConsolePipeline.cs" />
     <Compile Include="Mod.cs" />
     <Compile Include="ModPipelines\ModPipeline.cs" />
+    <Compile Include="ModPipelines\ModPipelineBase.cs" />
     <Compile Include="ModProperties\ModPropertyAttributes.cs" />
     <Compile Include="ModProperties\ModPropBool.cs" />
     <Compile Include="ModProperties\ModPropColor.cs" />
