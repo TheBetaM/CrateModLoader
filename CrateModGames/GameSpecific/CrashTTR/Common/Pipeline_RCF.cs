@@ -13,7 +13,11 @@ namespace CrateModLoader.GameSpecific.CrashTTR
             Managers = new Dictionary<string, RCF_Manager>();
         }
 
+        public override string Name => "RCF archive";
         public override List<string> Extensions => new List<string>() { ".RCF" };
+        public override bool IsModLayer => true;
+        public override int ModLayerID => 1;
+        public override bool ModLayerReplaceOnly => true;
 
         public override async Task ExtractObject(string filePath)
         {

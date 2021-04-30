@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using CrateModLoader.GameSpecific.CrashTTR;
 //RCF API by NeoKesha and BetaM
 /* Mod Layers:
@@ -9,7 +6,6 @@ using CrateModLoader.GameSpecific.CrashTTR;
  * Mod Passes:
  * string -> extraction path
  */
-
 namespace CrateModLoader.GameSpecific.CrashMoM
 {
     public sealed class Modder_MoM : Modder
@@ -21,8 +17,6 @@ namespace CrateModLoader.GameSpecific.CrashMoM
             await StartPipelines(PipelinePass.Extract);
 
             string path_extr = ConsolePipeline.ExtractedPath + @"default\";
-            UpdateProcessMessage("Installing Mod Crates: Layer 1...", 26);
-            ModCrates.InstallLayerMods(EnabledModCrates, path_extr, 1, true);
             UpdateProcessMessage("Cache Pass", 27);
             BeforeCachePass();
             StartCachePass(path_extr);

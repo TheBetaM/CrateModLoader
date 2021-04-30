@@ -8,7 +8,10 @@ namespace CrateModLoader.GameSpecific.CrashTS
     {
         public Pipeline_BD(Modder mod) : base(mod) { }
 
+        public override string Name => "BD archive";
         public override List<string> Extensions => new List<string>() { ".BD" };
+        public override bool IsModLayer => true;
+        public override int ModLayerID => 1;
 
         public override async Task ExtractObject(string filePath)
         {

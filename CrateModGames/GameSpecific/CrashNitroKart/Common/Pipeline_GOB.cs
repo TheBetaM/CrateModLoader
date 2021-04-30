@@ -9,7 +9,10 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
     {
         public Pipeline_GOB(Modder mod) : base(mod) { }
 
+        public override string Name => "GOB archive";
         public override List<string> Extensions => new List<string>() { ".GOB" };
+        public override bool IsModLayer => true;
+        public override int ModLayerID => 1;
 
         public override async Task ExtractObject(string filePath)
         {

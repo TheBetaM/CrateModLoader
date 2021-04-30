@@ -15,6 +15,10 @@ namespace CrateModLoader
         public virtual List<string> SecondaryList { get; set; }
         public virtual bool SecondarySkip { get; set; }
         public virtual bool DisableAsync => false;
+        public virtual bool IsModLayer => false;
+        public virtual int ModLayerID => 0;
+        public virtual bool ModLayerReplaceOnly => false;
+        public virtual string Name { get; }
         public Modder ExecutionSource;
         private Dictionary<string, List<FileInfo>> FoundFiles;
         public override bool SkipPipeline { get; set; }
@@ -58,9 +62,9 @@ namespace CrateModLoader
         }
         public override async Task FileStartPipeline(FileInfo file, PipelinePass pass)
         {
+            string filePath = file.FullName;
             if (DisableAsync)
             {
-                string filePath = file.FullName;
                 try
                 {
                     if (pass == PipelinePass.Extract)
@@ -79,7 +83,6 @@ namespace CrateModLoader
             }
             else
             {
-                string filePath = file.FullName;
                 try
                 {
                     if (pass == PipelinePass.Extract)
@@ -95,6 +98,12 @@ namespace CrateModLoader
                 {
                     Console.Write("ModPipeline Error: " + filePath);
                 }
+            }
+
+            if (IsModLayer)
+            {
+                string dirPath = filePath.Substring(0, (filePath.Length - 4)) + @"\";
+                ModCrates.InstallLayerMods(ExecutionSource.EnabledModCrates, dirPath, ModLayerID, ModLayerReplaceOnly);
             }
 
             //ExecutionSource.PassIterator++;

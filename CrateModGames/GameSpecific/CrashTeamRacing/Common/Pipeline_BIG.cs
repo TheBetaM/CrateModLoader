@@ -10,7 +10,10 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
     {
         public Pipeline_BIG(Modder mod) : base(mod) { }
 
+        public override string Name => "BIGFILE archive";
         public override List<string> Extensions => new List<string>() { ".BIG" };
+        public override bool IsModLayer => true;
+        public override int ModLayerID => 1;
 
         public override async Task ExtractObject(string filePath)
         {

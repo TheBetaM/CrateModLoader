@@ -55,9 +55,6 @@ namespace CrateModLoader.GameSpecific.CrashTS
             UpdateProcessMessage("Patching executable...", 4);
             PatchEXE(bdPath, ConsolePipeline.Metadata.Console, GameRegion.Region);
 
-            UpdateProcessMessage("Installing Mod Crates: Layer 1...", 5);
-            ModCrates.InstallLayerMods(EnabledModCrates, bdPath, 1);
-
             //could be better...
             foreach (ModPropertyBase prop in Props)
             {

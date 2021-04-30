@@ -18,10 +18,6 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
             FindArchives(new Pipeline_BIG(this));
             await StartPipelines(PipelinePass.Extract);
 
-            string path_extr = ConsolePipeline.ExtractedPath + @"BIGFILE\";
-            UpdateProcessMessage("Installing Mod Crates: Layer 1...", 6);
-            ModCrates.InstallLayerMods(EnabledModCrates, path_extr, 1);
-
             // Mods
             FindFiles(new Parser_LNG(this), new Parser_LEV(this), new Parser_CTR(this));
             await StartNewPass();

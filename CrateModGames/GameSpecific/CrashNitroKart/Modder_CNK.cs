@@ -38,9 +38,6 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
             FindArchives(new Pipeline_GOB(this));
             await StartPipelines(PipelinePass.Extract);
 
-            UpdateProcessMessage("Installing Mod Crates: Layer 1...", 6);
-            ModCrates.InstallLayerMods(EnabledModCrates, path_gob_extracted, 1);
-
             //todo improve
             foreach (ModPropertyBase mod in Props)
             {
