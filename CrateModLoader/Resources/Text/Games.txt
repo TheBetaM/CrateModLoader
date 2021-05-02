@@ -24,7 +24,7 @@ Mod Menu:
 Crash Twinsanity
 Supported: All PS2 versions (.ISO format), All XBOX versions (.ISO format)
 Mod abbreviation: CrashTS   
-Mod layers: 1 - CRASH.BD contents (Same as Layer 0 on XBOX)
+Mod layers: 1 - CRASH.BD contents (PS2)
 API by NeoKesha, Smartkin, ManDude, BetaM and Marko. (https://github.com/Smartkin/twinsanity-editor)  
 Features:  
 - Randomize Individual Crates
@@ -191,6 +191,14 @@ Features:
 - Randomize World Palette  
 - Version and seed visible in the Loading screen (English only)  
   
+Super Monkey Ball Adventure
+Supported: All PSP versions (.ISO format), All GC versions (.ISO format), All PS2 versions (.ISO format)
+Mod abbreviation: MonkeyBallAdv   
+Mod layers: 1 - MB.BD contents (PS2/PSP)
+API by NeoKesha, Smartkin, ManDude, BetaM and Marko. (https://github.com/Smartkin/twinsanity-editor)  
+Features:  
+- Version and seed visible in the Main Menu  
+
 Crash of the Titans
 Supported: All PS2 versions (.ISO format), All Wii versions (.ISO/.WBFS formats), All PSP versions (.ISO format), All 360 versions (.ISO format)   
 Mod abbreviation: CrashTitans  

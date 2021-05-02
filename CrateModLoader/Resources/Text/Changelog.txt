@@ -9,6 +9,9 @@ General
 - More detailed process information
 - Fixed not being able to build unsupported games
 
+New games supported:
+- Super Monkey Ball Adventure (PS2, PSP, GCN)
+
 Crash Twinsanity
 - Improved feature compatibility with modded levels in Mod Crates
 

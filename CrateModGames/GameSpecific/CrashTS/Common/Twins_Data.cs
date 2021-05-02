@@ -483,13 +483,13 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 for (int ogi = 0; ogi < gameObject.list_ogi.Count; ogi++)
                 {
                     GraphicsInfo This_GI = (GraphicsInfo)gameObject.list_ogi[ogi];
-                    if (This_GI.ArmatureModelID != 0)
+                    if (This_GI.SkinID != 0)
                     {
-                        export_armdl.Add(This_GI.ArmatureModelID);
+                        export_armdl.Add(This_GI.SkinID);
                     }
-                    if (This_GI.ActorModelID != 0)
+                    if (This_GI.BlendSkinID != 0)
                     {
-                        export_acmdl.Add(This_GI.ActorModelID);
+                        export_acmdl.Add(This_GI.BlendSkinID);
                     }
                     if (This_GI.ModelIDs.Length > 0)
                     {

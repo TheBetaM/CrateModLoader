@@ -536,7 +536,8 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
                     NewGem.SomeNum1 = 10;
                     NewGem.SomeNum2 = 10;
                     NewGem.SomeNum3 = 10;
-                    NewGem.AfterOID = uint.MaxValue;
+                    NewGem.RefList = -1;
+                    NewGem.ScriptID = -1;
                     NewGem.Flags = 0x1CE;
                     NewGem.UnkI322 = new List<float>() { 1 };
                     NewGem.UnkI323 = new List<uint>() { 0, 255, (uint)GemList[i].type };

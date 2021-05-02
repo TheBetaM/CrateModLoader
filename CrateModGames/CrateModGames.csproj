@@ -47,6 +47,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Drawing.Design" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Xml" />
     <Reference Include="Twinsanity">
       <HintPath>GameSpecific\CrashTS\Twinsanity.dll</HintPath>
     </Reference>
@@ -418,6 +419,19 @@
     <Compile Include="GameSpecific\CrashTWOC\Common\TWOC_File_AI.cs" />
     <Compile Include="GameSpecific\CrashTWOC\Common\TWOC_File_CRT.cs" />
     <Compile Include="GameSpecific\CrashTWOC\Common\TWOC_File_WMP.cs" />
+    <Compile Include="GameSpecific\MonkeyBallAdv\Common\Parser_RM.cs" />
+    <Compile Include="GameSpecific\MonkeyBallAdv\Common\Parser_SM.cs" />
+    <Compile Include="GameSpecific\MonkeyBallAdv\Common\Parser_XML.cs" />
+    <Compile Include="GameSpecific\MonkeyBallAdv\Common\SMBA_Common.cs" />
+    <Compile Include="GameSpecific\MonkeyBallAdv\Game_MonkeyBallAdv.cs" />
+    <Compile Include="GameSpecific\MonkeyBallAdv\Modder_MonkeyBallAdv.cs" />
+    <Compile Include="GameSpecific\MonkeyBallAdv\Mods\SMBA_EnableJump.cs" />
+    <Compile Include="GameSpecific\MonkeyBallAdv\Mods\SMBA_EnablePowerJump.cs" />
+    <Compile Include="GameSpecific\MonkeyBallAdv\Mods\SMBA_Metadata.cs" />
+    <Compile Include="GameSpecific\MonkeyBallAdv\Mods\SMBA_TestMod.cs" />
+    <Compile Include="GameSpecific\MonkeyBallAdv\Properties\SMBA_Props_Main.cs" />
+    <Compile Include="GameSpecific\MonkeyBallAdv\Randomizers\SMBA_Rand_BackwardsPuzzleLevels.cs" />
+    <Compile Include="GameSpecific\MonkeyBallAdv\Randomizers\SMBA_Rand_ChallengeMode.cs" />
     <Compile Include="GameSpecific\Rayman3\Common\Parser_TPL.cs" />
     <Compile Include="GameSpecific\Rayman3\Common\Ray3_Common.cs" />
     <Compile Include="GameSpecific\Rayman3\Common\TPL_File.cs" />
