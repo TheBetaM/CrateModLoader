@@ -34,7 +34,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
 
         public override async void StartModProcess()
         {
-            string bdPath = bdPath = ConsolePipeline.ExtractedPath;
+            string bdPath = ConsolePipeline.ExtractedPath;
             TwinsFile.FileType rmType = TwinsFile.FileType.RMX;
             TwinsFile.FileType smType = TwinsFile.FileType.SMX;
 
@@ -61,9 +61,6 @@ namespace CrateModLoader.GameSpecific.CrashTS
 
             Twins_Data.cachedGameObjects.Clear();
 
-            UpdateProcessMessage("Modding textures...", 94);
-            Twins_Data_Textures.Textures_Mod(bdPath, GameRegion.Region);
-
             #region Build BD
             // Build BD
             if (ConsolePipeline.Metadata.Console == ConsoleMode.PS2)
@@ -76,21 +73,23 @@ namespace CrateModLoader.GameSpecific.CrashTS
             ProcessBusy = false;
         }
 
-        public override void StartPreload()
+        public override async void StartPreload()
         {
+            #region Extract BD
+            // Extract BD (PS2 only)
             if (ConsolePipeline.Metadata.Console == ConsoleMode.PS2)
             {
-                string bdPath = System.IO.Path.Combine(ConsolePipeline.ExtractedPath, @"cml_extr\");
+                UpdateProcessMessage("Extracting CRASH.BD...", 0);
 
-                Directory.CreateDirectory(bdPath);
-
-                BDArchive.ExtractAll(System.IO.Path.Combine(ConsolePipeline.ExtractedPath, "CRASH6/CRASH"), bdPath);
-
-                File.Delete(System.IO.Path.Combine(ConsolePipeline.ExtractedPath, "CRASH6/CRASH.BD"));
-                File.Delete(System.IO.Path.Combine(ConsolePipeline.ExtractedPath, "CRASH6/CRASH.BH"));
-
-                Twins_Data_Textures.Textures_Preload(bdPath, GameRegion.Region);
+                FindArchives(new Pipeline_BD(this));
+                await StartPipelines(PipelinePass.Extract);
             }
+            #endregion
+
+            FindFiles();
+            await StartPreloadPass();
+
+            ProcessBusy = false;
         }
 
         void PatchEXE(string bdPath, ConsoleMode console, RegionType region)

@@ -154,6 +154,7 @@
     <Compile Include="GameSpecific\CrashNitroKart\Common\Parser_CSV.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\Common\Pipeline_GOB.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\Game_CrashNK.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\Mods\CNK_CustomTextureHandle.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\Mods\CNK_DisableFadeout.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\Mods\CNK_DisablePopups.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\Mods\CNK_Metadata.cs" />
@@ -223,6 +224,7 @@
     <Compile Include="GameSpecific\CrashTS\Mods\TS_ClassicExplosions.cs" />
     <Compile Include="GameSpecific\CrashTS\Mods\TS_ClassicHealth.cs" />
     <Compile Include="GameSpecific\CrashTS\Mods\TS_CortexDoubleJump.cs" />
+    <Compile Include="GameSpecific\CrashTS\Mods\TS_CustomTextureHandle.cs" />
     <Compile Include="GameSpecific\CrashTS\Mods\TS_EnableClassicSlideJump.cs" />
     <Compile Include="GameSpecific\CrashTS\Mods\TS_EnableFlyingKick.cs" />
     <Compile Include="GameSpecific\CrashTS\Mods\TS_EnableHiddenEnemies.cs" />
@@ -437,6 +439,7 @@
     <Compile Include="GameSpecific\Rayman3\Common\TPL_File.cs" />
     <Compile Include="GameSpecific\Rayman3\Game_Rayman3.cs" />
     <Compile Include="GameSpecific\Rayman3\Modder_Rayman3.cs" />
+    <Compile Include="GameSpecific\Rayman3\Mods\Ray3_CustomTextureHandle.cs" />
     <Compile Include="GameSpecific\Rayman3\Mods\Ray3_RemoveIntroVideos.cs" />
     <Compile Include="GameSpecific\Rayman3\Mods\Ray3_Start2DNightmare.cs" />
     <Compile Include="GameSpecific\Rayman3\Properties\Rayman3_Props_Main.cs" />

@@ -29,8 +29,21 @@ namespace CrateModLoader
             }
         }
 
+        public sealed override void PreloadPass(object value)
+        {
+            if (value is T)
+            {
+                PreloadPass((T)value);
+            }
+            else
+            {
+                return;
+            }
+        }
+
         public virtual void CachePass(T value) { }
         public abstract void ModPass(T value);
+        public virtual void PreloadPass(T value) { }
     }
 
     public abstract class ModStruct<T, U> : Mod
@@ -67,9 +80,27 @@ namespace CrateModLoader
             }
         }
 
+        public sealed override void PreloadPass(object value)
+        {
+            if (value is T)
+            {
+                PreloadPass((T)value);
+            }
+            else if (value is U)
+            {
+                PreloadPass((U)value);
+            }
+            else
+            {
+                return;
+            }
+        }
+
         public virtual void CachePass(T value) { }
         public abstract void ModPass(T value);
+        public virtual void PreloadPass(T value) { }
         public virtual void CachePass(U value) { }
         public abstract void ModPass(U value);
+        public virtual void PreloadPass(U value) { }
     }
 }

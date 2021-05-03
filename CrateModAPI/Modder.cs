@@ -152,6 +152,28 @@ namespace CrateModLoader
                                 }
                             }
 
+                            if (!Props[Props.Count - 1].RequiresPreload)
+                            {
+                                ModRequiresPreload chunkAttr = (ModRequiresPreload)field.GetCustomAttribute(typeof(ModRequiresPreload), false);
+                                if (chunkAttr == null)
+                                    chunkAttr = (ModRequiresPreload)field.DeclaringType.GetCustomAttribute(typeof(ModRequiresPreload), false);
+                                if (chunkAttr != null)
+                                {
+                                    Props[Props.Count - 1].RequiresPreload = true;
+                                }
+                            }
+
+                            if (!Props[Props.Count - 1].PreloadBonus)
+                            {
+                                ModPreloadBonus chunkAttr = (ModPreloadBonus)field.GetCustomAttribute(typeof(ModPreloadBonus), false);
+                                if (chunkAttr == null)
+                                    chunkAttr = (ModPreloadBonus)field.DeclaringType.GetCustomAttribute(typeof(ModPreloadBonus), false);
+                                if (chunkAttr != null)
+                                {
+                                    Props[Props.Count - 1].RequiresPreload = true;
+                                }
+                            }
+
                             if (string.IsNullOrWhiteSpace(Props[Props.Count - 1].Name))
                             {
                                 Props[Props.Count - 1].Name = field.Name;
@@ -236,6 +258,47 @@ namespace CrateModLoader
 
             Mods = new List<Mod>();
             List<Type> DupeCheck = new List<Type>();
+
+            foreach (ModPropertyBase Prop in ActiveProps)
+            {
+                if (Prop.TargetMods != null)
+                {
+                    foreach (Type mod in Prop.TargetMods)
+                    {
+                        if (!DupeCheck.Contains(mod))
+                        {
+                            DupeCheck.Add(mod);
+                            Mod NewMod = (Mod)Activator.CreateInstance(mod);
+                            Mods.Add(NewMod);
+                        }
+                    }
+                }
+            }
+
+            //Console.WriteLine("Active Props: " + ActiveProps.Count);
+        }
+
+        public void LoadPropsPreload()
+        {
+            ActiveProps = new List<ModPropertyBase>();
+            Mods = new List<Mod>();
+            List<Type> DupeCheck = new List<Type>();
+
+            GenericModStruct = new GenericModStruct()
+            {
+                Console = ConsolePipeline.Metadata.Console,
+                Region = GameRegion.Region,
+                ExecutableFileName = GameRegion.ExecName,
+                ExtractedPath = ConsolePipeline.ExtractedPath,
+            };
+
+            foreach (ModPropertyBase Prop in Props)
+            {
+                if (Prop.PreloadBonus || Prop.RequiresPreload)
+                {
+                    ActiveProps.Add(Prop);
+                }
+            }
 
             foreach (ModPropertyBase Prop in ActiveProps)
             {
@@ -351,7 +414,7 @@ namespace CrateModLoader
                 {
                     if (!parser.SkipParser)
                     {
-                        editTaskList.Add(parser.StartPass());
+                        editTaskList.Add(parser.StartPass((ModPass)CurrentPass));
                     }
                 }
 
@@ -414,12 +477,29 @@ namespace CrateModLoader
                 mod.ModPass(value);
             }
         }
+        public void BeforePreloadPass()
+        {
+            foreach (Mod mod in Mods)
+            {
+                mod.BeforePreloadPass();
+            }
+        }
+        public void StartPreloadPass(object value)
+        {
+            foreach (Mod mod in Mods)
+            {
+                mod.PreloadPass(value);
+            }
+        }
         public void StartPass(object value, ModPass pass = ModPass.Mod)
         {
             switch (pass)
             {
                 case ModPass.Cache:
                     StartCachePass(value);
+                    break;
+                case ModPass.Preload:
+                    StartPreloadPass(value);
                     break;
                 default:
                 case ModPass.Mod:
@@ -428,10 +508,39 @@ namespace CrateModLoader
             }
         }
 
+        public async Task StartPreloadPass()
+        {
+            bool NeedsCache = NeedsCachePass();
+            int CurrentPass = (int)ModPass.Preload;
+            PassBusy = true;
 
-        public void StartProcess()
+            PassIterator = 0;
+
+            UpdateProcessMessage("Preload Pass");
+            BeforePreloadPass();
+
+            IList<Task> editTaskList = new List<Task>();
+
+            foreach (ModParserBase parser in ModParsers)
+            {
+                if (!parser.SkipParser)
+                {
+                    editTaskList.Add(parser.StartPass((ModPass)CurrentPass));
+                }
+            }
+
+            await Task.WhenAll(editTaskList);
+
+            editTaskList.Clear();
+
+            PassBusy = false;
+        }
+
+        private bool ModderIsPreloading = false;
+        public void StartProcess(bool Preloading = false)
         {
             ProcessBusy = true;
+            ModderIsPreloading = Preloading;
 
             // UI doesn't update until an await if this isn't here
             BackgroundWorker asyncWorker = new BackgroundWorker();
@@ -440,7 +549,14 @@ namespace CrateModLoader
         }
         private void AsyncWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            StartModProcess();
+            if (ModderIsPreloading)
+            {
+                StartPreload();
+            }
+            else
+            {
+                StartModProcess();
+            }
 
             if (NoAsyncProcess)
             {

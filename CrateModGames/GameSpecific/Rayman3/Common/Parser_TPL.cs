@@ -45,8 +45,6 @@ namespace CrateModLoader.GameSpecific.Rayman3
                 }
             }
 
-            Ray3_Common.Custom_Texture_Handle(tpl);
-
             return tpl;
         }
 

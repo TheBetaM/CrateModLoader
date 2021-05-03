@@ -712,14 +712,27 @@ namespace CrateModLoader
             DeleteTempFiles(TempPath);
             //Pipeline.PreStart(inputDirectoryMode, outputDirectoryMode);
 
-            a.ReportProgress(33);
+            a.ReportProgress(1);
 
-            ExtractGame(inputPath, TempPath);
-            while (Pipeline.IsBusy) Thread.Sleep(100);
+            ExtractGame2(inputPath, TempPath, a);
+            while (Pipeline.IsBusy || isExtracting) Thread.Sleep(100);
 
-            a.ReportProgress(66);
+            a.ReportProgress(26);
 
-            PreloadGame();
+            //EditGame(a);
+            if (Modder != null)
+            {
+                Modder.LoadPropsPreload();
+                Modder.StartProcess(true);
+                while (Modder.IsBusy)
+                {
+                    int PPerc = (int)(Modder.PassPercent * 0.48f);
+                    if (PPerc > 47) PPerc = 47;
+                    if (PPerc < 0) PPerc = 0;
+                    a.ReportProgress(26 + PPerc);
+                    Thread.Sleep(100);
+                }
+            }
 
             a.ReportProgress(90);
 
@@ -773,13 +786,31 @@ namespace CrateModLoader
             {
                 UpdateProcessMessage(ModLoaderText.Process_Step0);
             }
-            else if (e.ProgressPercentage == 33)
+            else if (e.ProgressPercentage == 1)
             {
                 UpdateProcessMessage(ModLoaderText.Process_Step1_ROM);
             }
-            else if (e.ProgressPercentage == 66)
+            else if (e.ProgressPercentage < 26)
             {
-                UpdateProcessMessage("Processing game files...");
+                int ExtractProgress = (int)(((e.ProgressPercentage - 1f) / 25f) * 100f);
+                UpdateProcessMessage($"{ModLoaderText.Process_Step1_ROM} ({ExtractProgress}%)");
+            }
+            else if (e.ProgressPercentage < 90)
+            {
+                string msg = "Processing game files...";
+                if (Modder != null)
+                {
+                    if (Modder.ProcessBusy)
+                    {
+                        //msg += string.Format($"({Modder.PassPercent}%) {Modder.ProcessMessage}");
+                        msg += string.Format($" {Modder.ProcessMessage}");
+                    }
+                    if (Modder.PassBusy)
+                    {
+                        msg += string.Format($" ({Modder.PassIterator}/{Modder.PassCount} files)");
+                    }
+                }
+                UpdateProcessMessage(msg);
             }
             else if (e.ProgressPercentage == 90)
             {

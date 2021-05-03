@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using CrateModLoader.ModProperties;
 using CrateModGames.GameSpecific.Rayman3;
+using CrateModLoader.GameSpecific.Rayman3.Mods;
 namespace CrateModLoader.GameSpecific.Rayman3
 {
-    [ModCategory((int)ModProps.Textures_Loading), ModAllowedConsoles(ConsoleMode.GCN)]
+    [ModCategory((int)ModProps.Textures_Loading), ModAllowedConsoles(ConsoleMode.GCN)] [ExecutesMods(typeof(Ray3_CustomTextureHandle))]
     public static class Rayman3_Textures_Loading
     {
         public static ModProp_TextureFile Texture_Load_Gear = new ModProp_TextureFile(false, "Loading - Gear", "");

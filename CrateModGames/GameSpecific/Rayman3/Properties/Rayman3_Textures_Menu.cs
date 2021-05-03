@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using CrateModLoader.ModProperties;
 using CrateModGames.GameSpecific.Rayman3;
+using CrateModLoader.GameSpecific.Rayman3.Mods;
 namespace CrateModLoader.GameSpecific.Rayman3
 {
-    [ModCategory((int)ModProps.Textures_Menu), ModAllowedConsoles(ConsoleMode.GCN)]
+    [ModCategory((int)ModProps.Textures_Menu), ModAllowedConsoles(ConsoleMode.GCN)] [ExecutesMods(typeof(Ray3_CustomTextureHandle))]
     public static class Rayman3_Textures_Menu
     {
         public static ModProp_TextureFile Texture_Menu_Overlay = new ModProp_TextureFile(false, "Pause Menu Overlay", "");

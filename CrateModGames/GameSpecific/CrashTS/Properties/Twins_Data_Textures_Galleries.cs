@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using CrateModLoader.ModProperties;
+using CrateModLoader.GameSpecific.CrashTS.Mods;
 
 namespace CrateModLoader.GameSpecific.CrashTS
 {
-    [ModCategory((int)ModProps.Galleries), ModAllowedConsoles(ConsoleMode.PS2)]
+    [ModCategory((int)ModProps.Galleries), ModAllowedConsoles(ConsoleMode.PS2)] [ExecutesMods(typeof(TS_CustomTextureHandle))]
     public static class Twins_Data_Textures_Galleries
     {
 

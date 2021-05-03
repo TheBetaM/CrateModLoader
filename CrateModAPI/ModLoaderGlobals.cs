@@ -37,6 +37,7 @@ namespace CrateModLoader
     {
         Cache = 0,
         Mod,
+        Preload,
     }
     public enum PipelinePass
     {

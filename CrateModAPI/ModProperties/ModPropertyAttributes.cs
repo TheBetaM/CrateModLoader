@@ -59,4 +59,16 @@ namespace CrateModLoader.ModProperties
             Mods = new List<Type>(args);
         }
     }
+
+    // Property requires preload to be visible
+    public class ModRequiresPreload : Attribute
+    {
+
+    }
+
+    // Property can get preloaded using the Mod(s) that are linked to the property
+    public class ModPreloadBonus : Attribute
+    {
+
+    }
 }

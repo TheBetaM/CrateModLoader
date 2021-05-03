@@ -4,7 +4,7 @@ using CrateModLoader.ModProperties;
 
 namespace CrateModLoader.GameSpecific.CrashNitroKart
 {
-    [ModCategory((int)ModProps.Textures)]
+    [ModCategory((int)ModProps.Textures)] [ExecutesMods(typeof(CNK_CustomTextureHandle))]
     public static class CNK_Data_Textures
     {
 
