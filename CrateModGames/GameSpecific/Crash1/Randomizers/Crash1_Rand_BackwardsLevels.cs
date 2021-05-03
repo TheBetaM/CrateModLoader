@@ -8,9 +8,6 @@ namespace CrateModLoader.GameSpecific.Crash1.Mods
     // todo: sort out FOV mod stuff
     public class Crash1_Rand_BackwardsLevels : ModStruct<NSF_Pair>
     {
-        public override string Name => Crash1_Text.Mod_BackwardsLevels;
-        public override string Description => Crash1_Text.Mod_BackwardsLevelsDesc;
-
         private bool isRandom;
         private Random rand;
 
@@ -88,11 +85,9 @@ namespace CrateModLoader.GameSpecific.Crash1.Mods
             //Crash1_Levels.L28_StormyAscent, // not needed
         };
 
-
-
         public Crash1_Rand_BackwardsLevels(bool isrand)
         {
-            isRandom = isrand;
+            isRandom = Crash1_Props_Main.Option_RandBackwardsLevels.Enabled;
         }
 
         public override void BeforeModPass()

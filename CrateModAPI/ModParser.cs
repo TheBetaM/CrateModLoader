@@ -126,9 +126,18 @@ namespace CrateModLoader
 
         bool CheckModsForType()
         {
+            /*
             foreach (ModPropertyBase Prop in ExecutionSource.ActiveProps)
             {
-                if (Prop.TargetMod is ModStruct<T>)
+                if (Prop.ModInstances is ModStruct<T>)
+                {
+                    return true;
+                }
+            }
+            */
+            foreach (Mod mod in ExecutionSource.Mods)
+            {
+                if (mod is ModStruct<T>)
                 {
                     return true;
                 }

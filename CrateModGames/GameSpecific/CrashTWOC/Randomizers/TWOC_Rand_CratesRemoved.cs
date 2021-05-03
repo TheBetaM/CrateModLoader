@@ -4,12 +4,8 @@ using System.IO;
 
 namespace CrateModLoader.GameSpecific.CrashTWOC
 {
-    // todo: test
     public class TWOC_Rand_CratesRemoved : ModStruct<TWOC_File_CRT>
     {
-        public override string Name => "Random Crates Removed";
-        public override string Description => "Wooden crates are randomly removed in each level. The box counter is adjusted accordingly.";
-
         public List<TWOC_File_CRT.CrateType> CratesToRemove = new List<TWOC_File_CRT.CrateType>()
         {
             TWOC_File_CRT.CrateType.Aku,

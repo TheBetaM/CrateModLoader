@@ -8,9 +8,6 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
     // todo: test, randomize per file
     public class TS_Rand_WorldPalette : ModStruct<ChunkInfoSM>
     {
-        public override string Name => Twins_Text.Rand_WorldPalette;
-        public override string Description => Twins_Text.Rand_WorldPaletteDesc;
-
         private ColorSwizzleData Swiz;
 
         public override void BeforeModPass()

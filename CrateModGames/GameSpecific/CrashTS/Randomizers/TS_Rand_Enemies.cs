@@ -8,9 +8,6 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
     // todo: use modder's Random state, randomize per file
     public class TS_Rand_Enemies : ModStruct<ChunkInfoRM>
     {
-        public override string Name => "Randomize Enemies (Soundless)";
-        public override string Description => "";
-        public override bool Hidden => true;
         public override bool NeedsCachePass => true;
 
         internal List<ObjectID> EnemyReplaceList = new List<ObjectID>();

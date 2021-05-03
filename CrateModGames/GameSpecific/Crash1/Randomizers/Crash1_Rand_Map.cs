@@ -7,9 +7,6 @@ namespace CrateModLoader.GameSpecific.Crash1.Mods
 {
     public class Crash1_Rand_Map : ModStruct<NSF_Pair>
     {
-        public override string Name => "Randomize Level Order";
-        public override string Description => "Shuffle the order of which levels you enter. The Cortex boss is still the last level to play.";
-
         private Random rand;
 
         public override void BeforeModPass()

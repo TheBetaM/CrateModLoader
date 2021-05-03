@@ -7,9 +7,6 @@ namespace CrateModLoader.GameSpecific.Rayman3
 {
     public class Ray3_Start2DNightmare : ModStruct<Rayman3_GenericMod>
     {
-        public override string Name => Rayman3_Text.Mod_NewGameNightmare;
-        public override string Description => Rayman3_Text.Mod_NewGameNightmareDesc;
-
         public override void ModPass(Rayman3_GenericMod mod)
         {
             string basePath = mod.mainPath;

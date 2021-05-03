@@ -7,9 +7,6 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
 {
     public class TS_EnableHiddenEnemies : ModStruct<ChunkInfoRM>
     {
-        public override string Name => Twins_Text.Mod_UnusedEnemies;
-        public override string Description => Twins_Text.Mod_UnusedEnemiesDesc;
-
         public override void ModPass(ChunkInfoRM info)
         {
             TwinsFile RM_Archive = info.File;

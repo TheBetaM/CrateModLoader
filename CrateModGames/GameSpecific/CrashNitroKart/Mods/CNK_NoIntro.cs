@@ -7,9 +7,6 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
 {
     public class CNK_NoIntro : ModStruct<CNK_GenericMod>
     {
-        public override string Name => CNK_Text.Mod_RemoveIntroVideos;
-        public override string Description => CNK_Text.Mod_RemoveIntroVideosDesc;
-
         public override void ModPass(CNK_GenericMod mod)
         {
             string path = mod.mainPath;

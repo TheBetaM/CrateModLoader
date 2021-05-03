@@ -8,9 +8,6 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
     //unfinished
     public class TS_SkipCutscenes : ModStruct<ChunkInfoRM>
     {
-        public override string Name => Twins_Text.Mod_SkipCutscenes;
-        public override string Description => Twins_Text.Mod_SkipCutscenesDesc;
-        public override bool Hidden => true;
         public override bool NeedsCachePass => true;
 
         private Dictionary<uint, Script> allScripts;

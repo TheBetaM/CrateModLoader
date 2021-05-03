@@ -26,16 +26,6 @@ namespace CrateModLoader.ModProperties
                 DefaultValue[i] = Value[i];
             }
         }
-        public ModPropNamedUIntArray(Mod m, uint[] f, string[] names) : base(f)
-        {
-            TargetMod = m;
-            PropNames = names;
-            DefaultValue = new uint[Value.Length];
-            for (int i = 0; i < Value.Length; i++)
-            {
-                DefaultValue[i] = Value[i];
-            }
-        }
 
         public override void ResetToDefault()
         {

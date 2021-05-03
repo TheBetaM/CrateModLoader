@@ -7,9 +7,6 @@ namespace CrateModLoader.GameSpecific.Crash2
 {
     public class Crash2_Rand_WarpRoomExits : ModStruct<NSF_Pair>
     {
-        public override string Name => Crash2_Text.Rand_WarpRoom;
-        public override string Description => Crash2_Text.Rand_WarpRoomDesc;
-
         private Random rand;
 
         public override void BeforeModPass()

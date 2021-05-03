@@ -7,9 +7,6 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
 {
     public class CNK_SpeedUpMaskHints : ModStruct<CSV>
     {
-        public override string Name => CNK_Text.Mod_SpeedUpMaskHint;
-        public override string Description => CNK_Text.Mod_SpeedUpMaskHintDesc;
-
         public override void ModPass(CSV file)
         {
             if (file.FullName.Contains("/hints/config.csv") || file.FullName.Contains("/hints/config.csv"))

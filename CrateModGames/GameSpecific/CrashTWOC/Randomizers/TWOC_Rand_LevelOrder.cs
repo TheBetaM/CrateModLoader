@@ -4,12 +4,8 @@ using System.IO;
 
 namespace CrateModLoader.GameSpecific.CrashTWOC
 {
-    // todo: test
     public class TWOC_Rand_LevelOrder : ModStruct<TWOC_GenericMod>
     {
-        public override string Name => "Randomize Level Order";
-        public override bool Hidden => true;
-
         public override void ModPass(TWOC_GenericMod mod)
         {
             string extrPath = mod.mainPath;

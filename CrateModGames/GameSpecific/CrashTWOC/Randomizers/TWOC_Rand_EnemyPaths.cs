@@ -4,12 +4,8 @@ using System.IO;
 
 namespace CrateModLoader.GameSpecific.CrashTWOC
 {
-    // todo: test
     public class TWOC_Rand_EnemyPaths : ModStruct<TWOC_File_AI>
     {
-        public override string Name => "Randomize Enemy Paths";
-        public override string Description => "Reverses paths of random enemies.";
-
         List<string> BannedEnemies = new List<string>()
             {
                 "crystal",

@@ -8,7 +8,6 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing.Mods
 {
     public class CTR_Lev_TestMod : ModStruct<Scene>
     {
-        public override string Name => "LEV Test";
         //public override bool NeedsCachePass => true;
 
         private List<byte> Weathers = new List<byte>();

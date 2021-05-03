@@ -7,9 +7,6 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
 {
     public class CNK_DisableFadeout : ModStruct<CSV>
     {
-        public override string Name => CNK_Text.Mod_DisableFadeout;
-        public override string Description => CNK_Text.Mod_DisableFadeoutDesc;
-
         public override void ModPass(CSV file)
         {
             if (file.FullName.Contains("/hud/") || file.FullName.Contains(@"\hud\"))

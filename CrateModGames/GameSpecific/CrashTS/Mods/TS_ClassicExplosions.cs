@@ -8,8 +8,6 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
     //todo needs testing
     public class TS_ClassicExplosions : ModStruct<ChunkInfoRM>
     {
-        public override string Name => Twins_Text.Mod_ClassicExplosionDaamge;
-        public override string Description => Twins_Text.Mod_ClassicExplosionDamageDesc;
         public override bool NeedsCachePass => true;
 
         private Script GenericCrateExplode = null;

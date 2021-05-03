@@ -7,10 +7,6 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
     // unfinished (new box positions are off)
     public class TWOC_Rand_WumpaIntoCrates : ModStruct<string>
     {
-        public override string Name => "Random Wumpa Are Random Crates";
-        public override string Description => "Wumpas are randomly turned into crates in each level. The box counter is adjusted accordingly.";
-        public override bool Hidden => true;
-
         public List<TWOC_File_CRT.CrateType> CratesToInsert = new List<TWOC_File_CRT.CrateType>()
         {
             TWOC_File_CRT.CrateType.Aku,

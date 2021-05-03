@@ -7,15 +7,12 @@ namespace CrateModLoader.GameSpecific.Crash1.TrilogyCommon
 {
     public class CrashTri_Rand_AshedCrates : ModStruct<NSF_Pair>
     {
-        public override string Name => "All Crates Are Covered Up";
-        public override string Description => "All crates are covered up to look the same on the outside in each level.";
-
         private Random rand;
         private bool isRandom;
 
-        public CrashTri_Rand_AshedCrates(bool isrand)
+        public CrashTri_Rand_AshedCrates()
         {
-            isRandom = isrand;
+            isRandom = Crash2.Crash2_Props_Main.Option_RandCratesAshed.Enabled || Crash3.Crash3_Props_Main.Option_RandCratesAshed.Enabled;
         }
 
         public override void BeforeModPass()

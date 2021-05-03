@@ -8,8 +8,6 @@ namespace CrateModLoader.GameSpecific.CrashTTR
 {
     public class CTTR_Rand_PlatformingCharacter : ModStruct<File, GOD_File>
     {
-        public override string Name => CTTR_Text.Rand_PlatformingCharacter;
-        public override string Description => CTTR_Text.Rand_PlatformingCharacterDesc;
         public override bool NeedsCachePass => true;
 
         private Chunk targetIdleAnim = null;

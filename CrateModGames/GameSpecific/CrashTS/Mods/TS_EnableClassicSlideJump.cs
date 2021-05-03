@@ -7,9 +7,6 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
 {
     public class TS_EnableClassicSlideJump : ModStruct<ChunkInfoRM>
     {
-        public override string Name => Twins_Text.Mod_ClassicSlideJump;
-        public override string Description => Twins_Text.Mod_ClassicSlideJumpDesc;
-
         public override void ModPass(ChunkInfoRM info)
         {
             TwinsFile RM_Archive = info.File;

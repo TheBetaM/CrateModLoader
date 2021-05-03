@@ -8,9 +8,6 @@ namespace CrateModLoader.GameSpecific.Crash2
     // todo: sort out boss randomizer stuff
     public class Crash2_Rand_BackwardsLevels : ModStruct<NSF_Pair>
     {
-        public override string Name => Crash2_Text.Mod_BackwardsLevels;
-        public override string Description => Crash2_Text.Mod_BackwardsLevelsDesc;
-
         private Random rand;
         private bool isRandom;
 
@@ -89,7 +86,7 @@ namespace CrateModLoader.GameSpecific.Crash2
 
         public Crash2_Rand_BackwardsLevels(bool isrand)
         {
-            isRandom = isrand;
+            isRandom = Crash2_Props_Main.Option_RandBackwardsLevels.Enabled;
         }
 
         public override void BeforeModPass()

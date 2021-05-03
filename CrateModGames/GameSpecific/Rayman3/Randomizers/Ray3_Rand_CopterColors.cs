@@ -7,9 +7,6 @@ namespace CrateModLoader.GameSpecific.Rayman3
 {
     public class Ray3_Rand_CopterColors : ModStruct<TPL_File>
     {
-        public override string Name => Rayman3_Text.Rand_CopterColors;
-        public override string Description => Rayman3_Text.Rand_CopterColorsDesc;
-
         public override void ModPass(TPL_File file)
         {
             if (file.Name.ToLower().Contains("fix.tpl"))

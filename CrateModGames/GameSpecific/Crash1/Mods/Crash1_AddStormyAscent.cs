@@ -7,9 +7,6 @@ namespace CrateModLoader.GameSpecific.Crash1.Mods
 {
     public class Crash1_AddStormyAscent : ModStruct<NSF_Pair>
     {
-        public override string Name => "Add Stormy Ascent";
-        public override string Description => "Replaces The Great Hall with Stormy Ascent. Works with all other features like Backwards Levels and Randomize Level Order. (Tokens removed from the level to ensure stability)";
-
         public override void ModPass(NSF_Pair pair)
         {
             if (pair.LevelC1 == Crash1_Levels.MapMainMenu)

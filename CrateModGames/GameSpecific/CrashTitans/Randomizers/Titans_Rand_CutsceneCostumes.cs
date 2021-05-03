@@ -6,9 +6,6 @@ namespace CrateModLoader.GameSpecific.CrashTitans
 {
     public class Titans_Rand_CutsceneCostumes : ModStruct<string>
     {
-        public override string Name => "Randomize Cutscene Costumes";
-        public override string Description => "Shuffles Crash's costume in every individual major cutscene.";
-
         private Random rand;
 
         private List<string> Costume_Battler = new List<string>()

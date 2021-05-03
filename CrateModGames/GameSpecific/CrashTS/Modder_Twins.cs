@@ -64,8 +64,8 @@ namespace CrateModLoader.GameSpecific.CrashTS
                     {
                         TS_Props_Main.Option_RandCharacterParams.Value = 1;
                         TS_Props_Main.Option_RandCharacterParams.HasChanged = true;
-                        TS_Rand_CharParams PMod = (TS_Rand_CharParams)TS_Props_Main.Option_RandCharacterParams.TargetMod;
-                        PMod.isSet = true;
+                        //TS_Rand_CharParams PMod = (TS_Rand_CharParams)TS_Props_Main.Option_RandCharacterParams.ModInstances;
+                        //PMod.isSet = true;
                     }
                 }
             }

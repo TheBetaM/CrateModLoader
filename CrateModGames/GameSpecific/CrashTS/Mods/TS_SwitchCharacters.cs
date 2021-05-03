@@ -8,8 +8,6 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
     //todo xbox scripts, needs testing
     public class TS_SwitchCharacters : ModStruct<ChunkInfoRM>
     {
-        public override string Name => Twins_Text.Mod_SwitchCharacters;
-        public override string Description => Twins_Text.Mod_SwitchCharactersDesc;
         public override bool NeedsCachePass => true;
 
         private Script StrafeLeft = null;

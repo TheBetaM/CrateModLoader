@@ -7,14 +7,11 @@ namespace CrateModLoader.GameSpecific.Rayman3
 {
     public class Ray3_Rand_LevelOrder : ModStruct<Rayman3_GenericMod>
     {
-        public override string Name => Rayman3_Text.Rand_LevelOrder;
-        public override string Description => Rayman3_Text.Rand_LevelOrderDesc;
-
         public bool anyLevels = false;
 
         public Ray3_Rand_LevelOrder(bool any)
         {
-            anyLevels = any;
+            anyLevels = Rayman3_Props_Main.Option_RandLevelOrder.Enabled;
         }
 
         public override void ModPass(Rayman3_GenericMod mod)

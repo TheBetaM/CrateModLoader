@@ -7,9 +7,6 @@ namespace CrateModLoader.GameSpecific.CrashTTR
 {
     public class CTTR_Rand_MinigameEntrances : ModStruct<GOD_File>
     {
-        public override string Name => CTTR_Text.Rand_Minigames;
-        public override string Description => CTTR_Text.Rand_MinigamesDesc;
-
         private List<int> randMinigames;
 
         public override void BeforeModPass()

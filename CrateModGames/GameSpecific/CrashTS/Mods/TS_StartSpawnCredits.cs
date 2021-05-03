@@ -9,9 +9,6 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
     //todo needs testing
     public class TS_StartSpawnCredits : ModStruct<ExecutableInfo>
     {
-        public override string Name => Twins_Text.Mod_StartAndCreditsSpawn;
-        public override string Description => Twins_Text.Mod_StartAndCreditsSpawnDesc;
-
         private Dictionary<ExecutableIndex, int> StartLevelPathOff = new Dictionary<ExecutableIndex, int>()
         {
             [ExecutableIndex.PAL] = 0x79938,

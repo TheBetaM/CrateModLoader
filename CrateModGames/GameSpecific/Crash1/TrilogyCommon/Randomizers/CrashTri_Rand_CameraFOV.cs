@@ -7,18 +7,15 @@ namespace CrateModLoader.GameSpecific.Crash1.TrilogyCommon
 {
     public class CrashTri_Rand_CameraFOV : ModStruct<NSF_Pair>
     {
-        public override string Name => CrashTri_Text.Mod_CameraWideFOV;
-        public override string Description => CrashTri_Text.Mod_CameraWideFOVDesc;
-
         private Random rand;
         private bool isRandom;
         private double FoV_Mod_1;
         private double FoV_Mod_2;
         private double FoV_Mod_3;
 
-        public CrashTri_Rand_CameraFOV(bool isrand)
+        public CrashTri_Rand_CameraFOV()
         {
-            isRandom = isrand;
+            isRandom = Crash1.Crash1_Props_Misc.Option_RandCameraFOV.Enabled || Crash2.Crash2_Props_Misc.Option_RandCameraFOV.Enabled || Crash3.Crash3_Props_Misc.Option_RandCameraFOV.Enabled;
         }
 
         public override void BeforeModPass()

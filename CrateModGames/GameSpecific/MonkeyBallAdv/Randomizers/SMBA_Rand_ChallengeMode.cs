@@ -6,9 +6,6 @@ namespace CrateModLoader.GameSpecific.MonkeyBallAdv.Mods
 {
     public class SMBA_Rand_ChallengeMode : ModStruct<XmlDocument>
     {
-        public override string Name => "Randomize Challenge Mode";
-        public override string Description => "Randomize which levels to play in all Challenge modes and randomize challenge settings.";
-
         public override void ModPass(XmlDocument xml)
         {
             if (xml.HasChildNodes && xml.FirstChild.Name == "settings")

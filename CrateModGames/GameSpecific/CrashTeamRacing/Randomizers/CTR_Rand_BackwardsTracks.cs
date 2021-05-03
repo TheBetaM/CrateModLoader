@@ -8,14 +8,12 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing.Mods
     //unfinished
     public class CTR_Rand_BackwardsTracks : ModStruct<Scene>
     {
-        public override string Name => "Random Tracks Are Reversed";
-
         private Random rand;
         private bool isRandom;
 
-        public CTR_Rand_BackwardsTracks(bool isrand)
+        public CTR_Rand_BackwardsTracks()
         {
-            isRandom = isrand;
+            isRandom = CTR_Props_Main.Option_Rand_BackwardsTracks.Enabled;
         }
 
         public override void BeforeModPass()

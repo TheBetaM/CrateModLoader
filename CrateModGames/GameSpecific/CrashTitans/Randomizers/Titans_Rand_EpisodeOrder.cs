@@ -6,9 +6,6 @@ namespace CrateModLoader.GameSpecific.CrashTitans
 {
     public class Titans_Rand_EpisodeOrder : ModStruct<string>
     {
-        public override string Name => "Randomize Episode Order";
-        public override bool Hidden => true;
-
         List<string> EpisodeFolderNames = new List<string>()
         {
             "L1_E1",

@@ -7,14 +7,12 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing.Mods
 {
     public class CTR_Rand_MoonGravity : ModStruct<Scene>
     {
-        public override string Name => "Random Tracks Have Moon Gravity";
-
         private Random rand;
         private bool isRandom;
 
-        public CTR_Rand_MoonGravity(bool isrand)
+        public CTR_Rand_MoonGravity()
         {
-            isRandom = isrand;
+            isRandom = CTR_Props_Main.Option_Rand_MoonGravity.Enabled;
         }
 
         public override void BeforeModPass()

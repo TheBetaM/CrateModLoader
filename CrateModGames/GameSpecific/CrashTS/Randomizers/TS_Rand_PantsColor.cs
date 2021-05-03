@@ -6,12 +6,8 @@ using System.Drawing;
 
 namespace CrateModLoader.GameSpecific.CrashTS.Mods
 {
-    // todo: testing
     public class TS_Rand_PantsColor : ModStruct<ChunkInfoRM>
     {
-        public override string Name => Twins_Text.Rand_PantsColor;
-        public override string Description => Twins_Text.Rand_PantsColorDesc;
-
         private Color PantsColor;
 
         public override void BeforeModPass()

@@ -9,8 +9,6 @@ namespace CrateModLoader.GameSpecific.Crash3
     //unfinished
     public class Crash3_Rand_BossPatterns : ModStruct<NSF_Pair>
     {
-        public override string Name => "Randomize Boss Levels";
-
         private Random rand;
 
         public override void BeforeModPass()

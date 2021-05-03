@@ -8,8 +8,6 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing.Mods
 {
     public class CTR_Rand_WorldPalette : ModStruct<Scene>
     {
-        public override string Name => "Randomize World Palette";
-
         private Random rand;
 
         public override void BeforeModPass()

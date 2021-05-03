@@ -9,9 +9,6 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
     // todo: testing
     public class TS_GreyscaleDimension : ModStruct<ChunkInfoSM>
     {
-        public override string Name => Twins_Text.Mod_GreyscaleDimension;
-        public override string Description => Twins_Text.Mod_GreyscaleDimensionDesc;
-
         public override void ModPass(ChunkInfoSM info)
         {
             TwinsFile SM_Archive = info.File;

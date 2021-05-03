@@ -7,9 +7,6 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
 {
     public class TS_ClassicHealth : ModStruct<ChunkInfoRM>
     {
-        public override string Name => Twins_Text.Mod_ClassicHealth;
-        public override string Description => Twins_Text.Mod_ClassicHealthDesc;
-
         public override void ModPass(ChunkInfoRM info)
         {
             TwinsFile RM_Archive = info.File;

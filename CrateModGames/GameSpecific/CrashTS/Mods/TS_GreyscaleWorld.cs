@@ -8,11 +8,6 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
 {
     public class TS_GreyscaleWorld : ModStruct<ChunkInfoSM>
     {
-        public override string Name => Twins_Text.Mod_GreyscaleWorld;
-        public override string Description => Twins_Text.Mod_GreyscaleWorldDesc;
-        public override List<ConsoleMode> SupportedConosles => new List<ConsoleMode>() { ConsoleMode.PS2 };
-        public override int Category => (int)ModProps.Misc;
-
         public override void ModPass(ChunkInfoSM info)
         {
             TwinsFile SM_Archive = info.File;

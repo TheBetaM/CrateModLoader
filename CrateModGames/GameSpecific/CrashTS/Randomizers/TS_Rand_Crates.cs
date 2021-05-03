@@ -8,8 +8,6 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
     // todo: randomize per file, test
     public class TS_Rand_Crates : ModStruct<ChunkInfoRM>
     {
-        public override string Name => Twins_Text.Rand_Crates;
-        public override string Description => Twins_Text.Rand_CratesDesc;
         public override bool NeedsCachePass => true;
 
         internal List<uint> CrateReplaceList = new List<uint>();

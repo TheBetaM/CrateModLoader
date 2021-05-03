@@ -7,14 +7,12 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing.Mods
 {
     public class CTR_Rand_IcyTracks : ModStruct<Scene>
     {
-        public override string Name => "Random Tracks Have Ice Physics";
-
         private Random rand;
         private bool isRandom;
 
-        public CTR_Rand_IcyTracks(bool isrand)
+        public CTR_Rand_IcyTracks()
         {
-            isRandom = isrand;
+            isRandom = CTR_Props_Main.Option_Rand_IcyTracks.Enabled;
         }
 
         public override void BeforeModPass()

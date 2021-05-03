@@ -7,8 +7,6 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
 {
     public class CNK_Rand_SurfaceParams : ModStruct<CSV>
     {
-        public override string Name => "Randomize Surface Parameters";
-
         private Random randState;
 
         public override void BeforeModPass()

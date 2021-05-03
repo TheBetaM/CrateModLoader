@@ -31,7 +31,7 @@ namespace CrateModLoader
         /// <summary> (for ModPropOption) True if it doesn't show up in the quick options in the main window </summary>
         public bool ModMenuOnly = false;
 
-        public Mod TargetMod = null;
+        public List<Type> TargetMods = null;
 
         /// <summary> Region list for the property to be allowed for </summary>
         public List<RegionType> AllowedRegions { get; set; }

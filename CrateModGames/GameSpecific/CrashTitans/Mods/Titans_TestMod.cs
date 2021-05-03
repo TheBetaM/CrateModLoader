@@ -8,8 +8,6 @@ namespace CrateModLoader.GameSpecific.CrashTitans
 {
     public class Titans_TestMod : ModStruct<string>
     {
-        public override string Name => "Test Mod: Wide camera angle in Episode 1";
-
         public override void ModPass(string path_extr)
         {
             // Proof of concept mod increasing gameplay FOV in Episode 1

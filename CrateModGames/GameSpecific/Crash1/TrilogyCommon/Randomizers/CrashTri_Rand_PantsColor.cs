@@ -9,17 +9,14 @@ namespace CrateModLoader.GameSpecific.Crash1.TrilogyCommon
 {
     public class CrashTri_Rand_PantsColor : ModStruct<NSF_Pair>
     {
-        public override string Name => CrashTri_Text.Rand_PantsColor;
-        public override string Description => CrashTri_Text.Rand_PantsColorDesc;
-
         private Random rand;
         private bool isRandom;
         private SceneryColor targetColor;
         private OldSceneryColor targetOldColor;
 
-        public CrashTri_Rand_PantsColor(bool isrand)
+        public CrashTri_Rand_PantsColor()
         {
-            isRandom = isrand;
+            isRandom = Crash1_Props_Main.Option_RandPantsColor.Enabled || Crash2_Props_Main.Option_RandPantsColor.Enabled || Crash3_Props_Main.Option_RandPantsColor.Enabled;
         }
 
         public override void BeforeModPass()

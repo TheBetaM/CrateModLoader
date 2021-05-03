@@ -7,8 +7,6 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing.Mods
 {
     public class CTR_OffroadDead : ModStruct<Scene>
     {
-        public override string Name => "Driving Offroad Respawns The Driver";
-
         private Random rand;
         private bool isRandom;
 
@@ -22,9 +20,9 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing.Mods
             TerrainFlags.Water,
         };
 
-        public CTR_OffroadDead(bool isrand)
+        public CTR_OffroadDead()
         {
-            isRandom = isrand;
+            isRandom = CTR_Props_Main.Option_OffroadDead.Disabled;
         }
 
         public override void BeforeModPass()

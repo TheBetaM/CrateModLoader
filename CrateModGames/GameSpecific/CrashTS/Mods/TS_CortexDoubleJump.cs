@@ -7,9 +7,6 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
 {
     public class TS_CortexDoubleJump : ModStruct<ChunkInfoRM>
     {
-        public override string Name => Twins_Text.Mod_CortexDoubleJump;
-        public override string Description => Twins_Text.Mod_CortexDoubleJumpDesc;
-
         public override void ModPass(ChunkInfoRM info)
         {
             TwinsFile RM_Archive = info.File;

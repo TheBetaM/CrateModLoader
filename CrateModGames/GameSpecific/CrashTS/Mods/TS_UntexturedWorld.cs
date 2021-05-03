@@ -7,9 +7,6 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
 {
     public class TS_UntexturedWorld : ModStruct<ChunkInfoSM>
     {
-        public override string Name => Twins_Text.Mod_UntexturedWorld;
-        public override string Description => Twins_Text.Mod_UntexturedWorldDesc;
-
         public override void ModPass(ChunkInfoSM info)
         {
             TwinsFile SM_Archive = info.File;

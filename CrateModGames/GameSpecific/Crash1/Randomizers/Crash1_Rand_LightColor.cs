@@ -7,9 +7,6 @@ namespace CrateModLoader.GameSpecific.Crash1.Mods
 {
     public class Crash1_Rand_LightColor : ModStruct<NSF_Pair>
     {
-        public override string Name => Crash1_Text.Rand_LightCol;
-        public override string Description => Crash1_Text.Rand_LightColDesc;
-
         private Random rand;
 
         public override void BeforeModPass()

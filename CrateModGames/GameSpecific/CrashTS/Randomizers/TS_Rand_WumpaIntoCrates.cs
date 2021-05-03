@@ -8,10 +8,6 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
     // todo: unfinished, use modder's Random state, randomize per file
     public class TS_Rand_WumpaIntoCrates : ModStruct<ChunkInfoRM>
     {
-        public override string Name => Twins_Text.Rand_WumpaIntoCrates;
-        public override string Description => Twins_Text.Rand_WumpaIntoCratesDesc;
-        public override bool Hidden => true;
-
         private bool isRandom = true;
 
         private List<ObjectID> CratesForWumpaToTurnInto = new List<ObjectID>()
@@ -29,7 +25,7 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
 
         public override void BeforeModPass()
         {
-            isRandom = true;
+            isRandom = TS_Props_Main.Option_AllWumpaCrates.Disabled;
         }
 
         public override void ModPass(ChunkInfoRM info)

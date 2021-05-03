@@ -7,10 +7,13 @@ namespace CrateModLoader.GameSpecific.CrashTTR
     //todo add mod prop for manual editing
     public class CTTR_Rand_BattleKOs : ModStruct<GOD_File>
     {
-        public override string Name => "Randomize Battle KO's";
-
         private List<int> randKOs;
         private bool isSet = false;
+
+        public CTTR_Rand_BattleKOs()
+        {
+            isSet = CTTR_Props_Main.Option_RandBattleKOs.Enabled;
+        }
 
         public override void BeforeModPass()
         {

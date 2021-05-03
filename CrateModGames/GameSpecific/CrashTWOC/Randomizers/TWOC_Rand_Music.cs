@@ -4,12 +4,8 @@ using System.IO;
 
 namespace CrateModLoader.GameSpecific.CrashTWOC
 {
-    // todo: test
     public class TWOC_Rand_Music : ModStruct<TWOC_GenericMod>
     {
-        public override string Name => "Randomize Music";
-        public override string Description => "Music tracks are shuffled around.";
-
         List<string> MusicNames = new List<string>()
         {
             "ArcticAL",

@@ -8,9 +8,6 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
     // todo: test, randomize per file
     public class TS_Rand_Surfaces : ModStruct<ChunkInfoRM>
     {
-        public override string Name => Twins_Text.Rand_SurfaceParams;
-        public override string Description => Twins_Text.Rand_SurfaceParamsDesc;
-
         internal Dictionary<int, int> randSurfaces = new Dictionary<int, int>();
 
         private List<DefaultEnums.SurfaceTypes> SurfacesToChange = new List<DefaultEnums.SurfaceTypes>()

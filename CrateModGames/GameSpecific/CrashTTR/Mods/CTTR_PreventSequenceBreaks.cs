@@ -6,9 +6,6 @@ namespace CrateModLoader.GameSpecific.CrashTTR
 {
     public class CTTR_PreventSequenceBreaks : ModStruct<GOD_File>
     {
-        public override string Name => CTTR_Text.Mod_PreventSkips;
-        public override string Description => CTTR_Text.Mod_PreventSkipsDesc;
-
         public override void ModPass(GOD_File file)
         {
             if (file.Name.Contains("genericobjectives.god"))

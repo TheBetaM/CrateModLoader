@@ -7,8 +7,6 @@ namespace CrateModLoader.GameSpecific.Crash1.TrilogyCommon
 {
     public class CrashTri_Crates_AllBlank : ModStruct<NSF_Pair>
     {
-        public override string Name => CrashTri_Text.Mod_AllCratesBlank;
-        public override string Description => CrashTri_Text.Mod_AllCratesBlankDesc;
 
         private List<CrateSubTypes> Crates_ToReplace = new List<CrateSubTypes>()
         {

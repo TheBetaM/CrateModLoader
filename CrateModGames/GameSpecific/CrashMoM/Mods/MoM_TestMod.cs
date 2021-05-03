@@ -8,8 +8,6 @@ namespace CrateModLoader.GameSpecific.CrashMoM.Mods
 {
     public class MoM_TestMod : ModStruct<string>
     {
-        public override string Name => "Test Mod";
-
         public override void ModPass(string path_extr)
         {
 

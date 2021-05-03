@@ -7,9 +7,6 @@ namespace CrateModLoader.GameSpecific.Crash1.TrilogyCommon
 {
     public class CrashTri_Rand_WorldTex : ModStruct<NSF_Pair>
     {
-        public override string Name => CrashTri_Text.Rand_WorldTex;
-        public override string Description => CrashTri_Text.Rand_WorldTexDesc;
-
         private Random rand;
 
         public override void BeforeModPass()

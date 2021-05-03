@@ -6,15 +6,12 @@ namespace CrateModLoader.GameSpecific.CrashTTR
 {
     public class CTTR_Rand_RaceLaps : ModStruct<GOD_File>
     {
-        public override string Name => CTTR_Text.Rand_RaceLaps;
-        public override string Description => CTTR_Text.Rand_RaceLapsDesc;
-
         private List<int> randLaps;
         private bool isSet;
 
-        public CTTR_Rand_RaceLaps(bool set)
+        public CTTR_Rand_RaceLaps()
         {
-            isSet = set;
+            isSet = CTTR_Props_Main.Option_RandRaceLaps.Enabled;
         }
 
         public override void BeforeModPass()

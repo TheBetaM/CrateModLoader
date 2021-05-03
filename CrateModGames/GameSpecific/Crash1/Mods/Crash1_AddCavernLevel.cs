@@ -8,9 +8,6 @@ namespace CrateModLoader.GameSpecific.Crash1.Mods
     //unfinished
     public class Crash1_AddCavernLevel : ModStruct<NSF_Pair>
     {
-        public override string Name => "Add Caved In";
-        public override string Description => "Replaces Papu Papu with the unused cavern level.";
-
         public override void ModPass(NSF_Pair pair)
         {
             /*

@@ -8,8 +8,6 @@ namespace CrateModLoader.GameSpecific.Crash1.Mods
     //unfinished
     public class Crash1_Rand_BonusRounds : ModStruct<NSF_Pair>
     {
-        public override string Name => "Randomize Bonus Rounds";
-
         private Random rand;
 
         private Dictionary<Crash1_Levels, BonusLevels[]> ValidBonuses = new Dictionary<Crash1_Levels, BonusLevels[]>()

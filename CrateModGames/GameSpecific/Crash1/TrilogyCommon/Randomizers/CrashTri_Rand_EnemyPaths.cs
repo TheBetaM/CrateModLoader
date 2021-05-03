@@ -7,9 +7,6 @@ namespace CrateModLoader.GameSpecific.Crash1.TrilogyCommon
 {
     public class CrashTri_Rand_EnemyPaths : ModStruct<NSF_Pair>
     {
-        public override string Name => CrashTri_Text.Rand_EnemyPaths;
-        public override string Description => CrashTri_Text.Rand_EnemyPathsDesc;
-
         private Random rand;
 
         private List<EntityTypePair> EnemiesToRemove_C2 = new List<EntityTypePair>()

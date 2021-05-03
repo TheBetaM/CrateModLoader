@@ -8,8 +8,6 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing.Mods
 {
     public class CTR_Rand_PantsColor : ModStruct<CtrModel>
     {
-        public override string Name => "Randomize Pants Color";
-
         private Random rand;
         private Color targetColor;
 

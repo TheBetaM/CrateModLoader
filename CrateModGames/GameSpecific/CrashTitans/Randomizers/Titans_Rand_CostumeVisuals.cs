@@ -6,9 +6,6 @@ namespace CrateModLoader.GameSpecific.CrashTitans
 {
     public class Titans_Rand_CostumeVisuals : ModStruct<string>
     {
-        public override string Name => "Randomize Costume Visuals";
-        public override string Description => "Shuffles Crash's playable costume visuals.";
-
         private Random rand;
 
         private List<string> Costumes = new List<string>()

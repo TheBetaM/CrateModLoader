@@ -8,8 +8,6 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
     //unfinished, music.csv doesn't seem to affect the game?
     public class CNK_Rand_Music : ModStruct<CSV>
     {
-        public override string Name => "Randomize Music";
-
         private Random randState;
 
         public override void BeforeModPass()

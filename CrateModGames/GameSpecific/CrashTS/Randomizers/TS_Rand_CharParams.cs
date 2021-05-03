@@ -8,13 +8,15 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
     // todo: test
     public class TS_Rand_CharParams : ModStruct<ChunkInfoRM>
     {
-        public override string Name => Twins_Text.Rand_CharParams;
-        public override string Description => Twins_Text.Rand_CharParamsDesc;
-
         internal List<uint> musicTypes = new List<uint>();
         internal List<uint> randMusicList = new List<uint>();
 
-        public bool isSet = false;
+        private bool isSet = false;
+
+        public TS_Rand_CharParams()
+        {
+            isSet = TS_Props_Main.Option_RandCharacterParams.Disabled;
+        }
 
         public override void BeforeModPass()
         {

@@ -8,9 +8,6 @@ namespace CrateModLoader.GameSpecific.Crash2
     //todo sort out backwards
     public class Crash2_Rand_BossPaths : ModStruct<NSF_Pair>
     {
-        public override string Name => Crash2_Text.Rand_BossLevels;
-        public override string Description => Crash2_Text.Rand_BossLevelsDesc;
-
         private Random rand;
 
         public override void BeforeModPass()

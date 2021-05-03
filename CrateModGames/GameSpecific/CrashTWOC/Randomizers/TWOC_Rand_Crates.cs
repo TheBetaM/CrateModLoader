@@ -4,12 +4,8 @@ using System.IO;
 
 namespace CrateModLoader.GameSpecific.CrashTWOC
 {
-    // todo: test
     public class TWOC_Rand_Crates : ModStruct<TWOC_File_CRT>
     {
-        public override string Name => "Randomize Wooden Crates";
-        public override string Description => "The types of wooden crates are randomized.";
-
         public List<TWOC_File_CRT.CrateType> CratesToChange = new List<TWOC_File_CRT.CrateType>()
         {
             TWOC_File_CRT.CrateType.Aku,

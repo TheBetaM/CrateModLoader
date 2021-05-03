@@ -7,9 +7,6 @@ namespace CrateModLoader.GameSpecific.Crash3
 {
     public class Crash3_Rand_BackwardsLevels : ModStruct<NSF_Pair>
     {
-        public override string Name => Crash3_Text.Mod_BackwardsLevels;
-        public override string Description => Crash3_Text.Mod_BackwardsLevelsDesc;
-
         private Random rand;
         private bool isRandom;
 
@@ -99,9 +96,9 @@ namespace CrateModLoader.GameSpecific.Crash3
         };
 
 
-        public Crash3_Rand_BackwardsLevels(bool isrand)
+        public Crash3_Rand_BackwardsLevels()
         {
-            isRandom = isrand;
+            isRandom = Crash3_Props_Main.Option_RandBackwardsLevels.Enabled;
         }
 
         public override void BeforeModPass()

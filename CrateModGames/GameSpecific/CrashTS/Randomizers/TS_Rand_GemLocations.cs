@@ -8,9 +8,6 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
     // todo: test, randomize per file
     public class TS_Rand_GemLocations : ModStruct<ChunkInfoRM>
     {
-        public override string Name => Twins_Text.Rand_GemLocations;
-        public override string Description => Twins_Text.Rand_GemLocationsDesc;
-
         internal List<uint> gemObjectList = new List<uint>();
 
         private List<TwinsGem> GemSpawnPoints = new List<TwinsGem>()

@@ -8,8 +8,6 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing.Mods
     //works but sucks
     public class CTR_Rand_SurfaceParams : ModStruct<Scene>
     {
-        public override string Name => "Randomize Surface Parameters";
-
         private List<TerrainFlags> ToReplace = new List<TerrainFlags>()
         {
             TerrainFlags.Asphalt,

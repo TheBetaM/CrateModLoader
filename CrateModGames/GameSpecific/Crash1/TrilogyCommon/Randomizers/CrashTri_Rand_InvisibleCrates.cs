@@ -9,15 +9,12 @@ namespace CrateModLoader.GameSpecific.Crash1.TrilogyCommon
 {
     public class CrashTri_Rand_InvisibleCrates : ModStruct<NSF_Pair>
     {
-        public override string Name => CrashTri_Text.Mod_InvisibleCrates;
-        public override string Description => CrashTri_Text.Mod_InvisibleCratesDesc;
-
         private Random rand;
         private bool isRandom;
 
-        public CrashTri_Rand_InvisibleCrates(bool isrand)
+        public CrashTri_Rand_InvisibleCrates()
         {
-            isRandom = isrand;
+            isRandom = Crash1_Props_Main.Option_RandInvisibleCrates.Enabled || Crash2_Props_Main.Option_RandInvisibleCrates.Enabled || Crash3_Props_Main.Option_RandInvisibleCrates.Enabled;
         }
 
         public override void BeforeModPass()

@@ -7,8 +7,6 @@ namespace CrateModLoader.GameSpecific.CrashTTR
     // unfinsihed, needs more logic
     public class CTTR_Rand_HubEntrances : ModStruct<GOD_File>
     {
-        public override string Name => "Randomize Hub Entrances";
-
         private List<int> randHubs;
         private List<int> randGems;
 

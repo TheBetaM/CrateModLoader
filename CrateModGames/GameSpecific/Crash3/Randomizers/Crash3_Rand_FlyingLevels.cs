@@ -9,9 +9,6 @@ namespace CrateModLoader.GameSpecific.Crash3
     // unfinished
     public class Crash3_Rand_FlyingLevels : ModStruct<NSF_Pair>
     {
-        public override string Name => Crash3_Text.Rand_FlyingLevels;
-        public override string Description => Crash3_Text.Rand_FlyingLevelsDesc;
-
         private Random rand;
 
         public override void BeforeModPass()

@@ -7,9 +7,6 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
 {
     public class CNK_Rand_PowerupEffects : ModStruct<CSV>
     {
-        public override string Name => CNK_Text.Rand_PowerupEffects;
-        public override string Description => CNK_Text.Rand_PowerupEffectsDesc;
-
         public override void BeforeModPass()
         {
             Random randState = new Random(ModLoaderGlobals.RandomizerSeed);

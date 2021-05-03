@@ -10,15 +10,12 @@ namespace CrateModLoader.GameSpecific.Crash1.TrilogyCommon
     //unfinished
     public class CrashTri_Rand_MirrorLevel : ModStruct<NSF_Pair>
     {
-        public override string Name => "Random Levels Are Mirrored";
-        public override bool Hidden => true;
-
         private Random rand;
         private bool isRandom;
 
         public CrashTri_Rand_MirrorLevel(bool isrand)
         {
-            isRandom = isrand;
+            isRandom = Crash1_Props_Main.Option_RandMirroredWorld.Enabled || Crash2_Props_Main.Option_RandMirroredWorld.Enabled || Crash3_Props_Main.Option_RandMirroredWorld.Enabled;
         }
 
         public override void BeforeModPass()

@@ -7,8 +7,11 @@ namespace CrateModLoader.GameSpecific.CrashMoM
 {
     static class MoM_Props_Main
     {
-        public static ModPropOption Option_TestMod = new ModPropOption(new MoM_TestMod()) { Hidden = true, };
-        public static ModPropOption Option_Rand_CostumeVisuals = new ModPropOption(new MoM_Rand_CostumeVisuals());
-        public static ModPropOption Option_Metadata = new ModPropOption(new MoM_Metadata(), 1) { Hidden = true, };
+        [ExecutesMods(typeof(MoM_TestMod))] [ModHidden]
+        public static ModPropOption Option_TestMod = new ModPropOption("Test Mod", "");
+        [ExecutesMods(typeof(MoM_Rand_CostumeVisuals))]
+        public static ModPropOption Option_Rand_CostumeVisuals = new ModPropOption("Randomize Costume Visuals", "Shuffles Crash's playable costume visuals.");
+        [ExecutesMods(typeof(MoM_Metadata))] [ModHidden]
+        public static ModPropOption Option_Metadata = new ModPropOption(1);
     }
 }

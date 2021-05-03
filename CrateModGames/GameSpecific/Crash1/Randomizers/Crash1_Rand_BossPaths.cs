@@ -8,9 +8,6 @@ namespace CrateModLoader.GameSpecific.Crash1.Mods
     // todo: split off backwards levels logic
     public class Crash1_Rand_BossPaths : ModStruct<NSF_Pair>
     {
-        public override string Name => Crash1_Text.Rand_BossLevels;
-        public override string Description => Crash1_Text.Rand_BossLevelsDesc;
-
         private Random rand;
 
         public override void BeforeModPass()

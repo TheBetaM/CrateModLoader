@@ -7,9 +7,6 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
 {
     public class CNK_DisablePopups : ModStruct<CSV>
     {
-        public override string Name => CNK_Text.Mod_DisableUnlockPopups;
-        public override string Description => CNK_Text.Mod_DisableUnlockPopupsDesc;
-
         public override void ModPass(CSV file)
         {
             if (file.Name.ToLower() == "unlockables.csv")

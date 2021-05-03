@@ -7,9 +7,6 @@ namespace CrateModLoader.GameSpecific.Crash1.TrilogyCommon
 {
     public class CrashTri_Scenery_Invisible : ModStruct<NSF_Pair>
     {
-        public override string Name => "Invisible World (Beta)";
-        public override string Description => "The scenery is invisible.";
-
         public override void ModPass(NSF_Pair pair)
         {
             // Well, "invisible" without being disruptive to stability

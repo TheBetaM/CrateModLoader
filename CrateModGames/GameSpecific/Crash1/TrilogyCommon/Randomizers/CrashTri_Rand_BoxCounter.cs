@@ -9,9 +9,6 @@ namespace CrateModLoader.GameSpecific.Crash1.TrilogyCommon
 {
     public class CrashTri_Rand_BoxCounter : ModStruct<NSF_Pair>
     {
-        public override string Name => CrashTri_Text.Rand_CrateCounter;
-        public override string Description => CrashTri_Text.Rand_CrateCounterDesc;
-
         private Random rand;
 
         private Dictionary<Crash2_Levels, int> minBoxCounts_C2 = new Dictionary<Crash2_Levels, int>()

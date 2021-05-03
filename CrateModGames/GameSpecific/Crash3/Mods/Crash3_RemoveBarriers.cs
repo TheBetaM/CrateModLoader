@@ -7,9 +7,6 @@ namespace CrateModLoader.GameSpecific.Crash3
 {
     public class Crash3_RemoveBarriers : ModStruct<NSF_Pair>
     {
-        public override string Name => Crash3_Text.Mod_RemoveWarpRoomWalls;
-        public override string Description => Crash3_Text.Mod_RemoveWarpRoomWallsDesc;
-
         public override void ModPass(NSF_Pair pair)
         {
             if (pair.LevelC3 != Crash3_Levels.WarpRoom)

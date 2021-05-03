@@ -8,9 +8,6 @@ namespace CrateModLoader.GameSpecific.Rayman3
     // unstable
     public class Ray3_Rand_WorldColors : ModStruct<string>
     {
-        public override string Name => Rayman3_Text.Rand_WorldColors;
-        public override string Description => Rayman3_Text.Rand_WorldColorsDesc;
-
         public override void ModPass(string filePath)
         {
             Random rand = new Random(ModLoaderGlobals.RandomizerSeed);

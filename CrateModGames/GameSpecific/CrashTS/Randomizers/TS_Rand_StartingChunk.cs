@@ -9,9 +9,6 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
     // todo: test, could be better?
     public class TS_Rand_StartingChunk : ModStruct<ExecutableInfo>
     {
-        public override string Name => Twins_Text.Rand_StartingLevel;
-        public override string Description => Twins_Text.Rand_StartingLevelDesc;
-
         internal List<uint> musicTypes = new List<uint>();
         internal List<uint> randMusicList = new List<uint>();
 

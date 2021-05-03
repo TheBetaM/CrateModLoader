@@ -7,8 +7,6 @@ namespace CrateModLoader.GameSpecific.Crash2.Mods
     //unfinished
     public class Crash2_VehicleLevelsOnFoot : ModStruct<NSF_Pair>
     {
-        public override string Name => "Vehicle Levels On Foot";
-
         public override void ModPass(NSF_Pair pair)
         {
             if (!Crash2_Common.BearLevelsList.Contains(pair.LevelC2) && !Crash2_Common.BoardLevelsList.Contains(pair.LevelC2))

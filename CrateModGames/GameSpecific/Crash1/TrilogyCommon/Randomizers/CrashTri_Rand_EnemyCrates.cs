@@ -8,9 +8,6 @@ namespace CrateModLoader.GameSpecific.Crash1.TrilogyCommon
     //unfinished
     public class CrashTri_Rand_EnemyCrates : ModStruct<NSF_Pair>
     {
-        public override string Name => CrashTri_Text.Rand_EnemyCrates;
-        public override string Description => CrashTri_Text.Rand_EnemyCratesDesc;
-
         private Random rand;
         private bool isRandom;
 
@@ -186,9 +183,9 @@ namespace CrateModLoader.GameSpecific.Crash1.TrilogyCommon
         };
 
 
-        public CrashTri_Rand_EnemyCrates(bool isrand)
+        public CrashTri_Rand_EnemyCrates()
         {
-            isRandom = isrand;
+            isRandom = Crash2.Crash2_Props_Main.Option_RandEnemiesAreCrates.Enabled || Crash3.Crash3_Props_Main.Option_RandEnemiesAreCrates.Enabled;
         }
 
         public override void BeforeModPass()

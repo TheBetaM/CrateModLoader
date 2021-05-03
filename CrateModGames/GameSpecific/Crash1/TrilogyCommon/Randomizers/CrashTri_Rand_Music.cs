@@ -7,8 +7,6 @@ namespace CrateModLoader.GameSpecific.Crash1.TrilogyCommon
 {
     public class CrashTri_Rand_Music : ModStruct<NSF_Pair>
     {
-        public override string Name => "Randomize Music Tracks";
-        public override string Description => "Music tracks are randomized, still played using the level's instruments.";
         public override bool NeedsCachePass => true;
 
         private List<SEP> Cache_MIDI = new List<SEP>();

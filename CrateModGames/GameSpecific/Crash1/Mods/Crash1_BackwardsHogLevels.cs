@@ -8,9 +8,6 @@ namespace CrateModLoader.GameSpecific.Crash1.Mods
     // todo: sort out FOV mod stuff
     public class Crash1_BackwardsHogLevels : ModStruct<NSF_Pair>
     {
-        public override string Name => Crash1_Text.Mod_BackwardsHogLevels;
-        public override string Description => Crash1_Text.Mod_BackwardsHogLevelsDesc;
-
         public override void ModPass(NSF_Pair pair)
         {
             if (!Crash1_Common.VehicleLevelsList.Contains(pair.LevelC1))

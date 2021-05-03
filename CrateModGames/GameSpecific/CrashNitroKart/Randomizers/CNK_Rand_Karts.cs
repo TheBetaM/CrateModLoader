@@ -7,9 +7,6 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
 {
     public class CNK_Rand_Karts : ModStruct<CNK_GenericMod>
     {
-        public override string Name => CNK_Text.Rand_Karts;
-        public override string Description => CNK_Text.Rand_KartsDesc;
-
         private Random randState;
 
         public override void BeforeModPass()

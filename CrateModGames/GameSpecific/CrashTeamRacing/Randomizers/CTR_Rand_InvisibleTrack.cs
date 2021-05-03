@@ -7,14 +7,12 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing.Mods
 {
     public class CTR_Rand_InvisibleTrack : ModStruct<Scene>
     {
-        public override string Name => "Random Tracks Are Invisible";
-
         private Random rand;
         private bool isRandom;
 
-        public CTR_Rand_InvisibleTrack(bool isrand)
+        public CTR_Rand_InvisibleTrack()
         {
-            isRandom = isrand;
+            isRandom = CTR_Props_Main.Option_Rand_InvisibleTracks.Enabled;
         }
 
         public override void BeforeModPass()

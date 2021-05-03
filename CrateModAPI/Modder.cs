@@ -43,7 +43,7 @@ namespace CrateModLoader
 
         // Multithreading stuff
 
-        //public List<Mod> Mods = new List<Mod>();
+        public List<Mod> Mods = new List<Mod>();
         public List<ModParserBase> ModParsers = new List<ModParserBase>();
         public List<ModPipelineBase> Pipelines = new List<ModPipelineBase>();
         public List<ModPropertyBase> ActiveProps = new List<ModPropertyBase>();
@@ -100,9 +100,7 @@ namespace CrateModLoader
                             {
                                 ModMenuOnly chunkAttr = (ModMenuOnly)field.GetCustomAttribute(typeof(ModMenuOnly), false);
                                 if (chunkAttr == null)
-                                {
                                     chunkAttr = (ModMenuOnly)field.DeclaringType.GetCustomAttribute(typeof(ModMenuOnly), false);
-                                }
                                 if (chunkAttr != null)
                                 {
                                     Props[Props.Count - 1].ModMenuOnly = true;
@@ -113,9 +111,7 @@ namespace CrateModLoader
                             {
                                 ModAllowedConsoles ListConsoles = (ModAllowedConsoles)field.GetCustomAttribute(typeof(ModAllowedConsoles), false);
                                 if (ListConsoles == null)
-                                {
                                     ListConsoles = (ModAllowedConsoles)field.DeclaringType.GetCustomAttribute(typeof(ModAllowedConsoles), false);
-                                }
                                 if (ListConsoles != null)
                                 {
                                     Props[Props.Count - 1].AllowedConsoles = ListConsoles.Allowed;
@@ -126,9 +122,7 @@ namespace CrateModLoader
                             {
                                 ModAllowedRegions ListRegions = (ModAllowedRegions)field.GetCustomAttribute(typeof(ModAllowedRegions), false);
                                 if (ListRegions == null)
-                                {
                                     ListRegions = (ModAllowedRegions)field.DeclaringType.GetCustomAttribute(typeof(ModAllowedRegions), false);
-                                }
                                 if (ListRegions != null)
                                 {
                                     Props[Props.Count - 1].AllowedRegions = ListRegions.Allowed;
@@ -139,12 +133,21 @@ namespace CrateModLoader
                             {
                                 ModHidden chunkAttr = (ModHidden)field.GetCustomAttribute(typeof(ModHidden), false);
                                 if (chunkAttr == null)
-                                {
                                     chunkAttr = (ModHidden)field.DeclaringType.GetCustomAttribute(typeof(ModHidden), false);
-                                }
                                 if (chunkAttr != null)
                                 {
-                                    Props[Props.Count - 1].ModMenuOnly = true;
+                                    Props[Props.Count - 1].Hidden = true;
+                                }
+                            }
+
+                            if (Props[Props.Count - 1].TargetMods == null)
+                            {
+                                ExecutesMods chunkAttr = (ExecutesMods)field.GetCustomAttribute(typeof(ExecutesMods), false);
+                                if (chunkAttr == null)
+                                    chunkAttr = (ExecutesMods)field.DeclaringType.GetCustomAttribute(typeof(ExecutesMods), false);
+                                if (chunkAttr != null)
+                                {
+                                    Props[Props.Count - 1].TargetMods = chunkAttr.Mods;
                                 }
                             }
 
@@ -188,9 +191,21 @@ namespace CrateModLoader
 
         public bool NeedsCachePass()
         {
+            /*
             foreach (ModPropertyBase Prop in ActiveProps)
             {
-                if (Prop.TargetMod.NeedsCachePass)
+                foreach (Mod mod in Prop.ModInstances)
+                {
+                    if (mod.NeedsCachePass)
+                    {
+                        return true;
+                    }
+                }
+            }
+            */
+            foreach (Mod mod in Mods)
+            {
+                if (mod.NeedsCachePass)
                 {
                     return true;
                 }
@@ -204,9 +219,28 @@ namespace CrateModLoader
 
             foreach (ModPropertyBase Prop in Props)
             {
-                if (Prop.TargetMod != null && ((Prop is ModPropOption opt && opt.Enabled)) || (!(Prop is ModPropOption) && Prop.HasChanged))
+                if (((Prop is ModPropOption opt && opt.Enabled)) || (!(Prop is ModPropOption) && Prop.HasChanged))
                 {
                     ActiveProps.Add(Prop);
+                }
+            }
+
+            Mods = new List<Mod>();
+            List<Type> DupeCheck = new List<Type>();
+
+            foreach (ModPropertyBase Prop in ActiveProps)
+            {
+                if (Prop.TargetMods != null)
+                {
+                    foreach (Type mod in Prop.TargetMods)
+                    {
+                        if (!DupeCheck.Contains(mod))
+                        {
+                            DupeCheck.Add(mod);
+                            Mod NewMod = (Mod)Activator.CreateInstance(mod);
+                            Mods.Add(NewMod);
+                        }
+                    }
                 }
             }
 
@@ -334,30 +368,30 @@ namespace CrateModLoader
 
         public void BeforeCachePass()
         {
-            foreach (ModPropertyBase Prop in ActiveProps)
+            foreach (Mod mod in Mods)
             {
-                Prop.TargetMod.BeforeCachePass();
+                mod.BeforeCachePass();
             }
         }
         public void StartCachePass(object value)
         {
-            foreach (ModPropertyBase Prop in ActiveProps)
+            foreach (Mod mod in Mods)
             {
-                Prop.TargetMod.CachePass(value);
+                mod.CachePass(value);
             }
         }
         public void BeforeModPass()
         {
-            foreach (ModPropertyBase Prop in ActiveProps)
+            foreach (Mod mod in Mods)
             {
-                Prop.TargetMod.BeforeModPass();
+                mod.BeforeModPass();
             }
         }
         public void StartModPass(object value)
         {
-            foreach (ModPropertyBase Prop in ActiveProps)
+            foreach (Mod mod in Mods)
             {
-                Prop.TargetMod.ModPass(value);
+                mod.ModPass(value);
             }
         }
         public void StartPass(object value, ModPass pass = ModPass.Mod)

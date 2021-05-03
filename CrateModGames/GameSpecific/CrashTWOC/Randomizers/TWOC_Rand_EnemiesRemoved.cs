@@ -4,12 +4,8 @@ using System.IO;
 
 namespace CrateModLoader.GameSpecific.CrashTWOC
 {
-    // todo: test
     public class TWOC_Rand_EnemiesRemoved : ModStruct<TWOC_File_AI>
     {
-        public override string Name => "Random Enemies Removed";
-        public override string Description => "Enemies are randomly removed in each level.";
-
         List<string> BannedEnemies = new List<string>()
             {
                 "crystal",

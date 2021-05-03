@@ -8,9 +8,6 @@ namespace CrateModLoader.GameSpecific.Crash1.TrilogyCommon
 {
     public class CrashTri_Scenery_Rainbow : ModStruct<NSF_Pair>
     {
-        public override string Name => CrashTri_Text.Rand_WorldColors;
-        public override string Description => CrashTri_Text.Rand_WorldColorsDesc;
-
         private Random rand;
 
         public override void BeforeModPass()

@@ -7,8 +7,6 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing.Mods
 {
     public class CTR_AllCratesAreWumpaCrates : ModStruct<Scene>
     {
-        public override string Name => "All Wooden Crates Are Wumpa Crates";
-
         public override void ModPass(Scene lev)
         {
             uint FruitModel = 0;

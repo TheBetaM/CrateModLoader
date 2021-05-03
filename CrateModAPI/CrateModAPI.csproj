@@ -44,7 +44,6 @@
     <Compile Include="EventArgs.cs" />
     <Compile Include="FileFilter.cs" />
     <Compile Include="Game.cs" />
-    <Compile Include="IMod.cs" />
     <Compile Include="ModCrates.cs" />
     <Compile Include="Modder.cs" />
     <Compile Include="ModLoader.cs" />

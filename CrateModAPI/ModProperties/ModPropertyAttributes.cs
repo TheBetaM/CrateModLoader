@@ -48,4 +48,15 @@ namespace CrateModLoader.ModProperties
     {
 
     }
+
+    // Changing the property executes a Mod
+    public class ExecutesMods : Attribute
+    {
+        public List<Type> Mods;
+
+        public ExecutesMods(params Type[] args)
+        {
+            Mods = new List<Type>(args);
+        }
+    }
 }

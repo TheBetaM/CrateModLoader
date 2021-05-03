@@ -6,9 +6,6 @@ namespace CrateModLoader.GameSpecific.CrashTTR
 {
     public class CTTR_Rand_TrackEntrances : ModStruct<GOD_File>
     {
-        public override string Name => CTTR_Text.Rand_TrackEntrances;
-        public override string Description => CTTR_Text.Rand_TrackEntrancesDesc;
-
         private List<int> randTracks;
 
         public override void BeforeModPass()

@@ -8,8 +8,6 @@ namespace CrateModLoader.GameSpecific.Crash1.TrilogyCommon
     //unfinished
     public class CrashTri_Objects_Untextured : ModStruct<NSF_Pair>
     {
-        public override string Name => "Untextured Objects";
-
         public override void ModPass(NSF_Pair pair)
         {
             // shouldn't this cause some serious memory read corruption? lol

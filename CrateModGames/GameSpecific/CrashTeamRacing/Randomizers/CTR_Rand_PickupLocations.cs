@@ -8,7 +8,6 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing.Mods
     // doesn't work very well, most of the time pickups become invisible
     public class CTR_Rand_PickupLocations : ModStruct<Scene>
     {
-        public override string Name => "Randomize Pickup Locations";
         public override bool NeedsCachePass => true;
 
         private Random rand;

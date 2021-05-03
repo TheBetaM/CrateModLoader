@@ -7,9 +7,6 @@ namespace CrateModLoader.GameSpecific.Crash1.TrilogyCommon
 {
     public class CrashTri_Rand_RemoveEnemies : ModStruct<NSF_Pair>
     {
-        public override string Name => CrashTri_Text.Rand_EnemiesRemoved;
-        public override string Description => CrashTri_Text.Rand_EnemiesRemovedDesc;
-
         private Random rand;
         private bool isRandom;
 
@@ -184,9 +181,9 @@ namespace CrateModLoader.GameSpecific.Crash1.TrilogyCommon
             new EntityTypePair(16, 9), //ptery
         };
 
-        public CrashTri_Rand_RemoveEnemies(bool isrand)
+        public CrashTri_Rand_RemoveEnemies()
         {
-            isRandom = isrand;
+            isRandom = Crash2.Crash2_Props_Main.Option_RandEnemiesMissing.Enabled || Crash3.Crash3_Props_Main.Option_RandEnemiesMissing.Enabled;
         }
 
         public override void BeforeModPass()

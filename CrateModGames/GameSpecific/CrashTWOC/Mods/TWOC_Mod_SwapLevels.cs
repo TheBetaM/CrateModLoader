@@ -4,12 +4,8 @@ using System.IO;
 
 namespace CrateModLoader.GameSpecific.CrashTWOC
 {
-    // todo: test
     public class TWOC_SwapLevels : ModStruct<TWOC_GenericMod>
     {
-        public override string Name => "Atlasphere Levels On Foot";
-        public override bool Hidden => true;
-
         public override void ModPass(TWOC_GenericMod mod)
         {
             string extrPath = mod.mainPath;

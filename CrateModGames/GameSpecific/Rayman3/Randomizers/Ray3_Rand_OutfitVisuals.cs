@@ -7,9 +7,6 @@ namespace CrateModLoader.GameSpecific.Rayman3
 {
     public class Ray3_Rand_OutfitVisuals : ModStruct<TPL_File>
     {
-        public override string Name => Rayman3_Text.Rand_OutfitVisuals;
-        public override string Description => Rayman3_Text.Rand_OutfitVisualsDesc;
-
         public override void ModPass(TPL_File file)
         {
 

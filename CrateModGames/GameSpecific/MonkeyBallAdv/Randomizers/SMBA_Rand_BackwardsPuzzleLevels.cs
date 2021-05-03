@@ -6,14 +6,11 @@ namespace CrateModLoader.GameSpecific.MonkeyBallAdv.Mods
 {
     public class SMBA_Rand_BackwardsPuzzleLevels : ModStruct<ChunkInfoRM>
     {
-        public override string Name => "Random Puzzle Levels Are Backwards";
-        public override string Description => "Random Challenge Mode/Puzzle Realm levels have their start and end swapped. (where possible)";
-
         private bool isRandom = false;
 
-        public SMBA_Rand_BackwardsPuzzleLevels(bool isRand)
+        public SMBA_Rand_BackwardsPuzzleLevels()
         {
-            isRandom = isRand;
+            isRandom = SMBA_Props_Main.Option_Rand_BackwardsPuzzleLevels.Enabled;
         }
 
         private Random rand;

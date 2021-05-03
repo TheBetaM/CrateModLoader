@@ -7,8 +7,6 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing.Mods
 {
     public class CTR_Rand_CrateEffects : ModStruct<Scene>
     {
-        public override string Name => "Randomize Crate Effects";
-
         private List<CTREvent> ReplaceEvents = new List<CTREvent>()
         {
             CTREvent.CrateWeapon,

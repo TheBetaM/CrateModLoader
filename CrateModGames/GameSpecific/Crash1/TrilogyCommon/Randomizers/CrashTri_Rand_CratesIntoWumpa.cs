@@ -7,9 +7,6 @@ namespace CrateModLoader.GameSpecific.Crash1.TrilogyCommon
 {
     public class CrashTri_Rand_CratesIntoWumpa : ModStruct<NSF_Pair>
     {
-        public override string Name => CrashTri_Text.Mod_AllCratesBlank;
-        public override string Description => CrashTri_Text.Mod_AllCratesBlankDesc;
-
         private List<CrateSubTypes> Crates_ToReplace = new List<CrateSubTypes>()
         {
             CrateSubTypes.Blank, CrateSubTypes.TNT, CrateSubTypes.Nitro, CrateSubTypes.Steel, CrateSubTypes.Fruit, CrateSubTypes.Life,
@@ -19,9 +16,9 @@ namespace CrateModLoader.GameSpecific.Crash1.TrilogyCommon
         private Random rand;
         private bool isRandom;
 
-        public CrashTri_Rand_CratesIntoWumpa(bool isrand)
+        public CrashTri_Rand_CratesIntoWumpa()
         {
-            isRandom = isrand;
+            isRandom = Crash1_Props_Main.Option_RandCratesMissing.Enabled || Crash2.Crash2_Props_Main.Option_RandCratesMissing.Enabled || Crash3.Crash3_Props_Main.Option_RandCratesMissing.Enabled;
         }
 
         public override void BeforeModPass()

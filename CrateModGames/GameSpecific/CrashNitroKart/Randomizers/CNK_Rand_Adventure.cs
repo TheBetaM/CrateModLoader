@@ -7,9 +7,6 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
 {
     public class CNK_Rand_Adventure : ModStruct<CSV>
     {
-        public override string Name => CNK_Text.Rand_Adventure;
-        public override string Description => CNK_Text.Rand_AdventureDesc;
-
         public string[] PadInfoEventName =
         {
             "0",

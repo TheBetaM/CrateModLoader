@@ -8,8 +8,6 @@ namespace CrateModLoader.GameSpecific.Crash2
     //unfinished
     public class Crash2_Rand_WarpRoom : ModStruct<NSF_Pair>
     {
-        public override string Name => "Randomize Level Order";
-
         private Random rand;
 
         public override void BeforeModPass()

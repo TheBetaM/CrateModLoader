@@ -8,9 +8,6 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
     // todo: test
     public class TS_Rand_Music : ModStruct<ChunkInfoRM>
     {
-        public override string Name => Twins_Text.Rand_Music;
-        public override string Description => Twins_Text.Rand_MusicDesc;
-
         internal List<uint> musicTypes = new List<uint>();
         internal List<uint> randMusicList = new List<uint>();
 

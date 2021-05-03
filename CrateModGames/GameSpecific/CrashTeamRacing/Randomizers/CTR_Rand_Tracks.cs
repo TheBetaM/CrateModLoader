@@ -6,9 +6,6 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
 {
     public class CTR_Rand_Tracks : ModStruct<string>
     {
-        public override string Name => "Randomize Track Order (Any%)";
-        public override string Description => "Shuffles all tracks around. CTR letters don't spawn in bonus tracks so 101% is not possible.";
-
         public List<string> TrackFolderNames = new List<string>()
         {
             "arena2",

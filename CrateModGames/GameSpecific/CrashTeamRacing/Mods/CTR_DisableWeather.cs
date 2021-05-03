@@ -7,8 +7,6 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing.Mods
 {
     public class CTR_DisableWeather : ModStruct<Scene>
     {
-        public override string Name => "Disable Weather Effects";
-
         public override void ModPass(Scene lev)
         {
             foreach (QuadBlock quad in lev.quads)

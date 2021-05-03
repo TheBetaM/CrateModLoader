@@ -7,9 +7,6 @@ namespace CrateModLoader.GameSpecific.Crash1.TrilogyCommon
 {
     public class CrashTri_Scenery_Greyscale : ModStruct<NSF_Pair>
     {
-        public override string Name => CrashTri_Text.Mod_GreyscaleWorld;
-        public override string Description => CrashTri_Text.Mod_GreyscaleWorldDesc;
-
         public override void ModPass(NSF_Pair pair)
         {
             foreach (SceneryEntry entry in pair.nsf.GetEntries<SceneryEntry>())

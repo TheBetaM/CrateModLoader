@@ -7,9 +7,6 @@ namespace CrateModLoader.GameSpecific.CrashMoM.Mods
     // these models aren't used in cutscenes
     public class MoM_Rand_CutsceneCostumes : ModStruct<string>
     {
-        public override string Name => "Randomize Cutscene Costumes";
-        public override string Description => "Shuffles Crash's costume in ingame cutscenes.";
-
         private Random rand;
 
         private List<string> Costumes = new List<string>()

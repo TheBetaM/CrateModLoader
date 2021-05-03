@@ -7,9 +7,6 @@ namespace CrateModLoader.GameSpecific.Crash3
 {
     public class Crash3_Rand_WarpRoom : ModStruct<NSF_Pair>
     {
-        public override string Name => "Randomize Level Order";
-        public override string Description => "Shuffles levels around (except for secret levels and ones with secret entrances). The last level is still the Cortex boss.";
-
         private Random rand;
 
         private Dictionary<Crash3_Levels, int> LevelValues = new Dictionary<Crash3_Levels, int>()

@@ -8,9 +8,6 @@ namespace CrateModLoader.GameSpecific.Crash1.TrilogyCommon
     //stability problems...
     public class CrashTri_Rand_WoodenCrates : ModStruct<NSF_Pair>
     {
-        public override string Name => CrashTri_Text.Rand_Crates;
-        public override string Description => CrashTri_Text.Rand_CratesDesc;
-
         private Random rand;
 
         public override void BeforeModPass()
