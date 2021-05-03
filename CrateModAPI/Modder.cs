@@ -399,12 +399,12 @@ namespace CrateModLoader
                 PassIterator = 0;
                 if (CurrentPass == 0)
                 {
-                    UpdateProcessMessage("Cache Pass");
+                    UpdateProcessMessage("Cache Pass", 30);
                     BeforeCachePass();
                 }
                 else if (CurrentPass == 1)
                 {
-                    UpdateProcessMessage("Mod Pass");
+                    UpdateProcessMessage("Mod Pass", 50);
                     BeforeModPass();
                 }
 
@@ -441,6 +441,14 @@ namespace CrateModLoader
             PassBusy = true;
             PassIterator = 0;
             PassCount = 0;
+            if (pass == PipelinePass.Extract)
+            {
+                UpdateProcessMessage("Extracting archives...", 25);
+            }
+            else if (pass == PipelinePass.Build)
+            {
+                UpdateProcessMessage("Rebuilding archives...", 75);
+            }
 
             IList<Task> TaskList = new List<Task>();
 
@@ -547,7 +555,7 @@ namespace CrateModLoader
 
             PassIterator = 0;
 
-            UpdateProcessMessage("Preload Pass");
+            UpdateProcessMessage("Preload Pass", 50);
             BeforePreloadPass();
 
             IList<Task> editTaskList = new List<Task>();

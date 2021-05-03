@@ -14,14 +14,12 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
 
         public override async void StartModProcess()
         {
-            UpdateProcessMessage("Extracting ASSETS.GOB...", 5);
             FindArchives(new Pipeline_GOB(this));
             await StartPipelines(PipelinePass.Extract);
 
             FindFiles(new Parser_CSV(this));
             await StartNewPass();
 
-            UpdateProcessMessage("Building ASSETS.GOB...", 97);
             await StartPipelines(PipelinePass.Build);
 
             ProcessBusy = false;
@@ -29,7 +27,6 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
 
         public override async void StartPreload()
         {
-            UpdateProcessMessage("Extracting ASSETS.GOB...", 5);
             FindArchives(new Pipeline_GOB(this));
             await StartPipelines(PipelinePass.Extract);
 

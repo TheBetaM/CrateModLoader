@@ -14,16 +14,11 @@ namespace CrateModLoader.GameSpecific.MonkeyBallAdv
     {
         public override async void StartModProcess()
         {
-            #region Extract BD
-            // Extract BD (PS2/PSP only)
             if (ConsolePipeline.Metadata.Console != ConsoleMode.GCN)
             {
-                UpdateProcessMessage("Extracting MB.BD...", 0);
-
                 FindArchives(new CrashTS.Pipeline_BD(this));
                 await StartPipelines(PipelinePass.Extract);
             }
-            #endregion
 
             if (ConsolePipeline.Metadata.Console == ConsoleMode.PSP) //PS2 level editing not functional yet
                 FindFiles(new Parser_XML(this), 
@@ -33,14 +28,10 @@ namespace CrateModLoader.GameSpecific.MonkeyBallAdv
                 FindFiles(new Parser_XML(this));
             await StartNewPass();
 
-            #region Build BD
-            // Build BD
             if (ConsolePipeline.Metadata.Console != ConsoleMode.GCN)
             {
-                UpdateProcessMessage("Building MB.BD...", 95);
                 await StartPipelines(PipelinePass.Build);
             }
-            #endregion
 
             ProcessBusy = false;
         }

@@ -15,14 +15,12 @@ namespace CrateModLoader.GameSpecific.CrashTTR
     {
         public override async void StartModProcess()
         {
-            UpdateProcessMessage("Extracting all RCF archives...", 5);
             FindArchives(new Pipeline_RCF(this));
             await StartPipelines(PipelinePass.Extract);
 
             FindFiles(new Parser_GOD(this), new Parser_P3D(this));
             await StartNewPass();
 
-            UpdateProcessMessage("Packing all RCF archives...", 75);
             await StartPipelines(PipelinePass.Build);
 
             ProcessBusy = false;

@@ -13,14 +13,12 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
     {
         public override async void StartModProcess()
         {
-            UpdateProcessMessage("Extracting BIGFILE.BIG...", 5);
             FindArchives(new Pipeline_BIG(this));
             await StartPipelines(PipelinePass.Extract);
 
             FindFiles(new Parser_LNG(this), new Parser_LEV(this), new Parser_CTR(this));
             await StartNewPass();
 
-            UpdateProcessMessage("Building BIGFILE.BIG...", 95);
             await StartPipelines(PipelinePass.Build);
 
             ProcessBusy = false;
