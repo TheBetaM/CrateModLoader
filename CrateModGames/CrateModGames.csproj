@@ -430,8 +430,10 @@
     <Compile Include="GameSpecific\MonkeyBallAdv\Mods\SMBA_EnableJump.cs" />
     <Compile Include="GameSpecific\MonkeyBallAdv\Mods\SMBA_EnablePowerJump.cs" />
     <Compile Include="GameSpecific\MonkeyBallAdv\Mods\SMBA_Metadata.cs" />
+    <Compile Include="GameSpecific\MonkeyBallAdv\Mods\SMBA_SettingsHandling.cs" />
     <Compile Include="GameSpecific\MonkeyBallAdv\Mods\SMBA_TestMod.cs" />
     <Compile Include="GameSpecific\MonkeyBallAdv\Properties\SMBA_Props_Main.cs" />
+    <Compile Include="GameSpecific\MonkeyBallAdv\Properties\SMBA_Props_Settings.cs" />
     <Compile Include="GameSpecific\MonkeyBallAdv\Randomizers\SMBA_Rand_BackwardsPuzzleLevels.cs" />
     <Compile Include="GameSpecific\MonkeyBallAdv\Randomizers\SMBA_Rand_ChallengeMode.cs" />
     <Compile Include="GameSpecific\Rayman3\Common\Parser_TPL.cs" />

@@ -198,6 +198,8 @@ Mod layers: 1 - MB.BD contents (PS2/PSP)
 API by NeoKesha, Smartkin, ManDude, BetaM and Marko. (https://github.com/Smartkin/twinsanity-editor)  
 Features:  
 - Version and seed visible in the Main Menu  
+Mod Menu:
+- Challenge/Story Mode settings
 
 Crash of the Titans
 Supported: All PS2 versions (.ISO format), All Wii versions (.ISO/.WBFS formats), All PSP versions (.ISO format), All 360 versions (.ISO format)   
