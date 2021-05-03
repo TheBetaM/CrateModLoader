@@ -7,7 +7,7 @@ using System.IO;
 namespace CrateModLoader.GameSpecific.CrashTS.Mods
 {
     //todo needs testing
-    public class TS_ChangeCreditsChunk : ModStruct<ExecutableInfo>
+    public class TS_ChangeCreditsChunk : ModStruct<GenericModStruct>
     {
         
 
@@ -30,8 +30,9 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
             [ExecutableIndex.XBOX_PAL] = 0x368874,
         };
 
-        public override void ModPass(ExecutableInfo ExecFile)
+        public override void ModPass(GenericModStruct mod)
         {
+            ExecutableInfo ExecFile = Twins_Common.GetEXE(mod);
             using (FileStream file = new FileStream(ExecFile.Path, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite))
             {
                 using (BinaryWriter writer = new BinaryWriter(file))

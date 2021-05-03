@@ -1,5 +1,4 @@
 ﻿/* Mod Passes:
- * TWOC_GenericMod -> extraction path + console type
  * TWOC_File_AI -> AI files
  * TWOC_File_CRT -> Crate files
  * TWOC_File_WMP -> Wumpa files

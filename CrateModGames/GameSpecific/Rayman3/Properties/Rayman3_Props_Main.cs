@@ -5,6 +5,14 @@ using CrateModGames.GameSpecific.Rayman3;
 
 namespace CrateModLoader.GameSpecific.Rayman3
 {
+    public enum ModProps : int
+    {
+        Options = 0,
+        Textures_General,
+        Textures_Menu,
+        Textures_Loading,
+    }
+
     public static class Rayman3_Props_Main
     {
         [ExecutesMods(typeof(Ray3_Rand_LevelOrder))]

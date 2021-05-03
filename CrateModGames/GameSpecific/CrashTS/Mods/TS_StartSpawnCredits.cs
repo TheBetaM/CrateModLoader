@@ -7,7 +7,7 @@ using System.IO;
 namespace CrateModLoader.GameSpecific.CrashTS.Mods
 {
     //todo needs testing
-    public class TS_StartSpawnCredits : ModStruct<ExecutableInfo>
+    public class TS_StartSpawnCredits : ModStruct<GenericModStruct>
     {
         private Dictionary<ExecutableIndex, int> StartLevelPathOff = new Dictionary<ExecutableIndex, int>()
         {
@@ -28,8 +28,9 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
             [ExecutableIndex.XBOX_PAL] = 0x265140,
         };
 
-        public override void ModPass(ExecutableInfo ExecFile)
+        public override void ModPass(GenericModStruct mod)
         {
+            ExecutableInfo ExecFile = Twins_Common.GetEXE(mod);
             uint CreditsChunkPointer = 0;
 
             using (FileStream file = new FileStream(ExecFile.Path, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite))

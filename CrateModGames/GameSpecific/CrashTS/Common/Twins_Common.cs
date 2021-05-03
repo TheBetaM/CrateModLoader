@@ -689,6 +689,55 @@ namespace CrateModLoader.GameSpecific.CrashTS
             return type;
         }
 
+        public static string GetDataPath(GenericModStruct mod)
+        {
+            string bdPath = mod.ExtractedPath;
+            if (mod.Console == ConsoleMode.PS2)
+            {
+                bdPath = System.IO.Path.Combine(mod.ExtractedPath, @"CRASH6\CRASH\");
+            }
+            return bdPath;
+        }
+
+        public static ExecutableInfo GetEXE(GenericModStruct mod)
+        {
+            RegionType region = mod.Region;
+            ConsoleMode console = mod.Console;
+            string bdPath = GetDataPath(mod);
+            string filePath = System.IO.Path.Combine(mod.ExtractedPath, mod.ExecutableFileName);
+
+            ExecutableIndex index = ExecutableIndex.Invalid;
+            if (console == ConsoleMode.XBOX)
+            {
+                if (region == RegionType.PAL)
+                    index = ExecutableIndex.XBOX_PAL;
+                else if (region == RegionType.NTSC_U)
+                    index = ExecutableIndex.XBOX_NTSC;
+            }
+            else
+            {
+                if (region == RegionType.NTSC_U)
+                {
+                    using (BinaryReader reader = new BinaryReader(new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read)))
+                    {
+                        reader.BaseStream.Position = 0x1ECB10;
+                        char ch = reader.ReadChar();
+
+                        if (ch == 'C')
+                            index = ExecutableIndex.NTSCU;
+                        else
+                            index = ExecutableIndex.NTSCU2;
+                    }
+                }
+                else if (region == RegionType.PAL)
+                    index = ExecutableIndex.PAL;
+                else if (region == RegionType.NTSC_J)
+                    index = ExecutableIndex.NTSCJ;
+            }
+
+            return new ExecutableInfo(filePath, index, bdPath);
+        }
+
         public static void LoadTexture(string path, ref ModProp_TextureFile target)
         {
             if (File.Exists(path))

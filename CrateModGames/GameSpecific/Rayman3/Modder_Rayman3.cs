@@ -1,21 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 /*
  * Mod Passes:
  * TPL_File -> texture archives
  */
-
 namespace CrateModLoader.GameSpecific.Rayman3
 {
-    public enum ModProps : int
-    {
-        Options = 0,
-        Textures_General,
-        Textures_Menu,
-        Textures_Loading,
-    }
-
     public sealed class Modder_Rayman3 : Modder
     {
         public override bool CanPreloadGame => true;
@@ -36,6 +25,5 @@ namespace CrateModLoader.GameSpecific.Rayman3
 
             ProcessBusy = false;
         }
-
     }
 }

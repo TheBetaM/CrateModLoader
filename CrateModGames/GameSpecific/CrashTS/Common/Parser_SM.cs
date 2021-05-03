@@ -5,11 +5,11 @@ namespace CrateModLoader.GameSpecific.CrashTS
 {
     public class Parser_SM : ModParser<ChunkInfoSM>
     {
-        private TwinsFile.FileType SM_Type;
+        private ConsoleMode console;
 
-        public Parser_SM(Modder mod, TwinsFile.FileType SMtype) : base(mod)
+        public Parser_SM(Modder mod, ConsoleMode cons) : base(mod)
         {
-            SM_Type = SMtype;
+            console = cons;
         }
 
         public override List<string> Extensions => new List<string>() { ".SM2", ".SMX" };
@@ -17,7 +17,14 @@ namespace CrateModLoader.GameSpecific.CrashTS
         public override ChunkInfoSM LoadObject(string filePath)
         {
             TwinsFile Archive = new TwinsFile();
-            Archive.LoadFile(filePath, SM_Type);
+            if (console == ConsoleMode.XBOX)
+            {
+                Archive.LoadFile(filePath, TwinsFile.FileType.SMX);
+            }
+            else
+            {
+                Archive.LoadFile(filePath, TwinsFile.FileType.SM2);
+            }
             ChunkInfoSM chunk = new ChunkInfoSM(Archive, Twins_Common.ChunkPathToType(filePath));
 
             return chunk;

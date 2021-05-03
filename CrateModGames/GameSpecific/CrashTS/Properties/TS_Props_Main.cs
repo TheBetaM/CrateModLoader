@@ -6,7 +6,17 @@ using CrateModLoader.GameSpecific.CrashTS.Mods;
 
 namespace CrateModLoader.GameSpecific.CrashTS
 {
-    static class TS_Props_Main
+    public enum ModProps : int
+    {
+        Options = 0,
+        Misc = 1,
+        Character = 2,
+        Textures = 3,
+        Galleries = 4,
+        Text = 5,
+    }
+
+    public static class TS_Props_Main
     {
         [ExecutesMods(typeof(TS_Rand_Crates))]
         public static ModPropOption Option_RandCrates = new ModPropOption(Twins_Text.Rand_Crates, Twins_Text.Rand_CratesDesc)

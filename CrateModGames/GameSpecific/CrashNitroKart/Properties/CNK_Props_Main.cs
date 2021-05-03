@@ -5,6 +5,16 @@ using CrateModGames.GameSpecific.CrashNitroKart;
 
 namespace CrateModLoader.GameSpecific.CrashNitroKart
 {
+    public enum ModProps : int
+    {
+        KartStats = 1,
+        DriverStats = 2,
+        Surfaces = 3,
+        Powerups = 4,
+        Adventure = 5,
+        Textures = 6,
+    }
+
     public static class CNK_Props_Main
     {
         [ExecutesMods(typeof(CNK_Rand_Adventure))]

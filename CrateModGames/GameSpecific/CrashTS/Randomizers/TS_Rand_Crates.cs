@@ -241,5 +241,10 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
                 }
             }
         }
+
+        public override void AfterModPass()
+        {
+            Twins_Data.cachedGameObjects.Clear();
+        }
     }
 }

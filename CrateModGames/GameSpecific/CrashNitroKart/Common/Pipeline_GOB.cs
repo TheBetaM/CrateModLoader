@@ -66,6 +66,31 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
                     GobExtract.StartInfo.Arguments = relativePath + fileName + " " + relativePath + fileNameNoExt + " -create 1";
                     GobExtract.Start();
                     GobExtract.WaitForExit();
+
+                    // Extraction cleanup
+                    if (Directory.Exists(relativePath + fileNameNoExt))
+                    {
+                        DirectoryInfo di = new DirectoryInfo(relativePath + fileNameNoExt);
+
+                        foreach (FileInfo file in di.EnumerateFiles())
+                        {
+                            file.Delete();
+                        }
+                        try
+                        {
+                            foreach (DirectoryInfo dir in di.EnumerateDirectories())
+                            {
+                                dir.Delete(true);
+                            }
+                            Directory.Delete(relativePath + fileNameNoExt);
+                        }
+                        catch
+                        {
+
+                        }
+
+                    }
+
                 }
                 );
         }

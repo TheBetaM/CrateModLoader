@@ -1,28 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using CrateModLoader.GameSpecific.CrashTS;
-
+﻿//Twinsanity API by NeoKesha, Smartkin, ManDude, BetaM and Marko (https://github.com/Smartkin/twinsanity-editor)
+/* 
+ * Mod Layers:
+ * 1: Extracted BD/BH archive files (PS2/PSP only)
+ * Mod Passes:
+ * ChunkInfoRM -> All RM files
+ * ChunkInfoSM -> All SM files
+ * ChunkInfoFull -> All RM/SM file pairs (not yet implemented)
+ * XML -> All XML files
+ */
 namespace CrateModLoader.GameSpecific.MonkeyBallAdv
 {
     public sealed class Modder_MonkeyBallAdv : Modder
     {
         public override async void StartModProcess()
         {
-            string bdPath = ConsolePipeline.ExtractedPath;
-
             #region Extract BD
             // Extract BD (PS2/PSP only)
             if (ConsolePipeline.Metadata.Console != ConsoleMode.GCN)
             {
                 UpdateProcessMessage("Extracting MB.BD...", 0);
-                bdPath = System.IO.Path.Combine(ConsolePipeline.ExtractedPath, @"MB\");
 
-                FindArchives(new Pipeline_BD(this));
+                FindArchives(new CrashTS.Pipeline_BD(this));
                 await StartPipelines(PipelinePass.Extract);
             }
             #endregion
 
-            StartModPass(bdPath);
             if (ConsolePipeline.Metadata.Console == ConsoleMode.PSP) //PS2 level editing not functional yet
                 FindFiles(new Parser_XML(this), 
                     new Parser_RM(this, ConsolePipeline.Metadata.Console)

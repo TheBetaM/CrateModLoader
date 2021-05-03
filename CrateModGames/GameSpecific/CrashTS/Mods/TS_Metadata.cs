@@ -1,20 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using Twinsanity;
 using System.IO;
 using System.Text;
-using CrateModGames.GameSpecific.CrashTS;
 
 namespace CrateModLoader.GameSpecific.CrashTS.Mods
 {
-    public class TS_Metadata : ModStruct<ExecutableInfo>
+    public class TS_Metadata : ModStruct<GenericModStruct>
     {
 
-        public override void ModPass(ExecutableInfo info)
+        public override void ModPass(GenericModStruct mod)
         {
-            string bdPath = info.BDpath;
-            bool isNTSC = info.Index == ExecutableIndex.NTSCU || info.Index == ExecutableIndex.NTSCU2 || info.Index == ExecutableIndex.XBOX_NTSC;
-            bool isPAL = info.Index == ExecutableIndex.PAL || info.Index == ExecutableIndex.XBOX_PAL;
+            string bdPath = Twins_Common.GetDataPath(mod);
+            bool isNTSC = mod.Region == RegionType.NTSC_U;
+            bool isPAL = mod.Region == RegionType.PAL;
 
             string[] CodeText;
             if (isNTSC)

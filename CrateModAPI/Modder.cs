@@ -421,6 +421,16 @@ namespace CrateModLoader
                 await Task.WhenAll(editTaskList);
 
                 editTaskList.Clear();
+
+                if (CurrentPass == 0)
+                {
+                    AfterCachePass();
+                }
+                else if (CurrentPass == 1)
+                {
+                    AfterModPass();
+                }
+
                 CurrentPass++;
             }
             PassBusy = false;
@@ -463,6 +473,13 @@ namespace CrateModLoader
                 mod.CachePass(value);
             }
         }
+        public void AfterCachePass()
+        {
+            foreach (Mod mod in Mods)
+            {
+                mod.AfterCachePass();
+            }
+        }
         public void BeforeModPass()
         {
             foreach (Mod mod in Mods)
@@ -477,6 +494,13 @@ namespace CrateModLoader
                 mod.ModPass(value);
             }
         }
+        public void AfterModPass()
+        {
+            foreach (Mod mod in Mods)
+            {
+                mod.AfterModPass();
+            }
+        }
         public void BeforePreloadPass()
         {
             foreach (Mod mod in Mods)
@@ -489,6 +513,13 @@ namespace CrateModLoader
             foreach (Mod mod in Mods)
             {
                 mod.PreloadPass(value);
+            }
+        }
+        public void AfterPreloadPass()
+        {
+            foreach (Mod mod in Mods)
+            {
+                mod.AfterPreloadPass();
             }
         }
         public void StartPass(object value, ModPass pass = ModPass.Mod)
@@ -528,6 +559,8 @@ namespace CrateModLoader
                     editTaskList.Add(parser.StartPass((ModPass)CurrentPass));
                 }
             }
+
+            AfterPreloadPass();
 
             await Task.WhenAll(editTaskList);
 
