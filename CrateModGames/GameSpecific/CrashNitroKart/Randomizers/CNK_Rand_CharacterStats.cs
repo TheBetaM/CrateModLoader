@@ -7,9 +7,21 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
 {
     public class CNK_Rand_CharacterStats : ModStruct<CSV>
     {
+        private bool isRand = false;
+
+        public CNK_Rand_CharacterStats()
+        {
+            isRand = CNK_Props_Main.Option_RandCharStats.Enabled;
+        }
+
+
         public override void BeforeModPass()
         {
             Random randState = new Random(ModLoaderGlobals.RandomizerSeed);
+            if (!isRand)
+            {
+                return;
+            }
             for (int i = 0; i < 16; i++)
             {
                 Randomize_CharacterStats(randState, i);

@@ -6,7 +6,7 @@ using CrateModGames.GameSpecific.CrashTS;
 
 namespace CrateModLoader.GameSpecific.CrashTS.Mods
 {
-    // todo: test, could be better?
+    // todo: test
     public class TS_Rand_StartingChunk : ModStruct<ExecutableInfo>
     {
         internal List<uint> musicTypes = new List<uint>();
@@ -49,9 +49,6 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
                 if (Twins_Data.All_Chunks[i].Chunk == randChunk)
                 {
                     TS_Props_Misc.CreditsChunk.Value = @"Levels\" + Twins_Data.All_Chunks[i].Path;
-                    TS_Props_Misc.CreditsChunk.HasChanged = true;
-                    TS_Props_Misc.Option_SwapStartAndCreditsChunk.Value = 1;
-                    TS_Props_Misc.Option_SwapStartAndCreditsChunk.HasChanged = true;
                     break;
                 }
             }

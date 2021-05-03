@@ -10,8 +10,6 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
     {
         public override async void StartModProcess()
         {
-            //todo: Generic mods here
-
             FindFiles(new Parser_AI(this), new Parser_CRT(this), new Parser_WMP(this));
             await StartNewPass();
 

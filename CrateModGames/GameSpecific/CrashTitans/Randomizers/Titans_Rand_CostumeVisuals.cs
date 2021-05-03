@@ -4,7 +4,7 @@ using System.IO;
 
 namespace CrateModLoader.GameSpecific.CrashTitans
 {
-    public class Titans_Rand_CostumeVisuals : ModStruct<string>
+    public class Titans_Rand_CostumeVisuals : ModStruct<GenericModStruct>
     {
         private Random rand;
 
@@ -54,8 +54,9 @@ namespace CrateModLoader.GameSpecific.CrashTitans
             }
         }
 
-        public override void ModPass(string path_extr)
+        public override void ModPass(GenericModStruct mod)
         {
+            string path_extr = mod.ExtractedPath + @"default\";
             for (int i = 0; i < Costumes.Count; i++)
             {
                 string path1 = path_extr + "package/" + Costumes[i] + ".p3d";

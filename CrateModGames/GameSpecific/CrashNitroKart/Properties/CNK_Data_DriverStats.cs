@@ -3,7 +3,7 @@ using CrateModLoader.ModProperties;
 
 namespace CrateModLoader.GameSpecific.CrashNitroKart
 {
-    [ModCategory((int)ModProps.DriverStats)]
+    [ModCategory((int)ModProps.DriverStats)] [ExecutesMods(typeof(CNK_Rand_CharacterStats))]
     static class CNK_Data_DriverStats
     {
         public static string[] DriverNames = Enum.GetNames(typeof(Drivers));

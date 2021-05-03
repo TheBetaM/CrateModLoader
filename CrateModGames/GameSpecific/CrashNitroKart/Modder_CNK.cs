@@ -33,42 +33,8 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
             string path_gob_extracted = ConsolePipeline.ExtractedPath + @"\ASSETS\";
 
             UpdateProcessMessage("Extracting ASSETS.GOB...", 5);
-
-            //Extract GOB
             FindArchives(new Pipeline_GOB(this));
             await StartPipelines(PipelinePass.Extract);
-
-            //todo improve
-            foreach (ModPropertyBase mod in Props)
-            {
-                if (mod.HasChanged)
-                {
-                    if (mod.Category == (int)ModProps.KartStats)
-                    {
-                        CNK_Props_Main.Option_RandPowerupDistribution.Value = 1;
-                        CNK_Props_Main.Option_RandPowerupDistribution.HasChanged = true;
-                    }
-                    else if (mod.Category == (int)ModProps.DriverStats)
-                    {
-                        CNK_Props_Main.Option_RandCharStats.Value = 1;
-                        CNK_Props_Main.Option_RandCharStats.HasChanged = true;
-                    }
-                    else if (mod.Category == (int)ModProps.Powerups)
-                    {
-                        CNK_Props_Main.Option_RandWeaponEffects.Value = 1;
-                        CNK_Props_Main.Option_RandWeaponEffects.HasChanged = true;
-                    }
-                    else if (mod.Category == (int)ModProps.Surfaces)
-                    {
-                        CNK_Props_Main.Option_RandSurfParams.Value = 1;
-                        CNK_Props_Main.Option_RandSurfParams.HasChanged = true;
-                    }
-                }
-            }
-
-            //Generic mods
-            CNK_GenericMod generic = new CNK_GenericMod(path_gob_extracted, ConsolePipeline.ExtractedPath, ConsolePipeline.Metadata.Console);
-            StartModPass(generic);
 
             //Mods
             FindFiles(new Parser_CSV(this));
@@ -78,7 +44,6 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
             HandleTextures(path_gob_extracted);
 
             UpdateProcessMessage("Building ASSETS.GOB...", 97);
-            //Build GOB
             await StartPipelines(PipelinePass.Build);
 
             // Extraction cleanup

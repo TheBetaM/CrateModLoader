@@ -5,45 +5,45 @@ using CrateModGames.GameSpecific.CrashNitroKart;
 
 namespace CrateModLoader.GameSpecific.CrashNitroKart
 {
-    public class CNK_NoIntro : ModStruct<CNK_GenericMod>
+    public class CNK_NoIntro : ModStruct<GenericModStruct>
     {
-        public override void ModPass(CNK_GenericMod mod)
+        public override void ModPass(GenericModStruct mod)
         {
-            string path = mod.mainPath;
-            ConsoleMode console = mod.console; 
+            string path = mod.ExtractedPath + @"/ASSETS/";
+            ConsoleMode console = mod.Console; 
 
             if (console == ConsoleMode.PS2)
             {
-                if (File.Exists(path + "VIDEO/INTRO/ALCHEMY.SFD;1"))
-                    File.Delete(path + "VIDEO/INTRO/ALCHEMY.SFD;1");
-                if (File.Exists(path + "VIDEO/INTRO/FCO.SFD;1"))
-                    File.Delete(path + "VIDEO/INTRO/FCO.SFD;1");
-                if (File.Exists(path + "VIDEO/INTRO/FCODUT.SFD;1"))
-                    File.Delete(path + "VIDEO/INTRO/FCODUT.SFD;1");
-                if (File.Exists(path + "VIDEO/INTRO/FCOENG.SFD;1"))
-                    File.Delete(path + "VIDEO/INTRO/FCOENG.SFD;1");
-                if (File.Exists(path + "VIDEO/INTRO/FCOFRE.SFD;1"))
-                    File.Delete(path + "VIDEO/INTRO/FCOFRE.SFD;1");
-                if (File.Exists(path + "VIDEO/INTRO/FCOGER.SFD;1"))
-                    File.Delete(path + "VIDEO/INTRO/FCOGER.SFD;1");
-                if (File.Exists(path + "VIDEO/INTRO/FCOITA.SFD;1"))
-                    File.Delete(path + "VIDEO/INTRO/FCOITA.SFD;1");
-                if (File.Exists(path + "VIDEO/INTRO/FCOSPA.SFD;1"))
-                    File.Delete(path + "VIDEO/INTRO/FCOSPA.SFD;1");
-                if (File.Exists(path + "VIDEO/INTRO/SCO.SFD;1"))
-                    File.Delete(path + "VIDEO/INTRO/SCO.SFD;1");
-                if (File.Exists(path + "VIDEO/INTRO/SCODUT.SFD;1"))
-                    File.Delete(path + "VIDEO/INTRO/SCODUT.SFD;1");
-                if (File.Exists(path + "VIDEO/INTRO/SCOENG.SFD;1"))
-                    File.Delete(path + "VIDEO/INTRO/SCOENG.SFD;1");
-                if (File.Exists(path + "VIDEO/INTRO/SCOFRE.SFD;1"))
-                    File.Delete(path + "VIDEO/INTRO/SCOFRE.SFD;1");
-                if (File.Exists(path + "VIDEO/INTRO/SCOGER.SFD;1"))
-                    File.Delete(path + "VIDEO/INTRO/SCOGER.SFD;1");
-                if (File.Exists(path + "VIDEO/INTRO/SCOITA.SFD;1"))
-                    File.Delete(path + "VIDEO/INTRO/SCOITA.SFD;1");
-                if (File.Exists(path + "VIDEO/INTRO/SCOSPA.SFD;1"))
-                    File.Delete(path + "VIDEO/INTRO/SCOSPA.SFD;1");
+                if (File.Exists(path + "VIDEO/INTRO/ALCHEMY.SFD"))
+                    File.Delete(path + "VIDEO/INTRO/ALCHEMY.SFD");
+                if (File.Exists(path + "VIDEO/INTRO/FCO.SFD"))
+                    File.Delete(path + "VIDEO/INTRO/FCO.SFD");
+                if (File.Exists(path + "VIDEO/INTRO/FCODUT.SFD"))
+                    File.Delete(path + "VIDEO/INTRO/FCODUT.SFD");
+                if (File.Exists(path + "VIDEO/INTRO/FCOENG.SFD"))
+                    File.Delete(path + "VIDEO/INTRO/FCOENG.SFD");
+                if (File.Exists(path + "VIDEO/INTRO/FCOFRE.SFD"))
+                    File.Delete(path + "VIDEO/INTRO/FCOFRE.SFD");
+                if (File.Exists(path + "VIDEO/INTRO/FCOGER.SFD"))
+                    File.Delete(path + "VIDEO/INTRO/FCOGER.SFD");
+                if (File.Exists(path + "VIDEO/INTRO/FCOITA.SFD"))
+                    File.Delete(path + "VIDEO/INTRO/FCOITA.SFD");
+                if (File.Exists(path + "VIDEO/INTRO/FCOSPA.SFD"))
+                    File.Delete(path + "VIDEO/INTRO/FCOSPA.SFD");
+                if (File.Exists(path + "VIDEO/INTRO/SCO.SFD"))
+                    File.Delete(path + "VIDEO/INTRO/SCO.SFD");
+                if (File.Exists(path + "VIDEO/INTRO/SCODUT.SFD"))
+                    File.Delete(path + "VIDEO/INTRO/SCODUT.SFD");
+                if (File.Exists(path + "VIDEO/INTRO/SCOENG.SFD"))
+                    File.Delete(path + "VIDEO/INTRO/SCOENG.SFD");
+                if (File.Exists(path + "VIDEO/INTRO/SCOFRE.SFD"))
+                    File.Delete(path + "VIDEO/INTRO/SCOFRE.SFD");
+                if (File.Exists(path + "VIDEO/INTRO/SCOGER.SFD"))
+                    File.Delete(path + "VIDEO/INTRO/SCOGER.SFD");
+                if (File.Exists(path + "VIDEO/INTRO/SCOITA.SFD"))
+                    File.Delete(path + "VIDEO/INTRO/SCOITA.SFD");
+                if (File.Exists(path + "VIDEO/INTRO/SCOSPA.SFD"))
+                    File.Delete(path + "VIDEO/INTRO/SCOSPA.SFD");
             }
             else if (console == ConsoleMode.GCN)
             {

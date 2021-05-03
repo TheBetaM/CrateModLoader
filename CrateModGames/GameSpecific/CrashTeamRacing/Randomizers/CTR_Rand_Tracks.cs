@@ -4,7 +4,7 @@ using System.IO;
 
 namespace CrateModLoader.GameSpecific.CrashTeamRacing
 {
-    public class CTR_Rand_Tracks : ModStruct<string>
+    public class CTR_Rand_Tracks : ModStruct<GenericModStruct>
     {
         public List<string> TrackFolderNames = new List<string>()
         {
@@ -29,8 +29,9 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
             "secret2",
         };
 
-        public override void ModPass(string path_extr)
+        public override void ModPass(GenericModStruct mod)
         {
+            string path_extr = mod.ExtractedPath + @"\BIGFILE\";
             if (!Directory.Exists(path_extr + @"levels\tracks\island1"))
             {
                 return;

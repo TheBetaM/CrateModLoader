@@ -5,10 +5,11 @@ using Pure3D.Chunks;
 
 namespace CrateModLoader.GameSpecific.CrashTitans
 {
-    public class Titans_Metadata : ModStruct<string>
+    public class Titans_Metadata : ModStruct<GenericModStruct>
     {
-        public override void ModPass(string path_extr)
+        public override void ModPass(GenericModStruct mod)
         {
+            string path_extr = mod.ExtractedPath + @"default\";
             bool skip = false;
             string fileName = path_extr + "package/cdd70a8c.p3d";
             File file = new File();

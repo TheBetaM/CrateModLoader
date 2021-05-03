@@ -6,12 +6,12 @@ using Pure3D.Chunks;
 
 namespace CrateModLoader.GameSpecific.CrashMoM.Mods
 {
-    public class MoM_TestMod : ModStruct<string>
+    public class MoM_TestMod : ModStruct<GenericModStruct>
     {
-        public override void ModPass(string path_extr)
+        public override void ModPass(GenericModStruct mod)
         {
+            string path_extr = mod.ExtractedPath + @"default\";
 
-            
             string file1 = path_extr + "anim/1066d3f8.p3d";
             string file2 = path_extr + "anim/e7418dc5.p3d"; //orig
             System.IO.File.Move(file2, file1 + "1");

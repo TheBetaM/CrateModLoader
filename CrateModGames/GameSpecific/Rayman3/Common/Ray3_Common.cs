@@ -95,18 +95,6 @@ namespace CrateModLoader.GameSpecific.Rayman3
         Tower5_Lept_15 = 47,
     }
 
-    public class Rayman3_GenericMod
-    {
-        public string mainPath;
-        public ConsoleMode console;
-
-        public Rayman3_GenericMod(string main, ConsoleMode cons)
-        {
-            mainPath = main;
-            console = cons;
-        }
-    }
-
     public static class Ray3_Common
     {
         public static string[] LevelNames = new string[]
@@ -175,6 +163,20 @@ namespace CrateModLoader.GameSpecific.Rayman3
             "lodps2_07.tpl",
             "lodps2_08.tpl",
         };
+
+        public static string GetDataPath(GenericModStruct mod)
+        {
+            string basePath = mod.ExtractedPath;
+            if (mod.Console == ConsoleMode.PS2)
+                basePath += @"DATABIN\";
+            else if (mod.Console == ConsoleMode.GCN)
+                basePath += @"GAMEDATABIN\";
+            else if (mod.Console == ConsoleMode.XBOX)
+                basePath += @"gamedatabin\";
+            else if (mod.Console == ConsoleMode.PC)
+                basePath += @"Gamedatabin\";
+            return basePath;
+        }
 
         public static void Recolor_Texture_File(string filePath, ColorSwizzleData Swiz)
         {

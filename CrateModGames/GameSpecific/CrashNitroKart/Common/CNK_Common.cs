@@ -837,20 +837,6 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
         }
     }
 
-    public class CNK_GenericMod
-    {
-        public string extrPath;
-        public string mainPath;
-        public ConsoleMode console;
-
-        public CNK_GenericMod(string ext, string main, ConsoleMode cons)
-        {
-            extrPath = ext;
-            mainPath = main;
-            console = cons;
-        }
-    }
-
     public static class CNK_Common
     {
 

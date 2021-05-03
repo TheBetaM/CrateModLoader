@@ -5,7 +5,7 @@ using System.IO;
 namespace CrateModLoader.GameSpecific.CrashMoM.Mods
 {
     // these models aren't used in cutscenes
-    public class MoM_Rand_CutsceneCostumes : ModStruct<string>
+    public class MoM_Rand_CutsceneCostumes : ModStruct<GenericModStruct>
     {
         private Random rand;
 
@@ -43,8 +43,9 @@ namespace CrateModLoader.GameSpecific.CrashMoM.Mods
             }
         }
 
-        public override void ModPass(string path_extr)
+        public override void ModPass(GenericModStruct mod)
         {
+            string path_extr = mod.ExtractedPath + @"default\";
             for (int i = 0; i < Costumes.Count; i++)
             {
                 string path1 = path_extr + "package/" + Costumes[i] + ".p3d";

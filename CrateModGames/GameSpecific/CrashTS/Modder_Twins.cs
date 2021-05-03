@@ -55,21 +55,6 @@ namespace CrateModLoader.GameSpecific.CrashTS
             UpdateProcessMessage("Patching executable...", 4);
             PatchEXE(bdPath, ConsolePipeline.Metadata.Console, GameRegion.Region);
 
-            //could be better...
-            foreach (ModPropertyBase prop in Props)
-            {
-                if (prop.HasChanged)
-                {
-                    if (prop.Category == (int)ModProps.Character)
-                    {
-                        TS_Props_Main.Option_RandCharacterParams.Value = 1;
-                        TS_Props_Main.Option_RandCharacterParams.HasChanged = true;
-                        //TS_Rand_CharParams PMod = (TS_Rand_CharParams)TS_Props_Main.Option_RandCharacterParams.ModInstances;
-                        //PMod.isSet = true;
-                    }
-                }
-            }
-
             //Mods
             FindFiles(new Parser_RM(this, rmType), new Parser_SM(this, smType));
             await StartNewPass();

@@ -4,10 +4,11 @@ using System.IO;
 
 namespace CrateModLoader.GameSpecific.CrashMoM
 {
-    public class MoM_Metadata : ModStruct<string>
+    public class MoM_Metadata : ModStruct<GenericModStruct>
     {
-        public override void ModPass(string path_extr)
+        public override void ModPass(GenericModStruct mod)
         {
+            string path_extr = mod.ExtractedPath + @"default\";
             // Proof of concept mod replacing credits text
             string[] credits_lines = File.ReadAllLines(path_extr + @"script\CreditsList.txt");
 

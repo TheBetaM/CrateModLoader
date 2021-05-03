@@ -6,7 +6,6 @@
  * LNG -> language files
  * CTR -> model files
  * LEV -> level files
- * string -> BIGFILE contents path (not yet implemented)
  */
 namespace CrateModLoader.GameSpecific.CrashTeamRacing
 {
@@ -18,7 +17,6 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
             FindArchives(new Pipeline_BIG(this));
             await StartPipelines(PipelinePass.Extract);
 
-            // Mods
             FindFiles(new Parser_LNG(this), new Parser_LEV(this), new Parser_CTR(this));
             await StartNewPass();
 

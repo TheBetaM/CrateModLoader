@@ -6,10 +6,11 @@ using Pure3D.Chunks;
 
 namespace CrateModLoader.GameSpecific.CrashTitans
 {
-    public class Titans_TestMod : ModStruct<string>
+    public class Titans_TestMod : ModStruct<GenericModStruct>
     {
-        public override void ModPass(string path_extr)
+        public override void ModPass(GenericModStruct mod)
         {
+            string path_extr = mod.ExtractedPath + @"default\";
             // Proof of concept mod increasing gameplay FOV in Episode 1
             /*
             string[] frontend_lines = File.ReadAllLines(path_extr + @"levels\L1_E1\cameraoverrides.blua");

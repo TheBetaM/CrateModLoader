@@ -4,12 +4,12 @@ using System.IO;
 
 namespace CrateModLoader.GameSpecific.CrashTWOC
 {
-    public class TWOC_Rand_LevelOrder : ModStruct<TWOC_GenericMod>
+    public class TWOC_Rand_LevelOrder : ModStruct<GenericModStruct>
     {
-        public override void ModPass(TWOC_GenericMod mod)
+        public override void ModPass(GenericModStruct mod)
         {
-            string extrPath = mod.mainPath;
-            ConsoleMode console = mod.console;
+            string extrPath = mod.ExtractedPath;
+            ConsoleMode console = mod.Console;
 
             Random rand = new Random(ModLoaderGlobals.RandomizerSeed);
             string LevelsPathA = @"LEVELS\A\";

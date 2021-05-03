@@ -5,11 +5,11 @@ using CrateModGames.GameSpecific.Rayman3;
 
 namespace CrateModLoader.GameSpecific.Rayman3
 {
-    public class Ray3_RemoveIntroVideo : ModStruct<Rayman3_GenericMod>
+    public class Ray3_RemoveIntroVideo : ModStruct<GenericModStruct>
     {
-        public override void ModPass(Rayman3_GenericMod mod)
+        public override void ModPass(GenericModStruct mod)
         {
-            string basePath = mod.mainPath;
+            string basePath = Ray3_Common.GetDataPath(mod);
             if (Directory.Exists(basePath + "videos"))
             {
                 if (File.Exists(basePath + @"videos\trailer.h4m"))

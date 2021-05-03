@@ -4,7 +4,7 @@ using System.IO;
 
 namespace CrateModLoader.GameSpecific.CrashTitans
 {
-    public class Titans_Rand_EpisodeOrder : ModStruct<string>
+    public class Titans_Rand_EpisodeOrder : ModStruct<GenericModStruct>
     {
         List<string> EpisodeFolderNames = new List<string>()
         {
@@ -30,8 +30,9 @@ namespace CrateModLoader.GameSpecific.CrashTitans
             "L5_E3",
         };
 
-        public override void ModPass(string path_extr)
+        public override void ModPass(GenericModStruct mod)
         {
+            string path_extr = mod.ExtractedPath + @"default\";
             // unfinished
             Random rand = new Random(ModLoaderGlobals.RandomizerSeed);
             List<int> LevelsToRand = new List<int>();

@@ -3,7 +3,7 @@ using CrateModLoader.ModProperties;
 
 namespace CrateModLoader.GameSpecific.CrashNitroKart
 {
-    [ModCategory((int)ModProps.KartStats)]
+    [ModCategory((int)ModProps.KartStats)] [ExecutesMods(typeof(CNK_Rand_KartStats))]
     static class CNK_Data_KartStats
     {
 

@@ -7,13 +7,21 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
 {
     public class CNK_Rand_KartStats : ModStruct<CSV>
     {
+        private bool isRand = false;
+
+        public CNK_Rand_KartStats()
+        {
+            isRand = CNK_Props_Main.Option_RandKartStats.Enabled;
+        }
+
         public override void BeforeModPass()
         {
             Random randState = new Random(ModLoaderGlobals.RandomizerSeed);
 
-            double target_val = 0;
-            target_val = randState.NextDouble() + 0.5;
-            //todo
+            if (!isRand)
+            {
+                return;
+            }
 
             //Accel
             CNK_Data_KartStats.m_AccelerationGainNormal.Value = randState.Next(24, 29) + (float)randState.NextDouble(); // 26f;

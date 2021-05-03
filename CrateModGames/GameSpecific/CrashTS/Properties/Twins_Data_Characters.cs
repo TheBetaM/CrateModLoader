@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using CrateModLoader.ModProperties;
+using CrateModLoader.GameSpecific.CrashTS.Mods;
 
 namespace CrateModLoader.GameSpecific.CrashTS
 {
 
-    [ModCategory((int)ModProps.Character)]
+    [ModCategory((int)ModProps.Character)] [ExecutesMods(typeof(TS_Rand_CharParams))]
     static class Twins_Data_Characters
     {
 

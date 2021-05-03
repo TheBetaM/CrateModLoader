@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 /*
  * Mod Passes:
- * Rayman3_GenericMod -> extraction path + console
  * TPL_File -> texture archives
  */
 
@@ -24,22 +23,6 @@ namespace CrateModLoader.GameSpecific.Rayman3
 
         public override async void StartModProcess()
         {
-            string basePath = ConsolePipeline.ExtractedPath;
-            if (ConsolePipeline.Metadata.Console == ConsoleMode.PS2)
-                basePath += @"DATABIN\";
-            else if (ConsolePipeline.Metadata.Console == ConsoleMode.GCN)
-                basePath += @"GAMEDATABIN\";
-            else if (ConsolePipeline.Metadata.Console == ConsoleMode.XBOX)
-                basePath += @"gamedatabin\";
-            else if (ConsolePipeline.Metadata.Console == ConsoleMode.PC)
-                basePath += @"Gamedatabin\";
-
-            //Generic mods
-            Rayman3_GenericMod generic = new Rayman3_GenericMod(basePath, ConsolePipeline.Metadata.Console);
-            UpdateProcessMessage("Setting up mods...", 4);
-            StartModPass(generic);
-
-            //Mods
             FindFiles(new Parser_TPL(this));
             await StartNewPass();
 

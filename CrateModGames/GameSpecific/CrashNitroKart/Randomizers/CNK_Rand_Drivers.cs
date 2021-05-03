@@ -5,29 +5,30 @@ using CrateModGames.GameSpecific.CrashNitroKart;
 
 namespace CrateModLoader.GameSpecific.CrashNitroKart
 {
-    public class CNK_Rand_Drivers : ModStruct<CNK_GenericMod>
+    public class CNK_Rand_Drivers : ModStruct<GenericModStruct>
     {
         private Random randState;
 
-        public override void ModPass(CNK_GenericMod mod)
+        public override void ModPass(GenericModStruct mod)
         {
+            string path_gob_extracted = mod.ExtractedPath + @"/ASSETS/";
+            ConsoleMode console = mod.Console;
+
             randState = new Random(ModLoaderGlobals.RandomizerSeed);
-            string path_gob_extracted = mod.extrPath;
-            ConsoleMode console = mod.console;
 
             //Replace model files
-            string modelpath = path_gob_extracted;
+            string modelpath = path_gob_extracted + "";
             if (console == ConsoleMode.PS2)
             {
-                modelpath += "/ps2/gfx/chars/";
+                modelpath += "ps2/gfx/chars/";
             }
             else if (console == ConsoleMode.XBOX)
             {
-                modelpath += "/xbox/gfx/chars/";
+                modelpath += "xbox/gfx/chars/";
             }
             else
             {
-                modelpath += "/gcn/gfx/chars/";
+                modelpath += "gcn/gfx/chars/";
             }
 
             List<int> charList = new List<int>();

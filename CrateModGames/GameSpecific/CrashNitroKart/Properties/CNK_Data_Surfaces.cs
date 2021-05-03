@@ -1,9 +1,10 @@
 ﻿using System;
 using CrateModLoader.ModProperties;
+using CrateModLoader.GameSpecific.CrashNitroKart;
 
 namespace CrateModLoader.GameSpecific.CrashNitroKart
 {
-    [ModCategory((int)ModProps.Surfaces)]
+    [ModCategory((int)ModProps.Surfaces)] [ExecutesMods(typeof(CNK_Rand_SurfaceParams))]
     static class CNK_Data_Surfaces
     {
         public static string[] SurfaceNames = Enum.GetNames(typeof(SurfaceTypes));

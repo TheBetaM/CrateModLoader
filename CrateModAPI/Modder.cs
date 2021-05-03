@@ -55,6 +55,7 @@ namespace CrateModLoader
         public int PassIterator { get; set; }
         public int PassCount { get; set; }
         public int PassPercent { get; set; }
+        public GenericModStruct GenericModStruct { get; set; }
 
         public Modder() { }
 
@@ -225,6 +226,14 @@ namespace CrateModLoader
                 }
             }
 
+            GenericModStruct = new GenericModStruct()
+            {
+                Console = ConsolePipeline.Metadata.Console,
+                Region = GameRegion.Region,
+                ExecutableFileName = GameRegion.ExecName,
+                ExtractedPath = ConsolePipeline.ExtractedPath,
+            };
+
             Mods = new List<Mod>();
             List<Type> DupeCheck = new List<Type>();
 
@@ -248,6 +257,16 @@ namespace CrateModLoader
         }
 
         public void FindFiles(params ModParserBase[] parsers)
+        {
+            ModParsers = new List<ModParserBase>(parsers);
+            ModParsers.Insert(0, new Parser_GenericMod(this));
+            PassCount = 0;
+            PassIterator = 0;
+            DirectoryInfo di = new DirectoryInfo(ConsolePipeline.ExtractedPath);
+            Recursive_LoadFiles(di);
+        }
+        // If you want to invoke Generic mods separately (note: Generic is automatically skipped if attempted to be executed twice)
+        public void FindFiles(bool NoGeneric, params ModParserBase[] parsers)
         {
             ModParsers = new List<ModParserBase>(parsers);
             PassCount = 0;
@@ -301,6 +320,7 @@ namespace CrateModLoader
             }
         }
 
+        // todo: BeforePass could be triggered twice for each mod if there are separate new passes in a Modder
         public async Task StartNewPass()
         {
             bool NeedsCache = NeedsCachePass();

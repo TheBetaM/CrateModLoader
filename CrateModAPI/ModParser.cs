@@ -14,7 +14,7 @@ namespace CrateModLoader
         public virtual List<string> SecondaryList => null;
         public virtual bool SecondarySkip => true;
         public virtual bool DisableAsync => false;
-        private Modder ExecutionSource;
+        public Modder ExecutionSource;
         private Dictionary<string, List<FileInfo>> FoundFiles;
         public override bool SkipParser { get; set; }
 
@@ -22,9 +22,12 @@ namespace CrateModLoader
         {
             ExecutionSource = source;
             FoundFiles = new Dictionary<string, List<FileInfo>>();
-            foreach (string ext in Extensions)
+            if (Extensions != null)
             {
-                FoundFiles.Add(ext.ToLower(), new List<FileInfo>());
+                foreach (string ext in Extensions)
+                {
+                    FoundFiles.Add(ext.ToLower(), new List<FileInfo>());
+                }
             }
             SkipParser = !CheckModsForType();
         }
@@ -41,7 +44,6 @@ namespace CrateModLoader
 
         public override async Task StartPass(ModPass pass = ModPass.Mod)
         {
-            ExecutionSource.PassIterator = 0;
             IList<Task> editTaskList = new List<Task>();
             foreach (KeyValuePair<string, List<FileInfo>> list in FoundFiles)
             {

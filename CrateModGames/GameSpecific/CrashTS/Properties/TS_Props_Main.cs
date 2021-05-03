@@ -22,7 +22,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
         public static ModPropOption Option_RandCharacterParams = new ModPropOption(Twins_Text.Rand_CharParams, Twins_Text.Rand_CharParamsDesc);
         [ExecutesMods(typeof(TS_Rand_Surfaces))]
         public static ModPropOption Option_RandSurfaces = new ModPropOption(Twins_Text.Rand_SurfaceParams, Twins_Text.Rand_SurfaceParamsDesc);
-        [ExecutesMods(typeof(TS_Rand_StartingChunk))]
+        [ExecutesMods(typeof(TS_Rand_StartingChunk), typeof(TS_SwapStartCreditsSpawn), typeof(TS_ChangeStartingChunk))]
         public static ModPropOption Option_RandStartingChunk = new ModPropOption(Twins_Text.Rand_StartingLevel, Twins_Text.Rand_StartingLevelDesc);
         [ExecutesMods(typeof(TS_EnableFlyingKick))]
         public static ModPropOption Option_FlyingKick = new ModPropOption(Twins_Text.Mod_FlyingKick, Twins_Text.Mod_FlyingKickDesc);

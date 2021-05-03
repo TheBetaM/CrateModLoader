@@ -3,7 +3,7 @@ using CrateModLoader.ModProperties;
 
 namespace CrateModLoader.GameSpecific.CrashNitroKart
 {
-    [ModCategory((int)ModProps.Powerups)]
+    [ModCategory((int)ModProps.Powerups)] [ExecutesMods(typeof(CNK_Rand_PowerupEffects))]
     public static class CNK_Data_Powerups
     {
         //These are Normal values, not battle/boss/AI

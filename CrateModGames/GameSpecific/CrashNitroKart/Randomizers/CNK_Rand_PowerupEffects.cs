@@ -7,9 +7,21 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
 {
     public class CNK_Rand_PowerupEffects : ModStruct<CSV>
     {
+        private bool isRand = false;
+
+        public CNK_Rand_PowerupEffects()
+        {
+            isRand = CNK_Props_Main.Option_RandWeaponEffects.Enabled;
+        }
+
+
         public override void BeforeModPass()
         {
             Random randState = new Random(ModLoaderGlobals.RandomizerSeed);
+            if (!isRand)
+            {
+                return;
+            }
             CNK_Randomize_PowerShield(randState);
             CNK_Randomize_BowlingBomb(randState);
             CNK_Randomize_FreezingMine(randState);

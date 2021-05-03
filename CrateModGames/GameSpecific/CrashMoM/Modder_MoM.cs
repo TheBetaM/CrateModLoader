@@ -4,7 +4,7 @@ using CrateModLoader.GameSpecific.CrashTTR;
 /* Mod Layers:
  * 1: Default.RCF contents (only replace files)
  * Mod Passes:
- * string -> extraction path
+ * 
  */
 namespace CrateModLoader.GameSpecific.CrashMoM
 {
@@ -16,13 +16,7 @@ namespace CrateModLoader.GameSpecific.CrashMoM
             FindArchives(new Pipeline_RCF(this) { SecondaryList = new List<string>() { "default.rcf", "DEFAULT.RCF" }, SecondarySkip = false, });
             await StartPipelines(PipelinePass.Extract);
 
-            string path_extr = ConsolePipeline.ExtractedPath + @"default\";
-            UpdateProcessMessage("Cache Pass", 27);
-            BeforeCachePass();
-            StartCachePass(path_extr);
-            UpdateProcessMessage("Mod Pass", 50);
-            BeforeModPass();
-            StartModPass(path_extr);
+            await StartNewPass();
 
             UpdateProcessMessage("Packing DEFAULT.RCF...", 75);
             await StartPipelines(PipelinePass.Build);
