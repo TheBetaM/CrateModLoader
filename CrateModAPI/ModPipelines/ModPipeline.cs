@@ -102,7 +102,9 @@ namespace CrateModLoader
 
             if (IsModLayer)
             {
-                string dirPath = filePath.Substring(0, (filePath.Length - 4)) + @"\";
+                string fileName = Path.GetFileName(filePath);
+                string fileNameNoExt = Path.GetFileNameWithoutExtension(filePath);
+                string dirPath = filePath.Substring(0, (filePath.Length - fileName.Length)) + fileNameNoExt + @"\";
                 ModCrates.InstallLayerMods(ExecutionSource.EnabledModCrates, dirPath, ModLayerID, ModLayerReplaceOnly);
             }
 
