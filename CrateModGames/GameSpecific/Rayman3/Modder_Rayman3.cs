@@ -12,7 +12,7 @@ namespace CrateModLoader.GameSpecific.Rayman3
 
         public override async void StartModProcess()
         {
-            FindFiles(new Parser_TPL(this));
+            FindFiles(new Parser_TPL(this, ConsolePipeline.ExtractedPath));
             await StartNewPass();
 
             ProcessBusy = false;
@@ -20,7 +20,7 @@ namespace CrateModLoader.GameSpecific.Rayman3
 
         public override async void StartPreload()
         {
-            FindFiles(new Parser_TPL(this));
+            FindFiles(new Parser_TPL(this, ConsolePipeline.ExtractedPath, true));
             await StartPreloadPass();
 
             ProcessBusy = false;

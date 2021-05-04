@@ -908,6 +908,16 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
             "earth1", "earth2", "earth3", "arena1", "barin1", "barin2", "barin3", "arena2", "fenom1", "fenom2", "fenom3", "arena3", "teknee1", "teknee2", "teknee3", "arena4", "arena5", "velorace" , "citadel" , "hub1" , "hub2" , "hub3" , "hub4" , "secr"
         };
 
+        public static string GetDataPath(ConsoleMode console, string ExtractedPath)
+        {
+            string path_gob_extracted = ExtractedPath + @"\assets\";
+            if (console == ConsoleMode.PS2)
+            {
+                path_gob_extracted = ExtractedPath + @"\ASSETS\";
+            }
+            return path_gob_extracted;
+        }
+
         public static string Float_To_CSV_Line(float targetfloat)
         {
             string cur_line = String.Format("{0:0.#########}", targetfloat);

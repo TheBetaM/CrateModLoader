@@ -49,9 +49,13 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
         //unfinished
         [ExecutesMods(typeof(CNK_Rand_Music))] [ModHidden]
         public static ModPropOption Option_RandMusic = new ModPropOption("Randomize Music", ""); // audio.csv does NOTHING
+        [ModHidden]
         public static ModPropOption Option_RandWumpaCrate = new ModPropOption();  //TODO dda
+        [ModHidden]
         public static ModPropOption Option_RandObstacles = new ModPropOption();  //TODO obstacles
+        [ModHidden]
         public static ModPropOption Option_RandCupPoints = new ModPropOption();  //Maybe? gameprogression
+        [ModHidden]
         public static ModPropOption Option_NoMaskHints = new ModPropOption(); //TODO, hinthistory.csv
     }
 }

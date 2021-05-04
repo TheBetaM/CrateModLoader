@@ -12,8 +12,12 @@ namespace CrateModLoader.GameSpecific.CrashTS
         Misc = 1,
         Character = 2,
         Textures = 3,
-        Galleries = 4,
-        Text = 5,
+        Text = 4,
+        Gallery_Boss = 5,
+        Gallery_Concept = 6,
+        Gallery_Enemy = 7,
+        Gallery_Unseen = 8,
+        Galleries = 9,
     }
 
     public static class TS_Props_Main

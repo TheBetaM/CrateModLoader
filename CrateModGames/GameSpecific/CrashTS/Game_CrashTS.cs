@@ -59,7 +59,11 @@ namespace CrateModLoader.GameSpecific.CrashTS
             [(int)ModProps.Misc] = "Misc.",
             [(int)ModProps.Character] = "Character",
             [(int)ModProps.Textures] = "Textures",
-            [(int)ModProps.Galleries] = "Galleries",
+            [(int)ModProps.Gallery_Boss] = "Boss Galleries",
+            [(int)ModProps.Gallery_Concept] = "Concept Galleries",
+            [(int)ModProps.Gallery_Enemy] = "Enemy Galleries",
+            [(int)ModProps.Gallery_Unseen] = "Unseem Gal.",
+            [(int)ModProps.Galleries] = "Story Gal.",
         };
     }
 }

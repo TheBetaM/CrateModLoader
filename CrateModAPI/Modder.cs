@@ -356,7 +356,7 @@ namespace CrateModLoader
             {
                 foreach (ModParserBase parser in ModParsers)
                 {
-                    if (!parser.SkipParser)
+                    if (!parser.SkipParser || parser.ForceParser)
                     {
                         bool add = parser.AddFile(file);
                         if (add) PassCount++;
@@ -412,7 +412,7 @@ namespace CrateModLoader
 
                 foreach (ModParserBase parser in ModParsers)
                 {
-                    if (!parser.SkipParser)
+                    if (!parser.SkipParser || parser.ForceParser)
                     {
                         editTaskList.Add(parser.StartPass((ModPass)CurrentPass));
                     }
@@ -562,7 +562,7 @@ namespace CrateModLoader
 
             foreach (ModParserBase parser in ModParsers)
             {
-                if (!parser.SkipParser)
+                if (!parser.SkipParser || parser.ForceParser)
                 {
                     editTaskList.Add(parser.StartPass((ModPass)CurrentPass));
                 }

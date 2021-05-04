@@ -12,12 +12,21 @@ namespace CrateModLoader.ModProperties
         public string BrowseFilter = ""; // OpenFileDialog filter
         public bool SaveAsRawData = false;
         public string AssetExtension = "";
+        public string AssetPath = string.Empty;
 
         public ModPropExternalResourceBase(bool b) : base(b)
         {
         }
         public ModPropExternalResourceBase(bool b, string name, string desc) : base(b, name, desc)
         {
+        }
+        public ModPropExternalResourceBase(string p) : base(false)
+        {
+            AssetPath = p;
+        }
+        public ModPropExternalResourceBase(string p, string name, string desc) : base(false, name, desc)
+        {
+            AssetPath = p;
         }
 
         /// <summary>

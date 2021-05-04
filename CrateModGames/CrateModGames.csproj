@@ -152,9 +152,9 @@
     <Compile Include="GameSpecific\CrashNitroKart\Common\CNK_Common.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\Common\CSV_Table.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\Common\Parser_CSV.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\Common\Parser_PNG.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\Common\Pipeline_GOB.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\Game_CrashNK.cs" />
-    <Compile Include="GameSpecific\CrashNitroKart\Mods\CNK_CustomTextureHandle.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\Mods\CNK_DisableFadeout.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\Mods\CNK_DisablePopups.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\Mods\CNK_Metadata.cs" />
@@ -214,9 +214,11 @@
     <Compile Include="GameSpecific\CrashTitans\Randomizers\Titans_Rand_CutsceneCostumes.cs" />
     <Compile Include="GameSpecific\CrashTitans\Randomizers\Titans_Rand_EpisodeOrder.cs" />
     <Compile Include="GameSpecific\CrashTS\Common\BD_Archive.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\Parser_PSM.cs" />
     <Compile Include="GameSpecific\CrashTS\Common\Parser_RM.cs" />
     <Compile Include="GameSpecific\CrashTS\Common\Parser_SM.cs" />
     <Compile Include="GameSpecific\CrashTS\Common\Pipeline_BD.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\PSM_Texture.cs" />
     <Compile Include="GameSpecific\CrashTS\Game_CrashTS.cs" />
     <Compile Include="GameSpecific\CrashTS\Modder_Twins.cs" />
     <Compile Include="GameSpecific\CrashTS\Mods\TS_ChangeCreditsChunk.cs" />
@@ -224,7 +226,6 @@
     <Compile Include="GameSpecific\CrashTS\Mods\TS_ClassicExplosions.cs" />
     <Compile Include="GameSpecific\CrashTS\Mods\TS_ClassicHealth.cs" />
     <Compile Include="GameSpecific\CrashTS\Mods\TS_CortexDoubleJump.cs" />
-    <Compile Include="GameSpecific\CrashTS\Mods\TS_CustomTextureHandle.cs" />
     <Compile Include="GameSpecific\CrashTS\Mods\TS_EnableClassicSlideJump.cs" />
     <Compile Include="GameSpecific\CrashTS\Mods\TS_EnableFlyingKick.cs" />
     <Compile Include="GameSpecific\CrashTS\Mods\TS_EnableHiddenEnemies.cs" />
@@ -236,6 +237,10 @@
     <Compile Include="GameSpecific\CrashTS\Mods\TS_StartSpawnCredits.cs" />
     <Compile Include="GameSpecific\CrashTS\Mods\TS_SwapStartCreditsSpawn.cs" />
     <Compile Include="GameSpecific\CrashTS\Properties\TS_Props_Misc.cs" />
+    <Compile Include="GameSpecific\CrashTS\Properties\Twins_Data_Textures_Gallery_Boss.cs" />
+    <Compile Include="GameSpecific\CrashTS\Properties\Twins_Data_Textures_Gallery_Concept.cs" />
+    <Compile Include="GameSpecific\CrashTS\Properties\Twins_Data_Textures_Gallery_Enemy.cs" />
+    <Compile Include="GameSpecific\CrashTS\Properties\Twins_Data_Textures_Gallery_Unseen.cs" />
     <Compile Include="GameSpecific\CrashTS\Randomizers\TS_Rand_CharParams.cs" />
     <Compile Include="GameSpecific\CrashTS\Randomizers\TS_Rand_Crates.cs" />
     <Compile Include="GameSpecific\CrashTS\Randomizers\TS_Rand_Enemies.cs" />
@@ -441,7 +446,6 @@
     <Compile Include="GameSpecific\Rayman3\Common\TPL_File.cs" />
     <Compile Include="GameSpecific\Rayman3\Game_Rayman3.cs" />
     <Compile Include="GameSpecific\Rayman3\Modder_Rayman3.cs" />
-    <Compile Include="GameSpecific\Rayman3\Mods\Ray3_CustomTextureHandle.cs" />
     <Compile Include="GameSpecific\Rayman3\Mods\Ray3_RemoveIntroVideos.cs" />
     <Compile Include="GameSpecific\Rayman3\Mods\Ray3_Start2DNightmare.cs" />
     <Compile Include="GameSpecific\Rayman3\Properties\Rayman3_Props_Main.cs" />

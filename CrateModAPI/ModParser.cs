@@ -17,6 +17,7 @@ namespace CrateModLoader
         public Modder ExecutionSource;
         private Dictionary<string, List<FileInfo>> FoundFiles;
         public override bool SkipParser { get; set; }
+        public bool LoadOnly = false;
 
         public ModParser(Modder source)
         {
@@ -66,7 +67,10 @@ namespace CrateModLoader
 
                     ExecutionSource.StartPass(thing, pass);
 
-                    SaveObject(thing, filePath);
+                    if (!LoadOnly)
+                    {
+                        SaveObject(thing, filePath);
+                    }
                 }
                 catch
                 {
@@ -85,7 +89,10 @@ namespace CrateModLoader
 
                         ExecutionSource.StartPass(thing, pass);
 
-                        SaveObject(thing, filePath);
+                        if (!LoadOnly)
+                        {
+                            SaveObject(thing, filePath);
+                        }
                     }
                     catch
                     {

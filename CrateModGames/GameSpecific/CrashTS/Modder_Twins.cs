@@ -23,7 +23,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
                 await StartPipelines(PipelinePass.Extract);
             }
 
-            FindFiles(new Parser_RM(this, ConsolePipeline.Metadata.Console), new Parser_SM(this, ConsolePipeline.Metadata.Console));
+            FindFiles(new Parser_RM(this, ConsolePipeline.Metadata.Console), new Parser_SM(this, ConsolePipeline.Metadata.Console), new Parser_PSM(this, ConsolePipeline.Metadata.Console, ConsolePipeline.ExtractedPath));
             await StartNewPass();
 
             if (ConsolePipeline.Metadata.Console == ConsoleMode.PS2)
@@ -40,9 +40,13 @@ namespace CrateModLoader.GameSpecific.CrashTS
             {
                 FindArchives(new Pipeline_BD(this));
                 await StartPipelines(PipelinePass.Extract);
+                FindFiles(new Parser_PSM(this, ConsolePipeline.Metadata.Console, ConsolePipeline.ExtractedPath, true));
             }
-
-            FindFiles();
+            else
+            {
+                FindFiles();
+            }
+            
             await StartPreloadPass();
 
             ProcessBusy = false;

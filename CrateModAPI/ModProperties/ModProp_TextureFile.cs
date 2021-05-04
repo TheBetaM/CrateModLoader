@@ -20,6 +20,18 @@ namespace CrateModLoader.ModProperties
             PreloadBonus = true;
             AssetExtension = ".png";
         }
+        public ModProp_TextureFile(string path) : base(path)
+        {
+            BrowseFilter = "Image Files (*.png;*.bmp)|*.png;*.bmp|";
+            PreloadBonus = true;
+            AssetExtension = ".png";
+        }
+        public ModProp_TextureFile(string path, string name, string desc) : base(path, name, desc)
+        {
+            BrowseFilter = "Image Files (*.png;*.bmp)|*.png;*.bmp|";
+            PreloadBonus = true;
+            AssetExtension = ".png";
+        }
 
         public override bool TryResource(string path)
         {

@@ -177,6 +177,19 @@ namespace CrateModLoader.GameSpecific.Rayman3
                 basePath += @"Gamedatabin\";
             return basePath;
         }
+        public static string GetDataPath(ConsoleMode Console, string ExtractedPath)
+        {
+            string basePath = ExtractedPath;
+            if (Console == ConsoleMode.PS2)
+                basePath += @"DATABIN\";
+            else if (Console == ConsoleMode.GCN)
+                basePath += @"GAMEDATABIN\";
+            else if (Console == ConsoleMode.XBOX)
+                basePath += @"gamedatabin\";
+            else if (Console == ConsoleMode.PC)
+                basePath += @"Gamedatabin\";
+            return basePath;
+        }
 
         public static void Recolor_Texture_File(string filePath, ColorSwizzleData Swiz)
         {

@@ -17,7 +17,7 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
             FindArchives(new Pipeline_GOB(this));
             await StartPipelines(PipelinePass.Extract);
 
-            FindFiles(new Parser_CSV(this));
+            FindFiles(new Parser_CSV(this), new Parser_PNG(this, ConsolePipeline.Metadata.Console, ConsolePipeline.ExtractedPath));
             await StartNewPass();
 
             await StartPipelines(PipelinePass.Build);
@@ -30,7 +30,7 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
             FindArchives(new Pipeline_GOB(this));
             await StartPipelines(PipelinePass.Extract);
 
-            FindFiles();
+            FindFiles(new Parser_PNG(this, ConsolePipeline.Metadata.Console, ConsolePipeline.ExtractedPath, true));
             await StartPreloadPass();
 
             ProcessBusy = false;
