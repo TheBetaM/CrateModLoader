@@ -11,7 +11,6 @@ namespace CrateModLoader.GameSpecific.MonkeyBallAdv
         public Parser_XML(Modder mod) : base(mod) { }
 
         public override List<string> Extensions => new List<string>() { ".XML" };
-        public override bool DisableAsync => true;
 
         public override XmlDocument LoadObject(string filePath)
         {

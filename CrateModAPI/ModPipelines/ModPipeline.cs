@@ -78,7 +78,7 @@ namespace CrateModLoader
                 }
                 catch
                 {
-                    Console.Write("ModPipeline Error: " + filePath);
+                    Console.WriteLine("ModPipeline Error: " + filePath);
                 }
             }
             else
@@ -96,7 +96,7 @@ namespace CrateModLoader
                 }
                 catch
                 {
-                    Console.Write("ModPipeline Error: " + filePath);
+                    Console.WriteLine("ModPipeline Error: " + filePath);
                 }
             }
 

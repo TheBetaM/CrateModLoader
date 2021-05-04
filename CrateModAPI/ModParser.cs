@@ -74,7 +74,7 @@ namespace CrateModLoader
                 }
                 catch
                 {
-                    Console.Write("ModParser Error: " + filePath);
+                    Console.WriteLine("ModParser Error: " + filePath);
                 }
             }
             else
@@ -96,7 +96,7 @@ namespace CrateModLoader
                     }
                     catch
                     {
-                        Console.Write("ModParser Error: " + filePath);
+                        Console.WriteLine("ModParser Error: " + filePath);
                     }
                 }
                 );
@@ -135,15 +135,6 @@ namespace CrateModLoader
 
         bool CheckModsForType()
         {
-            /*
-            foreach (ModPropertyBase Prop in ExecutionSource.ActiveProps)
-            {
-                if (Prop.ModInstances is ModStruct<T>)
-                {
-                    return true;
-                }
-            }
-            */
             foreach (Mod mod in ExecutionSource.Mods)
             {
                 if (mod is ModStruct<T>)

@@ -11,7 +11,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
     public class PSM_Texture
     {
         private string Path = "";
-        public Bitmap Image;
+        public Bitmap Image = null;
 
         public bool LoadTexture(string path)
         {

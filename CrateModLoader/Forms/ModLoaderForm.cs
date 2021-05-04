@@ -178,12 +178,12 @@ namespace CrateModLoader
             {
                 if (MessageBox.Show(ModLoaderText.NoOptionsSelectedPopup, ModLoaderText.NoOptionsSelectedTitle, MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    ModProgram.StartProcess();
+                    ModProgram.StartProcess(false);
                 }
             }
             else
             {
-                ModProgram.StartProcess();
+                ModProgram.StartProcess(false);
             }
         }
 
@@ -441,7 +441,7 @@ namespace CrateModLoader
         }
         public void EnableInteraction(object sender, EventArgs e)
         {
-            button_startProcess.Enabled = true;
+            button_startProcess.Enabled = ModProgram.OutputPath != string.Empty;
             checkedListBox1.Enabled = true;
             button_browseInput.Enabled = true;
             button_browseOutput.Enabled = true;
@@ -677,7 +677,7 @@ namespace CrateModLoader
             {
                 if (MessageBox.Show(ModLoaderText.Popup_PreloadGame, ModLoaderText.Button_PreloadGame, MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    ModProgram.StartPreload();
+                    ModProgram.StartProcess(true);
                 }
             }
         }

@@ -22,7 +22,8 @@ namespace CrateModLoader
         public ConsolePipeline Pipeline;
         public int RandomizerSeedBase = 0;
         public string InputPath = "";
-        public string OutputPath = "";
+        public string OutputPath = string.Empty;
+        public bool IsPreloading = false;
         public bool GamePreloaded = false;
 
         public string TempPath = ModLoaderGlobals.BaseDirectory + ModLoaderGlobals.TempName + @"\";
@@ -187,6 +188,7 @@ namespace CrateModLoader
             Modder = null;
             Pipeline = null;
             GamePreloaded = false;
+            IsPreloading = false;
             SupportedMods = new List<ModCrate>();
             bool ConsoleDetected = false;
             string regionID;
@@ -384,8 +386,9 @@ namespace CrateModLoader
             }
         }
 
-        public void StartProcess()
+        public void StartProcess(bool Preload)
         {
+            IsPreloading = Preload;
             InteractionDisable.Invoke(this, null);
 
             BackgroundWorker asyncWorker = new BackgroundWorker();
@@ -405,22 +408,34 @@ namespace CrateModLoader
             bool inputDirectoryMode = IO_Common.PathIsFolder(inputPath);
             bool outputDirectoryMode = IO_Common.PathIsFolder(outputPath);
 
-            a.ReportProgress(0);
-
-            DeleteTempFiles(TempPath);
             Pipeline.PreStart(inputDirectoryMode, outputDirectoryMode);
 
-            a.ReportProgress(1);
+            a.ReportProgress(0);
+            if (!GamePreloaded)
+            {
+                DeleteTempFiles(TempPath);
+            }
 
-            ExtractGame2(inputPath, TempPath, a);
-            while (Pipeline.IsBusy || isExtracting) Thread.Sleep(100);
+            if (!GamePreloaded)
+            {
+                a.ReportProgress(1);
+                ExtractGame2(inputPath, TempPath, a);
+                while (Pipeline.IsBusy || isExtracting) Thread.Sleep(100);
+            }
 
             a.ReportProgress(26);
 
-            EditGame(a);
+            if (!IsPreloading)
+            {
+                EditGame(a);
+            }
             if (Modder != null)
             {
-                Modder.StartProcess();
+                if (IsPreloading)
+                {
+                    Modder.LoadPropsPreload();
+                }
+                Modder.StartProcess(IsPreloading);
                 while (Modder.IsBusy)
                 {
                     int PPerc = (int)(Modder.PassPercent * 0.48f);
@@ -431,16 +446,19 @@ namespace CrateModLoader
                 }
             }
 
-            a.ReportProgress(74);
-
-            BuildGame(TempPath, outputPath, a);
-            while (Pipeline.IsBusy) Thread.Sleep(100);
-
-            a.ReportProgress(99);
-
-            if (!KeepTempFiles)
+            if (!IsPreloading)
             {
-                DeleteTempFiles(TempPath);
+                a.ReportProgress(74);
+
+                BuildGame(TempPath, outputPath, a);
+                while (Pipeline.IsBusy) Thread.Sleep(100);
+
+                a.ReportProgress(99);
+
+                if (!KeepTempFiles)
+                {
+                    DeleteTempFiles(TempPath);
+                }
             }
         }
 
@@ -455,7 +473,17 @@ namespace CrateModLoader
             }
             else if (!e.Cancelled)
             {
-                UpdateProcessMessage(ModLoaderText.Process_Finished);
+                if (IsPreloading)
+                {
+                    UpdateProcessMessage("Preload complete!");
+                    IsPreloading = false;
+                    GamePreloaded = true;
+                    ModMenuUpdated.Invoke(this, new EventValueArgs<bool>(false));
+                }
+                else
+                {
+                    UpdateProcessMessage(ModLoaderText.Process_Finished);
+                }
             }
             else
             {
@@ -686,136 +714,5 @@ namespace CrateModLoader
             ResetGameEvent.Invoke(this, new EventValueArgs<bool>(ClearGameText));
         }
 
-        public void StartPreload()
-        {
-            InteractionDisable.Invoke(this, null);
-
-            BackgroundWorker asyncWorker = new BackgroundWorker();
-            asyncWorker.WorkerReportsProgress = true;
-            asyncWorker.DoWork += new DoWorkEventHandler(Preload_DoWork);
-            asyncWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(Preload_RunWorkerCompleted);
-            asyncWorker.ProgressChanged += new ProgressChangedEventHandler(Preload_ProgressChanged);
-            asyncWorker.RunWorkerAsync();
-        }
-
-        private void Preload_DoWork(object sender, DoWorkEventArgs e)
-        {
-            BackgroundWorker a = sender as BackgroundWorker;
-            string inputPath = InputPath;
-            //string tempPath = ModLoaderGlobals.BaseDirectory + ModLoaderGlobals.TempName + @"\";
-            //string outputPath = OutputPath;
-            bool inputDirectoryMode = IO_Common.PathIsFolder(inputPath);
-            //bool outputDirectoryMode = IO_Common.PathIsFolder(outputPath);
-
-            a.ReportProgress(0);
-
-            DeleteTempFiles(TempPath);
-            //Pipeline.PreStart(inputDirectoryMode, outputDirectoryMode);
-
-            a.ReportProgress(1);
-
-            ExtractGame2(inputPath, TempPath, a);
-            while (Pipeline.IsBusy || isExtracting) Thread.Sleep(100);
-
-            a.ReportProgress(26);
-
-            //EditGame(a);
-            if (Modder != null)
-            {
-                Modder.LoadPropsPreload();
-                Modder.StartProcess(true);
-                while (Modder.IsBusy)
-                {
-                    int PPerc = (int)(Modder.PassPercent * 0.48f);
-                    if (PPerc > 47) PPerc = 47;
-                    if (PPerc < 0) PPerc = 0;
-                    a.ReportProgress(26 + PPerc);
-                    Thread.Sleep(100);
-                }
-            }
-
-            a.ReportProgress(90);
-
-            if (!KeepTempFiles)
-            {
-                DeleteTempFiles(TempPath);
-            }
-        }
-
-        public void PreloadGame()
-        {
-            if (Modder != null)
-            {
-                Modder.StartPreload();
-            }
-        }
-
-        private void Preload_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            ProcessProgressChanged.Invoke(this, new EventValueArgs<int>(100));
-            ProcessFinished.Invoke(this, null);
-            if (e.Error != null)
-            {
-                ProcessProgressChanged.Invoke(this, new EventValueArgs<int>(0));
-                UpdateProcessMessage(ModLoaderText.Process_Error + " " + e.Error.Message);
-            }
-            else if (!e.Cancelled)
-            {
-                UpdateProcessMessage("Preload complete!");
-                GamePreloaded = true;
-                ModMenuUpdated.Invoke(this, new EventValueArgs<bool>(false));
-            }
-            else
-            {
-                ProcessProgressChanged.Invoke(this, new EventValueArgs<int>(0));
-                UpdateProcessMessage(ModLoaderText.Process_Cancelled);
-            }
-
-            InteractionEnable.Invoke(this, null);
-
-            BackgroundWorker a = sender as BackgroundWorker;
-            a.DoWork -= Preload_DoWork;
-            a.RunWorkerCompleted -= Preload_RunWorkerCompleted;
-            a.ProgressChanged -= Preload_ProgressChanged;
-        }
-
-        private void Preload_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            ProcessProgressChanged.Invoke(this, new EventValueArgs<int>(e.ProgressPercentage));
-            if (e.ProgressPercentage == 0)
-            {
-                UpdateProcessMessage(ModLoaderText.Process_Step0);
-            }
-            else if (e.ProgressPercentage == 1)
-            {
-                UpdateProcessMessage(ModLoaderText.Process_Step1_ROM);
-            }
-            else if (e.ProgressPercentage < 26)
-            {
-                int ExtractProgress = (int)(((e.ProgressPercentage - 1f) / 25f) * 100f);
-                UpdateProcessMessage($"{ModLoaderText.Process_Step1_ROM} ({ExtractProgress}%)");
-            }
-            else if (e.ProgressPercentage < 90)
-            {
-                string msg = "Processing game files...";
-                if (Modder != null)
-                {
-                    if (Modder.ProcessBusy)
-                    {
-                        //msg += string.Format($"({Modder.PassPercent}%) {Modder.ProcessMessage}");
-                        msg += string.Format($" {Modder.ProcessMessage}");
-                    }
-                    if (Modder.PassBusy && Modder.PassCount != 0)
-                    {
-                        msg += string.Format($" ({Modder.PassIterator}/{Modder.PassCount} files)");
-                    }
-                }
-                UpdateProcessMessage(msg);
-            }
-            else if (e.ProgressPercentage == 90)
-            {
-                UpdateProcessMessage("Removing temporary files...");
-            }
-        }
     }
 }

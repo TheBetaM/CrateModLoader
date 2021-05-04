@@ -14,24 +14,19 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
 
         public override async void StartModProcess()
         {
-            FindArchives(new Pipeline_GOB(this));
-            await StartPipelines(PipelinePass.Extract);
+            if (!ModderHasPreloaded)
+            {
+                FindArchives(new Pipeline_GOB(this));
+                await StartPipelines(PipelinePass.Extract);
+            }
 
-            FindFiles(new Parser_CSV(this), new Parser_PNG(this, ConsolePipeline.Metadata.Console, ConsolePipeline.ExtractedPath));
+            FindFiles(new Parser_CSV(this), new Parser_PNG(this, ConsolePipeline.Metadata.Console, ConsolePipeline.ExtractedPath, ModderIsPreloading));
             await StartNewPass();
 
-            await StartPipelines(PipelinePass.Build);
-
-            ProcessBusy = false;
-        }
-
-        public override async void StartPreload()
-        {
-            FindArchives(new Pipeline_GOB(this));
-            await StartPipelines(PipelinePass.Extract);
-
-            FindFiles(new Parser_PNG(this, ConsolePipeline.Metadata.Console, ConsolePipeline.ExtractedPath, true));
-            await StartPreloadPass();
+            if (!ModderIsPreloading)
+            {
+                await StartPipelines(PipelinePass.Build);
+            }
 
             ProcessBusy = false;
         }

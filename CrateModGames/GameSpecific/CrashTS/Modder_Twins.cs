@@ -17,40 +17,32 @@ namespace CrateModLoader.GameSpecific.CrashTS
 
         public override async void StartModProcess()
         {
-            if (ConsolePipeline.Metadata.Console == ConsoleMode.PS2)
+            if (!ModderHasPreloaded && ConsolePipeline.Metadata.Console == ConsoleMode.PS2)
             {
                 FindArchives(new Pipeline_BD(this));
                 await StartPipelines(PipelinePass.Extract);
             }
 
-            FindFiles(new Parser_RM(this, ConsolePipeline.Metadata.Console), new Parser_SM(this, ConsolePipeline.Metadata.Console), new Parser_PSM(this, ConsolePipeline.Metadata.Console, ConsolePipeline.ExtractedPath));
+            if (ModderIsPreloading)
+            {
+                if (ConsolePipeline.Metadata.Console == ConsoleMode.PS2)
+                    FindFiles(new Parser_PSM(this, ConsolePipeline.Metadata.Console, ConsolePipeline.ExtractedPath, true));
+                else
+                    FindFiles();
+            }
+            else
+            {
+                FindFiles(new Parser_RM(this, ConsolePipeline.Metadata.Console), new Parser_SM(this, ConsolePipeline.Metadata.Console), new Parser_PSM(this, ConsolePipeline.Metadata.Console, ConsolePipeline.ExtractedPath));
+            }
+            
             await StartNewPass();
 
-            if (ConsolePipeline.Metadata.Console == ConsoleMode.PS2)
+            if (!ModderIsPreloading && ConsolePipeline.Metadata.Console == ConsoleMode.PS2)
             {
                 await StartPipelines(PipelinePass.Build);
             }
 
             ProcessBusy = false;
         }
-
-        public override async void StartPreload()
-        {
-            if (ConsolePipeline.Metadata.Console == ConsoleMode.PS2)
-            {
-                FindArchives(new Pipeline_BD(this));
-                await StartPipelines(PipelinePass.Extract);
-                FindFiles(new Parser_PSM(this, ConsolePipeline.Metadata.Console, ConsolePipeline.ExtractedPath, true));
-            }
-            else
-            {
-                FindFiles();
-            }
-            
-            await StartPreloadPass();
-
-            ProcessBusy = false;
-        }
-
     }
 }

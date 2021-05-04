@@ -40,6 +40,14 @@ namespace CrateModLoader
         public virtual bool ModCrateRegionCheck => false; // A game might require some type of verification (i.e. file integrity, region matching) before installing layer0 mod crates.
         public virtual bool CanPreloadGame => false;
         public virtual List<ConsoleMode> PreloadConsoles => null;
+        /// <summary>
+        /// Is the modder in the Preload phase
+        /// </summary>
+        public bool ModderIsPreloading { get; set; }
+        /// <summary>
+        /// Has the Preload phase been finished
+        /// </summary>
+        public bool ModderHasPreloaded = false;
 
         // Multithreading stuff
 
@@ -201,8 +209,6 @@ namespace CrateModLoader
 
         public abstract void StartModProcess(); // Must put ProcessBusy = false; at the end!
 
-        public virtual void StartPreload() { } // Optional method to preload variables and resources from the game to the Mod Menu+
-
         public void UpdateProcessMessage(string msg, int? per = null)
         {
             ProcessMessage = msg;
@@ -214,18 +220,6 @@ namespace CrateModLoader
 
         public bool NeedsCachePass()
         {
-            /*
-            foreach (ModPropertyBase Prop in ActiveProps)
-            {
-                foreach (Mod mod in Prop.ModInstances)
-                {
-                    if (mod.NeedsCachePass)
-                    {
-                        return true;
-                    }
-                }
-            }
-            */
             foreach (Mod mod in Mods)
             {
                 if (mod.NeedsCachePass)
@@ -386,26 +380,31 @@ namespace CrateModLoader
         // todo: BeforePass could be triggered twice for each mod if there are separate new passes in a Modder
         public async Task StartNewPass()
         {
-            bool NeedsCache = NeedsCachePass();
-            int CurrentPass = 0;
-            if (!NeedsCache)
-            {
-                CurrentPass++;
-            }
+            ModPass CurrentPass = ModPass.Cache;
+            if (!NeedsCachePass())
+                CurrentPass = ModPass.Mod;
+            if (ModderIsPreloading)
+                CurrentPass = ModPass.Preload;
+
             PassBusy = true;
 
-            while (CurrentPass < 2)
+            while (CurrentPass < ModPass.End)
             {
                 PassIterator = 0;
-                if (CurrentPass == 0)
+                if (CurrentPass ==  ModPass.Cache)
                 {
                     UpdateProcessMessage("Cache Pass", 30);
                     BeforeCachePass();
                 }
-                else if (CurrentPass == 1)
+                else if (CurrentPass == ModPass.Mod)
                 {
                     UpdateProcessMessage("Mod Pass", 50);
                     BeforeModPass();
+                }
+                else if (CurrentPass == ModPass.Preload)
+                {
+                    UpdateProcessMessage("Preload Pass", 15);
+                    BeforePreloadPass();
                 }
 
                 IList<Task> editTaskList = new List<Task>();
@@ -414,7 +413,7 @@ namespace CrateModLoader
                 {
                     if (!parser.SkipParser || parser.ForceParser)
                     {
-                        editTaskList.Add(parser.StartPass((ModPass)CurrentPass));
+                        editTaskList.Add(parser.StartPass(CurrentPass));
                     }
                 }
 
@@ -422,16 +421,21 @@ namespace CrateModLoader
 
                 editTaskList.Clear();
 
-                if (CurrentPass == 0)
-                {
+                if (CurrentPass == ModPass.Cache)
                     AfterCachePass();
-                }
-                else if (CurrentPass == 1)
-                {
+                else if (CurrentPass == ModPass.Mod)
                     AfterModPass();
-                }
+                else if (CurrentPass == ModPass.Preload)
+                    AfterPreloadPass();
 
-                CurrentPass++;
+                if (CurrentPass != ModPass.Preload)
+                {
+                    CurrentPass++;
+                }
+                else
+                {
+                    CurrentPass = ModPass.End;
+                }
             }
             PassBusy = false;
         }
@@ -547,37 +551,6 @@ namespace CrateModLoader
             }
         }
 
-        public async Task StartPreloadPass()
-        {
-            bool NeedsCache = NeedsCachePass();
-            int CurrentPass = (int)ModPass.Preload;
-            PassBusy = true;
-
-            PassIterator = 0;
-
-            UpdateProcessMessage("Preload Pass", 50);
-            BeforePreloadPass();
-
-            IList<Task> editTaskList = new List<Task>();
-
-            foreach (ModParserBase parser in ModParsers)
-            {
-                if (!parser.SkipParser || parser.ForceParser)
-                {
-                    editTaskList.Add(parser.StartPass((ModPass)CurrentPass));
-                }
-            }
-
-            AfterPreloadPass();
-
-            await Task.WhenAll(editTaskList);
-
-            editTaskList.Clear();
-
-            PassBusy = false;
-        }
-
-        private bool ModderIsPreloading = false;
         public void StartProcess(bool Preloading = false)
         {
             ProcessBusy = true;
@@ -590,15 +563,9 @@ namespace CrateModLoader
         }
         private void AsyncWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            if (ModderIsPreloading)
-            {
-                StartPreload();
-            }
-            else
-            {
-                StartModProcess();
-            }
+            StartModProcess();
 
+            ModderHasPreloaded = true;
             if (NoAsyncProcess)
             {
                 ProcessBusy = false;

@@ -35,9 +35,10 @@ namespace CrateModLoader
 
     public enum ModPass
     {
-        Cache = 0,
-        Mod,
-        Preload,
+        Preload = 0,
+        Cache = 1,
+        Mod = 2,
+        End = 3,
     }
     public enum PipelinePass
     {

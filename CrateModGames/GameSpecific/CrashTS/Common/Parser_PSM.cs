@@ -37,17 +37,23 @@ namespace CrateModLoader.GameSpecific.CrashTS
         public override PSM_Texture LoadObject(string filePath)
         {
             PSM_Texture tex = new PSM_Texture();
-            bool load = tex.LoadTexture(filePath);
 
+            bool load = false;
+            if (!SkipParser)
+            {
+                load = tex.LoadTexture(filePath);
+            }
             if (TexDict.ContainsKey(filePath))
             {
                 if (!TexDict[filePath].Value)
                 {
+                    if (!load) { load = tex.LoadTexture(filePath); }
                     TexDict[filePath].Resource = tex.Image;
                     TexDict[filePath].Value = true;
                 }
-                else
+                else if (TexDict[filePath].HasChanged)
                 {
+                    if (!load) { load = tex.LoadTexture(filePath); }
                     tex.Image = TexDict[filePath].Resource;
                 }
             }
@@ -57,7 +63,10 @@ namespace CrateModLoader.GameSpecific.CrashTS
 
         public override void SaveObject(PSM_Texture tex, string filePath)
         {
-            tex.UpdateTexture(filePath);
+            if (tex.Image != null)
+            {
+                tex.UpdateTexture(filePath);
+            }
         }
     }
 }
