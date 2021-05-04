@@ -397,7 +397,7 @@
             this.button_modTools.Name = "button_modTools";
             this.button_modTools.Size = new System.Drawing.Size(154, 26);
             this.button_modTools.TabIndex = 21;
-            this.button_modTools.Text = "Mod Tools";
+            this.button_modTools.Text = "Level Editor";
             this.button_modTools.UseVisualStyleBackColor = true;
             this.button_modTools.Visible = false;
             // 

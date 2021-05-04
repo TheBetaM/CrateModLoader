@@ -19,7 +19,13 @@ namespace CrateModLoader
 
             checkedListBox_mods.Items.Clear();
 
-            ModCrates.PopulateModList(ModProgram.SupportedMods, ModProgram.Modder != null, ModProgram.Game.ShortName);
+            string ShortName = ModCrates.UnsupportedGameShortName;
+            if (ModProgram.Modder != null)
+            {
+                ShortName = ModProgram.Game.ShortName;
+            }
+
+            ModCrates.PopulateModList(ModProgram.SupportedMods, ModProgram.Modder != null, ShortName);
 
             if (ModProgram.SupportedMods.Count > 0)
             {

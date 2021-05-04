@@ -4,6 +4,7 @@ General
 - PS1, PS2, PSP and Folder mode extraction step is now multithreaded
 - Modding step is now multithreaded
 - Preloading is now multithreaded and combined with the main process (no longer needs to extract again after clicking Start)
+- Every game (supported or otherwise) can now be preloaded if you want to dig into or manually replace their files (no extra features outside of existing Mod Menu+ features)
 - Every randomizer is now handled independently from each other 
 (Before - Seed of randomizer feature 1 affects seed of randomizer feature 2; 
  After - The same seed has the same result for feature 2 regardless of whether feature 1 is enabled)

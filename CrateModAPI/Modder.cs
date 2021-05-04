@@ -38,14 +38,12 @@ namespace CrateModLoader
 
         public bool ModMenuEnabled => Props.Count > 0;
         public virtual bool ModCrateRegionCheck => false; // A game might require some type of verification (i.e. file integrity, region matching) before installing layer0 mod crates.
-        public virtual bool CanPreloadGame => false;
-        public virtual List<ConsoleMode> PreloadConsoles => null;
         /// <summary>
         /// Is the modder in the Preload phase
         /// </summary>
-        public bool ModderIsPreloading { get; set; }
+        public bool ModderIsPreloading = false;
         /// <summary>
-        /// Has the Preload phase been finished
+        /// Has the Preload phase been finished, also false when not preloading
         /// </summary>
         public bool ModderHasPreloaded = false;
 

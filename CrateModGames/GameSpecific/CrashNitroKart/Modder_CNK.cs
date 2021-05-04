@@ -10,8 +10,6 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
 {
     public sealed class Modder_CNK : Modder
     {
-        public override bool CanPreloadGame => true;
-
         public override async void StartModProcess()
         {
             if (!ModderHasPreloaded)

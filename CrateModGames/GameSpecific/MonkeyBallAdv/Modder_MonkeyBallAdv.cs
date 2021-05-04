@@ -14,7 +14,7 @@ namespace CrateModLoader.GameSpecific.MonkeyBallAdv
     {
         public override async void StartModProcess()
         {
-            if (ConsolePipeline.Metadata.Console != ConsoleMode.GCN)
+            if (!ModderHasPreloaded && ConsolePipeline.Metadata.Console != ConsoleMode.GCN)
             {
                 FindArchives(new CrashTS.Pipeline_BD(this));
                 await StartPipelines(PipelinePass.Extract);
@@ -28,7 +28,7 @@ namespace CrateModLoader.GameSpecific.MonkeyBallAdv
                 FindFiles(new Parser_XML(this));
             await StartNewPass();
 
-            if (ConsolePipeline.Metadata.Console != ConsoleMode.GCN)
+            if (!ModderIsPreloading && ConsolePipeline.Metadata.Console != ConsoleMode.GCN)
             {
                 await StartPipelines(PipelinePass.Build);
             }

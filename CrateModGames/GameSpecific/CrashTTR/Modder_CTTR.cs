@@ -15,13 +15,19 @@ namespace CrateModLoader.GameSpecific.CrashTTR
     {
         public override async void StartModProcess()
         {
-            FindArchives(new Pipeline_RCF(this));
-            await StartPipelines(PipelinePass.Extract);
+            if (!ModderHasPreloaded)
+            {
+                FindArchives(new Pipeline_RCF(this));
+                await StartPipelines(PipelinePass.Extract);
+            }
 
             FindFiles(new Parser_GOD(this), new Parser_P3D(this));
             await StartNewPass();
 
-            await StartPipelines(PipelinePass.Build);
+            if (!ModderIsPreloading)
+            {
+                await StartPipelines(PipelinePass.Build);
+            }
 
             ProcessBusy = false;
         }

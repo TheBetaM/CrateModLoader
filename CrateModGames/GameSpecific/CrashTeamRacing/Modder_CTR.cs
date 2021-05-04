@@ -13,13 +13,19 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
     {
         public override async void StartModProcess()
         {
-            FindArchives(new Pipeline_BIG(this));
-            await StartPipelines(PipelinePass.Extract);
+            if (!ModderHasPreloaded)
+            {
+                FindArchives(new Pipeline_BIG(this));
+                await StartPipelines(PipelinePass.Extract);
+            }
 
             FindFiles(new Parser_LNG(this), new Parser_LEV(this), new Parser_CTR(this));
             await StartNewPass();
 
-            await StartPipelines(PipelinePass.Build);
+            if (!ModderIsPreloading)
+            {
+                await StartPipelines(PipelinePass.Build);
+            }
 
             ProcessBusy = false;
         }

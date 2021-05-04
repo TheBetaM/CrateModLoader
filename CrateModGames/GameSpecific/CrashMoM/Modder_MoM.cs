@@ -12,12 +12,18 @@ namespace CrateModLoader.GameSpecific.CrashMoM
     {
         public override async void StartModProcess()
         {
-            FindArchives(new Pipeline_RCF(this) { SecondaryList = new List<string>() { "default.rcf", "DEFAULT.RCF" }, SecondarySkip = false, });
-            await StartPipelines(PipelinePass.Extract);
+            if (!ModderHasPreloaded)
+            {
+                FindArchives(new Pipeline_RCF(this) { SecondaryList = new List<string>() { "default.rcf", "DEFAULT.RCF" }, SecondarySkip = false, });
+                await StartPipelines(PipelinePass.Extract);
+            }
 
             await StartNewPass();
 
-            await StartPipelines(PipelinePass.Build);
+            if (!ModderIsPreloading)
+            {
+                await StartPipelines(PipelinePass.Build);
+            }
 
             ProcessBusy = false;
         }
