@@ -7,6 +7,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
     public class Parser_PSM : ModParser<PSM_Texture>
     {
         private Dictionary<string, ModProp_TextureFile> TexDict;
+        public override bool DisableAsync => true;
 
         public Parser_PSM(Modder mod, ConsoleMode cons, string ExtPath, bool Preload = false) : base(mod)
         {
