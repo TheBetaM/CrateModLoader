@@ -549,10 +549,9 @@ namespace CrateModLoader
             }
         }
 
-        public void StartProcess(bool Preloading = false)
+        public void StartProcess()
         {
             ProcessBusy = true;
-            ModderIsPreloading = Preloading;
 
             // UI doesn't update until an await if this isn't here
             BackgroundWorker asyncWorker = new BackgroundWorker();
@@ -563,7 +562,6 @@ namespace CrateModLoader
         {
             StartModProcess();
 
-            ModderHasPreloaded = true;
             if (NoAsyncProcess)
             {
                 ProcessBusy = false;

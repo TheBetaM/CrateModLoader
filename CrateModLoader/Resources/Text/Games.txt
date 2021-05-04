@@ -17,9 +17,9 @@ Features:
 - Speed Up Mask Hint Appearance  
 - Remove Intro Videos  
 - Version and seed visible in the Credits screen
-Mod Menu:
+Mod Menu: (+)
 - Individual character and kart physics parameters
-- UI Textures, icons
+(+) UI Textures, icons
   
 Crash Twinsanity
 Supported: All PS2 versions (.ISO format), All XBOX versions (.ISO format)
@@ -48,12 +48,12 @@ Features:
 - Greyscale World (PS2)
 - Untextured World
 - Version and seed visible in the Autosave Disabled screen  
-Mod Menu:
+Mod Menu: (+)
 - Additional features  
 - Individual character parameters  
 - Starting/Credits chunk settings  
 - Customize Pants Color 
-- UI textures, icons, galleries  
+(+) UI textures, icons, galleries  
   
 Crash Tag Team Racing
 Supported: All PS2 versions (.ISO format), All GC versions (.ISO format), All PSP versions (.ISO format), All XBOX versions (.ISO format)  
@@ -82,9 +82,9 @@ Features:
 - Randomize Outfit Visuals (GCN)  
 - New Game Into 2D Nightmare (GCN)  
 - Remove Intro Videos (GCN)  
-Mod Menu:
+Mod Menu: (+)
 - Rayman Textures
-- UI and other common Textures
+(+) UI and other common Textures
 
 Crash Bandicoot
 Supported: All PS1 versions (.BIN/.ISO formats)  

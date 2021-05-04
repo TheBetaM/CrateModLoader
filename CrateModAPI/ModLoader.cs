@@ -435,7 +435,8 @@ namespace CrateModLoader
                 {
                     Modder.LoadPropsPreload();
                 }
-                Modder.StartProcess(IsPreloading);
+                Modder.ModderIsPreloading = IsPreloading;
+                Modder.StartProcess();
                 while (Modder.IsBusy)
                 {
                     int PPerc = (int)(Modder.PassPercent * 0.48f);
@@ -444,6 +445,7 @@ namespace CrateModLoader
                     a.ReportProgress(26 + PPerc);
                     Thread.Sleep(100);
                 }
+                Modder.ModderHasPreloaded = true;
             }
 
             if (!IsPreloading)
