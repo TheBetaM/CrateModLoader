@@ -48,6 +48,9 @@ namespace CrateModLoader
         /// <summary> Resets the property's value to its default state. </summary>
         public abstract void ResetToDefault();
 
+        /// <summary> Force the option order in the quick options list (does not affect execution order) </summary>
+        public uint? ListIndex = null; 
+
         public bool Allowed(ConsoleMode Console, RegionType Region)
         {
             if (Hidden)

@@ -6,6 +6,7 @@ using System.Media;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.Collections.Generic;
 using CrateModAPI.Resources.Text;
 using CrateModLoader.ModProperties;
 
@@ -232,18 +233,8 @@ namespace CrateModLoader
                             option.Value = 1;
                         }
                         option.HasChanged = true;
-                        if (!string.IsNullOrEmpty(option.Description))
-                        {
-                            linkLabel_optionDesc.Text = option.Description;
-                            linkLabel_optionDesc.Visible = true;
-                            panel_desc.Visible = true;
-                        }
-                        else
-                        {
-                            linkLabel_optionDesc.Text = string.Empty;
-                            linkLabel_optionDesc.Visible = false;
-                            panel_desc.Visible = false;
-                        }
+                        linkLabel_optionDesc.Text = option.Description;
+                        linkLabel_optionDesc.Visible = panel_desc.Visible = !string.IsNullOrEmpty(option.Description);
                     }
                 }
             }
@@ -596,11 +587,47 @@ namespace CrateModLoader
 
             if (ModProgram.Modder.Props.Count > 0)
             {
+                Dictionary<uint, int> PropOrder = new Dictionary<uint, int>();
+                uint maxIndex = 0;
+
+                for (int i = 0; i < ModProgram.Modder.Props.Count; i++)
+                {
+                    ModPropertyBase prop = ModProgram.Modder.Props[i];
+                    if (prop is ModPropOption option && option.Allowed(ModProgram.Pipeline.Metadata.Console, ModProgram.Modder.GameRegion.Region) && !option.ModMenuOnly)
+                    {
+                        if (option.ListIndex != null)
+                        {
+                            PropOrder.Add((uint)option.ListIndex, i);
+                            if ((uint)option.ListIndex > maxIndex)
+                            {
+                                maxIndex = (uint)option.ListIndex;
+                            }
+                        }
+                    }
+                }
+
+                if (PropOrder.Count > 0)
+                {
+                    uint iter = 0;
+                    while (iter < maxIndex + 1)
+                    {
+                        if (PropOrder.ContainsKey(iter))
+                        {
+                            ModPropOption option = (ModPropOption)ModProgram.Modder.Props[PropOrder[iter]];
+                            checkedListBox1.Items.Add(option, option.Value != 0);
+                        }
+                        iter++;
+                    }
+                }
+
                 foreach (var prop in ModProgram.Modder.Props)
                 {
                     if (prop is ModPropOption option && option.Allowed(ModProgram.Pipeline.Metadata.Console, ModProgram.Modder.GameRegion.Region) && !option.ModMenuOnly)
                     {
-                        checkedListBox1.Items.Add(option, option.Value != 0);
+                        if (option.ListIndex == null)
+                        {
+                            checkedListBox1.Items.Add(option, option.Value != 0);
+                        }
                     }
                 }
             }
@@ -684,6 +711,31 @@ namespace CrateModLoader
                     ModProgram.StartProcess(true);
                 }
             }
+        }
+
+        private void checkedListBox1_MouseEnter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkedListBox1_MouseMove(object sender, MouseEventArgs e)
+        {
+            CheckedListBox c = sender as CheckedListBox;
+            int index = c.IndexFromPoint(e.Location);
+            if (index < 0) return;
+            if (index != c.SelectedIndex)
+                c.SelectedIndex = index;
+
+            if (c.Items[index] is ModPropOption option)
+            {
+                linkLabel_optionDesc.Text = option.Description;
+                linkLabel_optionDesc.Visible = panel_desc.Visible = !string.IsNullOrEmpty(option.Description);
+            }
+        }
+
+        public void DisplayError(object sender, EventValueArgs<string> e)
+        {
+            MessageBox.Show(e.Value);
         }
     }
 }

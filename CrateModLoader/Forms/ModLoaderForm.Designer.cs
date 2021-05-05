@@ -99,6 +99,8 @@
             this.checkedListBox1.TabIndex = 0;
             this.checkedListBox1.Visible = false;
             this.checkedListBox1.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged);
+            this.checkedListBox1.MouseEnter += new System.EventHandler(this.checkedListBox1_MouseEnter);
+            this.checkedListBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.checkedListBox1_MouseMove);
             // 
             // openFileDialog1
             // 

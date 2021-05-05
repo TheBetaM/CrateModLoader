@@ -4,6 +4,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Globalization;
 using CrateModLoader.ModProperties;
+using CrateModAPI.Resources.Text;
 
 namespace CrateModLoader
 {
@@ -62,7 +63,7 @@ namespace CrateModLoader
         public const string Prop_Plugin = "Plugin";
         public const string Prop_Game = "Game";
 
-        public static void PopulateModList(List<ModCrate> SupportedMods, bool IsSupportedGame, string ShortName)
+        public static void PopulateModList(ModLoader Program, List<ModCrate> SupportedMods, bool IsSupportedGame, string ShortName)
         {
 
             bool SupportAll = false;
@@ -106,7 +107,7 @@ namespace CrateModLoader
                     }
                     catch
                     {
-                        //MessageBox.Show(ModLoaderText.ModCrateErrorPopup + " " + file.FullName);
+                        Program.InvokeError(ModLoaderText.ModCrateErrorPopup + " " + file.FullName);
                     }
                 }
             }
@@ -137,7 +138,7 @@ namespace CrateModLoader
                     }
                     catch
                     {
-                        //MessageBox.Show(ModLoaderText.ModCrateErrorPopup + " " + dir.FullName);
+                        Program.InvokeError(ModLoaderText.ModCrateErrorPopup + " " + dir.FullName);
                     }
                 }
             }
@@ -713,7 +714,7 @@ namespace CrateModLoader
 
             if (Settings.Count == 0)
             {
-                //MessageBox.Show(ModLoaderText.ModMenuLoad_Error);
+                //Program.InvokeError(ModLoaderText.ModMenuLoad_Error);
                 return;
             }
 
@@ -752,7 +753,7 @@ namespace CrateModLoader
         /// <summary>
         /// Optional region check.
         /// </summary>
-        public static void VerifyModCrates(List<ModCrate> SupportedMods, string ShortName, RegionCode region)
+        public static void VerifyModCrates(ModLoader Program, List<ModCrate> SupportedMods, string ShortName, RegionCode region)
         {
             bool modsdirty = false;
             foreach (var crate in SupportedMods)
@@ -765,7 +766,7 @@ namespace CrateModLoader
                 }
             }
             if (modsdirty)
-                PopulateModList(SupportedMods, true, ShortName);
+                PopulateModList(Program, SupportedMods, true, ShortName);
         }
 
     }

@@ -180,6 +180,17 @@ namespace CrateModLoader
                                 }
                             }
 
+                            if (Props[Props.Count - 1].ListIndex == null)
+                            {
+                                ModListOrder chunkAttr = (ModListOrder)field.GetCustomAttribute(typeof(ModListOrder), false);
+                                if (chunkAttr == null)
+                                    chunkAttr = (ModListOrder)field.DeclaringType.GetCustomAttribute(typeof(ModListOrder), false);
+                                if (chunkAttr != null)
+                                {
+                                    Props[Props.Count - 1].ListIndex = chunkAttr.ID;
+                                }
+                            }
+
                             if (string.IsNullOrWhiteSpace(Props[Props.Count - 1].Name))
                             {
                                 Props[Props.Count - 1].Name = field.Name;

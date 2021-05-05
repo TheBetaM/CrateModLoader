@@ -56,6 +56,7 @@ namespace CrateModLoader
         public event EventHandler<EventValueArgs<bool>> ModMenuUpdated;
         public event EventHandler<EventValueArgs<string>> LayoutChangeUnsupported;
         public event EventHandler<EventGameDetails> LayoutChangeSupported;
+        public event EventHandler<EventValueArgs<string>> ErrorMessage;
 
         public ModLoader()
         {
@@ -238,7 +239,7 @@ namespace CrateModLoader
             
             if (Modder != null && Modder.ModCrateRegionCheck)
             {
-                ModCrates.VerifyModCrates(SupportedMods, Game.ShortName, Modder.GameRegion);
+                ModCrates.VerifyModCrates(this, SupportedMods, Game.ShortName, Modder.GameRegion);
             }
             ModCrates.InstallLayerMods(SupportedMods, Pipeline.ExtractedPath, 0);
             if (Modder != null)
@@ -714,6 +715,12 @@ namespace CrateModLoader
             SupportedMods = new List<ModCrate>();
 
             ResetGameEvent.Invoke(this, new EventValueArgs<bool>(ClearGameText));
+        }
+
+        public void InvokeError(string msg)
+        {
+            Console.WriteLine("Error: " + msg);
+            ErrorMessage.Invoke(this, new EventValueArgs<string>(msg));
         }
 
     }
