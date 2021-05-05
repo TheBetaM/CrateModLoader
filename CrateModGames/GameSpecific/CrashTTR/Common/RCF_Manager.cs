@@ -34,7 +34,7 @@ namespace CrateModLoader.GameSpecific.CrashTTR
             isBusy = false;
         }
 
-        public async Task PackAsync(string path, string path_extr)
+        public async Task PackAsync(Modder meta, string path, string path_extr)
         {
             isBusy = true;
             // set externals
@@ -44,6 +44,7 @@ namespace CrateModLoader.GameSpecific.CrashTTR
             {
                 File.Delete(path);
             }
+            meta.PassCount += (int)cachedRCF.Header.Files;
 
             await cachedRCF.PackAsync(path, path_extr);
 

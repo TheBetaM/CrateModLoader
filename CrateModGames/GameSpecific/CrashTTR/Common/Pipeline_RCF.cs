@@ -36,7 +36,7 @@ namespace CrateModLoader.GameSpecific.CrashTTR
             string fileName = Path.GetFileName(filePath);
             string dirPath = filePath.Substring(0, (filePath.Length - 4)) + @"\";
 
-            await rcf.PackAsync(filePath, dirPath);
+            await rcf.PackAsync(ExecutionSource, filePath, dirPath);
         }
     }
 }

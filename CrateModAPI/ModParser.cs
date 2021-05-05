@@ -137,7 +137,9 @@ namespace CrateModLoader
         {
             foreach (Mod mod in ExecutionSource.Mods)
             {
-                if (mod is ModStruct<T>)
+                Type thistype = mod.GetType();
+                List<Type> types = new List<Type>(thistype.BaseType.GenericTypeArguments);
+                if (types.Contains(typeof(T)))
                 {
                     return true;
                 }
