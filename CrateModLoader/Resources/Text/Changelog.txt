@@ -9,6 +9,7 @@ General
 (Before - Seed of randomizer feature 1 affects seed of randomizer feature 2; 
  After - The same seed has the same result for feature 2 regardless of whether feature 1 is enabled)
 - More detailed process information
+- The install order of Mod Crates can now be changed
 - Fixed not being able to build unsupported games
 
 New games supported:

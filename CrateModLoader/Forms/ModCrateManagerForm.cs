@@ -5,6 +5,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Diagnostics;
 using CrateModAPI.Resources.Text;
+using CrateModLoader.Tools.IO;
 
 namespace CrateModLoader
 {
@@ -19,6 +20,11 @@ namespace CrateModLoader
 
             InitializeComponent();
 
+            PopulateList();
+        }
+
+        void PopulateList()
+        {
             checkedListBox_mods.Items.Clear();
 
             string ShortName = ModCrates.UnsupportedGameShortName;
@@ -121,6 +127,7 @@ namespace CrateModLoader
 
         private void checkedListBox_mods_MouseMove(object sender, MouseEventArgs e)
         {
+            /* Not a good experience managing multiple crates.
             CheckedListBox c = sender as CheckedListBox;
             int index = c.IndexFromPoint(e.Location);
             if (index < 0) return;
@@ -131,6 +138,7 @@ namespace CrateModLoader
             }
 
             UpdateInfoBox(index);
+            */
         }
 
         void UpdateInfoBox(int index)
@@ -142,7 +150,10 @@ namespace CrateModLoader
             {
                 if (ModProgram.SupportedMods[index].IsFolder)
                 {
-                    pictureBox_ModIcon.Image = Image.FromFile(Path.Combine(ModProgram.SupportedMods[index].Path, ModCrates.IconFileName));
+                    Image temp = Image.FromFile(Path.Combine(ModProgram.SupportedMods[index].Path, ModCrates.IconFileName));
+                    Image disp = new Bitmap(temp);
+                    temp.Dispose();
+                    pictureBox_ModIcon.Image = disp;
                 }
                 else
                 {
@@ -199,6 +210,7 @@ namespace CrateModLoader
             if (index < 0) return;
             if (index + 1 >= checkedListBox_mods.Items.Count) return;
 
+            // broken
             ignoreChange = true;
             bool check = checkedListBox_mods.GetItemChecked(index);
             checkedListBox_mods.Items.Insert(index + 1, checkedListBox_mods.Items[index]);
@@ -226,23 +238,157 @@ namespace CrateModLoader
 
         private void button_ImportCrate_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void button_CreateCrate_Click(object sender, EventArgs e)
-        {
-
+            if (contextMenuStrip_ImportCrate.Visible)
+            {
+                contextMenuStrip_ImportCrate.Hide();
+            }
+            else
+            {
+                contextMenuStrip_ImportCrate.Show(button_ImportCrate, new Point(0, button_ImportCrate.Height));
+            }
         }
 
         private void button_DeleteCrate_Click(object sender, EventArgs e)
         {
             int index = checkedListBox_mods.SelectedIndex;
             if (index < 0) return;
+
+            if (MessageBox.Show("Are you sure you want to delete " + ModProgram.SupportedMods[index].Name + " and all its files?", "Delete Mod Crate?", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                ModCrates.DeleteModCrate(ModProgram.SupportedMods[index]);
+                ModProgram.SupportedMods.RemoveAt(index);
+                checkedListBox_mods.Items.RemoveAt(index);
+                checkedListBox_mods.SelectedIndex = -1;
+            }
         }
 
         private void button_DownloadCrates_Click(object sender, EventArgs e)
         {
+            if (contextMenuStrip_DownloadMods.Visible)
+            {
+                contextMenuStrip_DownloadMods.Hide();
+            }
+            else
+            {
+                contextMenuStrip_DownloadMods.Show(button_DownloadCrates, new Point(0, button_DownloadCrates.Height));
+            }
+        }
+
+        private void download_site_BT_Click(object sender, EventArgs e)
+        {
             Process.Start(ModLoaderGlobals.ModCratesDownloadLink);
         }
+
+        private void toolStripMenuItem_FromFile_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.FileName = "";
+            openFileDialog1.Filter = ModLoaderText.InputDialogTypeAuto + " (*.zip)|*.zip|" + ModLoaderText.OutputDialogTypeAllFiles + " (*.*)|*.*";
+
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                ImportModCrate(openFileDialog1.FileName, false);
+            }
+        }
+
+        private void toolStripMenuItem_FromFolder_Click(object sender, EventArgs e)
+        {
+            // copy folder and verify that it's a mod crate for this game
+            // then add it to the listbox and supportedmods list
+            if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
+            {
+                ImportModCrate(folderBrowserDialog1.SelectedPath + @"\", true);
+            }
+        }
+
+        void ImportModCrate(string Path, bool FolderMode)
+        {
+            ModCrate TestCrate = null;
+            string newPath = "";
+
+            if (FolderMode)
+            {
+                DirectoryInfo origCrate = new DirectoryInfo(Path);
+                TestCrate = ModCrates.LoadMetadata(origCrate);
+                newPath = ModLoaderGlobals.ModDirectory + origCrate.Name + @"\";
+                if (Directory.Exists(newPath))
+                {
+                    ModProgram.InvokeError("A folder with this name already exists!");
+                    return;
+                }
+            }
+            else
+            {
+                FileInfo origCrate = new FileInfo(Path);
+                TestCrate = ModCrates.LoadMetadata(origCrate);
+
+                newPath = ModLoaderGlobals.ModDirectory + origCrate.Name;
+                if (File.Exists(newPath))
+                {
+                    ModProgram.InvokeError("A file with this name already exists!");
+                    return;
+                }
+            }
+
+            if (TestCrate == null)
+            {
+                ModProgram.InvokeError("Failed to import Mod Crate!");
+                return;
+            }
+
+            if (FolderMode)
+            {
+                Directory.CreateDirectory(newPath);
+                string pathparent = newPath;
+                DirectoryInfo di = new DirectoryInfo(Path);
+                foreach (DirectoryInfo dir in di.EnumerateDirectories())
+                {
+                    Directory.CreateDirectory(pathparent + dir.Name);
+                    foreach (FileInfo file in dir.EnumerateFiles())
+                    {
+                        file.CopyTo(pathparent + dir.Name + @"\" + file.Name);
+                    }
+                    IO_Common.Recursive_CopyFiles(dir, pathparent + dir.Name + @"\");
+                }
+                foreach (FileInfo file in di.EnumerateFiles())
+                {
+                    file.CopyTo(pathparent + file.Name);
+                }
+            }
+            else
+            {
+                File.Copy(Path, newPath);
+            }
+
+            PopulateList();
+
+            if ((ModProgram.Game != null && TestCrate.TargetGame == ModProgram.Game.ShortName) ||
+                (TestCrate.TargetGame == ModCrates.AllGamesShortName) ||
+                (ModProgram.Game == null && TestCrate.TargetGame == ModCrates.UnsupportedGameShortName))
+            {
+                //ModProgram.SupportedMods.Add(NewCrate);
+            }
+            else
+            {
+                ModProgram.InvokeError("The Mod Crate has been imported, but it's not meant for the currently loaded game, so it will not appear on the list.");
+            }
+        }
+
+        private void button_RefreshCrates_Click(object sender, EventArgs e)
+        {
+            PopulateList();
+        }
+
+        private void button_CreateCrate_Click(object sender, EventArgs e)
+        {
+            // wizard to create mod crate
+            // require preload to generate file structure
+        }
+
+        private void button_EditCrate_Click(object sender, EventArgs e)
+        {
+            // wizard to edit mod crate filesystem
+            // and/or settings like language/difficulty/props imported from the crate?
+        }
+
     }
 }

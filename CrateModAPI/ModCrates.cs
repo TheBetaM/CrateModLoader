@@ -149,6 +149,11 @@ namespace CrateModLoader
                 return;
             }
 
+            List<bool> DeleteCheck = new List<bool>();
+            for (int i = 0; i < SupportedMods.Count; i++)
+            {
+                DeleteCheck.Add(false);
+            }
             for (int mod = 0; mod < ModList.Count; mod++)
             {
                 bool wasAdded = false;
@@ -157,6 +162,7 @@ namespace CrateModLoader
                     if (SupportedMods[i].Path == ModList[mod].Path)
                     {
                         wasAdded = true;
+                        DeleteCheck[i] = true;
                     }
                 }
 
@@ -165,8 +171,19 @@ namespace CrateModLoader
                     SupportedMods.Add(ModList[mod]);
                 }
             }
-            // todo: if a mod has been removed externally, the list won't update that
 
+            if (DeleteCheck.Count > 0 && SupportedMods.Count > 0)
+            {
+                for (int i = 0; i < DeleteCheck.Count; i++)
+                {
+                    if (!DeleteCheck[i])
+                    {
+                        SupportedMods.RemoveAt(i);
+                        DeleteCheck.RemoveAt(i);
+                        i--;
+                    }
+                }
+            }
 
         }
 
@@ -428,12 +445,6 @@ namespace CrateModLoader
             //ModList.Add(NewCrate);
             return NewCrate;
         }
-
-        //public static void ClearModLists(List<ModCrate> SupportedMods)
-        //{
-            //ModList = new List<ModCrate>();
-            //SupportedMods = new List<ModCrate>();
-        //}
 
         /// <summary>
         /// Installs all active mods of the specified layer in the specified path
@@ -768,6 +779,42 @@ namespace CrateModLoader
             if (modsdirty)
                 PopulateModList(Program, SupportedMods, true, ShortName);
         }
+
+        public static void DeleteModCrate(ModCrate Crate)
+        {
+            if (Crate.IsFolder)
+            {
+                if (Directory.Exists(Crate.Path))
+                {
+                    DirectoryInfo di = new DirectoryInfo(Crate.Path);
+
+                    foreach (FileInfo file in di.EnumerateFiles())
+                    {
+                        file.Delete();
+                    }
+                    try
+                    {
+                        foreach (DirectoryInfo dir in di.EnumerateDirectories())
+                        {
+                            dir.Delete(true);
+                        }
+                        Directory.Delete(Crate.Path);
+                    }
+                    catch
+                    {
+
+                    }
+                }
+            }
+            else
+            {
+                if (File.Exists(Crate.Path))
+                {
+                    File.Delete(Crate.Path);
+                }
+            }
+        }
+
 
     }
 }

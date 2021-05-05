@@ -76,6 +76,7 @@ namespace CrateModLoader
             ModProgram.ModMenuUpdated += UpdateModMenuChangeState;
             ModProgram.LayoutChangeUnsupported += SetLayoutUnsupportedGame;
             ModProgram.LayoutChangeSupported += SetLayoutSupportedGame;
+            ModProgram.ErrorMessage += DisplayError;
         }
 
         private void button1_Click(object sender, EventArgs e)
