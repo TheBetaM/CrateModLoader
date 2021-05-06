@@ -114,6 +114,21 @@ namespace CrateModLoader.Forms
                 return;
             }
 
+            try
+            {
+                SaveCrate(saveFileDialog1.FileName);
+                Console.WriteLine("Mod Crate saved at: " + saveFileDialog1.FileName);
+                MessageBox.Show("Save complete!");
+            }
+            catch
+            {
+                Console.WriteLine("Failed to save Mod Crate: " + saveFileDialog1.FileName);
+                MessageBox.Show("Save failed!");
+            }
+        }
+
+        void SaveCrate(string SavePath)
+        {
             ConsolePipeline Pipeline = ModProgram.Pipeline;
             Modder Mod = ModProgram.Modder;
 
@@ -144,44 +159,30 @@ namespace CrateModLoader.Forms
             }
 
             Dictionary<string, string> Assets = new Dictionary<string, string>();
-            List<string> IgnoreDirs = new List<string>();
             Dictionary<string, string> Layer0 = new Dictionary<string, string>();
-            List<string> Layer0_Folders = new List<string>();
             List<Dictionary<string, string>> Layers = new List<Dictionary<string, string>>();
-            List<List<string>> LayerFolders = new List<List<string>>();
             if (Mod != null)
             {
                 Assets = ModCrates.SaveSettingsToCrate(Mod, Path.Combine(tempPath, ModCrates.SettingsFileName), false);
                 for (int i = 0; i < Mod.Pipelines.Count; i++)
                 {
                     Layers.Add(new Dictionary<string, string>());
-                    LayerFolders.Add(new List<string>());
-                    ModPipeline pipe = Mod.Pipelines[i] as ModPipeline;
-                    foreach (string ext in pipe.ExtractedPaths)
-                    {
-                        string testPath = ext;
-                        if (!testPath.EndsWith("\\"))
-                        {
-                            testPath += "\\";
-                        }
-                        IgnoreDirs.Add(testPath);
-                    }
                 }
             }
 
             string layer0Name = ModCrates.LayerFolderName + @"0/";
-            Recursive_FindFiles(layer0Name, (DirNode)treeView_files.Nodes[0].Tag, Layer0, Layer0_Folders);
+            Recursive_FindFiles(layer0Name, (DirNode)treeView_files.Nodes[0].Tag, Layer0);
             if (Mod != null)
             {
                 for (int i = 0; i < Mod.Pipelines.Count; i++)
                 {
                     string layerName = ModCrates.LayerFolderName + LayerIDs[i] + @"/";
-                    Recursive_FindFiles(layerName, (DirNode)TreeViews[i].Nodes[0].Tag, Layers[i], LayerFolders[i]);
+                    Recursive_FindFiles(layerName, (DirNode)TreeViews[i].Nodes[0].Tag, Layers[i]);
                 }
             }
 
             string zipFolderName = ModLoaderGlobals.ModAssetsFolderName + @"/";
-            using (FileStream fileStream = new FileStream(saveFileDialog1.FileName, FileMode.Create))
+            using (FileStream fileStream = new FileStream(SavePath, FileMode.Create))
             {
                 using (ZipArchive zip = new ZipArchive(fileStream, ZipArchiveMode.Create))
                 {
@@ -207,10 +208,6 @@ namespace CrateModLoader.Forms
                     if (Layer0.Count > 0)
                     {
                         zip.CreateEntry(layer0Name);
-                        foreach(string dir in Layer0_Folders)
-                        {
-                            zip.CreateEntry(dir);
-                        }
                         foreach (KeyValuePair<string, string> pair in Layer0)
                         {
                             zip.CreateEntryFromFile(pair.Key, pair.Value);
@@ -223,10 +220,6 @@ namespace CrateModLoader.Forms
                         {
                             string layerName = ModCrates.LayerFolderName + LayerIDs[i] + @"/";
                             zip.CreateEntry(layerName);
-                            foreach (string dir in LayerFolders[i])
-                            {
-                                zip.CreateEntry(dir);
-                            }
                             foreach (KeyValuePair<string, string> pair in Layers[i])
                             {
                                 zip.CreateEntryFromFile(pair.Key, pair.Value);
@@ -239,19 +232,16 @@ namespace CrateModLoader.Forms
 
             //cleanup
             Directory.Delete(tempPath, true);
-
-            Console.WriteLine("Mod crate saved at: " + saveFileDialog1.FileName);
-            MessageBox.Show("Save complete!");
         }
 
-        void Recursive_FindFiles(string rootPath, DirNode root, Dictionary<string, string> filemap, List<string> folders)
+        void Recursive_FindFiles(string rootPath, DirNode root, Dictionary<string, string> filemap)
         {
             foreach (TreeNode node in root.Node.Nodes)
             {
                 if (node.Tag is DirNode dir)
                 {
                     string newPath = rootPath + dir.Node.Text + @"/";
-                    Recursive_FindFiles(newPath, dir, filemap, folders);
+                    Recursive_FindFiles(newPath, dir, filemap);
                 }
                 else if (node.Tag is FileNode file)
                 {
@@ -259,22 +249,6 @@ namespace CrateModLoader.Forms
                     {
                         string newPath = rootPath + file.Node.Text;
                         filemap.Add(file.ExternalPath, newPath);
-
-                        /* 
-                        //ehh, it doesn't care about folder entries...
-                        string testPath = rootPath + "";
-                        TreeNode thisNode = root.Node;
-                        while (thisNode.Parent != null)
-                        {
-                            if (!folders.Contains(testPath))
-                            {
-                                //folders.Add(testPath);
-                            }
-                            string trim = thisNode.Text + @"\";
-                            testPath = testPath.TrimEnd(trim.ToCharArray());
-                            thisNode = thisNode.Parent;
-                        }
-                        */
                     }
                 }
             }
@@ -309,7 +283,7 @@ namespace CrateModLoader.Forms
             if (tree.SelectedNode.Tag is FileNode file)
             {
                 ExportingFile = true;
-                saveFileDialog1.FileName = file.File.Name + Path.GetExtension(file.File.FullName);
+                saveFileDialog1.FileName = file.File.Name; //+ Path.GetExtension(file.File.FullName);
                 saveFileDialog1.Filter = ModLoaderText.OutputDialogTypeAllFiles + " (*.*)|*.*";
                 saveFileDialog1.ShowDialog();
             }
@@ -431,41 +405,56 @@ namespace CrateModLoader.Forms
                     }
                 }
             }
-
             targetTree.Nodes.Add(root.Node);
             targetTree.Nodes[0].Expand();
-
         }
 
         void Recursive_AddNodes(DirectoryInfo di, DirNode root, List<string> ignoreDirs)
         {
             foreach (DirectoryInfo dir in di.EnumerateDirectories())
             {
-                if (!CheckNodeDupe(root, dir.Name, false))
+                string testPath = dir.FullName;
+                if (!testPath.EndsWith("\\"))
                 {
-                    string testPath = dir.FullName;
-                    if (!testPath.EndsWith("\\"))
+                    testPath += "\\";
+                }
+                if (!ignoreDirs.Contains(testPath))
+                {
+                    DirNode node = CheckNodeDupe(root, dir.Name, false);
+                    if (node == null)
                     {
-                        testPath += "\\";
-                    }
-                    if (!ignoreDirs.Contains(testPath))
-                    {
-                        DirNode node = new DirNode(dir.Name, dir);
+                        node = new DirNode(dir.Name, dir);
                         root.Node.Nodes.Add(node.Node);
-                        Recursive_AddNodes(dir, node, ignoreDirs);
                     }
+                    Recursive_AddNodes(dir, node, ignoreDirs);
                 }
             }
             foreach (FileInfo file in di.EnumerateFiles())
             {
-                if (!CheckNodeDupe(root, file.Name, true))
+                if (!CheckNodeDupeFile(root, file.Name, true))
                 {
                     FileNode fnode = new FileNode(file.Name, file);
                     root.Node.Nodes.Add(fnode.Node);
                 }
             }
         }
-        bool CheckNodeDupe(DirNode root, string Name, bool isFile)
+        DirNode CheckNodeDupe(DirNode root, string Name, bool isFile)
+        {
+            // this is for something like .RCF where dozens of archives with dupe files represent one layer
+            TreeNode node = root.Node;
+            for (int i = 0; i < node.Nodes.Count; i++)
+            {
+                if (node.Nodes[i].Text == Name)
+                {
+                    if (!isFile && node.Nodes[i].Tag is DirNode dir)
+                    {
+                        return dir;
+                    }
+                }
+            }
+            return null;
+        }
+        bool CheckNodeDupeFile(DirNode root, string Name, bool isFile)
         {
             // this is for something like .RCF where dozens of archives with dupe files represent one layer
             TreeNode node = root.Node;
@@ -474,10 +463,6 @@ namespace CrateModLoader.Forms
                 if (node.Nodes[i].Text == Name)
                 {
                     if (isFile && node.Nodes[i].Tag is FileNode)
-                    {
-                        return true;
-                    }
-                    else if (!isFile && node.Nodes[i].Tag is DirNode)
                     {
                         return true;
                     }
