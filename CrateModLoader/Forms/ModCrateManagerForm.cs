@@ -6,6 +6,7 @@ using System.IO.Compression;
 using System.Diagnostics;
 using CrateModAPI.Resources.Text;
 using CrateModLoader.Tools.IO;
+using CrateModLoader.Forms;
 
 namespace CrateModLoader
 {
@@ -282,7 +283,7 @@ namespace CrateModLoader
         private void toolStripMenuItem_FromFile_Click(object sender, EventArgs e)
         {
             openFileDialog1.FileName = "";
-            openFileDialog1.Filter = ModLoaderText.InputDialogTypeAuto + " (*.zip)|*.zip|" + ModLoaderText.OutputDialogTypeAllFiles + " (*.*)|*.*";
+            openFileDialog1.Filter = "Mod Crate (*.zip)|*.zip|" + ModLoaderText.OutputDialogTypeAllFiles + " (*.*)|*.*";
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
@@ -382,12 +383,36 @@ namespace CrateModLoader
         {
             // wizard to create mod crate
             // require preload to generate file structure
+
+            if (!ModProgram.GamePreloaded)
+            {
+                ModProgram.InvokeError("The game must be preloaded to be able to create or edit Mod Crates.");
+                return;
+            }
+
+            ModCrateWizardForm editMenu = new ModCrateWizardForm(ModProgram);
+
+            editMenu.Owner = this;
+            editMenu.Show();
         }
 
         private void button_EditCrate_Click(object sender, EventArgs e)
         {
+            int index = checkedListBox_mods.SelectedIndex;
+            if (index < 0) return;
+
+            if (!ModProgram.GamePreloaded)
+            {
+                ModProgram.InvokeError("The game must be preloaded to be able to create or edit Mod Crates.");
+                return;
+            }
+
             // wizard to edit mod crate filesystem
             // and/or settings like language/difficulty/props imported from the crate?
+            ModCrateWizardForm editMenu = new ModCrateWizardForm(ModProgram, ModProgram.SupportedMods[index]);
+
+            editMenu.Owner = this;
+            editMenu.Show();
         }
 
     }

@@ -45,6 +45,7 @@
             this.button_DeleteCrate = new System.Windows.Forms.Button();
             this.button_DownloadCrates = new System.Windows.Forms.Button();
             this.button_EditCrate = new System.Windows.Forms.Button();
+            this.button_RefreshCrates = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.contextMenuStrip_ImportCrate = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem_FromFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -53,7 +54,6 @@
             this.download_site_BT = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.button_RefreshCrates = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_ModIcon)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.contextMenuStrip_ImportCrate.SuspendLayout();
@@ -237,7 +237,6 @@
             // button_CreateCrate
             // 
             this.button_CreateCrate.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button_CreateCrate.Enabled = false;
             this.button_CreateCrate.Location = new System.Drawing.Point(67, 0);
             this.button_CreateCrate.Margin = new System.Windows.Forms.Padding(0);
             this.button_CreateCrate.Name = "button_CreateCrate";
@@ -274,7 +273,6 @@
             // button_EditCrate
             // 
             this.button_EditCrate.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button_EditCrate.Enabled = false;
             this.button_EditCrate.Location = new System.Drawing.Point(148, 0);
             this.button_EditCrate.Margin = new System.Windows.Forms.Padding(0);
             this.button_EditCrate.Name = "button_EditCrate";
@@ -283,6 +281,19 @@
             this.button_EditCrate.Text = "Edit";
             this.button_EditCrate.UseVisualStyleBackColor = true;
             this.button_EditCrate.Click += new System.EventHandler(this.button_EditCrate_Click);
+            // 
+            // button_RefreshCrates
+            // 
+            this.tableLayoutPanel1.SetColumnSpan(this.button_RefreshCrates, 2);
+            this.button_RefreshCrates.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button_RefreshCrates.Location = new System.Drawing.Point(0, 0);
+            this.button_RefreshCrates.Margin = new System.Windows.Forms.Padding(0);
+            this.button_RefreshCrates.Name = "button_RefreshCrates";
+            this.button_RefreshCrates.Size = new System.Drawing.Size(67, 30);
+            this.button_RefreshCrates.TabIndex = 15;
+            this.button_RefreshCrates.Text = "Refresh";
+            this.button_RefreshCrates.UseVisualStyleBackColor = true;
+            this.button_RefreshCrates.Click += new System.EventHandler(this.button_RefreshCrates_Click);
             // 
             // contextMenuStrip_ImportCrate
             // 
@@ -323,19 +334,6 @@
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
-            // 
-            // button_RefreshCrates
-            // 
-            this.tableLayoutPanel1.SetColumnSpan(this.button_RefreshCrates, 2);
-            this.button_RefreshCrates.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button_RefreshCrates.Location = new System.Drawing.Point(0, 0);
-            this.button_RefreshCrates.Margin = new System.Windows.Forms.Padding(0);
-            this.button_RefreshCrates.Name = "button_RefreshCrates";
-            this.button_RefreshCrates.Size = new System.Drawing.Size(67, 30);
-            this.button_RefreshCrates.TabIndex = 15;
-            this.button_RefreshCrates.Text = "Refresh";
-            this.button_RefreshCrates.UseVisualStyleBackColor = true;
-            this.button_RefreshCrates.Click += new System.EventHandler(this.button_RefreshCrates_Click);
             // 
             // ModCrateManagerForm
             // 

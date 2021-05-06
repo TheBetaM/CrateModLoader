@@ -100,5 +100,6 @@ namespace CrateModLoader
         public bool CanBuildROMfromROM = true;
         public bool CanBuildROMfromFolder = true;
         public bool CanBuildFolder = true;
+        public bool CanOnlyReplaceFiles = true;
     }
 }

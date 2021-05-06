@@ -269,9 +269,13 @@ namespace CrateModLoader
                         }
                         else
                         {
-                            if (entry.FullName.Split('/')[0].Substring(0, LayerFolderName.Length).ToLower() == LayerFolderName)
+                            if (entry.FullName.StartsWith(LayerFolderName) && 
+                                (entry.FullName.EndsWith("/") || entry.FullName.EndsWith("\\")) &&
+                                (entry.FullName.Split('/').Length == 2 || entry.FullName.Split('\\').Length == 2)
+                                )
                             {
-                                int Layer = int.Parse(entry.FullName.Split('/')[0].Substring(LayerFolderName.Length));
+                                string trim = entry.FullName.TrimStart(LayerFolderName.ToCharArray()).TrimEnd('/').TrimEnd('\\');
+                                int Layer = int.Parse(trim);
                                 if (!ModdedLayers.Contains(Layer))
                                 {
                                     MaxLayer = Math.Max(MaxLayer, Layer);

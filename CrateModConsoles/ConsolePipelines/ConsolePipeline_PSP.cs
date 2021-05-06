@@ -19,6 +19,7 @@ namespace CrateModLoader.ModPipelines
             Console = ConsoleMode.PSP,
             NeedsDetection = true,
             CanBuildROMfromFolder = false, // original file required for building
+            CanOnlyReplaceFiles = false,
         };
 
         public override string TempPath => ModLoaderGlobals.BaseDirectory + ModLoaderGlobals.TempName + @"\";

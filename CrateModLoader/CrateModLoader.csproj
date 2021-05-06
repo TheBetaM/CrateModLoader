@@ -56,6 +56,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression">
       <Private>False</Private>
@@ -64,8 +65,10 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\Form_Common.cs" />
     <Compile Include="Forms\ModCrateMakerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -77,6 +80,12 @@
     </Compile>
     <Compile Include="Forms\ModCrateManagerForm.Designer.cs">
       <DependentUpon>ModCrateManagerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ModCrateWizardForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ModCrateWizardForm.Designer.cs">
+      <DependentUpon>ModCrateWizardForm.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI_ModProperties\ModPropBoolGUI.cs" />
     <Compile Include="GUI_ModProperties\ModPropColorGUI.cs" />
@@ -105,12 +114,6 @@
       <DependentUpon>ModMenuForm.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI_ModProperties\ModPropertyGUI.cs" />
-    <Compile Include="Forms\ModToolsForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\ModToolsForm.Designer.cs">
-      <DependentUpon>ModToolsForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -130,14 +133,14 @@
     <EmbeddedResource Include="Forms\ModCrateManagerForm.resx">
       <DependentUpon>ModCrateManagerForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ModCrateWizardForm.resx">
+      <DependentUpon>ModCrateWizardForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ModLoaderForm.resx">
       <DependentUpon>ModLoaderForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ModMenuForm.resx">
       <DependentUpon>ModMenuForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ModToolsForm.resx">
-      <DependentUpon>ModToolsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

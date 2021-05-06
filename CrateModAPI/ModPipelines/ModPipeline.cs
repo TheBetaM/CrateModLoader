@@ -17,11 +17,12 @@ namespace CrateModLoader
         public virtual bool DisableAsync => false;
         public virtual bool IsModLayer => false;
         public virtual int ModLayerID => 0;
-        public virtual bool ModLayerReplaceOnly => false;
+        public override bool ModLayerReplaceOnly => false;
         public virtual string Name { get; }
         public Modder ExecutionSource;
         private Dictionary<string, List<FileInfo>> FoundFiles;
         public override bool SkipPipeline { get; set; }
+        public List<string> ExtractedPaths { get; set; }
 
         public ModPipeline(Modder source)
         {
@@ -34,6 +35,7 @@ namespace CrateModLoader
             SkipPipeline = false;
             SecondarySkip = true;
             //SkipPipeline = !CheckModsForType();
+            ExtractedPaths = new List<string>();
         }
 
         /// <summary>
@@ -106,6 +108,8 @@ namespace CrateModLoader
                 string fileNameNoExt = Path.GetFileNameWithoutExtension(filePath);
                 string dirPath = filePath.Substring(0, (filePath.Length - fileName.Length)) + fileNameNoExt + @"\";
                 ModCrates.InstallLayerMods(ExecutionSource.EnabledModCrates, dirPath, ModLayerID, ModLayerReplaceOnly);
+
+                ExtractedPaths.Add(dirPath);
             }
 
             //ExecutionSource.PassIterator++;
