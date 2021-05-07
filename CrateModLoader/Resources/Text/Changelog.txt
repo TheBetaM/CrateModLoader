@@ -4,13 +4,15 @@ General
 - PS1, PS2, PSP and Folder mode extraction step is now multithreaded
 - Modding step is now multithreaded
 - Preloading is now multithreaded and combined with the main process (no longer needs to extract again after clicking Start)
-- Every game (supported or otherwise) can now be preloaded if you want to dig into or manually replace their files (no extra benefits outside of existing Mod Menu+ features)
 - Every randomizer is now handled independently from each other 
 (Before - Seed of randomizer feature 1 affects seed of randomizer feature 2; 
  After - The same seed has the same result for feature 2 regardless of whether feature 1 is enabled)
 - More detailed process information
-- The install order of Mod Crates can now be changed
+- Every game (supported or otherwise) can now be preloaded 
+- The Mod Crate Manager now has more functionality:  Change install order, Delete, Create, Edit
+- You can now create full-fledged Mod Crates from within the program using the Mod Crate Wizard in the Mod Crate Manager. (The game must be preloaded to create or edit Mod Crates)
 - Fixed not being able to build unsupported games
+- Blocked starting a new process after one finishes to prevent bugs. To work around this you can (re)open a ROM to fully reset the program.
 
 New games supported:
 - Super Monkey Ball Adventure (PS2, PSP, GCN)
@@ -47,7 +49,7 @@ CTR: Crash Team Racing
 - New feature: Random Tracks Have Ice Physics
 - New feature: Driving Offroad Respawns The Driver
 - New feature: Randomize World Palette
-- Updated CTR Framework API (Mod Crates will need to be updated)
+- Updated CTR Framework API (existing Mod Crates will need to be updated due to file name changes)
 
 Crash of the Titans
 - New feature: Randomize Costume Visuals

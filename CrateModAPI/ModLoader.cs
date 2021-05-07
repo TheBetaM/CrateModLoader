@@ -25,6 +25,7 @@ namespace CrateModLoader
         public string OutputPath = string.Empty;
         public bool IsPreloading = false;
         public bool GamePreloaded = false;
+        public bool HasProcessFinished = false;
 
         public string TempPath = ModLoaderGlobals.BaseDirectory + ModLoaderGlobals.TempName + @"\";
         public static bool KeepTempFiles = false;
@@ -190,6 +191,7 @@ namespace CrateModLoader
             Pipeline = null;
             GamePreloaded = false;
             IsPreloading = false;
+            HasProcessFinished = false;
             SupportedMods = new List<ModCrate>();
             bool ConsoleDetected = false;
             string regionID;
@@ -254,6 +256,10 @@ namespace CrateModLoader
                 }
                 Modder.LoadActiveProps();
                 ModCrates.InstallCrateSettings(SupportedMods, Modder);
+                foreach (ModPipelineBase Pipeline in Modder.Pipelines)
+                {
+                    Pipeline.InstallModCrates();
+                }
             }
         }
 
@@ -462,6 +468,7 @@ namespace CrateModLoader
                 {
                     DeleteTempFiles(TempPath);
                 }
+                HasProcessFinished = true;
             }
         }
 
@@ -711,6 +718,9 @@ namespace CrateModLoader
         {
             Modder = null;
             Pipeline = null;
+            GamePreloaded = false;
+            IsPreloading = false;
+            HasProcessFinished = false;
 
             SupportedMods = new List<ModCrate>();
 

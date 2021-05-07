@@ -20,6 +20,7 @@ namespace CrateModLoader.Forms
         private uint LayerEditing = 0;
         private bool BaseLayer => (LayerEditing == 0);
         private bool ExportingFile = false;
+        private bool EditMode = false;
         private List<TreeView> TreeViews;
         private List<int> LayerIDs;
 
@@ -27,13 +28,11 @@ namespace CrateModLoader.Forms
         {
             ModProgram = program;
             InitializeComponent();
+            crate = new ModCrate();
             if (editCrate != null)
             {
-                crate = editCrate;
-            }
-            else
-            {
-                crate = new ModCrate();
+                editCrate.CopyTo(crate);
+                EditMode = true;
             }
 
             if (ModProgram.Game == null)
@@ -83,11 +82,17 @@ namespace CrateModLoader.Forms
             toolTip1.SetToolTip(button_ModMenu, "Open Mod Menu of which setting will be applied in the Mod Crate.");
             toolTip1.SetToolTip(button_RemoveFile, "Remove selected File");
             toolTip1.SetToolTip(button_RemoveFolder, "Remove selected Folder");
+            toolTip1.SetToolTip(button_RestoreFile, "Restore selected File if it has been replaced");
 
             GenerateTree(0);
             for (int i = 0; i < TreeViews.Count; i++)
             {
                 GenerateTree(i + 1);
+            }
+
+            if (EditMode)
+            {
+                LoadCrate();
             }
         }
 
@@ -114,9 +119,18 @@ namespace CrateModLoader.Forms
                 return;
             }
 
+            if (EditMode && File.Exists(saveFileDialog1.FileName))
+            {
+                Console.WriteLine("Cannot overwrite editing crate: " + saveFileDialog1.FileName);
+                MessageBox.Show("Save failed! Cannot overwrite Mod Crates in Edit mode.");
+                return;
+            }
+
+            SaveCrate(saveFileDialog1.FileName);
+
             try
             {
-                SaveCrate(saveFileDialog1.FileName);
+                
                 Console.WriteLine("Mod Crate saved at: " + saveFileDialog1.FileName);
                 MessageBox.Show("Save complete!");
             }
@@ -129,6 +143,7 @@ namespace CrateModLoader.Forms
 
         void SaveCrate(string SavePath)
         {
+            bool restorefolder = crate.IsFolder;
             ConsolePipeline Pipeline = ModProgram.Pipeline;
             Modder Mod = ModProgram.Modder;
 
@@ -155,7 +170,7 @@ namespace CrateModLoader.Forms
 
             if (crate.HasIcon)
             {
-                File.Copy(crate.IconPath, Path.Combine(tempPath, ModCrates.IconFileName));
+                File.Copy(crate.IconPath, Path.Combine(tempPath, ModCrates.IconFileName), true);
             }
 
             Dictionary<string, string> Assets = new Dictionary<string, string>();
@@ -232,6 +247,114 @@ namespace CrateModLoader.Forms
 
             //cleanup
             Directory.Delete(tempPath, true);
+
+            crate.IsFolder = restorefolder;
+        }
+
+        void LoadCrate()
+        {
+            Modder Mod = ModProgram.Modder;
+            if (Mod != null)
+            {
+                ModCrates.InstallCrateSettings(crate, ModProgram.Modder);
+            }
+            string cratePath = crate.Path;
+
+            if (!crate.IsFolder)
+            {
+                cratePath = ModLoaderGlobals.ModDirectory + "tempext";
+                Directory.CreateDirectory(cratePath);
+                using (ZipArchive archive = ZipFile.OpenRead(crate.Path))
+                {
+                    archive.ExtractToDirectory(cratePath);
+                }
+            }
+
+            if (crate.HasIcon)
+            {
+                crate.IconPath = cratePath + @"\" + ModCrates.IconFileName;
+            }
+            if (crate.LayersModded.Length == 1 && !crate.LayersModded[0])
+            {
+                // Nothing else to do
+                return;
+            }
+
+            for (int i = 0; i < crate.LayersModded.Length; i++)
+            {
+                if (crate.LayersModded[i])
+                {
+                    int LayerID = 0;
+                    if (i != 0)
+                    {
+                        for (int id = 0; id < LayerIDs.Count; id++)
+                        {
+                            if (LayerIDs[id] == i)
+                            {
+                                LayerID = id;
+                            }
+                        }
+                        if (LayerID > TreeViews.Count)
+                        {
+                            throw new Exception("Invalid layer!!");
+                        }
+                    }
+
+                    TreeView tree = treeView_files;
+                    if (i != 0) tree = TreeViews[LayerID];
+
+                    DirectoryInfo dir = new DirectoryInfo(cratePath + @"\" + ModCrates.LayerFolderName + i + @"\");
+                    Recursive_CompareLayers((DirNode)tree.Nodes[0].Tag, dir);
+                }
+            }
+
+        }
+
+        void Recursive_CompareLayers(DirNode root, DirectoryInfo di)
+        {
+            foreach (DirectoryInfo dir in di.EnumerateDirectories())
+            {
+                TreeNode node = NodeContainsName(root.Node, dir.Name);
+                DirNode dnode = null;
+                if (node != null)
+                {
+                    dnode = (DirNode)node.Tag;
+                }
+                else
+                {
+                    dnode = new DirNode(dir.Name, dir);
+                    dnode.NewFolder();
+                    root.Node.Nodes.Add(dnode.Node);
+                }
+                Recursive_CompareLayers(dnode, dir);
+            }
+            foreach (FileInfo file in di.EnumerateFiles())
+            {
+                TreeNode node = NodeContainsName(root.Node, file.Name);
+                if (node != null)
+                {
+                    FileNode fnode = (FileNode)node.Tag;
+                    fnode.Replace(file.FullName);
+                }
+                else
+                {
+                    FileNode fnode = new FileNode(file.Name, file);
+                    fnode.NewFile(file.FullName);
+                    root.Node.Nodes.Add(fnode.Node);
+                }
+            }
+        }
+
+        TreeNode NodeContainsName(TreeNode tree, string name)
+        {
+            foreach(TreeNode node in tree.Nodes)
+            {
+                if (node.Text == name)
+                {
+                    return node;
+                }
+            }
+            return null;
         }
 
         void Recursive_FindFiles(string rootPath, DirNode root, Dictionary<string, string> filemap)
@@ -272,6 +395,18 @@ namespace CrateModLoader.Forms
                 }
             }
         }
+        private void button_RestoreFile_Click(object sender, EventArgs e)
+        {
+            TreeView tree = treeView_files;
+            if (!BaseLayer) tree = TreeViews[(int)LayerEditing - 1];
+            if (tree.SelectedNode.Tag == null) return;
+            if (tree.SelectedNode.Tag is DirNode) return; //todo: restore folder
+
+            if (tree.SelectedNode.Tag is FileNode file)
+            {
+                file.Restore();
+            }
+        }
 
         private void button_ExportFile_Click(object sender, EventArgs e)
         {
@@ -309,7 +444,7 @@ namespace CrateModLoader.Forms
                 {
                     //File.Copy(openFileDialog1.FileName, file.File.FullName, true);
                     string fName = Path.GetFileName(openFileDialog1.FileName);
-                    FileNode fnode = new FileNode(fName, null);
+                    FileNode fnode = new FileNode(fName, new FileInfo(openFileDialog1.FileName));
                     fnode.NewFile(openFileDialog1.FileName);
                     tree.SelectedNode.Nodes.Add(fnode.Node);
                 }
@@ -478,7 +613,15 @@ namespace CrateModLoader.Forms
 
         private void ModCrateWizardForm_FormClosed(object sender, FormClosedEventArgs e)
         {
+            if (!crate.IsFolder && Directory.Exists(ModLoaderGlobals.ModDirectory + "tempext"))
+            {
+                crate = null;
+                Directory.Delete(ModLoaderGlobals.ModDirectory + "tempext", true);
+            }
+            crate = null;
+
             Owner.Enabled = true;
+
         }
 
         private void ModCrateWizardForm_Load(object sender, EventArgs e)
@@ -550,5 +693,7 @@ namespace CrateModLoader.Forms
         {
             //tbd
         }
+
+        
     }
 }

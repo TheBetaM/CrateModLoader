@@ -384,7 +384,7 @@ namespace CrateModLoader
             // wizard to create mod crate
             // require preload to generate file structure
 
-            if (!ModProgram.GamePreloaded)
+            if (!ModProgram.GamePreloaded || ModProgram.HasProcessFinished)
             {
                 ModProgram.InvokeError("The game must be preloaded to be able to create or edit Mod Crates.");
                 return;
@@ -401,7 +401,7 @@ namespace CrateModLoader
             int index = checkedListBox_mods.SelectedIndex;
             if (index < 0) return;
 
-            if (!ModProgram.GamePreloaded)
+            if (!ModProgram.GamePreloaded || ModProgram.HasProcessFinished)
             {
                 ModProgram.InvokeError("The game must be preloaded to be able to create or edit Mod Crates.");
                 return;

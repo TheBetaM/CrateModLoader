@@ -14,5 +14,7 @@ namespace CrateModLoader
         public abstract Task FileStartPipeline(FileInfo file, PipelinePass pass);
 
         public abstract bool AddFile(FileInfo file);
+
+        public abstract void InstallModCrates();
     }
 }

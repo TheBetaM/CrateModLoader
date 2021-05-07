@@ -161,7 +161,7 @@ namespace CrateModLoader
         {
             ModProgram.OutputPath = saveFileDialog1.FileName;
             textBox_outputPath.Text = ModProgram.OutputPath;
-            bool ready = ModProgram.Pipeline != null;
+            bool ready = ModProgram.Pipeline != null && !ModProgram.HasProcessFinished;
             button_startProcess.Enabled = ready;
             if (ready)
             {
@@ -387,7 +387,7 @@ namespace CrateModLoader
                 ModProgram.OutputPath = folderBrowserDialog2.SelectedPath + @"\";
                 textBox_outputPath.Text = ModProgram.OutputPath;
 
-                bool ready = ModProgram.Pipeline != null;
+                bool ready = ModProgram.Pipeline != null && !ModProgram.HasProcessFinished;
                 button_startProcess.Enabled = ready;
                 if (ready)
                 {
@@ -433,7 +433,14 @@ namespace CrateModLoader
         }
         public void EnableInteraction(object sender, EventArgs e)
         {
-            button_startProcess.Enabled = ModProgram.OutputPath != string.Empty;
+            if (ModProgram.OutputPath != string.Empty && !ModProgram.HasProcessFinished)
+            {
+                button_startProcess.Enabled = true;
+            }
+            else
+            {
+                button_startProcess.Enabled = false;
+            }
             checkedListBox1.Enabled = true;
             button_browseInput.Enabled = true;
             button_browseOutput.Enabled = true;
@@ -658,6 +665,10 @@ namespace CrateModLoader
             if (ModProgram.OutputPath == "")
             {
                 UpdateProcessText(ModLoaderText.Step2Text);
+                allow = false;
+            }
+            if (ModProgram.HasProcessFinished)
+            {
                 allow = false;
             }
             button_startProcess.Enabled = allow;

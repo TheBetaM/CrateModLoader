@@ -56,6 +56,7 @@
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.button_RestoreFile = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -70,13 +71,14 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Controls.Add(this.button_RestoreFile, 2, 4);
             this.tableLayoutPanel1.Controls.Add(this.button_RemoveFolder, 2, 7);
             this.tableLayoutPanel1.Controls.Add(this.button_RemoveFile, 1, 7);
             this.tableLayoutPanel1.Controls.Add(this.button_AddFile, 1, 6);
             this.tableLayoutPanel1.Controls.Add(this.treeView_files, 4, 1);
             this.tableLayoutPanel1.Controls.Add(this.button_SaveAs, 4, 9);
             this.tableLayoutPanel1.Controls.Add(this.button_Cancel, 0, 9);
-            this.tableLayoutPanel1.Controls.Add(this.button_ExportFile, 2, 4);
+            this.tableLayoutPanel1.Controls.Add(this.button_ExportFile, 2, 5);
             this.tableLayoutPanel1.Controls.Add(this.button_AddFolder, 2, 6);
             this.tableLayoutPanel1.Controls.Add(this.button_ReplaceFile, 1, 4);
             this.tableLayoutPanel1.Controls.Add(this.button_ModMenu, 1, 1);
@@ -276,7 +278,7 @@
             this.button_ExportFile.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button_ExportFile.ImageKey = "file-download";
             this.button_ExportFile.ImageList = this.imageList1;
-            this.button_ExportFile.Location = new System.Drawing.Point(96, 173);
+            this.button_ExportFile.Location = new System.Drawing.Point(96, 221);
             this.button_ExportFile.Margin = new System.Windows.Forms.Padding(0);
             this.button_ExportFile.Name = "button_ExportFile";
             this.button_ExportFile.Size = new System.Drawing.Size(48, 48);
@@ -374,6 +376,19 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // button_RestoreFile
+            // 
+            this.button_RestoreFile.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button_RestoreFile.ImageKey = "file-x";
+            this.button_RestoreFile.ImageList = this.imageList1;
+            this.button_RestoreFile.Location = new System.Drawing.Point(96, 173);
+            this.button_RestoreFile.Margin = new System.Windows.Forms.Padding(0);
+            this.button_RestoreFile.Name = "button_RestoreFile";
+            this.button_RestoreFile.Size = new System.Drawing.Size(48, 48);
+            this.button_RestoreFile.TabIndex = 13;
+            this.button_RestoreFile.UseVisualStyleBackColor = true;
+            this.button_RestoreFile.Click += new System.EventHandler(this.button_RestoreFile_Click);
+            // 
             // ModCrateWizardForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -414,5 +429,6 @@
         private System.Windows.Forms.Button button_RemoveFolder;
         private System.Windows.Forms.Button button_RemoveFile;
         private System.Windows.Forms.Button button_LevelEditor;
+        private System.Windows.Forms.Button button_RestoreFile;
     }
 }

@@ -107,7 +107,6 @@ namespace CrateModLoader
                 string fileName = Path.GetFileName(filePath);
                 string fileNameNoExt = Path.GetFileNameWithoutExtension(filePath);
                 string dirPath = filePath.Substring(0, (filePath.Length - fileName.Length)) + fileNameNoExt + @"\";
-                ModCrates.InstallLayerMods(ExecutionSource.EnabledModCrates, dirPath, ModLayerID, ModLayerReplaceOnly);
 
                 ExtractedPaths.Add(dirPath);
             }
@@ -141,6 +140,17 @@ namespace CrateModLoader
                 }
             }
             return false;
+        }
+
+        public override void InstallModCrates()
+        {
+            if (IsModLayer)
+            {
+                foreach (string dirPath in ExtractedPaths)
+                {
+                    ModCrates.InstallLayerMods(ExecutionSource.EnabledModCrates, dirPath, ModLayerID, ModLayerReplaceOnly);
+                }
+            }
         }
 
         bool CheckModsForType()

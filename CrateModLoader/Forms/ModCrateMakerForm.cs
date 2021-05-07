@@ -72,7 +72,24 @@ namespace CrateModLoader
             textBox_name.Text = editCrate.Name;
             textBox_version.Text = editCrate.Version;
 
-            //todo: load the crate icon
+            if (crate.HasIcon)
+            {
+                try
+                {
+                    Bitmap temp = new Bitmap(crate.IconPath);
+                    Bitmap img = new Bitmap(temp);
+                    temp.Dispose();
+
+                    if (img != null)
+                    {
+                        pictureBox1.Image = img;
+                    }
+                }
+                catch
+                {
+                    Console.WriteLine("Failed load load Mod Crate icon!!");
+                }
+            }
         }
 
         private void button_save_Click(object sender, EventArgs e)
@@ -80,10 +97,6 @@ namespace CrateModLoader
             if (!FromWizard)
             {
                 ModCrates.SaveSimpleCrateToFile(mod, path, crate);
-            }
-            else
-            {
-                //todo
             }
 
             Close();
@@ -97,7 +110,9 @@ namespace CrateModLoader
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
 
-                Bitmap img = new Bitmap(openFileDialog1.FileName);
+                Bitmap temp = new Bitmap(openFileDialog1.FileName);
+                Bitmap img = new Bitmap(temp);
+                temp.Dispose();
 
                 if (img != null)
                 {

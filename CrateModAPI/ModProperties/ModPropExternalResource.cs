@@ -46,6 +46,12 @@ namespace CrateModLoader.ModProperties
         public override void FileToResource(string inputPath)
         { }
 
+        public override void ResetToDefault()
+        {
+            Resource = default(T);
+            base.ResetToDefault();
+        }
+
         public override void Serialize(ref string line)
         {
             if (Value)

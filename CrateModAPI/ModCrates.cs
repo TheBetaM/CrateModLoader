@@ -30,6 +30,27 @@ namespace CrateModLoader
         public string NestedPath = "";
 
         public bool[] LayersModded = new bool[1] { false };
+
+        public void CopyTo(ModCrate crate)
+        {
+            crate.Meta = new Dictionary<string, string>(Meta);
+            crate.Settings = new Dictionary<string, string>(Settings);
+            crate.Path = Path;
+            crate.Name = Name;
+            crate.Desc = Desc;
+            crate.Author = Author;
+            crate.Version = Version;
+            crate.CML_Version = ModLoaderGlobals.ProgramVersionSimple.ToString();
+            crate.TargetGame = TargetGame;
+            crate.Plugin = Plugin;
+            crate.HasSettings = HasSettings;
+            crate.IsFolder = IsFolder;
+            crate.HasIcon = HasIcon;
+            crate.IconPath = IconPath;
+            crate.NestedPath = NestedPath;
+            crate.LayersModded = new bool[LayersModded.Length];
+            LayersModded.CopyTo(crate.LayersModded, 0);
+        }
     }
 
     public static class ModCrates
@@ -552,6 +573,21 @@ namespace CrateModLoader
                             prop.DeSerialize(SupportedMods[mod].Settings[prop.CodeName], SupportedMods[mod]);
                             prop.HasChanged = true;
                         }
+                    }
+                }
+            }
+        }
+        public static void InstallCrateSettings(ModCrate crate, Modder modder)
+        {
+            if (crate.HasSettings)
+            {
+                foreach (ModPropertyBase prop in modder.Props)
+                {
+                    prop.ResetToDefault();
+                    if (crate.Settings.ContainsKey(prop.CodeName))
+                    {
+                        prop.DeSerialize(crate.Settings[prop.CodeName], crate);
+                        prop.HasChanged = true;
                     }
                 }
             }
