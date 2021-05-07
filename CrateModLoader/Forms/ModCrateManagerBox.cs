@@ -10,21 +10,26 @@ using CrateModLoader.Forms;
 
 namespace CrateModLoader
 {
-    public partial class ModCrateManagerForm : Form
+    public partial class ModCrateManagerBox : UserControl
     {
         public ModLoader ModProgram;
         private bool ignoreChange = false;
 
-        public ModCrateManagerForm(ModLoader Program)
+        public ModCrateManagerBox(ModLoader Program)
         {
             ModProgram = Program;
 
             InitializeComponent();
 
-            PopulateList();
+            checkedListBox_mods.Items.Clear();
+            label_author.Text = "";
+            label_desc.Text = "";
+            pictureBox_ModIcon.Image = null;
+
+            //PopulateList();
         }
 
-        void PopulateList()
+        public void PopulateList()
         {
             checkedListBox_mods.Items.Clear();
 
@@ -75,14 +80,15 @@ namespace CrateModLoader
 
             label_author.Text = "";
             label_desc.Text = "";
-            button_confirm.Text = ModLoaderText.ModCrateManagerConfirmButton;
+            //button_confirm.Text = ModLoaderText.ModCrateManagerConfirmButton;
             Text = ModLoaderText.ModCrateManagerTitle;
             pictureBox_ModIcon.Image = null;
         }
 
         private void button_confirm_Click(object sender, EventArgs e)
         {
-            Close();
+            //Close();
+            ModProgram.UpdateModCrateChangedState();
         }
 
         private void button_importmod_Click(object sender, EventArgs e)
@@ -92,12 +98,12 @@ namespace CrateModLoader
 
         private void ModCrateManagerForm_Load(object sender, EventArgs e)
         {
-            Owner.Enabled = false;
+            //Owner.Enabled = false;
         }
 
         private void ModCrateManagerForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Owner.Enabled = true;
+            //Owner.Enabled = true;
 
             ModProgram.UpdateModCrateChangedState();
         }
@@ -381,10 +387,12 @@ namespace CrateModLoader
 
         private void button_CreateCrate_Click(object sender, EventArgs e)
         {
-            // wizard to create mod crate
-            // require preload to generate file structure
-
-            if (!ModProgram.GamePreloaded || ModProgram.HasProcessFinished)
+            if (ModProgram.HasProcessFinished)
+            {
+                ModProgram.InvokeError("The game ROM must be reloaded.");
+                return;
+            }
+            if (!ModProgram.GamePreloaded)
             {
                 ModProgram.InvokeError("The game must be preloaded to be able to create or edit Mod Crates.");
                 return;
@@ -392,7 +400,7 @@ namespace CrateModLoader
 
             ModCrateWizardForm editMenu = new ModCrateWizardForm(ModProgram);
 
-            editMenu.Owner = this;
+            editMenu.Owner = this.ParentForm;
             editMenu.Show();
         }
 
@@ -401,17 +409,20 @@ namespace CrateModLoader
             int index = checkedListBox_mods.SelectedIndex;
             if (index < 0) return;
 
-            if (!ModProgram.GamePreloaded || ModProgram.HasProcessFinished)
+            if (ModProgram.HasProcessFinished)
+            {
+                ModProgram.InvokeError("The game ROM must be reloaded.");
+                return;
+            }
+            if (!ModProgram.GamePreloaded)
             {
                 ModProgram.InvokeError("The game must be preloaded to be able to create or edit Mod Crates.");
                 return;
             }
 
-            // wizard to edit mod crate filesystem
-            // and/or settings like language/difficulty/props imported from the crate?
             ModCrateWizardForm editMenu = new ModCrateWizardForm(ModProgram, ModProgram.SupportedMods[index]);
 
-            editMenu.Owner = this;
+            editMenu.Owner = this.ParentForm;
             editMenu.Show();
         }
 

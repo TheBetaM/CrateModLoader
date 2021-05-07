@@ -15,6 +15,7 @@ namespace CrateModLoader
     public partial class ModLoaderForm : Form
     {
         public ModLoader ModProgram;
+        public ModCrateManagerBox ModCrateBox;
 
         public ModLoaderForm(ModLoader Program)
         {
@@ -34,10 +35,16 @@ namespace CrateModLoader
             textBox_inputPath.Text = ModLoaderText.InputInstruction;
             textBox_outputPath.Text = ModLoaderText.OutputInstruction;
             button_downloadMods.Text = ModLoaderText.Button_PreloadGame;
-            button_modCrateMenu.Text = ModLoaderText.ModCratesButton;
-            button_modTools.Text = "Level Editor";
+
+            ModCrateBox = new ModCrateManagerBox(ModProgram);
+            ModCrateBox.Dock = DockStyle.Fill;
+            panel_modCrateManager.Controls.Add(ModCrateBox);
+            ModCrateBox.Visible = ModCrateBox.Enabled = false;
+
+            //button_modCrateMenu.Text = ModLoaderText.ModCratesButton;
+            //button_modTools.Text = "Level Editor";
             button_openModMenu.Text = ModLoaderText.ModMenuButton;
-            button_randomizeSeed.Text = ModLoaderText.RandomizeSeedButton;
+            button_randomizeSeed.Text = ModLoaderText.RandomizeSeedButton + " →";
             button_browseInput.Text = ModLoaderText.InputBrowse;
             button_browseOutput.Text = ModLoaderText.OutputBrowse;
             button_startProcess.Text = ModLoaderText.StartProcessButton;
@@ -48,9 +55,9 @@ namespace CrateModLoader
             toolTip1.SetToolTip(linkLabel_apiCredit, ModLoaderText.Tooltip_Label_API);
             toolTip1.SetToolTip(numericUpDown1, ModLoaderText.Tooltip_Numeric_Seed);
             toolTip1.SetToolTip(button_downloadMods, ModLoaderText.Tooltip_PreloadGame);
-            toolTip1.SetToolTip(button_modCrateMenu, ModLoaderText.Tooltip_Button_ModCrates);
+            //toolTip1.SetToolTip(button_modCrateMenu, ModLoaderText.Tooltip_Button_ModCrates);
             toolTip1.SetToolTip(button_openModMenu, ModLoaderText.Tooltip_Button_ModMenu);
-            toolTip1.SetToolTip(button_modTools, ModLoaderText.Tooltip_Button_ModTools);
+            //toolTip1.SetToolTip(button_modTools, ModLoaderText.Tooltip_Button_ModTools);
             toolTip1.SetToolTip(button_randomizeSeed, ModLoaderText.Tooltip_Button_RandomizeSeed);
 
             progressBar1.Minimum = 0;
@@ -196,10 +203,10 @@ namespace CrateModLoader
             // A list with a button that lets you manually add .zip files
             // Set availability in the respective modder's Game struct (ModCratesSupported variable) 
 
-            ModCrateManagerForm modCrateManagerMenu = new ModCrateManagerForm(ModProgram);
+            //ModCrateManagerForm modCrateManagerMenu = new ModCrateManagerForm(ModProgram);
 
-            modCrateManagerMenu.Owner = this;
-            modCrateManagerMenu.Show();
+            //modCrateManagerMenu.Owner = this;
+            //modCrateManagerMenu.Show();
         }
 
         private void button_openModMenu_Click(object sender, EventArgs e)
@@ -404,7 +411,7 @@ namespace CrateModLoader
                 //Size = new Size(mMinimumSize.Width, height + 300);
                 Size = new Size(MinimumSize.Width, height);
             }
-            MinimumSize = new Size(MinimumSize.Width, height);
+            //MinimumSize = new Size(MinimumSize.Width, height);
             if (Size.Height > height)
             {
                 Size = new Size(MinimumSize.Width, height);
@@ -422,10 +429,10 @@ namespace CrateModLoader
             numericUpDown1.ReadOnly = true;
             numericUpDown1.Enabled = false;
             button_openModMenu.Enabled = false;
-            button_modCrateMenu.Enabled = false;
+            //button_modCrateMenu.Enabled = false;
             linkLabel_apiCredit.Enabled = false;
             linkLabel_programTitle.Enabled = false;
-            button_modTools.Enabled = false;
+            //button_modTools.Enabled = false;
             button_downloadMods.Enabled = false;
             menuStrip1.Enabled = false;
             DragDrop -= ModLoaderForm_DragDrop;
@@ -448,7 +455,7 @@ namespace CrateModLoader
             textBox_outputPath.ReadOnly = false;
             numericUpDown1.ReadOnly = false;
             numericUpDown1.Enabled = true;
-            button_modCrateMenu.Enabled = true;
+            //button_modCrateMenu.Enabled = true;
             menuStrip1.Enabled = true;
             DragDrop += ModLoaderForm_DragDrop;
             DragEnter += ModLoaderForm_DragEnter;
@@ -457,7 +464,7 @@ namespace CrateModLoader
             {
                 button_openModMenu.Enabled = ModProgram.Modder.ModMenuEnabled;
             }
-            button_modTools.Enabled = false;//true;
+            //button_modTools.Enabled = false;//true;
 
             if (!ModProgram.GamePreloaded)
                 //ModProgram.Modder.CanPreloadGame && (ModProgram.Modder.PreloadConsoles == null || ModProgram.Modder.PreloadConsoles.Contains(ModProgram.Pipeline.Metadata.Console)))
@@ -479,17 +486,18 @@ namespace CrateModLoader
         void ResetGameSpecific(object sender, EventValueArgs<bool> e)
         {
             bool ClearGameText = e.Value;
-            button_modCrateMenu.Text = ModLoaderText.ModCratesButton;
+            //button_modCrateMenu.Text = ModLoaderText.ModCratesButton;
             button_openModMenu.Text = ModLoaderText.ModMenuButton;
 
             button_startProcess.Enabled = false;
 
             button_openModMenu.Enabled = button_openModMenu.Visible = false;
-            button_modCrateMenu.Enabled = button_modCrateMenu.Visible = false;
-            button_randomizeSeed.Enabled = button_randomizeSeed.Visible = button_modTools.Visible = button_modTools.Enabled = false;
+            //button_modCrateMenu.Enabled = button_modCrateMenu.Visible = false;
+            button_randomizeSeed.Enabled = button_randomizeSeed.Visible = false;//button_modTools.Visible = button_modTools.Enabled = false;
             numericUpDown1.Enabled = numericUpDown1.Visible = false;
             button_downloadMods.Visible = true;
             button_downloadMods.Enabled = !ModProgram.GamePreloaded;
+            ModCrateBox.Visible = ModCrateBox.Enabled = false;
 
             linkLabel_apiCredit.Text = string.Empty;
             linkLabel_apiCredit.LinkVisited = false;
@@ -504,28 +512,25 @@ namespace CrateModLoader
 
             checkedListBox1.Visible = checkedListBox1.Enabled = false;
 
-            int Height = 188;
-            if (!ClearGameText)
-            {
-                Height = 220;
-            }
-
+            int Height = 500;
             AdjustSize(Height);
         }
 
         void SetLayoutUnsupportedGame(object sender, EventValueArgs<string> e)
         {
             string cons_mod = e.Value;
-            button_modCrateMenu.Text = ModLoaderText.ModCratesButton;
+            //button_modCrateMenu.Text = ModLoaderText.ModCratesButton;
             checkedListBox1.Items.Clear();
             button_openModMenu.Visible = true;
             button_openModMenu.Enabled = false;
-            button_modCrateMenu.Enabled = button_modCrateMenu.Visible = true;
-            button_randomizeSeed.Enabled = button_randomizeSeed.Visible = button_openModMenu.Visible = button_openModMenu.Enabled = button_modTools.Visible = false;
+            //button_modCrateMenu.Enabled = button_modCrateMenu.Visible = true;
+            button_randomizeSeed.Enabled = button_randomizeSeed.Visible = button_openModMenu.Visible = button_openModMenu.Enabled = false;// button_modTools.Visible = false;
             numericUpDown1.Enabled = numericUpDown1.Visible = false;
-            button_modTools.Enabled = false;
+            //button_modTools.Enabled = false;
             button_downloadMods.Visible = true;
             button_downloadMods.Enabled = !ModProgram.GamePreloaded;
+            ModCrateBox.Visible = ModCrateBox.Enabled = true;
+            ModCrateBox.PopulateList();
 
             label_gameType.Text = ModLoaderText.UnsupportedGameTitle + " (" + cons_mod + ")";
             linkLabel_apiCredit.Text = string.Empty;
@@ -533,7 +538,7 @@ namespace CrateModLoader
             linkLabel_optionDesc.Visible = false;
             panel_desc.Visible = false;
 
-            int height = 295 + 45 + (checkedListBox1.Items.Count * 17);
+            int height = 500;//295 + 45 + (checkedListBox1.Items.Count * 17);
             checkedListBox1.Visible = checkedListBox1.Enabled = checkedListBox1.Items.Count > 0;
             AdjustSize(height);
         }
@@ -542,13 +547,15 @@ namespace CrateModLoader
             Game game = e.Game;
             string cons_mod = e.Console;
             string region_mod = e.Region;
-            button_modCrateMenu.Text = ModLoaderText.ModCratesButton;
+            //button_modCrateMenu.Text = ModLoaderText.ModCratesButton;
             checkedListBox1.Items.Clear();
             button_openModMenu.Visible = true;
             button_openModMenu.Enabled = ModProgram.Modder.ModMenuEnabled;
-            button_modCrateMenu.Visible = true;
-            button_modCrateMenu.Enabled = !game.ModCratesDisabled;
-            button_randomizeSeed.Enabled = button_randomizeSeed.Visible = button_modTools.Visible = button_downloadMods.Visible = true;
+            //button_modCrateMenu.Visible = true;
+            //button_modCrateMenu.Enabled = !game.ModCratesDisabled;
+            button_randomizeSeed.Enabled = button_randomizeSeed.Visible = true; //button_modTools.Visible = button_downloadMods.Visible = true;
+            ModCrateBox.Visible = ModCrateBox.Enabled = true;
+            ModCrateBox.PopulateList();
 
             if (!ModProgram.GamePreloaded)
               //&& ModProgram.Modder.CanPreloadGame && (ModProgram.Modder.PreloadConsoles == null || ModProgram.Modder.PreloadConsoles.Contains(ModProgram.Pipeline.Metadata.Console)))
@@ -564,7 +571,7 @@ namespace CrateModLoader
             linkLabel_optionDesc.Text = string.Empty;
             linkLabel_optionDesc.Visible = false;
             panel_desc.Visible = false;
-            button_modTools.Enabled = false;//true;
+            //button_modTools.Enabled = false;//true;
 
             if (string.IsNullOrWhiteSpace(region_mod))
             {
@@ -640,7 +647,7 @@ namespace CrateModLoader
                 }
             }
 
-            int height = 295 + 45 + (checkedListBox1.Items.Count * 17);
+            int height = 500;//295 + 45 + (checkedListBox1.Items.Count * 17);
             checkedListBox1.Visible = checkedListBox1.Enabled = checkedListBox1.Items.Count > 0;
             AdjustSize(height);
         }
@@ -702,7 +709,7 @@ namespace CrateModLoader
                 CratesActive += $" ({ ModsActive }x)";
             }
 
-            button_modCrateMenu.Text = CratesActive;
+            //button_modCrateMenu.Text = CratesActive;
         }
 
         [DllImport("user32.dll")]

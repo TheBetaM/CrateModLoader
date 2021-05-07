@@ -126,11 +126,9 @@ namespace CrateModLoader.Forms
                 return;
             }
 
-            SaveCrate(saveFileDialog1.FileName);
-
             try
             {
-                
+                SaveCrate(saveFileDialog1.FileName);
                 Console.WriteLine("Mod Crate saved at: " + saveFileDialog1.FileName);
                 MessageBox.Show("Save complete!");
             }

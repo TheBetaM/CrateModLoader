@@ -1,6 +1,6 @@
 ﻿namespace CrateModLoader
 {
-    partial class ModCrateManagerForm
+    partial class ModCrateManagerBox
     {
         /// <summary>
         /// Required designer variable.
@@ -29,9 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ModCrateManagerForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ModCrateManagerBox));
             this.checkedListBox_mods = new System.Windows.Forms.CheckedListBox();
-            this.button_confirm = new System.Windows.Forms.Button();
             this.label_author = new System.Windows.Forms.Label();
             this.label_desc = new System.Windows.Forms.Label();
             this.pictureBox_ModIcon = new System.Windows.Forms.PictureBox();
@@ -54,6 +53,7 @@
             this.download_site_BT = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_ModIcon)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.contextMenuStrip_ImportCrate.SuspendLayout();
@@ -74,31 +74,17 @@
             this.checkedListBox_mods.Margin = new System.Windows.Forms.Padding(0);
             this.checkedListBox_mods.Name = "checkedListBox_mods";
             this.tableLayoutPanel1.SetRowSpan(this.checkedListBox_mods, 4);
-            this.checkedListBox_mods.Size = new System.Drawing.Size(437, 236);
+            this.checkedListBox_mods.Size = new System.Drawing.Size(437, 300);
             this.checkedListBox_mods.TabIndex = 0;
             this.checkedListBox_mods.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBox_mods_ItemCheck);
             this.checkedListBox_mods.SelectedIndexChanged += new System.EventHandler(this.checkedListBox_mods_SelectedIndexChanged);
             this.checkedListBox_mods.MouseMove += new System.Windows.Forms.MouseEventHandler(this.checkedListBox_mods_MouseMove);
             // 
-            // button_confirm
-            // 
-            this.tableLayoutPanel1.SetColumnSpan(this.button_confirm, 7);
-            this.button_confirm.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button_confirm.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button_confirm.Location = new System.Drawing.Point(0, 333);
-            this.button_confirm.Margin = new System.Windows.Forms.Padding(0);
-            this.button_confirm.Name = "button_confirm";
-            this.button_confirm.Size = new System.Drawing.Size(474, 33);
-            this.button_confirm.TabIndex = 1;
-            this.button_confirm.Text = "Confirm";
-            this.button_confirm.UseVisualStyleBackColor = true;
-            this.button_confirm.Click += new System.EventHandler(this.button_confirm_Click);
-            // 
             // label_author
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.label_author, 5);
             this.label_author.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label_author.Location = new System.Drawing.Point(70, 266);
+            this.label_author.Location = new System.Drawing.Point(70, 330);
             this.label_author.Name = "label_author";
             this.label_author.Size = new System.Drawing.Size(401, 20);
             this.label_author.TabIndex = 3;
@@ -109,9 +95,9 @@
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.label_desc, 5);
             this.label_desc.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label_desc.Location = new System.Drawing.Point(70, 286);
+            this.label_desc.Location = new System.Drawing.Point(70, 350);
             this.label_desc.Name = "label_desc";
-            this.label_desc.Size = new System.Drawing.Size(401, 47);
+            this.label_desc.Size = new System.Drawing.Size(401, 50);
             this.label_desc.TabIndex = 4;
             this.label_desc.Text = "Mod Description";
             // 
@@ -120,11 +106,11 @@
             this.tableLayoutPanel1.SetColumnSpan(this.pictureBox_ModIcon, 2);
             this.pictureBox_ModIcon.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox_ModIcon.InitialImage = null;
-            this.pictureBox_ModIcon.Location = new System.Drawing.Point(0, 266);
+            this.pictureBox_ModIcon.Location = new System.Drawing.Point(0, 330);
             this.pictureBox_ModIcon.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox_ModIcon.Name = "pictureBox_ModIcon";
             this.tableLayoutPanel1.SetRowSpan(this.pictureBox_ModIcon, 2);
-            this.pictureBox_ModIcon.Size = new System.Drawing.Size(67, 67);
+            this.pictureBox_ModIcon.Size = new System.Drawing.Size(67, 70);
             this.pictureBox_ModIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox_ModIcon.TabIndex = 5;
             this.pictureBox_ModIcon.TabStop = false;
@@ -140,7 +126,6 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel1.Controls.Add(this.checkedListBox_mods, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.button_confirm, 0, 7);
             this.tableLayoutPanel1.Controls.Add(this.label_desc, 2, 6);
             this.tableLayoutPanel1.Controls.Add(this.pictureBox_ModIcon, 0, 5);
             this.tableLayoutPanel1.Controls.Add(this.label_author, 2, 5);
@@ -157,7 +142,7 @@
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 8;
+            this.tableLayoutPanel1.RowCount = 7;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
@@ -165,9 +150,8 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 47F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(474, 366);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(474, 400);
             this.tableLayoutPanel1.TabIndex = 6;
             // 
             // button_ToTop
@@ -177,7 +161,7 @@
             this.button_ToTop.Location = new System.Drawing.Point(0, 30);
             this.button_ToTop.Margin = new System.Windows.Forms.Padding(0);
             this.button_ToTop.Name = "button_ToTop";
-            this.button_ToTop.Size = new System.Drawing.Size(37, 59);
+            this.button_ToTop.Size = new System.Drawing.Size(37, 75);
             this.button_ToTop.TabIndex = 6;
             this.button_ToTop.Text = "⭱";
             this.button_ToTop.UseVisualStyleBackColor = true;
@@ -187,10 +171,10 @@
             // 
             this.button_MoveUp.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button_MoveUp.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button_MoveUp.Location = new System.Drawing.Point(0, 89);
+            this.button_MoveUp.Location = new System.Drawing.Point(0, 105);
             this.button_MoveUp.Margin = new System.Windows.Forms.Padding(0);
             this.button_MoveUp.Name = "button_MoveUp";
-            this.button_MoveUp.Size = new System.Drawing.Size(37, 59);
+            this.button_MoveUp.Size = new System.Drawing.Size(37, 75);
             this.button_MoveUp.TabIndex = 7;
             this.button_MoveUp.Text = "↑";
             this.button_MoveUp.UseVisualStyleBackColor = true;
@@ -200,10 +184,10 @@
             // 
             this.button_MoveDown.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button_MoveDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button_MoveDown.Location = new System.Drawing.Point(0, 148);
+            this.button_MoveDown.Location = new System.Drawing.Point(0, 180);
             this.button_MoveDown.Margin = new System.Windows.Forms.Padding(0);
             this.button_MoveDown.Name = "button_MoveDown";
-            this.button_MoveDown.Size = new System.Drawing.Size(37, 59);
+            this.button_MoveDown.Size = new System.Drawing.Size(37, 75);
             this.button_MoveDown.TabIndex = 8;
             this.button_MoveDown.Text = "↓";
             this.button_MoveDown.UseVisualStyleBackColor = true;
@@ -213,10 +197,10 @@
             // 
             this.button_ToBottom.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button_ToBottom.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button_ToBottom.Location = new System.Drawing.Point(0, 207);
+            this.button_ToBottom.Location = new System.Drawing.Point(0, 255);
             this.button_ToBottom.Margin = new System.Windows.Forms.Padding(0);
             this.button_ToBottom.Name = "button_ToBottom";
-            this.button_ToBottom.Size = new System.Drawing.Size(37, 59);
+            this.button_ToBottom.Size = new System.Drawing.Size(37, 75);
             this.button_ToBottom.TabIndex = 9;
             this.button_ToBottom.Text = "⭳";
             this.button_ToBottom.UseVisualStyleBackColor = true;
@@ -225,48 +209,53 @@
             // button_ImportCrate
             // 
             this.button_ImportCrate.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button_ImportCrate.ImageKey = "file-plus";
+            this.button_ImportCrate.ImageList = this.imageList1;
             this.button_ImportCrate.Location = new System.Drawing.Point(229, 0);
             this.button_ImportCrate.Margin = new System.Windows.Forms.Padding(0);
             this.button_ImportCrate.Name = "button_ImportCrate";
             this.button_ImportCrate.Size = new System.Drawing.Size(81, 30);
             this.button_ImportCrate.TabIndex = 10;
-            this.button_ImportCrate.Text = "Import...";
             this.button_ImportCrate.UseVisualStyleBackColor = true;
             this.button_ImportCrate.Click += new System.EventHandler(this.button_ImportCrate_Click);
             // 
             // button_CreateCrate
             // 
             this.button_CreateCrate.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button_CreateCrate.ImageKey = "(none)";
+            this.button_CreateCrate.ImageList = this.imageList1;
             this.button_CreateCrate.Location = new System.Drawing.Point(67, 0);
             this.button_CreateCrate.Margin = new System.Windows.Forms.Padding(0);
             this.button_CreateCrate.Name = "button_CreateCrate";
             this.button_CreateCrate.Size = new System.Drawing.Size(81, 30);
             this.button_CreateCrate.TabIndex = 11;
-            this.button_CreateCrate.Text = "Create...";
+            this.button_CreateCrate.Text = "Create";
             this.button_CreateCrate.UseVisualStyleBackColor = true;
             this.button_CreateCrate.Click += new System.EventHandler(this.button_CreateCrate_Click);
             // 
             // button_DeleteCrate
             // 
             this.button_DeleteCrate.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button_DeleteCrate.ImageKey = "file-minus";
+            this.button_DeleteCrate.ImageList = this.imageList1;
             this.button_DeleteCrate.Location = new System.Drawing.Point(310, 0);
             this.button_DeleteCrate.Margin = new System.Windows.Forms.Padding(0);
             this.button_DeleteCrate.Name = "button_DeleteCrate";
             this.button_DeleteCrate.Size = new System.Drawing.Size(81, 30);
             this.button_DeleteCrate.TabIndex = 12;
-            this.button_DeleteCrate.Text = "Delete";
             this.button_DeleteCrate.UseVisualStyleBackColor = true;
             this.button_DeleteCrate.Click += new System.EventHandler(this.button_DeleteCrate_Click);
             // 
             // button_DownloadCrates
             // 
             this.button_DownloadCrates.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button_DownloadCrates.ImageKey = "world";
+            this.button_DownloadCrates.ImageList = this.imageList1;
             this.button_DownloadCrates.Location = new System.Drawing.Point(391, 0);
             this.button_DownloadCrates.Margin = new System.Windows.Forms.Padding(0);
             this.button_DownloadCrates.Name = "button_DownloadCrates";
             this.button_DownloadCrates.Size = new System.Drawing.Size(83, 30);
             this.button_DownloadCrates.TabIndex = 13;
-            this.button_DownloadCrates.Text = "Download";
             this.button_DownloadCrates.UseVisualStyleBackColor = true;
             this.button_DownloadCrates.Click += new System.EventHandler(this.button_DownloadCrates_Click);
             // 
@@ -286,12 +275,13 @@
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.button_RefreshCrates, 2);
             this.button_RefreshCrates.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button_RefreshCrates.ImageKey = "refresh";
+            this.button_RefreshCrates.ImageList = this.imageList1;
             this.button_RefreshCrates.Location = new System.Drawing.Point(0, 0);
             this.button_RefreshCrates.Margin = new System.Windows.Forms.Padding(0);
             this.button_RefreshCrates.Name = "button_RefreshCrates";
             this.button_RefreshCrates.Size = new System.Drawing.Size(67, 30);
             this.button_RefreshCrates.TabIndex = 15;
-            this.button_RefreshCrates.Text = "Refresh";
             this.button_RefreshCrates.UseVisualStyleBackColor = true;
             this.button_RefreshCrates.Click += new System.EventHandler(this.button_RefreshCrates_Click);
             // 
@@ -335,19 +325,24 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // ModCrateManagerForm
+            // imageList1
+            // 
+            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList1.Images.SetKeyName(0, "CML");
+            this.imageList1.Images.SetKeyName(1, "refresh");
+            this.imageList1.Images.SetKeyName(2, "file-plus");
+            this.imageList1.Images.SetKeyName(3, "file-minus");
+            this.imageList1.Images.SetKeyName(4, "world");
+            // 
+            // ModCrateManagerBox
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(474, 366);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(400, 400);
-            this.Name = "ModCrateManagerForm";
-            this.Text = "Mod Crate Manager";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ModCrateManagerForm_FormClosed);
+            this.Margin = new System.Windows.Forms.Padding(0);
+            this.Name = "ModCrateManagerBox";
+            this.Size = new System.Drawing.Size(474, 400);
             this.Load += new System.EventHandler(this.ModCrateManagerForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_ModIcon)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
@@ -360,7 +355,6 @@
         #endregion
 
         private System.Windows.Forms.CheckedListBox checkedListBox_mods;
-        private System.Windows.Forms.Button button_confirm;
         private System.Windows.Forms.Label label_author;
         private System.Windows.Forms.Label label_desc;
         private System.Windows.Forms.PictureBox pictureBox_ModIcon;
@@ -383,5 +377,6 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.Button button_RefreshCrates;
+        private System.Windows.Forms.ImageList imageList1;
     }
 }

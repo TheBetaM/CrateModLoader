@@ -75,11 +75,11 @@
     <Compile Include="Forms\ModCrateMakerForm.Designer.cs">
       <DependentUpon>ModCrateMakerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\ModCrateManagerForm.cs">
-      <SubType>Form</SubType>
+    <Compile Include="Forms\ModCrateManagerBox.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\ModCrateManagerForm.Designer.cs">
-      <DependentUpon>ModCrateManagerForm.cs</DependentUpon>
+    <Compile Include="Forms\ModCrateManagerBox.Designer.cs">
+      <DependentUpon>ModCrateManagerBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\ModCrateWizardForm.cs">
       <SubType>Form</SubType>
@@ -130,8 +130,8 @@
     <EmbeddedResource Include="Forms\ModCrateMakerForm.resx">
       <DependentUpon>ModCrateMakerForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ModCrateManagerForm.resx">
-      <DependentUpon>ModCrateManagerForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\ModCrateManagerBox.resx">
+      <DependentUpon>ModCrateManagerBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ModCrateWizardForm.resx">
       <DependentUpon>ModCrateWizardForm.cs</DependentUpon>
