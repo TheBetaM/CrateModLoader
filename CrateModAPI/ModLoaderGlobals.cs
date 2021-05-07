@@ -64,7 +64,5 @@ namespace CrateModLoader
         public static string ModDirectory = BaseDirectory + @"Mods\";
 
         public static string ModAssetsFolderName = "modassets";
-
-        public static string ModCratesDownloadLink = "http://beyondtwinsanity.com/mods/";
     }
 }

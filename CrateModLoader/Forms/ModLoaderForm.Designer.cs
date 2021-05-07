@@ -95,7 +95,7 @@
             this.checkedListBox1.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.checkedListBox1.Name = "checkedListBox1";
             this.tableLayoutPanel2.SetRowSpan(this.checkedListBox1, 2);
-            this.checkedListBox1.Size = new System.Drawing.Size(389, 258);
+            this.checkedListBox1.Size = new System.Drawing.Size(389, 270);
             this.checkedListBox1.TabIndex = 0;
             this.checkedListBox1.Visible = false;
             this.checkedListBox1.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged);
@@ -333,7 +333,7 @@
             this.tableLayoutPanel5.SetColumnSpan(this.panel_desc, 3);
             this.panel_desc.Controls.Add(this.linkLabel_optionDesc);
             this.panel_desc.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel_desc.Location = new System.Drawing.Point(3, 408);
+            this.panel_desc.Location = new System.Drawing.Point(3, 420);
             this.panel_desc.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.panel_desc.Name = "panel_desc";
             this.panel_desc.Size = new System.Drawing.Size(781, 38);
@@ -519,7 +519,7 @@
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(392, 258);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(392, 270);
             this.tableLayoutPanel2.TabIndex = 42;
             // 
             // tableLayoutPanel3
@@ -569,7 +569,7 @@
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(784, 446);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(784, 458);
             this.tableLayoutPanel5.TabIndex = 45;
             // 
             // panel_modCrateManager
@@ -579,7 +579,7 @@
             this.panel_modCrateManager.Location = new System.Drawing.Point(392, 150);
             this.panel_modCrateManager.Margin = new System.Windows.Forms.Padding(0);
             this.panel_modCrateManager.Name = "panel_modCrateManager";
-            this.panel_modCrateManager.Size = new System.Drawing.Size(392, 258);
+            this.panel_modCrateManager.Size = new System.Drawing.Size(392, 270);
             this.panel_modCrateManager.TabIndex = 44;
             // 
             // ModLoaderForm
@@ -588,13 +588,13 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(784, 471);
+            this.ClientSize = new System.Drawing.Size(784, 483);
             this.Controls.Add(this.tableLayoutPanel5);
             this.Controls.Add(this.linkLabel_programTitle);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.MinimumSize = new System.Drawing.Size(800, 510);
+            this.MinimumSize = new System.Drawing.Size(800, 522);
             this.Name = "ModLoaderForm";
             this.Text = "Crate Mod Loader";
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.ModLoaderForm_DragDrop);

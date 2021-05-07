@@ -26,6 +26,16 @@ namespace CrateModLoader
             label_desc.Text = "";
             pictureBox_ModIcon.Image = null;
 
+            toolTip1.SetToolTip(button_CreateCrate, "Create a Mod Crate for this game");
+            toolTip1.SetToolTip(button_DeleteCrate, "Delete the selected Mod Crate and its files");
+            toolTip1.SetToolTip(button_EditCrate, "Edit the selected Mod Crate");
+            toolTip1.SetToolTip(button_ImportCrate, "Import a Mod Crate from a file or folder");
+            toolTip1.SetToolTip(button_RefreshCrates, "Refresh and check available Mod Crates in your Mods directory");
+            toolTip1.SetToolTip(button_ToTop, "Move the selected Mod Crate to be the first one installed.");
+            toolTip1.SetToolTip(button_ToBottom, "Move the selected Mod Crate to be the last one installed.");
+            toolTip1.SetToolTip(button_MoveUp, "Move the selected Mod Crate's install order earlier.");
+            toolTip1.SetToolTip(button_MoveDown, "Move the selected Mod Crate's install order later.");
+
             //PopulateList();
         }
 
@@ -267,23 +277,6 @@ namespace CrateModLoader
                 checkedListBox_mods.Items.RemoveAt(index);
                 checkedListBox_mods.SelectedIndex = -1;
             }
-        }
-
-        private void button_DownloadCrates_Click(object sender, EventArgs e)
-        {
-            if (contextMenuStrip_DownloadMods.Visible)
-            {
-                contextMenuStrip_DownloadMods.Hide();
-            }
-            else
-            {
-                contextMenuStrip_DownloadMods.Show(button_DownloadCrates, new Point(0, button_DownloadCrates.Height));
-            }
-        }
-
-        private void download_site_BT_Click(object sender, EventArgs e)
-        {
-            Process.Start(ModLoaderGlobals.ModCratesDownloadLink);
         }
 
         private void toolStripMenuItem_FromFile_Click(object sender, EventArgs e)
