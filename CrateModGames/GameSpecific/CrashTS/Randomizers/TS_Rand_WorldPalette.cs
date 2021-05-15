@@ -5,18 +5,20 @@ using CrateModGames.GameSpecific.CrashTS;
 
 namespace CrateModLoader.GameSpecific.CrashTS.Mods
 {
-    // todo: test, randomize per file
+    // todo: test
     public class TS_Rand_WorldPalette : ModStruct<ChunkInfoSM>
     {
-        private ColorSwizzleData Swiz;
+        private Random randState;
 
         public override void BeforeModPass()
         {
-            Swiz = new ColorSwizzleData(new Random(ModLoaderGlobals.RandomizerSeed));
+            randState = new Random(ModLoaderGlobals.RandomizerSeed);
         }
 
         public override void ModPass(ChunkInfoSM info)
         {
+            ColorSwizzleData Swiz = new ColorSwizzleData(randState);
+
             TwinsFile SM_Archive = info.File;
 
             if (SM_Archive.Type != TwinsFile.FileType.SM2) return;

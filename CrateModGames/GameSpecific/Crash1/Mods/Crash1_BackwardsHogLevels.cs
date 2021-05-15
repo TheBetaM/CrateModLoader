@@ -5,7 +5,7 @@ using CrateModGames.GameSpecific.Crash1;
 
 namespace CrateModLoader.GameSpecific.Crash1.Mods
 {
-    // todo: sort out FOV mod stuff
+    // todo: test (fov!)
     public class Crash1_BackwardsHogLevels : ModStruct<NSF_Pair>
     {
         public override void ModPass(NSF_Pair pair)
@@ -20,7 +20,6 @@ namespace CrateModLoader.GameSpecific.Crash1.Mods
             OldEntity WarpOutEntity = null;
             OldZoneEntry WarpOutZone = null;
             int SpawnEID = 0;
-            //Mod_CameraFOV(nsf, new Random(), false);
 
             foreach (OldZoneEntry zone in pair.nsf.GetEntries<OldZoneEntry>())
             {

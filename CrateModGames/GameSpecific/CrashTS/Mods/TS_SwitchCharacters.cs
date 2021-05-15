@@ -5,8 +5,8 @@ using CrateModGames.GameSpecific.CrashTS;
 
 namespace CrateModLoader.GameSpecific.CrashTS.Mods
 {
-    //todo xbox scripts, needs testing
-    public class TS_SwitchCharacters : ModStruct<ChunkInfoRM>
+    //todo: testing
+    public class TS_SwitchCharacters : ModStruct<GenericModStruct, ChunkInfoRM>
     {
         public override bool NeedsCachePass => true;
 
@@ -15,18 +15,26 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
         private Script HeadStrafeLeft = null;
         private Script HeadStrafeRight = null;
 
+        private int scriptVer = 0;
+
+        public override void CachePass(GenericModStruct mod)
+        {
+            if (mod.Console == ConsoleMode.XBOX)
+            {
+                scriptVer = 1;
+            }
+            else
+            {
+                scriptVer = 0;
+            }
+        }
+
         public override void CachePass(ChunkInfoRM info)
         {
             TwinsFile RM_Archive = info.File;
 
             if (StrafeLeft == null)
             {
-
-                int scriptVer = 0;
-                //if (ConsolePipeline.Metadata.Console == ConsoleMode.XBOX)
-                //{
-                //    scriptVer = 1;
-                //}
 
                 if (RM_Archive.ContainsItem((uint)RM_Sections.Code))
                 {
@@ -111,6 +119,11 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
                     }
                 }
             }
+        }
+
+        public override void ModPass(GenericModStruct value)
+        {
+            
         }
 
         public override void ModPass(ChunkInfoRM info)

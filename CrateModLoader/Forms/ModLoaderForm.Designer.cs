@@ -138,12 +138,11 @@
             // 
             // progressBar1
             // 
-            this.tableLayoutPanel5.SetColumnSpan(this.progressBar1, 2);
             this.progressBar1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.progressBar1.Location = new System.Drawing.Point(0, 48);
             this.progressBar1.Margin = new System.Windows.Forms.Padding(0);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(588, 26);
+            this.progressBar1.Size = new System.Drawing.Size(392, 26);
             this.progressBar1.TabIndex = 4;
             // 
             // textBox_outputPath
@@ -175,13 +174,14 @@
             // 
             // button_startProcess
             // 
+            this.tableLayoutPanel5.SetColumnSpan(this.button_startProcess, 2);
             this.button_startProcess.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button_startProcess.Enabled = false;
             this.button_startProcess.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button_startProcess.Location = new System.Drawing.Point(588, 48);
+            this.button_startProcess.Location = new System.Drawing.Point(392, 48);
             this.button_startProcess.Margin = new System.Windows.Forms.Padding(0);
             this.button_startProcess.Name = "button_startProcess";
-            this.button_startProcess.Size = new System.Drawing.Size(196, 26);
+            this.button_startProcess.Size = new System.Drawing.Size(392, 26);
             this.button_startProcess.TabIndex = 11;
             this.button_startProcess.Text = "Start!";
             this.button_startProcess.UseVisualStyleBackColor = true;
@@ -550,7 +550,7 @@
             this.tableLayoutPanel5.Controls.Add(this.panel_desc, 0, 6);
             this.tableLayoutPanel5.Controls.Add(this.button_browseInput, 2, 0);
             this.tableLayoutPanel5.Controls.Add(this.textBox_inputPath, 0, 0);
-            this.tableLayoutPanel5.Controls.Add(this.button_startProcess, 2, 2);
+            this.tableLayoutPanel5.Controls.Add(this.button_startProcess, 1, 2);
             this.tableLayoutPanel5.Controls.Add(this.textBox_outputPath, 0, 1);
             this.tableLayoutPanel5.Controls.Add(this.tableLayoutPanel3, 0, 4);
             this.tableLayoutPanel5.Controls.Add(this.tableLayoutPanel2, 0, 5);

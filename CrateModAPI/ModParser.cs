@@ -18,6 +18,7 @@ namespace CrateModLoader
         private Dictionary<string, List<FileInfo>> FoundFiles;
         public override bool SkipParser { get; set; }
         public bool LoadOnly = false;
+        private uint ErrorCount = 0;
 
         public ModParser(Modder source)
         {
@@ -55,6 +56,7 @@ namespace CrateModLoader
             }
             await Task.WhenAll(editTaskList);
             editTaskList.Clear();
+            //Console.WriteLine("ModParser finished, errors: " + ErrorCount);
         }
         public override async Task FileStartPass(FileInfo file, ModPass pass = ModPass.Mod)
         {
@@ -74,7 +76,8 @@ namespace CrateModLoader
                 }
                 catch
                 {
-                    Console.WriteLine("ModParser Error: " + filePath);
+                    ErrorCount++;
+                    //Console.WriteLine("ModParser Error: " + filePath);
                 }
             }
             else
@@ -96,7 +99,8 @@ namespace CrateModLoader
                     }
                     catch
                     {
-                        Console.WriteLine("ModParser Error: " + filePath);
+                        ErrorCount++;
+                        //Console.WriteLine("ModParser Error: " + filePath);
                     }
                 }
                 );

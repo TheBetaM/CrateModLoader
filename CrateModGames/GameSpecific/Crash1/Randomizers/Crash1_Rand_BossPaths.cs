@@ -5,7 +5,7 @@ using CrateModGames.GameSpecific.Crash1;
 
 namespace CrateModLoader.GameSpecific.Crash1.Mods
 {
-    // todo: split off backwards levels logic
+    // todo: test
     public class Crash1_Rand_BossPaths : ModStruct<NSF_Pair>
     {
         private Random rand;
@@ -21,8 +21,6 @@ namespace CrateModLoader.GameSpecific.Crash1.Mods
             {
                 return;
             }
-
-            bool isBackwards = false; // to remove
 
             List<List<EntityPosition>> CortexShots = new List<List<EntityPosition>>();
 
@@ -107,42 +105,17 @@ namespace CrateModLoader.GameSpecific.Crash1.Mods
                                 zone.Entities[i].Positions.Add(Path[a]);
                             }
 
-                            if (isBackwards)
+                            List<int> PosToRand = new List<int>();
+                            for (int a = 41; a < Path.Length - 1; a++)
                             {
-                                //41 - top left
-                                zone.Entities[i].Positions.Add(Path[43]);
-                                //42 - top middle
-                                zone.Entities[i].Positions.Add(Path[42]);
-                                //43 - top right
-                                zone.Entities[i].Positions.Add(Path[41]);
-                                //44 - middle left
-                                zone.Entities[i].Positions.Add(Path[46]);
-                                //45 - middle middle
-                                zone.Entities[i].Positions.Add(Path[45]);
-                                //46 - middle right
-                                zone.Entities[i].Positions.Add(Path[44]);
-                                //47 - bot left
-                                zone.Entities[i].Positions.Add(Path[49]);
-                                //48 - bot middle
-                                zone.Entities[i].Positions.Add(Path[48]);
-                                //49 - bot right
-                                zone.Entities[i].Positions.Add(Path[47]);
+                                PosToRand.Add(a);
                             }
-                            else
+                            int count = PosToRand.Count;
+                            for (int a = 0; a < count; a++)
                             {
-                                List<int> PosToRand = new List<int>();
-                                for (int a = 41; a < Path.Length - 1; a++)
-                                {
-                                    PosToRand.Add(a);
-                                }
-                                int count = PosToRand.Count;
-                                for (int a = 0; a < count; a++)
-                                {
-                                    int r = rand.Next(PosToRand.Count);
-                                    zone.Entities[i].Positions.Add(Path[PosToRand[r]]);
-                                    PosToRand.RemoveAt(r);
-                                }
-
+                                int r = rand.Next(PosToRand.Count);
+                                zone.Entities[i].Positions.Add(Path[PosToRand[r]]);
+                                PosToRand.RemoveAt(r);
                             }
 
                             zone.Entities[i].Positions.Add(Path[Path.Length - 1]);
@@ -164,104 +137,68 @@ namespace CrateModLoader.GameSpecific.Crash1.Mods
                             65-95 - right-to-left
                             */
 
-                            if (isBackwards)
+                            List<int> PosToRand = new List<int>();
+                            for (int a = 0; a < 4; a++)
                             {
-                                zone.Entities[i].Positions.Add(Path[0]);
+                                PosToRand.Add(a);
+                            }
+                            int count = PosToRand.Count;
+                            for (int c = 0; c < count; c++)
+                            {
+                                int r = rand.Next(PosToRand.Count);
+                                if (PosToRand[r] == 0)
+                                {
+                                    if (c == 0)
+                                        zone.Entities[i].Positions.Add(Path[0]);
 
-                                for (int a = 1; a < 16; a++)
-                                    zone.Entities[i].Positions.Add(Path[a + 30]);
+                                    for (int a = 1; a < 16; a++)
+                                        zone.Entities[i].Positions.Add(Path[a + 0]);
+                                }
+                                else if (PosToRand[r] == 1)
+                                {
+                                    if (c == 0)
+                                        zone.Entities[i].Positions.Add(Path[15]);
 
-                                for (int a = 1; a < 16; a++)
-                                    zone.Entities[i].Positions.Add(Path[a + 45]);
+                                    for (int a = 1; a < 16; a++)
+                                        zone.Entities[i].Positions.Add(Path[a + 15]);
+                                }
+                                else if (PosToRand[r] == 2)
+                                {
+                                    if (c == 0)
+                                        zone.Entities[i].Positions.Add(Path[30]);
 
-                                for (int a = 1; a < 16; a++)
-                                    zone.Entities[i].Positions.Add(Path[a + 0]);
+                                    for (int a = 1; a < 16; a++)
+                                        zone.Entities[i].Positions.Add(Path[a + 30]);
+                                }
+                                else if (PosToRand[r] == 3)
+                                {
+                                    if (c == 0)
+                                        zone.Entities[i].Positions.Add(Path[45]);
 
-                                for (int a = 1; a < 16; a++)
-                                    zone.Entities[i].Positions.Add(Path[a + 15]);
+                                    for (int a = 1; a < 16; a++)
+                                        zone.Entities[i].Positions.Add(Path[a + 45]);
+                                }
+                                PosToRand.RemoveAt(r);
+                            }
 
-                                for (int a = 1; a < 5; a++)
-                                    zone.Entities[i].Positions.Add(Path[a + 60]);
+                            for (int a = 1; a < 5; a++)
+                                zone.Entities[i].Positions.Add(Path[a + 60]);
 
+                            if (rand.Next(2) == 0)
+                            {
                                 for (int a = 0; a < 31; a++)
                                     zone.Entities[i].Positions.Add(Path[(30 - a) + 65]);
-
                             }
                             else
                             {
-                                List<int> PosToRand = new List<int>();
-                                for (int a = 0; a < 4; a++)
-                                {
-                                    PosToRand.Add(a);
-                                }
-                                int count = PosToRand.Count;
-                                for (int c = 0; c < count; c++)
-                                {
-                                    int r = rand.Next(PosToRand.Count);
-                                    if (PosToRand[r] == 0)
-                                    {
-                                        if (c == 0)
-                                            zone.Entities[i].Positions.Add(Path[0]);
-
-                                        for (int a = 1; a < 16; a++)
-                                            zone.Entities[i].Positions.Add(Path[a + 0]);
-                                    }
-                                    else if (PosToRand[r] == 1)
-                                    {
-                                        if (c == 0)
-                                            zone.Entities[i].Positions.Add(Path[15]);
-
-                                        for (int a = 1; a < 16; a++)
-                                            zone.Entities[i].Positions.Add(Path[a + 15]);
-                                    }
-                                    else if (PosToRand[r] == 2)
-                                    {
-                                        if (c == 0)
-                                            zone.Entities[i].Positions.Add(Path[30]);
-
-                                        for (int a = 1; a < 16; a++)
-                                            zone.Entities[i].Positions.Add(Path[a + 30]);
-                                    }
-                                    else if (PosToRand[r] == 3)
-                                    {
-                                        if (c == 0)
-                                            zone.Entities[i].Positions.Add(Path[45]);
-
-                                        for (int a = 1; a < 16; a++)
-                                            zone.Entities[i].Positions.Add(Path[a + 45]);
-                                    }
-                                    PosToRand.RemoveAt(r);
-                                }
-
-                                for (int a = 1; a < 5; a++)
-                                    zone.Entities[i].Positions.Add(Path[a + 60]);
-
-                                if (rand.Next(2) == 0)
-                                {
-                                    for (int a = 0; a < 31; a++)
-                                        zone.Entities[i].Positions.Add(Path[(30 - a) + 65]);
-                                }
-                                else
-                                {
-                                    for (int a = 0; a < 31; a++)
-                                        zone.Entities[i].Positions.Add(Path[a]);
-                                }
-
+                                for (int a = 0; a < 31; a++)
+                                    zone.Entities[i].Positions.Add(Path[a]);
                             }
 
                         }
                         else if (zone.Entities[i].Type == 49 && zone.Entities[i].Subtype == 0) // Cortex
                         {
-                            if (isBackwards)
-                            {
-                                EntityPosition[] Path = new EntityPosition[zone.Entities[i].Positions.Count];
-                                zone.Entities[i].Positions.CopyTo(Path, 0);
-                                zone.Entities[i].Positions.Clear();
-                                for (int a = 0; a < Path.Length; a++)
-                                {
-                                    zone.Entities[i].Positions.Add(Path[(Path.Length - 1) - a]);
-                                }
-                            }
+                            
                         }
                         else if (zone.Entities[i].Type == 50 && zone.Entities[i].Subtype == 1) // Cortex projectile paths
                         {
@@ -270,92 +207,78 @@ namespace CrateModLoader.GameSpecific.Crash1.Mods
                             zone.Entities[i].Positions.CopyTo(Path, 0);
                             zone.Entities[i].Positions.Clear();
 
-                            if (isBackwards)
+                            List<EntityPosition> PPath = new List<EntityPosition>();
+                            for (int a = 0; a < Path.Length; a++)
                             {
-                                for (int a = 0; a < Path.Length; a++)
-                                {
-                                    zone.Entities[i].Positions.Add(Path[(Path.Length - 1) - a]);
-                                }
+                                PPath.Add(Path[a]);
                             }
-                            else
-                            {
-                                List<EntityPosition> PPath = new List<EntityPosition>();
-                                for (int a = 0; a < Path.Length; a++)
-                                {
-                                    PPath.Add(Path[a]);
-                                }
-                                CortexShots.Add(PPath);
-
-                            }
+                            CortexShots.Add(PPath);
                         }
                     }
                 }
 
-                if (!isBackwards)
+                for (int i = 0; i < zone.Entities.Count; i++)
                 {
-                    for (int i = 0; i < zone.Entities.Count; i++)
+                    if (zone.Entities.Count > 0 && i < zone.Entities.Count)
                     {
-                        if (zone.Entities.Count > 0 && i < zone.Entities.Count)
+                        if (zone.Entities[i].Type == 50 && zone.Entities[i].Subtype == 1) // Cortex projectiles
                         {
-                            if (zone.Entities[i].Type == 50 && zone.Entities[i].Subtype == 1) // Cortex projectiles
+
+                            int r = rand.Next(8);
+                            switch (r)
                             {
-
-                                int r = rand.Next(8);
-                                switch (r)
-                                {
-                                    default:
-                                    case 0:
-                                        for (int a = 0; a < CortexShots[0].Count; a++)
-                                        {
-                                            zone.Entities[i].Positions.Add(CortexShots[0][a]);
-                                        }
-                                        break;
-                                    case 1:
-                                        for (int a = 0; a < CortexShots[0].Count; a++)
-                                        {
-                                            zone.Entities[i].Positions.Add(CortexShots[0][(CortexShots[0].Count - 1) - a]);
-                                        }
-                                        break;
-                                    case 2:
-                                        for (int a = 0; a < CortexShots[0].Count; a++)
-                                        {
-                                            zone.Entities[i].Positions.Add(CortexShots[1][a]);
-                                        }
-                                        break;
-                                    case 3:
-                                        for (int a = 0; a < CortexShots[0].Count; a++)
-                                        {
-                                            zone.Entities[i].Positions.Add(CortexShots[1][(CortexShots[1].Count - 1) - a]);
-                                        }
-                                        break;
-                                    case 4:
-                                        for (int a = 0; a < CortexShots[0].Count; a++)
-                                        {
-                                            zone.Entities[i].Positions.Add(CortexShots[2][a]);
-                                        }
-                                        break;
-                                    case 5:
-                                        for (int a = 0; a < CortexShots[0].Count; a++)
-                                        {
-                                            zone.Entities[i].Positions.Add(CortexShots[2][(CortexShots[2].Count - 1) - a]);
-                                        }
-                                        break;
-                                    case 6:
-                                        for (int a = 0; a < CortexShots[0].Count; a++)
-                                        {
-                                            zone.Entities[i].Positions.Add(CortexShots[3][a]);
-                                        }
-                                        break;
-                                    case 7:
-                                        for (int a = 0; a < CortexShots[0].Count; a++)
-                                        {
-                                            zone.Entities[i].Positions.Add(CortexShots[3][(CortexShots[3].Count - 1) - a]);
-                                        }
-                                        break;
-                                }
-
-
+                                default:
+                                case 0:
+                                    for (int a = 0; a < CortexShots[0].Count; a++)
+                                    {
+                                        zone.Entities[i].Positions.Add(CortexShots[0][a]);
+                                    }
+                                    break;
+                                case 1:
+                                    for (int a = 0; a < CortexShots[0].Count; a++)
+                                    {
+                                        zone.Entities[i].Positions.Add(CortexShots[0][(CortexShots[0].Count - 1) - a]);
+                                    }
+                                    break;
+                                case 2:
+                                    for (int a = 0; a < CortexShots[0].Count; a++)
+                                    {
+                                        zone.Entities[i].Positions.Add(CortexShots[1][a]);
+                                    }
+                                    break;
+                                case 3:
+                                    for (int a = 0; a < CortexShots[0].Count; a++)
+                                    {
+                                        zone.Entities[i].Positions.Add(CortexShots[1][(CortexShots[1].Count - 1) - a]);
+                                    }
+                                    break;
+                                case 4:
+                                    for (int a = 0; a < CortexShots[0].Count; a++)
+                                    {
+                                        zone.Entities[i].Positions.Add(CortexShots[2][a]);
+                                    }
+                                    break;
+                                case 5:
+                                    for (int a = 0; a < CortexShots[0].Count; a++)
+                                    {
+                                        zone.Entities[i].Positions.Add(CortexShots[2][(CortexShots[2].Count - 1) - a]);
+                                    }
+                                    break;
+                                case 6:
+                                    for (int a = 0; a < CortexShots[0].Count; a++)
+                                    {
+                                        zone.Entities[i].Positions.Add(CortexShots[3][a]);
+                                    }
+                                    break;
+                                case 7:
+                                    for (int a = 0; a < CortexShots[0].Count; a++)
+                                    {
+                                        zone.Entities[i].Positions.Add(CortexShots[3][(CortexShots[3].Count - 1) - a]);
+                                    }
+                                    break;
                             }
+
+
                         }
                     }
                 }

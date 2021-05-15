@@ -5,7 +5,7 @@ using CrateModGames.GameSpecific.CrashTS;
 
 namespace CrateModLoader.GameSpecific.CrashTS.Mods
 {
-    // todo: randomize per file, test
+    // todo: test
     public class TS_Rand_Crates : ModStruct<ChunkInfoRM>
     {
         public override bool NeedsCachePass => true;
@@ -60,7 +60,7 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
         {
             TwinsFile RM_Archive = info.File;
             ChunkType chunk = info.Type;
-            Random randState = new Random();
+            Random randState = new Random(ModLoaderGlobals.RandomizerSeed);
 
             if (chunk == ChunkType.Default)
             {

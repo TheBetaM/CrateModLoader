@@ -9,8 +9,8 @@ General
  After - The same seed has the same result for feature 2 regardless of whether feature 1 is enabled)
 - More detailed process information
 - Every game (supported or otherwise) can now be preloaded 
-- The Mod Crate Manager now has more functionality:  Change install order, Delete, Create, Edit
-- You can now create full-fledged Mod Crates from within the program using the Mod Crate Wizard in the Mod Crate Manager. (The game must be preloaded to create or edit Mod Crates)
+- More Mod Crate management options:  Change install order, Delete, Import, Create, Edit
+- You can now create and edit full-fledged Mod Crates from within the program. (The game must be preloaded to create or edit Mod Crates)
 - Fixed not being able to build unsupported games
 - Blocked starting a new process after one finishes to prevent bugs. To work around this you can (re)open a ROM to fully reset the program.
 

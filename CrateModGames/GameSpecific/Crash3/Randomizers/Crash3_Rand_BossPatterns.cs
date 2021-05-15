@@ -5,7 +5,6 @@ using CrateModGames.GameSpecific.Crash3;
 
 namespace CrateModLoader.GameSpecific.Crash3
 {
-    //todo sort out backwards
     //unfinished
     public class Crash3_Rand_BossPatterns : ModStruct<NSF_Pair>
     {

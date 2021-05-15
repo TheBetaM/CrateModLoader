@@ -5,6 +5,7 @@ using CrateModGames.GameSpecific.Crash3;
 
 namespace CrateModLoader.GameSpecific.Crash3
 {
+    //test cortex, flying lvls
     public class Crash3_Rand_BackwardsLevels : ModStruct<NSF_Pair>
     {
         private Random rand;
@@ -120,12 +121,12 @@ namespace CrateModLoader.GameSpecific.Crash3
             }
             if (Crash3_Common.BossLevelsList.Contains(level))
             {
-                //Mod_RandomizeBosses(nsf, nsd, level, rand, true);
+                BossPass(pair);
                 return;
             }
             if (Crash3_Common.FlyingLevelsList.Contains(level))
             {
-                //Mod_RandomizeFlyingLevels(nsf, nsd, level, rand, true);
+                FLyingLevelPass(pair);
                 return;
             }
 
@@ -1637,6 +1638,236 @@ namespace CrateModLoader.GameSpecific.Crash3
                 }
             }
 
+        }
+
+        public void FLyingLevelPass(NSF_Pair pair)
+        {
+            Crash3_Levels level = pair.LevelC3;
+            if (!Crash3_Common.FlyingLevelsList.Contains(level))
+            {
+                return;
+            }
+
+            List<int> TypesToRand = new List<int>()
+            {
+                0, 1, //4, 
+            };
+
+            // randomize zep/balloon count? will need to update draw lists...
+
+            NewZoneEntry MainZone = null;
+            EntityPosition SpawnPos = new EntityPosition(0, 0, 0);
+
+            foreach (Chunk chunk in pair.nsf.Chunks)
+            {
+                if (chunk is NormalChunk zonechunk)
+                {
+                    foreach (Entry entry in zonechunk.Entries)
+                    {
+                        if (entry is NewZoneEntry)
+                        {
+                            NewZoneEntry zone = (NewZoneEntry)entry;
+                            foreach (Entity ent in zone.Entities)
+                            {
+                                ent.Name = null;
+
+                                if (level == Crash3_Levels.L17_ByeByeBlimps)
+                                {
+                                    MainZone = zone;
+                                    if (ent.Type != null && ent.Type == 36)
+                                    {
+                                        if (ent.Subtype == 0 || ent.Subtype == 1) // zep and loons
+                                        {
+                                            short X = ent.Positions[0].X;
+                                            short Y = ent.Positions[0].Y;
+                                            short Z = (short)(-ent.Positions[0].Z);
+                                            ent.Positions.Clear();
+                                            ent.Positions.Add(new EntityPosition(X, Y, Z));
+
+                                        }
+                                    }
+                                    else if (ent.Type != null && ent.Type == 0 && ent.Subtype == 0)
+                                    {
+                                        //WarpOutPos = ent.Positions[0]; // maybe randomize crash's spawn?
+                                    }
+                                }
+                                else if (level == Crash3_Levels.L24_MadBombers)
+                                {
+                                    if (ent.Type == 55 && ent.Subtype == 0) //reverse paths
+                                    {
+                                        List<EntityPosition> Pos1 = new List<EntityPosition>(ent.Positions);
+                                        Pos1.Reverse();
+                                        ent.Positions.Clear();
+                                        for (int a = 0; a < Pos1.Count; a++)
+                                        {
+                                            ent.Positions.Add(Pos1[a]);
+                                        }
+                                    }
+                                }
+                                else if (level == Crash3_Levels.L28_RingsOfPower)
+                                {
+                                    if (ent.Type == 87 && ent.Subtype == 0) //ring
+                                    {
+                                        int RingID = ent.Settings[0].ValueA;
+                                        ent.Settings[0] = new EntitySetting((byte)(29 - RingID), 0);
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
+
+            /*
+            int xoffset = BitConv.FromInt32(WarpOutZone.Layout, 0);
+            int yoffset = BitConv.FromInt32(WarpOutZone.Layout, 4);
+            int zoffset = BitConv.FromInt32(WarpOutZone.Layout, 8);
+
+            nsd.Spawns[0].SpawnX = (xoffset + (short)(WarpOutPos.X * 1.5)) << 8;
+            nsd.Spawns[0].SpawnY = (yoffset + (short)(WarpOutPos.Y * 1.5)) << 8;
+            nsd.Spawns[0].SpawnZ = (zoffset + (short)(WarpOutPos.Z * 1.5)) << 8;
+            */
+
+        }
+
+        public void BossPass(NSF_Pair pair)
+        {
+            Crash3_Levels level = pair.LevelC3;
+            if (!Crash3_Common.BossLevelsList.Contains(level))
+            {
+                return;
+            }
+
+            Entity CrashEntity = null;
+            NewZoneEntry CrashZone = null;
+            Entity WarpInEntity = null;
+            Entity TropyEntity = null;
+            NewZoneEntry TropyZone = null;
+
+            foreach (Chunk chunk in pair.nsf.Chunks)
+            {
+                if (chunk is NormalChunk zonechunk)
+                {
+                    for (int e = 0; e < zonechunk.Entries.Count; e++)
+                    {
+                        if (zonechunk.Entries[e] is NewZoneEntry zone)
+                        {
+
+                            for (int i = 0; i < zone.Entities.Count; i++)
+                            {
+                                if (zone.Entities.Count > 0 && i < zone.Entities.Count)
+                                {
+
+                                    if (level == Crash3_Levels.B03_NTropy)
+                                    {
+
+                                        if (CrashEntity == null && zone.Entities[i].Type == 0 && zone.Entities[i].Subtype == 0)
+                                        {
+                                            CrashEntity = zone.Entities[i];
+                                            CrashZone = zone;
+                                        }
+                                        else if (WarpInEntity == null && zone.Entities[i].Type == 30 && zone.Entities[i].Subtype == 9)
+                                        {
+                                            WarpInEntity = zone.Entities[i];
+                                        }
+                                        else if (TropyEntity == null && zone.Entities[i].Type == 89 && zone.Entities[i].Subtype == 0)
+                                        {
+                                            TropyEntity = zone.Entities[i];
+                                            TropyZone = zone;
+                                        }
+
+                                    }
+                                    zone.Entities[i].Name = null;
+
+                                    if (zone.Entities[i].Type == 68 && zone.Entities[i].Subtype == 0) // N.Gin
+                                    {
+                                        EntityPosition[] Path = new EntityPosition[zone.Entities[i].Positions.Count];
+                                        zone.Entities[i].Positions.CopyTo(Path, 0);
+                                        zone.Entities[i].Positions.Clear();
+
+                                        for (int a = 35; a > -1; a--)
+                                        {
+                                            zone.Entities[i].Positions.Add(Path[a]);
+                                        }
+
+                                        for (int a = 36; a < Path.Length; a++)
+                                        {
+                                            zone.Entities[i].Positions.Add(Path[a]);
+                                        }
+
+                                    }
+                                    else if (zone.Entities[i].Type == 94 && zone.Entities[i].Subtype == 0) // Cortex
+                                    {
+                                        EntityPosition[] Path = new EntityPosition[zone.Entities[i].Positions.Count];
+                                        zone.Entities[i].Positions.CopyTo(Path, 0);
+                                        zone.Entities[i].Positions.Clear();
+
+                                        for (int a = 0; a < 18; a++)
+                                        {
+                                            zone.Entities[i].Positions.Add(Path[a]);
+                                        }
+
+                                        for (int a = 45; a > 17; a--)
+                                        {
+                                            zone.Entities[i].Positions.Add(Path[a]);
+                                        }
+
+                                        for (int a = 46; a < Path.Length; a++)
+                                        {
+                                            zone.Entities[i].Positions.Add(Path[a]);
+                                        }
+
+                                    }
+                                    else if (zone.Entities[i].Type == 94 && zone.Entities[i].Subtype == 5) // Uka
+                                    {
+                                        EntityPosition[] Path = new EntityPosition[zone.Entities[i].Positions.Count];
+                                        zone.Entities[i].Positions.CopyTo(Path, 0);
+                                        zone.Entities[i].Positions.Clear();
+
+                                        for (int a = Path.Length - 1; a > -1; a--)
+                                        {
+                                            zone.Entities[i].Positions.Add(Path[a]);
+                                        }
+
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                }
+            }
+
+            if (level == Crash3_Levels.B03_NTropy)
+            {
+
+                EntityPosition CrashPos = new EntityPosition(CrashEntity.Positions[0].X, CrashEntity.Positions[0].Y, CrashEntity.Positions[0].Z);
+                EntityPosition TropyPos = new EntityPosition(TropyEntity.Positions[0].X, TropyEntity.Positions[0].Y, TropyEntity.Positions[0].Z);
+                EntityPosition WarpInPos = new EntityPosition(WarpInEntity.Positions[0].X, WarpInEntity.Positions[0].Y, WarpInEntity.Positions[0].Z);
+
+                EntityPosition BackSpawn = new EntityPosition(TropyEntity.Positions[0].X, CrashEntity.Positions[0].Y, (short)(TropyEntity.Positions[0].Z - 8000));
+                EntityPosition FrontSpawn = new EntityPosition(CrashEntity.Positions[0].X, TropyEntity.Positions[0].Y, (short)(CrashEntity.Positions[0].Z + 7000));
+
+                CrashEntity.Positions.RemoveAt(0);
+                TropyEntity.Positions.RemoveAt(0);
+                WarpInEntity.Positions.RemoveAt(0);
+
+                CrashEntity.Positions.Add(BackSpawn);
+                WarpInEntity.Positions.Add(BackSpawn);
+                TropyEntity.Positions.Add(FrontSpawn);
+
+                CrashEntity.Name = null;
+                WarpInEntity.Name = null;
+
+                int xoffset = BitConv.FromInt32(CrashZone.Layout, 0);
+                int yoffset = BitConv.FromInt32(CrashZone.Layout, 4);
+                int zoffset = BitConv.FromInt32(CrashZone.Layout, 8);
+
+                pair.newnsd.Spawns[0].SpawnX = (xoffset + BackSpawn.X * 1) << 8;
+                pair.newnsd.Spawns[0].SpawnY = (yoffset + BackSpawn.Y * 1) << 8;
+                pair.newnsd.Spawns[0].SpawnZ = (zoffset + BackSpawn.Z * 1) << 8;
+            }
         }
 
         private void CreateEntityFruitBox(int id, int type, int subtype, short x, short y, short z, ref NewZoneEntry zone)

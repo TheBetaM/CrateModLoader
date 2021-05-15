@@ -5,7 +5,7 @@ using CrateModGames.GameSpecific.Crash1;
 
 namespace CrateModLoader.GameSpecific.Crash1.Mods
 {
-    // todo: sort out FOV mod stuff
+    // todo: test
     public class Crash1_Rand_BackwardsLevels : ModStruct<NSF_Pair>
     {
         private bool isRandom;
@@ -113,12 +113,19 @@ namespace CrateModLoader.GameSpecific.Crash1.Mods
             }
             if (Crash1_Common.BossLevelsList.Contains(level))
             {
-                //Mod_RandomizeBosses(nsf, nsd, level, rand, true);
+                BossPass(pair);
                 return;
             }
             if (!Crash1_Common.ChaseLevelsList.Contains(level))
             {
-                //Mod_CameraFOV(nsf, rand, false);
+                foreach (OldZoneEntry zone in pair.nsf.GetEntries<OldZoneEntry>())
+                {
+                    foreach (OldCamera cam in zone.Cameras)
+                    {
+                        short newFOV = (short)Math.Floor(cam.Zoom * 1.5f);
+                        cam.Zoom = newFOV;
+                    }
+                }
             }
 
             OldEntity CrashEntity = null;
@@ -1327,6 +1334,119 @@ namespace CrateModLoader.GameSpecific.Crash1.Mods
             }
         }
 
+        public void BossPass(NSF_Pair pair)
+        {
+            if (!Crash1_Common.BossLevelsList.Contains(pair.LevelC1))
+            {
+                return;
+            }
+
+            List<List<EntityPosition>> CortexShots = new List<List<EntityPosition>>();
+
+            foreach (OldZoneEntry zone in pair.nsf.GetEntries<OldZoneEntry>())
+            {
+                for (int i = 0; i < zone.Entities.Count; i++)
+                {
+                    if (zone.Entities.Count > 0 && i < zone.Entities.Count)
+                    {
+                        if (zone.Entities[i].Type == 37 && zone.Entities[i].Subtype == 0) // Ripper Roo
+                        {
+                            EntityPosition[] Path = new EntityPosition[zone.Entities[i].Positions.Count];
+                            zone.Entities[i].Positions.CopyTo(Path, 0);
+                            zone.Entities[i].Positions.Clear();
+
+                            for (int a = 0; a < 41; a++)
+                            {
+                                zone.Entities[i].Positions.Add(Path[a]);
+                            }
+
+                            //41 - top left
+                            zone.Entities[i].Positions.Add(Path[43]);
+                            //42 - top middle
+                            zone.Entities[i].Positions.Add(Path[42]);
+                            //43 - top right
+                            zone.Entities[i].Positions.Add(Path[41]);
+                            //44 - middle left
+                            zone.Entities[i].Positions.Add(Path[46]);
+                            //45 - middle middle
+                            zone.Entities[i].Positions.Add(Path[45]);
+                            //46 - middle right
+                            zone.Entities[i].Positions.Add(Path[44]);
+                            //47 - bot left
+                            zone.Entities[i].Positions.Add(Path[49]);
+                            //48 - bot middle
+                            zone.Entities[i].Positions.Add(Path[48]);
+                            //49 - bot right
+                            zone.Entities[i].Positions.Add(Path[47]);
+
+                            zone.Entities[i].Positions.Add(Path[Path.Length - 1]);
+
+                        }
+                        else if (zone.Entities[i].Type == 15 && zone.Entities[i].Subtype == 0) // Pinstripe
+                        {
+                            EntityPosition[] Path = new EntityPosition[zone.Entities[i].Positions.Count];
+                            zone.Entities[i].Positions.CopyTo(Path, 0);
+                            zone.Entities[i].Positions.Clear();
+
+                            /*
+                                0 - middle
+                                0-15 - middle-to-left
+                            15-30 - left-to-middle
+                            30-45 - middle-to-right
+                            45-60 - right-to-middle
+                            60-65 - back-to-right
+                            65-95 - right-to-left
+                            */
+
+                            zone.Entities[i].Positions.Add(Path[0]);
+
+                            for (int a = 1; a < 16; a++)
+                                zone.Entities[i].Positions.Add(Path[a + 30]);
+
+                            for (int a = 1; a < 16; a++)
+                                zone.Entities[i].Positions.Add(Path[a + 45]);
+
+                            for (int a = 1; a < 16; a++)
+                                zone.Entities[i].Positions.Add(Path[a + 0]);
+
+                            for (int a = 1; a < 16; a++)
+                                zone.Entities[i].Positions.Add(Path[a + 15]);
+
+                            for (int a = 1; a < 5; a++)
+                                zone.Entities[i].Positions.Add(Path[a + 60]);
+
+                            for (int a = 0; a < 31; a++)
+                                zone.Entities[i].Positions.Add(Path[(30 - a) + 65]);
+
+                        }
+                        else if (zone.Entities[i].Type == 49 && zone.Entities[i].Subtype == 0) // Cortex
+                        {
+                            EntityPosition[] Path = new EntityPosition[zone.Entities[i].Positions.Count];
+                            zone.Entities[i].Positions.CopyTo(Path, 0);
+                            zone.Entities[i].Positions.Clear();
+                            for (int a = 0; a < Path.Length; a++)
+                            {
+                                zone.Entities[i].Positions.Add(Path[(Path.Length - 1) - a]);
+                            }
+                        }
+                        else if (zone.Entities[i].Type == 50 && zone.Entities[i].Subtype == 1) // Cortex projectile paths
+                        {
+
+                            EntityPosition[] Path = new EntityPosition[zone.Entities[i].Positions.Count];
+                            zone.Entities[i].Positions.CopyTo(Path, 0);
+                            zone.Entities[i].Positions.Clear();
+
+                            for (int a = 0; a < Path.Length; a++)
+                            {
+                                zone.Entities[i].Positions.Add(Path[(Path.Length - 1) - a]);
+                            }
+                        }
+                    }
+                }
+
+                break;
+            }
+        }
 
         private void CreateEntityMask(short id, short x, short y, short z, OldZoneEntry zone)
         {

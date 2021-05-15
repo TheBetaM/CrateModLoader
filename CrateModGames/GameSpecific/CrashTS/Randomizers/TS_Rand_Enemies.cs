@@ -5,7 +5,6 @@ using CrateModGames.GameSpecific.CrashTS;
 
 namespace CrateModLoader.GameSpecific.CrashTS.Mods
 {
-    // todo: use modder's Random state, randomize per file
     public class TS_Rand_Enemies : ModStruct<ChunkInfoRM>
     {
         public override bool NeedsCachePass => true;
@@ -16,6 +15,7 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
 
         public override void CachePass(ChunkInfoRM info)
         {
+            randState = new Random(ModLoaderGlobals.RandomizerSeed);
             // loaded default
             TwinsFile RM_Archive = info.File;
             ChunkType chunkType = info.Type;

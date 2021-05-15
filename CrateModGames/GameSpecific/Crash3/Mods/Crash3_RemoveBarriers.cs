@@ -14,25 +14,16 @@ namespace CrateModLoader.GameSpecific.Crash3
                 return;
             }
 
-            foreach (Chunk chunk in pair.nsf.Chunks)
+            foreach (NewZoneEntry zone in pair.nsf.GetEntries<NewZoneEntry>())
             {
-                if (chunk is NormalChunk zonechunk)
+                for (int i = 0; i < zone.Entities.Count; i++)
                 {
-                    foreach (Entry entry in zonechunk.Entries)
+                    if (zone.Entities[i].Type != null && zone.Entities[i].Subtype != null)
                     {
-                        if (entry is NewZoneEntry zone)
+                        if (zone.Entities[i].Type == 26 && zone.Entities[i].Subtype == 2) //barrier
                         {
-                            for (int i = 0; i < zone.Entities.Count; i++)
-                            {
-                                if (zone.Entities[i].Type != null && zone.Entities[i].Subtype != null)
-                                {
-                                    if (zone.Entities[i].Type == 26 && zone.Entities[i].Subtype == 2) //barrier
-                                    {
-                                        zone.Entities[i].Positions.Clear();
-                                        zone.Entities[i].Positions.Add(new EntityPosition(-12000, -12000, -12000));
-                                    }
-                                }
-                            }
+                            zone.Entities[i].Positions.Clear();
+                            zone.Entities[i].Positions.Add(new EntityPosition(-12000, -12000, -12000));
                         }
                     }
                 }

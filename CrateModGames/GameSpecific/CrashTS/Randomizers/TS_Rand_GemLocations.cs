@@ -5,7 +5,7 @@ using CrateModGames.GameSpecific.CrashTS;
 
 namespace CrateModLoader.GameSpecific.CrashTS.Mods
 {
-    // todo: test, randomize per file
+    // todo: test
     public class TS_Rand_GemLocations : ModStruct<ChunkInfoRM>
     {
         internal List<uint> gemObjectList = new List<uint>();

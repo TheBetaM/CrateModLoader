@@ -5,7 +5,7 @@ using CrateModGames.GameSpecific.Crash2;
 
 namespace CrateModLoader.GameSpecific.Crash2
 {
-    //todo sort out backwards
+    //todo test
     public class Crash2_Rand_BossPaths : ModStruct<NSF_Pair>
     {
         private Random rand;
@@ -18,16 +18,11 @@ namespace CrateModLoader.GameSpecific.Crash2
         public override void ModPass(NSF_Pair pair)
         {
             Crash2_Levels level = pair.LevelC2;
-            bool isBackwards = false;
             if (!Crash2_Common.BossLevelsList.Contains(level))
             {
                 return;
             }
-            if (level == Crash2_Levels.B05_Cortex && !isBackwards)
-            {
-                return;
-            }
-            if (level == Crash2_Levels.B03_TinyTiger && isBackwards)
+            if (level == Crash2_Levels.B05_Cortex)
             {
                 return;
             }
@@ -35,8 +30,6 @@ namespace CrateModLoader.GameSpecific.Crash2
             List<EntityPosition> TinyPlats = new List<EntityPosition>();
             EntityPosition TinyInit = new EntityPosition();
             List<List<EntityPosition>> RocketPaths = new List<List<EntityPosition>>();
-            int SpawnZone = 0;
-            EntityPosition CrashSpawn = new EntityPosition();
 
             bool CameraFlip = true;
 
@@ -78,115 +71,103 @@ namespace CrateModLoader.GameSpecific.Crash2
                                         zone.Entities[i].Positions.CopyTo(Path, 0);
                                         zone.Entities[i].Positions.Clear();
 
-                                        if (isBackwards)
+                                        List<int> PosToRand = new List<int>();
+                                        for (int a = 0; a < Path.Length - 1; a++)
                                         {
-                                            for (int a = Path.Length - 2; a > -1; a--)
-                                            {
-                                                zone.Entities[i].Positions.Add(Path[a]);
-                                            }
+                                            PosToRand.Add(a);
                                         }
-                                        else
+                                        List<int> PosRand = new List<int>();
+
+                                        /* if you freely randomize the tiles the explosion hitbox bugs out
+                                        int count = PosToRand.Count;
+                                        for (int a = 0; a < count; a++)
                                         {
+                                            int r = rand.Next(PosToRand.Count);
+                                            zone.Entities[i].Positions.Add(Path[PosToRand[r]]);
+                                            PosToRand.RemoveAt(r);
+                                        }
+                                        */
 
-                                            List<int> PosToRand = new List<int>();
-                                            for (int a = 0; a < Path.Length - 1; a++)
+                                        int iter = rand.Next(1, 5);
+
+                                        while (iter > 0)
+                                        {
+                                            if (rand.Next(2) == 0)
                                             {
-                                                PosToRand.Add(a);
+                                                //horizontal flip
+                                                for (int a = 0; a < 8; a++)
+                                                {
+                                                    for (int b = 7; b > -1; b--)
+                                                    {
+                                                        PosRand.Add(PosToRand[(a * 8) + b]);
+                                                    }
+                                                }
+                                                PosToRand.Clear();
+                                                for (int a = 0; a < PosRand.Count; a++)
+                                                {
+                                                    PosToRand.Add(PosRand[a]);
+                                                }
+                                                PosRand.Clear();
                                             }
-                                            List<int> PosRand = new List<int>();
-
-                                            /* if you freely randomize the tiles the explosion hitbox bugs out
-                                            int count = PosToRand.Count;
-                                            for (int a = 0; a < count; a++)
+                                            if (rand.Next(2) == 0)
                                             {
-                                                int r = rand.Next(PosToRand.Count);
-                                                zone.Entities[i].Positions.Add(Path[PosToRand[r]]);
-                                                PosToRand.RemoveAt(r);
+                                                //vertical flip
+                                                for (int a = 7; a > -1; a--)
+                                                {
+                                                    for (int b = 0; b < 8; b++)
+                                                    {
+                                                        PosRand.Add(PosToRand[(a * 8) + b]);
+                                                    }
+                                                }
+                                                PosToRand.Clear();
+                                                for (int a = 0; a < PosRand.Count; a++)
+                                                {
+                                                    PosToRand.Add(PosRand[a]);
+                                                }
+                                                PosRand.Clear();
                                             }
-                                            */
-
-                                            int iter = rand.Next(1, 5);
-
-                                            while (iter > 0)
+                                            if (rand.Next(2) == 0)
                                             {
-                                                if (rand.Next(2) == 0)
+                                                //rotate 90 degrees clockwise
+                                                for (int a = 0; a < 8; a++)
                                                 {
-                                                    //horizontal flip
-                                                    for (int a = 0; a < 8; a++)
+                                                    for (int b = 0; b < 8; b++)
                                                     {
-                                                        for (int b = 7; b > -1; b--)
-                                                        {
-                                                            PosRand.Add(PosToRand[(a * 8) + b]);
-                                                        }
+                                                        PosRand.Add(PosToRand[a + (b * 8)]);
                                                     }
-                                                    PosToRand.Clear();
-                                                    for (int a = 0; a < PosRand.Count; a++)
-                                                    {
-                                                        PosToRand.Add(PosRand[a]);
-                                                    }
-                                                    PosRand.Clear();
                                                 }
-                                                if (rand.Next(2) == 0)
+                                                PosToRand.Clear();
+                                                for (int a = 0; a < PosRand.Count; a++)
                                                 {
-                                                    //vertical flip
-                                                    for (int a = 7; a > -1; a--)
-                                                    {
-                                                        for (int b = 0; b < 8; b++)
-                                                        {
-                                                            PosRand.Add(PosToRand[(a * 8) + b]);
-                                                        }
-                                                    }
-                                                    PosToRand.Clear();
-                                                    for (int a = 0; a < PosRand.Count; a++)
-                                                    {
-                                                        PosToRand.Add(PosRand[a]);
-                                                    }
-                                                    PosRand.Clear();
+                                                    PosToRand.Add(PosRand[a]);
                                                 }
-                                                if (rand.Next(2) == 0)
+                                                PosRand.Clear();
+                                            }
+                                            if (rand.Next(2) == 0)
+                                            {
+                                                //rotate 90 degrees counter-clockwise
+                                                for (int a = 0; a < 8; a++)
                                                 {
-                                                    //rotate 90 degrees clockwise
-                                                    for (int a = 0; a < 8; a++)
+                                                    for (int b = 7; b > -1; b--)
                                                     {
-                                                        for (int b = 0; b < 8; b++)
-                                                        {
-                                                            PosRand.Add(PosToRand[a + (b * 8)]);
-                                                        }
+                                                        PosRand.Add(PosToRand[a + (b * 8)]);
                                                     }
-                                                    PosToRand.Clear();
-                                                    for (int a = 0; a < PosRand.Count; a++)
-                                                    {
-                                                        PosToRand.Add(PosRand[a]);
-                                                    }
-                                                    PosRand.Clear();
                                                 }
-                                                if (rand.Next(2) == 0)
+                                                PosToRand.Clear();
+                                                for (int a = 0; a < PosRand.Count; a++)
                                                 {
-                                                    //rotate 90 degrees counter-clockwise
-                                                    for (int a = 0; a < 8; a++)
-                                                    {
-                                                        for (int b = 7; b > -1; b--)
-                                                        {
-                                                            PosRand.Add(PosToRand[a + (b * 8)]);
-                                                        }
-                                                    }
-                                                    PosToRand.Clear();
-                                                    for (int a = 0; a < PosRand.Count; a++)
-                                                    {
-                                                        PosToRand.Add(PosRand[a]);
-                                                    }
-                                                    PosRand.Clear();
+                                                    PosToRand.Add(PosRand[a]);
                                                 }
-
-
-                                                iter--;
+                                                PosRand.Clear();
                                             }
 
-                                            for (int a = 0; a < PosToRand.Count; a++)
-                                            {
-                                                zone.Entities[i].Positions.Add(Path[PosToRand[a]]);
-                                            }
 
+                                            iter--;
+                                        }
+
+                                        for (int a = 0; a < PosToRand.Count; a++)
+                                        {
+                                            zone.Entities[i].Positions.Add(Path[PosToRand[a]]);
                                         }
 
                                         zone.Entities[i].Positions.Add(Path[Path.Length - 1]);
@@ -198,14 +179,7 @@ namespace CrateModLoader.GameSpecific.Crash2
                                         zone.Entities[i].Positions.Clear();
                                         short targetZ = 220;
 
-                                        if (isBackwards)
-                                        {
-                                            targetZ = 1670; // doesn't seem to do much but might as well
-                                        }
-                                        else
-                                        {
-                                            targetZ = (short)rand.Next(100, 520);
-                                        }
+                                        targetZ = (short)rand.Next(100, 520);
 
                                         Path = new EntityPosition(Path.X, Path.Y, targetZ);
                                         zone.Entities[i].Positions.Add(Path);
@@ -327,20 +301,18 @@ namespace CrateModLoader.GameSpecific.Crash2
                                     RocketToRand.Add(i);
                                 }
                                 List<int> RocketRand = new List<int>();
-                                if (!isBackwards)
+
+                                for (int i = 0; i < RocketPaths.Count; i++)
                                 {
-                                    for (int i = 0; i < RocketPaths.Count; i++)
+                                    if (i == 0 || i == 7)
                                     {
-                                        if (i == 0 || i == 7)
-                                        {
-                                            RocketRand.Add(i);
-                                        }
-                                        else
-                                        {
-                                            int r = rand.Next(RocketToRand.Count);
-                                            RocketRand.Add(RocketToRand[r]);
-                                            RocketToRand.RemoveAt(r);
-                                        }
+                                        RocketRand.Add(i);
+                                    }
+                                    else
+                                    {
+                                        int r = rand.Next(RocketToRand.Count);
+                                        RocketRand.Add(RocketToRand[r]);
+                                        RocketToRand.RemoveAt(r);
                                     }
                                 }
 
@@ -364,40 +336,10 @@ namespace CrateModLoader.GameSpecific.Crash2
                                                 // 7 - shoot out right
                                                 // 8-19 - sideways rockets, interchangeably shot from left-right
 
-                                                if (isBackwards)
+                                                int target = RocketRand[iter];
+                                                for (int a = 0; a < RocketPaths[target].Count; a++)
                                                 {
-                                                    if (iter >= 1 && iter <= 6)
-                                                    {
-                                                        int target = 7 - iter;
-                                                        for (int a = 0; a < RocketPaths[target].Count; a++)
-                                                        {
-                                                            zone.Entities[i].Positions.Add(RocketPaths[target][a]);
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        int target = iter;
-                                                        if (iter % 2 == 0)
-                                                        {
-                                                            target = iter + 1;
-                                                        }
-                                                        else
-                                                        {
-                                                            target = iter - 1;
-                                                        }
-                                                        for (int a = 0; a < RocketPaths[target].Count; a++)
-                                                        {
-                                                            zone.Entities[i].Positions.Add(RocketPaths[target][a]);
-                                                        }
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    int target = RocketRand[iter];
-                                                    for (int a = 0; a < RocketPaths[target].Count; a++)
-                                                    {
-                                                        zone.Entities[i].Positions.Add(RocketPaths[target][a]);
-                                                    }
+                                                    zone.Entities[i].Positions.Add(RocketPaths[target][a]);
                                                 }
 
                                             }
@@ -405,50 +347,6 @@ namespace CrateModLoader.GameSpecific.Crash2
                                         }
                                     }
                                 }
-
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (level == Crash2_Levels.B05_Cortex)
-            {
-                foreach (Chunk chunk in pair.nsf.Chunks)
-                {
-                    if (chunk is NormalChunk zonechunk)
-                    {
-                        for (int e = 0; e < zonechunk.Entries.Count; e++)
-                        {
-                            if (zonechunk.Entries[e] is ZoneEntry zone)
-                            {
-
-                                if (zone.EName == "33_7Z")
-                                {
-                                    SpawnZone = zone.EID;
-
-                                    int xoffset = BitConv.FromInt32(zone.Layout, 0);
-                                    int yoffset = BitConv.FromInt32(zone.Layout, 4);
-                                    int zoffset = BitConv.FromInt32(zone.Layout, 8);
-
-                                    CrashSpawn = new EntityPosition(748, 750, 880);
-
-                                    pair.nsd.Spawns[0].ZoneEID = SpawnZone;
-                                    pair.nsd.Spawns[0].SpawnX = (xoffset + CrashSpawn.X * 4) << 8;
-                                    pair.nsd.Spawns[0].SpawnY = (yoffset + CrashSpawn.Y * 4) << 8;
-                                    pair.nsd.Spawns[0].SpawnZ = (zoffset + CrashSpawn.Z * 4) << 8;
-                                }
-
-                                /*
-                                if (linkedzones.Contains(zone.EID))
-                                {
-                                    Console.WriteLine("zone " + linkedzones.IndexOf(zone.EID) + ": " + zone.EName);
-                                }
-                                if (zone.EID == nsd.Spawns[0].ZoneEID)
-                                {
-                                    Console.WriteLine("spawnzone: " + zone.EName);
-                                }
-                                */
 
                             }
                         }
