@@ -5,6 +5,8 @@ using System.IO.Compression;
 using System.Globalization;
 using CrateModLoader.ModProperties;
 using CrateModAPI.Resources.Text;
+using Octodiff.Core;
+using Octodiff.Diagnostics;
 
 namespace CrateModLoader
 {
@@ -545,14 +547,46 @@ namespace CrateModLoader
             foreach (FileInfo file in di.EnumerateFiles())
             {
                 string relativePath = Path.Combine(dest.FullName, mainbuffer + @"\" + file.Name);
-                bool allow = true;
-                if (onlyOverwrite && !File.Exists(basePath + relativePath))
+
+                if (Path.GetExtension(file.Name).EndsWith("octodelta"))
                 {
-                    allow = false;
+                    string targetFile = Path.ChangeExtension(file.FullName, null);
+                    string origFullName = targetFile;
+                    if (File.Exists(origFullName))
+                    {
+                        string tempName = targetFile + "1";
+                        File.Move(origFullName, tempName);
+
+                        try
+                        {
+                            // Apply delta file to create new file
+                            var deltaApplier = new DeltaApplier { SkipHashCheck = false };
+                            using (var basisStream = new FileStream(tempName, FileMode.Open, FileAccess.Read, FileShare.Read))
+                            using (var deltaStream = new FileStream(file.FullName, FileMode.Open, FileAccess.Read, FileShare.Read))
+                            using (var newFileStream = new FileStream(origFullName, FileMode.Create, FileAccess.ReadWrite, FileShare.Read))
+                            {
+                                deltaApplier.Apply(basisStream, new BinaryDeltaReader(deltaStream, new ConsoleProgressReporter()), newFileStream);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("Octodiff error: " + ex.Message);
+                        }
+
+                        File.Delete(tempName);
+                    }
                 }
-                if (allow)
+                else
                 {
-                    File.Copy(file.FullName, basePath + relativePath, true);
+                    bool allow = true;
+                    if (onlyOverwrite && !File.Exists(basePath + relativePath))
+                    {
+                        allow = false;
+                    }
+                    if (allow)
+                    {
+                        File.Copy(file.FullName, basePath + relativePath, true);
+                    }
                 }
             }
         }

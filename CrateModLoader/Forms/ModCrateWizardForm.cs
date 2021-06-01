@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using System.IO;
 using System.IO.Compression;
 using CrateModAPI.Resources.Text;
+using Octodiff.Core;
+using Octodiff.Diagnostics;
 
 namespace CrateModLoader.Forms
 {
@@ -83,6 +85,7 @@ namespace CrateModLoader.Forms
             toolTip1.SetToolTip(button_RemoveFile, "Remove selected File");
             toolTip1.SetToolTip(button_RemoveFolder, "Remove selected Folder");
             toolTip1.SetToolTip(button_RestoreFile, "Restore selected File if it has been replaced");
+            toolTip1.SetToolTip(button_ReplaceFileDelta, "Replace selected File by creating a delta patch (smaller size, incompatible between different versions)");
 
             GenerateTree(0);
             for (int i = 0; i < TreeViews.Count; i++)
@@ -154,6 +157,10 @@ namespace CrateModLoader.Forms
 
             string tempPath = ModLoaderGlobals.ModDirectory + @"\" + ModLoaderGlobals.TempName;
             string assetsPath = tempPath + @"\" + ModLoaderGlobals.ModAssetsFolderName + @"\";
+            if (Directory.Exists(tempPath))
+            {
+                Directory.Delete(tempPath, true);
+            }
             Directory.CreateDirectory(tempPath);
             Directory.CreateDirectory(assetsPath);
 
@@ -246,6 +253,24 @@ namespace CrateModLoader.Forms
             //cleanup
             Directory.Delete(tempPath, true);
 
+            foreach(KeyValuePair<string, string> pair in Layer0)
+            {
+                if (Path.GetExtension(pair.Key).EndsWith("octodelta"))
+                {
+                    File.Delete(pair.Key);
+                }
+            }
+            for (int i = 0; i < Layers.Count; i++)
+            {
+                foreach (KeyValuePair<string, string> pair in Layers[i])
+                {
+                    if (Path.GetExtension(pair.Key).EndsWith("octodelta"))
+                    {
+                        File.Delete(pair.Key);
+                    }
+                }
+            }
+
             crate.IsFolder = restorefolder;
         }
 
@@ -328,17 +353,35 @@ namespace CrateModLoader.Forms
             }
             foreach (FileInfo file in di.EnumerateFiles())
             {
-                TreeNode node = NodeContainsName(root.Node, file.Name);
-                if (node != null)
+                TreeNode node = null;
+                if (Path.GetExtension(file.Name).EndsWith("octodelta"))
                 {
-                    FileNode fnode = (FileNode)node.Tag;
-                    fnode.Replace(file.FullName);
+                    node = NodeContainsName(root.Node, file.Name.TrimEnd(".octodelta".ToCharArray()));
+                    if (node != null)
+                    {
+                        FileNode fnode = (FileNode)node.Tag;
+                        fnode.ReplaceDelta(file.FullName);
+                        //todo: test if the delta patch can even be applied?
+                    }
+                    else
+                    {
+                        // there's no file that the delta patch is for so... do nothing? error/warning?
+                    }
                 }
                 else
                 {
-                    FileNode fnode = new FileNode(file.Name, file);
-                    fnode.NewFile(file.FullName);
-                    root.Node.Nodes.Add(fnode.Node);
+                    node = NodeContainsName(root.Node, file.Name);
+                    if (node != null)
+                    {
+                        FileNode fnode = (FileNode)node.Tag;
+                        fnode.Replace(file.FullName);
+                    }
+                    else
+                    {
+                        FileNode fnode = new FileNode(file.Name, file);
+                        fnode.NewFile(file.FullName);
+                        root.Node.Nodes.Add(fnode.Node);
+                    }
                 }
             }
         }
@@ -368,8 +411,49 @@ namespace CrateModLoader.Forms
                 {
                     if (file.isReplaced)
                     {
-                        string newPath = rootPath + file.Node.Text;
-                        filemap.Add(file.ExternalPath, newPath);
+                        if (file.isDelta)
+                        {
+                            //Create octodiff delta patch and and it to the filemap
+                            var signatureBaseFilePath = file.File.FullName;
+                            var signatureFilePath = file.ExternalPath + @".octosig";
+                            var newFilePath = file.ExternalPath;
+                            var deltaFilePath = file.ExternalPath + @".octodelta";
+
+                            try
+                            {
+                                // Create signature file
+                                var signatureBuilder = new SignatureBuilder();
+                                using (var basisStream = new FileStream(signatureBaseFilePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+                                using (var signatureStream = new FileStream(signatureFilePath, FileMode.Create, FileAccess.Write, FileShare.Read))
+                                {
+                                    signatureBuilder.Build(basisStream, new SignatureWriter(signatureStream));
+                                }
+
+                                // Create delta file
+                                var deltaBuilder = new DeltaBuilder();
+                                using (var newFileStream = new FileStream(newFilePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+                                using (var signatureFileStream = new FileStream(signatureFilePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+                                using (var deltaStream = new FileStream(deltaFilePath, FileMode.Create, FileAccess.Write, FileShare.Read))
+                                {
+                                    deltaBuilder.BuildDelta(newFileStream, new SignatureReader(signatureFileStream, new ConsoleProgressReporter()), new AggregateCopyOperationsDecorator(new BinaryDeltaWriter(deltaStream)));
+                                }
+
+                                string newPath = rootPath + file.Node.Text + ".octodelta";
+                                filemap.Add(deltaFilePath, newPath);
+
+                                //Delete signature file
+                                File.Delete(signatureFilePath);
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine("Octodiff error: " + ex.Message);
+                            }
+                        }
+                        else
+                        {
+                            string newPath = rootPath + file.Node.Text;
+                            filemap.Add(file.ExternalPath, newPath);
+                        }
                     }
                 }
             }
@@ -390,6 +474,24 @@ namespace CrateModLoader.Forms
                 {
                     //File.Copy(openFileDialog1.FileName, file.File.FullName, true);
                     file.Replace(openFileDialog1.FileName);
+                }
+            }
+        }
+        private void button_ReplaceFileDelta_Click(object sender, EventArgs e)
+        {
+            TreeView tree = treeView_files;
+            if (!BaseLayer) tree = TreeViews[(int)LayerEditing - 1];
+            if (tree.SelectedNode.Tag == null) return;
+            if (tree.SelectedNode.Tag is DirNode) return; //todo: replace folder
+
+            if (tree.SelectedNode.Tag is FileNode file)
+            {
+                openFileDialog1.Filter = ModLoaderText.OutputDialogTypeAllFiles + " (*.*)|*.*";
+
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    //File.Copy(openFileDialog1.FileName, file.File.FullName, true);
+                    file.ReplaceDelta(openFileDialog1.FileName);
                 }
             }
         }
@@ -691,7 +793,5 @@ namespace CrateModLoader.Forms
         {
             //tbd
         }
-
-        
     }
 }

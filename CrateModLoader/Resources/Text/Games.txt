@@ -172,6 +172,7 @@ Mod Menu:
 Crash Bandicoot: The Wrath Of Cortex
 Supported: All PS2 versions (.BIN/.ISO format) (XBOX, GC not supported yet)  
 Mod abbreviation: CrashTWOC  
+API by BetaM.  
 Features:  
 - Randomize Wooden Crates  
 - Randomize Enemy Paths  
@@ -200,6 +201,14 @@ Features:
 - Version and seed visible in the Main Menu  
 Mod Menu:
 - Challenge/Story Mode settings
+
+Worms Forts: Under Siege
+Supported: All PS2 versions (.BIN/.ISO format) (XBOX not supported yet)  
+Mod abbreviation: WormsForts  
+Mod layers: 1 - DATA.ZIP contents 
+API by BetaM.  
+Features:  
+- Version and seed visible in the Title screen     
 
 Crash of the Titans
 Supported: All PS2 versions (.ISO format), All Wii versions (.ISO/.WBFS formats), All PSP versions (.ISO format), All 360 versions (.ISO format)   

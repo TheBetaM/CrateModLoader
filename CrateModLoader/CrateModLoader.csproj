@@ -54,6 +54,9 @@
     <ApplicationIcon>Resources\rando_icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Octodiff, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Octodiff.1.2.1\lib\net40\Octodiff.exe</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
@@ -209,7 +212,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>ROBOCOPY "$(TargetDir) " "$(TargetDir)Tools\ " /XF *.exe *.config *.manifest *.txt *.ini /XD Tools tools /IS /MOV
+    <PostBuildEvent>ROBOCOPY "$(TargetDir) " "$(TargetDir)Tools\ " /XF CrateModLoader.exe *.config *.manifest *.txt *.ini /XD Tools tools /IS /MOV
 if %25errorlevel%25 leq 4 exit 0 else exit %25errorlevel%25</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

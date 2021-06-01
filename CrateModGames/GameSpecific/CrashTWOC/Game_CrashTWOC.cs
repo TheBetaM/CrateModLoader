@@ -7,6 +7,7 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
     {
         public override string Name => "Crash Bandicoot: The Wrath of Cortex";
         public override string ShortName => "CrashTWOC";
+        public override string API_Credit => "API by BetaM";
         public override List<ConsoleMode> Consoles => new List<ConsoleMode>
                 {
                     ConsoleMode.PS2,

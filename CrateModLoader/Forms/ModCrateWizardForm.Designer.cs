@@ -57,6 +57,7 @@
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.button_ReplaceFileDelta = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -71,7 +72,8 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Controls.Add(this.button_RestoreFile, 2, 4);
+            this.tableLayoutPanel1.Controls.Add(this.button_ReplaceFileDelta, 2, 4);
+            this.tableLayoutPanel1.Controls.Add(this.button_RestoreFile, 1, 5);
             this.tableLayoutPanel1.Controls.Add(this.button_RemoveFolder, 2, 7);
             this.tableLayoutPanel1.Controls.Add(this.button_RemoveFile, 1, 7);
             this.tableLayoutPanel1.Controls.Add(this.button_AddFile, 1, 6);
@@ -153,7 +155,7 @@
             this.button_RestoreFile.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button_RestoreFile.ImageKey = "file-x";
             this.button_RestoreFile.ImageList = this.imageList1;
-            this.button_RestoreFile.Location = new System.Drawing.Point(96, 173);
+            this.button_RestoreFile.Location = new System.Drawing.Point(48, 221);
             this.button_RestoreFile.Margin = new System.Windows.Forms.Padding(0);
             this.button_RestoreFile.Name = "button_RestoreFile";
             this.button_RestoreFile.Size = new System.Drawing.Size(48, 48);
@@ -390,6 +392,19 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // button_ReplaceFileDelta
+            // 
+            this.button_ReplaceFileDelta.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button_ReplaceFileDelta.ImageKey = "file-diff";
+            this.button_ReplaceFileDelta.ImageList = this.imageList1;
+            this.button_ReplaceFileDelta.Location = new System.Drawing.Point(96, 173);
+            this.button_ReplaceFileDelta.Margin = new System.Windows.Forms.Padding(0);
+            this.button_ReplaceFileDelta.Name = "button_ReplaceFileDelta";
+            this.button_ReplaceFileDelta.Size = new System.Drawing.Size(48, 48);
+            this.button_ReplaceFileDelta.TabIndex = 14;
+            this.button_ReplaceFileDelta.UseVisualStyleBackColor = true;
+            this.button_ReplaceFileDelta.Click += new System.EventHandler(this.button_ReplaceFileDelta_Click);
+            // 
             // ModCrateWizardForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -431,5 +446,6 @@
         private System.Windows.Forms.Button button_RemoveFile;
         private System.Windows.Forms.Button button_LevelEditor;
         private System.Windows.Forms.Button button_RestoreFile;
+        private System.Windows.Forms.Button button_ReplaceFileDelta;
     }
 }

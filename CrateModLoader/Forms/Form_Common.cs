@@ -48,6 +48,7 @@ namespace CrateModLoader.Forms
     {
         public FileInfo File;
         public bool isReplaced = false;
+        public bool isDelta = false;
         public string ExternalPath = string.Empty;
         private string origImage = string.Empty;
 
@@ -107,6 +108,17 @@ namespace CrateModLoader.Forms
             isReplaced = true;
             ExternalPath = path;
             Node.Text = File.Name;
+            isDelta = false;
+        }
+        public void ReplaceDelta(string path)
+        {
+            origImage = Node.ImageKey;
+            Node.ImageKey = "file-diff";
+            Node.SelectedImageKey = "file-diff";
+            isReplaced = true;
+            ExternalPath = path;
+            Node.Text = File.Name;
+            isDelta = true;
         }
 
         public void NewFile(string path)
@@ -114,6 +126,7 @@ namespace CrateModLoader.Forms
             Node.ImageKey = "file-plus";
             Node.SelectedImageKey = "file-plus";
             isReplaced = true;
+            isDelta = false;
             ExternalPath = path;
         }
 
@@ -122,6 +135,7 @@ namespace CrateModLoader.Forms
             if (isReplaced)
             {
                 isReplaced = false;
+                isDelta = false;
                 ExternalPath = string.Empty;
                 Node.ImageKey = origImage;
                 Node.SelectedImageKey = origImage;

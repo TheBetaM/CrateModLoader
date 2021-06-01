@@ -13,9 +13,13 @@ General
 - You can now create and edit full-fledged Mod Crates from within the program. (The game must be preloaded to create or edit Mod Crates)
 - Fixed not being able to build unsupported games
 - Blocked starting a new process after one finishes to prevent bugs. To work around this you can (re)open a ROM to fully reset the program.
+- Mod Crates can now also include Octodiff-based delta patches (ex. /layer1/Language/Code/English.txt.octodelta)
+They can be automatically created from within the Crate Mod Loader, or manually using Octodiff 1.2.1 .
+The advantage to using them is a lower file size of Mod Crates, the downside being incompatibility between different versions of the same file.
 
 New games supported:
 - Super Monkey Ball Adventure (PS2, PSP, GCN)
+- Worms Forts: Under Siege (PS2)
 
 Crash Twinsanity
 - Improved feature compatibility with added/modded levels in Mod Crates
