@@ -47,8 +47,16 @@ namespace CrateModLoader.GameSpecific.WormsForts
         }
     }
 
+    public enum WormsGame
+    {
+        Forts = 0,
+        W3D,
+        Worms4,
+    }
+
     public class XOM_File
     {
+        public WormsGame FileGame = WormsGame.Forts;
         public string FileName;
 
         public byte[] HeaderPad1; // 0x14

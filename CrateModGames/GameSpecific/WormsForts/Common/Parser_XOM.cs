@@ -4,7 +4,12 @@ namespace CrateModLoader.GameSpecific.WormsForts
 {
     public class Parser_XOM : ModParser<XOM_File>
     {
-        public Parser_XOM(Modder mod) : base(mod) { }
+        private WormsGame targetGame;
+
+        public Parser_XOM(Modder mod, WormsGame game) : base(mod)
+        {
+            targetGame = game;
+        }
 
         public override List<string> Extensions => new List<string>() { ".XOM" };
         public override bool SecondarySkip => false;
@@ -22,11 +27,13 @@ namespace CrateModLoader.GameSpecific.WormsForts
             "Polish.xom",
             "Slovak.xom",
             "Spanish.xom",
+            "Local.xom",
+
+            //WormsForts
 
             "Building.XOM",
             "Weapons.XOM",
             "Control.XOM",
-            "Local.xom",
 
             "DM01.xom",
             "DM02.xom",
@@ -77,12 +84,29 @@ namespace CrateModLoader.GameSpecific.WormsForts
             "T2.xom",
             "T3.xom",
 
+            //Worms3D
+
+            //Worms4 
+
+            "AmeFE.xom",
+            "CzeFE.xom",
+            "EngFE.xom",
+            "FreFE.xom",
+            "GerFE.xom",
+            "ItaFE.xom",
+            "JapFE.xom",
+            "PolFE.xom",
+            "RusFE.xom",
+            "SloFE.xom",
+            "SpaFE.xom",
+
         };
         public override bool DisableAsync => true; //too resource-intensive atm
 
         public override XOM_File LoadObject(string filePath)
         {
             XOM_File file = new XOM_File();
+            file.FileGame = targetGame;
             file.Read(filePath);
             return file;
         }

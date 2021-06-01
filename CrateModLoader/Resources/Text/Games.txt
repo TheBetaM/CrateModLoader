@@ -23,6 +23,7 @@ Mod Menu: (+)
   
 Crash Twinsanity
 Supported: All PS2 versions (.ISO format), All XBOX versions (.ISO format)
+Recommended: PAL PS2
 Mod abbreviation: CrashTS   
 Mod layers: 1 - CRASH.BD contents (PS2)
 API by NeoKesha, Smartkin, ManDude, BetaM and Marko. (https://github.com/Smartkin/twinsanity-editor)  
@@ -57,6 +58,7 @@ Mod Menu: (+)
   
 Crash Tag Team Racing
 Supported: All PS2 versions (.ISO format), All GC versions (.ISO format), All PSP versions (.ISO format), All XBOX versions (.ISO format)  
+Recommended: PSP
 Mod abbreviation: CrashTTR  
 Mod layers: 1 - All .RCF file contents (only replace files)
 APIs by NeoKesha and BetaM. (based on https://github.com/handsomematt/Pure3D)  
@@ -72,6 +74,7 @@ Mod Menu:
 
 Rayman 3: Hoodlum Havoc
 Supported: All PS2 versions (.ISO format), All GC versions (.ISO format), All XBOX versions (.ISO format)
+Recommended: GC
 Mod abbreviation: Rayman3  
 Features:
 - Randomize Level Order (Any amount of Levels)  
@@ -194,6 +197,7 @@ Features:
   
 Super Monkey Ball Adventure
 Supported: All PSP versions (.ISO format), All GC versions (.ISO format), All PS2 versions (.ISO format)
+Recommended: PSP
 Mod abbreviation: MonkeyBallAdv   
 Mod layers: 1 - MB.BD contents (PS2/PSP)
 API by NeoKesha, Smartkin, ManDude, BetaM and Marko. (https://github.com/Smartkin/twinsanity-editor)  
@@ -202,13 +206,29 @@ Features:
 Mod Menu:
 - Challenge/Story Mode settings
 
+Worms 3D
+Supported: All PS2 versions (.ISO format) (GCN, XBOX not supported yet)  
+Mod abbreviation: Worms3D  
+Mod layers: 1 - ZIPDAT.ZIP contents 
+API by BetaM.  
+Features:  
+- Version and seed visible in the Main Menu  
+
 Worms Forts: Under Siege
 Supported: All PS2 versions (.BIN/.ISO format) (XBOX not supported yet)  
 Mod abbreviation: WormsForts  
 Mod layers: 1 - DATA.ZIP contents 
 API by BetaM.  
 Features:  
-- Version and seed visible in the Title screen     
+- Version and seed visible in the Title screen    
+
+Worms 4: Mayhem
+Supported: All PS2 versions (.ISO format) (XBOX not supported yet)  
+Mod abbreviation: Worms4  
+Mod layers: 1 - DATA.ZIP contents 
+API by BetaM.  
+Features:  
+- Version and seed visible in the Credits screen  
 
 Crash of the Titans
 Supported: All PS2 versions (.ISO format), All Wii versions (.ISO/.WBFS formats), All PSP versions (.ISO format), All 360 versions (.ISO format)   

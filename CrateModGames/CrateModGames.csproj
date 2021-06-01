@@ -465,6 +465,14 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="GameSpecific\Worms3D\Game_Worms3D.cs" />
+    <Compile Include="GameSpecific\Worms3D\Modder_Worms3D.cs" />
+    <Compile Include="GameSpecific\Worms3D\Mods\W3D_Metadata.cs" />
+    <Compile Include="GameSpecific\Worms3D\Properties\W3D_Props_Main.cs" />
+    <Compile Include="GameSpecific\Worms4Mayhem\Game_Worms4.cs" />
+    <Compile Include="GameSpecific\Worms4Mayhem\Modder_Worms4.cs" />
+    <Compile Include="GameSpecific\Worms4Mayhem\Mods\W4_Metadata.cs" />
+    <Compile Include="GameSpecific\Worms4Mayhem\Properties\W4_Props_Main.cs" />
     <Compile Include="GameSpecific\WormsForts\Common\LUA_File.cs" />
     <Compile Include="GameSpecific\WormsForts\Common\Parser_LUA.cs" />
     <Compile Include="GameSpecific\WormsForts\Common\Parser_TGA.cs" />

@@ -20,7 +20,7 @@ namespace CrateModLoader.GameSpecific.WormsForts
                     Name = @"SLUS_210.93",
                     Region = RegionType.NTSC_U,
                     ExecName = "SLUS_210.93",
-                    CodeName = "SLUS_210_93", },
+                    CodeName = "SLUS_21093", },
                     new RegionCode() {
                     Name = @"SLES_523.42",
                     Region = RegionType.PAL,

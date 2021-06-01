@@ -1,19 +1,15 @@
 ﻿/* API by BetaM.
  * Mod Layers:
- * 1: Data.zip contents
+ * 1: Zipdat.zip contents
  * Mod Passes:
- * lua -> LUA scripts (plain text) (ps2) (Lua 5.0.1)
- * lub -> compiled LUA scripts (xbox) (standard Lua 5.0.1 compiler) (not yet implemented) 
+ * lua -> LUA scripts (plain text) (Lua 5.0) (ps2/gcn) 
  * xom -> data containers
  * tga -> textures
- * csv -> bitmap configs
  */
-using System.Collections.Generic;
-using CrateModLoader.GameSpecific.CrashNitroKart;
-
-namespace CrateModLoader.GameSpecific.WormsForts
+using CrateModLoader.GameSpecific.WormsForts;
+namespace CrateModLoader.GameSpecific.Worms3D
 {
-    public sealed class Modder_WormsForts : Modder
+    public sealed class Modder_Worms3D : Modder
     {
         public override async void StartModProcess()
         {
@@ -24,7 +20,7 @@ namespace CrateModLoader.GameSpecific.WormsForts
                 await StartPipelines(PipelinePass.Extract);
             }
 
-            FindFiles(new Parser_LUA(this), new Parser_XOM(this, WormsGame.Forts), new Parser_CSV(this), new Parser_TGA(this, ModderIsPreloading));
+            FindFiles(new Parser_LUA(this), new Parser_XOM(this, WormsGame.W3D), new Parser_TGA(this, ModderIsPreloading));
             await StartNewPass();
 
             if (!ModderIsPreloading)
