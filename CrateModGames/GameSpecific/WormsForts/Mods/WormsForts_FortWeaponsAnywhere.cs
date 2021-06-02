@@ -9,13 +9,10 @@ namespace CrateModLoader.GameSpecific.WormsForts
     {
         public override void ModPass(XOM_File file)
         {
-            for (int i = 0; i < file.Containers.Count; i++)
+            foreach (WeaponDataCtr cont in file.GetContainers<WeaponDataCtr>())
             {
-                if (file.Containers[i] is WeaponDataCtr cont)
-                {
-                    cont.FiringPlatformRequired = 0;
-                    cont.CanBeFiredFromAnywhere.Value = true;
-                }
+                cont.FiringPlatformRequired = 0;
+                cont.CanBeFiredFromAnywhere.Value = true;
             }
         }
     }

@@ -5,8 +5,18 @@ using System.IO;
 namespace CrateModLoader.GameSpecific.WormsForts.XOM
 {
     [XOM_TypeName("XStringResourceDetails")]
-    public class XStringResourceDetails : Container
+    public class XStringResourceDetails : NamedContainer
     {
+        public override string Name
+        {
+            get { return ParentFile.Strings[NameKey.RawValue]; }
+            set { ParentFile.Strings[NameKey.RawValue] = value; }
+        }
+        public string Value
+        {
+            get { return ParentFile.Strings[ValueKey.RawValue]; }
+            set { ParentFile.Strings[ValueKey.RawValue] = value; }
+        }
         public VInt NameKey = new VInt();
         public VInt ValueKey = new VInt();
         public uint Flags;

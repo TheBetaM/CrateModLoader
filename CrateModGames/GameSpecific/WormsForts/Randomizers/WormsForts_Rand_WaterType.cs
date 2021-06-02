@@ -16,13 +16,10 @@ namespace CrateModLoader.GameSpecific.WormsForts
 
         public override void ModPass(XOM_File file)
         {
-            for (int i = 0; i < file.Containers.Count; i++)
-            {
-                if (file.Containers[i] is XFortsExportedData cont)
-                {
-                    cont.WaterType = (XFortsExportedData.WaterTypes)rand.Next(4);
-                }
-            }
+            XFortsExportedData cont = file.GetContainer<XFortsExportedData>();
+            if (cont == null) return;
+
+            cont.WaterType = (XFortsExportedData.WaterTypes)rand.Next(4);
         }
     }
 }

@@ -24,7 +24,7 @@ namespace CrateModLoader.GameSpecific.Crash1
         public static ModPropOption Option_RandBackwardsLevels = new ModPropOption(Crash1_Text.Rand_BackwardsLevels, Crash1_Text.Rand_BackwardsLevelsDesc);
         [ExecutesMods(typeof(Crash1_BackwardsHogLevels))]
         public static ModPropOption Option_BackwardsHogLevels = new ModPropOption(Crash1_Text.Mod_BackwardsHogLevels, Crash1_Text.Mod_BackwardsHogLevelsDesc);
-        [ExecutesMods(typeof(CrashTri_Rand_CratesIntoWumpa))]
+        [ExecutesMods(typeof(CrashTri_Rand_CratesIntoWumpa))] [ModHidden]
         public static ModPropOption Option_RandCratesMissing = new ModPropOption(CrashTri_Text.Rand_CratesRemoved, CrashTri_Text.Rand_CratesRemovedDesc);
         [ExecutesMods(typeof(CrashTri_Rand_CrateContents))]
         public static ModPropOption Option_RandCrateContents = new ModPropOption(CrashTri_Text.Rand_CrateContents, CrashTri_Text.Rand_CrateContentsDesc);
@@ -32,7 +32,7 @@ namespace CrateModLoader.GameSpecific.Crash1
         public static ModPropOption Option_InvisibleCrates = new ModPropOption(Crash1_Text.Mod_InvisibleCrates, Crash1_Text.Mod_InvisibleCratesDesc);
         [ExecutesMods(typeof(CrashTri_Rand_InvisibleCrates))]
         public static ModPropOption Option_RandInvisibleCrates = new ModPropOption(Crash1_Text.Rand_InvisibleCrates, Crash1_Text.Rand_InvisibleCratesDesc);
-        [ExecutesMods(typeof(CrashTri_Rand_CrateParams))]
+        [ExecutesMods(typeof(CrashTri_Rand_CrateParams))] [ModHidden]
         public static ModPropOption Option_RandCrateParams = new ModPropOption(CrashTri_Text.Rand_CrateParams, CrashTri_Text.Rand_CrateParamsDesc);
         [ExecutesMods(typeof(Crash1_Rand_BossPaths))]
         public static ModPropOption Option_RandBosses = new ModPropOption(Crash1_Text.Rand_BossLevels, Crash1_Text.Rand_BossLevelsDesc);

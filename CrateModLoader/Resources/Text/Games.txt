@@ -85,6 +85,7 @@ Features:
 - Randomize Outfit Visuals (GCN)  
 - New Game Into 2D Nightmare (GCN)  
 - Remove Intro Videos (GCN)  
+- Version and seed visible in the Title screen  
 Mod Menu: (+)
 - Rayman Textures
 (+) UI and other common Textures
@@ -180,6 +181,7 @@ Features:
 - Randomize Wooden Crates  
 - Randomize Enemy Paths  
 - Random Enemies Removed  
+- Version and seed visible in the Options screen (English only)  
 
 CTR: Crash Team Racing
 Supported: All PS1 versions (.BIN/.ISO formats)  
@@ -196,7 +198,7 @@ Features:
 - Version and seed visible in the Loading screen (English only)  
   
 Super Monkey Ball Adventure
-Supported: All PSP versions (.ISO format), All GC versions (.ISO format), All PS2 versions (.ISO format)
+Supported: All PSP versions (.ISO format) (GC, PS2 not supported yet)  
 Recommended: PSP
 Mod abbreviation: MonkeyBallAdv   
 Mod layers: 1 - MB.BD contents (PS2/PSP)
@@ -206,14 +208,6 @@ Features:
 Mod Menu:
 - Challenge/Story Mode settings
 
-Worms 3D
-Supported: All PS2 versions (.ISO format) (GCN, XBOX not supported yet)  
-Mod abbreviation: Worms3D  
-Mod layers: 1 - ZIPDAT.ZIP contents 
-API by BetaM.  
-Features:  
-- Version and seed visible in the Main Menu  
-
 Worms Forts: Under Siege
 Supported: All PS2 versions (.BIN/.ISO format) (XBOX not supported yet)  
 Mod abbreviation: WormsForts  
@@ -221,14 +215,6 @@ Mod layers: 1 - DATA.ZIP contents
 API by BetaM.  
 Features:  
 - Version and seed visible in the Title screen    
-
-Worms 4: Mayhem
-Supported: All PS2 versions (.ISO format) (XBOX not supported yet)  
-Mod abbreviation: Worms4  
-Mod layers: 1 - DATA.ZIP contents 
-API by BetaM.  
-Features:  
-- Version and seed visible in the Credits screen  
 
 Crash of the Titans
 Supported: All PS2 versions (.ISO format), All Wii versions (.ISO/.WBFS formats), All PSP versions (.ISO format), All 360 versions (.ISO format)   

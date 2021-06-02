@@ -11,13 +11,13 @@ namespace CrateModLoader.GameSpecific.WormsForts
             targetGame = game;
         }
 
-        public override List<string> Extensions => new List<string>() { ".XOM" };
+        public override List<string> Extensions => new List<string>() { ".XOM", ".BDL", ".KEV" };
         public override bool SecondarySkip => false;
         public override List<string> SecondaryList => new List<string>()
         {
             
             "American.xom",
-            "Canadiam.xom",
+            "Canadian.xom",
             "Czech.xom",
             "English.xom",
             "French.xom",
@@ -86,6 +86,59 @@ namespace CrateModLoader.GameSpecific.WormsForts
 
             //Worms3D
 
+            "dday.xom",
+            "crate britain.xom",
+            "graveyard.xom",
+            "leek.xom",
+            "ice.xom",
+            "collide.xom",
+            "rum.xom",
+            "crust.xom",
+            "applecore.xom",
+            "helterskelter.xom",
+            "cherry.xom",
+            "clean.xom",
+            "timbers.xom",
+            "falling.xom",
+            "cropcircle.xom",
+            "treevillage.xom",
+            "landing.xom",
+            "beanstalk.xom",
+            "schools.xom",
+            "highstakes.xom",
+            "notpc.xom",
+            "cooped.xom",
+            "Trial.xom",
+            "showdown.xom",
+            "plaice.xom",
+            "hookline.xom",
+            "funfair.xom",
+            "pegasus.xom",
+            "boldly.xom",
+            "balloon.xom",
+            "countingsheep.xom",
+            "breakfast.xom",
+            "holiday.xom",
+            "pack.xom",
+            "alien.xom",
+
+            "tutorial1.xom",
+            "tutorial2.xom",
+            "tutorial3.xom",
+            "Tutorial4.xom",
+            "tutorial5.xom",
+
+            "Deathmatch1.xom",
+            "Deathmatch2.xom",
+            "Deathmatch3.xom",
+            "Deathmatch4.xom",
+            "Deathmatch5.xom",
+            "Deathmatch6.xom",
+            "Deathmatch7.xom",
+            "Deathmatch8.xom",
+            "Deathmatch9.xom",
+            "Deathmatch10.xom",
+
             //Worms4 
 
             "AmeFE.xom",
@@ -99,6 +152,68 @@ namespace CrateModLoader.GameSpecific.WormsForts
             "RusFE.xom",
             "SloFE.xom",
             "SpaFE.xom",
+
+            "SNEAKYBRIDGETHIEVES.XOM",
+            "CARPETCAPERS.XOM",
+            "CHUTETOVICTORY.XOM",
+            "THECRATEESCAPE.XOM",
+            "DESTRUCTANDSERVE.XOM",
+            "DINERMIGHT.XOM",
+            "DOOMCANYON.XOM",
+            "ESCAPEFROMTREEREX.XOM",
+            "FASTFOODDINO.XOM",
+            "GHOSTHILLGRAVEYARD.XOM",
+            "GIBBONTAKE.XOM",
+            "HIGHNOONHIJINX.XOM",
+            "JOUSTABOUTIT.XOM",
+            "THELANDTHATWORMSFORGOT.XOM",
+            "MINEALLMINE.XOM",
+            "NICETOSIEGEYOU.XOM",
+            "NOROOMFORERROR.XOM",
+            "RIVERBOATHARBOUR.XOM",
+            "ROBINTHEHOOD.XOM",
+            "BUILDINGSITESABOTEURS.XOM",
+            "STORMTHECASTLE.XOM",
+            "THISGAMEDOESDRAGON.XOM",
+            "TINCANWALLY.XOM",
+            "TRAITOROUSWATERS.XOM",
+            "TURKISHDELIGHTS.XOM",
+            "VALLEYOFTHEDINO.XOM",
+            "THEWINDYWIZARD.XOM",
+            "WORMWIGSBIGRIGJIG.XOM",
+
+            "TUTORIAL1.XOM",
+            "TUTORIAL2.XOM",
+            "TUTORIAL3.XOM",
+
+            "DEATHMATCH1.xom",
+            "DEATHMATCH2.xom",
+            "DEATHMATCH3.xom",
+            "DEATHMATCH4.xom",
+            "DEATHMATCH5.xom",
+            "DEATHMATCH6.xom",
+            "DEATHMATCH7.xom",
+            "DEATHMATCH8.xom",
+            "DEATHMATCH9.xom",
+            "DEATHMATCH10.xom",
+
+            //WormsOW
+
+            "AmericanFE.xom",
+            "CzechFE.xom",
+            "EnglishFE.xom",
+            "FrenchFE.xom",
+            "GermanFE.xom",
+            "ItalianFE.xom",
+            "JapaneseFE.xom",
+            "PolishFE.xom",
+            "Russian.xom",
+            "RussianFE.xom",
+            "SpanishFE.xom",
+
+            //WormsOW2
+
+            //WormsBI
 
         };
         public override bool DisableAsync => true; //too resource-intensive atm

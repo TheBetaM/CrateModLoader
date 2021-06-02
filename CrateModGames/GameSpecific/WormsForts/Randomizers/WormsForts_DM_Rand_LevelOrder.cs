@@ -49,34 +49,31 @@ namespace CrateModLoader.GameSpecific.WormsForts
             LevelDetails[] DM_Levels = new LevelDetails[10];
             uint[] Campaign_Levels = new uint[10];
 
-            for (int i = 0; i < file.Containers.Count; i++)
+            foreach (LevelDetails lev in file.GetContainers<LevelDetails>())
             {
-                if (file.Containers[i] is LevelDetails lev)
+                if (DM_Names.Contains(file.Strings[lev.LevelName.RawValue]))
                 {
-                    if (DM_Names.Contains(file.Strings[lev.LevelName.RawValue]))
+                    DM_Levels[DM_Names.IndexOf(file.Strings[lev.LevelName.RawValue])] = new LevelDetails()
                     {
-                        DM_Levels[DM_Names.IndexOf(file.Strings[lev.LevelName.RawValue])] = new LevelDetails()
-                        {
-                            LevelName = lev.LevelName,
-                            ScriptName = lev.ScriptName,
-                            LevelType = lev.LevelType,
-                            Brief = lev.Brief,
-                            Image = lev.Image,
-                            LevelNumber = lev.LevelNumber,
-                            Lock = lev.Lock,
-                            Movie = lev.Movie,
-                            AIPathNodeStartYOffset = lev.AIPathNodeStartYOffset,
-                            AIPathNodeCollisionStep = lev.AIPathNodeCollisionStep,
-                        };
-                    }
+                        LevelName = lev.LevelName,
+                        ScriptName = lev.ScriptName,
+                        LevelType = lev.LevelType,
+                        Brief = lev.Brief,
+                        Image = lev.Image,
+                        LevelNumber = lev.LevelNumber,
+                        Lock = lev.Lock,
+                        Movie = lev.Movie,
+                        AIPathNodeStartYOffset = lev.AIPathNodeStartYOffset,
+                        AIPathNodeCollisionStep = lev.AIPathNodeCollisionStep,
+                    };
                 }
-                else if (file.Containers[i] is Campaign cam)
+            }
+            foreach (Campaign cam in file.GetContainers<Campaign>())
+            {
+                if (DM_Campaign_Names.Contains(file.Strings[cam.LevelName.RawValue]))
                 {
-                    if (DM_Campaign_Names.Contains(file.Strings[cam.LevelName.RawValue]))
-                    {
-                        int ID = DM_Campaign_Names.IndexOf(file.Strings[cam.LevelName.RawValue]);
-                        Campaign_Levels[ID] = cam.ScriptName.RawValue;
-                    }
+                    int ID = DM_Campaign_Names.IndexOf(file.Strings[cam.LevelName.RawValue]);
+                    Campaign_Levels[ID] = cam.ScriptName.RawValue;
                 }
             }
 
@@ -93,32 +90,29 @@ namespace CrateModLoader.GameSpecific.WormsForts
                 RandList.RemoveAt(r);
             }
 
-            for (int i = 0; i < file.Containers.Count; i++)
+            foreach (LevelDetails lev in file.GetContainers<LevelDetails>())
             {
-                if (file.Containers[i] is LevelDetails lev)
+                if (DM_Names.Contains(file.Strings[lev.LevelName.RawValue]))
                 {
-                    if (DM_Names.Contains(file.Strings[lev.LevelName.RawValue]))
-                    {
-                        int ID = DM_Names.IndexOf(file.Strings[lev.LevelName.RawValue]);
-                        lev.LevelName = DM_Levels[ToRand[ID]].LevelName;
-                        lev.ScriptName = DM_Levels[ToRand[ID]].ScriptName;
-                        lev.LevelType = DM_Levels[ToRand[ID]].LevelType;
-                        lev.Brief = DM_Levels[ToRand[ID]].Brief;
-                        lev.Image = DM_Levels[ToRand[ID]].Image;
-                        lev.LevelNumber = DM_Levels[ToRand[ID]].LevelNumber;
-                        //lev.Lock = DM_Levels[ToRand[ID]].Lock;
-                        lev.Movie = DM_Levels[ToRand[ID]].Movie;
-                        lev.AIPathNodeStartYOffset = DM_Levels[ToRand[ID]].AIPathNodeStartYOffset;
-                        lev.AIPathNodeCollisionStep = DM_Levels[ToRand[ID]].AIPathNodeCollisionStep;
-                    }
+                    int ID = DM_Names.IndexOf(file.Strings[lev.LevelName.RawValue]);
+                    lev.LevelName = DM_Levels[ToRand[ID]].LevelName;
+                    lev.ScriptName = DM_Levels[ToRand[ID]].ScriptName;
+                    lev.LevelType = DM_Levels[ToRand[ID]].LevelType;
+                    lev.Brief = DM_Levels[ToRand[ID]].Brief;
+                    lev.Image = DM_Levels[ToRand[ID]].Image;
+                    lev.LevelNumber = DM_Levels[ToRand[ID]].LevelNumber;
+                    //lev.Lock = DM_Levels[ToRand[ID]].Lock;
+                    lev.Movie = DM_Levels[ToRand[ID]].Movie;
+                    lev.AIPathNodeStartYOffset = DM_Levels[ToRand[ID]].AIPathNodeStartYOffset;
+                    lev.AIPathNodeCollisionStep = DM_Levels[ToRand[ID]].AIPathNodeCollisionStep;
                 }
-                else if (file.Containers[i] is Campaign cam)
+            }
+            foreach (Campaign cam in file.GetContainers<Campaign>())
+            {
+                if (DM_Campaign_Names.Contains(file.Strings[cam.LevelName.RawValue]))
                 {
-                    if (DM_Campaign_Names.Contains(file.Strings[cam.LevelName.RawValue]))
-                    {
-                        //int ID = DM_Campaign_Names.IndexOf(file.Strings[cam.LevelName.Value]);
-                        //cam.ScriptName.Value = Campaign_Levels[ToRand[ID]];
-                    }
+                    //int ID = DM_Campaign_Names.IndexOf(file.Strings[cam.LevelName.Value]);
+                    //cam.ScriptName.Value = Campaign_Levels[ToRand[ID]];
                 }
             }
         }

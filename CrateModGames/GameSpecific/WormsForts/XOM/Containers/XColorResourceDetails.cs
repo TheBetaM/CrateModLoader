@@ -5,8 +5,13 @@ using System.IO;
 namespace CrateModLoader.GameSpecific.WormsForts.XOM
 {
     [XOM_TypeName("XColorResourceDetails")]
-    public class XColorResourceDetails : Container
+    public class XColorResourceDetails : NamedContainer
     {
+        public override string Name
+        {
+            get { return ParentFile.Strings[NameKey.RawValue]; }
+            set { ParentFile.Strings[NameKey.RawValue] = value; }
+        }
         public byte R;
         public byte G;
         public byte B;

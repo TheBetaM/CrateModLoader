@@ -20,10 +20,10 @@ namespace CrateModLoader.GameSpecific.Crash1
         public static ModPropOption Option_AllCratesWumpa = new ModPropOption(CrashTri_Text.Mod_AllCratesWumpa, CrashTri_Text.Mod_AllCratesWumpaDesc);
         [ExecutesMods(typeof(CrashTri_Rand_CameraFOV))]
         public static ModPropOption Option_RandCameraFOV = new ModPropOption(Crash1_Text.Rand_CameraFOV, Crash1_Text.Rand_CameraFOVDesc);
-        [ExecutesMods(typeof(CrashTri_Scenery_Invisible))]
-        public static ModPropOption Option_InvisibleWorld = new ModPropOption("Invisible World (Beta)", "The scenery is invisible.");
 
         // unfinished
+        [ExecutesMods(typeof(CrashTri_Scenery_Invisible))] [ModHidden]
+        public static ModPropOption Option_InvisibleWorld = new ModPropOption("Invisible World (Beta)", "The scenery is invisible.");
         [ExecutesMods(typeof(CrashTri_Rand_PantsColor))] [ModHidden]
         public static ModPropColor Prop_PantsColor = new ModPropColor(new int[4] { 0, 0, 255, 255 }, "Pants Color", "");
     }

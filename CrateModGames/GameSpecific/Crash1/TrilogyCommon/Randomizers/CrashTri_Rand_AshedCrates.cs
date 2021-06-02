@@ -12,7 +12,7 @@ namespace CrateModLoader.GameSpecific.Crash1.TrilogyCommon
 
         public CrashTri_Rand_AshedCrates()
         {
-            isRandom = Crash2.Crash2_Props_Main.Option_RandCratesAshed.Enabled || Crash3.Crash3_Props_Main.Option_RandCratesAshed.Enabled;
+            isRandom = Crash2.Crash2_Props_Misc.Option_RandCratesAshed.Enabled || Crash3.Crash3_Props_Misc.Option_RandCratesAshed.Enabled;
         }
 
         public override void BeforeModPass()

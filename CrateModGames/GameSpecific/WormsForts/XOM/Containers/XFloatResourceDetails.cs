@@ -5,8 +5,13 @@ using System.IO;
 namespace CrateModLoader.GameSpecific.WormsForts.XOM
 {
     [XOM_TypeName("XFloatResourceDetails")]
-    public class XFloatResourceDetails : Container
+    public class XFloatResourceDetails : NamedContainer
     {
+        public override string Name
+        {
+            get { return ParentFile.Strings[NameKey.RawValue]; }
+            set { ParentFile.Strings[NameKey.RawValue] = value; }
+        }
         public float Value;
         public VInt NameKey = new VInt();
         public uint Flags;

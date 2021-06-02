@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using CrateModLoader.GameSpecific.WormsForts;
 using CrateModLoader.GameSpecific.WormsForts.XOM;
 
-namespace CrateModLoader.GameSpecific.WormsForts
+namespace CrateModLoader.GameSpecific.Worms4
 {
-    public class WF_Rand_WorldPalette : ModStruct<XOM_File>
+    public class W4_Rand_WorldPalette : ModStruct<XOM_File>
     {
         private Random rand;
 
@@ -17,7 +18,7 @@ namespace CrateModLoader.GameSpecific.WormsForts
         public override void ModPass(XOM_File file)
         {
             string level = Path.GetFileName(file.FileName);
-            if (!WormsForts_Common.Levels_All.Contains(level)) return;
+            if (!Worms4_Common.Levels_All.Contains(level)) return;
 
             ColorSwizzleData Swiz = new ColorSwizzleData(rand);
 

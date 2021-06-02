@@ -416,6 +416,7 @@
     <Compile Include="GameSpecific\CrashTWOC\Common\TWOC_Common.cs" />
     <Compile Include="GameSpecific\CrashTWOC\Game_CrashTWOC.cs" />
     <Compile Include="GameSpecific\CrashTWOC\Modder_TWOC.cs" />
+    <Compile Include="GameSpecific\CrashTWOC\Mods\TWOC_Metadata.cs" />
     <Compile Include="GameSpecific\CrashTWOC\Mods\TWOC_Mod_SwapLevels.cs" />
     <Compile Include="GameSpecific\CrashTWOC\Properties\TWOC_Props_Main.cs" />
     <Compile Include="GameSpecific\CrashTWOC\Randomizers\TWOC_Rand_Crates.cs" />
@@ -448,6 +449,7 @@
     <Compile Include="GameSpecific\Rayman3\Common\TPL_File.cs" />
     <Compile Include="GameSpecific\Rayman3\Game_Rayman3.cs" />
     <Compile Include="GameSpecific\Rayman3\Modder_Rayman3.cs" />
+    <Compile Include="GameSpecific\Rayman3\Mods\Ray3_Metadata.cs" />
     <Compile Include="GameSpecific\Rayman3\Mods\Ray3_RemoveIntroVideos.cs" />
     <Compile Include="GameSpecific\Rayman3\Mods\Ray3_Start2DNightmare.cs" />
     <Compile Include="GameSpecific\Rayman3\Properties\Rayman3_Props_Main.cs" />
@@ -465,14 +467,19 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="GameSpecific\Worms3D\Common\W3D_Common.cs" />
     <Compile Include="GameSpecific\Worms3D\Game_Worms3D.cs" />
     <Compile Include="GameSpecific\Worms3D\Modder_Worms3D.cs" />
     <Compile Include="GameSpecific\Worms3D\Mods\W3D_Metadata.cs" />
     <Compile Include="GameSpecific\Worms3D\Properties\W3D_Props_Main.cs" />
+    <Compile Include="GameSpecific\Worms3D\Randomizers\Worms3D_Rand_WorldPalette.cs" />
+    <Compile Include="GameSpecific\Worms4Mayhem\Common\Worms4_Common.cs" />
     <Compile Include="GameSpecific\Worms4Mayhem\Game_Worms4.cs" />
     <Compile Include="GameSpecific\Worms4Mayhem\Modder_Worms4.cs" />
     <Compile Include="GameSpecific\Worms4Mayhem\Mods\W4_Metadata.cs" />
     <Compile Include="GameSpecific\Worms4Mayhem\Properties\W4_Props_Main.cs" />
+    <Compile Include="GameSpecific\Worms4Mayhem\Randomizers\Worms4_Rand_LevelVisuals.cs" />
+    <Compile Include="GameSpecific\Worms4Mayhem\Randomizers\Worms4_Rand_WorldPalette.cs" />
     <Compile Include="GameSpecific\WormsForts\Common\LUA_File.cs" />
     <Compile Include="GameSpecific\WormsForts\Common\Parser_LUA.cs" />
     <Compile Include="GameSpecific\WormsForts\Common\Parser_TGA.cs" />
@@ -536,6 +543,7 @@
     <Compile Include="GameSpecific\WormsForts\XOM\Containers\XStringResourceDetails.cs" />
     <Compile Include="GameSpecific\WormsForts\XOM\Containers\XUintResourceDetails.cs" />
     <Compile Include="GameSpecific\WormsForts\XOM\Containers\XVectorResourceDetails.cs" />
+    <Compile Include="GameSpecific\WormsForts\XOM\NamedContainer.cs" />
     <Compile Include="GameSpecific\WormsForts\XOM\UnknownContainer.cs" />
     <Compile Include="GameSpecific\WormsForts\XOM\XOM_File.cs" />
     <Compile Include="GameSpecific\WormsForts\XOM\XOM_IO_Helpers.cs" />

@@ -10,16 +10,10 @@ namespace CrateModLoader.GameSpecific.Worms3D
     {
         public override void ModPass(XOM_File file)
         {
-            for (int i = 0; i < file.Containers.Count; i++)
-            {
-                if (file.Containers[i] is XStringResourceDetails cont)
-                {
-                    if (file.Strings[cont.NameKey.RawValue] == "Lang.MainMenu")
-                    {
-                        file.Strings[cont.ValueKey.RawValue] = "CML " + ModLoaderGlobals.ProgramVersion + " Seed: " + ModLoaderGlobals.RandomizerSeed;
-                    }
-                }
-            }
+            XStringResourceDetails cont = file.GetContainer<XStringResourceDetails>("Lang.MainMenu");
+            if (cont == null) return;
+
+            cont.Value = "CML " + ModLoaderGlobals.ProgramVersion + " Seed: " + ModLoaderGlobals.RandomizerSeed;
         }
     }
 }

@@ -33,6 +33,7 @@ namespace CrateModLoader.GameSpecific.Rayman3
         public static ModPropOption Option_NewGameNightmare = new ModPropOption(Rayman3_Text.Mod_NewGameNightmare, Rayman3_Text.Mod_NewGameNightmareDesc);
         [ExecutesMods(typeof(Ray3_RemoveIntroVideo))] [ModAllowedConsoles(ConsoleMode.GCN)]
         public static ModPropOption Option_RemoveIntroVideos = new ModPropOption(1, Rayman3_Text.Mod_RemoveIntroVideo, Rayman3_Text.Mod_RemoveIntroVideoDesc);
-
+        [ExecutesMods(typeof(Ray3_Metadata))] [ModHidden]
+        public static ModPropOption Option_Metadata = new ModPropOption(1);
     }
 }

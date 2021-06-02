@@ -435,6 +435,7 @@ namespace CrateModLoader
             //button_modTools.Enabled = false;
             button_downloadMods.Enabled = false;
             menuStrip1.Enabled = false;
+            ModCrateBox.Enabled = false;
             DragDrop -= ModLoaderForm_DragDrop;
             DragEnter -= ModLoaderForm_DragEnter;
         }
@@ -457,6 +458,7 @@ namespace CrateModLoader
             numericUpDown1.Enabled = true;
             //button_modCrateMenu.Enabled = true;
             menuStrip1.Enabled = true;
+            ModCrateBox.Enabled = true;
             DragDrop += ModLoaderForm_DragDrop;
             DragEnter += ModLoaderForm_DragEnter;
 

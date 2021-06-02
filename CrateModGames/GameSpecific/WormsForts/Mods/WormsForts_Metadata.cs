@@ -9,18 +9,12 @@ namespace CrateModLoader.GameSpecific.WormsForts
     {
         public override void ModPass(XOM_File file)
         {
-            for (int i = 0; i < file.Containers.Count; i++)
-            {
-                if (file.Containers[i] is XStringResourceDetails cont)
-                {
-                    if (file.Strings[cont.NameKey.RawValue] == "FE.Copyright")
-                    {
-                        file.Strings[cont.ValueKey.RawValue] = "Crate Mod Loader " + ModLoaderGlobals.ProgramVersion
-                            + " Seed: " + ModLoaderGlobals.RandomizerSeed
-                            + "\n" + file.Strings[cont.ValueKey.RawValue];
-                    }
-                }
-            }
+            XStringResourceDetails cont = file.GetContainer<XStringResourceDetails>("FE.Copyright");
+            if (cont == null) return;
+
+            cont.Value = "Crate Mod Loader " + ModLoaderGlobals.ProgramVersion
+                    + " Seed: " + ModLoaderGlobals.RandomizerSeed
+                    + "\n" + cont.Value;
         }
     }
 }

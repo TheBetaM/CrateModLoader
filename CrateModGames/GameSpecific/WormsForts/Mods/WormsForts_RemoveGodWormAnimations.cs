@@ -9,16 +9,13 @@ namespace CrateModLoader.GameSpecific.WormsForts
     {
         public override void ModPass(XOM_File file)
         {
-            for (int i = 0; i < file.Containers.Count; i++)
+            foreach (WeaponDataCtr cont in file.GetContainers<WeaponDataCtr>())
             {
-                if (file.Containers[i] is WeaponDataCtr cont)
+                if (cont.IsGodWeapon.Value)
                 {
-                    if (cont.IsGodWeapon.Value)
-                    {
-                        cont.IsGodWeapon.Value = false;
-                        cont.GodWormEndAnimationName.Value = 0;
-                        cont.GodWormStartAnimationName.Value = 0;
-                    }
+                    cont.IsGodWeapon.Value = false;
+                    cont.GodWormEndAnimationName.Value = 0;
+                    cont.GodWormStartAnimationName.Value = 0;
                 }
             }
         }

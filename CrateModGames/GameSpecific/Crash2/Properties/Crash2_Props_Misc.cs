@@ -15,6 +15,8 @@ namespace CrateModLoader.GameSpecific.Crash2
         public static ModPropColor Prop_PantsColor = new ModPropColor(new int[4] { 0, 0, 255, 255 }, CrashTri_Text.Prop_PantsColor, CrashTri_Text.Prop_PantsColorDesc);
 
         //less used
+        [ExecutesMods(typeof(CrashTri_Rand_AshedCrates))]
+        public static ModPropOption Option_RandCratesAshed = new ModPropOption("Random Crate Types Are Covered Up", "Random crate types are covered up to look the same on the outside in each level.");
         [ExecutesMods(typeof(CrashTri_Rand_WoodenCrates))]
         public static ModPropOption Option_RandCrates = new ModPropOption(CrashTri_Text.Rand_Crates, CrashTri_Text.Rand_CratesDesc);
         [ExecutesMods(typeof(CrashTri_Rand_EnemyPaths))]
@@ -33,10 +35,10 @@ namespace CrateModLoader.GameSpecific.Crash2
         public static ModPropOption Option_AllCratesWumpa = new ModPropOption(CrashTri_Text.Mod_AllCratesWumpa, CrashTri_Text.Mod_AllCratesWumpaDesc);
         [ExecutesMods(typeof(CrashTri_Rand_CameraFOV))]
         public static ModPropOption Option_RandCameraFOV = new ModPropOption(CrashTri_Text.Rand_CameraFOV, CrashTri_Text.Rand_CameraFOVDesc);
-        [ExecutesMods(typeof(CrashTri_Scenery_Invisible))]
-        public static ModPropOption Option_InvisibleWorld = new ModPropOption("Invisible World (Beta)", "The scenery is invisible.");
 
         //unfinished
+        [ExecutesMods(typeof(CrashTri_Scenery_Invisible))] [ModHidden]
+        public static ModPropOption Option_InvisibleWorld = new ModPropOption("Invisible World (Beta)", "The scenery is invisible.");
         [ExecutesMods(typeof(CrashTri_Rand_EnemyCrates))] [ModHidden]
         public static ModPropOption Option_AllEnemiesAreCrates = new ModPropOption(Crash2_Text.Rand_AllEnemiesCrates, Crash2_Text.Rand_AllEnemiesCratesDesc);
 

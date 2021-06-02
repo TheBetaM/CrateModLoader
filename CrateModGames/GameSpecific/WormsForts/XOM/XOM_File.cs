@@ -14,6 +14,8 @@ namespace CrateModLoader.GameSpecific.WormsForts
         public uint unkInt2;
         public byte[] Data; // 0x10
         public string Name; // 0x20 max
+        public Type KnownType = null;
+        public List<Container> Containers;
 
         public static Dictionary<string, Type> SupportedTypes;
 
@@ -52,6 +54,9 @@ namespace CrateModLoader.GameSpecific.WormsForts
         Forts = 0,
         W3D,
         Worms4,
+        OW,
+        OW2,
+        BattleIslands,
     }
 
     public class XOM_File
@@ -64,6 +69,7 @@ namespace CrateModLoader.GameSpecific.WormsForts
         public byte[] HeaderPad2; // 0x1C
 
         public List<XOM_TYPE> Types;
+        public List<Type> TypesKnown;
         public byte[] GUID; //0x20
         public Dictionary<uint, string> Strings; // id skips 0x80 after every 0x80
         public List<Container> Containers; // order determines type
@@ -106,6 +112,7 @@ namespace CrateModLoader.GameSpecific.WormsForts
             }
 
             Types = new List<XOM_TYPE>();
+            TypesKnown = new List<Type>();
             Strings = new Dictionary<uint, string>();
             Containers = new List<Container>();
 
@@ -128,6 +135,10 @@ namespace CrateModLoader.GameSpecific.WormsForts
                 string typeName = new string(reader.ReadChars(0x20));
                 typeName = typeName.Trim('\0');
                 newType.Name = typeName;
+
+                newType.KnownType = null;
+                newType.Containers = new List<Container>();
+
                 Types.Add(newType);
             }
 
@@ -191,6 +202,7 @@ namespace CrateModLoader.GameSpecific.WormsForts
                     Container newCont = null;
                     if (XOM_TYPE.SupportedTypes.ContainsKey(ContType.Name))
                     {
+                        ContType.KnownType = XOM_TYPE.SupportedTypes[ContType.Name];
                         newCont = (Container)Activator.CreateInstance(XOM_TYPE.SupportedTypes[ContType.Name]);
                     }
                     else
@@ -204,6 +216,7 @@ namespace CrateModLoader.GameSpecific.WormsForts
                         newCont.RawData = true;
                     }
 
+                    ContType.Containers.Add(newCont);
                     Containers.Add(newCont);
                 }
             }
@@ -367,6 +380,61 @@ namespace CrateModLoader.GameSpecific.WormsForts
             //Console.WriteLine("XOM saved.");
         }
 
+        public XOM_TYPE GetXomType(Type thisType)
+        {
+            XOM_TYPE xType = null;
+            foreach (XOM_TYPE t in Types)
+            {
+                if (t.KnownType != null && t.KnownType == thisType)
+                {
+                    xType = t;
+                    break;
+                }
+            }
+            return xType;
+        }
+
+        public T GetContainer<T>(string cname) where T : NamedContainer
+        {
+            XOM_TYPE xType = GetXomType(typeof(T));
+            if (xType == null) return null;
+
+            foreach (Container cont in xType.Containers)
+            {
+                NamedContainer nam = (NamedContainer)cont;
+                if (nam.Name == cname)
+                {
+                    return (T)cont;
+                }
+            }
+            return null;
+        }
+
+        public T GetContainer<T>() where T : Container
+        {
+            XOM_TYPE xType = GetXomType(typeof(T));
+            if (xType == null) return null;
+
+            foreach (Container cont in xType.Containers)
+            {
+                return (T)cont;
+            }
+            return null;
+        }
+
+        public List<T> GetContainers<T>() where T : Container
+        {
+            List<T> entries = new List<T>();
+
+            XOM_TYPE xType = GetXomType(typeof(T));
+            if (xType == null) return entries;
+            
+            foreach (Container cont in xType.Containers)
+            {
+                entries.Add((T)cont);
+            }
+            return entries;
+        }
     }
 
 }

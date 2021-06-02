@@ -28,8 +28,6 @@ namespace CrateModLoader.GameSpecific.Crash2
         public static ModPropOption Option_RandInvisibleCrates = new ModPropOption(CrashTri_Text.Rand_InvisibleCrates, CrashTri_Text.Rand_InvisibleCratesDesc);
         [ExecutesMods(typeof(CrashTri_Rand_AshedCrates))]
         public static ModPropOption Option_AllCratesAshed = new ModPropOption("All Crates Are Covered Up", "All crates are covered up to look the same on the outside in each level.");
-        [ExecutesMods(typeof(CrashTri_Rand_AshedCrates))]
-        public static ModPropOption Option_RandCratesAshed = new ModPropOption("Random Crate Types Are Covered Up", "Random crate types are covered up to look the same on the outside in each level.");
         [ExecutesMods(typeof(CrashTri_Rand_CrateContents))]
         public static ModPropOption Option_RandCrateContents = new ModPropOption(CrashTri_Text.Rand_CrateContents, CrashTri_Text.Rand_CrateContentsDesc);
         [ExecutesMods(typeof(CrashTri_Rand_CrateParams))]

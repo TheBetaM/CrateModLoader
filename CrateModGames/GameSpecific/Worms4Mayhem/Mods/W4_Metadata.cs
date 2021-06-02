@@ -10,16 +10,10 @@ namespace CrateModLoader.GameSpecific.Worms4
     {
         public override void ModPass(XOM_File file)
         {
-            for (int i = 0; i < file.Containers.Count; i++)
-            {
-                if (file.Containers[i] is XStringResourceDetails cont)
-                {
-                    if (file.Strings[cont.NameKey.RawValue] == "FETIP.Return")
-                    {
-                        file.Strings[cont.ValueKey.RawValue] = "Crate Mod Loader " + ModLoaderGlobals.ProgramVersion + " Seed: " + ModLoaderGlobals.RandomizerSeed;
-                    }
-                }
-            }
+            XStringResourceDetails cont = file.GetContainer<XStringResourceDetails>("FETIP.Return");
+            if (cont == null) return;
+
+            cont.Value = "Crate Mod Loader " + ModLoaderGlobals.ProgramVersion + " Seed: " + ModLoaderGlobals.RandomizerSeed;
         }
     }
 }

@@ -16,6 +16,8 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
         public static ModPropOption Option_RandEnemiesRemoved = new ModPropOption("Random Enemies Removed", "Enemies are randomly removed in each level.");
         [ExecutesMods(typeof(TWOC_Rand_Music))] [ModAllowedConsoles(ConsoleMode.GCN, ConsoleMode.XBOX)]
         public static ModPropOption Option_RandMusic = new ModPropOption("Randomize Music", "Music tracks are shuffled around."); //works on xbox
+        [ExecutesMods(typeof(TWOC_Metadata))] [ModHidden]
+        public static ModPropOption Option_Metadata = new ModPropOption(1);
 
         [ExecutesMods(typeof(TWOC_Rand_WumpaIntoCrates))] [ModHidden]
         public static ModPropOption Option_RandWumpaCrates = new ModPropOption("Random Wumpa Are Random Crates", "Wumpas are randomly turned into crates in each level. The box counter is adjusted accordingly."); //todo: new box positions are off

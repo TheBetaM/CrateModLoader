@@ -12,41 +12,40 @@ General
 - More Mod Crate management options:  Change install order, Delete, Import, Create, Edit
 - You can now create and edit full-fledged Mod Crates from within the program. (The game must be preloaded to create or edit Mod Crates)
 - Fixed not being able to build unsupported games
-- Blocked starting a new process after one finishes to prevent bugs. To work around this you can (re)open a ROM to fully reset the program.
-- Mod Crates can now also include Octodiff-based delta patches (ex. /layer1/Language/Code/English.txt.octodelta)
+- Blocked starting a new process after one finishes to prevent bugs. To work around this you can (re)open a ROM or fully restart the program.
+- Mod Crates can now also include Octodiff-based delta patches for every game file (ex. /layer1/Language/Code/English.txt.octodelta)
 They can be automatically created from within the Crate Mod Loader, or manually using Octodiff's 1.2.1 version.
-The advantage to using them is a lower file size of Mod Crates, the downside being incompatibility between different versions of the same file.
+The advantage to using them is a lower file size of Mod Crates, the downside being incompatibility between different versions of the same game file.
 
 New games supported:
-- Super Monkey Ball Adventure (PSP, PS2, GCN)  
-- Worms 3D (PS2)  
+- Super Monkey Ball Adventure (PSP)  
 - Worms Forts: Under Siege (PS2)  
-- Worms 4: Mayhem (PS2)  
   
 Crash Twinsanity
 - Improved feature compatibility with added/modded levels in Mod Crates
+
+Rayman 3: Hoodlum Havoc
+- Crate Mod Loader info is now displayed ingame. (Title screen)  
 
 Crash Bandicoot
 - New feature: Enable Unused Enemies
 - New feature: Randomize Level Order
 - New feature: Add Stormy Ascent
 - New feature: Randomize Music Tracks
-- New feature: Randomize Crate Parameters
-- New feature: Random Crates Removed
-- New feature: Invisible World
 
 Crash Bandicoot 2: Cortex Strikes Back
-- New feature: Random/All Crates Are Covered Up
+- New feature: All Crates Are Covered Up
 - New feature: Randomize Music Tracks
-- New feature: Invisible World
 - Randomize World Textures: Fixed not being able to build using this feature
 
 Crash Bandicoot: WARPED
 - New feature: Randomize Level Order
-- New feature: Random/All Crates Are Covered Up
+- New feature: All Crates Are Covered Up
 - New feature: Randomize Music Tracks
-- New feature: Invisible World
-- Randomize World Textures: Fixed not being able to build using this feature
+- Randomize World Textures: Fixed not being able to build using this feature  
+
+Crash Bandicoot: The Wrath Of Cortex
+- Crate Mod Loader info is now displayed ingame. (Options screen)  
 
 CTR: Crash Team Racing
 - New feature: All Wooden Crates Are Wumpa Crates
@@ -55,12 +54,12 @@ CTR: Crash Team Racing
 - New feature: Random Tracks Have Ice Physics
 - New feature: Driving Offroad Respawns The Driver
 - New feature: Randomize World Palette
-- Updated CTR Framework API (existing Mod Crates will need to be updated due to file name changes)
+- Updated CTR Framework API (existing Mod Crates will need to be updated due to extraction file name changes)
 
 Crash of the Titans
 - New feature: Randomize Costume Visuals
 - New feature: Randomize Cutscene Costumes
-- Crate Mod Loader info is now displayed ingame. (Credits)
+- Crate Mod Loader info is now displayed ingame. (Credits screen)
 
 Crash Mind Over Mutant
 - New feature: Randomize Costume Visuals  

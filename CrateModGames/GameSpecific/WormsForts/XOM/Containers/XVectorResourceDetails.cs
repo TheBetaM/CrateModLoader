@@ -5,8 +5,13 @@ using System.IO;
 namespace CrateModLoader.GameSpecific.WormsForts.XOM
 {
     [XOM_TypeName("XVectorResourceDetails")]
-    public class XVectorResourceDetails : Container
+    public class XVectorResourceDetails : NamedContainer
     {
+        public override string Name
+        {
+            get { return ParentFile.Strings[NameKey.RawValue]; }
+            set { ParentFile.Strings[NameKey.RawValue] = value; }
+        }
         public float X;
         public float Y;
         public float Z;
