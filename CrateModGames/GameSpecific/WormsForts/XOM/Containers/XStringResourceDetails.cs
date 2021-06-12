@@ -9,13 +9,13 @@ namespace CrateModLoader.GameSpecific.WormsForts.XOM
     {
         public override string Name
         {
-            get { return ParentFile.Strings[NameKey.RawValue]; }
-            set { ParentFile.Strings[NameKey.RawValue] = value; }
+            get { return ParentFile.Strings[(int)NameKey.Value]; }
+            set { ParentFile.Strings[(int)NameKey.Value] = value; }
         }
         public string Value
         {
-            get { return ParentFile.Strings[ValueKey.RawValue]; }
-            set { ParentFile.Strings[ValueKey.RawValue] = value; }
+            get { return ParentFile.Strings[(int)ValueKey.Value]; }
+            set { ParentFile.Strings[(int)ValueKey.Value] = value; }
         }
         public VInt NameKey = new VInt();
         public VInt ValueKey = new VInt();
@@ -26,15 +26,6 @@ namespace CrateModLoader.GameSpecific.WormsForts.XOM
             ValueKey = new VInt(reader);
             NameKey = new VInt(reader);
             Flags = reader.ReadUInt32();
-
-            if (ParentFile.Strings.ContainsKey(NameKey.RawValue) && ParentFile.Strings.ContainsKey(ValueKey.RawValue))
-            {
-                //Console.WriteLine("XString: " + ParentFile.Strings[NameKey.RawValue] + " - " + ParentFile.Strings[ValueKey.RawValue]);
-            }
-            else
-            {
-                Console.WriteLine("XString: KEY NOT FOUND: " + NameKey.RawValue + " / " + ValueKey.RawValue);
-            }
         }
 
         public override void Write(BinaryWriter writer)

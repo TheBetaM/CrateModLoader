@@ -49,6 +49,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml" />
     <Reference Include="Twinsanity">
       <HintPath>GameSpecific\CrashTS\Twinsanity.dll</HintPath>
@@ -222,6 +223,9 @@
     <Compile Include="GameSpecific\CrashTS\Common\Pipeline_BD.cs" />
     <Compile Include="GameSpecific\CrashTS\Common\PSM_Texture.cs" />
     <Compile Include="GameSpecific\CrashTS\Game_CrashTS.cs" />
+    <Compile Include="GameSpecific\CrashTS\Level\CollisionData_RM.cs" />
+    <Compile Include="GameSpecific\CrashTS\Level\Level_RM.cs" />
+    <Compile Include="GameSpecific\CrashTS\Level\Object_Instance.cs" />
     <Compile Include="GameSpecific\CrashTS\Modder_Twins.cs" />
     <Compile Include="GameSpecific\CrashTS\Mods\TS_ChangeCreditsChunk.cs" />
     <Compile Include="GameSpecific\CrashTS\Mods\TS_ChangeStartingChunk.cs" />
@@ -434,6 +438,8 @@
     <Compile Include="GameSpecific\MonkeyBallAdv\Common\Parser_XML.cs" />
     <Compile Include="GameSpecific\MonkeyBallAdv\Common\SMBA_Common.cs" />
     <Compile Include="GameSpecific\MonkeyBallAdv\Game_MonkeyBallAdv.cs" />
+    <Compile Include="GameSpecific\MonkeyBallAdv\Level\Level_RM.cs" />
+    <Compile Include="GameSpecific\MonkeyBallAdv\Level\Object_InstanceMB.cs" />
     <Compile Include="GameSpecific\MonkeyBallAdv\Modder_MonkeyBallAdv.cs" />
     <Compile Include="GameSpecific\MonkeyBallAdv\Mods\SMBA_EnableJump.cs" />
     <Compile Include="GameSpecific\MonkeyBallAdv\Mods\SMBA_EnablePowerJump.cs" />
@@ -488,6 +494,9 @@
     <Compile Include="GameSpecific\WormsForts\Common\TGASharpLib.cs" />
     <Compile Include="GameSpecific\WormsForts\Common\WormsForts_Common.cs" />
     <Compile Include="GameSpecific\WormsForts\Game_WormsForts.cs" />
+    <Compile Include="GameSpecific\WormsForts\Level\CollisionData_XOM.cs" />
+    <Compile Include="GameSpecific\WormsForts\Level\Level_XOM.cs" />
+    <Compile Include="GameSpecific\WormsForts\Level\Object_BuildPoint.cs" />
     <Compile Include="GameSpecific\WormsForts\Modder_WormsForts.cs" />
     <Compile Include="GameSpecific\WormsForts\Mods\WormsForts_FortWeaponsAnywhere.cs" />
     <Compile Include="GameSpecific\WormsForts\Mods\WormsForts_Metadata.cs" />
@@ -497,6 +506,7 @@
     <Compile Include="GameSpecific\WormsForts\Properties\WormsForts_Props_Main.cs" />
     <Compile Include="GameSpecific\WormsForts\Properties\WormsForts_Props_Textures.cs" />
     <Compile Include="GameSpecific\WormsForts\Randomizers\WormsForts_DM_Rand_LevelOrder.cs" />
+    <Compile Include="GameSpecific\WormsForts\Randomizers\WormsForts_DM_Rand_ShuffleBuildPoints.cs" />
     <Compile Include="GameSpecific\WormsForts\Randomizers\WormsForts_Rand_Epoch.cs" />
     <Compile Include="GameSpecific\WormsForts\Randomizers\WormsForts_Rand_Skybox.cs" />
     <Compile Include="GameSpecific\WormsForts\Randomizers\WormsForts_Rand_VictLocations.cs" />

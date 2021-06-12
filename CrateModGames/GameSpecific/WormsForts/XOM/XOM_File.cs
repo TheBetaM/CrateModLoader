@@ -69,9 +69,8 @@ namespace CrateModLoader.GameSpecific.WormsForts
         public byte[] HeaderPad2; // 0x1C
 
         public List<XOM_TYPE> Types;
-        public List<Type> TypesKnown;
         public byte[] GUID; //0x20
-        public Dictionary<uint, string> Strings; // id skips 0x80 after every 0x80
+        public List<string> Strings;
         public List<Container> Containers; // order determines type
 
         public void Read(string fileName)
@@ -112,8 +111,7 @@ namespace CrateModLoader.GameSpecific.WormsForts
             }
 
             Types = new List<XOM_TYPE>();
-            TypesKnown = new List<Type>();
-            Strings = new Dictionary<uint, string>();
+            Strings = new List<string>();
             Containers = new List<Container>();
 
             // Header
@@ -160,12 +158,7 @@ namespace CrateModLoader.GameSpecific.WormsForts
             // String 0 is empty
             long pos = reader.BaseStream.Position;
             reader.ReadByte();
-            Strings.Add(0, "");
-            uint IDskip = 1;
-            uint LeftTilSkip = 0x7F;
-            bool FirstSkip = false;
-            // String key reference lengths are dynamic, if it's less than 0x80 it's one byte, otherwise two bytes
-            // todo: change key to compressed int type? even though it never goes that high...
+            Strings.Add("");
             for (int i = 0; i < StringCount; i++)
             {
                 long start = pos + StrOffsets[i];
@@ -176,20 +169,8 @@ namespace CrateModLoader.GameSpecific.WormsForts
                     len++;
                 }
                 reader.BaseStream.Position = start;
-                Strings.Add(IDskip, new string(reader.ReadChars(len)));
+                Strings.Add(new string(reader.ReadChars(len)));
                 reader.ReadByte();
-                IDskip++;
-                LeftTilSkip--;
-                if (LeftTilSkip == 0)
-                {
-                    if (!FirstSkip)
-                    {
-                        FirstSkip = true;
-                        IDskip += 0x80;
-                    }
-                    IDskip += 0x80;
-                    LeftTilSkip = 0x80;
-                }
             }
             reader.BaseStream.Position = pos + SectionSize;
 
@@ -228,10 +209,9 @@ namespace CrateModLoader.GameSpecific.WormsForts
             for (int i = 0; i < ContainerCount; i++)
             {
                 Container newCont = Containers[i];
-                newCont.ID = (uint)i + 1; // todo: ID is a dynamic dictionary like the strings dict
+                newCont.ID = (uint)i + 1;
 
                 // ideally all structure sizes would be known in which case this wouldn't be needed
-                // it makes everything slow for big files!
                 long startCont = reader.BaseStream.Position;
                 if (newCont is UnknownContainer)
                 {
@@ -349,14 +329,11 @@ namespace CrateModLoader.GameSpecific.WormsForts
             // String 0 is empty
             writer.Write((byte)0);
 
-            foreach (KeyValuePair<uint, string> pair in Strings)
+            for (int s = 1; s < Strings.Count; s++)
             {
-                if (pair.Key != 0)
-                {
-                    StrOffsets.Add((int)(writer.BaseStream.Position - SizeCountStart));
-                    writer.Write(pair.Value.ToCharArray());
-                    writer.Write((byte)0);
-                }
+                StrOffsets.Add((int)(writer.BaseStream.Position - SizeCountStart));
+                writer.Write(Strings[s].ToCharArray());
+                writer.Write((byte)0);
             }
             long CNTRsectionstart = writer.BaseStream.Position;
 

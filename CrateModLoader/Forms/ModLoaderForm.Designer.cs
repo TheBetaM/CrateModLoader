@@ -53,7 +53,8 @@
             this.panel_desc = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.button_downloadMods = new System.Windows.Forms.Button();
+            this.button_preloadGame = new System.Windows.Forms.Button();
+            this.button_LevelEditor = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem_loadROM = new System.Windows.Forms.ToolStripMenuItem();
@@ -190,10 +191,11 @@
             // numericUpDown1
             // 
             this.numericUpDown1.BackColor = System.Drawing.SystemColors.Window;
+            this.tableLayoutPanel1.SetColumnSpan(this.numericUpDown1, 3);
             this.numericUpDown1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.numericUpDown1.Enabled = false;
             this.numericUpDown1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.numericUpDown1.Location = new System.Drawing.Point(197, 26);
+            this.numericUpDown1.Location = new System.Drawing.Point(196, 26);
             this.numericUpDown1.Margin = new System.Windows.Forms.Padding(1, 1, 0, 0);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             2147483647,
@@ -201,7 +203,7 @@
             0,
             0});
             this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(195, 24);
+            this.numericUpDown1.Size = new System.Drawing.Size(196, 24);
             this.numericUpDown1.TabIndex = 12;
             this.numericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.toolTip1.SetToolTip(this.numericUpDown1, "The seed of all randomizers for this game.");
@@ -215,13 +217,14 @@
             // 
             // button_randomizeSeed
             // 
+            this.tableLayoutPanel1.SetColumnSpan(this.button_randomizeSeed, 3);
             this.button_randomizeSeed.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button_randomizeSeed.Enabled = false;
             this.button_randomizeSeed.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.button_randomizeSeed.Location = new System.Drawing.Point(0, 25);
             this.button_randomizeSeed.Margin = new System.Windows.Forms.Padding(0);
             this.button_randomizeSeed.Name = "button_randomizeSeed";
-            this.button_randomizeSeed.Size = new System.Drawing.Size(196, 25);
+            this.button_randomizeSeed.Size = new System.Drawing.Size(195, 25);
             this.button_randomizeSeed.TabIndex = 13;
             this.button_randomizeSeed.Text = "Randomize Seed →";
             this.toolTip1.SetToolTip(this.button_randomizeSeed, "Randomize the seed to the right of this button.");
@@ -246,13 +249,14 @@
             // 
             // button_openModMenu
             // 
+            this.tableLayoutPanel1.SetColumnSpan(this.button_openModMenu, 2);
             this.button_openModMenu.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button_openModMenu.Enabled = false;
             this.button_openModMenu.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button_openModMenu.Location = new System.Drawing.Point(196, 0);
+            this.button_openModMenu.Location = new System.Drawing.Point(130, 0);
             this.button_openModMenu.Margin = new System.Windows.Forms.Padding(0);
             this.button_openModMenu.Name = "button_openModMenu";
-            this.button_openModMenu.Size = new System.Drawing.Size(196, 25);
+            this.button_openModMenu.Size = new System.Drawing.Size(130, 25);
             this.button_openModMenu.TabIndex = 19;
             this.button_openModMenu.Text = "Mod Menu";
             this.toolTip1.SetToolTip(this.button_openModMenu, "Open the Mod Menu of this specific game.");
@@ -352,15 +356,18 @@
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Controls.Add(this.numericUpDown1, 1, 1);
+            this.tableLayoutPanel1.ColumnCount = 6;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel1.Controls.Add(this.numericUpDown1, 3, 1);
             this.tableLayoutPanel1.Controls.Add(this.button_randomizeSeed, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.button_downloadMods, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.button_openModMenu, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.button_preloadGame, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.button_openModMenu, 2, 0);
+            this.tableLayoutPanel1.Controls.Add(this.button_LevelEditor, 4, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
@@ -368,23 +375,42 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(392, 50);
             this.tableLayoutPanel1.TabIndex = 42;
             // 
-            // button_downloadMods
+            // button_preloadGame
             // 
-            this.button_downloadMods.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button_downloadMods.Enabled = false;
-            this.button_downloadMods.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button_downloadMods.Location = new System.Drawing.Point(0, 0);
-            this.button_downloadMods.Margin = new System.Windows.Forms.Padding(0);
-            this.button_downloadMods.Name = "button_downloadMods";
-            this.button_downloadMods.Size = new System.Drawing.Size(196, 25);
-            this.button_downloadMods.TabIndex = 22;
-            this.button_downloadMods.Text = "Preload Game";
-            this.button_downloadMods.UseVisualStyleBackColor = true;
-            this.button_downloadMods.Visible = false;
-            this.button_downloadMods.Click += new System.EventHandler(this.button_downloadMods_Click);
+            this.tableLayoutPanel1.SetColumnSpan(this.button_preloadGame, 2);
+            this.button_preloadGame.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button_preloadGame.Enabled = false;
+            this.button_preloadGame.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button_preloadGame.Location = new System.Drawing.Point(0, 0);
+            this.button_preloadGame.Margin = new System.Windows.Forms.Padding(0);
+            this.button_preloadGame.Name = "button_preloadGame";
+            this.button_preloadGame.Size = new System.Drawing.Size(130, 25);
+            this.button_preloadGame.TabIndex = 22;
+            this.button_preloadGame.Text = "Preload Game";
+            this.button_preloadGame.UseVisualStyleBackColor = true;
+            this.button_preloadGame.Visible = false;
+            this.button_preloadGame.Click += new System.EventHandler(this.button_downloadMods_Click);
+            // 
+            // button_LevelEditor
+            // 
+            this.tableLayoutPanel1.SetColumnSpan(this.button_LevelEditor, 2);
+            this.button_LevelEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button_LevelEditor.Enabled = false;
+            this.button_LevelEditor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button_LevelEditor.Location = new System.Drawing.Point(260, 0);
+            this.button_LevelEditor.Margin = new System.Windows.Forms.Padding(0);
+            this.button_LevelEditor.Name = "button_LevelEditor";
+            this.button_LevelEditor.Size = new System.Drawing.Size(132, 25);
+            this.button_LevelEditor.TabIndex = 23;
+            this.button_LevelEditor.Text = "Level Editor";
+            this.button_LevelEditor.UseVisualStyleBackColor = true;
+            this.button_LevelEditor.Visible = false;
+            this.button_LevelEditor.Click += new System.EventHandler(this.button_LevelEditor_Click);
             // 
             // menuStrip1
             // 
@@ -639,7 +665,7 @@
         private System.Windows.Forms.LinkLabel linkLabel_optionDesc;
         private System.Windows.Forms.Panel panel_desc;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Button button_downloadMods;
+        private System.Windows.Forms.Button button_preloadGame;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_loadROM;
@@ -658,6 +684,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
         private System.Windows.Forms.Panel panel_modCrateManager;
+        private System.Windows.Forms.Button button_LevelEditor;
     }
 }
 

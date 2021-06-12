@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using CrateModLoader.LevelAPI;
 
 namespace CrateModLoader
 {
@@ -15,7 +16,6 @@ namespace CrateModLoader
         public virtual bool SecondarySkip => true;
         public virtual bool DisableAsync => false;
         public Modder ExecutionSource;
-        private Dictionary<string, List<FileInfo>> FoundFiles;
         public override bool SkipParser { get; set; }
         public bool LoadOnly = false;
         private uint ErrorCount = 0;
@@ -136,6 +136,24 @@ namespace CrateModLoader
             }
             return false;
         }
+
+        public sealed override LevelBase LoadLevel(string FileName)
+        {
+            LevelBase lev = null;
+            try
+            {
+                T thing = LoadObject(FileName);
+
+                lev = LoadLevel(thing);
+            }
+            catch
+            {
+                Console.WriteLine("ModParser Error: " + FileName);
+            }
+            return lev;
+        }
+
+        public virtual LevelBase LoadLevel(T data) { return null; }
 
         bool CheckModsForType()
         {

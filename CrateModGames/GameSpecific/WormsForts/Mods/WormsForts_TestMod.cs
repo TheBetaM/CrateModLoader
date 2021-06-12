@@ -21,7 +21,7 @@ namespace CrateModLoader.GameSpecific.WormsForts
                 }
                 else if (file.Containers[i] is BuildingSpecificContainer bscont)
                 {
-                    if (file.Strings[bscont.ResourceName.RawValue] == "BrickifiedTower")
+                    if (file.Strings[(int)bscont.ResourceName.Value] == "BrickifiedTower")
                     {
                         //works
                         bscont.BuildingHealth = 60;
@@ -44,7 +44,7 @@ namespace CrateModLoader.GameSpecific.WormsForts
                 else if (file.Containers[i] is XColorResourceDetails colorcont)
                 {
                     //works but doesn't affect the battle color
-                    if (file.Strings[colorcont.NameKey.RawValue] == "AllianceColour1")
+                    if (file.Strings[(int)colorcont.NameKey.Value] == "AllianceColour1")
                     {
                         colorcont.R = 0;
                         colorcont.G = 255;
@@ -55,13 +55,13 @@ namespace CrateModLoader.GameSpecific.WormsForts
                 else if (file.Containers[i] is LevelDetails levcont)
                 {
                     //works
-                    if (file.Strings[levcont.LevelName.RawValue] == "Text.Level.Deathmatch1")
+                    if (file.Strings[(int)levcont.LevelName.Value] == "Text.Level.Deathmatch1")
                     {
-                        foreach (KeyValuePair<uint, string> pair in file.Strings)
+                        for (int s = 0; s < file.Strings.Count; s++)
                         {
-                            if (pair.Value == "SS.DM2")
+                            if (file.Strings[s] == "SS.DM2")
                             {
-                                levcont.Image.RawValue = pair.Key;
+                                levcont.Image.Value = (uint)s;
                                 break;
                             }
                         }
@@ -72,11 +72,11 @@ namespace CrateModLoader.GameSpecific.WormsForts
                     //works
                     foreach (XFortsExportedData.BuildPoint Point in fortcont.BuildPoints)
                     {
-                        if (file.Strings[Point.NameID.RawValue] == "buildHere0028")
+                        if (file.Strings[(int)Point.NameID.Value] == "buildHere0028")
                         {
                             Point.VictoryLocation.Value = true;
                         }
-                        if (file.Strings[Point.NameID.RawValue] == "buildHere0029")
+                        if (file.Strings[(int)Point.NameID.Value] == "buildHere0029")
                         {
                             Point.VictoryLocation.Value = false;
                         }

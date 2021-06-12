@@ -8,7 +8,7 @@ namespace CrateModLoader.GameSpecific.WormsForts.XOM
     public class VInt
     {
         public uint Value;
-        public uint RawValue; // make this private at some point
+        private uint RawValue;
 
         public VInt() { }
         public VInt(uint v)
@@ -151,21 +151,21 @@ namespace CrateModLoader.GameSpecific.WormsForts.XOM
 
         private void Compress(uint In)
         {
-            if (In < 128)
+            if (In < 0x80)
             {
                 RawValue = In;
             }
-            else if (In >= 128 && In <= 16383)
+            else if (In >= 0x80 && In < 0x4000)
             {
                 byte Low = (byte)(In % 0x80);
                 Low += 0x80;
                 byte Pow = (byte)(In / 0x80);
                 RawValue = (uint)((Pow * 0x100) + Low);
             }
-            else if (In >= 16384 && In <= 2097151)
+            else if (In >= 0x4000 && In < 0x200000)
             {
                 byte Pow = (byte)(In / 0x4000);
-                uint Val1 = (uint)(In - (Pow * 0x10000));
+                ushort Val1 = (ushort)(In - (Pow * 0x4000));
 
                 byte Mid = (byte)(Val1 / 0x80);
                 Mid += 0x80;
@@ -175,13 +175,13 @@ namespace CrateModLoader.GameSpecific.WormsForts.XOM
                 
                 RawValue = (uint)((Pow * 0x10000) + (Mid * 0x100) + Low);
             }
-            else if (In >= 2097152 && In <= 268435455)
+            else if (In >= 0x200000 && In <= 0x0FFFFFFF)
             {
                 byte Top = (byte)(In / 0x200000);
-                uint Val1 = (uint)(In - (Top * 0x1000000));
+                uint Val1 = (uint)(In - (Top * 0x200000));
 
                 byte Pow = (byte)(Val1 / 0x4000);
-                uint Val2 = (uint)((In - (Top * 0x1000000)) - (Pow * 0x10000));
+                uint Val2 = (uint)((In - (Top * 0x200000)) - (Pow * 0x4000));
                 Pow += 0x80;
 
                 byte Mid = (byte)(Val2 / 0x80);
@@ -270,6 +270,12 @@ namespace CrateModLoader.GameSpecific.WormsForts.XOM
         public Vector3(BinaryReader reader)
         {
             Read(reader);
+        }
+        public Vector3(float x, float y, float z)
+        {
+            X = x;
+            Y = y;
+            Z = z;
         }
 
         public void Read(BinaryReader reader)

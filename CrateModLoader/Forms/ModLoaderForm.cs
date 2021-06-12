@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using CrateModAPI.Resources.Text;
 using CrateModLoader.ModProperties;
+using CrateModLoader.Forms.LevelEditor;
 
 namespace CrateModLoader
 {
@@ -34,7 +35,7 @@ namespace CrateModLoader
             Text = ModLoaderText.ProgramTitle;
             textBox_inputPath.Text = ModLoaderText.InputInstruction;
             textBox_outputPath.Text = ModLoaderText.OutputInstruction;
-            button_downloadMods.Text = ModLoaderText.Button_PreloadGame;
+            button_preloadGame.Text = ModLoaderText.Button_PreloadGame;
 
             ModCrateBox = new ModCrateManagerBox(ModProgram);
             ModCrateBox.Dock = DockStyle.Fill;
@@ -54,7 +55,7 @@ namespace CrateModLoader
             toolTip1.SetToolTip(linkLabel_programTitle, ModLoaderText.Tooltip_Label_Version);
             toolTip1.SetToolTip(linkLabel_apiCredit, ModLoaderText.Tooltip_Label_API);
             toolTip1.SetToolTip(numericUpDown1, ModLoaderText.Tooltip_Numeric_Seed);
-            toolTip1.SetToolTip(button_downloadMods, ModLoaderText.Tooltip_PreloadGame);
+            toolTip1.SetToolTip(button_preloadGame, ModLoaderText.Tooltip_PreloadGame);
             //toolTip1.SetToolTip(button_modCrateMenu, ModLoaderText.Tooltip_Button_ModCrates);
             toolTip1.SetToolTip(button_openModMenu, ModLoaderText.Tooltip_Button_ModMenu);
             //toolTip1.SetToolTip(button_modTools, ModLoaderText.Tooltip_Button_ModTools);
@@ -194,19 +195,6 @@ namespace CrateModLoader
             {
                 ModProgram.StartProcess(false);
             }
-        }
-
-        private void button_modCrateMenu_Click(object sender, EventArgs e)
-        {
-            // Mod Crate Manager Window: 
-            // Either a checkbox list of .zip files in a mod directory OR
-            // A list with a button that lets you manually add .zip files
-            // Set availability in the respective modder's Game struct (ModCratesSupported variable) 
-
-            //ModCrateManagerForm modCrateManagerMenu = new ModCrateManagerForm(ModProgram);
-
-            //modCrateManagerMenu.Owner = this;
-            //modCrateManagerMenu.Show();
         }
 
         private void button_openModMenu_Click(object sender, EventArgs e)
@@ -425,6 +413,7 @@ namespace CrateModLoader
             button_browseInput.Enabled = false;
             button_browseOutput.Enabled = false;
             button_randomizeSeed.Enabled = false;
+            button_LevelEditor.Enabled = false;
             textBox_outputPath.ReadOnly = true;
             numericUpDown1.ReadOnly = true;
             numericUpDown1.Enabled = false;
@@ -433,7 +422,7 @@ namespace CrateModLoader
             linkLabel_apiCredit.Enabled = false;
             linkLabel_programTitle.Enabled = false;
             //button_modTools.Enabled = false;
-            button_downloadMods.Enabled = false;
+            button_preloadGame.Enabled = false;
             menuStrip1.Enabled = false;
             ModCrateBox.Enabled = false;
             DragDrop -= ModLoaderForm_DragDrop;
@@ -453,6 +442,7 @@ namespace CrateModLoader
             button_browseInput.Enabled = true;
             button_browseOutput.Enabled = true;
             button_randomizeSeed.Enabled = true;
+            
             textBox_outputPath.ReadOnly = false;
             numericUpDown1.ReadOnly = false;
             numericUpDown1.Enabled = true;
@@ -465,17 +455,22 @@ namespace CrateModLoader
             if (ModProgram.Modder != null)
             {
                 button_openModMenu.Enabled = ModProgram.Modder.ModMenuEnabled;
+                button_LevelEditor.Enabled = ModProgram.Game.EnableLevelEditor;
+            }
+            else
+            {
+                button_openModMenu.Enabled = button_LevelEditor.Enabled = false;
             }
             //button_modTools.Enabled = false;//true;
 
             if (!ModProgram.GamePreloaded)
                 //ModProgram.Modder.CanPreloadGame && (ModProgram.Modder.PreloadConsoles == null || ModProgram.Modder.PreloadConsoles.Contains(ModProgram.Pipeline.Metadata.Console)))
             {
-                button_downloadMods.Enabled = true;
+                button_preloadGame.Enabled = true;
             }
             else
             {
-                button_downloadMods.Enabled = false;
+                button_preloadGame.Enabled = false;
             }
 
             if (ModProgram.Modder != null && !string.IsNullOrWhiteSpace(ModProgram.Game.API_Link))
@@ -497,8 +492,8 @@ namespace CrateModLoader
             //button_modCrateMenu.Enabled = button_modCrateMenu.Visible = false;
             button_randomizeSeed.Enabled = button_randomizeSeed.Visible = false;//button_modTools.Visible = button_modTools.Enabled = false;
             numericUpDown1.Enabled = numericUpDown1.Visible = false;
-            button_downloadMods.Visible = true;
-            button_downloadMods.Enabled = !ModProgram.GamePreloaded;
+            button_preloadGame.Visible = true;
+            button_preloadGame.Enabled = !ModProgram.GamePreloaded;
             ModCrateBox.Visible = ModCrateBox.Enabled = false;
 
             linkLabel_apiCredit.Text = string.Empty;
@@ -526,11 +521,11 @@ namespace CrateModLoader
             button_openModMenu.Visible = true;
             button_openModMenu.Enabled = false;
             //button_modCrateMenu.Enabled = button_modCrateMenu.Visible = true;
-            button_randomizeSeed.Enabled = button_randomizeSeed.Visible = button_openModMenu.Visible = button_openModMenu.Enabled = false;// button_modTools.Visible = false;
+            button_randomizeSeed.Enabled = button_randomizeSeed.Visible = button_openModMenu.Visible = button_openModMenu.Enabled = button_LevelEditor.Enabled = button_LevelEditor.Visible = false;// button_modTools.Visible = false;
             numericUpDown1.Enabled = numericUpDown1.Visible = false;
             //button_modTools.Enabled = false;
-            button_downloadMods.Visible = true;
-            button_downloadMods.Enabled = !ModProgram.GamePreloaded;
+            button_preloadGame.Visible = true;
+            button_preloadGame.Enabled = !ModProgram.GamePreloaded;
             ModCrateBox.Visible = ModCrateBox.Enabled = true;
             ModCrateBox.PopulateList();
 
@@ -551,8 +546,11 @@ namespace CrateModLoader
             string region_mod = e.Region;
             //button_modCrateMenu.Text = ModLoaderText.ModCratesButton;
             checkedListBox1.Items.Clear();
+
             button_openModMenu.Visible = true;
             button_openModMenu.Enabled = ModProgram.Modder.ModMenuEnabled;
+            button_LevelEditor.Visible = true;
+            button_LevelEditor.Enabled = ModProgram.Game.EnableLevelEditor;
             //button_modCrateMenu.Visible = true;
             //button_modCrateMenu.Enabled = !game.ModCratesDisabled;
             button_randomizeSeed.Enabled = button_randomizeSeed.Visible = true; //button_modTools.Visible = button_downloadMods.Visible = true;
@@ -562,11 +560,11 @@ namespace CrateModLoader
             if (!ModProgram.GamePreloaded)
               //&& ModProgram.Modder.CanPreloadGame && (ModProgram.Modder.PreloadConsoles == null || ModProgram.Modder.PreloadConsoles.Contains(ModProgram.Pipeline.Metadata.Console)))
             {
-                button_downloadMods.Enabled = true;
+                button_preloadGame.Enabled = true;
             }
             else
             {
-                button_downloadMods.Enabled = false;
+                button_preloadGame.Enabled = false;
             }
 
             numericUpDown1.Enabled = numericUpDown1.Visible = true;
@@ -757,6 +755,20 @@ namespace CrateModLoader
         public void DisplayError(object sender, EventValueArgs<string> e)
         {
             MessageBox.Show(e.Value);
+        }
+
+        private void button_LevelEditor_Click(object sender, EventArgs e)
+        {
+            if (!ModProgram.GamePreloaded)
+            {
+                MessageBox.Show("You must preload the game to open the Level Editor.");
+                return;
+            }
+
+            LevelEditor Editor = new LevelEditor(ModProgram);
+            Editor.Owner = this;
+            Editor.Show();
+            return;
         }
     }
 }

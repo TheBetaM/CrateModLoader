@@ -17,6 +17,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
         public override string API_Link => "https://github.com/Smartkin/twinsanity-editor";
         public override Type TextClass => typeof(Twins_Text);
         public override Type ModderClass => typeof(Modder_Twins);
+        public override bool EnableLevelEditor => true;
 
         public override Dictionary<ConsoleMode, RegionCode[]> RegionID => new Dictionary<ConsoleMode, RegionCode[]>()
         {

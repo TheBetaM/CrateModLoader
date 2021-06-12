@@ -24,7 +24,7 @@ namespace CrateModLoader.GameSpecific.WormsForts
                 await StartPipelines(PipelinePass.Extract);
             }
 
-            FindFiles(new Parser_LUA(this), new Parser_XOM(this, WormsGame.Forts), new Parser_CSV(this), new Parser_TGA(this, ModderIsPreloading));
+            FindFiles(new Parser_LUA(this), new Parser_XOM(this, WormsGame.Forts, ModderIsPreloading), new Parser_CSV(this), new Parser_TGA(this, ModderIsPreloading));
             await StartNewPass();
 
             if (!ModderIsPreloading)

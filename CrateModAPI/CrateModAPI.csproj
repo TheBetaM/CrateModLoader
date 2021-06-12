@@ -40,6 +40,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
@@ -48,6 +49,12 @@
     <Compile Include="FileFilter.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GenericMod.cs" />
+    <Compile Include="LevelAPI\CollisionData.cs" />
+    <Compile Include="LevelAPI\CollisionDataBase.cs" />
+    <Compile Include="LevelAPI\LevelBase.cs" />
+    <Compile Include="LevelAPI\Level.cs" />
+    <Compile Include="LevelAPI\LevelObjectData.cs" />
+    <Compile Include="LevelAPI\LevelObjectDataBase.cs" />
     <Compile Include="ModCrates.cs" />
     <Compile Include="Modder.cs" />
     <Compile Include="ModLoader.cs" />
@@ -100,5 +107,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

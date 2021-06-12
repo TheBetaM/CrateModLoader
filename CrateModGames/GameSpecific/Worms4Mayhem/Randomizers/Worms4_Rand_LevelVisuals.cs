@@ -51,17 +51,17 @@ namespace CrateModLoader.GameSpecific.Worms4
             {
                 if (file.Containers[i] is XStringResourceDetails cont)
                 {
-                    if (file.Strings[cont.NameKey.RawValue] == "Databank.TimeOfDay")
+                    if (file.Strings[(int)cont.NameKey.Value] == "Databank.TimeOfDay")
                     {
-                        file.Strings[cont.ValueKey.RawValue] = TimesOfDay[rand_time];
+                        file.Strings[(int)cont.ValueKey.Value] = TimesOfDay[rand_time];
                     }
-                    if (file.Strings[cont.NameKey.RawValue] == "Databank.Theme")
+                    if (file.Strings[(int)cont.NameKey.Value] == "Databank.Theme")
                     {
-                        file.Strings[cont.ValueKey.RawValue] = LevelThemes[rand_theme];
+                        file.Strings[(int)cont.ValueKey.Value] = LevelThemes[rand_theme];
                     }
-                    if (file.Strings[cont.NameKey.RawValue] == "Databank.MaterialFile")
+                    if (file.Strings[(int)cont.NameKey.Value] == "Databank.MaterialFile")
                     {
-                        file.Strings[cont.ValueKey.RawValue] = LevelThemes_Materials[rand_theme];
+                        file.Strings[(int)cont.ValueKey.Value] = LevelThemes_Materials[rand_theme];
                     }
                 }
             }

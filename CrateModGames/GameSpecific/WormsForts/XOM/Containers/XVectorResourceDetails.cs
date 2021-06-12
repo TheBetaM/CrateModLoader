@@ -9,8 +9,8 @@ namespace CrateModLoader.GameSpecific.WormsForts.XOM
     {
         public override string Name
         {
-            get { return ParentFile.Strings[NameKey.RawValue]; }
-            set { ParentFile.Strings[NameKey.RawValue] = value; }
+            get { return ParentFile.Strings[(int)NameKey.Value]; }
+            set { ParentFile.Strings[(int)NameKey.Value] = value; }
         }
         public float X;
         public float Y;

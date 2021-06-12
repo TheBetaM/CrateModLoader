@@ -11,6 +11,7 @@ namespace CrateModLoader.GameSpecific.WormsForts
         public override string API_Credit => "API by BetaM";
         public override List<ConsoleMode> Consoles => new List<ConsoleMode> { ConsoleMode.PS2 }; // todo: xbox
         public override Type ModderClass => typeof(Modder_WormsForts);
+        public override bool EnableLevelEditor => true;
 
         public override Dictionary<ConsoleMode, RegionCode[]> RegionID => new Dictionary<ConsoleMode, RegionCode[]>()
         {

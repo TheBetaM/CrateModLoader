@@ -4,7 +4,7 @@ using System.IO;
 
 namespace CrateModLoader.GameSpecific.WormsForts.XOM
 {
-    //[XOM_TypeName("XCollisionGeometry")]
+    [XOM_TypeName("XCollisionGeometry")]
     public class XCollisionGeometry : Container
     {
         public float Restitution;
@@ -27,13 +27,13 @@ namespace CrateModLoader.GameSpecific.WormsForts.XOM
             Restitution = reader.ReadSingle();
             Friction = reader.ReadSingle();
             Mass = reader.ReadSingle();
-            byte IndCount = reader.ReadByte();
-            for (int i = 0; i < IndCount; i++)
+            VInt IndCount = new VInt(reader);
+            for (int i = 0; i < IndCount.Value; i++)
             {
                 Indices.Add(reader.ReadUInt16());
             }
-            byte VertCount = reader.ReadByte();
-            for (int i = 0; i < VertCount; i++)
+            VInt VertCount = new VInt(reader);
+            for (int i = 0; i < VertCount.Value; i++)
             {
                 Vertices.Add(reader.ReadSingle());
             }
@@ -48,12 +48,16 @@ namespace CrateModLoader.GameSpecific.WormsForts.XOM
             writer.Write(Friction);
             writer.Write(Mass);
 
-            writer.Write((byte)Indices.Count);
+            VInt IndCount = new VInt();
+            IndCount.Value = (uint)Indices.Count;
+            IndCount.Write(writer);
             for (int i = 0; i < Indices.Count; i++)
             {
                 writer.Write(Indices[i]);
             }
-            writer.Write((byte)Vertices.Count);
+            VInt VertCount = new VInt();
+            VertCount.Value = (uint)Vertices.Count;
+            VertCount.Write(writer);
             for (int i = 0; i < Vertices.Count; i++)
             {
                 writer.Write(Vertices[i]);

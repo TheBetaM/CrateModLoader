@@ -619,7 +619,8 @@ namespace CrateModAPI.Resources.Text {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Preloading the game data allows you to use Mod Menu+, but it will take a while. Start the process?.
+        ///   Looks up a localized string similar to Preloading the game data allows you to use Mod Menu+ and Level Editor, but it will take a while. 
+        ///Start the process?.
         /// </summary>
         public static string Popup_PreloadGame {
             get {

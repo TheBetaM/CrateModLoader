@@ -8,6 +8,8 @@ namespace CrateModLoader.GameSpecific.WormsForts
     {
         [ExecutesMods(typeof(WF_Rand_Epoch))]
         public static ModPropOption Option_Rand_Epoch = new ModPropOption("Randomize Level Epochs", "Randomize which era the level is set in.");
+        [ExecutesMods(typeof(WF_DM_Rand_ShuffleBuildPoints))]
+        public static ModPropOption Option_DM_Rand_ShuffleBuildPoints = new ModPropOption("Deathmatch: Randomize Building Locations", "Randomize the starting locations of Strongholds and neutral buildings in Deathmatch challenges.");
         [ExecutesMods(typeof(WF_DM_Rand_LevelOrder))] [ModHidden]
         public static ModPropOption Option_DM_Rand_LevelOrder = new ModPropOption("Deathmatch: Randomize Level Order", "Randomize the level order of The Trials.");
         [ExecutesMods(typeof(WF_Rand_VictLocations))]

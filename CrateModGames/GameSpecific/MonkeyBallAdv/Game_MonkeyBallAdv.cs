@@ -17,6 +17,7 @@ namespace CrateModLoader.GameSpecific.MonkeyBallAdv
         public override string API_Credit => Twins_Text.API_Credit;
         public override string API_Link => "https://github.com/Smartkin/twinsanity-editor";
         public override Type ModderClass => typeof(Modder_MonkeyBallAdv);
+        public override bool EnableLevelEditor => true;
 
         public override Dictionary<ConsoleMode, RegionCode[]> RegionID => new Dictionary<ConsoleMode, RegionCode[]>()
         {

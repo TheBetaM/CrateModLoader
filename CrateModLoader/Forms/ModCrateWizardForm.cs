@@ -12,6 +12,7 @@ using System.IO.Compression;
 using CrateModAPI.Resources.Text;
 using Octodiff.Core;
 using Octodiff.Diagnostics;
+using CrateModLoader.Forms.LevelEditor;
 
 namespace CrateModLoader.Forms
 {
@@ -40,6 +41,11 @@ namespace CrateModLoader.Forms
             if (ModProgram.Game == null)
             {
                 button_ModMenu.Enabled = false;
+                button_LevelEditor.Enabled = false;
+            }
+            else
+            {
+                button_LevelEditor.Enabled = ModProgram.Game.EnableLevelEditor;
             }
             LayerEditing = 0;
 
@@ -791,7 +797,9 @@ namespace CrateModLoader.Forms
 
         private void button_LevelEditor_Click(object sender, EventArgs e)
         {
-            //tbd
+            LevelEditor.LevelEditor Editor = new LevelEditor.LevelEditor(ModProgram);
+            Editor.Owner = this;
+            Editor.Show();
         }
     }
 }

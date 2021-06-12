@@ -17,6 +17,8 @@ namespace CrateModLoader
         public virtual string API_Link => string.Empty;
         /// <summary> Set to true to disable mod crates. </summary>
         public virtual bool ModCratesDisabled => false;
+        /// <summary> Set to true to enable Level Editor. </summary>
+        public virtual bool EnableLevelEditor => false;
         /// <summary> Text resource class used for mod menu property localization. </summary>
         public virtual Type TextClass => null;
         /// <summary> Modder class (automatically set at runtime) </summary>

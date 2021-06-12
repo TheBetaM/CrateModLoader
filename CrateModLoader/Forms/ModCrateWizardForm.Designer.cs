@@ -38,8 +38,9 @@
             treeNode2,
             treeNode3});
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.button_RestoreFile = new System.Windows.Forms.Button();
+            this.button_ReplaceFileDelta = new System.Windows.Forms.Button();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.button_RestoreFile = new System.Windows.Forms.Button();
             this.button_RemoveFolder = new System.Windows.Forms.Button();
             this.button_RemoveFile = new System.Windows.Forms.Button();
             this.button_AddFile = new System.Windows.Forms.Button();
@@ -57,7 +58,6 @@
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.button_ReplaceFileDelta = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -85,8 +85,8 @@
             this.tableLayoutPanel1.Controls.Add(this.button_ReplaceFile, 1, 4);
             this.tableLayoutPanel1.Controls.Add(this.button_ModMenu, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.comboBox_Layers, 4, 0);
-            this.tableLayoutPanel1.Controls.Add(this.button_EditInfo, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.button_LevelEditor, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.button_EditInfo, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.button_LevelEditor, 1, 2);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
@@ -150,18 +150,18 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(807, 453);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
-            // button_RestoreFile
+            // button_ReplaceFileDelta
             // 
-            this.button_RestoreFile.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button_RestoreFile.ImageKey = "file-x";
-            this.button_RestoreFile.ImageList = this.imageList1;
-            this.button_RestoreFile.Location = new System.Drawing.Point(48, 221);
-            this.button_RestoreFile.Margin = new System.Windows.Forms.Padding(0);
-            this.button_RestoreFile.Name = "button_RestoreFile";
-            this.button_RestoreFile.Size = new System.Drawing.Size(48, 48);
-            this.button_RestoreFile.TabIndex = 13;
-            this.button_RestoreFile.UseVisualStyleBackColor = true;
-            this.button_RestoreFile.Click += new System.EventHandler(this.button_RestoreFile_Click);
+            this.button_ReplaceFileDelta.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button_ReplaceFileDelta.ImageKey = "file-diff";
+            this.button_ReplaceFileDelta.ImageList = this.imageList1;
+            this.button_ReplaceFileDelta.Location = new System.Drawing.Point(96, 173);
+            this.button_ReplaceFileDelta.Margin = new System.Windows.Forms.Padding(0);
+            this.button_ReplaceFileDelta.Name = "button_ReplaceFileDelta";
+            this.button_ReplaceFileDelta.Size = new System.Drawing.Size(48, 48);
+            this.button_ReplaceFileDelta.TabIndex = 14;
+            this.button_ReplaceFileDelta.UseVisualStyleBackColor = true;
+            this.button_ReplaceFileDelta.Click += new System.EventHandler(this.button_ReplaceFileDelta_Click);
             // 
             // imageList1
             // 
@@ -194,6 +194,19 @@
             this.imageList1.Images.SetKeyName(24, "folder-add");
             this.imageList1.Images.SetKeyName(25, "folder-minus");
             this.imageList1.Images.SetKeyName(26, "file-import");
+            // 
+            // button_RestoreFile
+            // 
+            this.button_RestoreFile.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button_RestoreFile.ImageKey = "file-x";
+            this.button_RestoreFile.ImageList = this.imageList1;
+            this.button_RestoreFile.Location = new System.Drawing.Point(48, 221);
+            this.button_RestoreFile.Margin = new System.Windows.Forms.Padding(0);
+            this.button_RestoreFile.Name = "button_RestoreFile";
+            this.button_RestoreFile.Size = new System.Drawing.Size(48, 48);
+            this.button_RestoreFile.TabIndex = 13;
+            this.button_RestoreFile.UseVisualStyleBackColor = true;
+            this.button_RestoreFile.Click += new System.EventHandler(this.button_RestoreFile_Click);
             // 
             // button_RemoveFolder
             // 
@@ -360,7 +373,7 @@
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.button_EditInfo, 2);
             this.button_EditInfo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button_EditInfo.Location = new System.Drawing.Point(48, 77);
+            this.button_EditInfo.Location = new System.Drawing.Point(48, 125);
             this.button_EditInfo.Margin = new System.Windows.Forms.Padding(0);
             this.button_EditInfo.Name = "button_EditInfo";
             this.button_EditInfo.Size = new System.Drawing.Size(96, 48);
@@ -374,14 +387,13 @@
             this.tableLayoutPanel1.SetColumnSpan(this.button_LevelEditor, 2);
             this.button_LevelEditor.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button_LevelEditor.Enabled = false;
-            this.button_LevelEditor.Location = new System.Drawing.Point(48, 125);
+            this.button_LevelEditor.Location = new System.Drawing.Point(48, 77);
             this.button_LevelEditor.Margin = new System.Windows.Forms.Padding(0);
             this.button_LevelEditor.Name = "button_LevelEditor";
             this.button_LevelEditor.Size = new System.Drawing.Size(96, 48);
             this.button_LevelEditor.TabIndex = 12;
             this.button_LevelEditor.Text = "Level Editor";
             this.button_LevelEditor.UseVisualStyleBackColor = true;
-            this.button_LevelEditor.Visible = false;
             this.button_LevelEditor.Click += new System.EventHandler(this.button_LevelEditor_Click);
             // 
             // saveFileDialog1
@@ -391,19 +403,6 @@
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
-            // 
-            // button_ReplaceFileDelta
-            // 
-            this.button_ReplaceFileDelta.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button_ReplaceFileDelta.ImageKey = "file-diff";
-            this.button_ReplaceFileDelta.ImageList = this.imageList1;
-            this.button_ReplaceFileDelta.Location = new System.Drawing.Point(96, 173);
-            this.button_ReplaceFileDelta.Margin = new System.Windows.Forms.Padding(0);
-            this.button_ReplaceFileDelta.Name = "button_ReplaceFileDelta";
-            this.button_ReplaceFileDelta.Size = new System.Drawing.Size(48, 48);
-            this.button_ReplaceFileDelta.TabIndex = 14;
-            this.button_ReplaceFileDelta.UseVisualStyleBackColor = true;
-            this.button_ReplaceFileDelta.Click += new System.EventHandler(this.button_ReplaceFileDelta_Click);
             // 
             // ModCrateWizardForm
             // 

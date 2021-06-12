@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using CrateModLoader.LevelAPI;
 
 namespace CrateModLoader.GameSpecific.WormsForts
 {
@@ -6,9 +7,13 @@ namespace CrateModLoader.GameSpecific.WormsForts
     {
         private WormsGame targetGame;
 
-        public Parser_XOM(Modder mod, WormsGame game) : base(mod)
+        public Parser_XOM(Modder mod, WormsGame game, bool Preload = false) : base(mod)
         {
             targetGame = game;
+            if (Preload)
+            {
+                ForceParser = true;
+            }
         }
 
         public override List<string> Extensions => new List<string>() { ".XOM", ".BDL", ".KEV" };
@@ -217,6 +222,7 @@ namespace CrateModLoader.GameSpecific.WormsForts
 
         };
         public override bool DisableAsync => true; //too resource-intensive atm
+        public override bool IsLevelFile => true; 
 
         public override XOM_File LoadObject(string filePath)
         {
@@ -229,6 +235,13 @@ namespace CrateModLoader.GameSpecific.WormsForts
         public override void SaveObject(XOM_File thing, string filePath)
         {
             thing.Write(filePath);
+        }
+
+        public override LevelBase LoadLevel(XOM_File data)
+        {
+            Level_XOM Lev = new Level_XOM();
+            Lev.Load(data);
+            return Lev;
         }
     }
 }

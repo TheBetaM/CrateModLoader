@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.IO;
 using CrateModLoader.ModProperties;
+using CrateModLoader.LevelAPI;
 using CrateModAPI.Resources.Text;
 
 namespace CrateModLoader
@@ -53,6 +54,7 @@ namespace CrateModLoader
         public List<ModParserBase> ModParsers = new List<ModParserBase>();
         public List<ModPipelineBase> Pipelines = new List<ModPipelineBase>();
         public List<ModPropertyBase> ActiveProps = new List<ModPropertyBase>();
+        public List<LevelBase> Levels = new List<LevelBase>();
         public virtual bool NoAsyncProcess => false;
         public bool IsBusy => ProcessBusy || PassBusy; //{ get; set; }
         public bool PassBusy { get; set; }

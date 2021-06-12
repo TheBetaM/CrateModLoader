@@ -51,9 +51,9 @@ namespace CrateModLoader.GameSpecific.WormsForts
 
             foreach (LevelDetails lev in file.GetContainers<LevelDetails>())
             {
-                if (DM_Names.Contains(file.Strings[lev.LevelName.RawValue]))
+                if (DM_Names.Contains(file.Strings[(int)lev.LevelName.Value]))
                 {
-                    DM_Levels[DM_Names.IndexOf(file.Strings[lev.LevelName.RawValue])] = new LevelDetails()
+                    DM_Levels[DM_Names.IndexOf(file.Strings[(int)lev.LevelName.Value])] = new LevelDetails()
                     {
                         LevelName = lev.LevelName,
                         ScriptName = lev.ScriptName,
@@ -70,10 +70,10 @@ namespace CrateModLoader.GameSpecific.WormsForts
             }
             foreach (Campaign cam in file.GetContainers<Campaign>())
             {
-                if (DM_Campaign_Names.Contains(file.Strings[cam.LevelName.RawValue]))
+                if (DM_Campaign_Names.Contains(file.Strings[(int)cam.LevelName.Value]))
                 {
-                    int ID = DM_Campaign_Names.IndexOf(file.Strings[cam.LevelName.RawValue]);
-                    Campaign_Levels[ID] = cam.ScriptName.RawValue;
+                    int ID = DM_Campaign_Names.IndexOf(file.Strings[(int)cam.LevelName.Value]);
+                    Campaign_Levels[ID] = cam.ScriptName.Value;
                 }
             }
 
@@ -92,9 +92,9 @@ namespace CrateModLoader.GameSpecific.WormsForts
 
             foreach (LevelDetails lev in file.GetContainers<LevelDetails>())
             {
-                if (DM_Names.Contains(file.Strings[lev.LevelName.RawValue]))
+                if (DM_Names.Contains(file.Strings[(int)lev.LevelName.Value]))
                 {
-                    int ID = DM_Names.IndexOf(file.Strings[lev.LevelName.RawValue]);
+                    int ID = DM_Names.IndexOf(file.Strings[(int)lev.LevelName.Value]);
                     lev.LevelName = DM_Levels[ToRand[ID]].LevelName;
                     lev.ScriptName = DM_Levels[ToRand[ID]].ScriptName;
                     lev.LevelType = DM_Levels[ToRand[ID]].LevelType;
@@ -109,7 +109,7 @@ namespace CrateModLoader.GameSpecific.WormsForts
             }
             foreach (Campaign cam in file.GetContainers<Campaign>())
             {
-                if (DM_Campaign_Names.Contains(file.Strings[cam.LevelName.RawValue]))
+                if (DM_Campaign_Names.Contains(file.Strings[(int)cam.LevelName.Value]))
                 {
                     //int ID = DM_Campaign_Names.IndexOf(file.Strings[cam.LevelName.Value]);
                     //cam.ScriptName.Value = Campaign_Levels[ToRand[ID]];
