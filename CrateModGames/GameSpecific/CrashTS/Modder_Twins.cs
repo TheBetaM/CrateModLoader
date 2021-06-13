@@ -23,9 +23,9 @@ namespace CrateModLoader.GameSpecific.CrashTS
             if (ModderIsPreloading)
             {
                 if (ConsolePipeline.Metadata.Console == ConsoleMode.PS2)
-                    FindFiles(new Parser_PSM(this, ConsolePipeline.Metadata.Console, ConsolePipeline.ExtractedPath, true));
+                    FindFiles(new Parser_RM(this, ConsolePipeline.Metadata.Console), new Parser_PSM(this, ConsolePipeline.Metadata.Console, ConsolePipeline.ExtractedPath, true));
                 else
-                    FindFiles();
+                    FindFiles(new Parser_RM(this, ConsolePipeline.Metadata.Console));
             }
             else
             {

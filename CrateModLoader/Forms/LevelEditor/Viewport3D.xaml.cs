@@ -44,7 +44,8 @@ namespace CrateModLoader.Forms.LevelEditor
             InitializeComponent();
 
             Viewport = new HelixViewport3D();
-            Viewport.Camera = new PerspectiveCamera();
+            PerspectiveCamera Cam = new PerspectiveCamera();
+            Viewport.Camera = Cam;
             Viewport.CameraMode = CameraMode.WalkAround;
             Viewport.CameraRotationMode = CameraRotationMode.Turnball;
             this.AddChild(Viewport);
@@ -74,8 +75,6 @@ namespace CrateModLoader.Forms.LevelEditor
             {
                 CreateObjectVisual(data);
             }
-
-            //TextCreator.CreateTextLabel3D("test", BrushHelper.CreateGrayBrush(1f), true, 20d, new Point3D(0, 0, 0), new Vector3D(1, 0, 0), new Vector3D(0, 1, 0));
         }
 
         void CreateCollision(int ColorID, CollisionDataBase col = null)
@@ -108,7 +107,6 @@ namespace CrateModLoader.Forms.LevelEditor
                 {
                     Normals.Add(new Vector3D(0, 0, 0));
                 }
-                
             }
             List<Point> TexPoints = new List<Point>();
             for (int i = 0; i < Points.Count; i++)
