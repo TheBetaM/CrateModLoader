@@ -119,15 +119,99 @@ namespace CrateModLoader.ModPipelines
         {
             BackgroundWorker a = sender as BackgroundWorker;
 
-            PS2ImageMaker.StartPacking(buildInputPath, buildOutputPath);
-
-            int progress;
-            while (!Builder_CheckProgress(out progress))
+            if (isCDimage)
             {
-                a.ReportProgress(progress);
-                Thread.Sleep(100);
+                Builder_CD_Work();
+
+                while (isExtracting)
+                {
+                    Thread.Sleep(100);
+                }
             }
-            
+            else
+            {
+                DirectoryInfo di = new DirectoryInfo(buildInputPath);
+                foreach (DirectoryInfo dir in di.EnumerateDirectories())
+                {
+                    foreach (FileInfo file in dir.EnumerateFiles())
+                    {
+                        file.MoveTo(file.FullName);
+                    }
+                    IO_Common.Recursive_RenameFiles(dir);
+                }
+                foreach (FileInfo file in di.EnumerateFiles())
+                {
+                    file.MoveTo(file.FullName);
+                }
+
+                //Use PS2ImageMaker
+                PS2ImageMaker.StartPacking(buildInputPath, buildOutputPath);
+
+                int progress;
+                while (!Builder_CheckProgress(out progress))
+                {
+                    a.ReportProgress(progress);
+                    Thread.Sleep(100);
+                }
+
+                isExtracting = false;
+            }
+        }
+
+        private async void Builder_CD_Work()
+        {
+            await Task.Run(
+                () =>
+                {
+                    // Use CDBuilder
+                    CDBuilder isoBuild = new CDBuilder();
+                    isoBuild.UseJoliet = true;
+                    isoBuild.VolumeIdentifier = ISO_Label;
+
+                    // CD image adjustments
+                    DirectoryInfo dit = new DirectoryInfo(buildInputPath);
+                    foreach (DirectoryInfo dir in dit.EnumerateDirectories())
+                    {
+                        foreach (FileInfo file in dir.EnumerateFiles())
+                        {
+                            file.MoveTo(file.FullName);
+                        }
+                        IO_Common.Recursive_RenameFiles(dir);
+                    }
+                    foreach (FileInfo file in dit.EnumerateFiles())
+                    {
+                        file.MoveTo(file.FullName);
+                    }
+
+                    DirectoryInfo di = new DirectoryInfo(buildInputPath);
+                    HashSet<FileStream> files = new HashSet<FileStream>();
+
+                    foreach (DirectoryInfo dir in di.GetDirectories())
+                    {
+                        ISO_Common.Recursive_AddDirs(isoBuild, dir, dir.Name + @"\", files, true);
+                    }
+                    foreach (FileInfo file in di.GetFiles())
+                    {
+                        ISO_Common.AddFile(isoBuild, file, string.Empty, files, true);
+                    }
+
+                    using (FileStream output = new FileStream(buildOutputPath, FileMode.Create, FileAccess.Write))
+                    using (Stream input = isoBuild.Build())
+                    {
+                        ISO2PSX.Run(input, output, AsyncWorker);
+                    }
+
+                    isoBuild = null;
+
+                    foreach (FileStream file in files)
+                    {
+                        file.Close();
+                    }
+                    files.Clear();
+
+                    isExtracting = false;
+                }
+                );
         }
 
         bool Builder_CheckProgress(out int prog)
@@ -165,80 +249,17 @@ namespace CrateModLoader.ModPipelines
 
         public override void Build(string inputPath, string outputPath, BackgroundWorker worker)
         {
-            if (!isCDimage)
-            {
-                //Use PS2ImageMaker
-                DirectoryInfo di = new DirectoryInfo(inputPath);
-                foreach (DirectoryInfo dir in di.EnumerateDirectories())
-                {
-                    foreach (FileInfo file in dir.EnumerateFiles())
-                    {
-                        file.MoveTo(file.FullName);
-                    }
-                    IO_Common.Recursive_RenameFiles(dir);
-                }
-                foreach (FileInfo file in di.EnumerateFiles())
-                {
-                    file.MoveTo(file.FullName);
-                }
+            GlobalWorker = worker;
+            buildInputPath = inputPath;
+            buildOutputPath = outputPath;
+            isExtracting = true;
 
-                buildInputPath = inputPath;
-                buildOutputPath = outputPath;
-
-                GlobalWorker = worker;
-
-                AsyncWorker = new BackgroundWorker();
-                AsyncWorker.WorkerReportsProgress = true;
-                AsyncWorker.DoWork += new DoWorkEventHandler(Builder_DoWork);
-                AsyncWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(Builder_RunWorkerCompleted);
-                AsyncWorker.ProgressChanged += new ProgressChangedEventHandler(Builder_ProgressChanged);
-                AsyncWorker.RunWorkerAsync();
-            }
-            else
-            {
-                // Use CDBuilder
-                CDBuilder isoBuild = new CDBuilder();
-                isoBuild.UseJoliet = true;
-                isoBuild.VolumeIdentifier = ISO_Label;
-
-                // CD image adjustments
-                DirectoryInfo dit = new DirectoryInfo(inputPath);
-                foreach (DirectoryInfo dir in dit.EnumerateDirectories())
-                {
-                    foreach (FileInfo file in dir.EnumerateFiles())
-                    {
-                        file.MoveTo(file.FullName);
-                    }
-                    IO_Common.Recursive_RenameFiles(dir);
-                }
-                foreach (FileInfo file in dit.EnumerateFiles())
-                {
-                    file.MoveTo(file.FullName);
-                }
-
-                DirectoryInfo di = new DirectoryInfo(inputPath);
-                HashSet<FileStream> files = new HashSet<FileStream>();
-
-                foreach (DirectoryInfo dir in di.GetDirectories())
-                {
-                    ISO_Common.Recursive_AddDirs(isoBuild, dir, dir.Name + @"\", files, true);
-                }
-                foreach (FileInfo file in di.GetFiles())
-                {
-                    ISO_Common.AddFile(isoBuild, file, string.Empty, files, true);
-                }
-
-                using (FileStream output = new FileStream(outputPath, FileMode.Create, FileAccess.Write))
-                using (Stream input = isoBuild.Build())
-                {
-                    ISO2PSX.Run(input, output);
-                }
-
-                foreach (FileStream file in files)
-                {
-                    file.Close();
-                }
-            }
+            AsyncWorker = new BackgroundWorker();
+            AsyncWorker.WorkerReportsProgress = true;
+            AsyncWorker.DoWork += new DoWorkEventHandler(Builder_DoWork);
+            AsyncWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(Builder_RunWorkerCompleted);
+            AsyncWorker.ProgressChanged += new ProgressChangedEventHandler(Builder_ProgressChanged);
+            AsyncWorker.RunWorkerAsync();
         }
 
         private void Extractor_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -365,6 +386,7 @@ namespace CrateModLoader.ModPipelines
             extract_reader.Dispose();
             if (!isCDimage)
             {
+                extract_isoStream.Dispose();
                 extract_isoStream.Close();
             }
 
@@ -381,6 +403,7 @@ namespace CrateModLoader.ModPipelines
                 tempbin.Dispose();
                 File.Delete(TempBinPath);
             }
+            extractTaskList.Clear();
 
             isExtracting = false;
 

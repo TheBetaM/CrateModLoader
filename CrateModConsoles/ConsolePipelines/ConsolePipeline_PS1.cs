@@ -32,6 +32,8 @@ namespace CrateModLoader.ModPipelines
         private int ExtractIterator = 0;
         private int ExtractFileCount = 0;
         private bool isExtracting = false;
+        private string buildInputPath;
+        private string buildOutputPath;
         private string extractInputPath;
         private string extractOutputPath;
 
@@ -118,37 +120,89 @@ namespace CrateModLoader.ModPipelines
 
         public override void Build(string inputPath, string outputPath, BackgroundWorker worker)
         {
-            // Use CDBuilder
-            CDBuilder isoBuild = new CDBuilder();
-            isoBuild.UseJoliet = true;
-            isoBuild.VolumeIdentifier = ISO_Label;
 
-            DirectoryInfo di = new DirectoryInfo(inputPath);
-            HashSet<FileStream> files = new HashSet<FileStream>();
+            GlobalWorker = worker;
+            buildInputPath = inputPath;
+            buildOutputPath = outputPath;
+            isExtracting = true;
 
-            foreach (DirectoryInfo dir in di.GetDirectories())
-            {
-                ISO_Common.Recursive_AddDirs(isoBuild, dir, dir.Name + @"\", files, true);
-            }
-            foreach (FileInfo file in di.GetFiles())
-            {
-                ISO_Common.AddFile(isoBuild, file, string.Empty, files, true);
-            }
+            AsyncWorker = new BackgroundWorker();
+            AsyncWorker.WorkerReportsProgress = true;
+            AsyncWorker.DoWork += new DoWorkEventHandler(Builder_DoWork);
+            AsyncWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(Builder_RunWorkerCompleted);
+            AsyncWorker.ProgressChanged += new ProgressChangedEventHandler(Builder_ProgressChanged);
+            AsyncWorker.RunWorkerAsync();
 
-            using (FileStream output = new FileStream(outputPath, FileMode.Create, FileAccess.Write))
-            using (Stream input = isoBuild.Build())
-            {
-                ISO2PSX.Run(input, output);
-            }
-
-            isoBuild = null;
-
-            foreach (FileStream file in files)
-            {
-                file.Close();
-            }
-            files.Clear();
+            
         }
+
+        private void Builder_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            int prog_corrected = (int)((e.ProgressPercentage / 100f) * 25f);
+            GlobalWorker.ReportProgress(74 + prog_corrected);
+        }
+        private void Builder_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            BackgroundWorker a = sender as BackgroundWorker;
+            a.DoWork -= Builder_DoWork;
+            a.RunWorkerCompleted -= Builder_RunWorkerCompleted;
+            a.ProgressChanged -= Builder_ProgressChanged;
+
+            AsyncWorker = null;
+        }
+        private void Builder_DoWork(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker a = sender as BackgroundWorker;
+
+            Builder_Work();
+
+            while (isExtracting)
+            {
+                Thread.Sleep(100);
+            }
+        }
+        private async void Builder_Work()
+        {
+            await Task.Run(
+                () =>
+                {
+                    // Use CDBuilder
+                    CDBuilder isoBuild = new CDBuilder();
+                    isoBuild.UseJoliet = true;
+                    isoBuild.VolumeIdentifier = ISO_Label;
+
+                    DirectoryInfo di = new DirectoryInfo(buildInputPath);
+                    HashSet<FileStream> files = new HashSet<FileStream>();
+
+                    foreach (DirectoryInfo dir in di.GetDirectories())
+                    {
+                        ISO_Common.Recursive_AddDirs(isoBuild, dir, dir.Name + @"\", files, true);
+                    }
+                    foreach (FileInfo file in di.GetFiles())
+                    {
+                        ISO_Common.AddFile(isoBuild, file, string.Empty, files, true);
+                    }
+
+                    using (FileStream output = new FileStream(buildOutputPath, FileMode.Create, FileAccess.Write))
+                    using (Stream input = isoBuild.Build())
+                    {
+                        ISO2PSX.Run(input, output, AsyncWorker);
+                    }
+
+                    isoBuild = null;
+
+                    foreach (FileStream file in files)
+                    {
+                        file.Close();
+                    }
+                    files.Clear();
+
+                    isExtracting = false;
+                }
+                );
+        }
+
+
 
         private void Extractor_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {

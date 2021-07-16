@@ -212,6 +212,7 @@ namespace CrateModLoader.ModPipelines
             }
 
             extract_reader.Dispose();
+            extract_isoStream.Dispose();
             extract_isoStream.Close();
 
             // Extracting files
@@ -222,6 +223,7 @@ namespace CrateModLoader.ModPipelines
 
             await Task.WhenAll(extractTaskList);
 
+            extractTaskList.Clear();
             isExtracting = false;
 
         }
