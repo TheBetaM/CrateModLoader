@@ -288,7 +288,8 @@ namespace CrateModLoader
                         ModProgram.InputPath = fileList[0];
                     }
                     ModProgram.ResetGameSpecific(true);
-                    UpdateProcessText(ModLoaderText.Step1Text);
+                    UpdateProcessText("Detecting...");
+                    Update();
                     ModProgram.DetectGame(ModProgram.InputPath);
                     textBox_inputPath.Text = ModProgram.InputPath;
                 }
@@ -455,7 +456,7 @@ namespace CrateModLoader
             if (ModProgram.Modder != null)
             {
                 button_openModMenu.Enabled = ModProgram.Modder.ModMenuEnabled;
-                button_LevelEditor.Enabled = ModProgram.Game.EnableLevelEditor;
+                button_LevelEditor.Enabled = false;//ModProgram.Game.EnableLevelEditor;
             }
             else
             {
@@ -549,8 +550,8 @@ namespace CrateModLoader
 
             button_openModMenu.Visible = true;
             button_openModMenu.Enabled = ModProgram.Modder.ModMenuEnabled;
-            button_LevelEditor.Visible = true;
-            button_LevelEditor.Enabled = ModProgram.Game.EnableLevelEditor;
+            button_LevelEditor.Visible = false; //true;
+            button_LevelEditor.Enabled = false; //ModProgram.Game.EnableLevelEditor;
             //button_modCrateMenu.Visible = true;
             //button_modCrateMenu.Enabled = !game.ModCratesDisabled;
             button_randomizeSeed.Enabled = button_randomizeSeed.Visible = true; //button_modTools.Visible = button_downloadMods.Visible = true;

@@ -18,8 +18,8 @@ They can be automatically created from within the Crate Mod Loader, or manually 
 The advantage to using them is a lower file size of Mod Crates, the downside being incompatibility between different versions of the same game file.
 
 New games supported:
-- Super Monkey Ball Adventure (PSP)  
 - Worms Forts: Under Siege (PS2)  
+- Super Monkey Ball Adventure (PSP)  
   
 Crash Twinsanity
 - Improved feature compatibility with added/modded levels in Mod Crates

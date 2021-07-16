@@ -394,6 +394,7 @@
             this.button_LevelEditor.TabIndex = 12;
             this.button_LevelEditor.Text = "Level Editor";
             this.button_LevelEditor.UseVisualStyleBackColor = true;
+            this.button_LevelEditor.Visible = false;
             this.button_LevelEditor.Click += new System.EventHandler(this.button_LevelEditor_Click);
             // 
             // saveFileDialog1

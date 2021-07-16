@@ -40,7 +40,7 @@ namespace CrateModLoader.ModPipelines
         public override bool DetectROM(string inputPath, out string titleID, out uint regionID)
         {
             regionID = 0;
-            using (FileStream isoStream = File.Open(inputPath, FileMode.Open))
+            using (FileStream isoStream = new FileStream(inputPath, FileMode.Open, FileAccess.Read, FileShare.Read, 0x10000, FileOptions.SequentialScan))
             {
                 if (!CDReader.Detect(isoStream))
                 {
@@ -228,24 +228,21 @@ namespace CrateModLoader.ModPipelines
 
         private async Task ISO_ExtractAsync(string file, string path, BackgroundWorker worker)
         {
-            Stream fileStreamFrom = null;
-            Stream fileStreamTo = null;
-
             // CDReader doesn't work in async, so this is the workaround
-            Stream iso = File.Open(extractInputPath, FileMode.Open, FileAccess.Read, FileShare.Read);
-            CDReader cd = new CDReader(iso, true);
-
-            fileStreamFrom = cd.OpenFile(file, FileMode.Open);
-            fileStreamTo = File.Open(path, FileMode.OpenOrCreate);
-
-            await fileStreamFrom.CopyToAsync(fileStreamTo);
-            //fileStreamFrom.CopyTo(fileStreamTo);
-
-            fileStreamFrom.Close();
-            fileStreamTo.Close();
-
-            iso.Close();
-            cd.Dispose();
+            using (FileStream iso = new FileStream(extractInputPath, FileMode.Open, FileAccess.Read, FileShare.Read, 0x10000, FileOptions.SequentialScan))
+            {
+                using (CDReader cd = new CDReader(iso, true))
+                {
+                    using (Stream fileStreamFrom = cd.OpenFile(file, FileMode.Open))
+                    {
+                        using (Stream fileStreamTo = File.Open(path, FileMode.OpenOrCreate))
+                        {
+                            await fileStreamFrom.CopyToAsync(fileStreamTo);
+                            //fileStreamFrom.CopyTo(fileStreamTo);
+                        }
+                    }
+                }
+            }
 
             ExtractIterator++;
         }

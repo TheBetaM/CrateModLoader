@@ -47,7 +47,7 @@ namespace CrateModLoader.Forms.LevelEditor
             PerspectiveCamera Cam = new PerspectiveCamera();
             Viewport.Camera = Cam;
             Viewport.CameraMode = CameraMode.WalkAround;
-            Viewport.CameraRotationMode = CameraRotationMode.Turnball;
+            Viewport.CameraRotationMode = CameraRotationMode.Trackball;
             this.AddChild(Viewport);
         }
 
@@ -138,7 +138,8 @@ namespace CrateModLoader.Forms.LevelEditor
             if (ColorID >= ColorList.Count) ColorID = 0;
 
             MeshBuilder Builder = new MeshBuilder();
-            Builder.AddBox(new Rect3D(data.Position.X, data.Position.Y, data.Position.Z, data.Scale.X, data.Scale.Y, data.Scale.Z));
+            Builder.AddBoundingBox(new Rect3D(data.Position.X, data.Position.Y, data.Position.Z, data.Scale.X, data.Scale.Y, data.Scale.Z), 0.01d);
+            //Builder.AddBox(new Point3D(data.Position.X, data.Position.Y, data.Position.Z), data.Scale.X, data.Scale.Y, data.Scale.Z);
 
             MeshGeometry3D Mesh = Builder.ToMesh();
             Material Mat = MaterialHelper.CreateMaterial(ColorList[ColorID]);

@@ -26,7 +26,7 @@ namespace CrateModLoader.ModPipelines
         public override string TempPath => ModLoaderGlobals.BaseDirectory + ModLoaderGlobals.TempName + @"\";
         public override string ProcessPath => ModLoaderGlobals.TempName + @"\";
 
-        private string TempBinPath = ModLoaderGlobals.BaseDirectory + "binconvout.iso";
+        private string TempBinPath = ModLoaderGlobals.ToolsPath + "binconvout.iso";
         private BackgroundWorker GlobalWorker;
         public bool isCDimage = false;
         private int ExtractIterator = 0;
@@ -48,44 +48,45 @@ namespace CrateModLoader.ModPipelines
             regionID = 0;
             titleID = null;
             bool found = false;
-            using (FileStream isoStream = File.Open(inputPath, FileMode.Open))
+
+            // CDReader needs to instantiate from FileStream or else it will not dispose correctly
+            using (var isoStream = new FileStream(inputPath, FileMode.Open, FileAccess.Read, FileShare.Read, 0x10000, FileOptions.SequentialScan))
             {
-                CDReader cd;
-                MemoryStream tempbin = null;
+                using (var tempbin = new FileStream(TempBinPath, FileMode.Create))
+                {
+                    CDReader cd;
 
-                if (Path.GetExtension(inputPath).ToLower() == ".bin") // PS2 CD image
-                {
-                    tempbin = new MemoryStream();
-                    PSX2ISO.Run(isoStream, tempbin);
-                    cd = new CDReader(tempbin, true);
-                    isCDimage = true;
-                }
-                else if (!CDReader.Detect(isoStream))
-                {
-                    return false;
-                }
-                else
-                {
-                    cd = new CDReader(isoStream, true);
-                }
-
-                if (cd.FileExists(@"SYSTEM.CNF"))
-                {
-                    using (StreamReader sr = new StreamReader(cd.OpenFile(@"SYSTEM.CNF", FileMode.Open)))
+                    if (Path.GetExtension(inputPath).ToLower() == ".bin") // PS2 CD image
                     {
-                        titleID = sr.ReadLine();
-                        found = titleID.Contains("BOOT2");
+                        PSX2ISO.Run(isoStream, tempbin);
+                        cd = new CDReader(tempbin, true);
+                        isCDimage = true;
                     }
-                }
+                    else if (!CDReader.Detect(isoStream))
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        cd = new CDReader(isoStream, true);
+                    }
 
-                cd.Dispose();
-
-                if (tempbin != null)
-                {
-                    tempbin.Dispose();
-                    tempbin.Close();
+                    if (cd.FileExists(@"SYSTEM.CNF"))
+                    {
+                        using (StreamReader sr = new StreamReader(cd.OpenFile(@"SYSTEM.CNF", FileMode.Open)))
+                        {
+                            titleID = sr.ReadLine();
+                            found = titleID.Contains("BOOT2");
+                        }
+                    }
+                    cd.Dispose();
+                    cd = null;
                 }
             }
+
+            if (File.Exists(TempBinPath))
+                File.Delete(TempBinPath);
+
             if (!found)
             {
                 titleID = null;
@@ -387,28 +388,25 @@ namespace CrateModLoader.ModPipelines
 
         private async Task ISO_ExtractAsync(string file, string path, BackgroundWorker worker)
         {
-            Stream fileStreamFrom = null;
-            Stream fileStreamTo = null;
-
             string input = extractInputPath;
             if (isCDimage)
                 input = TempBinPath;
 
             // CDReader doesn't work in async, so this is the workaround
-            Stream iso = File.Open(input, FileMode.Open, FileAccess.Read, FileShare.Read);
-            CDReader cd = new CDReader(iso, true);
-
-            fileStreamFrom = cd.OpenFile(file, FileMode.Open);
-            fileStreamTo = File.Open(path, FileMode.OpenOrCreate);
-
-            await fileStreamFrom.CopyToAsync(fileStreamTo);
-            //fileStreamFrom.CopyTo(fileStreamTo); // uncomment to disable async
-
-            fileStreamFrom.Close();
-            fileStreamTo.Close();
-
-            iso.Close();
-            cd.Dispose();
+            using (FileStream iso = new FileStream(input, FileMode.Open, FileAccess.Read, FileShare.Read, 0x10000, FileOptions.SequentialScan))
+            {
+                using (CDReader cd = new CDReader(iso, true))
+                {
+                    using (Stream fileStreamFrom = cd.OpenFile(file, FileMode.Open))
+                    {
+                        using (Stream fileStreamTo = File.Open(path, FileMode.OpenOrCreate))
+                        {
+                            await fileStreamFrom.CopyToAsync(fileStreamTo);
+                            //fileStreamFrom.CopyTo(fileStreamTo);
+                        }
+                    }
+                }
+            }
 
             ExtractIterator++;
         }
