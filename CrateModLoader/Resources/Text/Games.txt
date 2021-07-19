@@ -2,235 +2,129 @@ Crate Mod Loader Supported Games
   
 Crash Nitro Kart
 Supported: All PS2 versions (.ISO format), All GC versions (.ISO format), All XBOX versions (.ISO format)  
-Mod abbreviation: CrashNK  
-Mod layers: 1 - ASSETS.GOB contents
+Recommended: PS2
 Tools/API by BetaM, ManDude and eezstreet.  
-Features:  
+Version and seed visible in the Credits screen.
+Features include:  
 - Randomize Adventure  
-- Randomize Character Stats
-- Randomize Kart Stats
-- Randomize Powerup Effects
-- Randomize Drivers  
-- Randomize Karts  
-- Disable Fadeout/Flash Overlay
-- Disable Unlock Popups
-- Speed Up Mask Hint Appearance  
-- Remove Intro Videos  
-- Version and seed visible in the Credits screen
-Mod Menu: (+)
-- Individual character and kart physics parameters
-(+) UI Textures, icons
+- Randomize Characters/Karts and their stats
+- Disable Fadeout/Flashing Overlay
+And more! Aswell as additional features in Mod Menu+!
   
 Crash Twinsanity
 Supported: All PS2 versions (.ISO format), All XBOX versions (.ISO format)
 Recommended: PAL PS2
-Mod abbreviation: CrashTS   
-Mod layers: 1 - CRASH.BD contents (PS2)
 API by NeoKesha, Smartkin, ManDude, BetaM and Marko. (https://github.com/Smartkin/twinsanity-editor)  
-Features:  
-- Randomize Individual Crates
+Version and seed visible in the Autosave Disabled screen.
+Features include:  
 - Randomize Gem Locations   
-- Randomize Character Parameters  
-- Randomize Surface Parameters
-- Randomize Starting Level
-- Enable Flying Kick for Crash  
-- Enable Stomp Kick for Crash (Flying Kick variation)  
-- Enable Double Jump for Cortex  
-- Enable Double Jump for Nina  
-- Enable Unused Enemies  
+- Enable Flying/Stomp Kick for Crash  
 - Switch Characters At Will
-- Classic Slide Jump for Crash
-- Classic Health
-- Classic Explosion Damage
-- Unlocked Camera Everywhere
-- Randomize Level Music  
-- Randomize Pants Color
-- Ranodmize World Palette (PS2)
-- Greyscale World (PS2)
-- Untextured World
-- Version and seed visible in the Autosave Disabled screen  
-Mod Menu: (+)
-- Additional features  
-- Individual character parameters  
-- Starting/Credits chunk settings  
-- Customize Pants Color 
-(+) UI textures, icons, galleries  
+And more! Aswell as additional features in Mod Menu+!
   
 Crash Tag Team Racing
 Supported: All PS2 versions (.ISO format), All GC versions (.ISO format), All PSP versions (.ISO format), All XBOX versions (.ISO format)  
 Recommended: PSP
-Mod abbreviation: CrashTTR  
-Mod layers: 1 - All .RCF file contents (only replace files)
 APIs by NeoKesha and BetaM. (based on https://github.com/handsomematt/Pure3D)  
-Features:  
+Version and seed visible in the Credits screen.
+Features include:  
 - Randomize Platforming Character
-- Randomize Track Entrances
-- Randomize Minigames
-- Randomize Race Laps
+- Randomize Track/Minigame Entrances
 - Prevent Sequence Breaks
-- Version and seed visible in the Credits screen
-Mod Menu:
-- Individual Race laps
+And more!
 
 Rayman 3: Hoodlum Havoc
 Supported: All PS2 versions (.ISO format), All GC versions (.ISO format), All XBOX versions (.ISO format)
 Recommended: GC
-Mod abbreviation: Rayman3  
-Features:
-- Randomize Level Order (Any amount of Levels)  
-- Randomize Sub-Level Order
-- Randomize Outfit Colors (GCN)
-- Randomize Copter Colors (GCN)
-- Randomize HUD Colors (GCN)
-- Randomize Outfit Visuals (GCN)  
+Version and seed visible in the Title screen.
+Features include:
+- Randomize Level Order 
+- Randomize Outfit Visuals and Colors (GCN)
 - New Game Into 2D Nightmare (GCN)  
-- Remove Intro Videos (GCN)  
-- Version and seed visible in the Title screen  
-Mod Menu: (+)
-- Rayman Textures
-(+) UI and other common Textures
+And more! Aswell as additional features in Mod Menu+!
 
 Crash Bandicoot
 Supported: All PS1 versions (.BIN/.ISO formats)  
-Mod abbreviation: Crash1 
 API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)  
-Features:  
+Version and seed visible in the Main Menu.
+Features include:  
+- Randomize Level Order
 - Backwards Levels
-- Random Levels Are Backwards
-- Randomize Crate Contents
-- Randomize Wooden Crates
-- Random/All Crates Are Invisible
-- Randomize Boss Levels
-- Randomize World Colors
-- Randomize World Palette
-- Randomize Lighting Color
-- Randomize Sound Effects  
-- Version and seed visible in the Main Menu
-Mod Menu:
-- Additional features
+- Add Stormy Ascent
+And more!
   
 Crash Bandicoot 2: Cortex Strikes Back
 Supported: All PS1 versions (.BIN/.ISO formats)  
-Mod abbreviation: Crash2  
 API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)  
-Features:  
+Version and seed visible in the Pause screen in the Warp Room (English only).
+Features include:  
 - Randomize Warp Room Exits
-- Backwards Levels (Beta)  
-- Random Levels Are Backwards
-- Randomize Wooden Crates
-- Randomize Crate Contents
-- Randomize Crate Parameters
 - Random/All Crates Are Invisible
-- Randomize Crate Counter
-- Random Crates Removed
-- Random Enemies Removed
-- Randomize Boss Levels
-- Wider Camera Field-Of-View
-- Ranodmize Pants Color
-- Randomize World Colors
-- Randomize World Palette
-- Greyscale World
-- Untextured World
-- Randomize Sound Effects 
-- Randomize Stremaed Audio  
-- Randomize World Textures
-- Randomize Object Colors
-- Randomize Object Textures
-- Randomize Streamed Audio
-- Version and seed visible in the Pause screen in the Warp Room (English only)  
-Mod Menu:
-- Additional features  
-- Customize Pants Color  
+- Randomize Pants Color
+And more!
   
 Crash Bandicoot: Warped
 Supported: All PS1 versions (.BIN/.ISO formats)  
-Mod abbreviation: Crash3  
 API by chekwob and ManDude. (https://github.com/cbhacks/CrashEdit)  
+Version and seed visible in the Pause screen in the Warp Room (English only).  
 Features:  
-- Backwards Levels (Beta)  
-- Random Levels Are Backwards
-- Randomize Wooden Crates
-- Randomize Crate Contents
 - Randomize Crate Parameters
-- Random/All Crates Are Invisible
-- Random Crates Removed
-- Randomize Crate Counter
-- Random Enemies Removed
-- Wider Camera Field-Of-View
-- Remove Warp Room Barriers
-- Randomize World Colors
 - Randomize World Palette
-- Greyscale World
-- Untextured World
-- Randomize Sound Effects 
-- Randomize Stremaed Audio  
-- Randomize World Textures
-- Randomize Object Colors
-- Randomize Object Textures
-- Randomize Streamed Audio
-- Version and seed visible in the Pause screen in the Warp Room (English only)  
-Mod Menu:
-- Additional features  
-- Customize Pants Color
+- Remove Warp Room Barriers
+And more!
 
 Crash Bandicoot: The Wrath Of Cortex
-Supported: All PS2 versions (.BIN/.ISO format) (XBOX, GC not supported yet)  
-Mod abbreviation: CrashTWOC  
+Supported: All PS2 versions (.BIN/.ISO format) (XBOX, GC not supported yet)   
 API by BetaM.  
-Features:  
+Version and seed visible in the Options screen (English only).  
+Features include:  
 - Randomize Wooden Crates  
 - Randomize Enemy Paths  
 - Random Enemies Removed  
-- Version and seed visible in the Options screen (English only)  
 
 CTR: Crash Team Racing
 Supported: All PS1 versions (.BIN/.ISO formats)  
-Mod abbreviation: CrashTR  
 Mod layers: 1 - BIGFILE.BIG contents
 API by DCxDemo. (https://github.com/DCxDemo/CTR-tools)  
-Features:  
-- All Wooden Crates Are Wumpa Crates  
+Version and seed visible in the Loading screen (English only).  
+Features include:    
 - Randomize Crate Effects  
-- Random/All Tracks Have Moon Gravity  
-- Random Tracks Have Ice Physics  
-- Driving Offroad Respawns The Driver  
+- Random/All Tracks Have Moon Gravity   
 - Randomize World Palette  
-- Version and seed visible in the Loading screen (English only)  
+And more!
+  
+Worms Forts: Under Siege
+Supported: All PS2 versions (.BIN/.ISO format) (XBOX not supported yet)  
+API by BetaM.  
+Version and seed visible in the Title screen.  
+Features include:  
+-   
+-   
+-  
+And more!
   
 Super Monkey Ball Adventure
 Supported: All PSP versions (.ISO format) (GC, PS2 not supported yet)  
 Recommended: PSP
-Mod abbreviation: MonkeyBallAdv   
-Mod layers: 1 - MB.BD contents (PS2/PSP)
 API by NeoKesha, Smartkin, ManDude, BetaM and Marko. (https://github.com/Smartkin/twinsanity-editor)  
-Features:  
-- Version and seed visible in the Main Menu  
-Mod Menu:
-- Challenge/Story Mode settings
-
-Worms Forts: Under Siege
-Supported: All PS2 versions (.BIN/.ISO format) (XBOX not supported yet)  
-Mod abbreviation: WormsForts  
-Mod layers: 1 - DATA.ZIP contents 
-API by BetaM.  
-Features:  
-- Version and seed visible in the Title screen    
+Version and seed visible in the Main Menu.  
+Features include:  
+- 
+- 
+- 
+And more!
 
 Crash of the Titans
 Supported: All PS2 versions (.ISO format), All Wii versions (.ISO/.WBFS formats), All PSP versions (.ISO format), All 360 versions (.ISO format)   
-Mod abbreviation: CrashTitans  
-Mod layers: 1 - Default.RCF contents (only replace files)
 API by BetaM and NeoKesha.   
-Features:   
+Version and seed visible in the Credits screen.  
+Features include:    
 - Randomize Costume Visuals  
 - Randomize Cutscene Costumes  
-- Version and seed visible in the Credits screen  
   
 Crash Mind Over Mutant
 Supported: All PS2 versions (.ISO format), All Wii versions (.ISO/.WBFS formats), All PSP versions (.ISO format), All 360 versions (.ISO format)   
-Mod abbreviation: CrashMOM  
-Mod layers: 1 - Default.RCF contents (only replace files)
 API by BetaM and NeoKesha.  
-Features:    
+Version and seed visible in the Credits screen.  
+Features include:    
 - Randomize Costume Visuals  
-- Version and seed visible in the Credits screen  

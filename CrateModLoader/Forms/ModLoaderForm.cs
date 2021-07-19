@@ -144,9 +144,18 @@ namespace CrateModLoader
             }
             */
 
-            saveFileDialog1.Filter = "ISO (*.iso)|*.iso|BIN (*.bin)|*.bin|" + ModLoaderText.OutputDialogTypeAllFiles + " (*.*)|*.*";
-
-            saveFileDialog1.FileName = ModLoaderText.DefaultOutputFileName + ".iso";
+            switch (ModProgram.Pipeline.Metadata.Console)
+            {
+                default:
+                    saveFileDialog1.Filter = "ISO (*.iso)|*.iso|BIN (*.bin)|*.bin|" + ModLoaderText.OutputDialogTypeAllFiles + " (*.*)|*.*";
+                    saveFileDialog1.FileName = ModLoaderText.DefaultOutputFileName + ".iso";
+                    break;
+                case ConsoleMode.N3DS:
+                    saveFileDialog1.Filter = "3DS (*.3ds)|*.3ds|" + ModLoaderText.OutputDialogTypeAllFiles + " (*.*)|*.*";
+                    saveFileDialog1.FileName = ModLoaderText.DefaultOutputFileName + ".3ds";
+                    break;
+            }
+            
             saveFileDialog1.ShowDialog();
         }
 

@@ -48,6 +48,8 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConsolePipelines\ConsolePipeline_3DS.cs" />
+    <Compile Include="ConsolePipelines\ConsolePipeline_NDS.cs" />
     <Compile Include="ConsolePipelines\ISO_Common.cs" />
     <Compile Include="ConsolePipelines\ConsolePipeline_GCN.cs" />
     <Compile Include="ConsolePipelines\ConsolePipeline_PS1.cs" />
@@ -67,10 +69,16 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Tools\3dstool.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Tools\extract-xiso LICENSE.TXT">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Tools\extract-xiso.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Tools\ext_key.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Tools\gcit.exe">

@@ -187,6 +187,10 @@ namespace CrateModLoader
         {
             bool directoryMode = IO_Common.PathIsFolder(inputPath);
 
+            if (Modder != null)
+            {
+                Modder.Reset();
+            }
             Modder = null;
             Pipeline = null;
             GamePreloaded = false;
@@ -596,6 +600,10 @@ namespace CrateModLoader
         {
             bool RegionNotSupported = true;
             RegionCode TargetRegion = new RegionCode();
+            if (Modder != null)
+            {
+                Modder.Reset();
+            }
             Modder = null;
 
             SupportedMods = new List<ModCrate>();
@@ -716,6 +724,10 @@ namespace CrateModLoader
 
         public void ResetGameSpecific(bool ClearGameText = false)
         {
+            if (Modder != null)
+            {
+                Modder.Reset();
+            }
             Modder = null;
             Pipeline = null;
             GamePreloaded = false;

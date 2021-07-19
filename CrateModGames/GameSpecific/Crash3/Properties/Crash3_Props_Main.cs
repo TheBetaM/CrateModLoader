@@ -10,7 +10,7 @@ namespace CrateModLoader.GameSpecific.Crash3
 {
     static class Crash3_Props_Main
     {
-        [ExecutesMods(typeof(Crash3_Rand_WarpRoom))]
+        [ExecutesMods(typeof(Crash3_Rand_WarpRoom))] [ModHidden]
         public static ModPropOption Option_RandWarpRoom = new ModPropOption("Randomize Level Order", "Shuffles levels around (except for secret levels and ones with secret entrances). The last level is still the Cortex boss.");
         [ExecutesMods(typeof(Crash3_Rand_BackwardsLevels))]
         public static ModPropOption Option_BackwardsLevels = new ModPropOption(Crash3_Text.Mod_BackwardsLevels, Crash3_Text.Mod_BackwardsLevelsDesc);

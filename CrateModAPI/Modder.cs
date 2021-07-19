@@ -581,5 +581,19 @@ namespace CrateModLoader
             }
         }
 
+        public void Reset()
+        {
+            foreach (ModPropertyBase prop in Props)
+            {
+                prop.ResetToDefault();
+            }
+            Mods.Clear();
+            ModParsers.Clear();
+            Pipelines.Clear();
+            ActiveProps.Clear();
+            Levels.Clear();
+            Props.Clear();
+            EnabledModCrates.Clear();
+        }
     }
 }

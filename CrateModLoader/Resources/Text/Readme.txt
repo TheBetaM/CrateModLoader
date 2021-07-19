@@ -30,6 +30,7 @@ extract-xiso (https://github.com/XboxDev/extract-xiso) (license included)
 xextool (http://xorloser.com/blog/?p=395) (freeware)  
 Wiims ISO Tools (https://wit.wiimm.de/) (GPL-2.0 license)  
 Gamecube ISO Tool (http://www.wiibackupmanager.co.uk/gcit.html) (freeware)
+3dstool (https://github.com/dnasdw/3dstool) (MIT license)
 
 License Information (for more information check /Tools/License.txt)
 

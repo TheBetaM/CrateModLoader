@@ -3,6 +3,7 @@
 General
 - PS1, PS2, PSP and Folder mode extraction step is now multithreaded
 - Modding step is now multithreaded
+- Added support for 3DS games
 - Preloading is now multithreaded and combined with the main process (no longer needs to extract again after clicking Start)
 - Every randomizer is now handled independently from each other 
 (Before - Seed of randomizer feature 1 affects seed of randomizer feature 2; 
@@ -28,41 +29,35 @@ Rayman 3: Hoodlum Havoc
 - Crate Mod Loader info is now displayed ingame. (Title screen)  
 
 Crash Bandicoot
-- New feature: Enable Unused Enemies
-- New feature: Randomize Level Order
-- New feature: Add Stormy Ascent
-- New feature: Randomize Music Tracks
+- New: Enable Unused Enemies
+- New: Randomize Level Order
+- New: Add Stormy Ascent
+- New: Randomize Music Tracks
 
-Crash Bandicoot 2: Cortex Strikes Back
-- New feature: All Crates Are Covered Up
-- New feature: Randomize Music Tracks
-- Randomize World Textures: Fixed not being able to build using this feature
-
-Crash Bandicoot: WARPED
-- New feature: Randomize Level Order
-- New feature: All Crates Are Covered Up
-- New feature: Randomize Music Tracks
-- Randomize World Textures: Fixed not being able to build using this feature  
+Crash Bandicoot 2: Cortex Strikes Back, Crash Bandicoot: WARPED
+- New: All Crates Are Covered Up
+- New: Randomize Music Tracks
+- Randomize World Textures: Fixed not being able to use this feature
 
 Crash Bandicoot: The Wrath Of Cortex
 - Crate Mod Loader info is now displayed ingame. (Options screen)  
 
 CTR: Crash Team Racing
-- New feature: All Wooden Crates Are Wumpa Crates
-- New feature: Randomize Crate Effects
-- New feature: Random/All Tracks Have Moon Gravity
-- New feature: Random Tracks Have Ice Physics
-- New feature: Driving Offroad Respawns The Driver
-- New feature: Randomize World Palette
-- Updated CTR Framework API (existing Mod Crates will need to be updated due to extraction file name changes)
+- New: All Wooden Crates Are Wumpa Crates
+- New: Randomize Crate Effects
+- New: Random/All Tracks Have Moon Gravity
+- New: Random Tracks Have Ice Physics
+- New: Driving Offroad Respawns The Driver
+- New: Randomize World Palette
+- Updated CTR Framework API (existing Mod Crates may need to be updated due to extraction file name changes)
 
 Crash of the Titans
-- New feature: Randomize Costume Visuals
-- New feature: Randomize Cutscene Costumes
+- New: Randomize Costume Visuals
+- New: Randomize Cutscene Costumes
 - Crate Mod Loader info is now displayed ingame. (Credits screen)
 
 Crash Mind Over Mutant
-- New feature: Randomize Costume Visuals  
+- New: Randomize Costume Visuals  
 
 1.3.0
 
