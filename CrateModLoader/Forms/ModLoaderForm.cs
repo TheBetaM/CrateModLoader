@@ -106,7 +106,7 @@ namespace CrateModLoader
             */
 
             //openFileDialog1.Filter = "PSX/PS2/PSP/GCN/WII/XBOX/360 ROM (*.iso; *.bin; *.wbfs)|*.iso;*.bin;*.wbfs|All files (*.*)|*.*";
-            openFileDialog1.Filter = ModLoaderText.InputDialogTypeAuto + " (*.iso; *.bin; *.wbfs)|*.iso;*.bin;*.wbfs|" + ModLoaderText.OutputDialogTypeAllFiles + " (*.*)|*.*";
+            openFileDialog1.Filter = ModLoaderText.InputDialogTypeAuto + " (*.iso; *.bin; *.wbfs; *.nds; *.3ds)|*.iso;*.bin;*.wbfs;*.nds;*.3ds|" + ModLoaderText.OutputDialogTypeAllFiles + " (*.*)|*.*";
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
@@ -153,6 +153,10 @@ namespace CrateModLoader
                 case ConsoleMode.N3DS:
                     saveFileDialog1.Filter = "3DS (*.3ds)|*.3ds|" + ModLoaderText.OutputDialogTypeAllFiles + " (*.*)|*.*";
                     saveFileDialog1.FileName = ModLoaderText.DefaultOutputFileName + ".3ds";
+                    break;
+                case ConsoleMode.NDS:
+                    saveFileDialog1.Filter = "NDS (*.nds)|*.nds|" + ModLoaderText.OutputDialogTypeAllFiles + " (*.*)|*.*";
+                    saveFileDialog1.FileName = ModLoaderText.DefaultOutputFileName + ".nds";
                     break;
             }
             

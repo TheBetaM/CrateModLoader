@@ -84,6 +84,9 @@
     <Content Include="Tools\gcit.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Tools\ndstool.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Tools\PS2ImageMaker.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

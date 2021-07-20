@@ -81,7 +81,7 @@ namespace CrateModLoader.ModPipelines
             string args1 = $"-cvtf romfs {extPath + "romfs.bin"} --romfs-dir {extPath + "romfs"}";
             string args2 = $"-czvtf exefs {extPath + "exefs.bin"} --header {extPath + "exefsheader.bin"} --exefs-dir {extPath + "exefs"}";
             string args3 = $"-cvtf cxi {extPath + "0.cxi"} --header {extPath + "ncchheader.bin"} --exh {extPath + "exh.bin"} --logo {extPath + "logo.darc.lz"} --plain {extPath + "plain.bin"} --exefs {extPath + "exefs.bin"} --romfs {extPath + "romfs.bin"} --not-encrypt";
-            string args4 = $"-cvt01267f cci {extPath + "0.cxi"} {extPath + "1.cfa"} {extPath + "2.cfa"} {extPath + "6.cfa"} {extPath + "7.cfa"} {outputPath} --header {extPath + "ncsdheader.bin"}";
+            string args4 = $"-cvt01267f cci {extPath + "0.cxi"} {extPath + "1.cfa"} {extPath + "2.cfa"} {extPath + "6.cfa"} {extPath + "7.cfa"} \"{outputPath}\" --header {extPath + "ncsdheader.bin"}";
 
             Process DetectProcess = new Process();
             DetectProcess.StartInfo.FileName = ModLoaderGlobals.ToolsPath + @"3dstool.exe";
@@ -122,7 +122,7 @@ namespace CrateModLoader.ModPipelines
             Directory.CreateDirectory(TempPath);
             string extPath = TempProcessPath;
 
-            string args1 = $"-xvt01267f cci {extPath + "0.cxi"} {extPath + "1.cfa"} {extPath + "2.cfa"} {extPath + "6.cfa"} {extPath + "7.cfa"} {inputPath} --header {extPath + "ncsdheader.bin"}";
+            string args1 = $"-xvt01267f cci {extPath + "0.cxi"} {extPath + "1.cfa"} {extPath + "2.cfa"} {extPath + "6.cfa"} {extPath + "7.cfa"} \"{inputPath}\" --header {extPath + "ncsdheader.bin"}";
             string args2 = $"-xvtf cxi {extPath + "0.cxi"} --header {extPath + "ncchheader.bin"} --exh {extPath + "exh.bin"} --logo {extPath + "logo.darc.lz"} --plain {extPath + "plain.bin"} --exefs {extPath + "exefs.bin"} --romfs {extPath + "romfs.bin"}";
             string args3 = $"-xuvtf exefs {extPath + "exefs.bin"} --header {extPath + "exefsheader.bin"} --exefs-dir {extPath + "exefs"}";
             string args4 = $"-xvtf romfs {extPath + "romfs.bin"} --romfs-dir {extPath + "romfs"}";
@@ -146,6 +146,32 @@ namespace CrateModLoader.ModPipelines
             //Console.WriteLine(outputMessage);
             DetectProcess.WaitForExit();
 
+            if (!Directory.Exists(ExtractedPath))
+            {
+                //fixing cxi flag and trying again
+                using (FileStream fileStream = new FileStream(TempPath + "0.cxi", FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite, 0x10000, FileOptions.SequentialScan))
+                {
+                    using (BinaryWriter writer = new BinaryWriter(fileStream))
+                    {
+                        try
+                        {
+                            fileStream.Seek(0x18F, SeekOrigin.Begin);
+                            writer.Write((byte)4);
+                        }
+                        catch
+                        {
+                            Console.WriteLine("cxi fix error");
+                        }
+                    }
+                }
+
+                DetectProcess.StartInfo.Arguments = args2;
+                DetectProcess.Start();
+                outputMessage = DetectProcess.StandardOutput.ReadToEnd();
+                //Console.WriteLine(outputMessage);
+                DetectProcess.WaitForExit();
+            }
+
             if (File.Exists(TempPath + "0.cxi"))
                 File.Delete(TempPath + "0.cxi");
 
@@ -166,6 +192,8 @@ namespace CrateModLoader.ModPipelines
 
             if (File.Exists(TempPath + "romfs.bin"))
                 File.Delete(TempPath + "romfs.bin");
+
+            
         }
 
     }

@@ -9,7 +9,6 @@ using CrateModLoader.Tools;
 
 namespace CrateModLoader.ModPipelines
 {
-    // no viable options for this yet?
     public class ConsolePipeline_NDS : ConsolePipeline
     {
 
@@ -23,7 +22,8 @@ namespace CrateModLoader.ModPipelines
         };
 
         public override string TempPath => ModLoaderGlobals.BaseDirectory + ModLoaderGlobals.TempName + @"\";
-        public override string ProcessPath => ModLoaderGlobals.TempName + @"\";
+        public override string ProcessPath => ModLoaderGlobals.TempName + @"\data\";
+        private string TempProcessPath => ModLoaderGlobals.TempName + @"\";
 
         private BackgroundWorker GlobalWorker;
 
@@ -35,8 +35,6 @@ namespace CrateModLoader.ModPipelines
         public override bool DetectROM(string inputPath, out string titleID, out uint regionID)
         {
             regionID = 0;
-            titleID = null;
-            return false;
             if (!Path.GetExtension(inputPath).ToUpper().EndsWith("NDS"))
             {
                 titleID = null;
@@ -71,12 +69,44 @@ namespace CrateModLoader.ModPipelines
 
         public override void Build(string inputPath, string outputPath, BackgroundWorker worker)
         {
-            // todo
+            // use ndstool
+            string extPath = TempProcessPath;
+            string args = $"-c \"{outputPath}\" -9 {extPath + "arm9.bin"} -7 {extPath + "arm7.bin"} -y9 {extPath + "y9.bin"} -y7 {extPath + "y7.bin"} -d {extPath + "data"} -y {extPath + "overlay"} -t {extPath + "banner.bin"} -h {extPath + "header.bin"}";
+
+            Process DetectProcess = new Process();
+            DetectProcess.StartInfo.FileName = ModLoaderGlobals.ToolsPath + @"ndstool.exe";
+            DetectProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            DetectProcess.StartInfo.Arguments = args;
+            DetectProcess.StartInfo.UseShellExecute = false;
+            DetectProcess.StartInfo.RedirectStandardOutput = true;
+            DetectProcess.StartInfo.CreateNoWindow = true;
+
+            DetectProcess.Start();
+            string outputMessage = DetectProcess.StandardOutput.ReadToEnd();
+            Console.WriteLine(outputMessage);
+            DetectProcess.WaitForExit();
         }
 
         public override void Extract(string inputPath, string outputPath, BackgroundWorker worker)
         {
-            // todo
+            // use ndstool
+            Directory.CreateDirectory(TempPath);
+            string extPath = TempProcessPath;
+
+            string args = $"-x \"{inputPath}\" -9 {extPath + "arm9.bin"} -7 {extPath + "arm7.bin"} -y9 {extPath + "y9.bin"} -y7 {extPath + "y7.bin"} -d {extPath + "data"} -y {extPath + "overlay"} -t {extPath + "banner.bin"} -h {extPath + "header.bin"}";
+
+            Process DetectProcess = new Process();
+            DetectProcess.StartInfo.FileName = ModLoaderGlobals.ToolsPath + @"ndstool.exe";
+            DetectProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            DetectProcess.StartInfo.Arguments = args;
+            DetectProcess.StartInfo.UseShellExecute = false;
+            DetectProcess.StartInfo.RedirectStandardOutput = true;
+            DetectProcess.StartInfo.CreateNoWindow = true;
+
+            DetectProcess.Start();
+            string outputMessage = DetectProcess.StandardOutput.ReadToEnd();
+            Console.WriteLine(outputMessage);
+            DetectProcess.WaitForExit();
         }
 
     }

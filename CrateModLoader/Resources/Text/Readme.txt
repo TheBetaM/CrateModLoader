@@ -24,13 +24,14 @@ Mod Crates can be folders or standard .zip files with these contents: (only ModC
 Tools Credits
 
 DiscUtils (https://github.com/DiscUtils/DiscUtils) (MIT license) 
-PS2ImageMaker (https://github.com/Smartkin/PS2ImageMaker) (GPL-3.0 licensee)  
+PS2ImageMaker (https://github.com/Smartkin/PS2ImageMaker) (GPL-3.0 license)  
 WQSG_UMD_kkMod (https://github.com/KyousukeKyaa/WQSG_UMD_kkMod) (GPL-2.0 license)  
 extract-xiso (https://github.com/XboxDev/extract-xiso) (license included)  
 xextool (http://xorloser.com/blog/?p=395) (freeware)  
 Wiims ISO Tools (https://wit.wiimm.de/) (GPL-2.0 license)  
-Gamecube ISO Tool (http://www.wiibackupmanager.co.uk/gcit.html) (freeware)
-3dstool (https://github.com/dnasdw/3dstool) (MIT license)
+Gamecube ISO Tool (http://www.wiibackupmanager.co.uk/gcit.html) (freeware)  
+3dstool (https://github.com/dnasdw/3dstool) (MIT license)  
+ndstool (https://github.com/devkitPro/ndstool) (GPL-3.0 license)  
 
 License Information (for more information check /Tools/License.txt)
 

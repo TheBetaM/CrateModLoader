@@ -3,7 +3,7 @@
 General
 - PS1, PS2, PSP and Folder mode extraction step is now multithreaded
 - Modding step is now multithreaded
-- Added support for 3DS games
+- Added support for DS and 3DS games
 - Preloading is now multithreaded and combined with the main process (no longer needs to extract again after clicking Start)
 - Every randomizer is now handled independently from each other 
 (Before - Seed of randomizer feature 1 affects seed of randomizer feature 2; 
