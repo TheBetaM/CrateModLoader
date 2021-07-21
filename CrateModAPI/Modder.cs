@@ -17,7 +17,7 @@ namespace CrateModLoader
      * 2. Make a new Game class that inherits the Game abstract class. 
      * 3. Override StartModProcess (there are more modding functions that can be overriden but are optional).
      * (optional) 4. Localize game title, API credit, and options using text resources.
-     * (optional) 5. Create ModProperty variables for automatic Mod Menu setup.
+     * (optional) 5. Create ModProperty variables for automatic Mod Menu setup. (must be part of the Modder's namespace)
      * (optional) 6. Add ModPropOption variables for quick options in the main window.
      * 7. Done.
      * 
@@ -63,6 +63,7 @@ namespace CrateModLoader
         public int PassIterator { get; set; }
         public int PassCount { get; set; }
         public int PassPercent { get; set; }
+        public bool PassIsPercent { get; set; } // Display progress as percentage instead of file count (PassIterator 0-100 and PassCount 100 still required)
         public GenericModStruct GenericModStruct { get; set; }
 
         public Modder() { }

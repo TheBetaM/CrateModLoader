@@ -6,6 +6,7 @@ namespace CrateModLoader.GameSpecific.CrashBash
     {
         public override async void StartModProcess()
         {
+            FindFiles();
             await StartNewPass();
 
             ProcessBusy = false;

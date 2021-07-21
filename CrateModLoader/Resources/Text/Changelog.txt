@@ -20,6 +20,7 @@ The advantage to using them is a lower file size of Mod Crates, the downside bei
 
 New games supported:
 - Worms Forts: Under Siege (PS2)  
+- Worms: Open Warfare 2 (PSP/NDS)
 - Super Monkey Ball Adventure (PSP)  
   
 Crash Twinsanity

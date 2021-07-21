@@ -18,18 +18,18 @@ namespace CrateModLoader
         DC, // Dreamcast, not supported yet
         PS3, // PlayStation 3, just for reference
         Android, // Android, being considered
-        NDS, // DS, not supported yet
-        N3DS, // 3DS, not supported yet
-        N64, // N64, being considered
+        NDS, // DS
+        N3DS, // 3DS
+        WIIU, // WiiU, being considered
     }
 
     // Region types
     public enum RegionType
     {
         Undefined = -1,
-        NTSC_U, // ex. North America
-        PAL, // ex. Europe
-        NTSC_J, // ex. Japan
+        NTSC_U, // North America
+        PAL, // Europe
+        NTSC_J, // Japan
         Global, // Region-free or region-less
     }
 

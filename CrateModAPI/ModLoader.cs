@@ -541,7 +541,14 @@ namespace CrateModLoader
                     }
                     if (Modder.PassBusy && Modder.PassCount != 0)
                     {
-                        msg += string.Format($" ({Modder.PassIterator}/{Modder.PassCount} files)");
+                        if (Modder.PassIsPercent)
+                        {
+                            msg += string.Format($" ({Modder.PassIterator}%)");
+                        }
+                        else
+                        {
+                            msg += string.Format($" ({Modder.PassIterator}/{Modder.PassCount} files)");
+                        }
                     }
                 }
                 UpdateProcessMessage(msg);

@@ -145,6 +145,7 @@
     <Compile Include="GameSpecific\Crash3\Randomizers\Crash3_Rand_WarpRoom.cs" />
     <Compile Include="GameSpecific\CrashBash\Game_CrashBash.cs" />
     <Compile Include="GameSpecific\CrashBash\Modder_Bash.cs" />
+    <Compile Include="GameSpecific\CrashNDS\CrashBB\Game_CrashBB.cs" />
     <Compile Include="GameSpecific\CrashMoM\Game_CrashMoM.cs" />
     <Compile Include="GameSpecific\CrashMoM\Modder_MoM.cs" />
     <Compile Include="GameSpecific\CrashMoM\Mods\MoM_Metadata.cs" />
@@ -152,6 +153,8 @@
     <Compile Include="GameSpecific\CrashMoM\Properties\MoM_Props_Main.cs" />
     <Compile Include="GameSpecific\CrashMoM\Randomizers\MoM_Rand_CostumeVisuals.cs" />
     <Compile Include="GameSpecific\CrashMoM\Randomizers\MoM_Rand_CutsceneCostumes.cs" />
+    <Compile Include="GameSpecific\CrashNDS\CrashMoMDS\Game_CrashMoMDS.cs" />
+    <Compile Include="GameSpecific\CrashNDS\CrashTitansDS\Game_CrashTitansDS.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\Common\CNK_Common.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\Common\CSV_Table.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\Common\Parser_CSV.cs" />
@@ -557,6 +560,9 @@
     <Compile Include="GameSpecific\WormsForts\XOM\UnknownContainer.cs" />
     <Compile Include="GameSpecific\WormsForts\XOM\XOM_File.cs" />
     <Compile Include="GameSpecific\WormsForts\XOM\XOM_IO_Helpers.cs" />
+    <Compile Include="GameSpecific\WormsOW2\Game_WormsOW2.cs" />
+    <Compile Include="GameSpecific\WormsOW2\Modder_WormsOW2.cs" />
+    <Compile Include="Generic\Modder_Generic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

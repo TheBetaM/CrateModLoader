@@ -83,7 +83,7 @@ namespace CrateModLoader.ModPipelines
 
             DetectProcess.Start();
             string outputMessage = DetectProcess.StandardOutput.ReadToEnd();
-            Console.WriteLine(outputMessage);
+            //Console.WriteLine(outputMessage);
             DetectProcess.WaitForExit();
         }
 
@@ -105,7 +105,7 @@ namespace CrateModLoader.ModPipelines
 
             DetectProcess.Start();
             string outputMessage = DetectProcess.StandardOutput.ReadToEnd();
-            Console.WriteLine(outputMessage);
+            //Console.WriteLine(outputMessage);
             DetectProcess.WaitForExit();
         }
 
