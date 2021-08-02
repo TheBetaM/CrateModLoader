@@ -13,7 +13,7 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
 
         public override void BeforeModPass()
         {
-            Random randState = new Random(ModLoaderGlobals.RandomizerSeed);
+            Random randState = GetRandom();
             List<uint> temp_musicList = new List<uint>();
 
             musicTypes.Add((uint)MusicID.Academy);

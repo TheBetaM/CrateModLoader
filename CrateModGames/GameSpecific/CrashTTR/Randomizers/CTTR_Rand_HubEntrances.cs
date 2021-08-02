@@ -12,7 +12,7 @@ namespace CrateModLoader.GameSpecific.CrashTTR
 
         public override void BeforeModPass()
         {
-            Random randState = new Random(ModLoaderGlobals.RandomizerSeed);
+            Random randState = GetRandom();
             randHubs = new List<int>();
             randGems = new List<int>();
             /*

@@ -55,7 +55,7 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
 
         public override void BeforeModPass()
         {
-            Random randState = new Random(ModLoaderGlobals.RandomizerSeed);
+            Random randState = GetRandom();
             randSurfaces = new Dictionary<int, int>();
             for (int i = 0; i < SurfacesToChange.Count; i++)
             {

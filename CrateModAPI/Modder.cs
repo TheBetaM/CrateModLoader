@@ -36,6 +36,7 @@ namespace CrateModLoader
         public RegionCode GameRegion;
         public Game SourceGame;
         public List<ModCrate> EnabledModCrates = new List<ModCrate>();
+        public Random GlobalRandom;
 
         public bool ModMenuEnabled => Props.Count > 0;
         public virtual bool ModCrateRegionCheck => false; // A game might require some type of verification (i.e. file integrity, region matching) before installing layer0 mod crates.
@@ -66,7 +67,10 @@ namespace CrateModLoader
         public bool PassIsPercent { get; set; } // Display progress as percentage instead of file count (PassIterator 0-100 and PassCount 100 still required)
         public GenericModStruct GenericModStruct { get; set; }
 
-        public Modder() { }
+        public Modder()
+        {
+            GlobalRandom = new Random(ModLoaderGlobals.RandomizerSeed);
+        }
 
         public void PopulateProperties()
         {
@@ -275,6 +279,7 @@ namespace CrateModLoader
                         {
                             DupeCheck.Add(mod);
                             Mod NewMod = (Mod)Activator.CreateInstance(mod);
+                            NewMod.ExecutionSource = this;
                             Mods.Add(NewMod);
                         }
                     }
@@ -316,6 +321,7 @@ namespace CrateModLoader
                         {
                             DupeCheck.Add(mod);
                             Mod NewMod = (Mod)Activator.CreateInstance(mod);
+                            NewMod.ExecutionSource = this;
                             Mods.Add(NewMod);
                         }
                     }

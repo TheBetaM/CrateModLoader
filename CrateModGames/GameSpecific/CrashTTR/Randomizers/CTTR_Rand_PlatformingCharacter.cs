@@ -16,7 +16,7 @@ namespace CrateModLoader.GameSpecific.CrashTTR
 
         public override void BeforeCachePass()
         {
-            Random randState = new Random(ModLoaderGlobals.RandomizerSeed);
+            Random randState = GetRandom();
             randChars = new List<int>();
 
             int maxPlayableCharacters = 2;

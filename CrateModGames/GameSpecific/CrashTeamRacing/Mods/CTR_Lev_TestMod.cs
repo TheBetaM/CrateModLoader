@@ -29,8 +29,8 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing.Mods
 
         public override void ModPass(Scene lev)
         {
-            Random rand = new Random(ModLoaderGlobals.RandomizerSeed);
-            
+            Random rand = GetRandom();
+
             foreach (PickupHeader pick in lev.pickups)
             {
                 

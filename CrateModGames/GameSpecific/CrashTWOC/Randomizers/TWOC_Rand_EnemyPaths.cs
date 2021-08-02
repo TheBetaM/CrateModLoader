@@ -47,7 +47,7 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
 
         public override void BeforeModPass()
         {
-            rand = new Random(ModLoaderGlobals.RandomizerSeed);
+            rand = GetRandom();
         }
 
         public override void ModPass(TWOC_File_AI AIFile)

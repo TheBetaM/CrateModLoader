@@ -11,7 +11,7 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
             string extrPath = mod.ExtractedPath;
             ConsoleMode console = mod.Console;
 
-            Random rand = new Random(ModLoaderGlobals.RandomizerSeed);
+            Random rand = GetRandom();
             string LevelsPathA = @"LEVELS\A\";
             string LevelsPathC = @"LEVELS\C\";
             

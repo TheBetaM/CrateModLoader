@@ -11,11 +11,15 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
 
         internal List<ObjectID> EnemyReplaceList = new List<ObjectID>();
         internal List<ObjectID> EnemyInsertList = new List<ObjectID>();
-        private Random randState = new Random();
+        private Random randState;
+
+        public TS_Rand_Enemies()
+        {
+            randState = GetRandom();
+        }
 
         public override void CachePass(ChunkInfoRM info)
         {
-            randState = new Random(ModLoaderGlobals.RandomizerSeed);
             // loaded default
             TwinsFile RM_Archive = info.File;
             ChunkType chunkType = info.Type;

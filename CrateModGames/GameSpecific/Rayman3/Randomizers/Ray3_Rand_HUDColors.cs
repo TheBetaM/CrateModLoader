@@ -11,7 +11,7 @@ namespace CrateModLoader.GameSpecific.Rayman3
 
         public override void BeforeModPass()
         {
-            rand = new Random(ModLoaderGlobals.RandomizerSeed);
+            rand = GetRandom();
         }
 
         public override void ModPass(TPL_File file)

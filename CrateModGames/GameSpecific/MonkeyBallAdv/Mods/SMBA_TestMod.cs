@@ -12,7 +12,7 @@ namespace CrateModLoader.GameSpecific.MonkeyBallAdv.Mods
         {
             if (xml.HasChildNodes && xml.FirstChild.Name == "challengemode")
             {
-                Random rand = new Random(ModLoaderGlobals.RandomizerSeed);
+                Random rand = GetRandom();
                 int Count_Beginner = xml["challengemode"]["beginner"].ChildNodes.Count;
                 int Count_Advanced = xml["challengemode"]["advanced"].ChildNodes.Count;
                 int Count_Expert = xml["challengemode"]["expert"].ChildNodes.Count;

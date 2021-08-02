@@ -10,7 +10,7 @@ namespace CrateModLoader.GameSpecific.Rayman3
     {
         public override void ModPass(string filePath)
         {
-            Random rand = new Random(ModLoaderGlobals.RandomizerSeed);
+            Random rand = GetRandom();
 
             Ray3_Common.GCN_ExportTextures(filePath, true);
 

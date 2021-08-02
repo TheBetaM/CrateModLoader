@@ -12,7 +12,7 @@ namespace CrateModLoader.GameSpecific.Rayman3
 
             if (file.Name.ToLower().Contains("fix.tpl"))
             {
-                Random randState = new Random(ModLoaderGlobals.RandomizerSeed);
+                Random randState = GetRandom();
                 string basePath = file.FolderName;
 
                 //Shuffle outfit textures

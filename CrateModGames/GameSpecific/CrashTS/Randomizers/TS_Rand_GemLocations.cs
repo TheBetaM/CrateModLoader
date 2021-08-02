@@ -387,7 +387,7 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
         {
             GemList = new List<TwinsGem>();
 
-            Random randState = new Random(ModLoaderGlobals.RandomizerSeed);
+            Random randState = GetRandom();
 
             List<GemType> GemsToGo = new List<GemType>();
             List<TwinsGem> PossibleLocations = new List<TwinsGem>();

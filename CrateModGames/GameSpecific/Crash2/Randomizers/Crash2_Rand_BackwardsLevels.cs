@@ -91,7 +91,7 @@ namespace CrateModLoader.GameSpecific.Crash2
 
         public override void BeforeModPass()
         {
-            rand = new Random(ModLoaderGlobals.RandomizerSeed);
+            rand = GetRandom();
         }
 
         public override void ModPass(NSF_Pair pair)

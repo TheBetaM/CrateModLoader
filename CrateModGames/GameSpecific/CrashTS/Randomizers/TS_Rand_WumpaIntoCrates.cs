@@ -5,7 +5,7 @@ using CrateModGames.GameSpecific.CrashTS;
 
 namespace CrateModLoader.GameSpecific.CrashTS.Mods
 {
-    // todo: unfinished, use modder's Random state, randomize per file
+    // todo: unfinished
     public class TS_Rand_WumpaIntoCrates : ModStruct<ChunkInfoRM>
     {
         private bool isRandom = true;
@@ -53,7 +53,7 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
                 (uint)ObjectID.EXTRALIFECRATECORTEX,
                 (uint)ObjectID.EXTRALIFECRATENINA
             };
-            Random randState = new Random((ModLoaderGlobals.RandomizerSeed + (int)chunkType) % int.MaxValue);
+            Random randState = GetRandom();
             for (uint section_id = (uint)RM_Sections.Instances1; section_id <= (uint)RM_Sections.Instances8; section_id++)
             {
                 if (!RM_Archive.ContainsItem(section_id)) continue;

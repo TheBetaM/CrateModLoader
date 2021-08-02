@@ -17,7 +17,7 @@ namespace CrateModLoader.GameSpecific.MonkeyBallAdv.Mods
 
         public override void BeforeModPass()
         {
-            rand = new Random(ModLoaderGlobals.RandomizerSeed);
+            rand = GetRandom();
         }
 
         public override void ModPass(ChunkInfoRM rm)

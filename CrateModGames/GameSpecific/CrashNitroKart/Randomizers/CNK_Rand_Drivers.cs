@@ -14,7 +14,7 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
             string path_gob_extracted = mod.ExtractedPath + @"/ASSETS/";
             ConsoleMode console = mod.Console;
 
-            randState = new Random(ModLoaderGlobals.RandomizerSeed);
+            randState = GetRandom();
 
             //Replace model files
             string modelpath = path_gob_extracted + "";

@@ -11,8 +11,8 @@ namespace CrateModLoader.GameSpecific.Rayman3
         public override List<ConsoleMode> Consoles => new List<ConsoleMode>
                 {
                     ConsoleMode.GCN,
-                    ConsoleMode.PS2,
-                    ConsoleMode.XBOX,
+                    //ConsoleMode.PS2,
+                    //ConsoleMode.XBOX,
                     //ConsoleMode.PC,
                 };
         public override Type ModderClass => typeof(Modder_Rayman3);

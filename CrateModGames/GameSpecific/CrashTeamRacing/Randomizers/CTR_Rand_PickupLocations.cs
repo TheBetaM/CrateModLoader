@@ -43,7 +43,7 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing.Mods
 
         public override void BeforeCachePass()
         {
-            rand = new Random(ModLoaderGlobals.RandomizerSeed);
+            rand = GetRandom();
             Banks = new Dictionary<string, PositionBank>();
         }
 

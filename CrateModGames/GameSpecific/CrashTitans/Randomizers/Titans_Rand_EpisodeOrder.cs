@@ -34,7 +34,7 @@ namespace CrateModLoader.GameSpecific.CrashTitans
         {
             string path_extr = mod.ExtractedPath + @"default\";
             // unfinished
-            Random rand = new Random(ModLoaderGlobals.RandomizerSeed);
+            Random rand = GetRandom();
             List<int> LevelsToRand = new List<int>();
             for (int i = 0; i < EpisodeFolderNames.Count; i++)
             {

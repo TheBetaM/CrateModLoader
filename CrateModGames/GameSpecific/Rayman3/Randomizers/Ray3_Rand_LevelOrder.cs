@@ -18,7 +18,7 @@ namespace CrateModLoader.GameSpecific.Rayman3
         {
             string basePath = Ray3_Common.GetDataPath(mod);
             ConsoleMode console = mod.Console;
-            Random randState = new Random(ModLoaderGlobals.RandomizerSeed);
+            Random randState = GetRandom();
             int minLevel = 1;
             int maxLevel = 46; //46
             int targetPos = 0;

@@ -5,7 +5,6 @@ using CrateModGames.GameSpecific.CrashTS;
 
 namespace CrateModLoader.GameSpecific.CrashTS.Mods
 {
-    // todo: test
     public class TS_Rand_Crates : ModStruct<ChunkInfoRM>
     {
         public override bool NeedsCachePass => true;
@@ -17,7 +16,7 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
 
         public override void BeforeCachePass()
         {
-            Random randState = new Random(ModLoaderGlobals.RandomizerSeed);
+            Random randState = GetRandom();
 
             if (TS_Props_Main.Option_RandCrates.Value == 1)
             {
@@ -60,7 +59,7 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
         {
             TwinsFile RM_Archive = info.File;
             ChunkType chunk = info.Type;
-            Random randState = new Random(ModLoaderGlobals.RandomizerSeed);
+            Random randState = GetRandom();
 
             if (chunk == ChunkType.Default)
             {
@@ -149,7 +148,8 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
             if (BannedChunks.Contains(chunkType))
                 return;
 
-            Random randState = new Random((ModLoaderGlobals.RandomizerSeed + (int)chunkType) % int.MaxValue);
+            //Random randState = new Random((ModLoaderGlobals.RandomizerSeed + (int)chunkType) % int.MaxValue);
+            Random randState = GetRandom(true);
             List<uint> lifecrates = new List<uint>
             {
                 (uint)ObjectID.EXTRALIFECRATE,

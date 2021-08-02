@@ -11,8 +11,30 @@ namespace CrateModLoader
     {
         public virtual bool NeedsCachePass { get { return false; } }
 
+        public Modder ExecutionSource { get; set; }
         public bool IsBusy { get; set; }
         public int Order { get; set; } // order of execution
+        private Random LocalRandom { get; set; }
+        public virtual bool RandomOverride => false;
+
+        /// <summary>
+        /// Preferrable to use this to get a seed-influenced random value in mods instead of a Random struct instance.
+        /// </summary>
+        public Random GetRandom(bool Global = false)
+        {
+            if (ModLoaderGlobals.UseGlobalRandom || RandomOverride || Global)
+            {
+                return ExecutionSource.GlobalRandom;
+            }
+            else
+            {
+                if (LocalRandom == null)
+                {
+                    LocalRandom = new Random(ModLoaderGlobals.RandomizerSeed);
+                }
+                return LocalRandom;
+            }
+        }
 
         public virtual void CachePass(object value) { } // Pass 1 (Cache): After extracting all files
         public abstract void ModPass(object value); // Pass 2 (Mod): After all files were processed for Cache pass

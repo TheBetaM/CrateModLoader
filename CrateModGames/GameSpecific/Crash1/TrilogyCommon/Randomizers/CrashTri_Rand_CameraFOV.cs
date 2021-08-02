@@ -20,7 +20,7 @@ namespace CrateModLoader.GameSpecific.Crash1.TrilogyCommon
 
         public override void BeforeModPass()
         {
-            rand = new Random(ModLoaderGlobals.RandomizerSeed);
+            rand = GetRandom();
 
             FoV_Mod_1 = 1.5d;
             if (isRandom)

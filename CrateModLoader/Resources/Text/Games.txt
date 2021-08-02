@@ -34,13 +34,13 @@ Features include:
 And more!
 
 Rayman 3: Hoodlum Havoc
-Supported: All PS2 versions (.ISO format), All GC versions (.ISO format), All XBOX versions (.ISO format)
+Supported: All GC versions (.ISO format) (PS2, XBOX not supported yet)
 Recommended: GC
 Version and seed visible in the Title screen.
 Features include:
 - Randomize Level Order 
-- Randomize Outfit Visuals and Colors (GCN)
-- New Game Into 2D Nightmare (GCN)  
+- Randomize Outfit Visuals and Colors  
+- New Game Into 2D Nightmare  
 And more! Aswell as additional features in Mod Menu+!
 
 Crash Bandicoot

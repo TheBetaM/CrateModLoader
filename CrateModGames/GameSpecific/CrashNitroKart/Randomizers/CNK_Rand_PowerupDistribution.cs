@@ -11,7 +11,7 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
 
         public override void BeforeModPass()
         {
-            randState = new Random(ModLoaderGlobals.RandomizerSeed);
+            randState = GetRandom();
         }
 
         public override void ModPass(CSV file)

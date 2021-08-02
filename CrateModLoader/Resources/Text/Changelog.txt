@@ -20,14 +20,15 @@ The advantage to using them is a lower file size of Mod Crates, the downside bei
 
 New games supported:
 - Worms Forts: Under Siege (PS2)  
-- Worms: Open Warfare 2 (PSP/NDS)
 - Super Monkey Ball Adventure (PSP)  
   
 Crash Twinsanity
 - Improved feature compatibility with added/modded levels in Mod Crates
+- Randomize Character Parameters: Fixed Mechabandicoot issues
 
 Rayman 3: Hoodlum Havoc
 - Crate Mod Loader info is now displayed ingame. (Title screen)  
+- Disabled support for the PS2/XBOX versions until more functionality is available there  
 
 Crash Bandicoot
 - New: Enable Unused Enemies
@@ -50,7 +51,7 @@ CTR: Crash Team Racing
 - New: Random Tracks Have Ice Physics
 - New: Driving Offroad Respawns The Driver
 - New: Randomize World Palette
-- Updated CTR Framework API (existing Mod Crates may need to be updated due to extraction file name changes)
+- Updated CTR Framework API (existing Mod Crates may need to be updated due to layer 1 file name changes)
 
 Crash of the Titans
 - New: Randomize Costume Visuals

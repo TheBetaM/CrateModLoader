@@ -10,7 +10,7 @@ namespace CrateModLoader.GameSpecific.MonkeyBallAdv.Mods
         {
             if (xml.HasChildNodes && xml.FirstChild.Name == "settings")
             {
-                Random rand = new Random(ModLoaderGlobals.RandomizerSeed);
+                Random rand = GetRandom();
                 int Challenge_Time = 60 + rand.Next(0, 20); // max 87
                 int Challenge_StartLives = 3 + rand.Next(-1, 7);
                 int Challenge_MaxLives = 99;
@@ -27,7 +27,7 @@ namespace CrateModLoader.GameSpecific.MonkeyBallAdv.Mods
             }
             if (xml.HasChildNodes && xml.FirstChild.Name == "challengemode")
             {
-                Random rand = new Random(ModLoaderGlobals.RandomizerSeed);
+                Random rand = GetRandom();
                 int Count_Beginner = xml["challengemode"]["beginner"].ChildNodes.Count;
                 int Count_Advanced = xml["challengemode"]["advanced"].ChildNodes.Count;
                 int Count_Expert = xml["challengemode"]["expert"].ChildNodes.Count;

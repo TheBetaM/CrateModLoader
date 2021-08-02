@@ -27,7 +27,7 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
 
         public override void ModPass(string extrPath)
         {
-            Random rand = new Random(ModLoaderGlobals.RandomizerSeed);
+            Random rand = GetRandom();
 
             string LevelsPathA = @"LEVELS\A\";
             string LevelsPathC = @"LEVELS\C\";

@@ -266,7 +266,7 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
 
         public override void BeforeModPass()
         {
-            Random randState = new Random(ModLoaderGlobals.RandomizerSeed);
+            Random randState = GetRandom();
 
             CNK_Randomize_WarpPads(randState);
             CNK_Randomize_ReqsRewards(randState);

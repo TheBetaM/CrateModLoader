@@ -38,7 +38,7 @@ namespace CrateModLoader.GameSpecific.WormsForts
 
         public WF_DM_Rand_ShuffleBuildPoints()
         {
-            rand = new Random(ModLoaderGlobals.RandomizerSeed);
+            rand = GetRandom();
         }
 
         public override void ModPass(XOM_File file)

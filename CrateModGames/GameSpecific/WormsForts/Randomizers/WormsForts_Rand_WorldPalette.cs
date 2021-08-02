@@ -11,7 +11,7 @@ namespace CrateModLoader.GameSpecific.WormsForts
 
         public override void BeforeModPass()
         {
-            rand = new Random(ModLoaderGlobals.RandomizerSeed);
+            rand = GetRandom();
         }
 
         public override void ModPass(XOM_File file)

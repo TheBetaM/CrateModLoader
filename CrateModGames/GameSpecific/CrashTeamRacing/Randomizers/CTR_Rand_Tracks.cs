@@ -36,7 +36,7 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
             {
                 return;
             }
-            Random rand = new Random(ModLoaderGlobals.RandomizerSeed);
+            Random rand = GetRandom();
 
             List<int> LevelInd = new List<int>();
             List<int> LevelRand = new List<int>();

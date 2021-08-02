@@ -39,7 +39,7 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
 
         public override void ModPass(GenericModStruct mod)
         {
-            Random randState = new Random(ModLoaderGlobals.RandomizerSeed);
+            Random randState = GetRandom();
             ChunkType randChunk = possibleStartingChunks[randState.Next(possibleStartingChunks.Count)];
             for (int i = 0; i < Twins_Data.All_Chunks.Count; i++)
             {

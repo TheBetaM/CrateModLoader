@@ -20,7 +20,7 @@ namespace CrateModLoader.GameSpecific.CrashTTR
             {
                 return;
             }
-            Random randState = new Random(ModLoaderGlobals.RandomizerSeed);
+            Random randState = GetRandom();
             randLaps = new List<int>();
             for (int i = 0; i < 15; i++)
             {

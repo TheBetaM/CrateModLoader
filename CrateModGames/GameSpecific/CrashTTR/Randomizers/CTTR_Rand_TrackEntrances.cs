@@ -10,7 +10,7 @@ namespace CrateModLoader.GameSpecific.CrashTTR
 
         public override void BeforeModPass()
         {
-            Random randState = new Random(ModLoaderGlobals.RandomizerSeed);
+            Random randState = GetRandom();
             randTracks = new List<int>();
             if (CTTR_Props_Main.Option_RandTrackEntrances.Enabled)
             {

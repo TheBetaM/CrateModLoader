@@ -11,7 +11,7 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
             string extrPath = mod.ExtractedPath;
             ConsoleMode console = mod.Console;
 
-            Random rand = new Random(ModLoaderGlobals.RandomizerSeed);
+            Random rand = GetRandom();
 
             TWOC_Levels Level1 = TWOC_Levels.L03_Bamboozled;
             TWOC_Levels Level2 = TWOC_Levels.L14_EskimoRoll;

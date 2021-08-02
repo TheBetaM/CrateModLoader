@@ -37,7 +37,7 @@ namespace CrateModLoader.GameSpecific.CrashTitans
 
         public override void BeforeModPass()
         {
-            rand = new Random(ModLoaderGlobals.RandomizerSeed);
+            rand = GetRandom();
 
             List<int> RepList = new List<int>();
             for (int i = 0; i < Costumes.Count; i++)

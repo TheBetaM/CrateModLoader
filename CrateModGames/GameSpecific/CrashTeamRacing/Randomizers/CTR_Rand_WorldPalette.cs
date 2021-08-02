@@ -12,7 +12,7 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing.Mods
 
         public override void BeforeModPass()
         {
-            rand = new Random(ModLoaderGlobals.RandomizerSeed);
+            rand = GetRandom();
         }
 
         public override void ModPass(Scene lev)

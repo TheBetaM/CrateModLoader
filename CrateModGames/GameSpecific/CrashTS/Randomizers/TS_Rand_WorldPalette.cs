@@ -12,7 +12,7 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
 
         public override void BeforeModPass()
         {
-            randState = new Random(ModLoaderGlobals.RandomizerSeed);
+            randState = GetRandom();
         }
 
         public override void ModPass(ChunkInfoSM info)

@@ -22,7 +22,7 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
         {
             if (!isSet)
             {
-                Random randState = new Random(ModLoaderGlobals.RandomizerSeed);
+                Random randState = GetRandom();
 
                 Twins_Randomize_Character((int)CharacterID.Crash, ref randState);
                 Twins_Randomize_Character((int)CharacterID.Cortex, ref randState);
@@ -317,7 +317,8 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
                         else if (instance.ObjectID == (uint)ObjectID.MECHABANDICOOT)
                         {
                             // Mechabandicoot mods
-
+                            // Needs fixing
+                            /*
                             instance.UnkI322[(int)CharacterInstanceFloats.AirGravity] = Twins_Data_Characters.CharFloats_AirGravity.Value[(int)CharacterID.Mechabandicoot];
                             instance.UnkI322[(int)CharacterInstanceFloats.BaseGravity] = Twins_Data_Characters.CharFloats_BaseGravity.Value[(int)CharacterID.Mechabandicoot];
                             instance.UnkI322[(int)CharacterInstanceFloats.BodyslamGravityForce] = Twins_Data_Characters.CharFloats_BodyslamGravityForce.Value[(int)CharacterID.Mechabandicoot];
@@ -385,6 +386,7 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
                             instance.UnkI321[(int)CharacterInstanceFlags.JumpRotationSpeed] = Twins_Data_Characters.CharFlags_JumpRotationSpeed.Value[(int)CharacterID.Mechabandicoot];
                             instance.UnkI321[(int)CharacterInstanceFlags.Unk8] = Twins_Data_Characters.CharFlags_Unk8.Value[(int)CharacterID.Mechabandicoot];
                             instance.UnkI321[(int)CharacterInstanceFlags.SlideJumpRotationSpeed] = Twins_Data_Characters.CharFlags_SlideJumpRotationSpeed.Value[(int)CharacterID.Mechabandicoot];
+                            */
 
                             //instance.UnkI322[(int)CharacterInstanceFloats.StrafingSpeed] = 10;
                         }

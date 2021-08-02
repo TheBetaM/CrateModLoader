@@ -12,7 +12,7 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
 
         public override void BeforeModPass()
         {
-            Random randState = new Random(ModLoaderGlobals.RandomizerSeed);
+            Random randState = GetRandom();
             PantsColor = Color.FromArgb(255, randState.Next(256), randState.Next(256), randState.Next(256));
 
             if (TS_Props_Misc.Prop_PantsColor.HasChanged)

@@ -51,8 +51,8 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
             ConsoleMode console = mod.Console;
 
             string Music_GC_Extra = "Gauntl2";
-            Random rand = new Random(ModLoaderGlobals.RandomizerSeed);
-            
+            Random rand = GetRandom();
+
             if (console == ConsoleMode.PS2)
             {
                 return;

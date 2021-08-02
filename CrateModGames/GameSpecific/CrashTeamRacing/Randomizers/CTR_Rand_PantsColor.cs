@@ -13,7 +13,7 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing.Mods
 
         public override void BeforeModPass()
         {
-            rand = new Random(ModLoaderGlobals.RandomizerSeed);
+            rand = GetRandom();
             targetColor = Color.FromArgb(0, (byte)rand.Next(256), (byte)rand.Next(256), (byte)rand.Next(256));
             targetColor = Color.FromArgb(0, 0, 255, 0);
         }

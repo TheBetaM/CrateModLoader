@@ -12,7 +12,7 @@ namespace CrateModLoader.GameSpecific.Rayman3
 
             if (file.Name.ToLower().Contains("fix.tpl"))
             {
-                Random rand = new Random(ModLoaderGlobals.RandomizerSeed);
+                Random rand = GetRandom();
 
                 List<string> OutfitTex = new List<string>()
                 {

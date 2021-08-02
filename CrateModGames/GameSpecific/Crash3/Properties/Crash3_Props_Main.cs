@@ -44,6 +44,8 @@ namespace CrateModLoader.GameSpecific.Crash3
         public static ModPropOption Option_RandStreams = new ModPropOption(CrashTri_Text.Rand_Streams, CrashTri_Text.Rand_StreamsDesc);
         [ExecutesMods(typeof(CrashTri_Rand_PantsColor))]
         public static ModPropOption Option_RandPantsColor = new ModPropOption(CrashTri_Text.Rand_PantsColor, CrashTri_Text.Rand_PantsColorDesc);
+        [ExecutesMods(typeof(CrashTri_Crash_RainbowPants))] [ModHidden]
+        public static ModPropOption Option_RainbowPants = new ModPropOption("Rainbow Pants", "");
         [ExecutesMods(typeof(CrashTri_Scenery_Rainbow))]
         public static ModPropOption Option_RandWorldColors = new ModPropOption(CrashTri_Text.Rand_WorldColors, CrashTri_Text.Rand_WorldColorsDesc);
         [ExecutesMods(typeof(CrashTri_Scenery_Swizzle))]

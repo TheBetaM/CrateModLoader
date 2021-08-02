@@ -23,7 +23,7 @@ namespace CrateModLoader.GameSpecific.Crash1.TrilogyCommon
         {
             if (isRandom)
             {
-                rand = new Random(ModLoaderGlobals.RandomizerSeed);
+                rand = GetRandom();
                 targetColor = new SceneryColor((byte)rand.Next(256), (byte)rand.Next(256), (byte)rand.Next(256), 0);
                 targetOldColor = new OldSceneryColor((byte)rand.Next(256), (byte)rand.Next(256), (byte)rand.Next(256), false);
             }

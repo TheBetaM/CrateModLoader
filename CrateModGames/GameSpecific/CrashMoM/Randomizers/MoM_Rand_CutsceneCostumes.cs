@@ -26,7 +26,7 @@ namespace CrateModLoader.GameSpecific.CrashMoM.Mods
 
         public override void BeforeModPass()
         {
-            rand = new Random(ModLoaderGlobals.RandomizerSeed);
+            rand = GetRandom();
 
             List<int> RepList = new List<int>();
             for (int i = 0; i < Costumes.Count; i++)
