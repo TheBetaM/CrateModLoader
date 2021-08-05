@@ -48,20 +48,117 @@ namespace CrateModLoader.ModPipelines
             titleID = null;
             regionID = 0;
 
-            // CDReader needs to instantiate from FileStream or else it will not dispose correctly
-            using (var isoStream = new FileStream(inputPath, FileMode.Open, FileAccess.Read, FileShare.Read, 0x10000, FileOptions.SequentialScan))
+            if (Path.GetExtension(inputPath).ToLower() == ".bin") // PS1 CD image
             {
-                using (var tempbin = new FileStream(TempBinPath, FileMode.Create))
+                isBINimage = true;
+                using (var fileStream = new FileStream(inputPath, FileMode.Open, FileAccess.Read, FileShare.Read, 0x10000, FileOptions.SequentialScan))
+                {
+                    using (BinaryReader reader = new BinaryReader(fileStream))
+                    {
+                        try
+                        {
+                            fileStream.Seek(0x9319, SeekOrigin.Begin);
+                            string test = new string(reader.ReadChars(0x05));
+                            if (test.Contains("CD001"))
+                            {
+                                // It's a bin image
+                                //Console.WriteLine("is bin");
+                                reader.ReadUInt16();
+                                test = new string(reader.ReadChars(0x0B));
+                                if (test.Contains("PLAYSTATION"))
+                                {
+                                    // It's a PSX or PS2 CD
+                                    //Console.WriteLine("is playstation bin");
+
+                                    int totalSectors = (int)(reader.BaseStream.Length / 2352);
+
+                                    fileStream.Seek(0x93B6, SeekOrigin.Begin);
+                                    uint rootDirSector = reader.ReadUInt32(); // usually 22 but better to be sure
+                                    if (rootDirSector >= totalSectors)
+                                        throw new Exception("root dir sector out of bounds");
+                                    fileStream.Seek((2352 * rootDirSector) + 0x18, SeekOrigin.Begin);
+                                    //Console.WriteLine("root dir sector " + rootDirSector);
+
+                                    // Looking for SYSTEM.CNF now
+                                    // Note: This may not work if the root folder listing is larger than one sector
+
+                                    bool foundCNF = false;
+                                    byte nameSize = 0;
+                                    string entryName = string.Empty;
+                                    uint cnfSector = 0;
+
+                                    while (!foundCNF)
+                                    {
+                                        byte entrySize = reader.ReadByte();
+                                        if (entrySize == 0)
+                                        {
+                                            foundCNF = true;
+                                            throw new Exception("SYSTEM.CNF not found");
+                                        }
+                                        fileStream.Seek(0x1F, SeekOrigin.Current);
+                                        nameSize = reader.ReadByte();
+                                        if (nameSize > 1)
+                                        {
+                                            entryName = new string(reader.ReadChars(nameSize));
+                                        }
+                                        else
+                                        {
+                                            reader.ReadByte();
+                                            entryName = string.Empty;
+                                        }
+
+                                        if (entryName.Contains("SYSTEM.CNF"))
+                                        {
+                                            foundCNF = true;
+                                            fileStream.Seek(-(nameSize + 0x1F), SeekOrigin.Current);
+                                            cnfSector = reader.ReadUInt32();
+                                        }
+                                        else
+                                        {
+                                            if (nameSize % 2 == 0)
+                                            {
+                                                reader.ReadByte();
+                                            }
+                                            fileStream.Seek(0xE, SeekOrigin.Current);
+                                        }
+                                    }
+
+                                    if (cnfSector >= totalSectors)
+                                        throw new Exception("cnf sector out of bounds");
+                                    fileStream.Seek((2352 * cnfSector) + 0x18, SeekOrigin.Begin);
+                                    //Console.WriteLine("cnf sector " + cnfSector);
+
+                                    titleID = new string(reader.ReadChars(0x1D));
+                                    //Console.WriteLine("title ID " + titleID);
+                                    if (titleID.Contains("BOOT2"))
+                                    {
+                                        // It's a PS2 CD!
+                                        found = false;
+                                        titleID = null;
+                                    }
+                                    else if (titleID.Contains("BOOT"))
+                                    {
+                                        found = true;
+                                    }
+                                }
+                            }
+                        }
+                        catch
+                        {
+                            found = false;
+                            titleID = null;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                // CDReader needs to instantiate from FileStream or else it will not dispose correctly
+                using (var isoStream = new FileStream(inputPath, FileMode.Open, FileAccess.Read, FileShare.Read, 0x10000, FileOptions.SequentialScan))
                 {
                     CDReader cd;
 
-                    if (Path.GetExtension(inputPath).ToLower() == ".bin") // PS1 CD image
-                    {
-                        PSX2ISO.Run(isoStream, tempbin);
-                        cd = new CDReader(tempbin, true);
-                        isBINimage = true;
-                    }
-                    else if (!CDReader.Detect(isoStream))
+                    if (!CDReader.Detect(isoStream))
                     {
                         return false;
                     }
@@ -86,9 +183,6 @@ namespace CrateModLoader.ModPipelines
                     cd = null;
                 }
             }
-
-            if (File.Exists(TempBinPath))
-                File.Delete(TempBinPath);
 
             if (!found)
             {
