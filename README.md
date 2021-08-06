@@ -2,9 +2,9 @@
 <img src="./CrateModLoader/Resources/cml_header.png" width="433" height="200" alt="Crate Mod Loader"> 
 </p>
   
-The all-in-one Randomizer and Mod Loader for console games.  
-It detects, extracts, modifies and rebuilds disc image files and directories in an easy to setup way.  
-In addition, it allows for standalone "Mod Crates" to be installed seamlessly into games.   
+The all-in-one Mod Loader and Randomizer for console games.  
+It detects, extracts, modifies and rebuilds games in an easy to setup way.  
+In addition, it allows for standalone "Mod Crates" to be installed seamlessly into games.  
   
 <p><img src="https://img.shields.io/github/downloads/TheBetaM/CrateModLoader/total.svg" alt="Downloads"/></p>
   
@@ -22,17 +22,12 @@ See [this list](./CONSOLES.md) for supported consoles in the current build.
 
 Place Mod Crates in the "Mods" folder for them to appear in the list.  
 An example mod can be found in the "Mods" folder.  
-Mod Crates can be folders or standard .zip files with these contents:  
-(only ModCrateInfo.txt is mandatory for them to function, the rest is optional)  
-- ModCrateInfo.txt with the details of the mod  
-- ModCrateSettings.txt game-specific settings that can't be changed with modded files  
-- ModCrateIcon.png icon of the mod displayed in the program  
-- "layer0" folder - any files and folders inside will replace or add to the base extracted contents of the game ROM  
-- "layer1" "layer2" etc. folders - supported games allow for replacement and/or addition of files in different game archives (check compatibility in [this list](./GAMES.md) or Games.txt)  
+Mod Crates can be folders or standard .zip files.
+They can be created in the program itself by preloading the game data.
   
 # Building Prerequisites
 
-- Microsoft Visual Studio 2017 version 15.3 (C# 7.1)
+- Microsoft Visual Studio 2017 version 15.3 (C# 7.1) or newer
 - .NET 4.7
 
 # Contributing

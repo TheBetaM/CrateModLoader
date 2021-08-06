@@ -37,7 +37,7 @@ namespace CrateModLoader
             else
             {
                 AttachConsole(ATTACH_PARENT_PROCESS);
-                ModLoaderCLI.StartCLI(args);
+                ModLoaderCLI.StartCLI(ModProgram, args);
             }
         }
     }

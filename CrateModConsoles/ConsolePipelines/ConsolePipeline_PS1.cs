@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using CrateModLoader.Tools;
 using CrateModLoader.Tools.ISO;
 
@@ -36,6 +37,7 @@ namespace CrateModLoader.ModPipelines
         private string buildOutputPath;
         private string extractInputPath;
         private string extractOutputPath;
+        private bool UseNewTools = true;
 
         public ConsolePipeline_PS1()
         {
@@ -260,43 +262,69 @@ namespace CrateModLoader.ModPipelines
             await Task.Run(
                 () =>
                 {
-                    // Use CDBuilder
-                    CDBuilder isoBuild = new CDBuilder();
-                    isoBuild.UseJoliet = true;
-                    isoBuild.VolumeIdentifier = ISO_Label;
-
-                    DirectoryInfo di = new DirectoryInfo(buildInputPath);
-                    HashSet<FileStream> files = new HashSet<FileStream>();
-
-                    foreach (DirectoryInfo dir in di.GetDirectories())
+                    if (UseNewTools)
                     {
-                        ISO_Common.Recursive_AddDirs(isoBuild, dir, dir.Name + @"\", files, true);
-                    }
-                    foreach (FileInfo file in di.GetFiles())
-                    {
-                        ISO_Common.AddFile(isoBuild, file, string.Empty, files, true);
-                    }
+                        // Use mkpsxiso
 
-                    using (FileStream output = new FileStream(buildOutputPath, FileMode.Create, FileAccess.Write))
-                    using (Stream input = isoBuild.Build())
-                    {
-                        ISO2PSX.Run(input, output, AsyncWorker);
-                    }
+                        string args = $"-y -q -o \"{buildOutputPath}\" Input.xml";
 
-                    isoBuild = null;
+                        Process BuildProcess = new Process();
+                        BuildProcess.StartInfo.FileName = ModLoaderGlobals.ToolsPath + @"mkpsxiso.exe";
+                        BuildProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                        BuildProcess.StartInfo.Arguments = args;
+                        BuildProcess.StartInfo.UseShellExecute = false;
+                        BuildProcess.StartInfo.RedirectStandardOutput = true;
+                        BuildProcess.StartInfo.CreateNoWindow = true;
 
-                    foreach (FileStream file in files)
-                    {
-                        file.Close();
+                        BuildProcess.Start();
+                        string outputMessage = BuildProcess.StandardOutput.ReadToEnd();
+                        //Console.WriteLine(outputMessage);
+                        BuildProcess.WaitForExit();
+
+                        if (File.Exists(ModLoaderGlobals.BaseDirectory + "Input.xml"))
+                            File.Delete(ModLoaderGlobals.BaseDirectory + "Input.xml");
+                        if (File.Exists(ModLoaderGlobals.BaseDirectory + "mkpsxiso.cue"))
+                            File.Delete(ModLoaderGlobals.BaseDirectory + "mkpsxiso.cue");
+
                     }
-                    files.Clear();
+                    else
+                    {
+                        // Use CDBuilder
+                        CDBuilder isoBuild = new CDBuilder();
+                        isoBuild.UseJoliet = true;
+                        isoBuild.VolumeIdentifier = ISO_Label;
+
+                        DirectoryInfo di = new DirectoryInfo(buildInputPath);
+                        HashSet<FileStream> files = new HashSet<FileStream>();
+
+                        foreach (DirectoryInfo dir in di.GetDirectories())
+                        {
+                            ISO_Common.Recursive_AddDirs(isoBuild, dir, dir.Name + @"\", files, true);
+                        }
+                        foreach (FileInfo file in di.GetFiles())
+                        {
+                            ISO_Common.AddFile(isoBuild, file, string.Empty, files, true);
+                        }
+
+                        using (FileStream output = new FileStream(buildOutputPath, FileMode.Create, FileAccess.Write))
+                        using (Stream input = isoBuild.Build())
+                        {
+                            ISO2PSX.Run(input, output, AsyncWorker);
+                        }
+
+                        isoBuild = null;
+
+                        foreach (FileStream file in files)
+                        {
+                            file.Close();
+                        }
+                        files.Clear();
+                    }
 
                     isExtracting = false;
                 }
                 );
         }
-
-
 
         private void Extractor_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
@@ -334,112 +362,139 @@ namespace CrateModLoader.ModPipelines
         private async void Extractor_Work(BackgroundWorker a)
         {
 
-            IList<Task> extractTaskList = new List<Task>();
-            Dictionary<string, string> Paths = new Dictionary<string, string>();
-            FileStream tempbin = null;
-            FileStream extract_isoStream = null;
-            CDReader extract_reader;
-            ExtractFileCount = 0;
-            ExtractIterator = 0;
-
-            // Mounting CDReader
-            if (isBINimage) // PS1 BIN image
+            if (isBINimage && UseNewTools)
             {
-                using (FileStream isoStream = File.Open(extractInputPath, FileMode.Open))
+                await Task.Run(
+                () =>
                 {
-                    FileStream binconvout = new FileStream(TempBinPath, FileMode.Create, FileAccess.Write);
-                    PSX2ISO.Run(isoStream, binconvout);
-                    binconvout.Close();
-                    tempbin = new FileStream(TempBinPath, FileMode.Open, FileAccess.Read, FileShare.Read);
-                }
-                extract_reader = new CDReader(tempbin, true);
+                    //use isodump
+                    Directory.CreateDirectory(TempPath);
+                    string args = $"\"{extractInputPath}\" -x {ModLoaderGlobals.TempName} -s Input.xml";
+
+                    Process ExtractProcess = new Process();
+                    ExtractProcess.StartInfo.FileName = ModLoaderGlobals.ToolsPath + @"isodump.exe";
+                    ExtractProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                    ExtractProcess.StartInfo.Arguments = args;
+                    ExtractProcess.StartInfo.UseShellExecute = false;
+                    ExtractProcess.StartInfo.RedirectStandardOutput = true;
+                    ExtractProcess.StartInfo.CreateNoWindow = true;
+
+                    ExtractProcess.Start();
+                    string outputMessage = ExtractProcess.StandardOutput.ReadToEnd();
+                    //Console.WriteLine(outputMessage);
+                    ExtractProcess.WaitForExit();
+                });
             }
             else
             {
-                extract_isoStream = File.Open(extractInputPath, FileMode.Open);
-                extract_reader = new CDReader(extract_isoStream, true);
-            }
-            ISO_Label = extract_reader.VolumeLabel;
+                IList<Task> extractTaskList = new List<Task>();
+                Dictionary<string, string> Paths = new Dictionary<string, string>();
+                FileStream tempbin = null;
+                FileStream extract_isoStream = null;
+                CDReader extract_reader;
+                ExtractFileCount = 0;
+                ExtractIterator = 0;
 
-            if (!Directory.Exists(extractOutputPath))
-            {
-                Directory.CreateDirectory(extractOutputPath);
-            }
-
-            // Counting the files
-            if (extract_reader.GetDirectories("").Length > 0)
-            {
-                foreach (string directory in extract_reader.GetDirectories(""))
+                // Mounting CDReader
+                if (isBINimage) // PS1 BIN image
                 {
-                    if (extract_reader.GetDirectoryInfo(directory).GetFiles().Length > 0)
-                        foreach (string file in extract_reader.GetFiles(directory))
-                            ExtractFileCount++;
-                    if (extract_reader.GetDirectories(directory).Length > 0)
+                    using (FileStream isoStream = File.Open(extractInputPath, FileMode.Open))
                     {
-                        Recursive_CountFiles(extract_reader, directory, ref ExtractFileCount);
+                        FileStream binconvout = new FileStream(TempBinPath, FileMode.Create, FileAccess.Write);
+                        PSX2ISO.Run(isoStream, binconvout);
+                        binconvout.Close();
+                        tempbin = new FileStream(TempBinPath, FileMode.Open, FileAccess.Read, FileShare.Read);
                     }
+                    extract_reader = new CDReader(tempbin, true);
                 }
-            }
-            if (extract_reader.GetDirectoryInfo("").GetFiles().Length > 0)
-            {
-                foreach (string file in extract_reader.GetFiles(""))
+                else
                 {
-                    ExtractFileCount++;
+                    extract_isoStream = File.Open(extractInputPath, FileMode.Open);
+                    extract_reader = new CDReader(extract_isoStream, true);
                 }
-            }
+                ISO_Label = extract_reader.VolumeLabel;
 
-            // Scanning file paths, creating directories
-            if (extract_reader.GetDirectories("").Length > 0)
-            {
-                foreach (string directory in extract_reader.GetDirectories(""))
+                if (!Directory.Exists(extractOutputPath))
                 {
-                    Directory.CreateDirectory(extractOutputPath + directory);
-                    if (extract_reader.GetDirectoryInfo(directory).GetFiles().Length > 0)
+                    Directory.CreateDirectory(extractOutputPath);
+                }
+
+                // Counting the files
+                if (extract_reader.GetDirectories("").Length > 0)
+                {
+                    foreach (string directory in extract_reader.GetDirectories(""))
                     {
-                        foreach (string file in extract_reader.GetFiles(directory))
+                        if (extract_reader.GetDirectoryInfo(directory).GetFiles().Length > 0)
+                            foreach (string file in extract_reader.GetFiles(directory))
+                                ExtractFileCount++;
+                        if (extract_reader.GetDirectories(directory).Length > 0)
                         {
-                            string filename = extractOutputPath + file;
-                            filename = filename.Replace(";1", string.Empty);
-                            Paths.Add(file, filename);
+                            Recursive_CountFiles(extract_reader, directory, ref ExtractFileCount);
                         }
                     }
-                    if (extract_reader.GetDirectories(directory).Length > 0)
+                }
+                if (extract_reader.GetDirectoryInfo("").GetFiles().Length > 0)
+                {
+                    foreach (string file in extract_reader.GetFiles(""))
                     {
-                        Recursive_CreateDirs(extract_reader, directory, ref Paths);
+                        ExtractFileCount++;
                     }
                 }
-            }
-            if (extract_reader.GetDirectoryInfo("").GetFiles().Length > 0)
-            {
-                foreach (string file in extract_reader.GetFiles(""))
+
+                // Scanning file paths, creating directories
+                if (extract_reader.GetDirectories("").Length > 0)
                 {
-                    string filename = extractOutputPath + "/" + file;
-                    filename = filename.Replace(";1", string.Empty);
-                    Paths.Add(file, filename);
+                    foreach (string directory in extract_reader.GetDirectories(""))
+                    {
+                        Directory.CreateDirectory(extractOutputPath + directory);
+                        if (extract_reader.GetDirectoryInfo(directory).GetFiles().Length > 0)
+                        {
+                            foreach (string file in extract_reader.GetFiles(directory))
+                            {
+                                string filename = extractOutputPath + file;
+                                filename = filename.Replace(";1", string.Empty);
+                                Paths.Add(file, filename);
+                            }
+                        }
+                        if (extract_reader.GetDirectories(directory).Length > 0)
+                        {
+                            Recursive_CreateDirs(extract_reader, directory, ref Paths);
+                        }
+                    }
                 }
-            }
+                if (extract_reader.GetDirectoryInfo("").GetFiles().Length > 0)
+                {
+                    foreach (string file in extract_reader.GetFiles(""))
+                    {
+                        string filename = extractOutputPath + "/" + file;
+                        filename = filename.Replace(";1", string.Empty);
+                        Paths.Add(file, filename);
+                    }
+                }
 
-            extract_reader.Dispose();
-            if (!isBINimage)
-            {
-                extract_isoStream.Dispose();
-                extract_isoStream.Close();
-            }
+                extract_reader.Dispose();
+                if (!isBINimage)
+                {
+                    extract_isoStream.Dispose();
+                    extract_isoStream.Close();
+                }
 
-            // Extracting files
-            foreach (KeyValuePair<string, string> Path in Paths)
-            {
-                extractTaskList.Add(ISO_ExtractAsync(Path.Key, Path.Value, a));
-            }
+                // Extracting files
+                foreach (KeyValuePair<string, string> Path in Paths)
+                {
+                    extractTaskList.Add(ISO_ExtractAsync(Path.Key, Path.Value, a));
+                }
 
-            await Task.WhenAll(extractTaskList);
+                await Task.WhenAll(extractTaskList);
 
-            if (tempbin != null)
-            {
-                tempbin.Dispose();
-                File.Delete(TempBinPath);
+                if (tempbin != null)
+                {
+                    tempbin.Dispose();
+                    File.Delete(TempBinPath);
+                }
+
+                extractTaskList.Clear();
             }
-            extractTaskList.Clear();
 
             isExtracting = false;
 

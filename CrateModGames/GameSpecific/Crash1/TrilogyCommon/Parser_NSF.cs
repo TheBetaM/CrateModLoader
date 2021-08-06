@@ -96,7 +96,19 @@ namespace CrateModLoader.GameSpecific.Crash1.TrilogyCommon
             }
 
             File.WriteAllBytes(filePath, thing.nsf.Save());
-            File.WriteAllBytes(Path.ChangeExtension(filePath, ".NSD"), thing.nsd.Save());
+
+            if (game == GameVersion.Crash2)
+            {
+                File.WriteAllBytes(Path.ChangeExtension(filePath, ".NSD"), thing.nsd.Save());
+            }
+            else if (game == GameVersion.Crash3)
+            {
+                File.WriteAllBytes(Path.ChangeExtension(filePath, ".NSD"), thing.newnsd.Save());
+            }
+            else
+            {
+                File.WriteAllBytes(Path.ChangeExtension(filePath, ".NSD"), thing.oldnsd.Save());
+            }
         }
 
         internal Crash1_Levels GetLevelFromNSF1(string nsf_name)

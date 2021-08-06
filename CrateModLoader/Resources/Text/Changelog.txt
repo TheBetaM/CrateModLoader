@@ -1,9 +1,10 @@
 1.4.0
 
 General
-- PS1, PS2, PSP and Folder mode extraction step is now multithreaded
-- Modding step is now multithreaded
+- PS2 DVD, PSP and Folder mode extraction step is now multithreaded
+- Modding step is now multithreaded (for most games)
 - Much faster detection for PS1 and PS2 CD games  
+- PS1 and PS2 CD games now use mkpsxiso for rebuilding, fixing various sound/movie issues and improving compatibility
 - Added support for DS and 3DS games
 - Preloading is now multithreaded and combined with the main process (no longer needs to extract again after clicking Start)
 - Every randomizer is now handled independently from each other 
@@ -18,6 +19,7 @@ General
 - Mod Crates can now also include Octodiff-based delta patches for every game file (ex. /layer1/Language/Code/English.txt.octodelta)
 They can be automatically created from within the Crate Mod Loader, or manually using Octodiff's 1.2.1 version.
 The advantage to using them is a lower file size of Mod Crates, the downside being incompatibility between different versions of the same game file.
+- Added commandline access to the program. Start it with -help to learn commandline usage.
 
 New games supported:
 - Worms Forts: Under Siege (PS2)  
@@ -52,6 +54,7 @@ CTR: Crash Team Racing
 - New: Random Tracks Have Ice Physics
 - New: Driving Offroad Respawns The Driver
 - New: Randomize World Palette
+- Fixed voices and movies not playing (due to new packing method)
 - Updated CTR Framework API (existing Mod Crates may need to be updated due to layer 1 file name changes)
 
 Crash of the Titans

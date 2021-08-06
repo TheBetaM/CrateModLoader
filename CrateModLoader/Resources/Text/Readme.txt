@@ -32,6 +32,8 @@ Wiims ISO Tools (https://wit.wiimm.de/) (GPL-2.0 license)
 Gamecube ISO Tool (http://www.wiibackupmanager.co.uk/gcit.html) (freeware)  
 3dstool (https://github.com/dnasdw/3dstool) (MIT license)  
 ndstool (https://github.com/devkitPro/ndstool) (GPL-3.0 license)  
+isodump (https://github.com/Lameguy64/isodump) (GPL-2.0 license)
+mkpsxiso (https://github.com/Lameguy64/mkpsxiso) (GPL-2.0 license)
 
 License Information (for more information check /Tools/License.txt)
 
