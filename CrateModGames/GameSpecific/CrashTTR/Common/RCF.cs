@@ -337,6 +337,7 @@ namespace RadcoreCementFile
             }
 
             await Task.WhenAll(editTaskList);
+            editTaskList.Clear();
 
         }
         private async Task ExtractFileAsync(string Path, int i)
@@ -611,7 +612,7 @@ namespace RadcoreCementFile
             }
 
             await Task.WhenAll(editTaskList);
-
+            editTaskList.Clear();
         }
 
         public long DirSize(DirectoryInfo d)

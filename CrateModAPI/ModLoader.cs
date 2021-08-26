@@ -331,6 +331,7 @@ namespace CrateModLoader
                 writeTaskList.Add(CopyFileAsync(Path.Key, Path.Value, worker));
             }
             await Task.WhenAll(writeTaskList);
+            writeTaskList.Clear();
             isExtracting = false;
         }
         private async Task CopyFileAsync(string from, string to, BackgroundWorker worker)

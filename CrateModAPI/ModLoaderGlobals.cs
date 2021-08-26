@@ -21,6 +21,8 @@ namespace CrateModLoader
         NDS, // DS
         N3DS, // 3DS
         WIIU, // WiiU, being considered
+        Saturn, // Sega Saturn, being considered
+        SegaCD, // Sega CD, being considered
     }
 
     // Region types

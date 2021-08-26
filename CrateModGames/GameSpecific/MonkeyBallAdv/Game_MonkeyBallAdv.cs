@@ -10,8 +10,8 @@ namespace CrateModLoader.GameSpecific.MonkeyBallAdv
         public override string ShortName => "MonkeyBallAdv";
         public override List<ConsoleMode> Consoles => new List<ConsoleMode>
                 {
-                    ConsoleMode.PS2,
-                    ConsoleMode.GCN,
+                    //ConsoleMode.PS2,
+                    //ConsoleMode.GCN,
                     ConsoleMode.PSP,
                 };
         public override string API_Credit => Twins_Text.API_Credit;
