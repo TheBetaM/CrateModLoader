@@ -19,7 +19,7 @@ namespace CrateModGames.GameSpecific.Crash2 {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Crash2_Text {
@@ -88,6 +88,24 @@ namespace CrateModGames.GameSpecific.Crash2 {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All Crates Are Invisible.
+        /// </summary>
+        internal static string Mod_InvisibleCrates {
+            get {
+                return ResourceManager.GetString("Mod_InvisibleCrates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All crates are invisible until you touch them..
+        /// </summary>
+        internal static string Mod_InvisibleCratesDesc {
+            get {
+                return ResourceManager.GetString("Mod_InvisibleCratesDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All Enemies Are Random Crates (Beta).
         /// </summary>
         internal static string Rand_AllEnemiesCrates {
@@ -120,6 +138,24 @@ namespace CrateModGames.GameSpecific.Crash2 {
         internal static string Rand_BossLevelsDesc {
             get {
                 return ResourceManager.GetString("Rand_BossLevelsDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Random Crates Are Invisible.
+        /// </summary>
+        internal static string Rand_InvisibleCrates {
+            get {
+                return ResourceManager.GetString("Rand_InvisibleCrates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Random crates are invisible until you touch them..
+        /// </summary>
+        internal static string Rand_InvisibleCratesDesc {
+            get {
+                return ResourceManager.GetString("Rand_InvisibleCratesDesc", resourceCulture);
             }
         }
         

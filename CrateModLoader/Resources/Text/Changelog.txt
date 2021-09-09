@@ -20,6 +20,8 @@ General
 They can be automatically created from within the Crate Mod Loader, or manually using Octodiff's 1.2.1 version.
 The advantage to using them is a lower file size of Mod Crates, the downside being incompatibility between different versions of the same game file.
 - Added commandline access to the program. Start it with -help to learn commandline usage.
+- Added CS-Script (C#) support to Mod Crates. Example script available in the included example mod.
+- Updated .NET requirement to 4.7.2
 
 New games supported:
 - Worms Forts: Under Siege (PS2)  

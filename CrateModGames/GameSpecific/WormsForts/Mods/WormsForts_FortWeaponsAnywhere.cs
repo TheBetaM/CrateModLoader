@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
+using CrateModLoader;
+using CrateModLoader.GameSpecific.WormsForts;
 using CrateModLoader.GameSpecific.WormsForts.XOM;
 
 namespace CrateModLoader.GameSpecific.WormsForts

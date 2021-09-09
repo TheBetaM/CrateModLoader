@@ -12,14 +12,10 @@ Contributors:
 
 Mod Crates
 
-Place Mod Crates in the "Mods" folder for them to appear in the list.
-An example mod can be found in the "Mods" folder.
-Mod Crates can be folders or standard .zip files with these contents: (only ModCrateInfo.txt is mandatory for them to function, the rest is optional)
-- ModCrateInfo.txt with the details of the mod
-- ModCrateSettings.txt game-specific settings that can't be changed with modded files
-- ModCrateIcon.png icon of the mod displayed in the program
-- "layer0" folder - any files and folders inside will replace or add to the base extracted contents of the game ROM
-- "layer1" "layer2" etc. folders - supported games allow for replacement and/or addition of files in different game archives (check compatibility in Games.txt)
+Place Mod Crates in the "Mods" folder for them to appear in the list.  
+An example mod can be found in the "Mods" folder.  
+Mod Crates can be folders or standard .zip files.
+They can be created in the program itself by preloading the game data.
 
 Tools Credits
 

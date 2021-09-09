@@ -27,8 +27,8 @@ They can be created in the program itself by preloading the game data.
   
 # Building Prerequisites
 
-- Microsoft Visual Studio 2017 version 15.3 (C# 7.1) or newer
-- .NET 4.7
+- Microsoft Visual Studio 2017 version 15.3 (C# 7.1) or newer (not 2019)
+- .NET 4.7.2
 
 # Contributing
 

@@ -61,21 +61,16 @@ namespace CrateModLoader.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 1.3.0
+        ///   Looks up a localized string similar to 1.4.0
         ///
-        ///General:
-        ///- PS2 ROM building is now supported internally (Thanks to Smartkin). Folder mode is now supported.  
-        ///- Options are now handled the same as Mod Menu properties allowing them to be set by Mod Crates and enabling variations and choices like difficulty settings in Mod Menus.  
-        ///
-        ///Crash Twinsanity:
-        ///- New feature: Classic Health
-        ///- New feature: Classic Explosion Damage
-        ///- Fixed default values for character health
-        ///
-        ///1.2.1
-        ///
-        ///Crash Twinsanity:
-        ///- Fixed processing errors in some versions of the [rest of string was truncated]&quot;;.
+        ///General
+        ///- PS2 DVD, PSP and Folder mode extraction step is now multithreaded
+        ///- Modding step is now multithreaded (for most games)
+        ///- Much faster detection for PS1 and PS2 CD games  
+        ///- PS1 and PS2 CD games now use mkpsxiso for rebuilding, fixing various sound/movie issues and improving compatibility
+        ///- Added support for DS and 3DS games
+        ///- Preloading is now multithreaded and combined with the main process (no longer needs to extract again after clicking Start)
+        ///- Every randomizer is now handled in [rest of string was truncated]&quot;;.
         /// </summary>
         public static string Changelog {
             get {
@@ -98,19 +93,17 @@ namespace CrateModLoader.Properties {
         ///  
         ///Crash Nitro Kart
         ///Supported: All PS2 versions (.ISO format), All GC versions (.ISO format), All XBOX versions (.ISO format)  
-        ///Mod abbreviation: CrashNK  
-        ///Mod Menu enabled.
-        ///Mod layers: 1 - ASSETS.GOB contents
+        ///Recommended: PS2
         ///Tools/API by BetaM, ManDude and eezstreet.  
-        ///Features:  
+        ///Version and seed visible in the Credits screen.
+        ///Features include:  
         ///- Randomize Adventure  
-        ///- Randomize Character Stats
-        ///- Randomize Kart Stats
-        ///- Randomize Powerup Effects
-        ///- Randomize Drivers  
-        ///- Randomize Karts  
-        ///- Disable Fadeout/Flash Overlay
-        ///- Disable Unlock Po [rest of string was truncated]&quot;;.
+        ///- Randomize Characters/Karts and their stats
+        ///- Disable Fadeout/Flashing Overlay
+        ///And more! Aswell as additional features in Mod Menu+!
+        ///  
+        ///Crash Twinsanity
+        ///Supported: All PS2 versions ( [rest of string was truncated]&quot;;.
         /// </summary>
         public static string Games {
             get {
@@ -119,7 +112,7 @@ namespace CrateModLoader.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Crate Mod Loader v1.3.0
+        ///   Looks up a localized string similar to Crate Mod Loader v1.4.0
         ///The all-in-one Randomizer and Mod Loader for console games.  
         ///It detects, extracts, modifies and rebuilds disc image files and directories in an easy to setup way.  
         ///In addition, it allows for standalone &quot;Mod Crates&quot; to be installed seamlessly into games.

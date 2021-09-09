@@ -73,10 +73,15 @@ namespace CrateModLoader.ModProperties
     public class ExecutesMods : Attribute
     {
         public List<Type> Mods;
+        public List<string> ModScripts;
 
         public ExecutesMods(params Type[] args)
         {
             Mods = new List<Type>(args);
+        }
+        public ExecutesMods(params string[] args)
+        {
+            ModScripts = new List<string>(args);
         }
     }
 

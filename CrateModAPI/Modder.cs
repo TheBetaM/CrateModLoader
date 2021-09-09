@@ -8,6 +8,7 @@ using System.IO;
 using CrateModLoader.ModProperties;
 using CrateModLoader.LevelAPI;
 using CrateModAPI.Resources.Text;
+using CSScriptLibrary;
 
 namespace CrateModLoader
 {
@@ -20,6 +21,18 @@ namespace CrateModLoader
      * (optional) 5. Create ModProperty variables for automatic Mod Menu setup. (must be part of the Modder's namespace)
      * (optional) 6. Add ModPropOption variables for quick options in the main window.
      * 7. Done.
+     * 
+     */
+
+    /*
+     * Converting a built-in Mod to a Mod script:
+     * - Convert namespace to using statement (ex. namespace CrateModLoader.GameSpecific.Crash1 -> using CrateModLoader.GameSpecific.Crash1;)
+     * - Add inherited namespaces, if missing (ex. using CrateModLoader;)
+     * - (only if including the script in the build, which is unsupported) In Solution Explorer set Build Actions to None, Copy to Output Directory to Copy Always 
+     * 
+     * Converting a Mod Script to a built-in Mod:
+     * - Restore namespace
+     * - In Solution Explorer set Build Actions to Compile, Copy to Output Directory to Do not copy
      * 
      */
 
@@ -70,6 +83,12 @@ namespace CrateModLoader
         public Modder()
         {
             GlobalRandom = new Random(ModLoaderGlobals.RandomizerSeed);
+            /*
+            CSScript.EvaluatorConfig.Engine = EvaluatorEngine.CodeDom;
+            var text = File.ReadAllText(ModLoaderGlobals.BaseDirectory + "GameSpecific/WormsForts/Mods/WormsForts_FortWeaponsAnywhere.cs");
+            dynamic mod = CSScript.Evaluator.LoadCode(text);
+            mod.ModPass(null);
+            */
         }
 
         public void PopulateProperties()
