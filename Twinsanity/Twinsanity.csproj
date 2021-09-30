@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B8D8E685-7E23-0A0B-00A3-F413B32DAD1C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Twinsanity</RootNamespace>
+    <AssemblyName>Twinsanity</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DefineConstants>DEBUG</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Diagnostics" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DefaultEnums.cs" />
+    <Compile Include="EzSwizzle.cs" />
+    <Compile Include="Items\Code\Animation.cs" />
+    <Compile Include="Items\Code\CodeModel.cs" />
+    <Compile Include="Items\Code\GameObjectDemo.cs" />
+    <Compile Include="Items\Code\GraphicsInfo.cs" />
+    <Compile Include="Items\DynamicSceneryData.cs" />
+    <Compile Include="Items\DynamicSceneryDataMB.cs" />
+    <Compile Include="Items\Graphics\BlendSkin.cs" />
+    <Compile Include="Items\Graphics\Skin.cs" />
+    <Compile Include="Items\Graphics\SkinX.cs" />
+    <Compile Include="Items\Graphics\MaterialDemo.cs" />
+    <Compile Include="Items\Graphics\Skydome.cs" />
+    <Compile Include="Items\Graphics\LodModel.cs" />
+    <Compile Include="Items\Instances\AIPath.cs" />
+    <Compile Include="Items\Instances\AIPosition.cs" />
+    <Compile Include="Items\Instances\CollisionSurface.cs" />
+    <Compile Include="Items\Instances\InstanceDemo.cs" />
+    <Compile Include="Items\Instances\InstanceMB.cs" />
+    <Compile Include="Items\Instances\InstanceTemplate.cs" />
+    <Compile Include="Items\Instances\InstanceTemplateDemo.cs" />
+    <Compile Include="Items\ParticleData.cs" />
+    <Compile Include="Items\SceneryData.cs" />
+    <Compile Include="Items\TwinsPSF.cs" />
+    <Compile Include="Items\TwinsPSM.cs" />
+    <Compile Include="Items\TwinsPTC.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="RIFF.cs" />
+    <Compile Include="ADPCM.cs" />
+    <Compile Include="BDArchive.cs" />
+    <Compile Include="Items\ChunkLinks.cs" />
+    <Compile Include="Items\Code\SoundEffect.cs" />
+    <Compile Include="Items\Graphics\Material.cs" />
+    <Compile Include="Items\Graphics\Texture.cs" />
+    <Compile Include="Items\Instances\Camera.cs" />
+    <Compile Include="Items\Instances\Path.cs" />
+    <Compile Include="Items\Instances\Position.cs" />
+    <Compile Include="Items\Instances\Trigger.cs" />
+    <Compile Include="Items\TwinsItem.cs" />
+    <Compile Include="Items\ColData.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="TwinsSection.cs" />
+    <Compile Include="TwinsFile.cs" />
+    <Compile Include="BitConv.cs" />
+    <Compile Include="TwinsShader.cs" />
+    <Compile Include="Types.cs" />
+    <Compile Include="Items\Code\GameObject.cs" />
+    <Compile Include="Items\Graphics\RigidModel.cs" />
+    <Compile Include="Items\Instances\Instance.cs" />
+    <Compile Include="Items\Graphics\Model.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Items\Code\Script.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
+    <Folder Include="Sections\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
