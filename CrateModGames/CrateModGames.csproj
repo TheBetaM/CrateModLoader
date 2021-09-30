@@ -52,9 +52,6 @@
     <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Xml" />
-    <Reference Include="Twinsanity">
-      <HintPath>GameSpecific\CrashTS\Twinsanity.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameSpecific\Crash1\Common\Crash1_Common.cs" />
@@ -221,6 +218,54 @@
     <Compile Include="GameSpecific\CrashTitans\Randomizers\Titans_Rand_CostumeVisuals.cs" />
     <Compile Include="GameSpecific\CrashTitans\Randomizers\Titans_Rand_CutsceneCostumes.cs" />
     <Compile Include="GameSpecific\CrashTitans\Randomizers\Titans_Rand_EpisodeOrder.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\ADPCM.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\BDArchive.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\BitConv.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\DefaultEnums.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\EzSwizzle.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\Items\ChunkLinks.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\Items\Code\Animation.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\Items\Code\CodeModel.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\Items\Code\GameObject.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\Items\Code\GameObjectDemo.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\Items\Code\GraphicsInfo.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\Items\Code\Script.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\Items\Code\SoundEffect.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\Items\ColData.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\Items\DynamicSceneryData.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\Items\DynamicSceneryDataMB.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\Items\Graphics\BlendSkin.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\Items\Graphics\LodModel.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\Items\Graphics\Material.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\Items\Graphics\MaterialDemo.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\Items\Graphics\Model.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\Items\Graphics\RigidModel.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\Items\Graphics\Skin.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\Items\Graphics\SkinX.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\Items\Graphics\Skydome.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\Items\Graphics\Texture.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\Items\Instances\AIPath.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\Items\Instances\AIPosition.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\Items\Instances\Camera.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\Items\Instances\CollisionSurface.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\Items\Instances\Instance.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\Items\Instances\InstanceDemo.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\Items\Instances\InstanceMB.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\Items\Instances\InstanceTemplate.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\Items\Instances\InstanceTemplateDemo.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\Items\Instances\Path.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\Items\Instances\Position.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\Items\Instances\Trigger.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\Items\ParticleData.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\Items\SceneryData.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\Items\TwinsItem.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\Items\TwinsPSF.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\Items\TwinsPSM.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\Items\TwinsPTC.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\TwinsFile.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\TwinsSection.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\TwinsShader.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\API\Twinsanity\Types.cs" />
     <Compile Include="GameSpecific\CrashTS\Common\BD_Archive.cs" />
     <Compile Include="GameSpecific\CrashTS\Common\Parser_PSM.cs" />
     <Compile Include="GameSpecific\CrashTS\Common\Parser_RM.cs" />
@@ -630,6 +675,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="GameSpecific\CrashTS\Common\API\LICENSE" />
+    <None Include="GameSpecific\CrashTS\Common\API\README.MD" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
