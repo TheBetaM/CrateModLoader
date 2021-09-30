@@ -199,6 +199,7 @@
     <Compile Include="FileFilter.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GenericMod.cs" />
+    <Compile Include="IMod.cs" />
     <Compile Include="LevelAPI\CollisionData.cs" />
     <Compile Include="LevelAPI\CollisionDataBase.cs" />
     <Compile Include="LevelAPI\LevelBase.cs" />

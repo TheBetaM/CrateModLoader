@@ -7,7 +7,7 @@ namespace CrateModLoader
     // Pass 1 (Cache): After extracting all files
     // Pass 2 (Mod): After Pass 1 for all files
     // Preload Pass: After extracting all files in the preload process
-    public abstract class Mod
+    public abstract class Mod : IMod
     {
         public virtual bool NeedsCachePass { get { return false; } }
 
@@ -40,7 +40,6 @@ namespace CrateModLoader
         public abstract void ModPass(object value); // Pass 2 (Mod): After all files were processed for Cache pass
         public virtual void PreloadPass(object value) { } // Preload pass if the mod acts as a loader/saver for property values/their data (see: custom textures)
 
-        public virtual void Init() { }
         public virtual void BeforeCachePass() { }
         public virtual void AfterCachePass() { }
         public virtual void BeforeModPass() { }

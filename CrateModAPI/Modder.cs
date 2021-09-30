@@ -69,6 +69,7 @@ namespace CrateModLoader
         public List<ModPipelineBase> Pipelines = new List<ModPipelineBase>();
         public List<ModPropertyBase> ActiveProps = new List<ModPropertyBase>();
         public List<LevelBase> Levels = new List<LevelBase>();
+        public Dictionary<string, IMod> ModScripts = new Dictionary<string, IMod>();
         public virtual bool NoAsyncProcess => false;
         public bool IsBusy => ProcessBusy || PassBusy; //{ get; set; }
         public bool PassBusy { get; set; }
@@ -83,12 +84,7 @@ namespace CrateModLoader
         public Modder()
         {
             GlobalRandom = new Random(ModLoaderGlobals.RandomizerSeed);
-            /*
-            CSScript.EvaluatorConfig.Engine = EvaluatorEngine.CodeDom;
-            var text = File.ReadAllText(ModLoaderGlobals.BaseDirectory + "GameSpecific/WormsForts/Mods/WormsForts_FortWeaponsAnywhere.cs");
-            dynamic mod = CSScript.Evaluator.LoadCode(text);
-            mod.ModPass(null);
-            */
+            CSScript.EvaluatorConfig.Engine = EvaluatorEngine.Roslyn; // the others are better, but require the .NET SDK to be installed supposedly
         }
 
         public void PopulateProperties()
@@ -305,6 +301,32 @@ namespace CrateModLoader
                 }
             }
 
+            //todo: change app domain here 
+
+            ModScripts = new Dictionary<string, IMod>();
+
+            foreach (ModCrate Crate in EnabledModCrates)
+            {
+                if (Crate.HasScripts)
+                {
+                    foreach (KeyValuePair<string, string> pair in Crate.Scripts)
+                    {
+                        try
+                        {
+                            IMod mod = CSScript.Evaluator.LoadCode<IMod>(pair.Value);
+                            //dynamic mod = CSScript.Evaluator.LoadCode(pair.Value);
+                            ModScripts.Add(pair.Key, mod);
+
+                            Console.WriteLine("Script: Loaded " + pair.Key);
+                        }
+                        catch
+                        {
+                            Console.WriteLine("ERROR: Failed to load script: " + pair.Key);
+                        }
+                    }
+                }
+            }
+
             //Console.WriteLine("Active Props: " + ActiveProps.Count);
         }
 
@@ -346,6 +368,8 @@ namespace CrateModLoader
                     }
                 }
             }
+
+            //todo: add mod scripts here
 
             //Console.WriteLine("Active Props: " + ActiveProps.Count);
         }
@@ -514,12 +538,20 @@ namespace CrateModLoader
             {
                 mod.BeforeCachePass();
             }
+            foreach (KeyValuePair<string, IMod> pair in ModScripts)
+            {
+                pair.Value.BeforeCachePass();
+            }
         }
         public void StartCachePass(object value)
         {
             foreach (Mod mod in Mods)
             {
                 mod.CachePass(value);
+            }
+            foreach (KeyValuePair<string, IMod> pair in ModScripts)
+            {
+                pair.Value.CachePass(value);
             }
         }
         public void AfterCachePass()
@@ -528,12 +560,20 @@ namespace CrateModLoader
             {
                 mod.AfterCachePass();
             }
+            foreach (KeyValuePair<string, IMod> pair in ModScripts)
+            {
+                pair.Value.AfterCachePass();
+            }
         }
         public void BeforeModPass()
         {
             foreach (Mod mod in Mods)
             {
                 mod.BeforeModPass();
+            }
+            foreach (KeyValuePair<string, IMod> pair in ModScripts)
+            {
+                pair.Value.BeforeModPass();
             }
         }
         public void StartModPass(object value)
@@ -542,12 +582,20 @@ namespace CrateModLoader
             {
                 mod.ModPass(value);
             }
+            foreach (KeyValuePair<string, IMod> pair in ModScripts)
+            {
+                pair.Value.ModPass(value);
+            }
         }
         public void AfterModPass()
         {
             foreach (Mod mod in Mods)
             {
                 mod.AfterModPass();
+            }
+            foreach (KeyValuePair<string, IMod> pair in ModScripts)
+            {
+                pair.Value.AfterModPass();
             }
         }
         public void BeforePreloadPass()
@@ -556,6 +604,10 @@ namespace CrateModLoader
             {
                 mod.BeforePreloadPass();
             }
+            foreach (KeyValuePair<string, IMod> pair in ModScripts)
+            {
+                pair.Value.BeforePreloadPass();
+            }
         }
         public void StartPreloadPass(object value)
         {
@@ -563,12 +615,20 @@ namespace CrateModLoader
             {
                 mod.PreloadPass(value);
             }
+            foreach (KeyValuePair<string, IMod> pair in ModScripts)
+            {
+                pair.Value.PreloadPass(value);
+            }
         }
         public void AfterPreloadPass()
         {
             foreach (Mod mod in Mods)
             {
                 mod.AfterPreloadPass();
+            }
+            foreach (KeyValuePair<string, IMod> pair in ModScripts)
+            {
+                pair.Value.AfterPreloadPass();
             }
         }
         public void StartPass(object value, ModPass pass = ModPass.Mod)
@@ -620,6 +680,7 @@ namespace CrateModLoader
             Levels.Clear();
             Props.Clear();
             EnabledModCrates.Clear();
+            ModScripts.Clear();
         }
     }
 }

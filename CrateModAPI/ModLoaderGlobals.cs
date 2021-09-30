@@ -66,6 +66,7 @@ namespace CrateModLoader
         public static string ModDirectory = BaseDirectory + @"Mods\";
 
         public static string ModAssetsFolderName = "modassets";
+        public static string ModScriptsFolderName = "modscripts";
 
         // Use a global random state instead of per feature.
         // It is not planned to be a user option, because that would make the experience confusing!

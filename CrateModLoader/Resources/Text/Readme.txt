@@ -16,6 +16,7 @@ Place Mod Crates in the "Mods" folder for them to appear in the list.
 An example mod can be found in the "Mods" folder.  
 Mod Crates can be folders or standard .zip files.
 They can be created in the program itself by preloading the game data.
+Mod Crates can also include CS-Script (C#) code in a ModScripts folder. 
 
 Tools Credits
 

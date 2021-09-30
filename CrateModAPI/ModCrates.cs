@@ -14,6 +14,7 @@ namespace CrateModLoader
     {
         public Dictionary<string, string> Meta = new Dictionary<string, string>();
         public Dictionary<string, string> Settings = new Dictionary<string, string>();
+        public Dictionary<string, string> Scripts = new Dictionary<string, string>();
         public string Path;
         public string Name = "Unnamed Mod";
         public string Desc = "(No Description)";
@@ -21,7 +22,8 @@ namespace CrateModLoader
         public string Version = "v1.0";
         public string CML_Version = ModLoaderGlobals.ProgramVersionSimple.ToString();
         public string TargetGame = ModCrates.AllGamesShortName;
-        public string Plugin;
+        public bool HasScripts = false;
+        public bool HasScriptOptions = false;
         public bool IsActivated = false;
         public bool HasSettings = false;
         public bool IsFolder = false;
@@ -37,6 +39,7 @@ namespace CrateModLoader
         {
             crate.Meta = new Dictionary<string, string>(Meta);
             crate.Settings = new Dictionary<string, string>(Settings);
+            crate.Scripts = new Dictionary<string, string>(Scripts);
             crate.Path = Path;
             crate.Name = Name;
             crate.Desc = Desc;
@@ -44,7 +47,8 @@ namespace CrateModLoader
             crate.Version = Version;
             crate.CML_Version = ModLoaderGlobals.ProgramVersionSimple.ToString();
             crate.TargetGame = TargetGame;
-            crate.Plugin = Plugin;
+            crate.HasScripts = HasScripts;
+            crate.HasScriptOptions = HasScriptOptions;
             crate.HasSettings = HasSettings;
             crate.IsFolder = IsFolder;
             crate.HasIcon = HasIcon;
@@ -58,15 +62,17 @@ namespace CrateModLoader
     public static class ModCrates
     {
 
-        /* Plan for how Mod Crates are supposed to work:
+        /* How Mod Crates work:
          * They're .zip files (or unzipped folders):
          * with folders called "layer0", "layer1", "layer2" etc. 
-         * Each layer corresponds to a data archive type that the files inside replace (or add?) (game-specific, except for layer0)
+         * Each layer corresponds to a data archive type that the files inside replace (or add) (game-specific, except for layer0)
          * modcrateinfo.txt file with the mod's metadata
-         * (optional) modcratesettings.txt file with the game specfic settings that can't be altered with mods
+         * (optional) modcratesettings.txt file with the game's unique properties (can be auto-generated using the Mod Menu)
          * (optional) modcrateicon.png icon of the mod
+         * (optional) modcrateoptions.xml for user options that affect scripts
+         * (optional) modcratescripts folder containing C# scripts (*.cs) of ModStructs (if modcrateoptions.xml doesn't exist, all mods are executed)
          * 
-         * Layer 0 is where the base extracted files from a ROM are, so every game is supposed to support it
+         * Layer 0 is where the base extracted files from a ROM are, so every game supports it.
          */
 
 
@@ -75,15 +81,15 @@ namespace CrateModLoader
         public const string LayerFolderName = "layer";
         public const string InfoFileName = "modcrateinfo.txt";
         public const string SettingsFileName = "modcratesettings.txt";
+		public const string ScriptOptionsFileName = "modcrateoptions.xml";
         public const string IconFileName = "modcrateicon.png";
-        public const string UnsupportedGameShortName = "NoGame";
-        public const string AllGamesShortName = "All";
+        public const string UnsupportedGameShortName = "NoGame"; // Will only show up for any unsupported game
+        public const string AllGamesShortName = "All"; // Will show up for all games
         public const string Prop_Name = "Name";
         public const string Prop_Desc = "Description";
         public const string Prop_Author = "Author";
         public const string Prop_Version = "Version";
-        public const string Prop_CML_Version = "ModLoaderVersion";
-        public const string Prop_Plugin = "Plugin";
+        public const string Prop_CML_Version = "ModLoaderVersion"; // Not currently in use, intended for any global breaking changes in the future
         public const string Prop_Game = "Game";
 
         public static void PopulateModList(ModLoader Program, List<ModCrate> SupportedMods, bool IsSupportedGame, string ShortName)
@@ -289,6 +295,10 @@ namespace CrateModLoader
                                     ModdedLayers.Add(Layer);
                                 }
                             }
+                            else if (entry.FullName.Length > NewCrate.NestedPath.Length && entry.FullName.Substring(NewCrate.NestedPath.Length, ModLoaderGlobals.ModScriptsFolderName.Length).ToLower() == ModLoaderGlobals.ModScriptsFolderName)
+                            {
+                                NewCrate.HasScripts = true;
+                            }
                         }
                         else
                         {
@@ -304,6 +314,26 @@ namespace CrateModLoader
                                     MaxLayer = Math.Max(MaxLayer, Layer);
                                     ModdedLayers.Add(Layer);
                                 }
+                            }
+                            else if (entry.FullName.StartsWith(ModLoaderGlobals.ModScriptsFolderName))
+                            {
+                                NewCrate.HasScripts = true;
+                            }
+                        }
+                    }
+                }
+                if (NewCrate.HasScripts)
+                {
+                    // Preload all scripts (todo: verify the scripts here?)
+                    foreach (ZipArchiveEntry entry in archive.Entries)
+                    {
+                        if (entry.FullName.Contains(ModLoaderGlobals.ModScriptsFolderName) && entry.FullName.Length > ModLoaderGlobals.ModScriptsFolderName.Length + 3)
+                        {
+                            using (StreamReader sr = new StreamReader(entry.Open()))
+                            {
+                                string inputScript = sr.ReadToEnd();
+                                string inputName = Path.GetFileNameWithoutExtension(entry.Name);
+                                NewCrate.Scripts.Add(inputName, inputScript);
                             }
                         }
                     }
@@ -344,8 +374,6 @@ namespace CrateModLoader
                 NewCrate.Version = NewCrate.Meta[Prop_Version];
             if (NewCrate.Meta.ContainsKey(Prop_CML_Version))
                 NewCrate.CML_Version = NewCrate.Meta[Prop_CML_Version];
-            if (NewCrate.Meta.ContainsKey(Prop_Plugin))
-                NewCrate.Plugin = NewCrate.Meta[Prop_Plugin];
             if (NewCrate.Meta.ContainsKey(Prop_Game))
                 NewCrate.TargetGame = NewCrate.Meta[Prop_Game];
             if (NewCrate.Meta.ContainsKey(Prop_Name + "-" + CultureInfo.CurrentCulture.Name))
@@ -419,6 +447,20 @@ namespace CrateModLoader
                             ModdedLayers.Add(Layer);
                         }
                     }
+                    if (di.Name.Contains(ModLoaderGlobals.ModScriptsFolderName))
+                    {
+                        NewCrate.HasScripts = true;
+                        // Preload all scripts (todo: verify the scripts here?) (potential bug - enforces UTF-8 encoding)
+                        foreach (FileInfo file in di.EnumerateFiles())
+                        {
+                            using (StreamReader sr = file.OpenText())
+                            {
+                                string inputScript = sr.ReadToEnd();
+                                string inputName = Path.GetFileNameWithoutExtension(file.Name);
+                                NewCrate.Scripts.Add(inputName, inputScript);
+                            }
+                        }
+                    }
                 }
             }
 
@@ -458,8 +500,6 @@ namespace CrateModLoader
                 NewCrate.Version = NewCrate.Meta[Prop_Version];
             if (NewCrate.Meta.ContainsKey(Prop_CML_Version))
                 NewCrate.CML_Version = NewCrate.Meta[Prop_CML_Version];
-            if (NewCrate.Meta.ContainsKey(Prop_Plugin))
-                NewCrate.Plugin = NewCrate.Meta[Prop_Plugin];
             if (NewCrate.Meta.ContainsKey(Prop_Game))
                 NewCrate.TargetGame = NewCrate.Meta[Prop_Game];
             if (NewCrate.Meta.ContainsKey(Prop_Name + "-" + CultureInfo.CurrentCulture.Name))

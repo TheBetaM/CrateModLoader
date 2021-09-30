@@ -16,8 +16,8 @@ namespace CrateModLoader.GameSpecific.WormsForts
         public static ModPropOption Option_Rand_VictLocations = new ModPropOption("Deathmatch/Multiplayer: Randomize Victory Locations", "Randomize which build locations are victory locations.");
         [ExecutesMods(typeof(WF_RemoveVictLocations))]
         public static ModPropOption Option_RemoveVictLocations = new ModPropOption("Deathmatch/Multiplayer: Remove Victory Locations", "Remove all victory locations from deathmatch and multiplayer levels.");
-        //[ExecutesMods(typeof(WF_FortWeaponsAnywhere))]
-        //public static ModPropOption Option_FortWeaponsAnywhere = new ModPropOption("Use Fort Weapons Anywhere", "Weapons that require being on buildings no longer do so.");
+        [ExecutesMods(typeof(WF_FortWeaponsAnywhere))]
+        public static ModPropOption Option_FortWeaponsAnywhere = new ModPropOption("Use Fort Weapons Anywhere", "Weapons that require being on buildings no longer do so.");
         [ExecutesMods(typeof(WF_RemoveGodWormAnimations))]
         public static ModPropOption Option_RemoveGodWormAnims = new ModPropOption("Remove God Worm Animations", "Weapons that show the extended animations no longer do so.");
         [ExecutesMods(typeof(WF_Rand_WorldPalette))]

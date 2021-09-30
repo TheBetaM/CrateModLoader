@@ -125,7 +125,17 @@ namespace CrateModLoader
             if (ignoreChange) return;
             if (e.NewValue == CheckState.Checked)
             {
-                ModCrates.UpdateModSelection(ModProgram.SupportedMods, index, true);
+                if (ModProgram.SupportedMods[index].HasScripts)
+                {
+                    if (MessageBox.Show("Warning: This mod contains executable scripts. Only activate scripts from sources you trust. Do you still want to activate this mod?", "Warning: Mod contains scripts", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                    {
+                        ModCrates.UpdateModSelection(ModProgram.SupportedMods, index, true);
+                    }
+                }
+                else
+                {
+                    ModCrates.UpdateModSelection(ModProgram.SupportedMods, index, true);
+                }
             }
             else
             {
