@@ -1,7 +1,6 @@
 using System.IO;
 using System;
 using System.Drawing;
-using Twinsanity.Properties;
 using System.Drawing.Imaging;
 using System.Collections.Generic;
 
