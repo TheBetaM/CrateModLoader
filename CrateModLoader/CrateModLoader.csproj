@@ -243,7 +243,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>ROBOCOPY "$(TargetDir) " "$(TargetDir)Tools\ " /XF CrateModLoader.exe *.config *.manifest *.txt *.ini /XD Tools tools /IS /MOV
+    <PostBuildEvent>ROBOCOPY "$(TargetDir) " "$(TargetDir)Tools\ " /XF CrateModLoader.exe CrateModLoader.exe.config *.manifest *.txt *.ini /XD Tools tools /IS /MOV
 if %25errorlevel%25 leq 4 exit 0 else exit %25errorlevel%25</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
