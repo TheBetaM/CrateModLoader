@@ -1,0 +1,747 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Menu_Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Menu_File" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="Menu_File_Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Menu_File_Exit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="Menu_File_Open" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="Menu_File_PatchNSD" xml:space="preserve">
+    <value>Patch NSD</value>
+  </data>
+  <data name="Menu_File_Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Menu_File_SaveAs" xml:space="preserve">
+    <value>Save As</value>
+  </data>
+  <data name="Menu_Find" xml:space="preserve">
+    <value>Find</value>
+  </data>
+  <data name="Menu_Find_EntryID" xml:space="preserve">
+    <value>Entry ID</value>
+  </data>
+  <data name="Menu_Find_EntryName" xml:space="preserve">
+    <value>Entry Name</value>
+  </data>
+  <data name="Menu_Find_Find" xml:space="preserve">
+    <value>Find</value>
+  </data>
+  <data name="Menu_Find_FindNext" xml:space="preserve">
+    <value>Find Next</value>
+  </data>
+  <data name="Menu_Find_ObjectName" xml:space="preserve">
+    <value>Object Name</value>
+  </data>
+  <data name="Menu_Undo" xml:space="preserve">
+    <value>Undo</value>
+  </data>
+  <data name="Menu_Undo_CurrentState" xml:space="preserve">
+    <value>Current State</value>
+  </data>
+  <data name="Menu_Undo_RedoAction" xml:space="preserve">
+    <value>Redo {0}</value>
+  </data>
+  <data name="Menu_Undo_RedoNone" xml:space="preserve">
+    <value>Nothing to redo</value>
+  </data>
+  <data name="Menu_Undo_UndoAction" xml:space="preserve">
+    <value>Undo {0}</value>
+  </data>
+  <data name="Menu_Undo_UndoNone" xml:space="preserve">
+    <value>Nothing to undo</value>
+  </data>
+  <data name="Toolbar_Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Toolbar_Find" xml:space="preserve">
+    <value>Find</value>
+  </data>
+  <data name="Toolbar_FindNext" xml:space="preserve">
+    <value>Find Next</value>
+  </data>
+  <data name="Toolbar_GotoEID" xml:space="preserve">
+    <value>Goto EID</value>
+  </data>
+  <data name="Toolbar_Open" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="Toolbar_PatchNSD" xml:space="preserve">
+    <value>Patch NSD</value>
+  </data>
+  <data name="Toolbar_RedoAction" xml:space="preserve">
+    <value>Redo {0}</value>
+  </data>
+  <data name="Toolbar_RedoNone" xml:space="preserve">
+    <value>Redo</value>
+  </data>
+  <data name="Toolbar_Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Toolbar_UndoAction" xml:space="preserve">
+    <value>Undo {0}</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Computer_File_063" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Computer_File_063.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="objects_036" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\objects_036.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="objects_029" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\objects_029.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="objects_020" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\objects_020.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="objects_037" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\objects_037.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Computer_File_064" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Computer_File_064.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="objects_028" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\objects_028.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="objects_079" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\objects_079.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="objects_070" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\objects_070.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Toolbar_UndoNone" xml:space="preserve">
+    <value>Undo</value>
+  </data>
+  <data name="Computer_File_053" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Computer_File_053.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Computer_File_068" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Computer_File_068.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="objects_006" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\objects_006.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="objects_006_red" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\objects_006_red.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="objects_006_yellow" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\objects_006_yellow.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="objects_012" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\objects_012.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="objects_012_blue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\objects_012_blue.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="objects_012_code" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\objects_012_code.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="objects_012_crimson" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\objects_012_crimson.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="objects_012_gray" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\objects_012_gray.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="objects_012_lime" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\objects_012_lime.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="objects_012_violet" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\objects_012_violet.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="objects_053_blue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\objects_053_blue.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="objects_053_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\objects_053_white.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="People_014" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\People_014.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="People_017" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\People_017.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="People_020" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\People_020.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="People_020_code" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\People_020_code.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="People_020_cyan" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\People_020_cyan.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="People_020_red" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\People_020_red.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Text_CloseDirtyFilePrompt" xml:space="preserve">
+    <value>The file "{0}" has not been saved since it was last modified. Continue anyway?</value>
+  </data>
+  <data name="Config_FraLang" xml:space="preserve">
+    <value>Language (requires restart)</value>
+  </data>
+  <data name="EntityBox_ChkBonusBoxCount" xml:space="preserve">
+    <value>Enabled (Bonus)</value>
+  </data>
+  <data name="EntityBox_ChkEnabled" xml:space="preserve">
+    <value>Enabled</value>
+  </data>
+  <data name="EntityBox_ChkHex" xml:space="preserve">
+    <value>Hex</value>
+  </data>
+  <data name="EntityBox_CmdAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="EntityBox_CmdAppend" xml:space="preserve">
+    <value>Append</value>
+  </data>
+  <data name="EntityBox_CmdInsert" xml:space="preserve">
+    <value>Insert</value>
+  </data>
+  <data name="EntityBox_CmdInterpolate" xml:space="preserve">
+    <value>Interpolate</value>
+  </data>
+  <data name="EntityBox_CmdNext" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="EntityBox_CmdPrevious" xml:space="preserve">
+    <value>Previous</value>
+  </data>
+  <data name="EntityBox_CmdRemove" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="EntityBox_FraBoxCount" xml:space="preserve">
+    <value>Box Count</value>
+  </data>
+  <data name="EntityBox_FraDDASection" xml:space="preserve">
+    <value>DDA Section</value>
+  </data>
+  <data name="EntityBox_FraDDASettings" xml:space="preserve">
+    <value>DDA Death/1-Up Count</value>
+  </data>
+  <data name="EntityBox_FraID" xml:space="preserve">
+    <value>ID &amp;&amp; Look-up ID</value>
+    <comment>Two &amp; are used because &amp; is used to select the mnemonic character in titles.</comment>
+  </data>
+  <data name="EntityBox_FraName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="EntityBox_FraOtherSettings" xml:space="preserve">
+    <value>Other Settings</value>
+  </data>
+  <data name="EntityBox_FraPosition" xml:space="preserve">
+    <value>Position(s)</value>
+  </data>
+  <data name="EntityBox_FraScaling" xml:space="preserve">
+    <value>Scale Modifier</value>
+  </data>
+  <data name="EntityBox_FraSettings" xml:space="preserve">
+    <value>Argument(s)</value>
+  </data>
+  <data name="EntityBox_FraSLST" xml:space="preserve">
+    <value>Sort List</value>
+  </data>
+  <data name="EntityBox_FraTTReward" xml:space="preserve">
+    <value>Time Trial Reward</value>
+  </data>
+  <data name="EntityBox_FraType" xml:space="preserve">
+    <value>Type &amp;&amp; Subtype</value>
+    <comment>Two &amp; are used because &amp; is used to select the mnemonic character in titles.</comment>
+  </data>
+  <data name="EntityBox_FraVictims" xml:space="preserve">
+    <value>Victims</value>
+  </data>
+  <data name="EntityBox_FraZMod" xml:space="preserve">
+    <value>Depth Modifier</value>
+  </data>
+  <data name="EntityBox_TabCamera" xml:space="preserve">
+    <value>Camera</value>
+  </data>
+  <data name="EntityBox_TabDrawList" xml:space="preserve">
+    <value>Draw Lists</value>
+  </data>
+  <data name="EntityBox_TabGeneral" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="EntityBox_TabLoadList" xml:space="preserve">
+    <value>Load Lists</value>
+  </data>
+  <data name="EntityBox_TabSpecial" xml:space="preserve">
+    <value>Special</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>English (Default)</value>
+  </data>
+  <data name="ErrorReporter_Abort" xml:space="preserve">
+    <value>Abort this operation.</value>
+  </data>
+  <data name="ErrorReporter_Break" xml:space="preserve">
+    <value>Break out to a debugger. (Experts only)</value>
+  </data>
+  <data name="ErrorReporter_Ignore" xml:space="preserve">
+    <value>Ignore the error and continue anyway.</value>
+  </data>
+  <data name="ErrorReporter_IgnoreAll" xml:space="preserve">
+    <value>Ignore the error and all others for this object.</value>
+  </data>
+  <data name="ErrorReporter_Skip" xml:space="preserve">
+    <value>Skip this object, leaving it unprocessed.</value>
+  </data>
+  <data name="ErrorReporter_Title" xml:space="preserve">
+    <value>An error occurred.</value>
+  </data>
+  <data name="Config_chkAnimGrid" xml:space="preserve">
+    <value>Enabled</value>
+  </data>
+  <data name="Config_chkCollisionDisplay" xml:space="preserve">
+    <value>Display frame collision by default</value>
+  </data>
+  <data name="Config_chkDeleteInvalidEntries" xml:space="preserve">
+    <value>(Patch NSD) Delete non-existent entries from load lists</value>
+  </data>
+  <data name="Config_chkNormalDisplay" xml:space="preserve">
+    <value>Display normals</value>
+  </data>
+  <data name="Config_chkUseAnimLinks" xml:space="preserve">
+    <value>(Crash 3) Used saved animation-model links</value>
+  </data>
+  <data name="Config_cmdReset" xml:space="preserve">
+    <value>Reset Settings</value>
+  </data>
+  <data name="Config_fraAnimGrid" xml:space="preserve">
+    <value>Animation Viewer World Grid</value>
+  </data>
+  <data name="Config_fraClearCol" xml:space="preserve">
+    <value>Clear Color</value>
+  </data>
+  <data name="Config_fraSize" xml:space="preserve">
+    <value>Default Window Size</value>
+  </data>
+  <data name="Config_lblAnimGrid" xml:space="preserve">
+    <value>Amount</value>
+  </data>
+  <data name="Config_lblH" xml:space="preserve">
+    <value>Width</value>
+  </data>
+  <data name="Config_lblW" xml:space="preserve">
+    <value>Height</value>
+  </data>
+  <data name="Crash3AnimationSelector_Desc" xml:space="preserve">
+    <value>Type in a Model (or Compressed Model) name and press Enter.</value>
+  </data>
+  <data name="EntityBox_cmdClearAllVictims" xml:space="preserve">
+    <value>Clear All</value>
+  </data>
+  <data name="EntityBox_cmdLoadListVerify" xml:space="preserve">
+    <value>Verify List Integrity</value>
+  </data>
+  <data name="EntityBox_cmdPayload" xml:space="preserve">
+    <value>Check Payload</value>
+  </data>
+  <data name="EntityBox_fraCameraIndex" xml:space="preserve">
+    <value>Camera Index</value>
+  </data>
+  <data name="EntityBox_fraCameraSubIndex" xml:space="preserve">
+    <value>Camera SubIndex</value>
+  </data>
+  <data name="EntityBox_fraDrawListA" xml:space="preserve">
+    <value>Draw List A</value>
+  </data>
+  <data name="EntityBox_fraDrawListB" xml:space="preserve">
+    <value>Draw List B</value>
+  </data>
+  <data name="EntityBox_fraEIDA" xml:space="preserve">
+    <value>Entries</value>
+  </data>
+  <data name="EntityBox_fraEIDB" xml:space="preserve">
+    <value>Entries</value>
+  </data>
+  <data name="EntityBox_fraEntityA" xml:space="preserve">
+    <value>Entities</value>
+  </data>
+  <data name="EntityBox_fraEntityB" xml:space="preserve">
+    <value>Entities</value>
+  </data>
+  <data name="EntityBox_fraFOV" xml:space="preserve">
+    <value>Field-of-View Timeline</value>
+  </data>
+  <data name="EntityBox_fraFOVFrame" xml:space="preserve">
+    <value>Field-of-View</value>
+  </data>
+  <data name="EntityBox_fraLoadListA" xml:space="preserve">
+    <value>Load List A</value>
+  </data>
+  <data name="EntityBox_fraLoadListB" xml:space="preserve">
+    <value>Load List B</value>
+  </data>
+  <data name="EntityBox_fraLoadListPayload" xml:space="preserve">
+    <value>Verify Load Lists</value>
+  </data>
+  <data name="EntityBox_fraNeighbor" xml:space="preserve">
+    <value>Neighbors</value>
+  </data>
+  <data name="EntityBox_fraNeighborSetting" xml:space="preserve">
+    <value>Neighbor</value>
+  </data>
+  <data name="EntityBox_lblFOVPosition" xml:space="preserve">
+    <value>Position</value>
+  </data>
+  <data name="EntityBox_lblMetavalueDrawA" xml:space="preserve">
+    <value>Position</value>
+  </data>
+  <data name="EntityBox_lblMetavalueDrawB" xml:space="preserve">
+    <value>Position</value>
+  </data>
+  <data name="EntityBox_lblMetavalueLoadA" xml:space="preserve">
+    <value>Position</value>
+  </data>
+  <data name="EntityBox_lblMetavalueLoadB" xml:space="preserve">
+    <value>Position</value>
+  </data>
+  <data name="EntityBox_lblNeighborCamera" xml:space="preserve">
+    <value>Cam. Index</value>
+  </data>
+  <data name="EntityBox_lblNeighborFlag" xml:space="preserve">
+    <value>Flag</value>
+  </data>
+  <data name="EntityBox_lblNeighborLink" xml:space="preserve">
+    <value>Link Type</value>
+  </data>
+  <data name="EntityBox_lblNeighborPosition" xml:space="preserve">
+    <value>Position</value>
+  </data>
+  <data name="EntityBox_lblNeighborZone" xml:space="preserve">
+    <value>Zone Index</value>
+  </data>
+  <data name="EntityBox_lblPayloadPosition" xml:space="preserve">
+    <value>Position</value>
+  </data>
+  <data name="EntityBox_fraAvgDist" xml:space="preserve">
+    <value>Point Distance</value>
+  </data>
+  <data name="EntityBox_FraMode" xml:space="preserve">
+    <value>Camera Mode</value>
+  </data>
+  <data name="InputWindow_cmdCancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="InterpolatorForm" xml:space="preserve">
+    <value>Interpolate Path</value>
+  </data>
+  <data name="InterpolatorForm_cmdCancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="InterpolatorForm_cmdFirst" xml:space="preserve">
+    <value>First</value>
+  </data>
+  <data name="InterpolatorForm_cmdLast" xml:space="preserve">
+    <value>Last</value>
+  </data>
+  <data name="InterpolatorForm_cmdNext" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="InterpolatorForm_cmdOK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="InterpolatorForm_cmdPrev" xml:space="preserve">
+    <value>Prev</value>
+  </data>
+  <data name="InterpolatorForm_fraAmount" xml:space="preserve">
+    <value>Amount</value>
+  </data>
+  <data name="InterpolatorForm_fraBound" xml:space="preserve">
+    <value>Start/End Position</value>
+  </data>
+  <data name="InterpolatorForm_fraFunction" xml:space="preserve">
+    <value>Progress Function</value>
+  </data>
+  <data name="InterpolatorForm_fraOrder" xml:space="preserve">
+    <value>Order</value>
+  </data>
+  <data name="InterpolatorForm_fraPosition" xml:space="preserve">
+    <value>Positions</value>
+  </data>
+  <data name="InterpolatorForm_fraTension" xml:space="preserve">
+    <value>Tension</value>
+  </data>
+  <data name="NewEntryForm" xml:space="preserve">
+    <value>New Entry</value>
+  </data>
+  <data name="NewEntryForm_fraName" xml:space="preserve">
+    <value>Entry Name</value>
+  </data>
+  <data name="NewEntryForm_fraType" xml:space="preserve">
+    <value>Entry Type</value>
+  </data>
+  <data name="OldMainForm_tbbExtra" xml:space="preserve">
+    <value>Extra Features</value>
+  </data>
+  <data name="OldMainForm_tbxConvertVAB" xml:space="preserve">
+    <value>Convert VAB to DLS</value>
+  </data>
+  <data name="OldMainForm_tbxConvertVHVB" xml:space="preserve">
+    <value>Convert VH+VB to DLS</value>
+  </data>
+  <data name="OldMainForm_tbxMakeBIN" xml:space="preserve">
+    <value>Make BIN (no region)</value>
+  </data>
+  <data name="OldMainForm_tbxMakeBINEUR" xml:space="preserve">
+    <value>Make BIN (PAL)</value>
+  </data>
+  <data name="OldMainForm_tbxMakeBINJAP" xml:space="preserve">
+    <value>Make BIN (NTSC-J)</value>
+  </data>
+  <data name="OldMainForm_tbxMakeBINUSA" xml:space="preserve">
+    <value>Make BIN (NTSC-U/C)</value>
+  </data>
+  <data name="TextureViewer_groupBox1" xml:space="preserve">
+    <value>Color Mode</value>
+  </data>
+  <data name="TextureViewer_groupBox2" xml:space="preserve">
+    <value>Blend Mode</value>
+  </data>
+  <data name="TextureViewer_groupBox4" xml:space="preserve">
+    <value>Size</value>
+  </data>
+  <data name="TextureViewer_groupBox5" xml:space="preserve">
+    <value>Offset</value>
+  </data>
+  <data name="CloseNSF" xml:space="preserve">
+    <value>Are you sure you want to close the NSF file?</value>
+  </data>
+  <data name="Close_ConfirmationPrompt" xml:space="preserve">
+    <value>Close Confirmation Prompt</value>
+  </data>
+  <data name="PatchNSD1" xml:space="preserve">
+    <value>Are you sure you want to overwrite the NSD file?</value>
+  </data>
+  <data name="PatchNSD2" xml:space="preserve">
+    <value>Do you want to sort all loadlists according to the NSD?</value>
+  </data>
+  <data name="PatchNSD3" xml:space="preserve">
+    <value>The chunk contents in this NSF may have been moved in accordance to the patched NSD and needs to be resaved. Continue?</value>
+  </data>
+  <data name="PatchNSD_Error1" xml:space="preserve">
+    <value>Can't figure out NSD filename. Make sure NSF file ends in \"f\" (case-insensitive)!\n\nFOO.NSF -&gt; FOO.NSD\n\n{0} -&gt; ???</value>
+  </data>
+  <data name="PatchNSD_Error2" xml:space="preserve">
+    <value>NSD patching is not supported for this game version.</value>
+  </data>
+  <data name="PatchNSD_Title1" xml:space="preserve">
+    <value>Patch NSD</value>
+  </data>
+  <data name="PatchNSD_Title2" xml:space="preserve">
+    <value>Loadlist autosorter</value>
+  </data>
+  <data name="SaveNSF" xml:space="preserve">
+    <value>Are you sure you want to overwrite this file?</value>
+  </data>
+  <data name="SaveNSF_Error1" xml:space="preserve">
+    <value>A packing error occurred. The chunk containing entry '{0}' has over 64 KB of data.</value>
+  </data>
+  <data name="SaveNSF_Error2" xml:space="preserve">
+    <value>An IO error occurred.\n\n</value>
+  </data>
+  <data name="SaveNSF_Error3" xml:space="preserve">
+    <value>An unauthorized access error occurred.\n\n</value>
+  </data>
+  <data name="SaveNSF_Title" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Save_ConfirmationPrompt" xml:space="preserve">
+    <value>Save Confirmation Prompt</value>
+  </data>
+  <data name="ConvertVAB_Error" xml:space="preserve">
+    <value>extra feature: VB size is invalid</value>
+  </data>
+  <data name="ConvertVHVB_Error" xml:space="preserve">
+    <value>extra feature: VB size does not match size specified in VH</value>
+  </data>
+  <data name="Done" xml:space="preserve">
+    <value>Done.</value>
+  </data>
+  <data name="MakeBIN_NoSystemFiles" xml:space="preserve">
+    <value>The selected drive or folder does not contain SYSTEM.CNF or PSX.EXE. At least one of these is required for a bootable PSX CD image. Continue anyway?</value>
+  </data>
+  <data name="MakeBIN_NoRegOK" xml:space="preserve">
+    <value>Created BIN file without region OK.</value>
+  </data>
+  <data name="MakeBIN_CueSuccess" xml:space="preserve">
+    <value>Created matching CUE file.</value>
+  </data>
+  <data name="MakeBIN_CueFail" xml:space="preserve">
+    <value>Failed to create CUE file: {0}</value>
+  </data>
+  <data name="MakeBIN_CueExists" xml:space="preserve">
+    <value>CUE file already exists, will not be modified.</value>
+  </data>
+  <data name="MakeBIN_DRNSF_Launch" xml:space="preserve">
+    <value>Launching DRNSF to apply selected region...</value>
+  </data>
+  <data name="MakeBIN_DRNSF_Error" xml:space="preserve">
+    <value>DRNSF returned an error. No region has been applied.</value>
+  </data>
+  <data name="MakeBIN_DRNSF_Success" xml:space="preserve">
+    <value>Region applied successfully.</value>
+  </data>
+  <data name="MakeBIN_DRNSF_Unavailable" xml:space="preserve">
+    <value>Could not find DRNSF exe. Please place this in the same directory as CrashEdit.</value>
+  </data>
+  <data name="MakeBIN_DRNSF_Fail" xml:space="preserve">
+    <value>Failed to launch DRNSF. Reason: {0}</value>
+  </data>
+  <data name="MakeBIN_Title" xml:space="preserve">
+    <value>Make BIN</value>
+  </data>
+  <data name="Playtest_Error1" xml:space="preserve">
+    <value>NSF filename '{0}' is not appropriate!</value>
+  </data>
+  <data name="Playtest_Error2" xml:space="preserve">
+    <value>Can't figure out NSD filename. Make sure NSF file ends in \"f\" (case-insensitive)!\n\nFOO.NSF -&gt; FOO.NSD\n\n{0} -&gt; ???</value>
+  </data>
+  <data name="Playtest_Error3" xml:space="preserve">
+    <value>NSD file '{0}' does not exist!</value>
+  </data>
+  <data name="Playtest_Error4" xml:space="preserve">
+    <value>Could not find exe file (PSX.EXE, SCUS_123.45, SLES_123.45, etc).</value>
+  </data>
+  <data name="Playtest_Title" xml:space="preserve">
+    <value>Playtest</value>
+  </data>
+  <data name="Config_chkPatchNSDSavesNSF" xml:space="preserve">
+    <value>(Patch NSD) Always save NSF after NSD patching</value>
+  </data>
+  <data name="MakeBIN_Making" xml:space="preserve">
+    <value>Making BIN...</value>
+  </data>
+  <data name="EntityBox_lblArgAs" xml:space="preserve">
+    <value>as Number: {0:F3}
+as Angle: {1:F}deg
+as Time: {2:F}s
+as Meters: {3:F3}m</value>
+  </data>
+</root>
