@@ -4,6 +4,7 @@ General
 - PS2 DVD, PSP and Folder mode extraction step is now multithreaded
 - Modding step is now multithreaded (for most games)
 - Much faster detection for PS1 and PS2 CD games  
+- Fixed not being able to build unsupported games
 - PS1 and PS2 CD games now use mkpsxiso for rebuilding, fixing various sound/movie issues and improving compatibility
 - Added support for DS and 3DS games
 - Preloading is now multithreaded and combined with the main process (no longer needs to extract again after clicking Start)
@@ -13,14 +14,12 @@ General
 - More detailed process information
 - Every game (supported or otherwise) can now be preloaded 
 - More Mod Crate management options:  Change install order, Delete, Import, Create, Edit
-- You can now create and edit full-fledged Mod Crates from within the program. (The game must be preloaded to create or edit Mod Crates)
-- Fixed not being able to build unsupported games
+- You can now create and edit Mod Crates from within the program. (The target game must be preloaded to create or edit Mod Crates)
 - Blocked starting a new process after one finishes to prevent bugs. To work around this you can (re)open a ROM or fully restart the program.
 - Mod Crates can now also include Octodiff-based delta patches for every game file (ex. /layer1/Language/Code/English.txt.octodelta)
 They can be automatically created from within the Crate Mod Loader, or manually using Octodiff's 1.2.1 version.
 The advantage to using them is a lower file size of Mod Crates, the downside being incompatibility between different versions of the same game file.
-- Added commandline access to the program. Start it with -help to learn commandline usage.
-- Added CS-Script (C#) support to Mod Crates. Example script available in the included example mod.
+- Added CS-Script (C#) support to Mod Crates. Example scripts available in the included example mod.
 - Updated .NET requirement to 4.7.2
 
 New games supported:
@@ -29,11 +28,12 @@ New games supported:
   
 Crash Twinsanity
 - Improved feature compatibility with added/modded levels in Mod Crates
+- Randomzie Gem Locations: Removed an inaccessible gem location in Classroom Chaos
 - Randomize Character Parameters: Fixed Mechabandicoot issues
 
 Rayman 3: Hoodlum Havoc
 - Crate Mod Loader info is now displayed ingame. (Title screen)  
-- Disabled support for the PS2/XBOX versions until more functionality is available there  
+- Disabled support for the PS2/XBOX versions until more features become possible there  
 
 Crash Bandicoot
 - New: Enable Unused Enemies

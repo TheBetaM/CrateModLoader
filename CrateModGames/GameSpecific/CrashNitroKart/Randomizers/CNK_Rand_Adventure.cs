@@ -291,7 +291,7 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
                     };
 
                     int x = i + 14;
-                    table[i] = cur_line;
+                    table[x] = cur_line;
                 }
                 
             }

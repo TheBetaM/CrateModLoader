@@ -9,7 +9,7 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
     {
         public override void ModPass(GenericModStruct mod)
         {
-            string path = mod.ExtractedPath + @"/ASSETS/";
+            string path = mod.ExtractedPath;
             ConsoleMode console = mod.Console; 
 
             if (console == ConsoleMode.PS2)

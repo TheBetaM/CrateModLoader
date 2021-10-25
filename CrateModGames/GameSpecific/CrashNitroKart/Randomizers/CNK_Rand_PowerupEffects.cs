@@ -42,8 +42,8 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
                 table[1][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.PowerShield_m_Time.Value);
                 table[2][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.PowerShield_m_RangeForZapping.Value);
                 table[3][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.PowerShield_m_ZapSpeed.Value);
-                table[4] = CNK_Common.FloatArray_To_CSV_FullLine(CNK_Data_Powerups.PowerShield_m_ColorNonJuiced.Value);
-                table[5] = CNK_Common.FloatArray_To_CSV_FullLine(CNK_Data_Powerups.PowerShield_m_ColorJuiced.Value);
+                table[4] = CNK_Common.FloatArray_To_CSV_FullLine(table[4], CNK_Data_Powerups.PowerShield_m_ColorNonJuiced.Value);
+                table[5] = CNK_Common.FloatArray_To_CSV_FullLine(table[5], CNK_Data_Powerups.PowerShield_m_ColorJuiced.Value);
                 table[6][0] = CNK_Common.Float_To_CSV_Word(CNK_Data_Powerups.PowerShield_m_ColRadius.Value);
             }
             if (file.Name.ToLower().Contains("bowlingbomb"))

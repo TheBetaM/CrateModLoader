@@ -281,7 +281,7 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
             new TwinsGem(ChunkType.School_Cortex_CoGPA06,new Vector3(3.293f,0.682f,9.750f)),
             new TwinsGem(ChunkType.School_Cortex_CoGPA06,new Vector3(33.632f,0.597f,-92.908f)),
             new TwinsGem(ChunkType.School_Cortex_CoGPA07,new Vector3(10.853f,-2.838f,-52.754f)),
-            new TwinsGem(ChunkType.School_Cortex_CoGPA08,new Vector3(-7.536f,-5.692f,10.340f)),
+            //new TwinsGem(ChunkType.School_Cortex_CoGPA08,new Vector3(-7.536f,-5.692f,10.340f)),
             // Rooftop locations
             new TwinsGem(ChunkType.School_Rooftop_RoofCor1,new Vector3(15.234f,0.562f,7.272f)),
             new TwinsGem(ChunkType.School_Rooftop_Roof01,new Vector3(163.832f,20.342f,86.993f)),

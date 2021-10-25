@@ -948,7 +948,7 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
             cur_line += ",";
             return cur_line;
         }
-        public static List<string> FloatArray_To_CSV_FullLine(float[] targetfloat)
+        public static List<string> FloatArray_To_CSV_FullLine(List<string> row, float[] targetfloat)
         {
             List<string> line = new List<string>();
             string[] line_vars = new string[targetfloat.Length];
@@ -960,6 +960,13 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
             for (int i = 0; i < targetfloat.Length; i++)
             {
                 line.Add(line_vars[i]);
+            }
+            if (row.Count > line.Count)
+            {
+                for (int i = line.Count; i < row.Count; i++)
+                {
+                    line.Add(row[i]);
+                }
             }
             return line;
         }
@@ -980,7 +987,7 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
             cur_line += ",";
             return cur_line;
         }
-        public static List<string> FloatArray2_To_CSV_FullLine(float[,] targetfloat, int targetCharacter)
+        public static List<string> FloatArray2_To_CSV_FullLine(List<string> row, float[,] targetfloat, int targetCharacter)
         {
             List<string> line = new List<string>();
             string[] line_vars = new string[targetfloat.GetLength(1)];
@@ -992,6 +999,13 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
             for (int i = 0; i < targetfloat.GetLength(1); i++)
             {
                 line.Add(line_vars[i]);
+            }
+            if (row.Count > line.Count)
+            {
+                for (int i = line.Count; i < row.Count; i++)
+                {
+                    line.Add(row[i]);
+                }
             }
             return line;
         }
