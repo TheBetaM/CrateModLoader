@@ -54,15 +54,6 @@
     <ApplicationIcon>Resources\rando_icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="HelixToolkit, Version=2.16.1.0, Culture=neutral, PublicKeyToken=52aa3500039caf0d, processorArchitecture=MSIL">
-      <HintPath>..\packages\HelixToolkit.2.16.1\lib\netstandard1.1\HelixToolkit.dll</HintPath>
-    </Reference>
-    <Reference Include="HelixToolkit.Wpf, Version=2.16.1.0, Culture=neutral, PublicKeyToken=52aa3500039caf0d, processorArchitecture=MSIL">
-      <HintPath>..\packages\HelixToolkit.Wpf.2.16.1\lib\net45\HelixToolkit.Wpf.dll</HintPath>
-    </Reference>
-    <Reference Include="Octodiff, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Octodiff.1.2.1\lib\net40\Octodiff.exe</HintPath>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -85,15 +76,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Forms\Form_Common.cs" />
-    <Compile Include="Forms\LevelEditor\LevelEditor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\LevelEditor\LevelEditor.Designer.cs">
-      <DependentUpon>LevelEditor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\LevelEditor\Viewport3D.xaml.cs">
-      <DependentUpon>Viewport3D.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Forms\ModCrateMakerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -152,9 +134,6 @@
     <Compile Include="Forms\TextDisplayForm.Designer.cs">
       <DependentUpon>TextDisplayForm.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Forms\LevelEditor\LevelEditor.resx">
-      <DependentUpon>LevelEditor.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ModCrateMakerForm.resx">
       <DependentUpon>ModCrateMakerForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -181,7 +160,6 @@
     <None Include="Mods\ExampleMod.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -234,12 +212,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Tools\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Forms\LevelEditor\Viewport3D.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

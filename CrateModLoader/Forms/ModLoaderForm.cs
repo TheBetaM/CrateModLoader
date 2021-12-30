@@ -9,7 +9,6 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using CrateModAPI.Resources.Text;
 using CrateModLoader.ModProperties;
-using CrateModLoader.Forms.LevelEditor;
 
 namespace CrateModLoader
 {
@@ -779,9 +778,9 @@ namespace CrateModLoader
                 return;
             }
 
-            LevelEditor Editor = new LevelEditor(ModProgram);
-            Editor.Owner = this;
-            Editor.Show();
+            //LevelEditor Editor = new LevelEditor(ModProgram);
+            //Editor.Owner = this;
+            //Editor.Show();
             return;
         }
     }

@@ -33,16 +33,15 @@
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="DiscUtils">
       <HintPath>Tools\DiscUtils.dll</HintPath>
     </Reference>
     <Reference Include="DiscUtils.Common">
       <HintPath>Tools\DiscUtils.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="ISO2PSX, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Tools\ISO2PSX.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -51,6 +50,7 @@
   <ItemGroup>
     <Compile Include="ConsolePipelines\ConsolePipeline_3DS.cs" />
     <Compile Include="ConsolePipelines\ConsolePipeline_NDS.cs" />
+    <Compile Include="ConsolePipelines\ISO2PSX.cs" />
     <Compile Include="ConsolePipelines\ISO_Common.cs" />
     <Compile Include="ConsolePipelines\ConsolePipeline_GCN.cs" />
     <Compile Include="ConsolePipelines\ConsolePipeline_PS1.cs" />
@@ -187,9 +187,6 @@
     <Content Include="Tools\xextool.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

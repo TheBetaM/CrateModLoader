@@ -1,12 +1,12 @@
 1.4.0
 
 General
+- Added support for DS and 3DS games
 - PS2 DVD, PSP and Folder mode extraction step is now multithreaded
 - Modding step is now multithreaded (for most games)
 - Much faster detection for PS1 and PS2 CD games  
-- Fixed not being able to build unsupported games
 - PS1 and PS2 CD games now use mkpsxiso for rebuilding, fixing various sound/movie issues and improving compatibility
-- Added support for DS and 3DS games
+- Fixed not being able to build unsupported games
 - Preloading is now multithreaded and combined with the main process (no longer needs to extract again after clicking Start)
 - Every randomizer is now handled independently from each other 
 (Before - Seed of randomizer feature 1 affects seed of randomizer feature 2; 
@@ -16,15 +16,15 @@ General
 - More Mod Crate management options:  Change install order, Delete, Import, Create, Edit
 - You can now create and edit Mod Crates from within the program. (The target game must be preloaded to create or edit Mod Crates)
 - Blocked starting a new process after one finishes to prevent bugs. To work around this you can (re)open a ROM or fully restart the program.
-- Mod Crates can now also include Octodiff-based delta patches for every game file (ex. /layer1/Language/Code/English.txt.octodelta)
-They can be automatically created from within the Crate Mod Loader, or manually using Octodiff's 1.2.1 version.
-The advantage to using them is a lower file size of Mod Crates, the downside being incompatibility between different versions of the same game file.
-- Added CS-Script (C#) support to Mod Crates. Example scripts available in the included example mod.
 - Updated .NET requirement to 4.7.2
+- Executables of PSP, GCN and Wii games are now accessible for layer 0 Mod Crates (PSP: BOOT.BIN and EBOOT.BIN; GCN/WII: main.dol)
 
 New games supported:
-- Worms Forts: Under Siege (PS2)  
+- Worms Forts: Under Siege (PS2)   
+- Crash Boom Bang! (NDS)  
+- Crash of the Titans (NDS)  
 - Super Monkey Ball Adventure (PSP)  
+- Sonic Rivals (PSP)  
   
 Crash Twinsanity
 - Improved feature compatibility with added/modded levels in Mod Crates

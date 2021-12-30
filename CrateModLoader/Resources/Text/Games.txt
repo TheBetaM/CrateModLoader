@@ -93,6 +93,41 @@ Features include:
 - Randomize World Palette  
 And more!
   
+Crash Boom Bang!
+Supported: All NDS versions (.NDS format)  
+API by BetaM.   
+Version and seed visible in the ??? screen.  
+Features include:    
+- 
+- 
+- 
+And more!
+
+Crash of the Titans  
+Supported: All PS2 versions (.ISO format), All Wii versions (.ISO/.WBFS formats), All PSP versions (.ISO format), All 360 versions (.ISO format)   
+API by BetaM and NeoKesha.   
+Version and seed visible in the Credits screen.  
+Features include:    
+- Randomize Costume Visuals  
+- Randomize Cutscene Costumes  
+
+Crash of the Titans (NDS)
+Supported: All NDS versions (.NDS format)  
+API by BetaM.   
+Version and seed visible in the ??? screen.  
+Features include:    
+- 
+- 
+- 
+And more!
+
+Crash Mind Over Mutant
+Supported: All PS2 versions (.ISO format), All Wii versions (.ISO/.WBFS formats), All PSP versions (.ISO format), All 360 versions (.ISO format)   
+API by BetaM and NeoKesha.  
+Version and seed visible in the Credits screen.  
+Features include:    
+- Randomize Costume Visuals  
+
 Worms Forts: Under Siege
 Supported: All PS2 versions (.BIN/.ISO format) (XBOX not supported yet)  
 API by BetaM.  
@@ -102,6 +137,13 @@ Features include:
 -   
 -  
 And more!
+  
+Sonic Rivals
+Supported: All PSP versions
+Version and seed visisble in the startup screen. (English only)
+Features include:
+- Randomize Level Order
+- Randomize Music
   
 Super Monkey Ball Adventure
 Supported: All PSP versions (.ISO format) (GC, PS2 not supported yet)  
@@ -114,17 +156,33 @@ Features include:
 - 
 And more!
 
-Crash of the Titans
-Supported: All PS2 versions (.ISO format), All Wii versions (.ISO/.WBFS formats), All PSP versions (.ISO format), All 360 versions (.ISO format)   
-API by BetaM and NeoKesha.   
+Additional games supported: (no unique features yet - only intended for Mod Crates)
+
+Crash Mind Over Mutant (NDS)
+Supported: All NDS versions
+API by BetaM.
 Version and seed visible in the Credits screen.  
-Features include:    
-- Randomize Costume Visuals  
-- Randomize Cutscene Costumes  
-  
-Crash Mind Over Mutant
-Supported: All PS2 versions (.ISO format), All Wii versions (.ISO/.WBFS formats), All PSP versions (.ISO format), All 360 versions (.ISO format)   
-API by BetaM and NeoKesha.  
-Version and seed visible in the Credits screen.  
-Features include:    
-- Randomize Costume Visuals  
+
+Worms 3D
+Supported: All PS2 versions (.ISO format) (XBOX/GCN not supported yet)  
+API by BetaM.  
+Version and seed visible in the Title screen.  
+
+Worms 4: Mayhem
+Supported: All PS2 versions (.ISO format) (XBOX not supported yet)  
+API by BetaM.  
+Version and seed visible in the Title screen.  
+
+Worms: Open Warfare
+Supported: All PSP versions (.ISO format) (NDS not supported yet)
+Version and seed visible in the title screen. (English only)
+
+Worms: Open Warfare 2
+Supported: All PSP versions (.ISO format) (NDS not supported yet)
+
+Worms: Battle Islands
+Supported: All PSP versions (.ISO format) (WII not supported yet)
+
+Sonic Rivals 2
+Supported: All PSP versions
+Version and seed visisble in the startup screen. (English only)

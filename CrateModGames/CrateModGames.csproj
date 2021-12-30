@@ -23,6 +23,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <LangVersion>latest</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,6 +33,10 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <LangVersion>latest</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CTRFramework, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
@@ -419,6 +424,11 @@
     <Compile Include="GameSpecific\Crash3\Randomizers\Crash3_Rand_WarpRoom.cs" />
     <Compile Include="GameSpecific\CrashBash\Game_CrashBash.cs" />
     <Compile Include="GameSpecific\CrashBash\Modder_Bash.cs" />
+    <Compile Include="GameSpecific\CrashNDS\CrashBB\Common\BIN_Archive.cs" />
+    <Compile Include="GameSpecific\CrashNDS\CrashBB\Common\LNG_File.cs" />
+    <Compile Include="GameSpecific\CrashNDS\CrashBB\Common\NDS_LZ10_Compression.cs" />
+    <Compile Include="GameSpecific\CrashNDS\CrashBB\Common\Pipeline_BIN.cs" />
+    <Compile Include="GameSpecific\CrashNDS\CrashBB\Common\Parser_LNG.cs" />
     <Compile Include="GameSpecific\CrashNDS\CrashBB\Game_CrashBB.cs" />
     <Compile Include="GameSpecific\CrashMoM\Game_CrashMoM.cs" />
     <Compile Include="GameSpecific\CrashMoM\Modder_MoM.cs" />
@@ -427,8 +437,23 @@
     <Compile Include="GameSpecific\CrashMoM\Properties\MoM_Props_Main.cs" />
     <Compile Include="GameSpecific\CrashMoM\Randomizers\MoM_Rand_CostumeVisuals.cs" />
     <Compile Include="GameSpecific\CrashMoM\Randomizers\MoM_Rand_CutsceneCostumes.cs" />
+    <Compile Include="GameSpecific\CrashNDS\CrashBB\Modder_CrashBB.cs" />
+    <Compile Include="GameSpecific\CrashNDS\CrashBB\Mods\CrashBB_Metadata.cs" />
+    <Compile Include="GameSpecific\CrashNDS\CrashBB\Properties\CrashBB_Props_Main.cs" />
+    <Compile Include="GameSpecific\CrashNDS\CrashMoMDS\Common\BIN_Archive.cs" />
+    <Compile Include="GameSpecific\CrashNDS\CrashMoMDS\Common\MXB_File.cs" />
+    <Compile Include="GameSpecific\CrashNDS\CrashMoMDS\Common\Pipeline_BIN.cs" />
+    <Compile Include="GameSpecific\CrashNDS\CrashMoMDS\Common\Parser_MXB.cs" />
     <Compile Include="GameSpecific\CrashNDS\CrashMoMDS\Game_CrashMoMDS.cs" />
+    <Compile Include="GameSpecific\CrashNDS\CrashMoMDS\Modder_CrashMoMDS.cs" />
+    <Compile Include="GameSpecific\CrashNDS\CrashMoMDS\Mods\MoMDS_Metadata.cs" />
+    <Compile Include="GameSpecific\CrashNDS\CrashMoMDS\Properties\MoMDS_Props_Main.cs" />
+    <Compile Include="GameSpecific\CrashNDS\CrashTitansDS\Common\BIN_Rom_Archive.cs" />
+    <Compile Include="GameSpecific\CrashNDS\CrashTitansDS\Common\Pipeline_BIN_Rom.cs" />
     <Compile Include="GameSpecific\CrashNDS\CrashTitansDS\Game_CrashTitansDS.cs" />
+    <Compile Include="GameSpecific\CrashNDS\CrashTitansDS\Modder_CrashTitansDS.cs" />
+    <Compile Include="GameSpecific\CrashNDS\CrashTitansDS\Mods\TitansDS_Metadata.cs" />
+    <Compile Include="GameSpecific\CrashNDS\CrashTitansDS\Properties\TitansDS_Props_Main.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\Common\CNK_Common.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\Common\CSV_Table.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\Common\Parser_CSV.cs" />
@@ -798,90 +823,110 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="GameSpecific\Worms3D\Common\W3D_Common.cs" />
-    <Compile Include="GameSpecific\Worms3D\Game_Worms3D.cs" />
-    <Compile Include="GameSpecific\Worms3D\Modder_Worms3D.cs" />
-    <Compile Include="GameSpecific\Worms3D\Mods\W3D_Metadata.cs" />
-    <Compile Include="GameSpecific\Worms3D\Properties\W3D_Props_Main.cs" />
-    <Compile Include="GameSpecific\Worms3D\Randomizers\Worms3D_Rand_WorldPalette.cs" />
-    <Compile Include="GameSpecific\Worms4Mayhem\Common\Worms4_Common.cs" />
-    <Compile Include="GameSpecific\Worms4Mayhem\Game_Worms4.cs" />
-    <Compile Include="GameSpecific\Worms4Mayhem\Modder_Worms4.cs" />
-    <Compile Include="GameSpecific\Worms4Mayhem\Mods\W4_Metadata.cs" />
-    <Compile Include="GameSpecific\Worms4Mayhem\Properties\W4_Props_Main.cs" />
-    <Compile Include="GameSpecific\Worms4Mayhem\Randomizers\Worms4_Rand_LevelVisuals.cs" />
-    <Compile Include="GameSpecific\Worms4Mayhem\Randomizers\Worms4_Rand_WorldPalette.cs" />
-    <Compile Include="GameSpecific\WormsForts\Common\LUA_File.cs" />
-    <Compile Include="GameSpecific\WormsForts\Common\Parser_LUA.cs" />
-    <Compile Include="GameSpecific\WormsForts\Common\Parser_TGA.cs" />
-    <Compile Include="GameSpecific\WormsForts\Common\Parser_XOM.cs" />
-    <Compile Include="GameSpecific\WormsForts\Common\Pipeline_ZIP.cs" />
-    <Compile Include="GameSpecific\WormsForts\Common\TGASharpLib.cs" />
-    <Compile Include="GameSpecific\WormsForts\Common\WormsForts_Common.cs" />
-    <Compile Include="GameSpecific\WormsForts\Game_WormsForts.cs" />
-    <Compile Include="GameSpecific\WormsForts\Level\CollisionData_XOM.cs" />
-    <Compile Include="GameSpecific\WormsForts\Level\Level_XOM.cs" />
-    <Compile Include="GameSpecific\WormsForts\Level\Object_BuildPoint.cs" />
-    <Compile Include="GameSpecific\WormsForts\Modder_WormsForts.cs" />
-    <Compile Include="GameSpecific\WormsForts\Mods\WormsForts_FortWeaponsAnywhere.cs" />
-    <Compile Include="GameSpecific\WormsForts\Mods\WormsForts_Metadata.cs" />
-    <Compile Include="GameSpecific\WormsForts\Mods\WormsForts_RemoveGodWormAnimations.cs" />
-    <Compile Include="GameSpecific\WormsForts\Mods\WormsForts_RemoveVictLocations.cs" />
-    <Compile Include="GameSpecific\WormsForts\Mods\WormsForts_TestMod.cs" />
-    <Compile Include="GameSpecific\WormsForts\Properties\WormsForts_Props_Main.cs" />
-    <Compile Include="GameSpecific\WormsForts\Properties\WormsForts_Props_Textures.cs" />
-    <Compile Include="GameSpecific\WormsForts\Randomizers\WormsForts_DM_Rand_LevelOrder.cs" />
-    <Compile Include="GameSpecific\WormsForts\Randomizers\WormsForts_DM_Rand_ShuffleBuildPoints.cs" />
-    <Compile Include="GameSpecific\WormsForts\Randomizers\WormsForts_Rand_Epoch.cs" />
-    <Compile Include="GameSpecific\WormsForts\Randomizers\WormsForts_Rand_Skybox.cs" />
-    <Compile Include="GameSpecific\WormsForts\Randomizers\WormsForts_Rand_VictLocations.cs" />
-    <Compile Include="GameSpecific\WormsForts\Randomizers\WormsForts_Rand_WaterType.cs" />
-    <Compile Include="GameSpecific\WormsForts\Randomizers\WormsForts_Rand_WorldPalette.cs" />
-    <Compile Include="GameSpecific\WormsForts\XOM\Container.cs" />
-    <Compile Include="GameSpecific\WormsForts\XOM\Containers\Control\AudioControlContainer.cs" />
-    <Compile Include="GameSpecific\WormsForts\XOM\Containers\Control\HumanControlContainer.cs" />
-    <Compile Include="GameSpecific\WormsForts\XOM\Containers\Control\PhysicsControlContainer.cs" />
-    <Compile Include="GameSpecific\WormsForts\XOM\Containers\Control\PowerUpDataContainer.cs" />
-    <Compile Include="GameSpecific\WormsForts\XOM\Containers\Control\WormAnimContainer.cs" />
-    <Compile Include="GameSpecific\WormsForts\XOM\Containers\Control\WormControlContainer.cs" />
-    <Compile Include="GameSpecific\WormsForts\XOM\Containers\Frontend\Campaign.cs" />
-    <Compile Include="GameSpecific\WormsForts\XOM\Containers\Frontend\CampaignCollective.cs" />
-    <Compile Include="GameSpecific\WormsForts\XOM\Containers\Frontend\LevelDetails.cs" />
-    <Compile Include="GameSpecific\WormsForts\XOM\Containers\Frontend\Mission.cs" />
-    <Compile Include="GameSpecific\WormsForts\XOM\Containers\Frontend\WeaponSettingsData.cs" />
-    <Compile Include="GameSpecific\WormsForts\XOM\Containers\Landscapes\GraphSet\Attributes\XAlphaTest.cs" />
-    <Compile Include="GameSpecific\WormsForts\XOM\Containers\Landscapes\GraphSet\Attributes\XBlendModeGL.cs" />
-    <Compile Include="GameSpecific\WormsForts\XOM\Containers\Landscapes\GraphSet\Attributes\XCullFace.cs" />
-    <Compile Include="GameSpecific\WormsForts\XOM\Containers\Landscapes\GraphSet\Attributes\XLightingEnable.cs" />
-    <Compile Include="GameSpecific\WormsForts\XOM\Containers\Landscapes\GraphSet\Attributes\XTriangleStripSet.cs" />
-    <Compile Include="GameSpecific\WormsForts\XOM\Containers\Landscapes\GraphSet\Attributes\XZBufferWriteEnable.cs" />
-    <Compile Include="GameSpecific\WormsForts\XOM\Containers\Landscapes\GraphSet\XCollisionGeometry.cs" />
-    <Compile Include="GameSpecific\WormsForts\XOM\Containers\Landscapes\GraphSet\XColor4ubSet.cs" />
-    <Compile Include="GameSpecific\WormsForts\XOM\Containers\Landscapes\GraphSet\XGroup.cs" />
-    <Compile Include="GameSpecific\WormsForts\XOM\Containers\Landscapes\GraphSet\XMaterial.cs" />
-    <Compile Include="GameSpecific\WormsForts\XOM\Containers\Landscapes\GraphSet\XMatrix.cs" />
-    <Compile Include="GameSpecific\WormsForts\XOM\Containers\Landscapes\GraphSet\XOglTextureMap.cs" />
-    <Compile Include="GameSpecific\WormsForts\XOM\Containers\Landscapes\GraphSet\XPointLight.cs" />
-    <Compile Include="GameSpecific\WormsForts\XOM\Containers\Landscapes\GraphSet\XShape.cs" />
-    <Compile Include="GameSpecific\WormsForts\XOM\Containers\Landscapes\GraphSet\XSimpleShader.cs" />
-    <Compile Include="GameSpecific\WormsForts\XOM\Containers\Landscapes\GraphSet\XTransform.cs" />
-    <Compile Include="GameSpecific\WormsForts\XOM\Containers\Landscapes\XFortsExportedData.cs" />
-    <Compile Include="GameSpecific\WormsForts\XOM\Containers\Tweaks\BuildingGlobalContainer.cs" />
-    <Compile Include="GameSpecific\WormsForts\XOM\Containers\Tweaks\BuildingSpecificContainer.cs" />
-    <Compile Include="GameSpecific\WormsForts\XOM\Containers\Tweaks\CrateContainer.cs" />
-    <Compile Include="GameSpecific\WormsForts\XOM\Containers\Tweaks\WeaponDataCtr.cs" />
-    <Compile Include="GameSpecific\WormsForts\XOM\Containers\XColorResourceDetails.cs" />
-    <Compile Include="GameSpecific\WormsForts\XOM\Containers\XContainerResourceDetails.cs" />
-    <Compile Include="GameSpecific\WormsForts\XOM\Containers\XDataBank.cs" />
-    <Compile Include="GameSpecific\WormsForts\XOM\Containers\XFloatResourceDetails.cs" />
-    <Compile Include="GameSpecific\WormsForts\XOM\Containers\XIntResourceDetails.cs" />
-    <Compile Include="GameSpecific\WormsForts\XOM\Containers\XStringResourceDetails.cs" />
-    <Compile Include="GameSpecific\WormsForts\XOM\Containers\XUintResourceDetails.cs" />
-    <Compile Include="GameSpecific\WormsForts\XOM\Containers\XVectorResourceDetails.cs" />
-    <Compile Include="GameSpecific\WormsForts\XOM\NamedContainer.cs" />
-    <Compile Include="GameSpecific\WormsForts\XOM\UnknownContainer.cs" />
-    <Compile Include="GameSpecific\WormsForts\XOM\XOM_File.cs" />
-    <Compile Include="GameSpecific\WormsForts\XOM\XOM_IO_Helpers.cs" />
+    <Compile Include="GameSpecific\SonicRivals\Common\Parser_TXT.cs" />
+    <Compile Include="GameSpecific\SonicRivals\Game_SonicRivals.cs" />
+    <Compile Include="GameSpecific\SonicRivals\Game_SonicRivals2.cs" />
+    <Compile Include="GameSpecific\SonicRivals\Modder_SonicRivals.cs" />
+    <Compile Include="GameSpecific\SonicRivals\Modder_SonicRivals2.cs" />
+    <Compile Include="GameSpecific\SonicRivals\Mods\SonicRivals_Metadata.cs" />
+    <Compile Include="GameSpecific\SonicRivals\Properties\SonicRivals2_Props_Main.cs" />
+    <Compile Include="GameSpecific\SonicRivals\Properties\SonicRivals_Props_Main.cs" />
+    <Compile Include="GameSpecific\SonicRivals\Randomizers\SonicRivals2_Rand_LevelOrder.cs" />
+    <Compile Include="GameSpecific\SonicRivals\Randomizers\SonicRivals_Rand_Characters.cs" />
+    <Compile Include="GameSpecific\SonicRivals\Randomizers\SonicRivals_Rand_LevelOrder.cs" />
+    <Compile Include="GameSpecific\SonicRivals\Randomizers\SonicRivals_Rand_Music.cs" />
+    <Compile Include="GameSpecific\Worms\Worms3D\Common\W3D_Common.cs" />
+    <Compile Include="GameSpecific\Worms\Worms3D\Game_Worms3D.cs" />
+    <Compile Include="GameSpecific\Worms\Worms3D\Modder_Worms3D.cs" />
+    <Compile Include="GameSpecific\Worms\Worms3D\Mods\W3D_Metadata.cs" />
+    <Compile Include="GameSpecific\Worms\Worms3D\Properties\W3D_Props_Main.cs" />
+    <Compile Include="GameSpecific\Worms\Worms3D\Randomizers\Worms3D_Rand_WorldPalette.cs" />
+    <Compile Include="GameSpecific\Worms\Worms4Mayhem\Common\Worms4_Common.cs" />
+    <Compile Include="GameSpecific\Worms\Worms4Mayhem\Game_Worms4.cs" />
+    <Compile Include="GameSpecific\Worms\Worms4Mayhem\Modder_Worms4.cs" />
+    <Compile Include="GameSpecific\Worms\Worms4Mayhem\Mods\W4_Metadata.cs" />
+    <Compile Include="GameSpecific\Worms\Worms4Mayhem\Properties\W4_Props_Main.cs" />
+    <Compile Include="GameSpecific\Worms\Worms4Mayhem\Randomizers\Worms4_Rand_LevelVisuals.cs" />
+    <Compile Include="GameSpecific\Worms\Worms4Mayhem\Randomizers\Worms4_Rand_WorldPalette.cs" />
+    <Compile Include="GameSpecific\Worms\Common\LUA_File.cs" />
+    <Compile Include="GameSpecific\Worms\Common\Parser_LUA.cs" />
+    <Compile Include="GameSpecific\Worms\Common\Parser_TGA.cs" />
+    <Compile Include="GameSpecific\Worms\Common\Parser_XOM.cs" />
+    <Compile Include="GameSpecific\Worms\Common\Pipeline_ZIP.cs" />
+    <Compile Include="GameSpecific\Worms\Common\TGASharpLib.cs" />
+    <Compile Include="GameSpecific\Worms\WormsForts\Common\WormsForts_Common.cs" />
+    <Compile Include="GameSpecific\Worms\WormsForts\Game_WormsForts.cs" />
+    <Compile Include="GameSpecific\Worms\WormsForts\Level\CollisionData_XOM.cs" />
+    <Compile Include="GameSpecific\Worms\WormsForts\Level\Level_XOM.cs" />
+    <Compile Include="GameSpecific\Worms\WormsForts\Level\Object_BuildPoint.cs" />
+    <Compile Include="GameSpecific\Worms\WormsForts\Modder_WormsForts.cs" />
+    <Compile Include="GameSpecific\Worms\WormsForts\Mods\WormsForts_FortWeaponsAnywhere.cs" />
+    <Compile Include="GameSpecific\Worms\WormsForts\Mods\WormsForts_Metadata.cs" />
+    <Compile Include="GameSpecific\Worms\WormsForts\Mods\WormsForts_RemoveGodWormAnimations.cs" />
+    <Compile Include="GameSpecific\Worms\WormsForts\Mods\WormsForts_RemoveVictLocations.cs" />
+    <Compile Include="GameSpecific\Worms\WormsForts\Mods\WormsForts_TestMod.cs" />
+    <Compile Include="GameSpecific\Worms\WormsForts\Properties\WormsForts_Props_Main.cs" />
+    <Compile Include="GameSpecific\Worms\WormsForts\Properties\WormsForts_Props_Textures.cs" />
+    <Compile Include="GameSpecific\Worms\WormsForts\Randomizers\WormsForts_DM_Rand_LevelOrder.cs" />
+    <Compile Include="GameSpecific\Worms\WormsForts\Randomizers\WormsForts_DM_Rand_ShuffleBuildPoints.cs" />
+    <Compile Include="GameSpecific\Worms\WormsForts\Randomizers\WormsForts_Rand_Epoch.cs" />
+    <Compile Include="GameSpecific\Worms\WormsForts\Randomizers\WormsForts_Rand_Skybox.cs" />
+    <Compile Include="GameSpecific\Worms\WormsForts\Randomizers\WormsForts_Rand_VictLocations.cs" />
+    <Compile Include="GameSpecific\Worms\WormsForts\Randomizers\WormsForts_Rand_WaterType.cs" />
+    <Compile Include="GameSpecific\Worms\WormsForts\Randomizers\WormsForts_Rand_WorldPalette.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Container.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Control\AudioControlContainer.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Control\HumanControlContainer.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Control\PhysicsControlContainer.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Control\PowerUpDataContainer.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Control\WormAnimContainer.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Control\WormControlContainer.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Frontend\Campaign.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Frontend\CampaignCollective.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Frontend\LevelDetails.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Frontend\Mission.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Frontend\WeaponSettingsData.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Landscapes\GraphSet\Attributes\XAlphaTest.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Landscapes\GraphSet\Attributes\XBlendModeGL.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Landscapes\GraphSet\Attributes\XCullFace.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Landscapes\GraphSet\Attributes\XLightingEnable.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Landscapes\GraphSet\Attributes\XTriangleStripSet.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Landscapes\GraphSet\Attributes\XZBufferWriteEnable.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Landscapes\GraphSet\XCollisionGeometry.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Landscapes\GraphSet\XColor4ubSet.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Landscapes\GraphSet\XGroup.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Landscapes\GraphSet\XMaterial.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Landscapes\GraphSet\XMatrix.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Landscapes\GraphSet\XOglTextureMap.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Landscapes\GraphSet\XPointLight.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Landscapes\GraphSet\XShape.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Landscapes\GraphSet\XSimpleShader.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Landscapes\GraphSet\XTransform.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Landscapes\XFortsExportedData.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Tweaks\BuildingGlobalContainer.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Tweaks\BuildingSpecificContainer.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Tweaks\CrateContainer.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Tweaks\WeaponDataCtr.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\XColorResourceDetails.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\XContainerResourceDetails.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\XDataBank.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\XFloatResourceDetails.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\XIntResourceDetails.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\XStringResourceDetails.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\XUintResourceDetails.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\XVectorResourceDetails.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\NamedContainer.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\UnknownContainer.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\XOM_File.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\XOM_IO_Helpers.cs" />
+    <Compile Include="GameSpecific\Worms\WormsBattleIslands\Game_WormsBI.cs" />
+    <Compile Include="GameSpecific\Worms\WormsBattleIslands\Modder_WormsBI.cs" />
+    <Compile Include="GameSpecific\Worms\WormsOW2\Game_WormsOW2.cs" />
+    <Compile Include="GameSpecific\Worms\WormsOW2\Modder_WormsOW2.cs" />
+    <Compile Include="GameSpecific\Worms\WormsOW\Game_WormsOW.cs" />
+    <Compile Include="GameSpecific\Worms\WormsOW\Modder_WormsOW.cs" />
+    <Compile Include="GameSpecific\Worms\WormsOW\Mods\WOW_Metadata.cs" />
+    <Compile Include="GameSpecific\Worms\WormsOW\Properties\WOW_Props_Main.cs" />
     <Compile Include="Generic\Modder_Generic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -940,16 +985,19 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="GameSpecific\CrashBash\Mods\" />
     <Folder Include="GameSpecific\CrashBash\Properties\" />
     <Folder Include="GameSpecific\CrashBash\Randomizers\" />
+    <Folder Include="GameSpecific\CrashNDS\CrashBB\Randomizers\" />
+    <Folder Include="GameSpecific\CrashNDS\CrashMoMDS\Randomizers\" />
+    <Folder Include="GameSpecific\CrashNDS\CrashTitansDS\Randomizers\" />
     <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="GameSpecific\Crash1\TrilogyCommon\API\Crash\Crash.csproj" />
     <None Include="GameSpecific\CrashTS\Common\API\LICENSE" />
     <None Include="GameSpecific\CrashTS\Common\API\README.MD" />

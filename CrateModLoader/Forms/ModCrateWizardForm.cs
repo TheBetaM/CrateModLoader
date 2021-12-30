@@ -10,9 +10,8 @@ using System.Windows.Forms;
 using System.IO;
 using System.IO.Compression;
 using CrateModAPI.Resources.Text;
-using Octodiff.Core;
-using Octodiff.Diagnostics;
-using CrateModLoader.Forms.LevelEditor;
+//using Octodiff.Core;
+//using Octodiff.Diagnostics;
 
 namespace CrateModLoader.Forms
 {
@@ -424,7 +423,7 @@ namespace CrateModLoader.Forms
                             var signatureFilePath = file.ExternalPath + @".octosig";
                             var newFilePath = file.ExternalPath;
                             var deltaFilePath = file.ExternalPath + @".octodelta";
-
+                            /*
                             try
                             {
                                 // Create signature file
@@ -454,6 +453,7 @@ namespace CrateModLoader.Forms
                             {
                                 Console.WriteLine("Octodiff error: " + ex.Message);
                             }
+                            */
                         }
                         else
                         {
@@ -797,9 +797,9 @@ namespace CrateModLoader.Forms
 
         private void button_LevelEditor_Click(object sender, EventArgs e)
         {
-            LevelEditor.LevelEditor Editor = new LevelEditor.LevelEditor(ModProgram);
-            Editor.Owner = this;
-            Editor.Show();
+            //LevelEditor.LevelEditor Editor = new LevelEditor.LevelEditor(ModProgram);
+            //Editor.Owner = this;
+            //Editor.Show();
         }
     }
 }

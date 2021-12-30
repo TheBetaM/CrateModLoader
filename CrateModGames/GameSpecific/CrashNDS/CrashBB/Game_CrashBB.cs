@@ -8,8 +8,9 @@ namespace CrateModLoader.GameSpecific.CrashBB
 
         public override string Name => "Crash Boom Bang!";
         public override string ShortName => "CrashBB";
+        public override string API_Credit => "API by BetaM";
         public override List<ConsoleMode> Consoles => new List<ConsoleMode> { ConsoleMode.NDS };
-        public override Type ModderClass => typeof(Generic.Modder_Generic);
+        public override Type ModderClass => typeof(Modder_CrashBB);
 
         public override Dictionary<ConsoleMode, RegionCode[]> RegionID => new Dictionary<ConsoleMode, RegionCode[]>()
         {

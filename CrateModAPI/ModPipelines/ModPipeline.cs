@@ -47,10 +47,8 @@ namespace CrateModLoader
         /// </summary>
         public abstract Task BuildObject(string filePath);
 
-
         public override async Task StartPipeline(PipelinePass pass)
         {
-            //ExecutionSource.PassIterator = 0;
             IList<Task> editTaskList = new List<Task>();
             foreach (KeyValuePair<string, List<FileInfo>> list in FoundFiles)
             {
@@ -67,6 +65,7 @@ namespace CrateModLoader
             string filePath = file.FullName;
             if (DisableAsync)
             {
+                // broken!! just starts the process but doesn't wait for it to finish!
                 try
                 {
                     if (pass == PipelinePass.Extract)
@@ -151,19 +150,6 @@ namespace CrateModLoader
                     ModCrates.InstallLayerMods(ExecutionSource.EnabledModCrates, dirPath, ModLayerID, ModLayerReplaceOnly);
                 }
             }
-        }
-
-        bool CheckModsForType()
-        {
-            // Add a pipeline requirement for ModStructs? and check it here
-            //foreach (ModPropertyBase Prop in ExecutionSource.ActiveProps)
-            //{
-                //if (Prop.TargetMod is ModStruct<T>)
-                //{
-                    //return true;
-                //}
-            //}
-            return false;
         }
 
     }

@@ -6,7 +6,7 @@ namespace CrateModLoader.GameSpecific.CrashMoM
     public class Game_CrashMoM : Game
     {
         public override string Name => "Crash Mind Over Mutant";
-        public override string ShortName => "Crash1";
+        public override string ShortName => "CrashMoM";
         public override List<ConsoleMode> Consoles => new List<ConsoleMode>
                 {
                     ConsoleMode.PS2,

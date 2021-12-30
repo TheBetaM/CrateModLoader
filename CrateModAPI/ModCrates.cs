@@ -5,8 +5,8 @@ using System.IO.Compression;
 using System.Globalization;
 using CrateModLoader.ModProperties;
 using CrateModAPI.Resources.Text;
-using Octodiff.Core;
-using Octodiff.Diagnostics;
+//using Octodiff.Core;
+//using Octodiff.Diagnostics;
 
 namespace CrateModLoader
 {
@@ -69,8 +69,8 @@ namespace CrateModLoader
          * modcrateinfo.txt file with the mod's metadata
          * (optional) modcratesettings.txt file with the game's unique properties (can be auto-generated using the Mod Menu)
          * (optional) modcrateicon.png icon of the mod
-         * (optional) modcrateoptions.xml for user options that affect scripts
-         * (optional) modcratescripts folder containing C# scripts (*.cs) of ModStructs (if modcrateoptions.xml doesn't exist, all mods are executed)
+         * (optional) (not yet implemented) modcrateoptions.xml for user options that affect scripts
+         * (optional) (not yet implemented) modcratescripts folder containing C# scripts (*.cs) of ModStructs (if modcrateoptions.xml doesn't exist, all mods are executed)
          * 
          * Layer 0 is where the base extracted files from a ROM are, so every game supports it.
          */
@@ -559,6 +559,7 @@ namespace CrateModLoader
                                 {
                                     entry.ExtractToFile(basePath + extrPath, true);
 
+                                    /*
                                     string outPath = basePath + extrPath;
                                     if (Path.GetExtension(outPath).EndsWith("octodelta"))
                                     {
@@ -592,6 +593,7 @@ namespace CrateModLoader
                                             File.Delete(outPath);
                                         }
                                     }
+                                    */
                                 }
                             }
                         }
@@ -621,7 +623,8 @@ namespace CrateModLoader
             foreach (FileInfo file in di.EnumerateFiles())
             {
                 string relativePath = Path.Combine(dest.FullName, mainbuffer + @"\" + file.Name);
-
+                
+                /*
                 if (Path.GetExtension(file.Name).EndsWith("octodelta"))
                 {
                     string targetFile = Path.ChangeExtension(file.FullName, null);
@@ -652,15 +655,18 @@ namespace CrateModLoader
                 }
                 else
                 {
-                    bool allow = true;
-                    if (onlyOverwrite && !File.Exists(basePath + relativePath))
-                    {
-                        allow = false;
-                    }
-                    if (allow)
-                    {
-                        File.Copy(file.FullName, basePath + relativePath, true);
-                    }
+                    
+                }
+                */
+
+                bool allow = true;
+                if (onlyOverwrite && !File.Exists(basePath + relativePath))
+                {
+                    allow = false;
+                }
+                if (allow)
+                {
+                    File.Copy(file.FullName, basePath + relativePath, true);
                 }
             }
         }
