@@ -132,6 +132,10 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
         {
             if (file.FullName.ToLower().Contains("common/physics/kp") || file.FullName.ToLower().Contains(@"common\physics\kp"))
             {
+                if (file.Name.ToLower() == "kpbase.csv") // oops! wouldn't wanna mangle the numbers there...
+                {
+                    return;
+                }
                 int csv_pos = 0;
                 for (int p = 0; p < CNK_Common.DriverTypes.Length; p++)
                 {

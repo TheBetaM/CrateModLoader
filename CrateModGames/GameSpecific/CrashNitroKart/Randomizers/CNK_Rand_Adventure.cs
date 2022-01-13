@@ -317,7 +317,7 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
                     table.RemoveAt(start_rewards + 1);
                 }
 
-                for (int i = 0; i < Adv_GoalsToRewards_EntryList.Count; i++)
+                for (int i = Adv_GoalsToRewards_EntryList.Count - 1; i >= 0; i--)
                 {
                     List<string> cur_line = new List<string>() {
                         CNK_Common.TrackName[(int)Adv_GoalsToRewards_EntryList[i].Track],
@@ -350,7 +350,7 @@ namespace CrateModLoader.GameSpecific.CrashNitroKart
                     table.RemoveAt(start_padinfo + 1);
                 }
 
-                for (int i = 0; i < Adv_WarpPadInfo_EntryList.Count; i++)
+                for (int i = Adv_WarpPadInfo_EntryList.Count - 1; i >= 0; i--)
                 {
                     List<string> cur_line = new List<string>() {
                         CNK_Common.PadInfoName[(int)Adv_WarpPadInfo_EntryList[i].PadName],
