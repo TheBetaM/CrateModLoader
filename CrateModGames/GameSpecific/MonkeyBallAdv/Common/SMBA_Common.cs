@@ -49,7 +49,10 @@ namespace CrateModLoader.GameSpecific.MonkeyBallAdv
     }
 
     public static class SMBA_Common
-    { 
-
+    {
+        public static string GetDataPath(GenericModStruct mod)
+        {
+            return System.IO.Path.Combine(mod.ExtractedPath, @"MB\");
+        }
     }
 }

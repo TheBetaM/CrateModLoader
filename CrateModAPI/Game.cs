@@ -27,6 +27,8 @@ namespace CrateModLoader
         public virtual Dictionary<int, string> PropertyCategories => null;
         /// <summary> Dictionary of region identifiers. </summary>
         public abstract Dictionary<ConsoleMode, RegionCode[]> RegionID { get; }
+        /// <summary> For PS1/PS2 CD games that work better with PSX2ISO than MKPSXISO </summary>
+        public virtual bool UseLegacyMethod => false;
     }
 
     public struct RegionCode

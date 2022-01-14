@@ -20,6 +20,6 @@ namespace CrateModLoader
 
         void Extract(string inputPath, string outputPath, BackgroundWorker worker);
 
-        void Build(string inputPath, string outputPath, BackgroundWorker worker);
+        void Build(string inputPath, string outputPath, BackgroundWorker worker, bool LegacyMethod);
     }
 }

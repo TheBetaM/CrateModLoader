@@ -9,7 +9,7 @@ namespace CrateModLoader.GameSpecific.CrashTitans
     {
         public override void ModPass(GenericModStruct mod)
         {
-            string path_extr = mod.ExtractedPath + @"default\";
+            string path_extr = mod.ExtractedPath + @"default\";            
             bool skip = false;
             string fileName = path_extr + "package/cdd70a8c.p3d";
             File file = new File();
@@ -19,7 +19,7 @@ namespace CrateModLoader.GameSpecific.CrashTitans
             }
             catch
             {
-                Console.WriteLine("Failed to load");
+                Console.WriteLine("Failed to load " + fileName);
                 skip = true;
             }
 
@@ -41,7 +41,6 @@ namespace CrateModLoader.GameSpecific.CrashTitans
             {
                 Console.WriteLine("Failed to find text");
             }
-
 
             if (!skip)
             {

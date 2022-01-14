@@ -129,7 +129,7 @@ namespace CrateModLoader
             }
             else
             {
-                Pipeline.Build(inputPath, outputPath, worker);
+                Pipeline.Build(inputPath, outputPath, worker, Game.UseLegacyMethod);
             }
 
         }

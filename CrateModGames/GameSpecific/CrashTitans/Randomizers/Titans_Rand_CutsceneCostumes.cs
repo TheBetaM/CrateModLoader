@@ -485,7 +485,7 @@ namespace CrateModLoader.GameSpecific.CrashTitans
             Eelectric,
             Grizzly,
             Koala,
-            Kooala,
+            //Kooala, // this only exists on PSP for some reason
             Monkey,
             Parafox,
             Rabbit,
@@ -520,8 +520,8 @@ namespace CrateModLoader.GameSpecific.CrashTitans
                     return Costume_Grizzly[id];
                 case Costume.Koala:
                     return Costume_Koala[id];
-                case Costume.Kooala:
-                    return Costume_Kooala[id];
+                //case Costume.Kooala:
+                //    return Costume_Kooala[id];
                 case Costume.Monkey:
                     return Costume_Monkey[id];
                 case Costume.Parafox:
@@ -557,7 +557,7 @@ namespace CrateModLoader.GameSpecific.CrashTitans
 
             for (int i = 0; i < Costume_Normal.Count; i++)
             {
-                for (int d = 0; d < 21; d++)
+                for (int d = 0; d < 20; d++)
                 {
                     string file = path_extr + "cinematics/" + GetName((Costume)d, i) + ".p3d";
                     File.Move(file, file + "1");
@@ -565,7 +565,7 @@ namespace CrateModLoader.GameSpecific.CrashTitans
             }
 
             List<int> Copy = new List<int>();
-            for(int i = 0; i < 21; i++)
+            for(int i = 0; i < 20; i++)
             {
                 Copy.Add(i);
             }
@@ -583,7 +583,7 @@ namespace CrateModLoader.GameSpecific.CrashTitans
                     Valid.RemoveAt(r);
                 }
 
-                for (int d = 0; d < 21; d++)
+                for (int d = 0; d < 20; d++)
                 {
                     string newfile = path_extr + "cinematics/" + GetName((Costume)Swapper[d], i) + ".p3d";
                     string oldfile = path_extr + "cinematics/" + GetName((Costume)d, i) + ".p3d1";

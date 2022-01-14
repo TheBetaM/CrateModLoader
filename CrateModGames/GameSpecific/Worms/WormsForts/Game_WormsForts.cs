@@ -12,6 +12,7 @@ namespace CrateModLoader.GameSpecific.WormsForts
         public override List<ConsoleMode> Consoles => new List<ConsoleMode> { ConsoleMode.PS2 }; // todo: xbox
         public override Type ModderClass => typeof(Modder_WormsForts);
         public override bool EnableLevelEditor => true;
+        public override bool UseLegacyMethod => true; // hangs forever on boot with new method
 
         public override Dictionary<ConsoleMode, RegionCode[]> RegionID => new Dictionary<ConsoleMode, RegionCode[]>()
         {

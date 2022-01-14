@@ -214,13 +214,14 @@ namespace CrateModLoader.ModPipelines
             return found;
         }
 
-        public override void Build(string inputPath, string outputPath, BackgroundWorker worker)
+        public override void Build(string inputPath, string outputPath, BackgroundWorker worker, bool LegacyMethod)
         {
 
             GlobalWorker = worker;
             buildInputPath = inputPath;
             buildOutputPath = outputPath;
             isExtracting = true;
+            UseNewTools = !LegacyMethod;
 
             AsyncWorker = new BackgroundWorker();
             AsyncWorker.WorkerReportsProgress = true;

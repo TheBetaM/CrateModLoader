@@ -78,7 +78,7 @@ namespace CrateModLoader
         public abstract void Extract(string inputPath, string outputPath, BackgroundWorker worker);
 
         // Use background worker if the builder can iterate over files
-        public abstract void Build(string inputPath, string outputPath, BackgroundWorker worker);
+        public abstract void Build(string inputPath, string outputPath, BackgroundWorker worker, bool LegacyMethod);
 
         public void UpdateExtractProgress(BackgroundWorker worker, int FileCount, ref int FileIterator)
         {

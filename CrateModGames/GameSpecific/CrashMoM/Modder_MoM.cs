@@ -18,6 +18,7 @@ namespace CrateModLoader.GameSpecific.CrashMoM
                 await StartPipelines(PipelinePass.Extract);
             }
 
+            FindFiles();
             await StartNewPass();
 
             if (!ModderIsPreloading)

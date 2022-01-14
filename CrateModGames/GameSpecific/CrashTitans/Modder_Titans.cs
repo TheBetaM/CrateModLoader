@@ -18,6 +18,7 @@ namespace CrateModLoader.GameSpecific.CrashTitans
                 await StartPipelines(PipelinePass.Extract);
             }
 
+            FindFiles();
             await StartNewPass();
 
             if (!ModderIsPreloading)

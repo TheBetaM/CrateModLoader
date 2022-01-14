@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CrateModLoader.GameSpecific.MonkeyBallAdv.Mods
 {
-    public class SMBA_Metadata : ModStruct<string>
+    public class SMBA_Metadata : ModStruct<GenericModStruct>
     {
 
         private List<string> Files = new List<string>()
@@ -14,8 +14,10 @@ namespace CrateModLoader.GameSpecific.MonkeyBallAdv.Mods
             "American.txt",
         };
 
-        public override void ModPass(string bdPath)
+        public override void ModPass(GenericModStruct mod)
         {
+            string bdPath = SMBA_Common.GetDataPath(mod);
+
             List<string> CodeText_LineList = new List<string>();
             
             foreach (string file in Files)

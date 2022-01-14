@@ -365,12 +365,13 @@ namespace CrateModLoader.ModPipelines
             GlobalWorker.ReportProgress(74 + prog_corrected);
         }
 
-        public override void Build(string inputPath, string outputPath, BackgroundWorker worker)
+        public override void Build(string inputPath, string outputPath, BackgroundWorker worker, bool LegacyMethod)
         {
             GlobalWorker = worker;
             buildInputPath = inputPath;
             buildOutputPath = outputPath;
             isExtracting = true;
+            UseNewTools = !LegacyMethod;
 
             AsyncWorker = new BackgroundWorker();
             AsyncWorker.WorkerReportsProgress = true;

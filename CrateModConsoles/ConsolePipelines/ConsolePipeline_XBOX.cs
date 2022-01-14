@@ -139,7 +139,7 @@ namespace CrateModLoader.ModPipelines
             return false;
         }
 
-        public override void Build(string inputPath, string outputPath, BackgroundWorker worker)
+        public override void Build(string inputPath, string outputPath, BackgroundWorker worker, bool LegacyMethod)
         {
             //Use extract-xiso
             string args = "-c ";
