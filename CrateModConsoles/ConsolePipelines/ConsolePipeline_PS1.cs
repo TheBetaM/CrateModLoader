@@ -368,12 +368,12 @@ namespace CrateModLoader.ModPipelines
                 await Task.Run(
                 () =>
                 {
-                    //use isodump
+                    //use dumpsxiso
                     Directory.CreateDirectory(TempPath);
                     string args = $"\"{extractInputPath}\" -x {ModLoaderGlobals.TempName} -s Input.xml";
 
                     Process ExtractProcess = new Process();
-                    ExtractProcess.StartInfo.FileName = ModLoaderGlobals.ToolsPath + @"isodump.exe";
+                    ExtractProcess.StartInfo.FileName = ModLoaderGlobals.ToolsPath + @"dumpsxiso.exe";
                     ExtractProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                     ExtractProcess.StartInfo.Arguments = args;
                     ExtractProcess.StartInfo.UseShellExecute = false;
