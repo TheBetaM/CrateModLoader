@@ -105,7 +105,7 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
             }
 
             ModelPack mpk = ModelPack.FromFile(file.FullName);
-            mpk.Extract(file.FullName, CtrVrm.FromFile(vrampath));
+            //mpk.Extract(file.FullName, CtrVrm.FromFile(vrampath));
         }
 
     }

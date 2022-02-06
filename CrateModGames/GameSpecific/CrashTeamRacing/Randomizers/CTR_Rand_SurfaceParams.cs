@@ -6,7 +6,7 @@ using CTRFramework;
 namespace CrateModLoader.GameSpecific.CrashTeamRacing.Mods
 {
     //works but sucks
-    public class CTR_Rand_SurfaceParams : ModStruct<Scene>
+    public class CTR_Rand_SurfaceParams : ModStruct<CtrScene>
     {
         private List<TerrainFlags> ToReplace = new List<TerrainFlags>()
         {
@@ -40,7 +40,7 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing.Mods
             rand = GetRandom();
         }
 
-        public override void ModPass(Scene lev)
+        public override void ModPass(CtrScene lev)
         {
             if (CTR_Common.GetTrackName(lev.path) != null)
             {

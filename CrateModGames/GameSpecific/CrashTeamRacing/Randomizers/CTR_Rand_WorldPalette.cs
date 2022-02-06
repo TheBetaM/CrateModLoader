@@ -6,7 +6,7 @@ using System.Drawing;
 
 namespace CrateModLoader.GameSpecific.CrashTeamRacing.Mods
 {
-    public class CTR_Rand_WorldPalette : ModStruct<Scene>
+    public class CTR_Rand_WorldPalette : ModStruct<CtrScene>
     {
         private Random rand;
 
@@ -15,14 +15,14 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing.Mods
             rand = GetRandom();
         }
 
-        public override void ModPass(Scene lev)
+        public override void ModPass(CtrScene lev)
         {
             ColorSwizzleData Swiz = new ColorSwizzleData(rand);
             foreach (Vertex v in lev.verts)
             {
-                Vector4b inputColor = v.color;
-                float intensity = Math.Max(v.color.X, v.color.Y);
-                intensity = Math.Max(v.color.Z, intensity);
+                Vector4b inputColor = v.Color;
+                float intensity = Math.Max(v.Color.X, v.Color.Y);
+                intensity = Math.Max(v.Color.Z, intensity);
 
                 int r = inputColor.X;
                 int g = inputColor.Y;
@@ -33,8 +33,8 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing.Mods
                     (int)((Swiz.g_r * r + Swiz.g_g * g + Swiz.g_b * b) / Swiz.g_s),
                     (int)((Swiz.b_r * r + Swiz.b_g * g + Swiz.b_b * b) / Swiz.b_s));
 
-                v.SetColor(Vcolor.Default, new Vector4b(targetColor));
-                v.SetColor(Vcolor.Morph, new Vector4b(targetColor));
+                v.SetColor(new Vector4b(targetColor), Vcolor.Default);
+                v.SetColor(new Vector4b(targetColor), Vcolor.Morph);
             }
             foreach (VertexAnim v in lev.vertanims)
             {

@@ -6,7 +6,7 @@ using System.Drawing;
 
 namespace CrateModLoader.GameSpecific.CrashTeamRacing.Mods
 {
-    public class CTR_Lev_TestMod : ModStruct<Scene>
+    public class CTR_Lev_TestMod : ModStruct<CtrScene>
     {
         //public override bool NeedsCachePass => true;
 
@@ -14,7 +14,7 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing.Mods
         private List<byte> Intens = new List<byte>();
         private bool printer = false;
 
-        public override void CachePass(Scene lev)
+        public override void CachePass(CtrScene lev)
         {
             foreach (QuadBlock quad in lev.quads)
             {
@@ -27,7 +27,7 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing.Mods
             }
         }
 
-        public override void ModPass(Scene lev)
+        public override void ModPass(CtrScene lev)
         {
             Random rand = GetRandom();
 
@@ -37,7 +37,7 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing.Mods
                 //if (pick.Event == CTREvent.WarpPad && pick.Name == "warppad#9")
                 //{       pick.Name = "warppad#3"; }
                 
-                if (pick.Event == CTREvent.CrateWeapon)
+                if (pick.ThreadID == CtrThreadID.CrateWeapon)
                 {
                     pick.unk1 = 0xF;
                 }

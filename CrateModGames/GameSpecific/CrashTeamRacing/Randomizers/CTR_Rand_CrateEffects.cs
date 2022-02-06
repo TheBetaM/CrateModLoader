@@ -5,25 +5,25 @@ using CTRFramework;
 
 namespace CrateModLoader.GameSpecific.CrashTeamRacing.Mods
 {
-    public class CTR_Rand_CrateEffects : ModStruct<Scene>
+    public class CTR_Rand_CrateEffects : ModStruct<CtrScene>
     {
-        private List<CTREvent> ReplaceEvents = new List<CTREvent>()
+        private List<CtrThreadID> ReplaceEvents = new List<CtrThreadID>()
         {
-            CTREvent.CrateWeapon,
-            CTREvent.CrateFruit,
-            CTREvent.CrateRelic1,
-            CTREvent.CrateRelic2,
-            CTREvent.CrateRelic3,
+            CtrThreadID.CrateWeapon,
+            CtrThreadID.CrateFruit,
+            CtrThreadID.CrateRelic1,
+            CtrThreadID.CrateRelic2,
+            CtrThreadID.CrateRelic3,
         };
-        private List<CTREvent> PossibleEvents = new List<CTREvent>()
+        private List<CtrThreadID> PossibleEvents = new List<CtrThreadID>()
         {
-            CTREvent.CrateWeapon,
-            CTREvent.SingleFruit,
-            CTREvent.CrateFruit,
-            CTREvent.StateTurleJump,
-            CTREvent.CrateRelic1,
-            CTREvent.CrateRelic2,
-            CTREvent.CrateRelic3,
+            CtrThreadID.CrateWeapon,
+            CtrThreadID.SingleFruit,
+            CtrThreadID.CrateFruit,
+            CtrThreadID.CavesTurtle,
+            CtrThreadID.CrateRelic1,
+            CtrThreadID.CrateRelic2,
+            CtrThreadID.CrateRelic3,
         };
 
         private Random rand;
@@ -33,13 +33,13 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing.Mods
             rand = GetRandom();
         }
 
-        public override void ModPass(Scene lev)
+        public override void ModPass(CtrScene lev)
         {
             foreach (PickupHeader pick in lev.pickups)
             {
-                if (ReplaceEvents.Contains(pick.Event))
+                if (ReplaceEvents.Contains(pick.ThreadID))
                 {
-                    pick.Event = PossibleEvents[rand.Next(PossibleEvents.Count)];
+                    pick.ThreadID = PossibleEvents[rand.Next(PossibleEvents.Count)];
                 }
             }
         }

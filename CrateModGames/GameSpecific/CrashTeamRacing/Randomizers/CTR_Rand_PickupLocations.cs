@@ -6,37 +6,35 @@ using CTRFramework;
 namespace CrateModLoader.GameSpecific.CrashTeamRacing.Mods
 {
     // doesn't work very well, most of the time pickups become invisible
-    public class CTR_Rand_PickupLocations : ModStruct<Scene>
+    public class CTR_Rand_PickupLocations : ModStruct<CtrScene>
     {
         public override bool NeedsCachePass => true;
 
         private Random rand;
 
-        private List<CTREvent> ValidChecks = new List<CTREvent>()
+        private List<CtrThreadID> ValidChecks = new List<CtrThreadID>()
         {
-            CTREvent.CrateFruit,
-            CTREvent.CrateNitro,
-            CTREvent.CrateRelic1,
-            CTREvent.CrateRelic2,
-            CTREvent.CrateRelic3,
-            CTREvent.CrateTNT,
-            CTREvent.CrateWeapon,
-            CTREvent.Crystal,
-            CTREvent.SingleFruit,
-            //CTREvent.LetterC,
-            //CTREvent.LetterT,
-            //CTREvent.LetterR,
+            CtrThreadID.CrateFruit,
+            CtrThreadID.CrateNitro,
+            CtrThreadID.CrateRelic1,
+            CtrThreadID.CrateRelic2,
+            CtrThreadID.CrateRelic3,
+            CtrThreadID.CrateTNT,
+            CtrThreadID.CrateWeapon,
+            CtrThreadID.Crystal,
+            CtrThreadID.SingleFruit,
+            //CtrThreadID.LetterC,
+            //CtrThreadID.LetterT,
+            //CtrThreadID.LetterR,
         };
 
         class PositionBank
         {
-            public List<Vector3s> Positions;
-            public List<Vector3s> Angles;
+            public List<Pose> Poses;
 
             public PositionBank()
             {
-                Positions = new List<Vector3s>();
-                Angles = new List<Vector3s>();
+                Poses = new List<Pose>();
             }
         }
         private Dictionary<string, PositionBank> Banks;
@@ -59,7 +57,7 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing.Mods
             return null;
         }
 
-        public override void CachePass(Scene lev)
+        public override void CachePass(CtrScene lev)
         {
             if (lev.path.Contains("relic"))
             {
@@ -67,33 +65,32 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing.Mods
                 PositionBank bank = new PositionBank();
                 foreach (PickupHeader pick in lev.pickups)
                 {
-                    if (ValidChecks.Contains(pick.Event))
+                    if (ValidChecks.Contains(pick.ThreadID))
                     {
-                        bank.Positions.Add(pick.Position);
-                        bank.Angles.Add(pick.Angle);
+                        Pose pose = new Pose();
+                        pose.Position = pick.Pose.Position;
+                        pose.Rotation = pick.Pose.Rotation;
+                        bank.Poses.Add(pose);
                     }
                 }
                 Banks.Add(track, bank);
             }
         }
 
-        public override void ModPass(Scene lev)
+        public override void ModPass(CtrScene lev)
         {
             PositionBank bank = GetBank(lev.path);
             if (bank != null)
             {
-                List<Vector3s> PosLeft = new List<Vector3s>(bank.Positions);
-                List<Vector3s> AngLeft = new List<Vector3s>(bank.Angles);
+                List<Pose> PosLeft = new List<Pose>(bank.Poses);
                 int r = 0;
                 foreach (PickupHeader pick in lev.pickups)
                 {
-                    if (ValidChecks.Contains(pick.Event))
+                    if (ValidChecks.Contains(pick.ThreadID))
                     {
                         r = rand.Next(PosLeft.Count);
-                        pick.Position = PosLeft[r];
-                        pick.Angle = AngLeft[r];
+                        pick.Pose = PosLeft[r];
                         PosLeft.RemoveAt(r);
-                        AngLeft.RemoveAt(r);
                     }
                 }
             }

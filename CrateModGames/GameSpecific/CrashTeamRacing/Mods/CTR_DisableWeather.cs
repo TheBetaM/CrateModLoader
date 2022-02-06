@@ -5,9 +5,9 @@ using CTRFramework;
 
 namespace CrateModLoader.GameSpecific.CrashTeamRacing.Mods
 {
-    public class CTR_DisableWeather : ModStruct<Scene>
+    public class CTR_DisableWeather : ModStruct<CtrScene>
     {
-        public override void ModPass(Scene lev)
+        public override void ModPass(CtrScene lev)
         {
             foreach (QuadBlock quad in lev.quads)
             {

@@ -39,10 +39,6 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CTRFramework, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>GameSpecific\CrashTeamRacing\CTRFramework.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>GameSpecific\CrashTeamRacing\Newtonsoft.Json.dll</HintPath>
@@ -334,6 +330,67 @@
     <Compile Include="External\CrashEdit\Crash\Utility\Position.cs" />
     <Compile Include="External\CrashEdit\Crash\Utility\StringExt.cs" />
     <Compile Include="External\CrashEdit\Crash\Utility\WaveConv.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\big\BigEntry.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\big\BigFile.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\big\BigFileReader.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\ctr\CtrAnim.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\ctr\CtrDelta.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\ctr\CtrDraw.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\ctr\CtrFrame.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\ctr\CtrMesh.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\ctr\CtrModel.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\Enums.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\Interfaces.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\lang\CharSwap.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\lang\LNG.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\lev\CtrFace.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\lev\CtrScene.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\lev\CtrTex.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\lev\Gradient.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\lev\MeshInfo.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\lev\nav\BotPath.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\lev\nav\Nav.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\lev\nav\NavFrame.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\lev\PickupHeader.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\lev\QuadBlock.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\lev\SceneHeader.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\lev\SkyBox.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\lev\SpawnGroup.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\lev\TrialData.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\lev\TrialGhost.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\lev\Vertex.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\lev\VertexAnim.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\lev\VisData.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\lev\WaterAnim.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\mpk\Icon.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\mpk\IconPack.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\mpk\ModelPack.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\PatchedContainer.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\shared\BinaryReaderEx.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\shared\BinaryWriterEx.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\shared\BoundingBox.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\shared\Helpers.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\shared\HelpersPanic.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\shared\InstanceList.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\shared\Meta.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\shared\OBJ.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\shared\Pose.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\shared\PsxPtr.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\shared\Vectors\Vector3b.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\shared\Vectors\Vector3f.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\shared\Vectors\Vector3i.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\shared\Vectors\Vector3s.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\shared\Vectors\Vector4b.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\shared\Vectors\Vector4s.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\vrm\BMPHeader.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\vrm\CtrVrm.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\vrm\TextureLayout.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\vrm\Tim.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Properties\Resources.Designer.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\ThirdParty\PlyImporter\Extensions\ArrayExtensions.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\ThirdParty\PlyImporter\Extensions\EnumerableExtensions.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\ThirdParty\PlyImporter\PlyHandler.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\ThirdParty\PlyImporter\PlyHeader.cs" />
     <Compile Include="External\TwinsanityEditor\Twinsanity\ADPCM.cs" />
     <Compile Include="External\TwinsanityEditor\Twinsanity\BDArchive.cs" />
     <Compile Include="External\TwinsanityEditor\Twinsanity\BitConv.cs" />
@@ -534,6 +591,7 @@
     <Compile Include="GameSpecific\CrashNitroKart\Randomizers\CNK_Rand_PowerupDistribution.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\Randomizers\CNK_Rand_PowerupEffects.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\Randomizers\CNK_Rand_SurfaceParams.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Common\BIG_Reader.cs" />
     <Compile Include="GameSpecific\CrashTeamRacing\Common\CTR_Common.cs" />
     <Compile Include="GameSpecific\CrashTeamRacing\Common\Parser_CTR.cs" />
     <Compile Include="GameSpecific\CrashTeamRacing\Common\Parser_LEV.cs" />
@@ -936,6 +994,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="External\CTR-tools\ctr-tools\CTRFramework\Properties\BuildDate.txt" />
     <Content Include="Tools\GOBEXTRACT License.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -950,6 +1009,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="External\CTR-tools\ctr-tools\CTRFramework\Properties\Resources.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="GameSpecific\Crash1\TrilogyCommon\CrashTri_Text.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>CrashTri_Text.Designer.cs</LastGenOutput>
@@ -996,6 +1058,10 @@
     <Folder Include="GameSpecific\CrashNDS\CrashMoMDS\Randomizers\" />
     <Folder Include="GameSpecific\CrashNDS\CrashTitansDS\Randomizers\" />
     <Folder Include="Resources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="External\CTR-tools\ctr-tools\CTRFramework\ThirdParty\PlyImporter\LICENSE" />
+    <None Include="External\CTR-tools\ctr-tools\CTRFramework\ThirdParty\PlyImporter\README.md" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

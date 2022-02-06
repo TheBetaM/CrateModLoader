@@ -6,7 +6,7 @@ using CTRFramework;
 namespace CrateModLoader.GameSpecific.CrashTeamRacing.Mods
 {
     //unfinished
-    public class CTR_Rand_BackwardsTracks : ModStruct<Scene>
+    public class CTR_Rand_BackwardsTracks : ModStruct<CtrScene>
     {
         private Random rand;
         private bool isRandom;
@@ -21,7 +21,7 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing.Mods
             rand = GetRandom();
         }
 
-        public override void ModPass(Scene lev)
+        public override void ModPass(CtrScene lev)
         {
             if (CTR_Common.GetTrackName(lev.path) != string.Empty)
             {
@@ -29,14 +29,14 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing.Mods
                 {
                     foreach (Pose pa in lev.header.startGrid)
                     {
-                        pa.Position.X -= 1000;
-                        pa.Rotation.Y += 2048;
+                        pa.Position = new System.Numerics.Vector3(pa.Position.X - 1000, pa.Position.Y, pa.Position.Z);
+                        pa.Rotation = new System.Numerics.Vector3(pa.Rotation.X, pa.Rotation.Y + 2048, pa.Rotation.Z);
                     }
 
                     lev.restartPts.Reverse();
 
                     foreach (Pose pa in lev.restartPts)
-                        pa.Rotation.Y += 2048;
+                        pa.Rotation = new System.Numerics.Vector3(pa.Rotation.X, pa.Rotation.Y + 2048, pa.Rotation.Z);
 
                     int maxpos = 0;
                     foreach (QuadBlock qb in lev.quads)
@@ -54,9 +54,9 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing.Mods
 
                     foreach (PickupHeader pick in lev.pickups)
                     {
-                        if (pick.Event == CTREvent.FinishLap)
+                        if (pick.ThreadID == CtrThreadID.StartBanner)
                         {
-                            pick.Angle.Y += 2048;
+                            pick.Pose.Rotation = new System.Numerics.Vector3(pick.Pose.Rotation.X, pick.Pose.Rotation.Y + 2048, pick.Pose.Rotation.Z);
                         }
                     }
 

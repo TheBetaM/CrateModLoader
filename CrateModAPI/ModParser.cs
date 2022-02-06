@@ -56,7 +56,7 @@ namespace CrateModLoader
             }
             await Task.WhenAll(editTaskList);
             editTaskList.Clear();
-            //Console.WriteLine("ModParser finished, errors: " + ErrorCount);
+            Console.WriteLine("ModParser finished, errors: " + ErrorCount);
         }
         public override async Task FileStartPass(FileInfo file, ModPass pass = ModPass.Mod)
         {
@@ -77,7 +77,7 @@ namespace CrateModLoader
                 catch
                 {
                     ErrorCount++;
-                    //Console.WriteLine("ModParser Error: " + filePath);
+                    Console.WriteLine("ModParser Error: " + filePath);
                 }
             }
             else
@@ -100,7 +100,7 @@ namespace CrateModLoader
                     catch
                     {
                         ErrorCount++;
-                        //Console.WriteLine("ModParser Error: " + filePath);
+                        Console.WriteLine("ModParser Error: " + filePath);
                     }
                 }
                 );

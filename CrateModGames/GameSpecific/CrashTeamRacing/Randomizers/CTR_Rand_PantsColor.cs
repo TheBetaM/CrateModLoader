@@ -22,7 +22,7 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing.Mods
         {
             foreach(CtrMesh mesh in model.Entries)
             {
-                mesh.scale = new Vector4s(0, 0, 0, 0);
+                mesh.scale = new System.Numerics.Vector3(0, 0, 0);
                 //if (mesh.name.Contains("crash"))
                 //{
                     for (int i = 0; i < mesh.cols.Count; i++)

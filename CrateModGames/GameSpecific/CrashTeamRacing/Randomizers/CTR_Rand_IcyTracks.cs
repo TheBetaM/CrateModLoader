@@ -5,7 +5,7 @@ using CTRFramework;
 
 namespace CrateModLoader.GameSpecific.CrashTeamRacing.Mods
 {
-    public class CTR_Rand_IcyTracks : ModStruct<Scene>
+    public class CTR_Rand_IcyTracks : ModStruct<CtrScene>
     {
         private Random rand;
         private bool isRandom;
@@ -20,7 +20,7 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing.Mods
             rand = GetRandom();
         }
 
-        public override void ModPass(Scene lev)
+        public override void ModPass(CtrScene lev)
         {
             if (!isRandom || rand.Next(2) == 0)
             {
