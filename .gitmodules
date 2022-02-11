@@ -1,0 +1,9 @@
+[submodule "CrateModGames/External/TwinsanityEditor"]
+	path = CrateModGames/External/TwinsanityEditor
+	url = https://github.com/Smartkin/twinsanity-editor.git
+[submodule "CrateModGames/External/CrashEdit"]
+	path = CrateModGames/External/CrashEdit
+	url = https://github.com/cbhacks/CrashEdit.git
+[submodule "CrateModGames/External/CTR-tools"]
+	path = CrateModGames/External/CTR-tools
+	url = https://github.com/CTR-tools/CTR-tools.git

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace CrateModLoader
 {
@@ -17,28 +18,43 @@ namespace CrateModLoader
         DC, // Dreamcast, not supported yet
         PS3, // PlayStation 3, just for reference
         Android, // Android, being considered
-        NDS, // DS, not supported yet
-        N3DS, // 3DS, not supported yet
-        N64, // N64, being considered
+        NDS, // DS
+        N3DS, // 3DS
+        WIIU, // WiiU, being considered
+        Saturn, // Sega Saturn, being considered
+        SegaCD, // Sega CD, being considered
     }
 
     // Region types
     public enum RegionType
     {
         Undefined = -1,
-        NTSC_U, // ex. North America
-        PAL, // ex. Europe
-        NTSC_J, // ex. Japan
+        NTSC_U, // North America
+        PAL, // Europe
+        NTSC_J, // Japan
         Global, // Region-free or region-less
+    }
+
+    public enum ModPass
+    {
+        Preload = 0,
+        Cache = 1,
+        Mod = 2,
+        End = 3,
+    }
+    public enum PipelinePass
+    {
+        Extract = 0,
+        Build,
     }
 
     public static class ModLoaderGlobals
     {
-        /// <summary> Global Randomizer Seed, can be modified during modding. Max length - 10 characters </summary>
+        /// <summary> Global Randomizer Seed. Max length - 10 characters </summary>
         public static int RandomizerSeed = 0;
 
         /// <summary> String used to show which version of CML the modded game was built with. Should be under 10 characters. </summary>
-        public const string ProgramVersion = "v1.3.1";
+        public const string ProgramVersion = "b1.4.0";
         public const uint ProgramVersionSimple = 7;
         /// <summary> Name of the folder used to hold game data during the modding process. Folder will be created in the program's directory. </summary>
         public const string TempName = "temp";
@@ -50,6 +66,10 @@ namespace CrateModLoader
         public static string ModDirectory = BaseDirectory + @"Mods\";
 
         public static string ModAssetsFolderName = "modassets";
+        public static string ModScriptsFolderName = "modscripts";
 
+        // Use a global random state instead of per feature.
+        // It is not planned to be a user option, because that would make the experience confusing!
+        public static readonly bool UseGlobalRandom = false;
     }
 }

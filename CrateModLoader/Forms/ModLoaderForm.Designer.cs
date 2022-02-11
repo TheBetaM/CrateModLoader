@@ -43,7 +43,6 @@
             this.button_randomizeSeed = new System.Windows.Forms.Button();
             this.label_processText = new System.Windows.Forms.Label();
             this.button_openModMenu = new System.Windows.Forms.Button();
-            this.button_modCrateMenu = new System.Windows.Forms.Button();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.label_gameType = new System.Windows.Forms.Label();
             this.folderBrowserDialog2 = new System.Windows.Forms.FolderBrowserDialog();
@@ -54,8 +53,8 @@
             this.panel_desc = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.button_modTools = new System.Windows.Forms.Button();
-            this.button_downloadMods = new System.Windows.Forms.Button();
+            this.button_preloadGame = new System.Windows.Forms.Button();
+            this.button_LevelEditor = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem_loadROM = new System.Windows.Forms.ToolStripMenuItem();
@@ -71,7 +70,8 @@
             this.toolStripMenuItem_showChangelog = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.panel_modCrateManager = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.panel_desc.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -79,7 +79,7 @@
             this.menuStrip1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
-            this.tableLayoutPanel4.SuspendLayout();
+            this.tableLayoutPanel5.SuspendLayout();
             this.SuspendLayout();
             // 
             // checkedListBox1
@@ -95,10 +95,13 @@
             this.checkedListBox1.Location = new System.Drawing.Point(3, 0);
             this.checkedListBox1.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(464, 130);
+            this.tableLayoutPanel2.SetRowSpan(this.checkedListBox1, 2);
+            this.checkedListBox1.Size = new System.Drawing.Size(389, 270);
             this.checkedListBox1.TabIndex = 0;
             this.checkedListBox1.Visible = false;
             this.checkedListBox1.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged);
+            this.checkedListBox1.MouseEnter += new System.EventHandler(this.checkedListBox1_MouseEnter);
+            this.checkedListBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.checkedListBox1_MouseMove);
             // 
             // openFileDialog1
             // 
@@ -110,13 +113,14 @@
             // 
             // textBox_inputPath
             // 
+            this.tableLayoutPanel5.SetColumnSpan(this.textBox_inputPath, 2);
             this.textBox_inputPath.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textBox_inputPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.textBox_inputPath.Location = new System.Drawing.Point(0, 0);
             this.textBox_inputPath.Margin = new System.Windows.Forms.Padding(0);
             this.textBox_inputPath.Name = "textBox_inputPath";
             this.textBox_inputPath.ReadOnly = true;
-            this.textBox_inputPath.Size = new System.Drawing.Size(348, 22);
+            this.textBox_inputPath.Size = new System.Drawing.Size(588, 22);
             this.textBox_inputPath.TabIndex = 1;
             this.textBox_inputPath.Text = "1. Click \"Browse\" to select the game.";
             // 
@@ -124,10 +128,10 @@
             // 
             this.button_browseInput.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button_browseInput.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button_browseInput.Location = new System.Drawing.Point(348, 0);
+            this.button_browseInput.Location = new System.Drawing.Point(588, 0);
             this.button_browseInput.Margin = new System.Windows.Forms.Padding(0);
             this.button_browseInput.Name = "button_browseInput";
-            this.button_browseInput.Size = new System.Drawing.Size(116, 23);
+            this.button_browseInput.Size = new System.Drawing.Size(196, 24);
             this.button_browseInput.TabIndex = 2;
             this.button_browseInput.Text = "(1) Browse...";
             this.button_browseInput.UseVisualStyleBackColor = true;
@@ -135,23 +139,23 @@
             // 
             // progressBar1
             // 
-            this.tableLayoutPanel4.SetColumnSpan(this.progressBar1, 2);
             this.progressBar1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.progressBar1.Location = new System.Drawing.Point(0, 46);
+            this.progressBar1.Location = new System.Drawing.Point(0, 48);
             this.progressBar1.Margin = new System.Windows.Forms.Padding(0);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(464, 23);
+            this.progressBar1.Size = new System.Drawing.Size(392, 26);
             this.progressBar1.TabIndex = 4;
             // 
             // textBox_outputPath
             // 
+            this.tableLayoutPanel5.SetColumnSpan(this.textBox_outputPath, 2);
             this.textBox_outputPath.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textBox_outputPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.textBox_outputPath.Location = new System.Drawing.Point(0, 23);
+            this.textBox_outputPath.Location = new System.Drawing.Point(0, 24);
             this.textBox_outputPath.Margin = new System.Windows.Forms.Padding(0);
             this.textBox_outputPath.Name = "textBox_outputPath";
             this.textBox_outputPath.ReadOnly = true;
-            this.textBox_outputPath.Size = new System.Drawing.Size(348, 22);
+            this.textBox_outputPath.Size = new System.Drawing.Size(588, 22);
             this.textBox_outputPath.TabIndex = 6;
             this.textBox_outputPath.Text = "2. Click \"Browse\" to set the output path.";
             this.textBox_outputPath.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
@@ -160,10 +164,10 @@
             // 
             this.button_browseOutput.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button_browseOutput.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button_browseOutput.Location = new System.Drawing.Point(348, 23);
+            this.button_browseOutput.Location = new System.Drawing.Point(588, 24);
             this.button_browseOutput.Margin = new System.Windows.Forms.Padding(0);
             this.button_browseOutput.Name = "button_browseOutput";
-            this.button_browseOutput.Size = new System.Drawing.Size(116, 23);
+            this.button_browseOutput.Size = new System.Drawing.Size(196, 24);
             this.button_browseOutput.TabIndex = 7;
             this.button_browseOutput.Text = "(2) Browse...";
             this.button_browseOutput.UseVisualStyleBackColor = true;
@@ -171,14 +175,14 @@
             // 
             // button_startProcess
             // 
-            this.tableLayoutPanel4.SetColumnSpan(this.button_startProcess, 2);
+            this.tableLayoutPanel5.SetColumnSpan(this.button_startProcess, 2);
             this.button_startProcess.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button_startProcess.Enabled = false;
             this.button_startProcess.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button_startProcess.Location = new System.Drawing.Point(0, 69);
+            this.button_startProcess.Location = new System.Drawing.Point(392, 48);
             this.button_startProcess.Margin = new System.Windows.Forms.Padding(0);
             this.button_startProcess.Name = "button_startProcess";
-            this.button_startProcess.Size = new System.Drawing.Size(464, 23);
+            this.button_startProcess.Size = new System.Drawing.Size(392, 26);
             this.button_startProcess.TabIndex = 11;
             this.button_startProcess.Text = "Start!";
             this.button_startProcess.UseVisualStyleBackColor = true;
@@ -187,10 +191,11 @@
             // numericUpDown1
             // 
             this.numericUpDown1.BackColor = System.Drawing.SystemColors.Window;
+            this.tableLayoutPanel1.SetColumnSpan(this.numericUpDown1, 3);
             this.numericUpDown1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.numericUpDown1.Enabled = false;
             this.numericUpDown1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.numericUpDown1.Location = new System.Drawing.Point(309, 27);
+            this.numericUpDown1.Location = new System.Drawing.Point(196, 26);
             this.numericUpDown1.Margin = new System.Windows.Forms.Padding(1, 1, 0, 0);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             2147483647,
@@ -198,7 +203,7 @@
             0,
             0});
             this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(155, 24);
+            this.numericUpDown1.Size = new System.Drawing.Size(196, 24);
             this.numericUpDown1.TabIndex = 12;
             this.numericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.toolTip1.SetToolTip(this.numericUpDown1, "The seed of all randomizers for this game.");
@@ -212,15 +217,16 @@
             // 
             // button_randomizeSeed
             // 
+            this.tableLayoutPanel1.SetColumnSpan(this.button_randomizeSeed, 3);
             this.button_randomizeSeed.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button_randomizeSeed.Enabled = false;
             this.button_randomizeSeed.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button_randomizeSeed.Location = new System.Drawing.Point(154, 26);
+            this.button_randomizeSeed.Location = new System.Drawing.Point(0, 25);
             this.button_randomizeSeed.Margin = new System.Windows.Forms.Padding(0);
             this.button_randomizeSeed.Name = "button_randomizeSeed";
-            this.button_randomizeSeed.Size = new System.Drawing.Size(154, 26);
+            this.button_randomizeSeed.Size = new System.Drawing.Size(195, 25);
             this.button_randomizeSeed.TabIndex = 13;
-            this.button_randomizeSeed.Text = "Randomize Seed";
+            this.button_randomizeSeed.Text = "Randomize Seed →";
             this.toolTip1.SetToolTip(this.button_randomizeSeed, "Randomize the seed to the right of this button.");
             this.button_randomizeSeed.UseVisualStyleBackColor = true;
             this.button_randomizeSeed.Visible = false;
@@ -228,15 +234,14 @@
             // 
             // label_processText
             // 
-            this.label_processText.AutoSize = true;
             this.label_processText.BackColor = System.Drawing.Color.Transparent;
-            this.tableLayoutPanel3.SetColumnSpan(this.label_processText, 2);
+            this.tableLayoutPanel5.SetColumnSpan(this.label_processText, 3);
             this.label_processText.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label_processText.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label_processText.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.label_processText.Location = new System.Drawing.Point(3, 0);
+            this.label_processText.Location = new System.Drawing.Point(3, 74);
             this.label_processText.Name = "label_processText";
-            this.label_processText.Size = new System.Drawing.Size(458, 22);
+            this.label_processText.Size = new System.Drawing.Size(778, 26);
             this.label_processText.TabIndex = 15;
             this.label_processText.Text = "ProgressInfo The process info may be very long, but only if there\'s an error. Tex" +
     "t overflow is rare.";
@@ -244,36 +249,20 @@
             // 
             // button_openModMenu
             // 
+            this.tableLayoutPanel1.SetColumnSpan(this.button_openModMenu, 2);
             this.button_openModMenu.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button_openModMenu.Enabled = false;
             this.button_openModMenu.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button_openModMenu.Location = new System.Drawing.Point(308, 0);
+            this.button_openModMenu.Location = new System.Drawing.Point(260, 0);
             this.button_openModMenu.Margin = new System.Windows.Forms.Padding(0);
             this.button_openModMenu.Name = "button_openModMenu";
-            this.button_openModMenu.Size = new System.Drawing.Size(156, 26);
+            this.button_openModMenu.Size = new System.Drawing.Size(132, 25);
             this.button_openModMenu.TabIndex = 19;
             this.button_openModMenu.Text = "Mod Menu";
             this.toolTip1.SetToolTip(this.button_openModMenu, "Open the Mod Menu of this specific game.");
             this.button_openModMenu.UseVisualStyleBackColor = true;
             this.button_openModMenu.Visible = false;
             this.button_openModMenu.Click += new System.EventHandler(this.button_openModMenu_Click);
-            // 
-            // button_modCrateMenu
-            // 
-            this.button_modCrateMenu.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button_modCrateMenu.Enabled = false;
-            this.button_modCrateMenu.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button_modCrateMenu.Location = new System.Drawing.Point(0, 0);
-            this.button_modCrateMenu.Margin = new System.Windows.Forms.Padding(0);
-            this.button_modCrateMenu.Name = "button_modCrateMenu";
-            this.button_modCrateMenu.Size = new System.Drawing.Size(154, 26);
-            this.button_modCrateMenu.TabIndex = 20;
-            this.button_modCrateMenu.Text = "Mod Crates";
-            this.toolTip1.SetToolTip(this.button_modCrateMenu, "Manage Mod Crates compatible with this game. They must be in the \"Mods\" folder ne" +
-        "ar this application.");
-            this.button_modCrateMenu.UseVisualStyleBackColor = true;
-            this.button_modCrateMenu.Visible = false;
-            this.button_modCrateMenu.Click += new System.EventHandler(this.button_modCrateMenu_Click);
             // 
             // label_gameType
             // 
@@ -283,9 +272,9 @@
             this.label_gameType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.label_gameType.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label_gameType.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label_gameType.Location = new System.Drawing.Point(3, 22);
+            this.label_gameType.Location = new System.Drawing.Point(3, 0);
             this.label_gameType.Name = "label_gameType";
-            this.label_gameType.Size = new System.Drawing.Size(458, 33);
+            this.label_gameType.Size = new System.Drawing.Size(386, 30);
             this.label_gameType.TabIndex = 28;
             this.label_gameType.Text = "Game Name\r\n(Region Console)";
             this.label_gameType.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -296,9 +285,9 @@
             this.tableLayoutPanel3.SetColumnSpan(this.linkLabel_apiCredit, 2);
             this.linkLabel_apiCredit.Dock = System.Windows.Forms.DockStyle.Fill;
             this.linkLabel_apiCredit.Enabled = false;
-            this.linkLabel_apiCredit.Location = new System.Drawing.Point(3, 55);
+            this.linkLabel_apiCredit.Location = new System.Drawing.Point(3, 30);
             this.linkLabel_apiCredit.Name = "linkLabel_apiCredit";
-            this.linkLabel_apiCredit.Size = new System.Drawing.Size(458, 21);
+            this.linkLabel_apiCredit.Size = new System.Drawing.Size(386, 20);
             this.linkLabel_apiCredit.TabIndex = 29;
             this.linkLabel_apiCredit.TabStop = true;
             this.linkLabel_apiCredit.Text = "API Credit Text which is very long probably";
@@ -311,7 +300,7 @@
             this.linkLabel_programTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.linkLabel_programTitle.Enabled = false;
             this.linkLabel_programTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.linkLabel_programTitle.Location = new System.Drawing.Point(260, 0);
+            this.linkLabel_programTitle.Location = new System.Drawing.Point(580, 0);
             this.linkLabel_programTitle.Name = "linkLabel_programTitle";
             this.linkLabel_programTitle.Size = new System.Drawing.Size(206, 22);
             this.linkLabel_programTitle.TabIndex = 30;
@@ -345,37 +334,40 @@
             // 
             this.panel_desc.AutoScroll = true;
             this.panel_desc.BackColor = System.Drawing.Color.Transparent;
+            this.tableLayoutPanel5.SetColumnSpan(this.panel_desc, 3);
             this.panel_desc.Controls.Add(this.linkLabel_optionDesc);
             this.panel_desc.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel_desc.Location = new System.Drawing.Point(3, 130);
+            this.panel_desc.Location = new System.Drawing.Point(3, 420);
             this.panel_desc.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.panel_desc.Name = "panel_desc";
-            this.panel_desc.Size = new System.Drawing.Size(464, 38);
+            this.panel_desc.Size = new System.Drawing.Size(781, 38);
             this.panel_desc.TabIndex = 35;
             // 
             // panel2
             // 
-            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel5.SetColumnSpan(this.panel2, 2);
             this.panel2.Controls.Add(this.tableLayoutPanel1);
-            this.panel2.Location = new System.Drawing.Point(0, 195);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(392, 100);
             this.panel2.Margin = new System.Windows.Forms.Padding(0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(464, 52);
+            this.panel2.Size = new System.Drawing.Size(392, 50);
             this.panel2.TabIndex = 36;
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.ColumnCount = 3;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel1.Controls.Add(this.numericUpDown1, 2, 1);
-            this.tableLayoutPanel1.Controls.Add(this.button_randomizeSeed, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.button_modTools, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.button_downloadMods, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.button_modCrateMenu, 0, 0);
+            this.tableLayoutPanel1.ColumnCount = 6;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel1.Controls.Add(this.numericUpDown1, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.button_randomizeSeed, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.button_preloadGame, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.button_openModMenu, 2, 0);
+            this.tableLayoutPanel1.Controls.Add(this.button_LevelEditor, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
@@ -384,37 +376,41 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(464, 52);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(392, 50);
             this.tableLayoutPanel1.TabIndex = 42;
             // 
-            // button_modTools
+            // button_preloadGame
             // 
-            this.button_modTools.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button_modTools.Enabled = false;
-            this.button_modTools.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button_modTools.Location = new System.Drawing.Point(0, 26);
-            this.button_modTools.Margin = new System.Windows.Forms.Padding(0);
-            this.button_modTools.Name = "button_modTools";
-            this.button_modTools.Size = new System.Drawing.Size(154, 26);
-            this.button_modTools.TabIndex = 21;
-            this.button_modTools.Text = "Mod Tools";
-            this.button_modTools.UseVisualStyleBackColor = true;
-            this.button_modTools.Visible = false;
+            this.tableLayoutPanel1.SetColumnSpan(this.button_preloadGame, 2);
+            this.button_preloadGame.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button_preloadGame.Enabled = false;
+            this.button_preloadGame.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button_preloadGame.Location = new System.Drawing.Point(0, 0);
+            this.button_preloadGame.Margin = new System.Windows.Forms.Padding(0);
+            this.button_preloadGame.Name = "button_preloadGame";
+            this.button_preloadGame.Size = new System.Drawing.Size(130, 25);
+            this.button_preloadGame.TabIndex = 22;
+            this.button_preloadGame.Text = "Preload Game";
+            this.button_preloadGame.UseVisualStyleBackColor = true;
+            this.button_preloadGame.Visible = false;
+            this.button_preloadGame.Click += new System.EventHandler(this.button_downloadMods_Click);
             // 
-            // button_downloadMods
+            // button_LevelEditor
             // 
-            this.button_downloadMods.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button_downloadMods.Enabled = false;
-            this.button_downloadMods.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button_downloadMods.Location = new System.Drawing.Point(154, 0);
-            this.button_downloadMods.Margin = new System.Windows.Forms.Padding(0);
-            this.button_downloadMods.Name = "button_downloadMods";
-            this.button_downloadMods.Size = new System.Drawing.Size(154, 26);
-            this.button_downloadMods.TabIndex = 22;
-            this.button_downloadMods.Text = "Preload Game";
-            this.button_downloadMods.UseVisualStyleBackColor = true;
-            this.button_downloadMods.Visible = false;
-            this.button_downloadMods.Click += new System.EventHandler(this.button_downloadMods_Click);
+            this.tableLayoutPanel1.SetColumnSpan(this.button_LevelEditor, 2);
+            this.button_LevelEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button_LevelEditor.Enabled = false;
+            this.button_LevelEditor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button_LevelEditor.Location = new System.Drawing.Point(130, 0);
+            this.button_LevelEditor.Margin = new System.Windows.Forms.Padding(0);
+            this.button_LevelEditor.Name = "button_LevelEditor";
+            this.button_LevelEditor.Size = new System.Drawing.Size(130, 25);
+            this.button_LevelEditor.TabIndex = 23;
+            this.button_LevelEditor.Text = "Level Editor";
+            this.button_LevelEditor.UseVisualStyleBackColor = true;
+            this.button_LevelEditor.Visible = false;
+            this.button_LevelEditor.Click += new System.EventHandler(this.button_LevelEditor_Click);
             // 
             // menuStrip1
             // 
@@ -427,7 +423,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(2, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(464, 25);
+            this.menuStrip1.Size = new System.Drawing.Size(784, 25);
             this.menuStrip1.TabIndex = 41;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -539,65 +535,78 @@
             // 
             // tableLayoutPanel2
             // 
-            this.tableLayoutPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel2.ColumnCount = 1;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.Controls.Add(this.checkedListBox1, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.panel_desc, 0, 1);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 250);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 150);
             this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(464, 168);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(392, 270);
             this.tableLayoutPanel2.TabIndex = 42;
             // 
             // tableLayoutPanel3
             // 
-            this.tableLayoutPanel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel3.ColumnCount = 2;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 76F));
-            this.tableLayoutPanel3.Controls.Add(this.linkLabel_apiCredit, 0, 2);
-            this.tableLayoutPanel3.Controls.Add(this.label_gameType, 0, 1);
-            this.tableLayoutPanel3.Controls.Add(this.label_processText, 0, 0);
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 117);
+            this.tableLayoutPanel3.Controls.Add(this.linkLabel_apiCredit, 0, 1);
+            this.tableLayoutPanel3.Controls.Add(this.label_gameType, 0, 0);
+            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 100);
             this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 3;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            this.tableLayoutPanel3.RowCount = 2;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(464, 76);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(392, 50);
             this.tableLayoutPanel3.TabIndex = 43;
             // 
-            // tableLayoutPanel4
+            // tableLayoutPanel5
             // 
-            this.tableLayoutPanel4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel4.ColumnCount = 2;
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 75F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel4.Controls.Add(this.button_startProcess, 0, 3);
-            this.tableLayoutPanel4.Controls.Add(this.progressBar1, 0, 2);
-            this.tableLayoutPanel4.Controls.Add(this.textBox_inputPath, 0, 0);
-            this.tableLayoutPanel4.Controls.Add(this.textBox_outputPath, 0, 1);
-            this.tableLayoutPanel4.Controls.Add(this.button_browseInput, 1, 0);
-            this.tableLayoutPanel4.Controls.Add(this.button_browseOutput, 1, 1);
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 24);
-            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-            this.tableLayoutPanel4.RowCount = 4;
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(464, 92);
-            this.tableLayoutPanel4.TabIndex = 44;
+            this.tableLayoutPanel5.ColumnCount = 3;
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel5.Controls.Add(this.button_browseOutput, 2, 1);
+            this.tableLayoutPanel5.Controls.Add(this.panel_desc, 0, 6);
+            this.tableLayoutPanel5.Controls.Add(this.button_browseInput, 2, 0);
+            this.tableLayoutPanel5.Controls.Add(this.textBox_inputPath, 0, 0);
+            this.tableLayoutPanel5.Controls.Add(this.button_startProcess, 1, 2);
+            this.tableLayoutPanel5.Controls.Add(this.textBox_outputPath, 0, 1);
+            this.tableLayoutPanel5.Controls.Add(this.tableLayoutPanel3, 0, 4);
+            this.tableLayoutPanel5.Controls.Add(this.tableLayoutPanel2, 0, 5);
+            this.tableLayoutPanel5.Controls.Add(this.label_processText, 0, 3);
+            this.tableLayoutPanel5.Controls.Add(this.panel2, 1, 4);
+            this.tableLayoutPanel5.Controls.Add(this.progressBar1, 0, 2);
+            this.tableLayoutPanel5.Controls.Add(this.panel_modCrateManager, 1, 5);
+            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(0, 25);
+            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
+            this.tableLayoutPanel5.RowCount = 7;
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 24F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 24F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(784, 458);
+            this.tableLayoutPanel5.TabIndex = 45;
+            // 
+            // panel_modCrateManager
+            // 
+            this.tableLayoutPanel5.SetColumnSpan(this.panel_modCrateManager, 2);
+            this.panel_modCrateManager.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel_modCrateManager.Location = new System.Drawing.Point(392, 150);
+            this.panel_modCrateManager.Margin = new System.Windows.Forms.Padding(0);
+            this.panel_modCrateManager.Name = "panel_modCrateManager";
+            this.panel_modCrateManager.Size = new System.Drawing.Size(392, 270);
+            this.panel_modCrateManager.TabIndex = 44;
             // 
             // ModLoaderForm
             // 
@@ -605,16 +614,13 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(464, 419);
-            this.Controls.Add(this.tableLayoutPanel4);
-            this.Controls.Add(this.tableLayoutPanel3);
-            this.Controls.Add(this.tableLayoutPanel2);
-            this.Controls.Add(this.panel2);
+            this.ClientSize = new System.Drawing.Size(784, 483);
+            this.Controls.Add(this.tableLayoutPanel5);
             this.Controls.Add(this.linkLabel_programTitle);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.MinimumSize = new System.Drawing.Size(480, 180);
+            this.MinimumSize = new System.Drawing.Size(800, 522);
             this.Name = "ModLoaderForm";
             this.Text = "Crate Mod Loader";
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.ModLoaderForm_DragDrop);
@@ -628,9 +634,8 @@
             this.menuStrip1.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
-            this.tableLayoutPanel3.PerformLayout();
-            this.tableLayoutPanel4.ResumeLayout(false);
-            this.tableLayoutPanel4.PerformLayout();
+            this.tableLayoutPanel5.ResumeLayout(false);
+            this.tableLayoutPanel5.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -651,7 +656,6 @@
         private System.Windows.Forms.Button button_randomizeSeed;
         private System.Windows.Forms.Label label_processText;
         private System.Windows.Forms.Button button_openModMenu;
-        private System.Windows.Forms.Button button_modCrateMenu;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.Label label_gameType;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog2;
@@ -661,8 +665,7 @@
         private System.Windows.Forms.LinkLabel linkLabel_optionDesc;
         private System.Windows.Forms.Panel panel_desc;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Button button_downloadMods;
-        private System.Windows.Forms.Button button_modTools;
+        private System.Windows.Forms.Button button_preloadGame;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_loadROM;
@@ -679,7 +682,9 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
+        private System.Windows.Forms.Panel panel_modCrateManager;
+        private System.Windows.Forms.Button button_LevelEditor;
     }
 }
 

@@ -28,6 +28,11 @@ namespace CrateModLoader
         /// <summary> True if preload extends functionality </summary>
         public bool PreloadBonus = false;
 
+        /// <summary> (for ModPropOption) True if it doesn't show up in the quick options in the main window </summary>
+        public bool ModMenuOnly = false;
+
+        public List<Type> TargetMods = null;
+
         /// <summary> Region list for the property to be allowed for </summary>
         public List<RegionType> AllowedRegions { get; set; }
 
@@ -42,6 +47,9 @@ namespace CrateModLoader
 
         /// <summary> Resets the property's value to its default state. </summary>
         public abstract void ResetToDefault();
+
+        /// <summary> Force the option order in the quick options list (does not affect execution order) </summary>
+        public uint? ListIndex = null; 
 
         public bool Allowed(ConsoleMode Console, RegionType Region)
         {

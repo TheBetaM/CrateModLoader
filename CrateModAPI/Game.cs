@@ -3,28 +3,32 @@ using System.Collections.Generic;
 
 namespace CrateModLoader
 {
-    public struct Game
+    public abstract class Game
     {
         /// <summary> Displayed name of the game. </summary>
-        public string Name;
+        public abstract string Name { get; }
         /// <summary> Abbreviation for use in Mod Crates. </summary>
-        public string ShortName;
+        public abstract string ShortName { get; }
         /// <summary> Console types to check for game detection. </summary>
-        public List<ConsoleMode> Consoles;
+        public abstract List<ConsoleMode> Consoles { get; }
         /// <summary> Detailed credit of the individual game's support. Leave as String.Empty if not applicable. </summary>
-        public string API_Credit;
+        public virtual string API_Credit => string.Empty;
         /// <summary> Website link to the most relevant API. Leave as String.Empty if not applicable. </summary>
-        public string API_Link;
+        public virtual string API_Link => string.Empty;
         /// <summary> Set to true to disable mod crates. </summary>
-        public bool ModCratesDisabled;
+        public virtual bool ModCratesDisabled => false;
+        /// <summary> Set to true to enable Level Editor. </summary>
+        public virtual bool EnableLevelEditor => false;
         /// <summary> Text resource class used for mod menu property localization. </summary>
-        public Type TextClass;
+        public virtual Type TextClass => null;
         /// <summary> Modder class (automatically set at runtime) </summary>
-        public Type ModderClass;
+        public virtual Type ModderClass { get; }
         /// <summary> Dictionary of mod menu property categories. </summary>
-        public Dictionary<int, string> PropertyCategories;
+        public virtual Dictionary<int, string> PropertyCategories => null;
         /// <summary> Dictionary of region identifiers. </summary>
-        public Dictionary<ConsoleMode, RegionCode[]> RegionID;
+        public abstract Dictionary<ConsoleMode, RegionCode[]> RegionID { get; }
+        /// <summary> For PS1/PS2 CD games that work better with PSX2ISO than MKPSXISO </summary>
+        public virtual bool UseLegacyMethod => false;
     }
 
     public struct RegionCode

@@ -13,7 +13,7 @@ namespace CrateModLoader
 
         private Modder mod;
         private Game Game;
-        private ModLoaderForm parentForm;
+        private ModLoaderForm parentForm = null;
         private List<ModPropertyGUI_Base> PropGUIs;
 
         private ModPropertyGUI_Base GetExtension(object prop)
@@ -61,6 +61,13 @@ namespace CrateModLoader
             mod = modder;
             Game = g;
             parentForm = parent;
+
+            /*
+            if (parentForm == null)
+            {
+                button2.Enabled = false;
+            }
+            */
 
             //todo: generate Mod Bit
 
@@ -213,20 +220,23 @@ namespace CrateModLoader
         {
             Owner.Enabled = true;
 
-            parentForm.UpdateOptionList();
-
-            bool HasChanged = false;
-
-            foreach (ModPropertyBase prop in mod.Props)
+            if (parentForm != null)
             {
-                if (prop.HasChanged)
-                {
-                    HasChanged = true;
-                    break;
-                }
-            }
+                parentForm.UpdateOptionList();
 
-            parentForm.ModProgram.UpdateModMenuChangedState(HasChanged);
+                bool HasChanged = false;
+
+                foreach (ModPropertyBase prop in mod.Props)
+                {
+                    if (prop.HasChanged)
+                    {
+                        HasChanged = true;
+                        break;
+                    }
+                }
+
+                parentForm.ModProgram.UpdateModMenuChangedState(HasChanged);
+            }
         }
 
         private void ModMenuForm_Load(object sender, EventArgs e)

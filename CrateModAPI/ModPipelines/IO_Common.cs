@@ -10,7 +10,7 @@ namespace CrateModLoader.Tools.IO
             {
                 foreach (FileInfo file in dir.EnumerateFiles())
                 {
-                    file.MoveTo(file.FullName.Substring(0, file.FullName.Length - 2));
+                    file.MoveTo(file.FullName);
                 }
                 Recursive_RenameFiles(dir);
             }

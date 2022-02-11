@@ -18,6 +18,12 @@ namespace CrateModLoader.ModProperties
         public ModPropExternalResource(bool b, string name, string desc) : base(b, name, desc)
         {
         }
+        public ModPropExternalResource(string p) : base(p)
+        {
+        }
+        public ModPropExternalResource(string p, string name, string desc) : base(p, name, desc)
+        {
+        }
 
         /// <summary>
         /// Test if resource file is valid and load it into the Resoource variable. Return true if it is.
@@ -39,6 +45,12 @@ namespace CrateModLoader.ModProperties
         /// </summary>
         public override void FileToResource(string inputPath)
         { }
+
+        public override void ResetToDefault()
+        {
+            Resource = default(T);
+            base.ResetToDefault();
+        }
 
         public override void Serialize(ref string line)
         {

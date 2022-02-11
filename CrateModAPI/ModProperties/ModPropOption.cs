@@ -18,7 +18,6 @@ namespace CrateModLoader.ModProperties
         public bool Disabled => Value == 0;
         public bool On => Value != 0;
         public bool Off => Value == 0;
-        public bool ModMenuOnly = false; // Whether this property can show up in quick options or not (soft hidden)
 
         /// <summary>
         /// Single choice option with just the code name

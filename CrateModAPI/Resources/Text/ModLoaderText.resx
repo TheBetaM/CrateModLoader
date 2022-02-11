@@ -305,7 +305,8 @@
     <value>2. Click "Browse" to set the output path.</value>
   </data>
   <data name="Popup_PreloadGame" xml:space="preserve">
-    <value>Preloading the game data allows you to use Mod Menu+, but it will take a while. Start the process?</value>
+    <value>Preloading the game data allows you to use Mod Menu+ and Level Editor, but it will take a while. 
+Start the process?</value>
   </data>
   <data name="ProcessReady" xml:space="preserve">
     <value>Ready!</value>

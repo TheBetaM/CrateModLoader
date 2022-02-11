@@ -4,6 +4,9 @@ using System.IO;
 using System.IO.Compression;
 using System.Globalization;
 using CrateModLoader.ModProperties;
+using CrateModAPI.Resources.Text;
+//using Octodiff.Core;
+//using Octodiff.Diagnostics;
 
 namespace CrateModLoader
 {
@@ -11,6 +14,7 @@ namespace CrateModLoader
     {
         public Dictionary<string, string> Meta = new Dictionary<string, string>();
         public Dictionary<string, string> Settings = new Dictionary<string, string>();
+        public Dictionary<string, string> Scripts = new Dictionary<string, string>();
         public string Path;
         public string Name = "Unnamed Mod";
         public string Desc = "(No Description)";
@@ -18,7 +22,8 @@ namespace CrateModLoader
         public string Version = "v1.0";
         public string CML_Version = ModLoaderGlobals.ProgramVersionSimple.ToString();
         public string TargetGame = ModCrates.AllGamesShortName;
-        public string Plugin;
+        public bool HasScripts = false;
+        public bool HasScriptOptions = false;
         public bool IsActivated = false;
         public bool HasSettings = false;
         public bool IsFolder = false;
@@ -29,20 +34,45 @@ namespace CrateModLoader
         public string NestedPath = "";
 
         public bool[] LayersModded = new bool[1] { false };
+
+        public void CopyTo(ModCrate crate)
+        {
+            crate.Meta = new Dictionary<string, string>(Meta);
+            crate.Settings = new Dictionary<string, string>(Settings);
+            crate.Scripts = new Dictionary<string, string>(Scripts);
+            crate.Path = Path;
+            crate.Name = Name;
+            crate.Desc = Desc;
+            crate.Author = Author;
+            crate.Version = Version;
+            crate.CML_Version = ModLoaderGlobals.ProgramVersionSimple.ToString();
+            crate.TargetGame = TargetGame;
+            crate.HasScripts = HasScripts;
+            crate.HasScriptOptions = HasScriptOptions;
+            crate.HasSettings = HasSettings;
+            crate.IsFolder = IsFolder;
+            crate.HasIcon = HasIcon;
+            crate.IconPath = IconPath;
+            crate.NestedPath = NestedPath;
+            crate.LayersModded = new bool[LayersModded.Length];
+            LayersModded.CopyTo(crate.LayersModded, 0);
+        }
     }
 
     public static class ModCrates
     {
 
-        /* Plan for how Mod Crates are supposed to work:
+        /* How Mod Crates work:
          * They're .zip files (or unzipped folders):
          * with folders called "layer0", "layer1", "layer2" etc. 
-         * Each layer corresponds to a data archive type that the files inside replace (or add?) (game-specific, except for layer0)
+         * Each layer corresponds to a data archive type that the files inside replace (or add) (game-specific, except for layer0)
          * modcrateinfo.txt file with the mod's metadata
-         * (optional) modcratesettings.txt file with the game specfic settings that can't be altered with mods
+         * (optional) modcratesettings.txt file with the game's unique properties (can be auto-generated using the Mod Menu)
          * (optional) modcrateicon.png icon of the mod
+         * (optional) (not yet implemented) modcrateoptions.xml for user options that affect scripts
+         * (optional) (not yet implemented) modcratescripts folder containing C# scripts (*.cs) of ModStructs (if modcrateoptions.xml doesn't exist, all mods are executed)
          * 
-         * Layer 0 is where the base extracted files from a ROM are, so every game is supposed to support it
+         * Layer 0 is where the base extracted files from a ROM are, so every game supports it.
          */
 
 
@@ -51,18 +81,18 @@ namespace CrateModLoader
         public const string LayerFolderName = "layer";
         public const string InfoFileName = "modcrateinfo.txt";
         public const string SettingsFileName = "modcratesettings.txt";
+		public const string ScriptOptionsFileName = "modcrateoptions.xml";
         public const string IconFileName = "modcrateicon.png";
-        public const string UnsupportedGameShortName = "NoGame";
-        public const string AllGamesShortName = "All";
+        public const string UnsupportedGameShortName = "NoGame"; // Will only show up for any unsupported game
+        public const string AllGamesShortName = "All"; // Will show up for all games
         public const string Prop_Name = "Name";
         public const string Prop_Desc = "Description";
         public const string Prop_Author = "Author";
         public const string Prop_Version = "Version";
-        public const string Prop_CML_Version = "ModLoaderVersion";
-        public const string Prop_Plugin = "Plugin";
+        public const string Prop_CML_Version = "ModLoaderVersion"; // Not currently in use, intended for any global breaking changes in the future
         public const string Prop_Game = "Game";
 
-        public static void PopulateModList(List<ModCrate> SupportedMods, bool IsSupportedGame, string ShortName)
+        public static void PopulateModList(ModLoader Program, List<ModCrate> SupportedMods, bool IsSupportedGame, string ShortName)
         {
 
             bool SupportAll = false;
@@ -106,7 +136,7 @@ namespace CrateModLoader
                     }
                     catch
                     {
-                        //MessageBox.Show(ModLoaderText.ModCrateErrorPopup + " " + file.FullName);
+                        Program.InvokeError(ModLoaderText.ModCrateErrorPopup + " " + file.FullName);
                     }
                 }
             }
@@ -137,7 +167,7 @@ namespace CrateModLoader
                     }
                     catch
                     {
-                        //MessageBox.Show(ModLoaderText.ModCrateErrorPopup + " " + dir.FullName);
+                        Program.InvokeError(ModLoaderText.ModCrateErrorPopup + " " + dir.FullName);
                     }
                 }
             }
@@ -148,6 +178,11 @@ namespace CrateModLoader
                 return;
             }
 
+            List<bool> DeleteCheck = new List<bool>();
+            for (int i = 0; i < SupportedMods.Count; i++)
+            {
+                DeleteCheck.Add(false);
+            }
             for (int mod = 0; mod < ModList.Count; mod++)
             {
                 bool wasAdded = false;
@@ -156,6 +191,7 @@ namespace CrateModLoader
                     if (SupportedMods[i].Path == ModList[mod].Path)
                     {
                         wasAdded = true;
+                        DeleteCheck[i] = true;
                     }
                 }
 
@@ -164,8 +200,19 @@ namespace CrateModLoader
                     SupportedMods.Add(ModList[mod]);
                 }
             }
-            // todo: if a mod has been removed externally, the list won't update that
 
+            if (DeleteCheck.Count > 0 && SupportedMods.Count > 0)
+            {
+                for (int i = 0; i < DeleteCheck.Count; i++)
+                {
+                    if (!DeleteCheck[i])
+                    {
+                        SupportedMods.RemoveAt(i);
+                        DeleteCheck.RemoveAt(i);
+                        i--;
+                    }
+                }
+            }
 
         }
 
@@ -248,17 +295,45 @@ namespace CrateModLoader
                                     ModdedLayers.Add(Layer);
                                 }
                             }
+                            else if (entry.FullName.Length > NewCrate.NestedPath.Length && entry.FullName.Substring(NewCrate.NestedPath.Length, ModLoaderGlobals.ModScriptsFolderName.Length).ToLower() == ModLoaderGlobals.ModScriptsFolderName)
+                            {
+                                NewCrate.HasScripts = true;
+                            }
                         }
                         else
                         {
-                            if (entry.FullName.Split('/')[0].Substring(0, LayerFolderName.Length).ToLower() == LayerFolderName)
+                            if (entry.FullName.StartsWith(LayerFolderName) && 
+                                (entry.FullName.EndsWith("/") || entry.FullName.EndsWith("\\")) &&
+                                (entry.FullName.Split('/').Length == 2 || entry.FullName.Split('\\').Length == 2)
+                                )
                             {
-                                int Layer = int.Parse(entry.FullName.Split('/')[0].Substring(LayerFolderName.Length));
+                                string trim = entry.FullName.TrimStart(LayerFolderName.ToCharArray()).TrimEnd('/').TrimEnd('\\');
+                                int Layer = int.Parse(trim);
                                 if (!ModdedLayers.Contains(Layer))
                                 {
                                     MaxLayer = Math.Max(MaxLayer, Layer);
                                     ModdedLayers.Add(Layer);
                                 }
+                            }
+                            else if (entry.FullName.StartsWith(ModLoaderGlobals.ModScriptsFolderName))
+                            {
+                                NewCrate.HasScripts = true;
+                            }
+                        }
+                    }
+                }
+                if (NewCrate.HasScripts)
+                {
+                    // Preload all scripts (todo: verify the scripts here?)
+                    foreach (ZipArchiveEntry entry in archive.Entries)
+                    {
+                        if (entry.FullName.Contains(ModLoaderGlobals.ModScriptsFolderName) && entry.FullName.Length > ModLoaderGlobals.ModScriptsFolderName.Length + 3)
+                        {
+                            using (StreamReader sr = new StreamReader(entry.Open()))
+                            {
+                                string inputScript = sr.ReadToEnd();
+                                string inputName = Path.GetFileNameWithoutExtension(entry.Name);
+                                NewCrate.Scripts.Add(inputName, inputScript);
                             }
                         }
                     }
@@ -299,8 +374,6 @@ namespace CrateModLoader
                 NewCrate.Version = NewCrate.Meta[Prop_Version];
             if (NewCrate.Meta.ContainsKey(Prop_CML_Version))
                 NewCrate.CML_Version = NewCrate.Meta[Prop_CML_Version];
-            if (NewCrate.Meta.ContainsKey(Prop_Plugin))
-                NewCrate.Plugin = NewCrate.Meta[Prop_Plugin];
             if (NewCrate.Meta.ContainsKey(Prop_Game))
                 NewCrate.TargetGame = NewCrate.Meta[Prop_Game];
             if (NewCrate.Meta.ContainsKey(Prop_Name + "-" + CultureInfo.CurrentCulture.Name))
@@ -374,6 +447,20 @@ namespace CrateModLoader
                             ModdedLayers.Add(Layer);
                         }
                     }
+                    if (di.Name.Contains(ModLoaderGlobals.ModScriptsFolderName))
+                    {
+                        NewCrate.HasScripts = true;
+                        // Preload all scripts (todo: verify the scripts here?) (potential bug - enforces UTF-8 encoding)
+                        foreach (FileInfo file in di.EnumerateFiles())
+                        {
+                            using (StreamReader sr = file.OpenText())
+                            {
+                                string inputScript = sr.ReadToEnd();
+                                string inputName = Path.GetFileNameWithoutExtension(file.Name);
+                                NewCrate.Scripts.Add(inputName, inputScript);
+                            }
+                        }
+                    }
                 }
             }
 
@@ -413,8 +500,6 @@ namespace CrateModLoader
                 NewCrate.Version = NewCrate.Meta[Prop_Version];
             if (NewCrate.Meta.ContainsKey(Prop_CML_Version))
                 NewCrate.CML_Version = NewCrate.Meta[Prop_CML_Version];
-            if (NewCrate.Meta.ContainsKey(Prop_Plugin))
-                NewCrate.Plugin = NewCrate.Meta[Prop_Plugin];
             if (NewCrate.Meta.ContainsKey(Prop_Game))
                 NewCrate.TargetGame = NewCrate.Meta[Prop_Game];
             if (NewCrate.Meta.ContainsKey(Prop_Name + "-" + CultureInfo.CurrentCulture.Name))
@@ -428,16 +513,10 @@ namespace CrateModLoader
             return NewCrate;
         }
 
-        //public static void ClearModLists(List<ModCrate> SupportedMods)
-        //{
-            //ModList = new List<ModCrate>();
-            //SupportedMods = new List<ModCrate>();
-        //}
-
         /// <summary>
         /// Installs all active mods of the specified layer in the specified path
         /// </summary>
-        public static void InstallLayerMods(List<ModCrate> SupportedMods, string basePath, int layer)
+        public static void InstallLayerMods(List<ModCrate> SupportedMods, string basePath, int layer, bool onlyOverwrite = false)
         {
             for (int i = 0; i < SupportedMods.Count; i++)
             {
@@ -445,16 +524,16 @@ namespace CrateModLoader
                 {
                     if (!SupportedMods[i].IsFolder)
                     {
-                        InstallLayerMod(SupportedMods[i], basePath, layer);
+                        InstallLayerMod(SupportedMods[i], basePath, layer, onlyOverwrite);
                     }
                     else
                     {
-                        InstallLayerModFolder(SupportedMods[i], basePath, layer);
+                        InstallLayerModFolder(SupportedMods[i], basePath, layer, onlyOverwrite);
                     }
                 }
             }
         }
-        public static void InstallLayerMod(ModCrate Crate, string basePath, int layer)
+        public static void InstallLayerMod(ModCrate Crate, string basePath, int layer, bool onlyOverwrite)
         {
             using (ZipArchive archive = ZipFile.OpenRead(Crate.Path))
             {
@@ -471,20 +550,64 @@ namespace CrateModLoader
                                 string NewDir = entry.FullName.Substring(PathLen, entry.FullName.Length - PathLen - entry.Name.Length);
                                 string extrPath = entry.FullName.Substring(Crate.NestedPath.Length + LayerFolderName.Length + layer.ToString().Length);
                                 Directory.CreateDirectory(basePath + NewDir);
-                                entry.ExtractToFile(basePath + extrPath, true);
+                                bool allow = true;
+                                if (onlyOverwrite && !File.Exists(basePath + extrPath))
+                                {
+                                    allow = false;
+                                }
+                                if (allow)
+                                {
+                                    entry.ExtractToFile(basePath + extrPath, true);
+
+                                    /*
+                                    string outPath = basePath + extrPath;
+                                    if (Path.GetExtension(outPath).EndsWith("octodelta"))
+                                    {
+                                        string targetFile = Path.ChangeExtension(outPath, null);
+                                        string origFullName = targetFile;
+                                        if (File.Exists(origFullName))
+                                        {
+                                            string tempName = targetFile + "1";
+                                            File.Move(origFullName, tempName);
+
+                                            try
+                                            {
+                                                // Apply delta file to create new file
+                                                var deltaApplier = new DeltaApplier { SkipHashCheck = false };
+                                                using (var basisStream = new FileStream(tempName, FileMode.Open, FileAccess.Read, FileShare.Read))
+                                                using (var deltaStream = new FileStream(outPath, FileMode.Open, FileAccess.Read, FileShare.Read))
+                                                using (var newFileStream = new FileStream(origFullName, FileMode.Create, FileAccess.ReadWrite, FileShare.Read))
+                                                {
+                                                    deltaApplier.Apply(basisStream, new BinaryDeltaReader(deltaStream, new ConsoleProgressReporter()), newFileStream);
+                                                }
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                Console.WriteLine("Octodiff error: " + ex.Message);
+                                            }
+
+                                            File.Delete(tempName);
+                                        }
+                                        if (File.Exists(outPath))
+                                        {
+                                            File.Delete(outPath);
+                                        }
+                                    }
+                                    */
+                                }
                             }
                         }
                     }
                 }
             }
         }
-        public static void InstallLayerModFolder(ModCrate Crate, string basePath, int layer)
+        public static void InstallLayerModFolder(ModCrate Crate, string basePath, int layer, bool onlyOverwrite)
         {
             DirectoryInfo dest = new DirectoryInfo(basePath);
             DirectoryInfo source = new DirectoryInfo(Crate.Path + @"\" + LayerFolderName + layer);
-            Recursive_CopyFiles(basePath, source, dest, "");
+            Recursive_CopyFiles(basePath, source, dest, "", onlyOverwrite);
         }
-        static void Recursive_CopyFiles(string basePath, DirectoryInfo di, DirectoryInfo dest, string buffer)
+        static void Recursive_CopyFiles(string basePath, DirectoryInfo di, DirectoryInfo dest, string buffer, bool onlyOverwrite)
         {
             string mainbuffer = buffer + @"\";
             foreach (DirectoryInfo dir in di.EnumerateDirectories())
@@ -495,12 +618,56 @@ namespace CrateModLoader
                 {
                     Directory.CreateDirectory(tempFolder);
                 }
-                Recursive_CopyFiles(basePath, dir, dest, buffer);
+                Recursive_CopyFiles(basePath, dir, dest, buffer, onlyOverwrite);
             }
             foreach (FileInfo file in di.EnumerateFiles())
             {
                 string relativePath = Path.Combine(dest.FullName, mainbuffer + @"\" + file.Name);
-                File.Copy(file.FullName, basePath + relativePath, true);
+                
+                /*
+                if (Path.GetExtension(file.Name).EndsWith("octodelta"))
+                {
+                    string targetFile = Path.ChangeExtension(file.FullName, null);
+                    string origFullName = targetFile;
+                    if (File.Exists(origFullName))
+                    {
+                        string tempName = targetFile + "1";
+                        File.Move(origFullName, tempName);
+
+                        try
+                        {
+                            // Apply delta file to create new file
+                            var deltaApplier = new DeltaApplier { SkipHashCheck = false };
+                            using (var basisStream = new FileStream(tempName, FileMode.Open, FileAccess.Read, FileShare.Read))
+                            using (var deltaStream = new FileStream(file.FullName, FileMode.Open, FileAccess.Read, FileShare.Read))
+                            using (var newFileStream = new FileStream(origFullName, FileMode.Create, FileAccess.ReadWrite, FileShare.Read))
+                            {
+                                deltaApplier.Apply(basisStream, new BinaryDeltaReader(deltaStream, new ConsoleProgressReporter()), newFileStream);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("Octodiff error: " + ex.Message);
+                        }
+
+                        File.Delete(tempName);
+                    }
+                }
+                else
+                {
+                    
+                }
+                */
+
+                bool allow = true;
+                if (onlyOverwrite && !File.Exists(basePath + relativePath))
+                {
+                    allow = false;
+                }
+                if (allow)
+                {
+                    File.Copy(file.FullName, basePath + relativePath, true);
+                }
             }
         }
 
@@ -520,6 +687,21 @@ namespace CrateModLoader
                             prop.DeSerialize(SupportedMods[mod].Settings[prop.CodeName], SupportedMods[mod]);
                             prop.HasChanged = true;
                         }
+                    }
+                }
+            }
+        }
+        public static void InstallCrateSettings(ModCrate crate, Modder modder)
+        {
+            if (crate.HasSettings)
+            {
+                foreach (ModPropertyBase prop in modder.Props)
+                {
+                    prop.ResetToDefault();
+                    if (crate.Settings.ContainsKey(prop.CodeName))
+                    {
+                        prop.DeSerialize(crate.Settings[prop.CodeName], crate);
+                        prop.HasChanged = true;
                     }
                 }
             }
@@ -697,7 +879,7 @@ namespace CrateModLoader
 
             if (Settings.Count == 0)
             {
-                //MessageBox.Show(ModLoaderText.ModMenuLoad_Error);
+                //Program.InvokeError(ModLoaderText.ModMenuLoad_Error);
                 return;
             }
 
@@ -736,7 +918,7 @@ namespace CrateModLoader
         /// <summary>
         /// Optional region check.
         /// </summary>
-        public static void VerifyModCrates(List<ModCrate> SupportedMods, string ShortName, RegionCode region)
+        public static void VerifyModCrates(ModLoader Program, List<ModCrate> SupportedMods, string ShortName, RegionCode region)
         {
             bool modsdirty = false;
             foreach (var crate in SupportedMods)
@@ -749,8 +931,44 @@ namespace CrateModLoader
                 }
             }
             if (modsdirty)
-                PopulateModList(SupportedMods, true, ShortName);
+                PopulateModList(Program, SupportedMods, true, ShortName);
         }
+
+        public static void DeleteModCrate(ModCrate Crate)
+        {
+            if (Crate.IsFolder)
+            {
+                if (Directory.Exists(Crate.Path))
+                {
+                    DirectoryInfo di = new DirectoryInfo(Crate.Path);
+
+                    foreach (FileInfo file in di.EnumerateFiles())
+                    {
+                        file.Delete();
+                    }
+                    try
+                    {
+                        foreach (DirectoryInfo dir in di.EnumerateDirectories())
+                        {
+                            dir.Delete(true);
+                        }
+                        Directory.Delete(Crate.Path);
+                    }
+                    catch
+                    {
+
+                    }
+                }
+            }
+            else
+            {
+                if (File.Exists(Crate.Path))
+                {
+                    File.Delete(Crate.Path);
+                }
+            }
+        }
+
 
     }
 }

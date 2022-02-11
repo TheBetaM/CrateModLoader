@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -18,6 +17,7 @@ namespace CrateModLoader
         private Modder mod;
         private Game Game;
         private string path;
+        private bool FromWizard = false;
 
         public ModCrateMakerForm(Modder inmod, Game ingame, string outpath)
         {
@@ -48,13 +48,56 @@ namespace CrateModLoader
             crate.TargetGame = Game.ShortName;
             crate.HasSettings = true;
             crate.IsFolder = false;
+        }
 
+        public ModCrateMakerForm(ModCrate editCrate)
+        {
+            InitializeComponent();
 
+            button_save.Text = ModLoaderText.ModCrateMaker_Button_Save;
+            button_browse.Text = ModLoaderText.ModCrateMaker_Button_Browse;
+            button_cancel.Text = ModLoaderText.ModCrateMaker_Button_Cancel;
+            label_name.Text = ModLoaderText.ModCrateMaker_Label_Name;
+            label_author.Text = ModLoaderText.ModCrateMaker_Label_Author;
+            label_description.Text = ModLoaderText.ModCrateMaker_Label_Description;
+            label_version.Text = ModLoaderText.ModCrateMaker_Label_Version;
+            label_icon.Text = ModLoaderText.ModCrateMaker_Label_Icon;
+            Text = "Edit Mod Crate Details";
+
+            crate = editCrate;
+            FromWizard = true;
+
+            textBox_author.Text = editCrate.Author;
+            textBox_description.Text = editCrate.Desc;
+            textBox_name.Text = editCrate.Name;
+            textBox_version.Text = editCrate.Version;
+
+            if (crate.HasIcon)
+            {
+                try
+                {
+                    Bitmap temp = new Bitmap(crate.IconPath);
+                    Bitmap img = new Bitmap(temp);
+                    temp.Dispose();
+
+                    if (img != null)
+                    {
+                        pictureBox1.Image = img;
+                    }
+                }
+                catch
+                {
+                    Console.WriteLine("Failed load load Mod Crate icon!!");
+                }
+            }
         }
 
         private void button_save_Click(object sender, EventArgs e)
         {
-            ModCrates.SaveSimpleCrateToFile(mod, path, crate);
+            if (!FromWizard)
+            {
+                ModCrates.SaveSimpleCrateToFile(mod, path, crate);
+            }
 
             Close();
         }
@@ -67,7 +110,9 @@ namespace CrateModLoader
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
 
-                Bitmap img = new Bitmap(openFileDialog1.FileName);
+                Bitmap temp = new Bitmap(openFileDialog1.FileName);
+                Bitmap img = new Bitmap(temp);
+                temp.Dispose();
 
                 if (img != null)
                 {

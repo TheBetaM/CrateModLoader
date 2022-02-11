@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CrateModGames</RootNamespace>
     <AssemblyName>CrateModGames</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,6 +22,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>latest</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,14 +32,13 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>latest</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Crash">
-      <HintPath>GameSpecific\Crash1\Crash.dll</HintPath>
-    </Reference>
-    <Reference Include="CTRFramework">
-      <HintPath>GameSpecific\CrashTeamRacing\CTRFramework.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>GameSpecific\CrashTeamRacing\Newtonsoft.Json.dll</HintPath>
@@ -45,19 +47,440 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Drawing.Design" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml" />
-    <Reference Include="Twinsanity">
-      <HintPath>GameSpecific\CrashTS\Twinsanity.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameSpecific\Crash1\Crash1_Mods.cs" />
-    <Compile Include="GameSpecific\Crash1\CrashTri_Text.Designer.cs">
+    <Compile Include="External\CrashEdit\Crash\Action System\Command.cs" />
+    <Compile Include="External\CrashEdit\Crash\Action System\CommandManager.cs" />
+    <Compile Include="External\CrashEdit\Crash\Configuration System\GameVersion.cs" />
+    <Compile Include="External\CrashEdit\Crash\Error System\ErrorManager.cs" />
+    <Compile Include="External\CrashEdit\Crash\Error System\ErrorResponse.cs" />
+    <Compile Include="External\CrashEdit\Crash\Error System\ErrorSignalEventArgs.cs" />
+    <Compile Include="External\CrashEdit\Crash\Error System\ErrorSignalEventHandler.cs" />
+    <Compile Include="External\CrashEdit\Crash\Error System\LoadAbortedException.cs" />
+    <Compile Include="External\CrashEdit\Crash\Error System\LoadSkippedException.cs" />
+    <Compile Include="External\CrashEdit\Crash\Error System\PackingException.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Common Formats\RIFF\RIFF.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Common Formats\RIFF\RIFFData.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Common Formats\RIFF\RIFFItem.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Animation\AnimationEntry.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Animation\AnimationEntryLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Animation\ColoredAnimationEntry.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Animation\ColoredAnimationEntryLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Animation\Frame.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Animation\FrameCollision.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Animation\FrameVertex.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Animation\OldAnimationEntry.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Animation\OldAnimationEntryLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Animation\OldFrame.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Animation\OldFrameVertex.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Animation\ProtoAnimationEntry.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Animation\ProtoAnimationEntryLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Base\Chunk\Chunk.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Base\Chunk\ChunkLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Base\Chunk\ChunkTypeAttribute.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Base\Chunk\UnprocessedChunk.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Base\Entry Chunk\EntryChunk.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Base\Entry Chunk\EntryChunkLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Base\Entry\ENameComparer.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Base\Entry\Entry.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Base\Entry\EntryLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Base\Entry\EntryTypeAttribute.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Base\Entry\IEntry.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Base\Entry\UnprocessedEntry.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Demo\DemoEntry.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Demo\DemoEntryLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Abs.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Add.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Andb.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Andl.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Anif.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Anim.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Anis.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Arrl.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Arrs.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Atan.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Beqz.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Bnez.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Bra.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Ceq.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Ceqz.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Cfl.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Chld.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Chlf.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Cnez.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Cos.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Cst.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Cvmr.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Cvmw.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Dbg.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Degd.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Div.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Dsek.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Eflr.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Eflv.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Evha.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Evhr.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Evnb.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Evnc.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Evnt.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Jal.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Jalr.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Lea.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Loop.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Mips.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Misc.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Mod.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Mov.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Movc.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Mul.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Nop.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Notb.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Notl.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Ntry.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Orb.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Orl.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Pad.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Pshp.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Psin.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Push.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Ret.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Rgl.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Rnd.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Seek.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Sge.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Sgt.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Sha.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Sin.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Sle.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Slt.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Snda.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Sndp.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Spd.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Sub.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Tick.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Tst.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Unknown.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Veca.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Vecb.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Wgl.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOL Instructions\Xor.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOLArgument.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOLEntry.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOLEntryLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOLInstruction.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOLInstructionAttribute.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOLInterpreter.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOLInvalidInstruction.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\GOOLStateDescriptor.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\GOOL\MIPSInstruction.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Image\ImageEntry.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Image\ImageEntryLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Map\MapEntry.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Map\MapEntryLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Model\ModelEntry.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Model\ModelEntryLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Model\ModelExtendedTexture.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Model\ModelPosition.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Model\ModelStruct.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Model\ModelTexture.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Model\ModelTransformedTriangle.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Model\OldModelEntry.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Model\OldModelEntryLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Model\OldModelPolygon.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Model\OldModelStruct.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Model\OldModelTexture.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Music\MusicEntry.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Music\MusicEntryLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Music\OldMusicEntry.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Music\OldMusicEntryLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Mystery\MysteryMultiItemEntry.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Mystery\MysteryUniItemEntry.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Normal\NormalChunk.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Normal\NormalChunkLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\NSD\NewNSD.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\NSD\NSD.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\NSD\NSDLink.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\NSD\NSDSpawnPoint.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\NSD\OldNSD.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\NSD\ProtoNSD.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\NSF.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Palette\PaletteEntry.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Palette\PaletteEntryLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Scenery\NewSceneryEntry.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Scenery\NewSceneryEntryLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Scenery\NewSceneryVertex.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Scenery\OldSceneryColor.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Scenery\OldSceneryEntry.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Scenery\OldSceneryEntryLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Scenery\OldSceneryPolygon.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Scenery\OldSceneryTexture.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Scenery\OldSceneryVertex.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Scenery\ProtoSceneryEntry.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Scenery\ProtoSceneryEntryLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Scenery\ProtoSceneryPolygon.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Scenery\ProtoSceneryVertex.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Scenery\SceneryColor.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Scenery\SceneryEntry.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Scenery\SceneryEntryLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Scenery\SceneryQuad.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Scenery\SceneryTriangle.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Scenery\SceneryVertex.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\SLST\OldSLSTDelta.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\SLST\OldSLSTEntry.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\SLST\OldSLSTEntryLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\SLST\OldSLSTPolygonID.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\SLST\OldSLSTSource.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\SLST\SLSTDelta.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\SLST\SLSTEntry.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\SLST\SLSTEntryLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\SLST\SLSTPolygonID.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\SLST\SLSTSource.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Sound\OldSoundChunk.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Sound\OldSoundChunkLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Sound\SoundChunk.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Sound\SoundChunkLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Sound\SoundEntry.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Sound\SoundEntryLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Speech\SpeechChunk.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Speech\SpeechChunkLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Speech\SpeechEntry.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Speech\SpeechEntryLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\T15\T15Entry.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\T15\T15EntryLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\T17\T17Entry.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\T17\T17EntryLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\T21\T21Entry.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\T21\T21EntryLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\T6\T6Entry.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\T6\T6EntryLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Texture\TextureChunk.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Texture\TextureChunkLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Wavebank\WavebankChunk.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Wavebank\WavebankChunkLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Wavebank\WavebankEntry.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Wavebank\WavebankEntryLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Zone\Entity.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Zone\EntityBasicProperty.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Zone\EntityBasicPropertyLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Zone\EntityID.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Zone\EntityInt32Property.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Zone\EntityInt32PropertyLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Zone\EntityPosition.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Zone\EntityPositionProperty.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Zone\EntityPositionPropertyLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Zone\EntityProperty.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Zone\EntityPropertyLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Zone\EntityPropertyRow.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Zone\EntityPropertyTypeAttribute.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Zone\EntitySetting.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Zone\EntitySettingProperty.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Zone\EntitySettingPropertyLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Zone\EntityT4Property.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Zone\EntityT4PropertyLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Zone\EntityUInt32Property.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Zone\EntityUInt32PropertyLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Zone\EntityUInt8Property.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Zone\EntityUInt8PropertyLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Zone\EntityUnknownProperty.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Zone\EntityVictim.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Zone\EntityVictimProperty.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Zone\EntityVictimPropertyLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Zone\NewZoneEntry.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Zone\NewZoneEntryLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Zone\OldCamera.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Zone\OldCameraNeighbor.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Zone\OldCameraPosition.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Zone\OldEntity.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Zone\OldZoneEntry.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Zone\OldZoneEntryLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Zone\ProtoEntity.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Zone\ProtoEntityPosition.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Zone\ProtoZoneEntry.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Zone\ProtoZoneEntryLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Zone\ZoneEntry.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\Crash Formats\Zone\ZoneEntryLoader.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\PSX Formats\ADPCM\SampleLine.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\PSX Formats\ADPCM\SampleLineFlags.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\PSX Formats\ADPCM\SampleSet.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\PSX Formats\SEP.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\PSX Formats\SEQ.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\PSX Formats\VAB\VAB.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\PSX Formats\VAB\VH.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\PSX Formats\VAB\VHProgram.cs" />
+    <Compile Include="External\CrashEdit\Crash\Formats\PSX Formats\VAB\VHTone.cs" />
+    <Compile Include="External\CrashEdit\Crash\Utility\ADPCMConv.cs" />
+    <Compile Include="External\CrashEdit\Crash\Utility\Aligner.cs" />
+    <Compile Include="External\CrashEdit\Crash\Utility\AutoBitConv.cs" />
+    <Compile Include="External\CrashEdit\Crash\Utility\BEBitConv.cs" />
+    <Compile Include="External\CrashEdit\Crash\Utility\BitConv.cs" />
+    <Compile Include="External\CrashEdit\Crash\Utility\Endianness.cs" />
+    <Compile Include="External\CrashEdit\Crash\Utility\EvList.cs" />
+    <Compile Include="External\CrashEdit\Crash\Utility\EvListEventArgs.cs" />
+    <Compile Include="External\CrashEdit\Crash\Utility\EvListEventHandler.cs" />
+    <Compile Include="External\CrashEdit\Crash\Utility\IPosition.cs" />
+    <Compile Include="External\CrashEdit\Crash\Utility\ListExt.cs" />
+    <Compile Include="External\CrashEdit\Crash\Utility\MIDIConv.cs" />
+    <Compile Include="External\CrashEdit\Crash\Utility\NumberExt.cs" />
+    <Compile Include="External\CrashEdit\Crash\Utility\PixelConv.cs" />
+    <Compile Include="External\CrashEdit\Crash\Utility\Position.cs" />
+    <Compile Include="External\CrashEdit\Crash\Utility\StringExt.cs" />
+    <Compile Include="External\CrashEdit\Crash\Utility\WaveConv.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\big\BigEntry.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\big\BigFile.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\big\BigFileReader.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\ctr\CtrAnim.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\ctr\CtrDelta.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\ctr\CtrDraw.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\ctr\CtrFrame.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\ctr\CtrMesh.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\ctr\CtrModel.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\Enums.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\Interfaces.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\lang\CharSwap.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\lang\LNG.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\lev\CtrFace.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\lev\CtrScene.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\lev\CtrTex.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\lev\Gradient.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\lev\MeshInfo.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\lev\nav\BotPath.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\lev\nav\Nav.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\lev\nav\NavFrame.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\lev\PickupHeader.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\lev\QuadBlock.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\lev\SceneHeader.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\lev\SkyBox.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\lev\SpawnGroup.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\lev\TrialData.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\lev\TrialGhost.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\lev\Vertex.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\lev\VertexAnim.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\lev\VisData.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\lev\WaterAnim.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\mpk\Icon.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\mpk\IconPack.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\mpk\ModelPack.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\PatchedContainer.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\shared\BinaryReaderEx.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\shared\BinaryWriterEx.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\shared\BoundingBox.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\shared\Helpers.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\shared\HelpersPanic.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\shared\InstanceList.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\shared\Meta.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\shared\OBJ.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\shared\Pose.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\shared\PsxPtr.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\shared\Vectors\Vector3b.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\shared\Vectors\Vector3f.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\shared\Vectors\Vector3i.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\shared\Vectors\Vector3s.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\shared\Vectors\Vector4b.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\shared\Vectors\Vector4s.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\vrm\BMPHeader.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\vrm\CtrVrm.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\vrm\TextureLayout.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Code\vrm\Tim.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\Properties\Resources.Designer.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\ThirdParty\PlyImporter\Extensions\ArrayExtensions.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\ThirdParty\PlyImporter\Extensions\EnumerableExtensions.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\ThirdParty\PlyImporter\PlyHandler.cs" />
+    <Compile Include="External\CTR-tools\ctr-tools\CTRFramework\ThirdParty\PlyImporter\PlyHeader.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\ADPCM.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\BDArchive.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\BitConv.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\DefaultEnums.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\EzSwizzle.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\Items\ChunkLinks.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\Items\Code\Animation.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\Items\Code\CodeModel.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\Items\Code\GameObject.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\Items\Code\GameObjectDemo.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\Items\Code\GraphicsInfo.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\Items\Code\Script.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\Items\Code\SoundEffect.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\Items\ColData.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\Items\DynamicSceneryData.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\Items\DynamicSceneryDataMB.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\Items\Graphics\BlendSkin.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\Items\Graphics\LodModel.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\Items\Graphics\Material.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\Items\Graphics\MaterialDemo.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\Items\Graphics\Model.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\Items\Graphics\RigidModel.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\Items\Graphics\Skin.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\Items\Graphics\SkinX.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\Items\Graphics\Skydome.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\Items\Graphics\Texture.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\Items\Instances\AIPath.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\Items\Instances\AIPosition.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\Items\Instances\Camera.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\Items\Instances\CollisionSurface.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\Items\Instances\Instance.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\Items\Instances\InstanceDemo.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\Items\Instances\InstanceMB.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\Items\Instances\InstanceTemplate.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\Items\Instances\InstanceTemplateDemo.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\Items\Instances\Path.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\Items\Instances\Position.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\Items\Instances\Trigger.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\Items\ParticleData.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\Items\SceneryData.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\Items\TwinsItem.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\Items\TwinsPSF.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\Items\TwinsPSM.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\Items\TwinsPTC.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\TwinsFile.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\TwinsSection.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\TwinsShader.cs" />
+    <Compile Include="External\TwinsanityEditor\Twinsanity\Types.cs" />
+    <Compile Include="GameSpecific\Crash1\Common\Crash1_Common.cs" />
+    <Compile Include="GameSpecific\Crash1\Mods\Crash1_AddCavernLevel.cs" />
+    <Compile Include="GameSpecific\Crash1\Mods\Crash1_AddStormyAscent.cs" />
+    <Compile Include="GameSpecific\Crash1\Mods\Crash1_BackwardsHogLevels.cs" />
+    <Compile Include="GameSpecific\Crash1\Randomizers\Crash1_Rand_BackwardsLevels.cs" />
+    <Compile Include="GameSpecific\Crash1\Mods\Crash1_EnableDog.cs" />
+    <Compile Include="GameSpecific\Crash1\Mods\Crash1_Metadata.cs" />
+    <Compile Include="GameSpecific\Crash1\Randomizers\Crash1_Rand_BonusRounds.cs" />
+    <Compile Include="GameSpecific\Crash1\Randomizers\Crash1_Rand_BossPaths.cs" />
+    <Compile Include="GameSpecific\Crash1\Randomizers\Crash1_Rand_LightColor.cs" />
+    <Compile Include="GameSpecific\Crash1\Randomizers\Crash1_Rand_Map.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Mods\CrashTri_Crash_RainbowPants.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Mods\CrashTri_Crates_AllBlank.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Mods\CrashTri_Objects_Greyscale.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Mods\CrashTri_Objects_Untextured.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Parser_NSF.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Randomizers\CrashTri_Rand_AshedCrates.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Randomizers\CrashTri_Rand_Audio.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Randomizers\CrashTri_Rand_BoxCounter.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Randomizers\CrashTri_Rand_CameraFOV.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Randomizers\CrashTri_Rand_CrateContents.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Randomizers\CrashTri_Rand_CrateParams.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Randomizers\CrashTri_Rand_CratesIntoWumpa.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Randomizers\CrashTri_Rand_EnemyCrates.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Randomizers\CrashTri_Rand_EnemyPaths.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Randomizers\CrashTri_Rand_MirrorLevel.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Randomizers\CrashTri_Rand_PantsColor.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Randomizers\CrashTri_Rand_InvisibleCrates.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Randomizers\CrashTri_Rand_Music.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Randomizers\CrashTri_Rand_ObjectColors.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Randomizers\CrashTri_Rand_ObjectPalette.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Randomizers\CrashTri_Rand_ObjectTextures.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Randomizers\CrashTri_Rand_RemoveEnemies.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Randomizers\CrashTri_Rand_StreamedAudio.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Randomizers\CrashTri_Rand_WoodenCrates.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Randomizers\CrashTri_Rand_WorldTex.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Mods\CrashTri_Scenery_Greyscale.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Mods\CrashTri_Scenery_Invisible.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Randomizers\CrashTri_Scenery_Rainbow.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Randomizers\CrashTri_Scenery_Swizzle.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Mods\CrashTri_Scenery_Untextured.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\CrashTri_Text.Designer.cs">
       <DependentUpon>CrashTri_Text.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -67,69 +490,218 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="GameSpecific\Crash1\CrashTri_Common.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\CrashTri_Common.cs" />
+    <Compile Include="GameSpecific\Crash1\Game_Crash1.cs" />
     <Compile Include="GameSpecific\Crash1\Modder_Crash1.cs" />
-    <Compile Include="GameSpecific\Crash2\Crash2_Mods.cs" />
+    <Compile Include="GameSpecific\Crash1\Properties\Crash1_Props_Main.cs" />
+    <Compile Include="GameSpecific\Crash1\Properties\Crash1_Props_Misc.cs" />
+    <Compile Include="GameSpecific\Crash2\Common\Crash2_Common.cs" />
     <Compile Include="GameSpecific\Crash2\Crash2_Text.Designer.cs">
       <DependentUpon>Crash2_Text.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="GameSpecific\Crash2\Game_Crash2.cs" />
     <Compile Include="GameSpecific\Crash2\Modder_Crash2.cs" />
-    <Compile Include="GameSpecific\Crash3\Crash3_Mods.cs" />
+    <Compile Include="GameSpecific\Crash2\Mods\Crash2_Metadata.cs" />
+    <Compile Include="GameSpecific\Crash2\Mods\Crash2_VehicleLevelsOnFoot.cs" />
+    <Compile Include="GameSpecific\Crash2\Properties\Crash2_Props_Main.cs" />
+    <Compile Include="GameSpecific\Crash2\Properties\Crash2_Props_Misc.cs" />
+    <Compile Include="GameSpecific\Crash2\Randomizers\Crash2_Rand_BackwardsLevels.cs" />
+    <Compile Include="GameSpecific\Crash2\Randomizers\Crash2_Rand_BossPaths.cs" />
+    <Compile Include="GameSpecific\Crash2\Randomizers\Crash2_Rand_WarpRoom.cs" />
+    <Compile Include="GameSpecific\Crash2\Randomizers\Crash2_Rand_WarpRoomExits.cs" />
+    <Compile Include="GameSpecific\Crash3\Common\Crash3_Common.cs" />
     <Compile Include="GameSpecific\Crash3\Crash3_Text.Designer.cs">
       <DependentUpon>Crash3_Text.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="GameSpecific\Crash3\Game_Crash3.cs" />
     <Compile Include="GameSpecific\Crash3\Modder_Crash3.cs" />
+    <Compile Include="GameSpecific\Crash3\Mods\Crash3_Metadata.cs" />
+    <Compile Include="GameSpecific\Crash3\Mods\Crash3_RemoveBarriers.cs" />
+    <Compile Include="GameSpecific\Crash3\Properties\Crash3_Props_Main.cs" />
+    <Compile Include="GameSpecific\Crash3\Properties\Crash3_Props_Misc.cs" />
+    <Compile Include="GameSpecific\Crash3\Randomizers\Crash3_Rand_BackwardsLevels.cs" />
+    <Compile Include="GameSpecific\Crash3\Randomizers\Crash3_Rand_BossPatterns.cs" />
+    <Compile Include="GameSpecific\Crash3\Randomizers\Crash3_Rand_FlyingLevels.cs" />
+    <Compile Include="GameSpecific\Crash3\Randomizers\Crash3_Rand_WarpRoom.cs" />
+    <Compile Include="GameSpecific\CrashBash\Game_CrashBash.cs" />
     <Compile Include="GameSpecific\CrashBash\Modder_Bash.cs" />
+    <Compile Include="GameSpecific\CrashNDS\CrashBB\Common\BIN_Archive.cs" />
+    <Compile Include="GameSpecific\CrashNDS\CrashBB\Common\LNG_File.cs" />
+    <Compile Include="GameSpecific\CrashNDS\CrashBB\Common\NDS_LZ10_Compression.cs" />
+    <Compile Include="GameSpecific\CrashNDS\CrashBB\Common\Pipeline_BIN.cs" />
+    <Compile Include="GameSpecific\CrashNDS\CrashBB\Common\Parser_LNG.cs" />
+    <Compile Include="GameSpecific\CrashNDS\CrashBB\Game_CrashBB.cs" />
+    <Compile Include="GameSpecific\CrashMoM\Game_CrashMoM.cs" />
     <Compile Include="GameSpecific\CrashMoM\Modder_MoM.cs" />
-    <Compile Include="GameSpecific\CrashNitroKart\CNK_Data.cs" />
-    <Compile Include="GameSpecific\CrashNitroKart\CNK_Data_Adventure.cs" />
-    <Compile Include="GameSpecific\CrashNitroKart\CNK_Data_DriverStats.cs" />
-    <Compile Include="GameSpecific\CrashNitroKart\CNK_Data_KartStats.cs" />
-    <Compile Include="GameSpecific\CrashNitroKart\CNK_Data_Powerups.cs" />
-    <Compile Include="GameSpecific\CrashNitroKart\CNK_Data_Surfaces.cs" />
-    <Compile Include="GameSpecific\CrashNitroKart\CNK_Data_Textures.cs" />
+    <Compile Include="GameSpecific\CrashMoM\Mods\MoM_Metadata.cs" />
+    <Compile Include="GameSpecific\CrashMoM\Mods\MoM_TestMod.cs" />
+    <Compile Include="GameSpecific\CrashMoM\Properties\MoM_Props_Main.cs" />
+    <Compile Include="GameSpecific\CrashMoM\Randomizers\MoM_Rand_CostumeVisuals.cs" />
+    <Compile Include="GameSpecific\CrashMoM\Randomizers\MoM_Rand_CutsceneCostumes.cs" />
+    <Compile Include="GameSpecific\CrashNDS\CrashBB\Modder_CrashBB.cs" />
+    <Compile Include="GameSpecific\CrashNDS\CrashBB\Mods\CrashBB_Metadata.cs" />
+    <Compile Include="GameSpecific\CrashNDS\CrashBB\Properties\CrashBB_Props_Main.cs" />
+    <Compile Include="GameSpecific\CrashNDS\CrashMoMDS\Common\BIN_Archive.cs" />
+    <Compile Include="GameSpecific\CrashNDS\CrashMoMDS\Common\MXB_File.cs" />
+    <Compile Include="GameSpecific\CrashNDS\CrashMoMDS\Common\Pipeline_BIN.cs" />
+    <Compile Include="GameSpecific\CrashNDS\CrashMoMDS\Common\Parser_MXB.cs" />
+    <Compile Include="GameSpecific\CrashNDS\CrashMoMDS\Game_CrashMoMDS.cs" />
+    <Compile Include="GameSpecific\CrashNDS\CrashMoMDS\Modder_CrashMoMDS.cs" />
+    <Compile Include="GameSpecific\CrashNDS\CrashMoMDS\Mods\MoMDS_Metadata.cs" />
+    <Compile Include="GameSpecific\CrashNDS\CrashMoMDS\Properties\MoMDS_Props_Main.cs" />
+    <Compile Include="GameSpecific\CrashNDS\CrashTitansDS\Common\BIN_Rom_Archive.cs" />
+    <Compile Include="GameSpecific\CrashNDS\CrashTitansDS\Common\Pipeline_BIN_Rom.cs" />
+    <Compile Include="GameSpecific\CrashNDS\CrashTitansDS\Game_CrashTitansDS.cs" />
+    <Compile Include="GameSpecific\CrashNDS\CrashTitansDS\Modder_CrashTitansDS.cs" />
+    <Compile Include="GameSpecific\CrashNDS\CrashTitansDS\Mods\TitansDS_Metadata.cs" />
+    <Compile Include="GameSpecific\CrashNDS\CrashTitansDS\Properties\TitansDS_Props_Main.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\Common\CNK_Common.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\Common\CSV_Table.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\Common\Parser_CSV.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\Common\Parser_PNG.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\Common\Pipeline_GOB.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\Game_CrashNK.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\Mods\CNK_DisableFadeout.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\Mods\CNK_DisablePopups.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\Mods\CNK_Metadata.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\Mods\CNK_NoIntro.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\Mods\CNK_SpeedUpMaskHints.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\Properties\CNK_Data_DriverStats.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\Properties\CNK_Data_KartStats.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\Properties\CNK_Data_Powerups.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\Properties\CNK_Data_Surfaces.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\Properties\CNK_Data_Textures.cs" />
     <Compile Include="GameSpecific\CrashNitroKart\CNK_Text.Designer.cs">
       <DependentUpon>CNK_Text.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="GameSpecific\CrashNitroKart\Modder_CNK.cs" />
-    <Compile Include="GameSpecific\CrashTeamRacing\BIG.cs" />
-    <Compile Include="GameSpecific\CrashTeamRacing\CTRFile.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\Properties\CNK_Props_Main.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\Randomizers\CNK_Rand_Adventure.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\Randomizers\CNK_Rand_CharacterStats.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\Randomizers\CNK_Rand_Drivers.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\Randomizers\CNK_Rand_Karts.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\Randomizers\CNK_Rand_KartStats.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\Randomizers\CNK_Rand_Music.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\Randomizers\CNK_Rand_PowerupDistribution.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\Randomizers\CNK_Rand_PowerupEffects.cs" />
+    <Compile Include="GameSpecific\CrashNitroKart\Randomizers\CNK_Rand_SurfaceParams.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Common\BIG_Reader.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Common\CTR_Common.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Common\Parser_CTR.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Common\Parser_LEV.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Common\Parser_LNG.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Common\Pipeline_BIG.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Game_CrashTR.cs" />
     <Compile Include="GameSpecific\CrashTeamRacing\Modder_CTR.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Mods\CTR_DisableWeather.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Mods\CTR_Lev_TestMod.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Mods\CTR_Metadata.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Mods\CTR_NoWeaponCrates.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Mods\CTR_OffroadDead.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Properties\CTR_Props_Main.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Randomizers\CTR_Rand_CrateEffects.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Randomizers\CTR_Rand_IcyTracks.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Randomizers\CTR_Rand_InvisibleTrack.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Randomizers\CTR_Rand_MoonGravity.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Randomizers\CTR_Rand_PantsColor.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Randomizers\CTR_Rand_PickupLocations.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Randomizers\CTR_Rand_SurfaceParams.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Randomizers\CTR_Rand_Tracks.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Randomizers\CTR_Rand_Tracks101.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Randomizers\CTR_Rand_WorldPalette.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Randomizers\CTR_Rand_BackwardsTracks.cs" />
+    <Compile Include="GameSpecific\CrashTitans\Game_CrashTitans.cs" />
     <Compile Include="GameSpecific\CrashTitans\Modder_Titans.cs" />
+    <Compile Include="GameSpecific\CrashTitans\Mods\Titans_Metadata.cs" />
+    <Compile Include="GameSpecific\CrashTitans\Mods\Titans_TestMod.cs" />
+    <Compile Include="GameSpecific\CrashTitans\Properties\Titans_Props_Main.cs" />
+    <Compile Include="GameSpecific\CrashTitans\Randomizers\Titans_Rand_CostumeVisuals.cs" />
+    <Compile Include="GameSpecific\CrashTitans\Randomizers\Titans_Rand_CutsceneCostumes.cs" />
+    <Compile Include="GameSpecific\CrashTitans\Randomizers\Titans_Rand_EpisodeOrder.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\BD_Archive.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\Parser_PSM.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\Parser_RM.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\Parser_SM.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\Pipeline_BD.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\PSM_Texture.cs" />
+    <Compile Include="GameSpecific\CrashTS\Game_CrashTS.cs" />
+    <Compile Include="GameSpecific\CrashTS\Level\CollisionData_RM.cs" />
+    <Compile Include="GameSpecific\CrashTS\Level\Level_RM.cs" />
+    <Compile Include="GameSpecific\CrashTS\Level\Object_Instance.cs" />
     <Compile Include="GameSpecific\CrashTS\Modder_Twins.cs" />
-    <Compile Include="GameSpecific\CrashTS\Twins_Data.cs" />
-    <Compile Include="GameSpecific\CrashTS\Twins_Data_Characters.cs" />
-    <Compile Include="GameSpecific\CrashTS\Twins_Data_Objects.cs" />
-    <Compile Include="GameSpecific\CrashTS\Twins_Data_Scripts.cs" />
-    <Compile Include="GameSpecific\CrashTS\Twins_Data_Textures.cs" />
-    <Compile Include="GameSpecific\CrashTS\Twins_Data_Textures_Galleries.cs" />
-    <Compile Include="GameSpecific\CrashTS\Twins_Mods.cs" />
-    <Compile Include="GameSpecific\CrashTS\Twins_Randomizers.cs" />
-    <Compile Include="GameSpecific\CrashTS\Twins_Settings.cs" />
+    <Compile Include="GameSpecific\CrashTS\Mods\TS_ChangeCreditsChunk.cs" />
+    <Compile Include="GameSpecific\CrashTS\Mods\TS_ChangeStartingChunk.cs" />
+    <Compile Include="GameSpecific\CrashTS\Mods\TS_ClassicExplosions.cs" />
+    <Compile Include="GameSpecific\CrashTS\Mods\TS_ClassicHealth.cs" />
+    <Compile Include="GameSpecific\CrashTS\Mods\TS_CortexDoubleJump.cs" />
+    <Compile Include="GameSpecific\CrashTS\Mods\TS_EnableClassicSlideJump.cs" />
+    <Compile Include="GameSpecific\CrashTS\Mods\TS_EnableFlyingKick.cs" />
+    <Compile Include="GameSpecific\CrashTS\Mods\TS_EnableHiddenEnemies.cs" />
+    <Compile Include="GameSpecific\CrashTS\Mods\TS_EnableStompKick.cs" />
+    <Compile Include="GameSpecific\CrashTS\Mods\TS_GreyscaleDimension.cs" />
+    <Compile Include="GameSpecific\CrashTS\Mods\TS_GreyscaleWorld.cs" />
+    <Compile Include="GameSpecific\CrashTS\Mods\TS_Metadata.cs" />
+    <Compile Include="GameSpecific\CrashTS\Mods\TS_NinaDoubleJump.cs" />
+    <Compile Include="GameSpecific\CrashTS\Mods\TS_StartSpawnCredits.cs" />
+    <Compile Include="GameSpecific\CrashTS\Mods\TS_SwapStartCreditsSpawn.cs" />
+    <Compile Include="GameSpecific\CrashTS\Properties\TS_Props_Misc.cs" />
+    <Compile Include="GameSpecific\CrashTS\Properties\Twins_Data_Textures_Gallery_Boss.cs" />
+    <Compile Include="GameSpecific\CrashTS\Properties\Twins_Data_Textures_Gallery_Concept.cs" />
+    <Compile Include="GameSpecific\CrashTS\Properties\Twins_Data_Textures_Gallery_Enemy.cs" />
+    <Compile Include="GameSpecific\CrashTS\Properties\Twins_Data_Textures_Gallery_Unseen.cs" />
+    <Compile Include="GameSpecific\CrashTS\Randomizers\TS_Rand_CharParams.cs" />
+    <Compile Include="GameSpecific\CrashTS\Randomizers\TS_Rand_Crates.cs" />
+    <Compile Include="GameSpecific\CrashTS\Randomizers\TS_Rand_Enemies.cs" />
+    <Compile Include="GameSpecific\CrashTS\Randomizers\TS_Rand_GemLocations.cs" />
+    <Compile Include="GameSpecific\CrashTS\Randomizers\TS_Rand_Music.cs" />
+    <Compile Include="GameSpecific\CrashTS\Randomizers\TS_Rand_PantsColor.cs" />
+    <Compile Include="GameSpecific\CrashTS\Randomizers\TS_Rand_StartingChunk.cs" />
+    <Compile Include="GameSpecific\CrashTS\Randomizers\TS_Rand_Surdaces.cs" />
+    <Compile Include="GameSpecific\CrashTS\Randomizers\TS_Rand_WorldPalette.cs" />
+    <Compile Include="GameSpecific\CrashTS\Mods\TS_SkipCutscenes.cs" />
+    <Compile Include="GameSpecific\CrashTS\Mods\TS_SwitchCharacters.cs" />
+    <Compile Include="GameSpecific\CrashTS\Mods\TS_UnlockedCamera.cs" />
+    <Compile Include="GameSpecific\CrashTS\Mods\TS_UntexturedWorld.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\Twins_Common.cs" />
+    <Compile Include="GameSpecific\CrashTS\Randomizers\TS_Rand_WumpaIntoCrates.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\Twins_Data.cs" />
+    <Compile Include="GameSpecific\CrashTS\Properties\Twins_Data_Characters.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\Twins_Data_Objects.cs" />
+    <Compile Include="GameSpecific\CrashTS\Common\Twins_Data_Scripts.cs" />
+    <Compile Include="GameSpecific\CrashTS\Properties\Twins_Data_Textures.cs" />
+    <Compile Include="GameSpecific\CrashTS\Properties\Twins_Data_Textures_Galleries.cs" />
+    <Compile Include="GameSpecific\CrashTS\Properties\TS_Props_Main.cs" />
     <Compile Include="GameSpecific\CrashTS\Twins_Text.Designer.cs">
       <DependentUpon>Twins_Text.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="GameSpecific\CrashTTR\collada_schema_1_4.cs" />
-    <Compile Include="GameSpecific\CrashTTR\CTTR_Data.cs" />
-    <Compile Include="GameSpecific\CrashTTR\CTTR_Data_Text.cs" />
-    <Compile Include="GameSpecific\CrashTTR\CTTR_Mods.cs" />
-    <Compile Include="GameSpecific\CrashTTR\CTTR_Randomizers.cs" />
-    <Compile Include="GameSpecific\CrashTTR\CTTR_Settings.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Common\CTTR_Data.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Common\CTTR_Data_Text.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Common\GOD_File.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Common\Parser_FIG.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Common\Parser_GOD.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Common\Parser_MID.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Common\Parser_P3D.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Common\Pipeline_RCF.cs" />
     <Compile Include="GameSpecific\CrashTTR\CTTR_Text.Designer.cs">
       <DependentUpon>CTTR_Text.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="GameSpecific\CrashTTR\Game_CrashTTR.cs" />
     <Compile Include="GameSpecific\CrashTTR\Modder_CTTR.cs" />
-    <Compile Include="GameSpecific\CrashTTR\ModelExporter.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Mods\CTTR_Metadata.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Mods\CTTR_PreventSequenceBreaks.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Mods\CTTR_TestMod.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Properties\CTTR_Props_Main.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Properties\CTTR_Props_Misc.cs" />
     <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunk.cs" />
     <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\Animation.cs" />
     <Compile Include="GameSpecific\CrashTTR\Pure3D\Chunks\AnimationChannelCount.cs" />
@@ -242,29 +814,187 @@
     <Compile Include="GameSpecific\CrashTTR\Pure3D\File.cs" />
     <Compile Include="GameSpecific\CrashTTR\Pure3D\Types.cs" />
     <Compile Include="GameSpecific\CrashTTR\Pure3D\Util.cs" />
-    <Compile Include="GameSpecific\CrashTTR\RCF.cs" />
-    <Compile Include="GameSpecific\CrashTTR\RCF_Manager.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Common\RCF.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Common\RCF_Manager.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Randomizers\CTTR_Rand_BattleKOs.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Randomizers\CTTR_Rand_HubEntrances.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Randomizers\CTTR_Rand_MinigameEntrances.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Randomizers\CTTR_Rand_PlatformingCharacter.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Randomizers\CTTR_Rand_RaceLaps.cs" />
+    <Compile Include="GameSpecific\CrashTTR\Randomizers\CTTR_Rand_TrackEntrances.cs" />
+    <Compile Include="GameSpecific\CrashTWOC\Common\Parser_AI.cs" />
+    <Compile Include="GameSpecific\CrashTWOC\Common\Parser_CRT.cs" />
+    <Compile Include="GameSpecific\CrashTWOC\Common\Parser_WMP.cs" />
+    <Compile Include="GameSpecific\CrashTWOC\Common\TWOC_Common.cs" />
+    <Compile Include="GameSpecific\CrashTWOC\Game_CrashTWOC.cs" />
     <Compile Include="GameSpecific\CrashTWOC\Modder_TWOC.cs" />
-    <Compile Include="GameSpecific\CrashTWOC\TWOC_File_AI.cs" />
-    <Compile Include="GameSpecific\CrashTWOC\TWOC_File_CRT.cs" />
-    <Compile Include="GameSpecific\CrashTWOC\TWOC_File_WMP.cs" />
-    <Compile Include="GameSpecific\MarioSunshine\Modder_MarioSunshine.cs" />
+    <Compile Include="GameSpecific\CrashTWOC\Mods\TWOC_Metadata.cs" />
+    <Compile Include="GameSpecific\CrashTWOC\Mods\TWOC_Mod_SwapLevels.cs" />
+    <Compile Include="GameSpecific\CrashTWOC\Properties\TWOC_Props_Main.cs" />
+    <Compile Include="GameSpecific\CrashTWOC\Randomizers\TWOC_Rand_Crates.cs" />
+    <Compile Include="GameSpecific\CrashTWOC\Randomizers\TWOC_Rand_CratesRemoved.cs" />
+    <Compile Include="GameSpecific\CrashTWOC\Randomizers\TWOC_Rand_EnemiesRemoved.cs" />
+    <Compile Include="GameSpecific\CrashTWOC\Randomizers\TWOC_Rand_EnemyPaths.cs" />
+    <Compile Include="GameSpecific\CrashTWOC\Randomizers\TWOC_Rand_LevelOrder.cs" />
+    <Compile Include="GameSpecific\CrashTWOC\Randomizers\TWOC_Rand_Music.cs" />
+    <Compile Include="GameSpecific\CrashTWOC\Randomizers\TWOC_Rand_WumpaIntoCrates.cs" />
+    <Compile Include="GameSpecific\CrashTWOC\Common\TWOC_File_AI.cs" />
+    <Compile Include="GameSpecific\CrashTWOC\Common\TWOC_File_CRT.cs" />
+    <Compile Include="GameSpecific\CrashTWOC\Common\TWOC_File_WMP.cs" />
+    <Compile Include="GameSpecific\MonkeyBallAdv\Common\Parser_RM.cs" />
+    <Compile Include="GameSpecific\MonkeyBallAdv\Common\Parser_SM.cs" />
+    <Compile Include="GameSpecific\MonkeyBallAdv\Common\Parser_XML.cs" />
+    <Compile Include="GameSpecific\MonkeyBallAdv\Common\SMBA_Common.cs" />
+    <Compile Include="GameSpecific\MonkeyBallAdv\Game_MonkeyBallAdv.cs" />
+    <Compile Include="GameSpecific\MonkeyBallAdv\Level\Level_RM.cs" />
+    <Compile Include="GameSpecific\MonkeyBallAdv\Level\Object_InstanceMB.cs" />
+    <Compile Include="GameSpecific\MonkeyBallAdv\Modder_MonkeyBallAdv.cs" />
+    <Compile Include="GameSpecific\MonkeyBallAdv\Mods\SMBA_EnableJump.cs" />
+    <Compile Include="GameSpecific\MonkeyBallAdv\Mods\SMBA_EnablePowerJump.cs" />
+    <Compile Include="GameSpecific\MonkeyBallAdv\Mods\SMBA_Metadata.cs" />
+    <Compile Include="GameSpecific\MonkeyBallAdv\Mods\SMBA_SettingsHandling.cs" />
+    <Compile Include="GameSpecific\MonkeyBallAdv\Mods\SMBA_TestMod.cs" />
+    <Compile Include="GameSpecific\MonkeyBallAdv\Properties\SMBA_Props_Main.cs" />
+    <Compile Include="GameSpecific\MonkeyBallAdv\Properties\SMBA_Props_Settings.cs" />
+    <Compile Include="GameSpecific\MonkeyBallAdv\Randomizers\SMBA_Rand_BackwardsPuzzleLevels.cs" />
+    <Compile Include="GameSpecific\MonkeyBallAdv\Randomizers\SMBA_Rand_ChallengeMode.cs" />
+    <Compile Include="GameSpecific\Rayman3\Common\Parser_TPL.cs" />
+    <Compile Include="GameSpecific\Rayman3\Common\Ray3_Common.cs" />
+    <Compile Include="GameSpecific\Rayman3\Common\TPL_File.cs" />
+    <Compile Include="GameSpecific\Rayman3\Game_Rayman3.cs" />
     <Compile Include="GameSpecific\Rayman3\Modder_Rayman3.cs" />
-    <Compile Include="GameSpecific\Rayman3\ModProp_TextureFile.cs" />
+    <Compile Include="GameSpecific\Rayman3\Mods\Ray3_Metadata.cs" />
+    <Compile Include="GameSpecific\Rayman3\Mods\Ray3_RemoveIntroVideos.cs" />
+    <Compile Include="GameSpecific\Rayman3\Mods\Ray3_Start2DNightmare.cs" />
+    <Compile Include="GameSpecific\Rayman3\Properties\Rayman3_Props_Main.cs" />
+    <Compile Include="GameSpecific\Rayman3\Properties\Rayman3_Textures_General.cs" />
+    <Compile Include="GameSpecific\Rayman3\Properties\Rayman3_Textures_Loading.cs" />
+    <Compile Include="GameSpecific\Rayman3\Properties\Rayman3_Textures_Menu.cs" />
+    <Compile Include="GameSpecific\Rayman3\Randomizers\Ray3_Rand_CopterColors.cs" />
+    <Compile Include="GameSpecific\Rayman3\Randomizers\Ray3_Rand_HUDColors.cs" />
+    <Compile Include="GameSpecific\Rayman3\Randomizers\Ray3_Rand_LevelOrder.cs" />
+    <Compile Include="GameSpecific\Rayman3\Randomizers\Ray3_Rand_OutfitColors.cs" />
+    <Compile Include="GameSpecific\Rayman3\Randomizers\Ray3_Rand_OutfitVisuals.cs" />
+    <Compile Include="GameSpecific\Rayman3\Randomizers\Ray3_Rand_WorldColors.cs" />
     <Compile Include="GameSpecific\Rayman3\Rayman3_Text.Designer.cs">
       <DependentUpon>Rayman3_Text.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="GameSpecific\SonicRivals\Common\Parser_TXT.cs" />
+    <Compile Include="GameSpecific\SonicRivals\Game_SonicRivals.cs" />
+    <Compile Include="GameSpecific\SonicRivals\Game_SonicRivals2.cs" />
+    <Compile Include="GameSpecific\SonicRivals\Modder_SonicRivals.cs" />
+    <Compile Include="GameSpecific\SonicRivals\Modder_SonicRivals2.cs" />
+    <Compile Include="GameSpecific\SonicRivals\Mods\SonicRivals_Metadata.cs" />
+    <Compile Include="GameSpecific\SonicRivals\Properties\SonicRivals2_Props_Main.cs" />
+    <Compile Include="GameSpecific\SonicRivals\Properties\SonicRivals_Props_Main.cs" />
+    <Compile Include="GameSpecific\SonicRivals\Randomizers\SonicRivals2_Rand_LevelOrder.cs" />
+    <Compile Include="GameSpecific\SonicRivals\Randomizers\SonicRivals_Rand_Characters.cs" />
+    <Compile Include="GameSpecific\SonicRivals\Randomizers\SonicRivals_Rand_LevelOrder.cs" />
+    <Compile Include="GameSpecific\SonicRivals\Randomizers\SonicRivals_Rand_Music.cs" />
+    <Compile Include="GameSpecific\Worms\Worms3D\Common\W3D_Common.cs" />
+    <Compile Include="GameSpecific\Worms\Worms3D\Game_Worms3D.cs" />
+    <Compile Include="GameSpecific\Worms\Worms3D\Modder_Worms3D.cs" />
+    <Compile Include="GameSpecific\Worms\Worms3D\Mods\W3D_Metadata.cs" />
+    <Compile Include="GameSpecific\Worms\Worms3D\Properties\W3D_Props_Main.cs" />
+    <Compile Include="GameSpecific\Worms\Worms3D\Randomizers\Worms3D_Rand_WorldPalette.cs" />
+    <Compile Include="GameSpecific\Worms\Worms4Mayhem\Common\Worms4_Common.cs" />
+    <Compile Include="GameSpecific\Worms\Worms4Mayhem\Game_Worms4.cs" />
+    <Compile Include="GameSpecific\Worms\Worms4Mayhem\Modder_Worms4.cs" />
+    <Compile Include="GameSpecific\Worms\Worms4Mayhem\Mods\W4_Metadata.cs" />
+    <Compile Include="GameSpecific\Worms\Worms4Mayhem\Properties\W4_Props_Main.cs" />
+    <Compile Include="GameSpecific\Worms\Worms4Mayhem\Randomizers\Worms4_Rand_LevelVisuals.cs" />
+    <Compile Include="GameSpecific\Worms\Worms4Mayhem\Randomizers\Worms4_Rand_WorldPalette.cs" />
+    <Compile Include="GameSpecific\Worms\Common\LUA_File.cs" />
+    <Compile Include="GameSpecific\Worms\Common\Parser_LUA.cs" />
+    <Compile Include="GameSpecific\Worms\Common\Parser_TGA.cs" />
+    <Compile Include="GameSpecific\Worms\Common\Parser_XOM.cs" />
+    <Compile Include="GameSpecific\Worms\Common\Pipeline_ZIP.cs" />
+    <Compile Include="GameSpecific\Worms\Common\TGASharpLib.cs" />
+    <Compile Include="GameSpecific\Worms\WormsForts\Common\WormsForts_Common.cs" />
+    <Compile Include="GameSpecific\Worms\WormsForts\Game_WormsForts.cs" />
+    <Compile Include="GameSpecific\Worms\WormsForts\Level\CollisionData_XOM.cs" />
+    <Compile Include="GameSpecific\Worms\WormsForts\Level\Level_XOM.cs" />
+    <Compile Include="GameSpecific\Worms\WormsForts\Level\Object_BuildPoint.cs" />
+    <Compile Include="GameSpecific\Worms\WormsForts\Modder_WormsForts.cs" />
+    <Compile Include="GameSpecific\Worms\WormsForts\Mods\WormsForts_FortWeaponsAnywhere.cs" />
+    <Compile Include="GameSpecific\Worms\WormsForts\Mods\WormsForts_Metadata.cs" />
+    <Compile Include="GameSpecific\Worms\WormsForts\Mods\WormsForts_RemoveGodWormAnimations.cs" />
+    <Compile Include="GameSpecific\Worms\WormsForts\Mods\WormsForts_RemoveVictLocations.cs" />
+    <Compile Include="GameSpecific\Worms\WormsForts\Mods\WormsForts_TestMod.cs" />
+    <Compile Include="GameSpecific\Worms\WormsForts\Properties\WormsForts_Props_Main.cs" />
+    <Compile Include="GameSpecific\Worms\WormsForts\Properties\WormsForts_Props_Textures.cs" />
+    <Compile Include="GameSpecific\Worms\WormsForts\Randomizers\WormsForts_DM_Rand_LevelOrder.cs" />
+    <Compile Include="GameSpecific\Worms\WormsForts\Randomizers\WormsForts_DM_Rand_ShuffleBuildPoints.cs" />
+    <Compile Include="GameSpecific\Worms\WormsForts\Randomizers\WormsForts_Rand_Epoch.cs" />
+    <Compile Include="GameSpecific\Worms\WormsForts\Randomizers\WormsForts_Rand_Skybox.cs" />
+    <Compile Include="GameSpecific\Worms\WormsForts\Randomizers\WormsForts_Rand_VictLocations.cs" />
+    <Compile Include="GameSpecific\Worms\WormsForts\Randomizers\WormsForts_Rand_WaterType.cs" />
+    <Compile Include="GameSpecific\Worms\WormsForts\Randomizers\WormsForts_Rand_WorldPalette.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Container.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Control\AudioControlContainer.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Control\HumanControlContainer.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Control\PhysicsControlContainer.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Control\PowerUpDataContainer.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Control\WormAnimContainer.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Control\WormControlContainer.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Frontend\Campaign.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Frontend\CampaignCollective.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Frontend\LevelDetails.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Frontend\Mission.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Frontend\WeaponSettingsData.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Landscapes\GraphSet\Attributes\XAlphaTest.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Landscapes\GraphSet\Attributes\XBlendModeGL.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Landscapes\GraphSet\Attributes\XCullFace.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Landscapes\GraphSet\Attributes\XLightingEnable.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Landscapes\GraphSet\Attributes\XTriangleStripSet.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Landscapes\GraphSet\Attributes\XZBufferWriteEnable.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Landscapes\GraphSet\XCollisionGeometry.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Landscapes\GraphSet\XColor4ubSet.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Landscapes\GraphSet\XGroup.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Landscapes\GraphSet\XMaterial.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Landscapes\GraphSet\XMatrix.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Landscapes\GraphSet\XOglTextureMap.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Landscapes\GraphSet\XPointLight.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Landscapes\GraphSet\XShape.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Landscapes\GraphSet\XSimpleShader.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Landscapes\GraphSet\XTransform.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Landscapes\XFortsExportedData.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Tweaks\BuildingGlobalContainer.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Tweaks\BuildingSpecificContainer.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Tweaks\CrateContainer.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\Tweaks\WeaponDataCtr.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\XColorResourceDetails.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\XContainerResourceDetails.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\XDataBank.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\XFloatResourceDetails.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\XIntResourceDetails.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\XStringResourceDetails.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\XUintResourceDetails.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\Containers\XVectorResourceDetails.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\NamedContainer.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\UnknownContainer.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\XOM_File.cs" />
+    <Compile Include="GameSpecific\Worms\Common\API\XOM\XOM_IO_Helpers.cs" />
+    <Compile Include="GameSpecific\Worms\WormsBattleIslands\Game_WormsBI.cs" />
+    <Compile Include="GameSpecific\Worms\WormsBattleIslands\Modder_WormsBI.cs" />
+    <Compile Include="GameSpecific\Worms\WormsOW2\Game_WormsOW2.cs" />
+    <Compile Include="GameSpecific\Worms\WormsOW2\Modder_WormsOW2.cs" />
+    <Compile Include="GameSpecific\Worms\WormsOW\Game_WormsOW.cs" />
+    <Compile Include="GameSpecific\Worms\WormsOW\Modder_WormsOW.cs" />
+    <Compile Include="GameSpecific\Worms\WormsOW\Mods\WOW_Metadata.cs" />
+    <Compile Include="GameSpecific\Worms\WormsOW\Properties\WOW_Props_Main.cs" />
+    <Compile Include="Generic\Modder_Generic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Tools\CTR\filenames_pal.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Tools\CTR\filenames_usa.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="External\CTR-tools\ctr-tools\CTRFramework\Properties\BuildDate.txt" />
     <Content Include="Tools\GOBEXTRACT License.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -273,18 +1003,16 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Tools\CTR\versions.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\CrateModAPI\CrateModAPI.csproj">
       <Project>{864c8392-b1cc-45ec-9d1b-a7df2c1d1b6a}</Project>
       <Name>CrateModAPI</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="GameSpecific\Crash1\CrashTri_Text.resx">
+    <EmbeddedResource Include="External\CTR-tools\ctr-tools\CTRFramework\Properties\Resources.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GameSpecific\Crash1\TrilogyCommon\CrashTri_Text.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>CrashTri_Text.Designer.cs</LastGenOutput>
     </EmbeddedResource>
@@ -316,6 +1044,24 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Rayman3_Text.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="GameSpecific\CrashBash\Mods\" />
+    <Folder Include="GameSpecific\CrashBash\Properties\" />
+    <Folder Include="GameSpecific\CrashBash\Randomizers\" />
+    <Folder Include="GameSpecific\CrashNDS\CrashBB\Randomizers\" />
+    <Folder Include="GameSpecific\CrashNDS\CrashMoMDS\Randomizers\" />
+    <Folder Include="GameSpecific\CrashNDS\CrashTitansDS\Randomizers\" />
+    <Folder Include="Resources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="External\CTR-tools\ctr-tools\CTRFramework\ThirdParty\PlyImporter\LICENSE" />
+    <None Include="External\CTR-tools\ctr-tools\CTRFramework\ThirdParty\PlyImporter\README.md" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

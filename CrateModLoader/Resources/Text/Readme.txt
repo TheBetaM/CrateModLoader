@@ -1,4 +1,4 @@
-Crate Mod Loader v1.3.1
+Crate Mod Loader v1.4.0
 The all-in-one Randomizer and Mod Loader for console games.  
 It detects, extracts, modifies and rebuilds disc image files and directories in an easy to setup way.  
 In addition, it allows for standalone "Mod Crates" to be installed seamlessly into games.
@@ -12,24 +12,25 @@ Contributors:
 
 Mod Crates
 
-Place Mod Crates in the "Mods" folder for them to appear in the list.
-An example mod can be found in the "Mods" folder.
-Mod Crates can be folders or standard .zip files with these contents: (only ModCrateInfo.txt is mandatory for them to function, the rest is optional)
-- ModCrateInfo.txt with the details of the mod
-- ModCrateSettings.txt game-specific settings that can't be changed with modded files
-- ModCrateIcon.png icon of the mod displayed in the program
-- "layer0" folder - any files and folders inside will replace or add to the base extracted contents of the game ROM
-- "layer1" "layer2" etc. folders - supported games allow for replacement and/or addition of files in different game archives (check compatibility in Games.txt)
+Place Mod Crates in the "Mods" folder for them to appear in the list.  
+An example mod can be found in the "Mods" folder.  
+Mod Crates can be folders or standard .zip files.
+They can be created in the program itself by preloading the game data.
+Mod Crates can also include CS-Script (C#) code in a ModScripts folder. 
 
 Tools Credits
 
 DiscUtils (https://github.com/DiscUtils/DiscUtils) (MIT license) 
-PS2ImageMaker (https://github.com/Smartkin/PS2ImageMaker) (GPL-3.0 licensee)  
+PS2ImageMaker (https://github.com/Smartkin/PS2ImageMaker) (GPL-3.0 license)  
 WQSG_UMD_kkMod (https://github.com/KyousukeKyaa/WQSG_UMD_kkMod) (GPL-2.0 license)  
 extract-xiso (https://github.com/XboxDev/extract-xiso) (license included)  
 xextool (http://xorloser.com/blog/?p=395) (freeware)  
 Wiims ISO Tools (https://wit.wiimm.de/) (GPL-2.0 license)  
-Gamecube ISO Tool (http://www.wiibackupmanager.co.uk/gcit.html) (freeware)
+Gamecube ISO Tool (http://www.wiibackupmanager.co.uk/gcit.html) (freeware)  
+3dstool (https://github.com/dnasdw/3dstool) (MIT license)  
+ndstool (https://github.com/devkitPro/ndstool) (GPL-3.0 license)  
+isodump (https://github.com/Lameguy64/isodump) (GPL-2.0 license)
+mkpsxiso (https://github.com/Lameguy64/mkpsxiso) (GPL-2.0 license)
 
 License Information (for more information check /Tools/License.txt)
 

@@ -2,20 +2,37 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.ComponentModel;
+using System.Threading;
+using System.Threading.Tasks;
+using System.IO;
 using CrateModLoader.ModProperties;
+using CrateModLoader.LevelAPI;
 using CrateModAPI.Resources.Text;
+//using CSScriptLibrary;
 
 namespace CrateModLoader
 {
     /*
      * Adding a game:
-     * 1. Make a new modder class that inherits this abstract class. (ensure that the modder's namespace is CrateModLoader.GameSpecific.??? to avoid bugs)
-     * 2. Override its Game member with the appropriate info in the getter. 
-     * 3. Override StartModProcess (at least, there are more modding functions that can be overriden but are optional).
+     * 1. Make a new Modder class that inherits this abstract class. (ensure that the modder's namespace is CrateModLoader.GameSpecific.??? to avoid bugs)
+     * 2. Make a new Game class that inherits the Game abstract class. 
+     * 3. Override StartModProcess (there are more modding functions that can be overriden but are optional).
      * (optional) 4. Localize game title, API credit, and options using text resources.
-     * (optional) 5. Create ModProperty variables for automatic Mod Menu setup.
+     * (optional) 5. Create ModProperty variables for automatic Mod Menu setup. (must be part of the Modder's namespace)
      * (optional) 6. Add ModPropOption variables for quick options in the main window.
      * 7. Done.
+     * 
+     */
+
+    /* MOD SCRIPTS NOT YET IMPLEMENTED!!!
+     * Converting a built-in Mod to a Mod script:
+     * - Convert namespace to using statement (ex. namespace CrateModLoader.GameSpecific.Crash1 -> using CrateModLoader.GameSpecific.Crash1;)
+     * - Add inherited namespaces, if missing (ex. using CrateModLoader;)
+     * - (only if including the script in the build, which is unsupported) In Solution Explorer set Build Actions to None, Copy to Output Directory to Copy Always 
+     * 
+     * Converting a Mod Script to a built-in Mod:
+     * - Restore namespace
+     * - In Solution Explorer set Build Actions to Compile, Copy to Output Directory to Do not copy
      * 
      */
 
@@ -24,27 +41,51 @@ namespace CrateModLoader
     /// </summary>
     public abstract class Modder
     {
-
-        public List<Mod> Mods = new List<Mod>();
-        public List<ModPipeline> Pipelines = new List<ModPipeline>();
         public List<ModPropertyBase> Props = new List<ModPropertyBase>();
 
         // External
         public Assembly assembly;
-        public ModPipeline ConsolePipeline;
+        public ConsolePipeline ConsolePipeline;
         public RegionCode GameRegion;
+        public Game SourceGame;
         public List<ModCrate> EnabledModCrates = new List<ModCrate>();
+        public Random GlobalRandom;
 
-        public BackgroundWorker AsyncWorker = null;
         public bool ModMenuEnabled => Props.Count > 0;
-        public bool ModCrateRegionCheck = false; // A game might require some type of verification (i.e. file integrity, region matching) before installing layer0 mod crates.
-        public virtual bool CanPreloadGame => false;
-        public List<ConsoleMode> PreloadConsoles = new List<ConsoleMode>();
-        public bool IsBusy { get { return AsyncWorker != null && AsyncWorker.IsBusy; } }
+        public virtual bool ModCrateRegionCheck => false; // A game might require some type of verification (i.e. file integrity, region matching) before installing layer0 mod crates.
+        /// <summary>
+        /// Is the modder in the Preload phase
+        /// </summary>
+        public bool ModderIsPreloading = false;
+        /// <summary>
+        /// Has the Preload phase been finished, also false when not preloading
+        /// </summary>
+        public bool ModderHasPreloaded = false;
 
-        public abstract Game Game { get; }
+        // Multithreading stuff
 
-        public Modder() { }
+        public List<Mod> Mods = new List<Mod>();
+        public List<ModParserBase> ModParsers = new List<ModParserBase>();
+        public List<ModPipelineBase> Pipelines = new List<ModPipelineBase>();
+        public List<ModPropertyBase> ActiveProps = new List<ModPropertyBase>();
+        public List<LevelBase> Levels = new List<LevelBase>();
+        //public Dictionary<string, IMod> ModScripts = new Dictionary<string, IMod>();
+        public virtual bool NoAsyncProcess => false;
+        public bool IsBusy => ProcessBusy || PassBusy; //{ get; set; }
+        public bool PassBusy { get; set; }
+        public bool ProcessBusy { get; set; }
+        public string ProcessMessage { get; set; }
+        public int PassIterator { get; set; }
+        public int PassCount { get; set; }
+        public int PassPercent { get; set; }
+        public bool PassIsPercent { get; set; } // Display progress as percentage instead of file count (PassIterator 0-100 and PassCount 100 still required)
+        public GenericModStruct GenericModStruct { get; set; }
+
+        public Modder()
+        {
+            GlobalRandom = new Random(ModLoaderGlobals.RandomizerSeed);
+            //CSScript.EvaluatorConfig.Engine = EvaluatorEngine.Roslyn; // the others are better, but require the .NET SDK to be installed supposedly
+        }
 
         public void PopulateProperties()
         {
@@ -70,21 +111,105 @@ namespace CrateModLoader
                             if (Props[Props.Count - 1].Category == null)
                             {
                                 ModCategory chunkAttr = (ModCategory)field.GetCustomAttribute(typeof(ModCategory), false);
+                                if (chunkAttr == null)
+                                {
+                                    chunkAttr = (ModCategory)field.DeclaringType.GetCustomAttribute(typeof(ModCategory), false);
+                                }
                                 if (chunkAttr != null)
                                 {
                                     Props[Props.Count - 1].Category = chunkAttr.ID;
                                 }
                                 else
                                 {
-                                    ModCategory typeAttr = (ModCategory)field.DeclaringType.GetCustomAttribute(typeof(ModCategory), false);
-                                    if (typeAttr != null)
-                                    {
-                                        Props[Props.Count - 1].Category = typeAttr.ID;
-                                    }
-                                    else
-                                    {
-                                        Props[Props.Count - 1].Category = 0;
-                                    }
+                                    Props[Props.Count - 1].Category = 0;
+                                }
+                            }
+
+                            if (!Props[Props.Count - 1].ModMenuOnly)
+                            {
+                                ModMenuOnly chunkAttr = (ModMenuOnly)field.GetCustomAttribute(typeof(ModMenuOnly), false);
+                                if (chunkAttr == null)
+                                    chunkAttr = (ModMenuOnly)field.DeclaringType.GetCustomAttribute(typeof(ModMenuOnly), false);
+                                if (chunkAttr != null)
+                                {
+                                    Props[Props.Count - 1].ModMenuOnly = true;
+                                }
+                            }
+
+                            if (Props[Props.Count - 1].AllowedConsoles == null)
+                            {
+                                ModAllowedConsoles ListConsoles = (ModAllowedConsoles)field.GetCustomAttribute(typeof(ModAllowedConsoles), false);
+                                if (ListConsoles == null)
+                                    ListConsoles = (ModAllowedConsoles)field.DeclaringType.GetCustomAttribute(typeof(ModAllowedConsoles), false);
+                                if (ListConsoles != null)
+                                {
+                                    Props[Props.Count - 1].AllowedConsoles = ListConsoles.Allowed;
+                                }
+                            }
+
+                            if (Props[Props.Count - 1].AllowedRegions == null)
+                            {
+                                ModAllowedRegions ListRegions = (ModAllowedRegions)field.GetCustomAttribute(typeof(ModAllowedRegions), false);
+                                if (ListRegions == null)
+                                    ListRegions = (ModAllowedRegions)field.DeclaringType.GetCustomAttribute(typeof(ModAllowedRegions), false);
+                                if (ListRegions != null)
+                                {
+                                    Props[Props.Count - 1].AllowedRegions = ListRegions.Allowed;
+                                }
+                            }
+
+                            if (!Props[Props.Count - 1].Hidden)
+                            {
+                                ModHidden chunkAttr = (ModHidden)field.GetCustomAttribute(typeof(ModHidden), false);
+                                if (chunkAttr == null)
+                                    chunkAttr = (ModHidden)field.DeclaringType.GetCustomAttribute(typeof(ModHidden), false);
+                                if (chunkAttr != null)
+                                {
+                                    Props[Props.Count - 1].Hidden = true;
+                                }
+                            }
+
+                            if (Props[Props.Count - 1].TargetMods == null)
+                            {
+                                ExecutesMods chunkAttr = (ExecutesMods)field.GetCustomAttribute(typeof(ExecutesMods), false);
+                                if (chunkAttr == null)
+                                    chunkAttr = (ExecutesMods)field.DeclaringType.GetCustomAttribute(typeof(ExecutesMods), false);
+                                if (chunkAttr != null)
+                                {
+                                    Props[Props.Count - 1].TargetMods = chunkAttr.Mods;
+                                }
+                            }
+
+                            if (!Props[Props.Count - 1].RequiresPreload)
+                            {
+                                ModRequiresPreload chunkAttr = (ModRequiresPreload)field.GetCustomAttribute(typeof(ModRequiresPreload), false);
+                                if (chunkAttr == null)
+                                    chunkAttr = (ModRequiresPreload)field.DeclaringType.GetCustomAttribute(typeof(ModRequiresPreload), false);
+                                if (chunkAttr != null)
+                                {
+                                    Props[Props.Count - 1].RequiresPreload = true;
+                                }
+                            }
+
+                            if (!Props[Props.Count - 1].PreloadBonus)
+                            {
+                                ModPreloadBonus chunkAttr = (ModPreloadBonus)field.GetCustomAttribute(typeof(ModPreloadBonus), false);
+                                if (chunkAttr == null)
+                                    chunkAttr = (ModPreloadBonus)field.DeclaringType.GetCustomAttribute(typeof(ModPreloadBonus), false);
+                                if (chunkAttr != null)
+                                {
+                                    Props[Props.Count - 1].RequiresPreload = true;
+                                }
+                            }
+
+                            if (Props[Props.Count - 1].ListIndex == null)
+                            {
+                                ModListOrder chunkAttr = (ModListOrder)field.GetCustomAttribute(typeof(ModListOrder), false);
+                                if (chunkAttr == null)
+                                    chunkAttr = (ModListOrder)field.DeclaringType.GetCustomAttribute(typeof(ModListOrder), false);
+                                if (chunkAttr != null)
+                                {
+                                    Props[Props.Count - 1].ListIndex = chunkAttr.ID;
                                 }
                             }
 
@@ -92,9 +217,9 @@ namespace CrateModLoader
                             {
                                 Props[Props.Count - 1].Name = field.Name;
                             }
-                            if (Game.TextClass != null)
+                            if (SourceGame != null && SourceGame.TextClass != null)
                             {
-                                foreach (MethodInfo text in Game.TextClass.GetRuntimeMethods())
+                                foreach (MethodInfo text in SourceGame.TextClass.GetRuntimeMethods())
                                 {
                                     if (text.Name == "get_" + field.Name)
                                     {
@@ -113,98 +238,468 @@ namespace CrateModLoader
             }
         }
 
-        public void PopulateModsPipelines()
+        public abstract void StartModProcess(); // Must put ProcessBusy = false; at the end!
+
+        public void UpdateProcessMessage(string msg, int? per = null)
         {
-            Mods.Clear();
-            Pipelines.Clear();
-
-            // Populate mod and pipeline list automatically from namespace
-            Assembly asm = assembly;
-
-            string nameSpace = GetType().Namespace;
-
-            foreach (Type type in asm.GetTypes())
+            ProcessMessage = msg;
+            if (per != null)
             {
-                if (!string.IsNullOrEmpty(type.Namespace) && type.Namespace.Contains(nameSpace))
+                PassPercent = (int)per;
+            }
+        }
+
+        public bool NeedsCachePass()
+        {
+            foreach (Mod mod in Mods)
+            {
+                if (mod.NeedsCachePass)
                 {
-                    if (type.IsAssignableFrom(typeof(Mod)))
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public void LoadActiveProps()
+        {
+            ActiveProps = new List<ModPropertyBase>();
+
+            foreach (ModPropertyBase Prop in Props)
+            {
+                if (((Prop is ModPropOption opt && opt.Enabled)) || (!(Prop is ModPropOption) && Prop.HasChanged))
+                {
+                    ActiveProps.Add(Prop);
+                }
+            }
+
+            GenericModStruct = new GenericModStruct()
+            {
+                Console = ConsolePipeline.Metadata.Console,
+                Region = GameRegion.Region,
+                ExecutableFileName = GameRegion.ExecName,
+                ExtractedPath = ConsolePipeline.ExtractedPath,
+            };
+
+            Mods = new List<Mod>();
+            List<Type> DupeCheck = new List<Type>();
+
+            foreach (ModPropertyBase Prop in ActiveProps)
+            {
+                if (Prop.TargetMods != null)
+                {
+                    foreach (Type mod in Prop.TargetMods)
                     {
-                        Mod mod = (Mod)Activator.CreateInstance(type);
-                        if (!mod.Hidden)
+                        if (!DupeCheck.Contains(mod))
                         {
-                            Mods.Add(mod);
+                            DupeCheck.Add(mod);
+                            Mod NewMod = (Mod)Activator.CreateInstance(mod);
+                            NewMod.ExecutionSource = this;
+                            Mods.Add(NewMod);
                         }
                     }
-                    else if (type.IsAssignableFrom(typeof(ModPipeline)))
+                }
+            }
+
+            //todo: change app domain here 
+            /*
+            ModScripts = new Dictionary<string, IMod>();
+
+            foreach (ModCrate Crate in EnabledModCrates)
+            {
+                if (Crate.HasScripts)
+                {
+                    foreach (KeyValuePair<string, string> pair in Crate.Scripts)
                     {
-                        ModPipeline pipeline = (ModPipeline)Activator.CreateInstance(type);
-                        Pipelines.Add(pipeline);
+                        try
+                        {
+                            IMod mod = CSScript.Evaluator.LoadCode<IMod>(pair.Value);
+                            //dynamic mod = CSScript.Evaluator.LoadCode(pair.Value);
+                            ModScripts.Add(pair.Key, mod);
+
+                            Console.WriteLine("Script: Loaded " + pair.Key);
+                        }
+                        catch
+                        {
+                            Console.WriteLine("ERROR: Failed to load script: " + pair.Key);
+                        }
+                    }
+                }
+            }
+            */
+
+            //Console.WriteLine("Active Props: " + ActiveProps.Count);
+        }
+
+        public void LoadPropsPreload()
+        {
+            ActiveProps = new List<ModPropertyBase>();
+            Mods = new List<Mod>();
+            List<Type> DupeCheck = new List<Type>();
+
+            GenericModStruct = new GenericModStruct()
+            {
+                Console = ConsolePipeline.Metadata.Console,
+                Region = GameRegion.Region,
+                ExecutableFileName = GameRegion.ExecName,
+                ExtractedPath = ConsolePipeline.ExtractedPath,
+            };
+
+            foreach (ModPropertyBase Prop in Props)
+            {
+                if (Prop.PreloadBonus || Prop.RequiresPreload)
+                {
+                    ActiveProps.Add(Prop);
+                }
+            }
+
+            foreach (ModPropertyBase Prop in ActiveProps)
+            {
+                if (Prop.TargetMods != null)
+                {
+                    foreach (Type mod in Prop.TargetMods)
+                    {
+                        if (!DupeCheck.Contains(mod))
+                        {
+                            DupeCheck.Add(mod);
+                            Mod NewMod = (Mod)Activator.CreateInstance(mod);
+                            NewMod.ExecutionSource = this;
+                            Mods.Add(NewMod);
+                        }
+                    }
+                }
+            }
+
+            //todo: add mod scripts here
+
+            //Console.WriteLine("Active Props: " + ActiveProps.Count);
+        }
+
+        public void FindFiles(params ModParserBase[] parsers)
+        {
+            ModParsers = new List<ModParserBase>(parsers);
+            ModParsers.Insert(0, new Parser_GenericMod(this));
+            PassCount = 0;
+            PassIterator = 0;
+            DirectoryInfo di = new DirectoryInfo(ConsolePipeline.ExtractedPath);
+            Recursive_LoadFiles(di);
+        }
+        // If you want to invoke Generic mods separately (note: Generic is automatically skipped if attempted to be executed twice)
+        public void FindFiles(bool NoGeneric, params ModParserBase[] parsers)
+        {
+            ModParsers = new List<ModParserBase>(parsers);
+            PassCount = 0;
+            PassIterator = 0;
+            DirectoryInfo di = new DirectoryInfo(ConsolePipeline.ExtractedPath);
+            Recursive_LoadFiles(di);
+        }
+        public void FindArchives(params ModPipelineBase[] pipelines)
+        {
+            Pipelines = new List<ModPipelineBase>(pipelines);
+            PassCount = 0;
+            PassIterator = 0;
+            DirectoryInfo di = new DirectoryInfo(ConsolePipeline.ExtractedPath);
+            Recursive_LoadArchives(di);
+        }
+
+        void Recursive_LoadFiles(DirectoryInfo di)
+        {
+            foreach (DirectoryInfo dir in di.EnumerateDirectories())
+            {
+                Recursive_LoadFiles(dir);
+            }
+            foreach (FileInfo file in di.EnumerateFiles())
+            {
+                foreach (ModParserBase parser in ModParsers)
+                {
+                    if (!parser.SkipParser || parser.ForceParser)
+                    {
+                        bool add = parser.AddFile(file);
+                        if (add) PassCount++;
+                    }
+                }
+            }
+        }
+        void Recursive_LoadArchives(DirectoryInfo di)
+        {
+            foreach (DirectoryInfo dir in di.EnumerateDirectories())
+            {
+                Recursive_LoadArchives(dir);
+            }
+            foreach (FileInfo file in di.EnumerateFiles())
+            {
+                foreach (ModPipelineBase pipeline in Pipelines)
+                {
+                    if (!pipeline.SkipPipeline)
+                    {
+                        bool add = pipeline.AddFile(file);
+                        if (add) PassCount++;
                     }
                 }
             }
         }
 
-        public abstract void StartModProcess();
+        // todo: BeforePass could be triggered twice for each mod if there are separate new passes in a Modder
+        public async Task StartNewPass()
+        {
+            ModPass CurrentPass = ModPass.Cache;
+            if (!NeedsCachePass())
+                CurrentPass = ModPass.Mod;
+            if (ModderIsPreloading)
+                CurrentPass = ModPass.Preload;
 
-        public virtual void StartPreload() { } // Optional method to preload variables and resources from the game to the Mod Menu+
+            PassBusy = true;
+
+            while (CurrentPass < ModPass.End)
+            {
+                PassIterator = 0;
+                if (CurrentPass ==  ModPass.Cache)
+                {
+                    UpdateProcessMessage("Cache Pass", 30);
+                    BeforeCachePass();
+                }
+                else if (CurrentPass == ModPass.Mod)
+                {
+                    UpdateProcessMessage("Mod Pass", 50);
+                    BeforeModPass();
+                }
+                else if (CurrentPass == ModPass.Preload)
+                {
+                    UpdateProcessMessage("Preload Pass", 15);
+                    BeforePreloadPass();
+                }
+
+                IList<Task> editTaskList = new List<Task>();
+
+                foreach (ModParserBase parser in ModParsers)
+                {
+                    if (!parser.SkipParser || parser.ForceParser)
+                    {
+                        editTaskList.Add(parser.StartPass(CurrentPass));
+                    }
+                }
+
+                await Task.WhenAll(editTaskList);
+
+                editTaskList.Clear();
+
+                if (CurrentPass == ModPass.Cache)
+                    AfterCachePass();
+                else if (CurrentPass == ModPass.Mod)
+                    AfterModPass();
+                else if (CurrentPass == ModPass.Preload)
+                    AfterPreloadPass();
+
+                if (CurrentPass != ModPass.Preload)
+                {
+                    CurrentPass++;
+                }
+                else
+                {
+                    CurrentPass = ModPass.End;
+                }
+            }
+            PassBusy = false;
+        }
+
+        public async Task StartPipelines(PipelinePass pass)
+        {
+            PassBusy = true;
+            PassIterator = 0;
+            PassCount = 0;
+            if (pass == PipelinePass.Extract)
+            {
+                UpdateProcessMessage("Extracting archives...", 25);
+            }
+            else if (pass == PipelinePass.Build)
+            {
+                UpdateProcessMessage("Rebuilding archives...", 75);
+            }
+
+            IList<Task> TaskList = new List<Task>();
+
+            foreach (ModPipeline pipeline in Pipelines)
+            {
+                if (!pipeline.SkipPipeline)
+                {
+                    TaskList.Add(pipeline.StartPipeline(pass));
+                }
+            }
+
+            await Task.WhenAll(TaskList);
+
+            TaskList.Clear();
+
+            PassBusy = false;
+        }
+
+        public void BeforeCachePass()
+        {
+            foreach (Mod mod in Mods)
+            {
+                mod.BeforeCachePass();
+            }
+            /*
+            foreach (KeyValuePair<string, IMod> pair in ModScripts)
+            {
+                pair.Value.BeforeCachePass();
+            }
+            */
+        }
+        public void StartCachePass(object value)
+        {
+            foreach (Mod mod in Mods)
+            {
+                mod.CachePass(value);
+            }
+            /*
+            foreach (KeyValuePair<string, IMod> pair in ModScripts)
+            {
+                pair.Value.CachePass(value);
+            }
+            */
+        }
+        public void AfterCachePass()
+        {
+            foreach (Mod mod in Mods)
+            {
+                mod.AfterCachePass();
+            }
+            /*
+            foreach (KeyValuePair<string, IMod> pair in ModScripts)
+            {
+                pair.Value.AfterCachePass();
+            }
+            */
+        }
+        public void BeforeModPass()
+        {
+            foreach (Mod mod in Mods)
+            {
+                mod.BeforeModPass();
+            }
+            /*
+            foreach (KeyValuePair<string, IMod> pair in ModScripts)
+            {
+                pair.Value.BeforeModPass();
+            }
+            */
+        }
+        public void StartModPass(object value)
+        {
+            foreach (Mod mod in Mods)
+            {
+                mod.ModPass(value);
+            }
+            /*
+            foreach (KeyValuePair<string, IMod> pair in ModScripts)
+            {
+                pair.Value.ModPass(value);
+            }
+            */
+        }
+        public void AfterModPass()
+        {
+            foreach (Mod mod in Mods)
+            {
+                mod.AfterModPass();
+            }
+            /*
+            foreach (KeyValuePair<string, IMod> pair in ModScripts)
+            {
+                pair.Value.AfterModPass();
+            }
+            */
+        }
+        public void BeforePreloadPass()
+        {
+            foreach (Mod mod in Mods)
+            {
+                mod.BeforePreloadPass();
+            }
+            /*
+            foreach (KeyValuePair<string, IMod> pair in ModScripts)
+            {
+                pair.Value.BeforePreloadPass();
+            }
+            */
+        }
+        public void StartPreloadPass(object value)
+        {
+            foreach (Mod mod in Mods)
+            {
+                mod.PreloadPass(value);
+            }
+            /*
+            foreach (KeyValuePair<string, IMod> pair in ModScripts)
+            {
+                pair.Value.PreloadPass(value);
+            }
+            */
+        }
+        public void AfterPreloadPass()
+        {
+            foreach (Mod mod in Mods)
+            {
+                mod.AfterPreloadPass();
+            }
+            /*
+            foreach (KeyValuePair<string, IMod> pair in ModScripts)
+            {
+                pair.Value.AfterPreloadPass();
+            }
+            */
+        }
+        public void StartPass(object value, ModPass pass = ModPass.Mod)
+        {
+            switch (pass)
+            {
+                case ModPass.Cache:
+                    StartCachePass(value);
+                    break;
+                case ModPass.Preload:
+                    StartPreloadPass(value);
+                    break;
+                default:
+                case ModPass.Mod:
+                    StartModPass(value);
+                    break;
+            }
+        }
 
         public void StartProcess()
         {
-            AsyncWorker = new BackgroundWorker();
-            AsyncWorker.WorkerReportsProgress = true;
-            AsyncWorker.DoWork += new DoWorkEventHandler(Process);
-            AsyncWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(ProcessCompleted);
-            AsyncWorker.ProgressChanged += new ProgressChangedEventHandler(ProcessProgressChanged);
-            AsyncWorker.RunWorkerAsync();
-        }
+            ProcessBusy = true;
 
-        public virtual void Process(object sender, DoWorkEventArgs e)
+            // UI doesn't update until an await if this isn't here
+            BackgroundWorker asyncWorker = new BackgroundWorker();
+            asyncWorker.DoWork += new DoWorkEventHandler(AsyncWorker_DoWork);
+            asyncWorker.RunWorkerAsync();
+        }
+        private void AsyncWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            BackgroundWorker a = sender as BackgroundWorker;
+            StartModProcess();
 
-            foreach (Mod mod in Mods)
+            if (NoAsyncProcess)
             {
-                mod.BeforeProcess();
+                ProcessBusy = false;
             }
-            foreach (Mod mod in Mods)
-            {
-                mod.StartProcess();
-            }
-
-            bool Active = true;
-            bool IsActive = false;
-            int ModCount = 0;
-            while (Active)
-            {
-                IsActive = false;
-                ModCount = 0;
-                foreach (Mod mod in Mods)
-                {
-                    if (mod.IsBusy)
-                        IsActive = true;
-                    else
-                    {
-                        ModCount++;
-                    }
-                }
-                a.ReportProgress(ModCount / Mods.Count);
-                if (!IsActive)
-                    Active = false;
-            }
-
         }
 
-        private void ProcessCompleted(object sender, RunWorkerCompletedEventArgs e)
+        public void Reset()
         {
-            AsyncWorker = null;
+            foreach (ModPropertyBase prop in Props)
+            {
+                prop.ResetToDefault();
+            }
+            Mods.Clear();
+            ModParsers.Clear();
+            Pipelines.Clear();
+            ActiveProps.Clear();
+            Levels.Clear();
+            Props.Clear();
+            EnabledModCrates.Clear();
+            //ModScripts.Clear();
         }
-
-        private void ProcessProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            BackgroundWorker a = sender as BackgroundWorker;
-
-            //ModLoaderGlobals.ModProgram.UpdateProcessMessage(string.Format("{0} {1}%",ModLoaderText.Process_Step2, e.ProgressPercentage));
-        }
-
     }
 }

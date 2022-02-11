@@ -28,6 +28,7 @@ namespace CrateModLoader
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
+                Console.WriteLine("Crate Mod Loader " + ModLoaderGlobals.ProgramVersion);
                 using (ModLoaderForm ModProgramForm = new ModLoaderForm(ModProgram))
                 {
                     Application.Run(ModProgramForm);
@@ -36,7 +37,7 @@ namespace CrateModLoader
             else
             {
                 AttachConsole(ATTACH_PARENT_PROCESS);
-                ModLoaderCLI.StartCLI(args);
+                ModLoaderCLI.StartCLI(ModProgram, args);
             }
         }
     }

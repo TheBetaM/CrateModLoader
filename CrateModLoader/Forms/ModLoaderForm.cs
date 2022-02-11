@@ -6,6 +6,7 @@ using System.Media;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.Collections.Generic;
 using CrateModAPI.Resources.Text;
 using CrateModLoader.ModProperties;
 
@@ -14,6 +15,7 @@ namespace CrateModLoader
     public partial class ModLoaderForm : Form
     {
         public ModLoader ModProgram;
+        public ModCrateManagerBox ModCrateBox;
 
         public ModLoaderForm(ModLoader Program)
         {
@@ -32,11 +34,17 @@ namespace CrateModLoader
             Text = ModLoaderText.ProgramTitle;
             textBox_inputPath.Text = ModLoaderText.InputInstruction;
             textBox_outputPath.Text = ModLoaderText.OutputInstruction;
-            button_downloadMods.Text = ModLoaderText.Button_PreloadGame;
-            button_modCrateMenu.Text = ModLoaderText.ModCratesButton;
-            button_modTools.Text = ModLoaderText.Button_ModTools;
+            button_preloadGame.Text = ModLoaderText.Button_PreloadGame;
+
+            ModCrateBox = new ModCrateManagerBox(ModProgram);
+            ModCrateBox.Dock = DockStyle.Fill;
+            panel_modCrateManager.Controls.Add(ModCrateBox);
+            ModCrateBox.Visible = ModCrateBox.Enabled = false;
+
+            //button_modCrateMenu.Text = ModLoaderText.ModCratesButton;
+            //button_modTools.Text = "Level Editor";
             button_openModMenu.Text = ModLoaderText.ModMenuButton;
-            button_randomizeSeed.Text = ModLoaderText.RandomizeSeedButton;
+            button_randomizeSeed.Text = ModLoaderText.RandomizeSeedButton + " →";
             button_browseInput.Text = ModLoaderText.InputBrowse;
             button_browseOutput.Text = ModLoaderText.OutputBrowse;
             button_startProcess.Text = ModLoaderText.StartProcessButton;
@@ -46,10 +54,10 @@ namespace CrateModLoader
             toolTip1.SetToolTip(linkLabel_programTitle, ModLoaderText.Tooltip_Label_Version);
             toolTip1.SetToolTip(linkLabel_apiCredit, ModLoaderText.Tooltip_Label_API);
             toolTip1.SetToolTip(numericUpDown1, ModLoaderText.Tooltip_Numeric_Seed);
-            toolTip1.SetToolTip(button_downloadMods, ModLoaderText.Tooltip_PreloadGame);
-            toolTip1.SetToolTip(button_modCrateMenu, ModLoaderText.Tooltip_Button_ModCrates);
+            toolTip1.SetToolTip(button_preloadGame, ModLoaderText.Tooltip_PreloadGame);
+            //toolTip1.SetToolTip(button_modCrateMenu, ModLoaderText.Tooltip_Button_ModCrates);
             toolTip1.SetToolTip(button_openModMenu, ModLoaderText.Tooltip_Button_ModMenu);
-            toolTip1.SetToolTip(button_modTools, ModLoaderText.Tooltip_Button_ModTools);
+            //toolTip1.SetToolTip(button_modTools, ModLoaderText.Tooltip_Button_ModTools);
             toolTip1.SetToolTip(button_randomizeSeed, ModLoaderText.Tooltip_Button_RandomizeSeed);
 
             progressBar1.Minimum = 0;
@@ -75,6 +83,7 @@ namespace CrateModLoader
             ModProgram.ModMenuUpdated += UpdateModMenuChangeState;
             ModProgram.LayoutChangeUnsupported += SetLayoutUnsupportedGame;
             ModProgram.LayoutChangeSupported += SetLayoutSupportedGame;
+            ModProgram.ErrorMessage += DisplayError;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -96,7 +105,7 @@ namespace CrateModLoader
             */
 
             //openFileDialog1.Filter = "PSX/PS2/PSP/GCN/WII/XBOX/360 ROM (*.iso; *.bin; *.wbfs)|*.iso;*.bin;*.wbfs|All files (*.*)|*.*";
-            openFileDialog1.Filter = ModLoaderText.InputDialogTypeAuto + " (*.iso; *.bin; *.wbfs)|*.iso;*.bin;*.wbfs|" + ModLoaderText.OutputDialogTypeAllFiles + " (*.*)|*.*";
+            openFileDialog1.Filter = ModLoaderText.InputDialogTypeAuto + " (*.iso; *.bin; *.wbfs; *.nds; *.3ds)|*.iso;*.bin;*.wbfs;*.nds;*.3ds|" + ModLoaderText.OutputDialogTypeAllFiles + " (*.*)|*.*";
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
@@ -134,9 +143,22 @@ namespace CrateModLoader
             }
             */
 
-            saveFileDialog1.Filter = "ISO (*.iso)|*.iso|BIN (*.bin)|*.bin|" + ModLoaderText.OutputDialogTypeAllFiles + " (*.*)|*.*";
-
-            saveFileDialog1.FileName = ModLoaderText.DefaultOutputFileName + ".iso";
+            switch (ModProgram.Pipeline.Metadata.Console)
+            {
+                default:
+                    saveFileDialog1.Filter = "ISO (*.iso)|*.iso|BIN (*.bin)|*.bin|" + ModLoaderText.OutputDialogTypeAllFiles + " (*.*)|*.*";
+                    saveFileDialog1.FileName = ModLoaderText.DefaultOutputFileName + ".iso";
+                    break;
+                case ConsoleMode.N3DS:
+                    saveFileDialog1.Filter = "3DS (*.3ds)|*.3ds|" + ModLoaderText.OutputDialogTypeAllFiles + " (*.*)|*.*";
+                    saveFileDialog1.FileName = ModLoaderText.DefaultOutputFileName + ".3ds";
+                    break;
+                case ConsoleMode.NDS:
+                    saveFileDialog1.Filter = "NDS (*.nds)|*.nds|" + ModLoaderText.OutputDialogTypeAllFiles + " (*.*)|*.*";
+                    saveFileDialog1.FileName = ModLoaderText.DefaultOutputFileName + ".nds";
+                    break;
+            }
+            
             saveFileDialog1.ShowDialog();
         }
 
@@ -159,7 +181,7 @@ namespace CrateModLoader
         {
             ModProgram.OutputPath = saveFileDialog1.FileName;
             textBox_outputPath.Text = ModProgram.OutputPath;
-            bool ready = ModProgram.Pipeline != null;
+            bool ready = ModProgram.Pipeline != null && !ModProgram.HasProcessFinished;
             button_startProcess.Enabled = ready;
             if (ready)
             {
@@ -178,26 +200,13 @@ namespace CrateModLoader
             {
                 if (MessageBox.Show(ModLoaderText.NoOptionsSelectedPopup, ModLoaderText.NoOptionsSelectedTitle, MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    ModProgram.StartProcess();
+                    ModProgram.StartProcess(false);
                 }
             }
             else
             {
-                ModProgram.StartProcess();
+                ModProgram.StartProcess(false);
             }
-        }
-
-        private void button_modCrateMenu_Click(object sender, EventArgs e)
-        {
-            // Mod Crate Manager Window: 
-            // Either a checkbox list of .zip files in a mod directory OR
-            // A list with a button that lets you manually add .zip files
-            // Set availability in the respective modder's Game struct (ModCratesSupported variable) 
-
-            ModCrateManagerForm modCrateManagerMenu = new ModCrateManagerForm(ModProgram);
-
-            modCrateManagerMenu.Owner = this;
-            modCrateManagerMenu.Show();
         }
 
         private void button_openModMenu_Click(object sender, EventArgs e)
@@ -232,18 +241,8 @@ namespace CrateModLoader
                             option.Value = 1;
                         }
                         option.HasChanged = true;
-                        if (!string.IsNullOrEmpty(option.Description))
-                        {
-                            linkLabel_optionDesc.Text = option.Description;
-                            linkLabel_optionDesc.Visible = true;
-                            panel_desc.Visible = true;
-                        }
-                        else
-                        {
-                            linkLabel_optionDesc.Text = string.Empty;
-                            linkLabel_optionDesc.Visible = false;
-                            panel_desc.Visible = false;
-                        }
+                        linkLabel_optionDesc.Text = option.Description;
+                        linkLabel_optionDesc.Visible = panel_desc.Visible = !string.IsNullOrEmpty(option.Description);
                     }
                 }
             }
@@ -301,7 +300,8 @@ namespace CrateModLoader
                         ModProgram.InputPath = fileList[0];
                     }
                     ModProgram.ResetGameSpecific(true);
-                    UpdateProcessText(ModLoaderText.Step1Text);
+                    UpdateProcessText("Detecting...");
+                    Update();
                     ModProgram.DetectGame(ModProgram.InputPath);
                     textBox_inputPath.Text = ModProgram.InputPath;
                 }
@@ -395,7 +395,7 @@ namespace CrateModLoader
                 ModProgram.OutputPath = folderBrowserDialog2.SelectedPath + @"\";
                 textBox_outputPath.Text = ModProgram.OutputPath;
 
-                bool ready = ModProgram.Pipeline != null;
+                bool ready = ModProgram.Pipeline != null && !ModProgram.HasProcessFinished;
                 button_startProcess.Enabled = ready;
                 if (ready)
                 {
@@ -412,7 +412,7 @@ namespace CrateModLoader
                 //Size = new Size(mMinimumSize.Width, height + 300);
                 Size = new Size(MinimumSize.Width, height);
             }
-            MinimumSize = new Size(MinimumSize.Width, height);
+            //MinimumSize = new Size(MinimumSize.Width, height);
             if (Size.Height > height)
             {
                 Size = new Size(MinimumSize.Width, height);
@@ -426,48 +426,64 @@ namespace CrateModLoader
             button_browseInput.Enabled = false;
             button_browseOutput.Enabled = false;
             button_randomizeSeed.Enabled = false;
+            button_LevelEditor.Enabled = false;
             textBox_outputPath.ReadOnly = true;
             numericUpDown1.ReadOnly = true;
             numericUpDown1.Enabled = false;
             button_openModMenu.Enabled = false;
-            button_modCrateMenu.Enabled = false;
+            //button_modCrateMenu.Enabled = false;
             linkLabel_apiCredit.Enabled = false;
             linkLabel_programTitle.Enabled = false;
-            button_modTools.Enabled = false;
-            button_downloadMods.Enabled = false;
+            //button_modTools.Enabled = false;
+            button_preloadGame.Enabled = false;
             menuStrip1.Enabled = false;
+            ModCrateBox.Enabled = false;
             DragDrop -= ModLoaderForm_DragDrop;
             DragEnter -= ModLoaderForm_DragEnter;
         }
         public void EnableInteraction(object sender, EventArgs e)
         {
-            button_startProcess.Enabled = true;
+            if (ModProgram.OutputPath != string.Empty && !ModProgram.HasProcessFinished)
+            {
+                button_startProcess.Enabled = true;
+            }
+            else
+            {
+                button_startProcess.Enabled = false;
+            }
             checkedListBox1.Enabled = true;
             button_browseInput.Enabled = true;
             button_browseOutput.Enabled = true;
             button_randomizeSeed.Enabled = true;
+            
             textBox_outputPath.ReadOnly = false;
             numericUpDown1.ReadOnly = false;
             numericUpDown1.Enabled = true;
-            button_modCrateMenu.Enabled = true;
+            //button_modCrateMenu.Enabled = true;
             menuStrip1.Enabled = true;
+            ModCrateBox.Enabled = true;
             DragDrop += ModLoaderForm_DragDrop;
             DragEnter += ModLoaderForm_DragEnter;
 
             if (ModProgram.Modder != null)
             {
                 button_openModMenu.Enabled = ModProgram.Modder.ModMenuEnabled;
-            }
-            button_modTools.Enabled = false;//true;
-
-            if (ModProgram.Modder != null && !ModProgram.GamePreloaded && ModProgram.Modder.CanPreloadGame 
-                && (ModProgram.Modder.PreloadConsoles.Count == 0 || ModProgram.Modder.PreloadConsoles.Contains(ModProgram.Pipeline.Metadata.Console)))
-            {
-                button_downloadMods.Enabled = true;
+                button_LevelEditor.Enabled = false;//ModProgram.Game.EnableLevelEditor;
             }
             else
             {
-                button_downloadMods.Enabled = false;
+                button_openModMenu.Enabled = button_LevelEditor.Enabled = false;
+            }
+            //button_modTools.Enabled = false;//true;
+
+            if (!ModProgram.GamePreloaded)
+                //ModProgram.Modder.CanPreloadGame && (ModProgram.Modder.PreloadConsoles == null || ModProgram.Modder.PreloadConsoles.Contains(ModProgram.Pipeline.Metadata.Console)))
+            {
+                button_preloadGame.Enabled = true;
+            }
+            else
+            {
+                button_preloadGame.Enabled = false;
             }
 
             if (ModProgram.Modder != null && !string.IsNullOrWhiteSpace(ModProgram.Game.API_Link))
@@ -480,15 +496,18 @@ namespace CrateModLoader
         void ResetGameSpecific(object sender, EventValueArgs<bool> e)
         {
             bool ClearGameText = e.Value;
-            button_modCrateMenu.Text = ModLoaderText.ModCratesButton;
+            //button_modCrateMenu.Text = ModLoaderText.ModCratesButton;
             button_openModMenu.Text = ModLoaderText.ModMenuButton;
 
             button_startProcess.Enabled = false;
 
             button_openModMenu.Enabled = button_openModMenu.Visible = false;
-            button_modCrateMenu.Enabled = button_modCrateMenu.Visible = false;
-            button_randomizeSeed.Enabled = button_randomizeSeed.Visible = button_modTools.Visible = button_modTools.Enabled = button_downloadMods.Enabled = button_downloadMods.Visible = false;
+            //button_modCrateMenu.Enabled = button_modCrateMenu.Visible = false;
+            button_randomizeSeed.Enabled = button_randomizeSeed.Visible = false;//button_modTools.Visible = button_modTools.Enabled = false;
             numericUpDown1.Enabled = numericUpDown1.Visible = false;
+            button_preloadGame.Visible = true;
+            button_preloadGame.Enabled = !ModProgram.GamePreloaded;
+            ModCrateBox.Visible = ModCrateBox.Enabled = false;
 
             linkLabel_apiCredit.Text = string.Empty;
             linkLabel_apiCredit.LinkVisited = false;
@@ -503,26 +522,25 @@ namespace CrateModLoader
 
             checkedListBox1.Visible = checkedListBox1.Enabled = false;
 
-            int Height = 188;
-            if (!ClearGameText)
-            {
-                Height = 220;
-            }
-
+            int Height = 500;
             AdjustSize(Height);
         }
 
         void SetLayoutUnsupportedGame(object sender, EventValueArgs<string> e)
         {
             string cons_mod = e.Value;
-            button_modCrateMenu.Text = ModLoaderText.ModCratesButton;
+            //button_modCrateMenu.Text = ModLoaderText.ModCratesButton;
             checkedListBox1.Items.Clear();
             button_openModMenu.Visible = true;
             button_openModMenu.Enabled = false;
-            button_modCrateMenu.Enabled = button_modCrateMenu.Visible = button_modTools.Visible = true;
-            button_randomizeSeed.Enabled = button_randomizeSeed.Visible = button_openModMenu.Visible = button_openModMenu.Enabled = button_downloadMods.Enabled = button_downloadMods.Visible = false;
+            //button_modCrateMenu.Enabled = button_modCrateMenu.Visible = true;
+            button_randomizeSeed.Enabled = button_randomizeSeed.Visible = button_openModMenu.Visible = button_openModMenu.Enabled = button_LevelEditor.Enabled = button_LevelEditor.Visible = false;// button_modTools.Visible = false;
             numericUpDown1.Enabled = numericUpDown1.Visible = false;
-            button_modTools.Enabled = false;//true;
+            //button_modTools.Enabled = false;
+            button_preloadGame.Visible = true;
+            button_preloadGame.Enabled = !ModProgram.GamePreloaded;
+            ModCrateBox.Visible = ModCrateBox.Enabled = true;
+            ModCrateBox.PopulateList();
 
             label_gameType.Text = ModLoaderText.UnsupportedGameTitle + " (" + cons_mod + ")";
             linkLabel_apiCredit.Text = string.Empty;
@@ -530,7 +548,7 @@ namespace CrateModLoader
             linkLabel_optionDesc.Visible = false;
             panel_desc.Visible = false;
 
-            int height = 295 + 45 + (checkedListBox1.Items.Count * 17);
+            int height = 500;//295 + 45 + (checkedListBox1.Items.Count * 17);
             checkedListBox1.Visible = checkedListBox1.Enabled = checkedListBox1.Items.Count > 0;
             AdjustSize(height);
         }
@@ -539,29 +557,34 @@ namespace CrateModLoader
             Game game = e.Game;
             string cons_mod = e.Console;
             string region_mod = e.Region;
-            button_modCrateMenu.Text = ModLoaderText.ModCratesButton;
+            //button_modCrateMenu.Text = ModLoaderText.ModCratesButton;
             checkedListBox1.Items.Clear();
+
             button_openModMenu.Visible = true;
             button_openModMenu.Enabled = ModProgram.Modder.ModMenuEnabled;
-            button_modCrateMenu.Visible = true;
-            button_modCrateMenu.Enabled = !game.ModCratesDisabled;
-            button_randomizeSeed.Enabled = button_randomizeSeed.Visible = button_modTools.Visible = button_downloadMods.Visible = true;
+            button_LevelEditor.Visible = false; //true;
+            button_LevelEditor.Enabled = false; //ModProgram.Game.EnableLevelEditor;
+            //button_modCrateMenu.Visible = true;
+            //button_modCrateMenu.Enabled = !game.ModCratesDisabled;
+            button_randomizeSeed.Enabled = button_randomizeSeed.Visible = true; //button_modTools.Visible = button_downloadMods.Visible = true;
+            ModCrateBox.Visible = ModCrateBox.Enabled = true;
+            ModCrateBox.PopulateList();
 
-            if (!ModProgram.GamePreloaded && ModProgram.Modder.CanPreloadGame
-                && (ModProgram.Modder.PreloadConsoles.Count == 0 || ModProgram.Modder.PreloadConsoles.Contains(ModProgram.Pipeline.Metadata.Console)))
+            if (!ModProgram.GamePreloaded)
+              //&& ModProgram.Modder.CanPreloadGame && (ModProgram.Modder.PreloadConsoles == null || ModProgram.Modder.PreloadConsoles.Contains(ModProgram.Pipeline.Metadata.Console)))
             {
-                button_downloadMods.Enabled = true;
+                button_preloadGame.Enabled = true;
             }
             else
             {
-                button_downloadMods.Enabled = false;
+                button_preloadGame.Enabled = false;
             }
 
             numericUpDown1.Enabled = numericUpDown1.Visible = true;
             linkLabel_optionDesc.Text = string.Empty;
             linkLabel_optionDesc.Visible = false;
             panel_desc.Visible = false;
-            button_modTools.Enabled = false;//true;
+            //button_modTools.Enabled = false;//true;
 
             if (string.IsNullOrWhiteSpace(region_mod))
             {
@@ -592,16 +615,52 @@ namespace CrateModLoader
 
             if (ModProgram.Modder.Props.Count > 0)
             {
+                Dictionary<uint, int> PropOrder = new Dictionary<uint, int>();
+                uint maxIndex = 0;
+
+                for (int i = 0; i < ModProgram.Modder.Props.Count; i++)
+                {
+                    ModPropertyBase prop = ModProgram.Modder.Props[i];
+                    if (prop is ModPropOption option && option.Allowed(ModProgram.Pipeline.Metadata.Console, ModProgram.Modder.GameRegion.Region) && !option.ModMenuOnly)
+                    {
+                        if (option.ListIndex != null)
+                        {
+                            PropOrder.Add((uint)option.ListIndex, i);
+                            if ((uint)option.ListIndex > maxIndex)
+                            {
+                                maxIndex = (uint)option.ListIndex;
+                            }
+                        }
+                    }
+                }
+
+                if (PropOrder.Count > 0)
+                {
+                    uint iter = 0;
+                    while (iter < maxIndex + 1)
+                    {
+                        if (PropOrder.ContainsKey(iter))
+                        {
+                            ModPropOption option = (ModPropOption)ModProgram.Modder.Props[PropOrder[iter]];
+                            checkedListBox1.Items.Add(option, option.Value != 0);
+                        }
+                        iter++;
+                    }
+                }
+
                 foreach (var prop in ModProgram.Modder.Props)
                 {
                     if (prop is ModPropOption option && option.Allowed(ModProgram.Pipeline.Metadata.Console, ModProgram.Modder.GameRegion.Region) && !option.ModMenuOnly)
                     {
-                        checkedListBox1.Items.Add(option, option.Value != 0);
+                        if (option.ListIndex == null)
+                        {
+                            checkedListBox1.Items.Add(option, option.Value != 0);
+                        }
                     }
                 }
             }
 
-            int height = 295 + 45 + (checkedListBox1.Items.Count * 17);
+            int height = 500;//295 + 45 + (checkedListBox1.Items.Count * 17);
             checkedListBox1.Visible = checkedListBox1.Enabled = checkedListBox1.Items.Count > 0;
             AdjustSize(height);
         }
@@ -626,6 +685,10 @@ namespace CrateModLoader
             if (ModProgram.OutputPath == "")
             {
                 UpdateProcessText(ModLoaderText.Step2Text);
+                allow = false;
+            }
+            if (ModProgram.HasProcessFinished)
+            {
                 allow = false;
             }
             button_startProcess.Enabled = allow;
@@ -659,7 +722,7 @@ namespace CrateModLoader
                 CratesActive += $" ({ ModsActive }x)";
             }
 
-            button_modCrateMenu.Text = CratesActive;
+            //button_modCrateMenu.Text = CratesActive;
         }
 
         [DllImport("user32.dll")]
@@ -677,9 +740,48 @@ namespace CrateModLoader
             {
                 if (MessageBox.Show(ModLoaderText.Popup_PreloadGame, ModLoaderText.Button_PreloadGame, MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    ModProgram.StartPreload();
+                    ModProgram.StartProcess(true);
                 }
             }
+        }
+
+        private void checkedListBox1_MouseEnter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkedListBox1_MouseMove(object sender, MouseEventArgs e)
+        {
+            CheckedListBox c = sender as CheckedListBox;
+            int index = c.IndexFromPoint(e.Location);
+            if (index < 0) return;
+            if (index != c.SelectedIndex)
+                c.SelectedIndex = index;
+
+            if (c.Items[index] is ModPropOption option)
+            {
+                linkLabel_optionDesc.Text = option.Description;
+                linkLabel_optionDesc.Visible = panel_desc.Visible = !string.IsNullOrEmpty(option.Description);
+            }
+        }
+
+        public void DisplayError(object sender, EventValueArgs<string> e)
+        {
+            MessageBox.Show(e.Value);
+        }
+
+        private void button_LevelEditor_Click(object sender, EventArgs e)
+        {
+            if (!ModProgram.GamePreloaded)
+            {
+                MessageBox.Show("You must preload the game to open the Level Editor.");
+                return;
+            }
+
+            //LevelEditor Editor = new LevelEditor(ModProgram);
+            //Editor.Owner = this;
+            //Editor.Show();
+            return;
         }
     }
 }

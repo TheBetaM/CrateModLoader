@@ -1,94 +1,156 @@
 ﻿using System;
-using System.Reflection;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CrateModLoader
 {
-    // A mod pipeline describes a process of extracting, rebuilding and detecting the format of a game file/folder or a container (archive) of game files.
-    public abstract class ModPipeline : IModPipeline
+    // Extracts/builds archives of game files (inside ROMs)
+    public abstract class ModPipeline : ModPipelineBase
     {
 
-        public abstract ModPipelineInfo Metadata { get; }
+        public abstract List<string> Extensions { get; } // case-insensitive
+        public virtual List<string> SecondaryList { get; set; }
+        public virtual bool SecondarySkip { get; set; }
+        public virtual bool DisableAsync => false;
+        public virtual bool IsModLayer => false;
+        public virtual int ModLayerID => 0;
+        public override bool ModLayerReplaceOnly => false;
+        public virtual string Name { get; }
+        public Modder ExecutionSource;
+        private Dictionary<string, List<FileInfo>> FoundFiles;
+        public override bool SkipPipeline { get; set; }
+        public List<string> ExtractedPaths { get; set; }
 
-        public BackgroundWorker AsyncWorker { get; set; }
-        public bool IsBusy { get { return AsyncWorker != null && AsyncWorker.IsBusy; } }
-
-        /// <summary> Full path to the extracted files' folder. Differs based on console, but always points to the same game data. Ends with '\' </summary>
-        public string ExtractedPath
+        public ModPipeline(Modder source)
         {
-            get
+            ExecutionSource = source;
+            FoundFiles = new Dictionary<string, List<FileInfo>>();
+            foreach (string ext in Extensions)
             {
-                return ModLoaderGlobals.BaseDirectory + ProcessPath;
+                FoundFiles.Add(ext.ToLower(), new List<FileInfo>());
             }
+            SkipPipeline = false;
+            SecondarySkip = true;
+            //SkipPipeline = !CheckModsForType();
+            ExtractedPaths = new List<string>();
         }
 
-        /// <summary> Relative path to the extracted files' folder that starts with the temp folder's name. Ends with '\' </summary>
-        public abstract string ProcessPath { get; }
-        /// <summary> Folder path to extract game files to (only for use in console Pipelines & ModLoader) </summary>
-        public abstract string TempPath { get; }
-        /// <summary> Executable file name from the detected RegionCode struct of the currently loaded ROM. ex. "SLUS_209.09" </summary>
-        //public abstract string ExecutablePath { get; } // todo
+        /// <summary>
+        /// Extract archive at path to directory path that is named after the archive file.
+        /// </summary>
+        public abstract Task ExtractObject(string filePath);
+        /// <summary>
+        /// Rebuild archive at path from files in directory path named after the archive file.
+        /// </summary>
+        public abstract Task BuildObject(string filePath);
 
-        public virtual bool DetectROM(string inputPath, out string titleID, out uint regionID)
+        public override async Task StartPipeline(PipelinePass pass)
         {
-            titleID = null;
-            regionID = 0;
-            return false;
-        }
-
-        public virtual bool DetectFolder(string inputPath, out string titleID, out uint regionID)
-        {
-            titleID = null;
-            regionID = 0;
-            return false;
-        }
-
-        public virtual bool Detect(bool directoryMode, string inputPath, out string titleID, out uint regionID)
-        {
-            if (directoryMode)
-                return DetectFolder(inputPath, out titleID, out regionID);
-            else
-                return DetectROM(inputPath, out titleID, out regionID);
-        }
-
-        public virtual void PreStart(bool inputDirectoryMode, bool outputDirectoryMode)
-        {
-            if (!outputDirectoryMode)
+            IList<Task> editTaskList = new List<Task>();
+            foreach (KeyValuePair<string, List<FileInfo>> list in FoundFiles)
             {
-                if (inputDirectoryMode)
+                foreach (FileInfo file in list.Value)
                 {
-                    if (!Metadata.CanBuildROMfromFolder)
-                        throw new NotImplementedException("Building a ROM from a folder of this console is not supported yet.");
+                    editTaskList.Add(FileStartPipeline(file, pass));
+                }
+            }
+            await Task.WhenAll(editTaskList);
+            editTaskList.Clear();
+        }
+        public override async Task FileStartPipeline(FileInfo file, PipelinePass pass)
+        {
+            string filePath = file.FullName;
+            if (DisableAsync)
+            {
+                // broken!! just starts the process but doesn't wait for it to finish!
+                try
+                {
+                    if (pass == PipelinePass.Extract)
+                    {
+                        ExtractObject(filePath);
+                    }
+                    else if (pass == PipelinePass.Build)
+                    {
+                        BuildObject(filePath);
+                    }
+                }
+                catch
+                {
+                    Console.WriteLine("ModPipeline Error: " + filePath);
+                }
+            }
+            else
+            {
+                try
+                {
+                    if (pass == PipelinePass.Extract)
+                    {
+                        await ExtractObject(filePath);
+                    }
+                    else if (pass == PipelinePass.Build)
+                    {
+                        await BuildObject(filePath);
+                    }
+                }
+                catch
+                {
+                    Console.WriteLine("ModPipeline Error: " + filePath);
+                }
+            }
+
+            if (IsModLayer)
+            {
+                string fileName = Path.GetFileName(filePath);
+                string fileNameNoExt = Path.GetFileNameWithoutExtension(filePath);
+                string dirPath = filePath.Substring(0, (filePath.Length - fileName.Length)) + fileNameNoExt + @"\";
+
+                ExtractedPaths.Add(dirPath);
+            }
+
+            //ExecutionSource.PassIterator++;
+            //ExecutionSource.PassPercent = (int)((ExecutionSource.PassIterator / (float)ExecutionSource.PassCount) * 100f); //* ExecutionSource.PassPercentMod) + ExecutionSource.PassPercentAdd;
+        }
+
+        public override bool AddFile(FileInfo file)
+        {
+            string extension = file.Extension.ToLower();
+            if (FoundFiles.ContainsKey(extension))
+            {
+                if (SecondaryList != null && SecondaryList.Count > 0)
+                {
+                    if (SecondarySkip && !SecondaryList.Contains(file.Name))
+                    {
+                        FoundFiles[extension].Add(file);
+                        return true;
+                    }
+                    else if (!SecondarySkip && SecondaryList.Contains(file.Name))
+                    {
+                        FoundFiles[extension].Add(file);
+                        return true;
+                    }
                 }
                 else
                 {
-                    if (!Metadata.CanBuildROMfromROM)
-                        throw new NotImplementedException("Building a ROM from a ROM of this console is not supported yet.");
+                    FoundFiles[extension].Add(file);
+                    return true;
                 }
             }
-            else
+            return false;
+        }
+
+        public override void InstallModCrates()
+        {
+            if (IsModLayer)
             {
-                if (!Metadata.CanBuildFolder)
-                    throw new NotImplementedException("Building a folder of this console is not supported yet.");
+                foreach (string dirPath in ExtractedPaths)
+                {
+                    ModCrates.InstallLayerMods(ExecutionSource.EnabledModCrates, dirPath, ModLayerID, ModLayerReplaceOnly);
+                }
             }
         }
 
-        public abstract void Extract(string inputPath, string outputPath);
-
-        public abstract void Build(string inputPath, string outputPath);
-
-    }
-
-    public class ModPipelineInfo
-    {
-        public ConsoleMode Console { get; set; }
-        public int Layer { get; set; }
-        public Assembly Assembly { get; set; }
-
-        public bool NeedsDetection = false;
-        public bool CanExtractROM = true;
-        public bool CanBuildROMfromROM = true;
-        public bool CanBuildROMfromFolder = true;
-        public bool CanBuildFolder = true;
     }
 }
