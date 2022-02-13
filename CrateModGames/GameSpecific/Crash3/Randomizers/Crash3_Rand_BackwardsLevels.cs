@@ -126,7 +126,7 @@ namespace CrateModLoader.GameSpecific.Crash3
             }
             if (Crash3_Common.FlyingLevelsList.Contains(level))
             {
-                FLyingLevelPass(pair);
+                FlyingLevelPass(pair);
                 return;
             }
 
@@ -1640,7 +1640,7 @@ namespace CrateModLoader.GameSpecific.Crash3
 
         }
 
-        public void FLyingLevelPass(NSF_Pair pair)
+        public void FlyingLevelPass(NSF_Pair pair)
         {
             Crash3_Levels level = pair.LevelC3;
             if (!Crash3_Common.FlyingLevelsList.Contains(level))

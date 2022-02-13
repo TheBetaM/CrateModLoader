@@ -19,19 +19,23 @@ namespace CrateModLoader
         public override bool SkipParser { get; set; }
         public bool LoadOnly = false;
         private uint ErrorCount = 0;
+        private bool StreamedParser = false;
 
         public ModParser(Modder source)
         {
             ExecutionSource = source;
             FoundFiles = new Dictionary<string, List<FileInfo>>();
+            FoundMemFiles = new Dictionary<string, List<MemoryFile>>();
             if (Extensions != null)
             {
                 foreach (string ext in Extensions)
                 {
                     FoundFiles.Add(ext.ToLower(), new List<FileInfo>());
+                    FoundMemFiles.Add(ext.ToLower(), new List<MemoryFile>());
                 }
             }
             SkipParser = !CheckModsForType();
+            StreamedParser = ExecutionSource.StreamedModder;
         }
 
         /// <summary>
@@ -42,18 +46,42 @@ namespace CrateModLoader
         /// Save the type to the file. File must be closed at the end!
         /// </summary>
         public abstract void SaveObject(T thing, string filePath);
-
+        // MemoryFile operations
+        public virtual async Task<T> LoadObject(MemoryFile file, Dictionary<string, MemoryFile> AllFiles)
+        {
+            await new Task(null);
+            throw new NotImplementedException();
+        }
+        public virtual async void SaveObject(T thing, MemoryFile file, Dictionary<string, MemoryFile> AllFiles)
+        {
+            await new Task(null);
+            throw new NotImplementedException();
+        }
 
         public override async Task StartPass(ModPass pass = ModPass.Mod)
         {
             IList<Task> editTaskList = new List<Task>();
-            foreach (KeyValuePair<string, List<FileInfo>> list in FoundFiles)
+            if (ExecutionSource.StreamedModder)
             {
-                foreach (FileInfo file in list.Value)
+                foreach (KeyValuePair<string, List<MemoryFile>> list in FoundMemFiles)
                 {
-                    editTaskList.Add(FileStartPass(file, pass));
+                    foreach (MemoryFile file in list.Value)
+                    {
+                        editTaskList.Add(MemoryFileStartPass(file, pass));
+                    }
                 }
             }
+            else
+            {
+                foreach (KeyValuePair<string, List<FileInfo>> list in FoundFiles)
+                {
+                    foreach (FileInfo file in list.Value)
+                    {
+                        editTaskList.Add(FileStartPass(file, pass));
+                    }
+                }
+            }
+            
             await Task.WhenAll(editTaskList);
             editTaskList.Clear();
             Console.WriteLine("ModParser finished, errors: " + ErrorCount);
@@ -66,6 +94,12 @@ namespace CrateModLoader
                 try
                 {
                     T thing = LoadObject(filePath);
+
+                    if (thing == null)
+                    {
+                        ExecutionSource.PassIterator++;
+                        return;
+                    }
 
                     ExecutionSource.StartPass(thing, pass);
 
@@ -90,6 +124,12 @@ namespace CrateModLoader
                     {
                         T thing = LoadObject(filePath);
 
+                        if (thing == null)
+                        {
+                            ExecutionSource.PassIterator++;
+                            return;
+                        }
+
                         ExecutionSource.StartPass(thing, pass);
 
                         if (!LoadOnly)
@@ -104,6 +144,64 @@ namespace CrateModLoader
                     }
                 }
                 );
+            }
+
+            ExecutionSource.PassIterator++;
+            //ExecutionSource.PassPercent = (int)((ExecutionSource.PassIterator / (float)ExecutionSource.PassCount) * 100f); //* ExecutionSource.PassPercentMod) + ExecutionSource.PassPercentAdd;
+        }
+
+        public override async Task MemoryFileStartPass(MemoryFile file, ModPass pass = ModPass.Mod)
+        {
+            if (DisableAsync)
+            {
+                try
+                {
+                    Task<T> task = LoadObject(file, ExecutionSource.ConsolePipeline.ExtractedFiles);
+                    T thing = task.Result;
+
+                    if (thing == null)
+                    {
+                        ExecutionSource.PassIterator++;
+                        return;
+                    }
+
+                    ExecutionSource.StartPass(thing, pass);
+
+                    if (!LoadOnly)
+                    {
+                        SaveObject(thing, file, ExecutionSource.ConsolePipeline.ExtractedFiles);
+                    }
+                }
+                catch
+                {
+                    ErrorCount++;
+                    Console.WriteLine("ModParser Error: " + file.FullName);
+                }
+            }
+            else
+            {
+                try
+                {
+                    T thing = await LoadObject(file, ExecutionSource.ConsolePipeline.ExtractedFiles);
+
+                    if (thing == null)
+                    {
+                        ExecutionSource.PassIterator++;
+                        return;
+                    }
+
+                    ExecutionSource.StartPass(thing, pass);
+
+                    if (!LoadOnly)
+                    {
+                        SaveObject(thing, file, ExecutionSource.ConsolePipeline.ExtractedFiles);
+                    }
+                }
+                catch
+                {
+                    ErrorCount++;
+                    Console.WriteLine("ModParser Error: " + file.FullName);
+                }
             }
 
             ExecutionSource.PassIterator++;
@@ -131,6 +229,34 @@ namespace CrateModLoader
                 else
                 {
                     FoundFiles[extension].Add(file);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public override bool AddFile(MemoryFile file)
+        {
+            string[] splitPath = file.FullName.ToLower().Split('.');
+            string extension = "." + splitPath[splitPath.Length - 1];
+            if (FoundFiles.ContainsKey(extension))
+            {
+                if (SecondaryList != null && SecondaryList.Count > 0)
+                {
+                    if (SecondarySkip && !SecondaryList.Contains(file.FullName))
+                    {
+                        FoundMemFiles[extension].Add(file);
+                        return true;
+                    }
+                    else if (!SecondarySkip && SecondaryList.Contains(file.FullName))
+                    {
+                        FoundMemFiles[extension].Add(file);
+                        return true;
+                    }
+                }
+                else
+                {
+                    FoundMemFiles[extension].Add(file);
                     return true;
                 }
             }

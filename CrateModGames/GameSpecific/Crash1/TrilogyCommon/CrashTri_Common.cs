@@ -200,6 +200,10 @@ namespace CrateModLoader.GameSpecific
         public Crash3_Levels LevelC3;
         public RegionType region;
 
+        public NSF_Pair(RegionType r)
+        {
+            region = r;
+        }
         public NSF_Pair(NSF n)
         {
             nsf = n;

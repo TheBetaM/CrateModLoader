@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="EventArgs.cs" />
     <Compile Include="FileFilter.cs" />
+    <Compile Include="FileSystem\MemoryFile.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GenericMod.cs" />
     <Compile Include="IMod.cs" />

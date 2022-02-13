@@ -26,6 +26,7 @@ namespace CrateModLoader.ModPipelines
 
         public override string TempPath => ModLoaderGlobals.BaseDirectory + ModLoaderGlobals.TempName + @"\";
         public override string ProcessPath => ModLoaderGlobals.TempName + @"\";
+        public override bool StreamPipeline => true;
 
         private string TempBinPath = ModLoaderGlobals.ToolsPath + "binconvout.iso";
         private BackgroundWorker GlobalWorker;
@@ -221,7 +222,10 @@ namespace CrateModLoader.ModPipelines
             buildInputPath = inputPath;
             buildOutputPath = outputPath;
             isExtracting = true;
-            UseNewTools = !LegacyMethod;
+            if (LegacyMethod)
+            {
+                UseNewTools = false;
+            }
 
             AsyncWorker = new BackgroundWorker();
             AsyncWorker.WorkerReportsProgress = true;
@@ -295,31 +299,60 @@ namespace CrateModLoader.ModPipelines
                         isoBuild.UseJoliet = true;
                         isoBuild.VolumeIdentifier = ISO_Label;
 
-                        DirectoryInfo di = new DirectoryInfo(buildInputPath);
-                        HashSet<FileStream> files = new HashSet<FileStream>();
-
-                        foreach (DirectoryInfo dir in di.GetDirectories())
+                        if (UsingStreamPipeline)
                         {
-                            ISO_Common.Recursive_AddDirs(isoBuild, dir, dir.Name + @"\", files, true);
-                        }
-                        foreach (FileInfo file in di.GetFiles())
-                        {
-                            ISO_Common.AddFile(isoBuild, file, string.Empty, files, true);
-                        }
+                            foreach (KeyValuePair<string, MemoryFile> pair in ExtractedFiles)
+                            {
+                                pair.Value.Stream.Position = 0;
+                                isoBuild.AddFile(pair.Key, pair.Value.Stream);
+                            }
 
-                        using (FileStream output = new FileStream(buildOutputPath, FileMode.Create, FileAccess.Write))
-                        using (Stream input = isoBuild.Build())
-                        {
-                            ISO2PSX.Run(input, output, AsyncWorker);
-                        }
+                            using (FileStream output = new FileStream(buildOutputPath, FileMode.Create, FileAccess.Write))
+                            using (Stream input = isoBuild.Build())
+                            {
+                                /*
+                                foreach (MemoryFile file in ExtractedFiles)
+                                {
+                                    file.Dispose();
+                                }
+                                ExtractedFiles.Clear();
+                                GC.Collect();
+                                GC.WaitForPendingFinalizers();
+                                */
 
-                        isoBuild = null;
+                                ISO2PSX.Run(input, output, AsyncWorker);
+                            }
 
-                        foreach (FileStream file in files)
-                        {
-                            file.Close();
+                            isoBuild = null;
                         }
-                        files.Clear();
+                        else
+                        {
+                            DirectoryInfo di = new DirectoryInfo(buildInputPath);
+                            HashSet<FileStream> files = new HashSet<FileStream>();
+
+                            foreach (DirectoryInfo dir in di.GetDirectories())
+                            {
+                                ISO_Common.Recursive_AddDirs(isoBuild, dir, dir.Name + @"\", files, true);
+                            }
+                            foreach (FileInfo file in di.GetFiles())
+                            {
+                                ISO_Common.AddFile(isoBuild, file, string.Empty, files, true);
+                            }
+
+                            using (FileStream output = new FileStream(buildOutputPath, FileMode.Create, FileAccess.Write))
+                            using (Stream input = isoBuild.Build())
+                            {
+                                ISO2PSX.Run(input, output, AsyncWorker);
+                            }
+
+                            isoBuild = null;
+
+                            foreach (FileStream file in files)
+                            {
+                                file.Close();
+                            }
+                            files.Clear();
+                        }
                     }
 
                     isExtracting = false;
@@ -406,6 +439,8 @@ namespace CrateModLoader.ModPipelines
                         binconvout.Close();
                         tempbin = new FileStream(TempBinPath, FileMode.Open, FileAccess.Read, FileShare.Read);
                     }
+                    GC.Collect();
+                    GC.WaitForPendingFinalizers();
                     extract_reader = new CDReader(tempbin, true);
                 }
                 else
@@ -415,7 +450,7 @@ namespace CrateModLoader.ModPipelines
                 }
                 ISO_Label = extract_reader.VolumeLabel;
 
-                if (!Directory.Exists(extractOutputPath))
+                if (!UsingStreamPipeline && !Directory.Exists(extractOutputPath))
                 {
                     Directory.CreateDirectory(extractOutputPath);
                 }
@@ -447,7 +482,10 @@ namespace CrateModLoader.ModPipelines
                 {
                     foreach (string directory in extract_reader.GetDirectories(""))
                     {
-                        Directory.CreateDirectory(extractOutputPath + directory);
+                        if (!UsingStreamPipeline)
+                        {
+                            Directory.CreateDirectory(extractOutputPath + directory);
+                        }
                         if (extract_reader.GetDirectoryInfo(directory).GetFiles().Length > 0)
                         {
                             foreach (string file in extract_reader.GetFiles(directory))
@@ -479,6 +517,8 @@ namespace CrateModLoader.ModPipelines
                     extract_isoStream.Dispose();
                     extract_isoStream.Close();
                 }
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
 
                 // Extracting files
                 foreach (KeyValuePair<string, string> Path in Paths)
@@ -514,10 +554,19 @@ namespace CrateModLoader.ModPipelines
                 {
                     using (Stream fileStreamFrom = cd.OpenFile(file, FileMode.Open))
                     {
-                        using (Stream fileStreamTo = File.Open(path, FileMode.OpenOrCreate))
+                        if (UsingStreamPipeline)
                         {
-                            await fileStreamFrom.CopyToAsync(fileStreamTo);
-                            //fileStreamFrom.CopyTo(fileStreamTo);
+                            MemoryFile memfile = new MemoryFile();
+                            await memfile.FromStreamAsync(fileStreamFrom, file);
+                            ExtractedFiles.Add(file, memfile);
+                        }
+                        else
+                        {
+                            using (Stream fileStreamTo = File.Open(path, FileMode.OpenOrCreate))
+                            {
+                                await fileStreamFrom.CopyToAsync(fileStreamTo);
+                                //fileStreamFrom.CopyTo(fileStreamTo);
+                            }
                         }
                     }
                 }
@@ -526,13 +575,17 @@ namespace CrateModLoader.ModPipelines
             ExtractIterator++;
         }
 
-        public override void Extract(string inputPath, string outputPath, BackgroundWorker worker)
+        public override void Extract(string inputPath, string outputPath, BackgroundWorker worker, bool LegacyMethod)
         {
 
             GlobalWorker = worker;
             extractInputPath = inputPath;
             extractOutputPath = outputPath;
             isExtracting = true;
+            if (LegacyMethod)
+            {
+                UseNewTools = false;
+            }
 
             AsyncWorker = new BackgroundWorker();
             AsyncWorker.WorkerReportsProgress = true;
@@ -548,7 +601,10 @@ namespace CrateModLoader.ModPipelines
         {
             foreach (string directory in cd.GetDirectories(dir))
             {
-                Directory.CreateDirectory(TempPath + @"\" + directory);
+                if (!UsingStreamPipeline)
+                {
+                    Directory.CreateDirectory(TempPath + @"\" + directory);
+                }
                 if (cd.GetDirectoryInfo(directory).GetFiles().Length > 0)
                 {
                     foreach (string file in cd.GetFiles(directory))

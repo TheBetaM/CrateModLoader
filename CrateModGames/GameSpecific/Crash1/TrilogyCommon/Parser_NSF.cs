@@ -4,22 +4,186 @@ using Crash;
 using System.IO;
 using CrateModLoader.GameSpecific.Crash2;
 using CrateModLoader.GameSpecific.Crash3;
+using System.Threading.Tasks;
 
 namespace CrateModLoader.GameSpecific.Crash1.TrilogyCommon
 {
     public class Parser_NSF : ModParser<NSF_Pair>
     {
-        public override bool DisableAsync => true; // API fails during multithreading
+        public override bool DisableAsync => true; // API failed during multithreading
         private GameVersion game;
         private RegionType region;
+        private Dictionary<int, NSF_Pair> LevelPairs;
 
         public Parser_NSF(Modder mod, GameVersion thisGame, RegionType r) : base(mod)
         {
             game = thisGame;
             region = r;
+
+            LevelPairs = new Dictionary<int, NSF_Pair>();
+            if (game == GameVersion.Crash2)
+            {
+                for (int i = 0; i <= (int)Crash2_Levels.WarpRoom5; i++)
+                {
+                    if (Enum.IsDefined(typeof(Crash2_Levels), i))
+                    {
+                        LevelPairs.Add(i, new NSF_Pair(region));
+                    }
+                }
+            }
+            else if (game == GameVersion.Crash3)
+            {
+                for (int i = 0; i <= (int)Crash3_Levels.WarpRoom; i++)
+                {
+                    if (Enum.IsDefined(typeof(Crash3_Levels), i))
+                    {
+                        LevelPairs.Add(i, new NSF_Pair(region));
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i <= (int)Crash1_Levels.Bonus_Cortex; i++)
+                {
+                    if (Enum.IsDefined(typeof(Crash1_Levels), i))
+                    {
+                        LevelPairs.Add(i, new NSF_Pair(region));
+                    }
+                }
+            }
         }
 
-        public override List<string> Extensions => new List<string>() { ".NSF" };
+        public override List<string> Extensions => new List<string>() { ".NSF",".NSF;1", };
+
+        public override async Task<NSF_Pair> LoadObject(MemoryFile file, Dictionary<string, MemoryFile> AllFiles)
+        {
+            NSF_Pair pair;
+            int NSF_Level = -1;
+
+            if (game == GameVersion.Crash2)
+            {
+                NSF_Level = (int)GetLevelFromNSF2(file.FullName);
+            }
+            else if (game == GameVersion.Crash3)
+            {
+                NSF_Level = (int)GetLevelFromNSF3(file.FullName);
+            }
+            else
+            {
+                NSF_Level = (int)GetLevelFromNSF1(file.FullName);
+            }
+
+            if (!LevelPairs.ContainsKey(NSF_Level))
+            {
+                NSF_Level = LevelPairs.Count + 1;
+                LevelPairs.Add(NSF_Level, new NSF_Pair(region));
+                LevelPairs[NSF_Level].LevelC1 = Crash1_Levels.Unknown;
+                LevelPairs[NSF_Level].LevelC2 = Crash2_Levels.Unknown;
+                LevelPairs[NSF_Level].LevelC3 = Crash3_Levels.Unknown;
+            }
+            pair = LevelPairs[NSF_Level];
+            MemoryFile nsdfile = AllFiles[file.FullName.Replace(".NSF", ".NSD")];
+
+            NSF nsf = null;
+            OldNSD oldnsd = null;
+            NSD nsd = null;
+            NewNSD newnsd = null;
+            try
+            {
+                byte[] bytes = new byte[file.Stream.Length];
+                file.Stream.Position = 0;
+                await file.Stream.ReadAsync(bytes, 0, (int)file.Stream.Length);
+                nsf = NSF.LoadAndProcess(bytes, game);
+                pair.nsf = nsf;
+
+                bytes = new byte[nsdfile.Stream.Length];
+                nsdfile.Stream.Position = 0;
+                await nsdfile.Stream.ReadAsync(bytes, 0, (int)nsdfile.Stream.Length);
+
+                if (game == GameVersion.Crash2)
+                {
+                    nsd = NSD.Load(bytes);
+                    pair.nsd = nsd;
+                    pair.LevelC2 = (Crash2_Levels)NSF_Level;
+                    pair.isCrash2 = true;
+                }
+                else if (game == GameVersion.Crash3)
+                {
+                    newnsd = NewNSD.Load(bytes);
+                    pair.newnsd = newnsd;
+                    pair.LevelC3 = (Crash3_Levels)NSF_Level;
+                    pair.isCrash3 = true;
+                }
+                else
+                {
+                    oldnsd = OldNSD.Load(bytes);
+                    pair.oldnsd = oldnsd;
+                    pair.LevelC1 = (Crash1_Levels)NSF_Level;
+                    pair.isCrash1 = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                if (ex is LoadAbortedException)
+                {
+                    Console.WriteLine("Crash: LoadAbortedException: " + file.FullName + "\n" + ex.Message);
+                    pair = null; 
+                }
+                else if (ex is LoadSkippedException)
+                {
+                    Console.WriteLine("Crash: LoadSkippedException: " + file.FullName + "\n" + ex.Message);
+                    pair = null;
+                }
+                else
+                    throw;
+            }
+
+            return pair;
+        }
+        public override async void SaveObject(NSF_Pair thing, MemoryFile file, Dictionary<string, MemoryFile> AllFiles)
+        {
+
+            if (game == GameVersion.Crash2)
+            {
+                PatchNSD(thing.nsf, thing.nsd);
+            }
+            else if (game == GameVersion.Crash3)
+            {
+                PatchNSD(thing.nsf, thing.newnsd);
+            }
+            else
+            {
+                PatchNSD(thing.nsf, thing.oldnsd);
+            }
+
+            byte[] bytes;
+
+            bytes = thing.nsf.Save();
+            file.Stream.Position = 0;
+            file.Stream.SetLength(bytes.Length);
+            await file.Stream.WriteAsync(bytes, 0, bytes.Length);
+
+            if (game == GameVersion.Crash2)
+            {
+                bytes = thing.nsd.Save();
+            }
+            else if (game == GameVersion.Crash3)
+            {
+                bytes = thing.newnsd.Save();
+            }
+            else
+            {
+                bytes = thing.oldnsd.Save();
+            }
+
+            MemoryFile nsdfile = AllFiles[file.FullName.Replace(".NSF", ".NSD")];
+
+            nsdfile.Stream.Position = 0;
+            nsdfile.Stream.SetLength(bytes.Length);
+            await nsdfile.Stream.WriteAsync(bytes, 0, bytes.Length);
+
+            thing = null;
+        }
 
         public override NSF_Pair LoadObject(string filePath)
         {

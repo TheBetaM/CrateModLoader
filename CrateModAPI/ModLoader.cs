@@ -187,16 +187,8 @@ namespace CrateModLoader
         {
             bool directoryMode = IO_Common.PathIsFolder(inputPath);
 
-            if (Modder != null)
-            {
-                Modder.Reset();
-            }
-            Modder = null;
-            Pipeline = null;
-            GamePreloaded = false;
-            IsPreloading = false;
-            HasProcessFinished = false;
-            SupportedMods = new List<ModCrate>();
+            DisposeModder();
+
             bool ConsoleDetected = false;
             string regionID;
             uint regionNumber;
@@ -318,7 +310,7 @@ namespace CrateModLoader
             }
             else
             {
-                Pipeline.Extract(inputPath, outputPath, worker);
+                Pipeline.Extract(inputPath, outputPath, worker, Game.UseLegacyMethod);
             }
 
         }
@@ -420,6 +412,9 @@ namespace CrateModLoader
             bool inputDirectoryMode = IO_Common.PathIsFolder(inputPath);
             bool outputDirectoryMode = IO_Common.PathIsFolder(outputPath);
 
+            //DateTime timer = DateTime.Now;
+            //TimeSpan diff;
+
             Pipeline.PreStart(inputDirectoryMode, outputDirectoryMode);
 
             a.ReportProgress(0);
@@ -434,18 +429,26 @@ namespace CrateModLoader
                 ExtractGame2(inputPath, TempPath, a);
                 while (Pipeline.IsBusy || isExtracting) Thread.Sleep(100);
             }
+            //diff = DateTime.Now - timer;
+            //Console.WriteLine("Extracted: " + diff);
 
             a.ReportProgress(26);
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
 
             if (!IsPreloading)
             {
                 EditGame(a);
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
             }
             if (Modder != null)
             {
                 if (IsPreloading)
                 {
                     Modder.LoadPropsPreload();
+                    GC.Collect();
+                    GC.WaitForPendingFinalizers();
                 }
                 Modder.ModderIsPreloading = IsPreloading;
                 Modder.StartProcess();
@@ -458,6 +461,11 @@ namespace CrateModLoader
                     Thread.Sleep(100);
                 }
                 Modder.ModderHasPreloaded = true;
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+
+                //diff = DateTime.Now - timer;
+                //Console.WriteLine("Modded: " + diff);
             }
 
             if (!IsPreloading)
@@ -467,6 +475,9 @@ namespace CrateModLoader
                 BuildGame(TempPath, outputPath, a);
                 while (Pipeline.IsBusy) Thread.Sleep(100);
 
+                //diff = DateTime.Now - timer;
+                //Console.WriteLine("Built: " + diff);
+
                 a.ReportProgress(99);
 
                 if (!KeepTempFiles)
@@ -474,7 +485,12 @@ namespace CrateModLoader
                     DeleteTempFiles(TempPath);
                 }
                 HasProcessFinished = true;
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
             }
+
+            //diff = DateTime.Now - timer;
+            //Console.WriteLine("Time: " + diff);
         }
 
         private void AsyncWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -681,6 +697,10 @@ namespace CrateModLoader
                     Modder.assembly = pair.Value;
                     Modder.ConsolePipeline = Pipeline;
                     Modder.GameRegion = TargetRegion;
+                    if (Pipeline.StreamPipeline)
+                    {
+                        Pipeline.UsingStreamPipeline = Modder.StreamedModder;
+                    }
                     break;
                 }
             }
@@ -732,17 +752,7 @@ namespace CrateModLoader
 
         public void ResetGameSpecific(bool ClearGameText = false)
         {
-            if (Modder != null)
-            {
-                Modder.Reset();
-            }
-            Modder = null;
-            Pipeline = null;
-            GamePreloaded = false;
-            IsPreloading = false;
-            HasProcessFinished = false;
-
-            SupportedMods = new List<ModCrate>();
+            DisposeModder();
 
             ResetGameEvent.Invoke(this, new EventValueArgs<bool>(ClearGameText));
         }
@@ -751,6 +761,26 @@ namespace CrateModLoader
         {
             Console.WriteLine("Error: " + msg);
             ErrorMessage.Invoke(this, new EventValueArgs<string>(msg));
+        }
+
+        public void DisposeModder()
+        {
+            if (Modder != null)
+            {
+                Modder.Reset();
+            }
+            Modder = null;
+            if (Pipeline != null)
+            {
+                Pipeline.Dispose();
+            }
+            Pipeline = null;
+            GamePreloaded = false;
+            IsPreloading = false;
+            HasProcessFinished = false;
+            SupportedMods = new List<ModCrate>();
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
 
     }

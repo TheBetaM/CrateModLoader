@@ -18,7 +18,7 @@ namespace CrateModLoader
 
         void PreStart(bool inputDirectoryMode, bool outputDirectoryMode);
 
-        void Extract(string inputPath, string outputPath, BackgroundWorker worker);
+        void Extract(string inputPath, string outputPath, BackgroundWorker worker, bool LegacyMethod);
 
         void Build(string inputPath, string outputPath, BackgroundWorker worker, bool LegacyMethod);
     }

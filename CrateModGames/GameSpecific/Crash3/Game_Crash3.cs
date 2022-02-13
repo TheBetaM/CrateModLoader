@@ -13,6 +13,7 @@ namespace CrateModLoader.GameSpecific.Crash3
         public override string API_Credit => CrashTri_Text.API_Credit;
         public override string API_Link => "https://github.com/cbhacks/CrashEdit";
         public override Type ModderClass => typeof(Modder_Crash3);
+        //public override bool UseLegacyMethod => true;
 
         public override Dictionary<ConsoleMode, RegionCode[]> RegionID => new Dictionary<ConsoleMode, RegionCode[]>()
         {

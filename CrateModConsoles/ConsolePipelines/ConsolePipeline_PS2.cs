@@ -581,7 +581,7 @@ namespace CrateModLoader.ModPipelines
             ExtractIterator++;
         }
 
-        public override void Extract(string inputPath, string outputPath, BackgroundWorker worker)
+        public override void Extract(string inputPath, string outputPath, BackgroundWorker worker, bool LegacyMethod)
         {
 
             GlobalWorker = worker;

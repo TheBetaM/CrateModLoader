@@ -10,7 +10,7 @@ using CrateModLoader.Tools;
 
 namespace CrateModLoader.ModPipelines
 {
-
+    // Needed for new method: Build without WQSG_UMD
     public class ConsolePipeline_PSP : ConsolePipeline
     {
 
@@ -140,7 +140,10 @@ namespace CrateModLoader.ModPipelines
         private async void Extractor_Work(BackgroundWorker a)
         {
             //Needed to build
-            File.Copy(extractInputPath, ModLoaderGlobals.ToolsPath + "Game.iso", true);
+            if (!UsingStreamPipeline)
+            {
+                File.Copy(extractInputPath, ModLoaderGlobals.ToolsPath + "Game.iso", true);
+            }
 
             IList<Task> extractTaskList = new List<Task>();
             Dictionary<string, string> Paths = new Dictionary<string, string>();
@@ -153,7 +156,7 @@ namespace CrateModLoader.ModPipelines
             extract_isoStream = File.Open(extractInputPath, FileMode.Open);
             extract_reader = new CDReader(extract_isoStream, true);
 
-            if (!Directory.Exists(extractOutputPath))
+            if (!UsingStreamPipeline && !Directory.Exists(extractOutputPath))
             {
                 Directory.CreateDirectory(extractOutputPath);
             }
@@ -185,7 +188,10 @@ namespace CrateModLoader.ModPipelines
             {
                 foreach (string directory in extract_reader.GetDirectories(""))
                 {
-                    Directory.CreateDirectory(extractOutputPath + directory);
+                    if (!UsingStreamPipeline)
+                    {
+                        Directory.CreateDirectory(extractOutputPath + directory);
+                    }
                     if (extract_reader.GetDirectoryInfo(directory).GetFiles().Length > 0)
                     {
                         foreach (string file in extract_reader.GetFiles(directory))
@@ -237,10 +243,19 @@ namespace CrateModLoader.ModPipelines
                 {
                     using (Stream fileStreamFrom = cd.OpenFile(file, FileMode.Open))
                     {
-                        using (Stream fileStreamTo = File.Open(path, FileMode.OpenOrCreate))
+                        if (UsingStreamPipeline)
                         {
-                            await fileStreamFrom.CopyToAsync(fileStreamTo);
-                            //fileStreamFrom.CopyTo(fileStreamTo);
+                            MemoryFile memfile = new MemoryFile();
+                            await memfile.FromStreamAsync(fileStreamFrom, file);
+                            ExtractedFiles.Add(file, memfile);
+                        }
+                        else
+                        {
+                            using (Stream fileStreamTo = File.Open(path, FileMode.OpenOrCreate))
+                            {
+                                await fileStreamFrom.CopyToAsync(fileStreamTo);
+                                //fileStreamFrom.CopyTo(fileStreamTo);
+                            }
                         }
                     }
                 }
@@ -249,7 +264,7 @@ namespace CrateModLoader.ModPipelines
             ExtractIterator++;
         }
 
-        public override void Extract(string inputPath, string outputPath, BackgroundWorker worker)
+        public override void Extract(string inputPath, string outputPath, BackgroundWorker worker, bool LegacyMethod)
         {
 
             GlobalWorker = worker;
@@ -271,7 +286,10 @@ namespace CrateModLoader.ModPipelines
         {
             foreach (string directory in cd.GetDirectories(dir))
             {
-                Directory.CreateDirectory(TempPath + @"\" + directory);
+                if (!UsingStreamPipeline)
+                {
+                    Directory.CreateDirectory(TempPath + @"\" + directory);
+                }
                 if (cd.GetDirectoryInfo(directory).GetFiles().Length > 0)
                 {
                     foreach (string file in cd.GetFiles(directory))

@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Reflection;
 using System.ComponentModel;
+using System.Collections.Generic;
 
 namespace CrateModLoader
 {
     // A mod pipeline describes a process of extracting, rebuilding and detecting the format of a game file/folder or a container (archive) of game files.
-    public abstract class ConsolePipeline : IConsolePipeline
+    public abstract class ConsolePipeline : IConsolePipeline, IDisposable
     {
 
         public abstract ConsolePipelineInfo Metadata { get; }
 
         public BackgroundWorker AsyncWorker { get; set; }
         public bool ForceBusy = false;
+        public bool UsingStreamPipeline = false;
         public bool IsBusy { get { return (AsyncWorker != null && AsyncWorker.IsBusy) || ForceBusy; } }
 
         /// <summary> Full path to the extracted files' folder. Differs based on console, but always points to the same game data. Ends with '\' </summary>
@@ -29,6 +31,7 @@ namespace CrateModLoader
         public abstract string TempPath { get; }
         /// <summary> Executable file name from the detected RegionCode struct of the currently loaded ROM. ex. "SLUS_209.09" </summary>
         //public abstract string ExecutablePath { get; } // todo
+        public virtual bool StreamPipeline => false; // MemoryFile method
 
         public virtual bool DetectROM(string inputPath, out string titleID, out uint regionID)
         {
@@ -75,7 +78,7 @@ namespace CrateModLoader
         }
 
         // Use background worker if the extractor can iterate over files
-        public abstract void Extract(string inputPath, string outputPath, BackgroundWorker worker);
+        public abstract void Extract(string inputPath, string outputPath, BackgroundWorker worker, bool LegacyMethod);
 
         // Use background worker if the builder can iterate over files
         public abstract void Build(string inputPath, string outputPath, BackgroundWorker worker, bool LegacyMethod);
@@ -88,6 +91,22 @@ namespace CrateModLoader
             worker.ReportProgress(1 + p);
         }
 
+        // MemoryFile based method
+
+        public Dictionary<string, MemoryFile> ExtractedFiles = new Dictionary<string, MemoryFile>();
+
+        public virtual void Dispose()
+        {
+            if (ExtractedFiles != null && ExtractedFiles.Count > 0)
+            {
+                foreach (KeyValuePair<string, MemoryFile> pair in ExtractedFiles)
+                {
+                    pair.Value.Dispose();
+                }
+                ExtractedFiles.Clear();
+                ExtractedFiles = null;
+            }
+        }
     }
 
     public class ConsolePipelineInfo

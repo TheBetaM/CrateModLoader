@@ -519,6 +519,7 @@ namespace CrateModLoader
             linkLabel_optionDesc.Text = string.Empty;
             linkLabel_optionDesc.Visible = false;
             panel_desc.Visible = false;
+            progressBar1.Value = 0;
 
             checkedListBox1.Visible = checkedListBox1.Enabled = false;
 

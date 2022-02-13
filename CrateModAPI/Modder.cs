@@ -24,18 +24,6 @@ namespace CrateModLoader
      * 
      */
 
-    /* MOD SCRIPTS NOT YET IMPLEMENTED!!!
-     * Converting a built-in Mod to a Mod script:
-     * - Convert namespace to using statement (ex. namespace CrateModLoader.GameSpecific.Crash1 -> using CrateModLoader.GameSpecific.Crash1;)
-     * - Add inherited namespaces, if missing (ex. using CrateModLoader;)
-     * - (only if including the script in the build, which is unsupported) In Solution Explorer set Build Actions to None, Copy to Output Directory to Copy Always 
-     * 
-     * Converting a Mod Script to a built-in Mod:
-     * - Restore namespace
-     * - In Solution Explorer set Build Actions to Compile, Copy to Output Directory to Do not copy
-     * 
-     */
-
     /// <summary>
     /// Abstract Modder class, inherited by all game modders
     /// </summary>
@@ -61,6 +49,7 @@ namespace CrateModLoader
         /// Has the Preload phase been finished, also false when not preloading
         /// </summary>
         public bool ModderHasPreloaded = false;
+        public virtual bool StreamedModder => false; // All modding must operate on MemoryFiles instead of physical ones
 
         // Multithreading stuff
 
@@ -68,8 +57,7 @@ namespace CrateModLoader
         public List<ModParserBase> ModParsers = new List<ModParserBase>();
         public List<ModPipelineBase> Pipelines = new List<ModPipelineBase>();
         public List<ModPropertyBase> ActiveProps = new List<ModPropertyBase>();
-        public List<LevelBase> Levels = new List<LevelBase>();
-        //public Dictionary<string, IMod> ModScripts = new Dictionary<string, IMod>();
+        public List<LevelBase> Levels = new List<LevelBase>(); // Level API
         public virtual bool NoAsyncProcess => false;
         public bool IsBusy => ProcessBusy || PassBusy; //{ get; set; }
         public bool PassBusy { get; set; }
@@ -84,7 +72,6 @@ namespace CrateModLoader
         public Modder()
         {
             GlobalRandom = new Random(ModLoaderGlobals.RandomizerSeed);
-            //CSScript.EvaluatorConfig.Engine = EvaluatorEngine.Roslyn; // the others are better, but require the .NET SDK to be installed supposedly
         }
 
         public void PopulateProperties()
@@ -301,33 +288,6 @@ namespace CrateModLoader
                 }
             }
 
-            //todo: change app domain here 
-            /*
-            ModScripts = new Dictionary<string, IMod>();
-
-            foreach (ModCrate Crate in EnabledModCrates)
-            {
-                if (Crate.HasScripts)
-                {
-                    foreach (KeyValuePair<string, string> pair in Crate.Scripts)
-                    {
-                        try
-                        {
-                            IMod mod = CSScript.Evaluator.LoadCode<IMod>(pair.Value);
-                            //dynamic mod = CSScript.Evaluator.LoadCode(pair.Value);
-                            ModScripts.Add(pair.Key, mod);
-
-                            Console.WriteLine("Script: Loaded " + pair.Key);
-                        }
-                        catch
-                        {
-                            Console.WriteLine("ERROR: Failed to load script: " + pair.Key);
-                        }
-                    }
-                }
-            }
-            */
-
             //Console.WriteLine("Active Props: " + ActiveProps.Count);
         }
 
@@ -370,8 +330,6 @@ namespace CrateModLoader
                 }
             }
 
-            //todo: add mod scripts here
-
             //Console.WriteLine("Active Props: " + ActiveProps.Count);
         }
 
@@ -381,15 +339,57 @@ namespace CrateModLoader
             ModParsers.Insert(0, new Parser_GenericMod(this));
             PassCount = 0;
             PassIterator = 0;
+            
+            if (StreamedModder)
+            {
+                foreach (KeyValuePair<string, MemoryFile> pair in ConsolePipeline.ExtractedFiles)
+                {
+                    foreach (ModParserBase parser in ModParsers)
+                    {
+                        if (!parser.SkipParser || parser.ForceParser)
+                        {
+                            bool add = parser.AddFile(pair.Value);
+                            if (add)
+                            {
+                                PassCount++;
+                                //Console.WriteLine("ModParser: Found file: " + file.FullName);
+                            }
+                            else
+                            {
+                                //Console.WriteLine("ModParser: Not found file: " + file.FullName);
+                            }
+                        }
+                    }
+                }
+                return;
+            }
+
             DirectoryInfo di = new DirectoryInfo(ConsolePipeline.ExtractedPath);
             Recursive_LoadFiles(di);
         }
-        // If you want to invoke Generic mods separately (note: Generic is automatically skipped if attempted to be executed twice)
+        // If you want to invoke Generic mods separately (note: Generic mod parser is automatically skipped if attempted to be executed twice)
         public void FindFiles(bool NoGeneric, params ModParserBase[] parsers)
         {
             ModParsers = new List<ModParserBase>(parsers);
             PassCount = 0;
             PassIterator = 0;
+
+            if (StreamedModder)
+            {
+                foreach (KeyValuePair<string, MemoryFile> pair in ConsolePipeline.ExtractedFiles)
+                {
+                    foreach (ModParserBase parser in ModParsers)
+                    {
+                        if (!parser.SkipParser || parser.ForceParser)
+                        {
+                            bool add = parser.AddFile(pair.Value);
+                            if (add) PassCount++;
+                        }
+                    }
+                }
+                return;
+            }
+
             DirectoryInfo di = new DirectoryInfo(ConsolePipeline.ExtractedPath);
             Recursive_LoadFiles(di);
         }
@@ -398,6 +398,12 @@ namespace CrateModLoader
             Pipelines = new List<ModPipelineBase>(pipelines);
             PassCount = 0;
             PassIterator = 0;
+
+            if (StreamedModder)
+            {
+                return;
+            }
+
             DirectoryInfo di = new DirectoryInfo(ConsolePipeline.ExtractedPath);
             Recursive_LoadArchives(di);
         }

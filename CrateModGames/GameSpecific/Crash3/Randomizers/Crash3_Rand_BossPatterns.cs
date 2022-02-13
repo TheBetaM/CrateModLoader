@@ -212,9 +212,9 @@ namespace CrateModLoader.GameSpecific.Crash3
                 int yoffset = BitConv.FromInt32(CrashZone.Layout, 4);
                 int zoffset = BitConv.FromInt32(CrashZone.Layout, 8);
 
-                pair.newnsd.Spawns[0].SpawnX = (xoffset + BackSpawn.X * 1) << 8;
-                pair.newnsd.Spawns[0].SpawnY = (yoffset + BackSpawn.Y * 1) << 8;
-                pair.newnsd.Spawns[0].SpawnZ = (zoffset + BackSpawn.Z * 1) << 8;
+                //pair.newnsd.Spawns[0].SpawnX = (xoffset + BackSpawn.X * 1) << 8;
+                //pair.newnsd.Spawns[0].SpawnY = (yoffset + BackSpawn.Y * 1) << 8;
+                //pair.newnsd.Spawns[0].SpawnZ = (zoffset + BackSpawn.Z * 1) << 8;
             }
         }
     }

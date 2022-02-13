@@ -87,7 +87,7 @@ namespace CrateModLoader.ModPipelines
             DetectProcess.WaitForExit();
         }
 
-        public override void Extract(string inputPath, string outputPath, BackgroundWorker worker)
+        public override void Extract(string inputPath, string outputPath, BackgroundWorker worker, bool LegacyMethod)
         {
             // use ndstool
             Directory.CreateDirectory(TempPath);

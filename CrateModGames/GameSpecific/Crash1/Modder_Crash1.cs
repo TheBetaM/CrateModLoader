@@ -11,6 +11,7 @@ namespace CrateModLoader.GameSpecific.Crash1
     public sealed class Modder_Crash1 : Modder
     {
         public override bool ModCrateRegionCheck => true;
+        //public override bool StreamedModder => true;
 
         public override async void StartModProcess()
         {

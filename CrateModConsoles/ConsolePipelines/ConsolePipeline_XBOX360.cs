@@ -137,7 +137,7 @@ namespace CrateModLoader.ModPipelines
             throw new NotImplementedException();
         }
 
-        public override void Extract(string inputPath, string outputPath, BackgroundWorker worker)
+        public override void Extract(string inputPath, string outputPath, BackgroundWorker worker, bool LegacyMethod)
         {
             // TODO: add free space checks
             string args = "-x ";
