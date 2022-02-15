@@ -113,6 +113,9 @@ namespace CrateModLoader.GameSpecific.WormsForts.XOM
             {
                 RefPoint point = new RefPoint();
                 point.NameID.Read(reader);
+
+                point.NamePoint = ParentFile.Strings[(int)point.NameID.Value];
+
                 RefPoints.Add(point);
             }
             RefNameLength.Read(reader);
@@ -132,6 +135,9 @@ namespace CrateModLoader.GameSpecific.WormsForts.XOM
             {
                 BuildPoint point = new BuildPoint();
                 point.NameID.Read(reader);
+
+                point.NamePoint = ParentFile.Strings[(int)point.NameID.Value];
+
                 BuildPoints.Add(point);
             }
             reader.ReadByte();
@@ -158,6 +164,7 @@ namespace CrateModLoader.GameSpecific.WormsForts.XOM
             for (int i = 0; i < BuildPoints.Count; i++)
             {
                 BuildPoints[i].BuildingName.Read(reader);
+                BuildPoints[i].NameBuilding = ParentFile.Strings[(int)BuildPoints[i].BuildingName.Value];
             }
             reader.ReadByte();
             for (int i = 0; i < BuildPoints.Count; i++)
@@ -183,6 +190,7 @@ namespace CrateModLoader.GameSpecific.WormsForts.XOM
                 {
                     PhantomSphere sphere = new PhantomSphere();
                     sphere.NameID.Read(reader);
+                    sphere.NamePoint = ParentFile.Strings[(int)sphere.NameID.Value];
                     PhantomSpheres.Add(sphere);
                 }
             }
@@ -194,6 +202,7 @@ namespace CrateModLoader.GameSpecific.WormsForts.XOM
                 {
                     PhantomBox box = new PhantomBox();
                     box.NameID.Read(reader);
+                    box.NamePoint = ParentFile.Strings[(int)box.NameID.Value];
                     PhantomBoxes.Add(box);
                 }
             }
@@ -361,6 +370,8 @@ namespace CrateModLoader.GameSpecific.WormsForts.XOM
             public VInt NameID = new VInt();
             public Vector3 Pos = new Vector3();
             public Vector3 Rot = new Vector3();
+
+            public string NamePoint;
         }
 
         public class BuildPoint
@@ -375,6 +386,9 @@ namespace CrateModLoader.GameSpecific.WormsForts.XOM
             public float Rot;
             public byte Connections;
 
+            public string NamePoint;
+            public string NameBuilding;
+
             public BuildingTypes BuildingType
             {
                 get { return (BuildingTypes)buildingType; }
@@ -387,6 +401,8 @@ namespace CrateModLoader.GameSpecific.WormsForts.XOM
             public VInt NameID = new VInt();
             public Vector3 Pos = new Vector3();
             public Vector3 Extents = new Vector3();
+
+            public string NamePoint;
         }
 
         public class PhantomSphere
@@ -394,6 +410,8 @@ namespace CrateModLoader.GameSpecific.WormsForts.XOM
             public VInt NameID = new VInt();
             public Vector3 Pos = new Vector3();
             public float Radius;
+
+            public string NamePoint;
         }
     }
 }

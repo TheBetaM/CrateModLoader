@@ -8,19 +8,26 @@ namespace CrateModLoader.GameSpecific.MonkeyBallAdv
 {
     public class Level_RM : Level<ChunkInfoRM>
     {
-        public override Dictionary<int, string> CategoryNames => new Dictionary<int, string>()
+        public override Dictionary<int, string> CategoryNames
         {
-            [0] = "Group 0",
-            [1] = "Group 1",
-            [2] = "Group 2",
-            [3] = "Group 3",
-            [4] = "Group 4",
-            [5] = "Group 5",
-            [6] = "Group 6",
-            [7] = "Group 7",
-            [8] = "Group 8",
-            [9] = "Group 9",
-        };
+            get
+            {
+                return new Dictionary<int, string>()
+                {
+                    [0] = "Instance Group 0",
+                    [1] = "Instance Group 1",
+                    [2] = "Instance Group 2",
+                    [3] = "Instance Group 3",
+                    [4] = "Instance Group 4",
+                    [5] = "Instance Group 5",
+                    [6] = "Instance Group 6",
+                    [7] = "Instance Group 7",
+                    [8] = "Instance Group 8",
+                    [9] = "Instance Group 9",
+                };
+            }
+            set { }
+        }
 
         public override void Load(ChunkInfoRM file)
         {
@@ -33,7 +40,10 @@ namespace CrateModLoader.GameSpecific.MonkeyBallAdv
             {
                 CrashTS.CollisionData_RM RM_Col = new CrashTS.CollisionData_RM();
                 RM_Col.Load(col);
-                CollisionData.Add(RM_Col);
+                if (RM_Col.Vertices.Count > 0)
+                {
+                    CollisionData.Add(RM_Col);
+                }
             }
 
             uint mb_add = 0;

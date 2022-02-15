@@ -50,6 +50,7 @@ namespace CrateModLoader
         /// </summary>
         public bool ModderHasPreloaded = false;
         public virtual bool StreamedModder => false; // All modding must operate on MemoryFiles instead of physical ones
+        public bool EditorActive = false;
 
         // Multithreading stuff
 
@@ -346,7 +347,7 @@ namespace CrateModLoader
                 {
                     foreach (ModParserBase parser in ModParsers)
                     {
-                        if (!parser.SkipParser || parser.ForceParser)
+                        if (!parser.SkipParser || parser.ForceParser || EditorActive)
                         {
                             bool add = parser.AddFile(pair.Value);
                             if (add)
@@ -380,7 +381,7 @@ namespace CrateModLoader
                 {
                     foreach (ModParserBase parser in ModParsers)
                     {
-                        if (!parser.SkipParser || parser.ForceParser)
+                        if (!parser.SkipParser || parser.ForceParser || EditorActive)
                         {
                             bool add = parser.AddFile(pair.Value);
                             if (add) PassCount++;
@@ -418,7 +419,7 @@ namespace CrateModLoader
             {
                 foreach (ModParserBase parser in ModParsers)
                 {
-                    if (!parser.SkipParser || parser.ForceParser)
+                    if (!parser.SkipParser || parser.ForceParser || EditorActive)
                     {
                         bool add = parser.AddFile(file);
                         if (add) PassCount++;
@@ -436,7 +437,7 @@ namespace CrateModLoader
             {
                 foreach (ModPipelineBase pipeline in Pipelines)
                 {
-                    if (!pipeline.SkipPipeline)
+                    if (!pipeline.SkipPipeline || EditorActive)
                     {
                         bool add = pipeline.AddFile(file);
                         if (add) PassCount++;
@@ -479,7 +480,7 @@ namespace CrateModLoader
 
                 foreach (ModParserBase parser in ModParsers)
                 {
-                    if (!parser.SkipParser || parser.ForceParser)
+                    if ((!parser.SkipParser || parser.ForceParser) && !EditorActive)
                     {
                         editTaskList.Add(parser.StartPass(CurrentPass));
                     }

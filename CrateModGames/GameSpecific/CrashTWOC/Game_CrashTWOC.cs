@@ -15,6 +15,7 @@ namespace CrateModLoader.GameSpecific.CrashTWOC
                     //ConsoleMode.XBOX,
                 };
         public override Type ModderClass => typeof(Modder_TWOC);
+        public override bool EnableLevelEditor => true;
 
         public override Dictionary<ConsoleMode, RegionCode[]> RegionID => new Dictionary<ConsoleMode, RegionCode[]>()
         {

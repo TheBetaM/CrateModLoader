@@ -9,7 +9,7 @@ namespace CrateModLoader.LevelAPI
         public List<CollisionDataBase> CollisionData = new List<CollisionDataBase>();
         public BindingList<LevelObjectDataBase> ObjectData = new BindingList<LevelObjectDataBase>();
         public string Name { get; set; }
-        public abstract Dictionary<int, string> CategoryNames { get; }
+        public abstract Dictionary<int, string> CategoryNames { get; set; }
 
     }
 }

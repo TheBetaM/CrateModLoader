@@ -11,6 +11,7 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
         public override string API_Credit => "API by DCxDemo";
         public override string API_Link => "https://github.com/DCxDemo/CTR-tools";
         public override Type ModderClass => typeof(Modder_CTR);
+        public override bool EnableLevelEditor => true;
 
         public override Dictionary<ConsoleMode, RegionCode[]> RegionID => new Dictionary<ConsoleMode, RegionCode[]>()
         {

@@ -14,6 +14,7 @@ namespace CrateModLoader.GameSpecific.Crash2
         public override string API_Link => "https://github.com/cbhacks/CrashEdit";
         public override Type ModderClass => typeof(Modder_Crash2);
         //public override bool UseLegacyMethod => true;
+        public override bool EnableLevelEditor => true;
 
         public override Dictionary<ConsoleMode, RegionCode[]> RegionID => new Dictionary<ConsoleMode, RegionCode[]>()
         {

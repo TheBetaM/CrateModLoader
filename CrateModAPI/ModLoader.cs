@@ -26,6 +26,7 @@ namespace CrateModLoader
         public bool IsPreloading = false;
         public bool GamePreloaded = false;
         public bool HasProcessFinished = false;
+        public bool EditorActive = false;
 
         public string TempPath = ModLoaderGlobals.BaseDirectory + ModLoaderGlobals.TempName + @"\";
         public static bool KeepTempFiles = false;
@@ -349,7 +350,7 @@ namespace CrateModLoader
                 string pathchild = pathparent + dir.Name + @"\";
                 foreach (FileInfo file in dir.EnumerateFiles())
                 {
-                    Paths.Add(file.FullName, pathparent + file.Name);
+                    Paths.Add(file.FullName, pathchild + file.Name);
                 }
                 Recursive_ListFiles(dir, pathchild, ref Paths);
             }
@@ -415,7 +416,10 @@ namespace CrateModLoader
             //DateTime timer = DateTime.Now;
             //TimeSpan diff;
 
-            Pipeline.PreStart(inputDirectoryMode, outputDirectoryMode);
+            if (!EditorActive)
+            {
+                Pipeline.PreStart(inputDirectoryMode, outputDirectoryMode);
+            }
 
             a.ReportProgress(0);
             if (!GamePreloaded)

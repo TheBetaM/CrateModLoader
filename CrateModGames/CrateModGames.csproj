@@ -450,6 +450,14 @@
     <Compile Include="GameSpecific\Crash1\Randomizers\Crash1_Rand_BossPaths.cs" />
     <Compile Include="GameSpecific\Crash1\Randomizers\Crash1_Rand_LightColor.cs" />
     <Compile Include="GameSpecific\Crash1\Randomizers\Crash1_Rand_Map.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Level\Level_NSF.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Level\Object_Entity.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Level\Object_NewEntity.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Level\Object_NewZone.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Level\Object_OldEntity.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Level\Object_OldZone.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Level\Object_Zone.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Level\SceneryData_NSF_Old.cs" />
     <Compile Include="GameSpecific\Crash1\TrilogyCommon\Mods\CrashTri_Crash_RainbowPants.cs" />
     <Compile Include="GameSpecific\Crash1\TrilogyCommon\Mods\CrashTri_Crates_AllBlank.cs" />
     <Compile Include="GameSpecific\Crash1\TrilogyCommon\Mods\CrashTri_Objects_Greyscale.cs" />
@@ -598,6 +606,9 @@
     <Compile Include="GameSpecific\CrashTeamRacing\Common\Parser_LNG.cs" />
     <Compile Include="GameSpecific\CrashTeamRacing\Common\Pipeline_BIG.cs" />
     <Compile Include="GameSpecific\CrashTeamRacing\Game_CrashTR.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Level\CollisionData_MeshInfo.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Level\Level_LEV.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Level\Object_Pickup.cs" />
     <Compile Include="GameSpecific\CrashTeamRacing\Modder_CTR.cs" />
     <Compile Include="GameSpecific\CrashTeamRacing\Mods\CTR_DisableWeather.cs" />
     <Compile Include="GameSpecific\CrashTeamRacing\Mods\CTR_Lev_TestMod.cs" />
@@ -634,6 +645,10 @@
     <Compile Include="GameSpecific\CrashTS\Level\CollisionData_RM.cs" />
     <Compile Include="GameSpecific\CrashTS\Level\Level_RM.cs" />
     <Compile Include="GameSpecific\CrashTS\Level\Object_Instance.cs" />
+    <Compile Include="GameSpecific\CrashTS\Level\Object_RestartPoint.cs" />
+    <Compile Include="GameSpecific\CrashTS\Level\Object_SceneHeader.cs" />
+    <Compile Include="GameSpecific\CrashTS\Level\Object_SpawnGroup.cs" />
+    <Compile Include="GameSpecific\CrashTS\Level\Object_StartGrid.cs" />
     <Compile Include="GameSpecific\CrashTS\Modder_Twins.cs" />
     <Compile Include="GameSpecific\CrashTS\Mods\TS_ChangeCreditsChunk.cs" />
     <Compile Include="GameSpecific\CrashTS\Mods\TS_ChangeStartingChunk.cs" />
@@ -917,6 +932,10 @@
     <Compile Include="GameSpecific\Worms\WormsForts\Level\CollisionData_XOM.cs" />
     <Compile Include="GameSpecific\Worms\WormsForts\Level\Level_XOM.cs" />
     <Compile Include="GameSpecific\Worms\WormsForts\Level\Object_BuildPoint.cs" />
+    <Compile Include="GameSpecific\Worms\WormsForts\Level\Object_FortsExportedData.cs" />
+    <Compile Include="GameSpecific\Worms\WormsForts\Level\Object_RefPoint.cs" />
+    <Compile Include="GameSpecific\Worms\WormsForts\Level\Object_TriggerBox.cs" />
+    <Compile Include="GameSpecific\Worms\WormsForts\Level\Object_TriggerSphere.cs" />
     <Compile Include="GameSpecific\Worms\WormsForts\Modder_WormsForts.cs" />
     <Compile Include="GameSpecific\Worms\WormsForts\Mods\WormsForts_FortWeaponsAnywhere.cs" />
     <Compile Include="GameSpecific\Worms\WormsForts\Mods\WormsForts_Metadata.cs" />
@@ -1057,6 +1076,7 @@
     <Folder Include="GameSpecific\CrashNDS\CrashBB\Randomizers\" />
     <Folder Include="GameSpecific\CrashNDS\CrashMoMDS\Randomizers\" />
     <Folder Include="GameSpecific\CrashNDS\CrashTitansDS\Randomizers\" />
+    <Folder Include="GameSpecific\CrashTWOC\Level\" />
     <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
