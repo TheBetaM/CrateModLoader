@@ -457,6 +457,8 @@
     <Compile Include="GameSpecific\Crash1\TrilogyCommon\Level\Object_OldEntity.cs" />
     <Compile Include="GameSpecific\Crash1\TrilogyCommon\Level\Object_OldZone.cs" />
     <Compile Include="GameSpecific\Crash1\TrilogyCommon\Level\Object_Zone.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Level\SceneryData_NSF.cs" />
+    <Compile Include="GameSpecific\Crash1\TrilogyCommon\Level\SceneryData_NSF_New.cs" />
     <Compile Include="GameSpecific\Crash1\TrilogyCommon\Level\SceneryData_NSF_Old.cs" />
     <Compile Include="GameSpecific\Crash1\TrilogyCommon\Mods\CrashTri_Crash_RainbowPants.cs" />
     <Compile Include="GameSpecific\Crash1\TrilogyCommon\Mods\CrashTri_Crates_AllBlank.cs" />
@@ -645,10 +647,10 @@
     <Compile Include="GameSpecific\CrashTS\Level\CollisionData_RM.cs" />
     <Compile Include="GameSpecific\CrashTS\Level\Level_RM.cs" />
     <Compile Include="GameSpecific\CrashTS\Level\Object_Instance.cs" />
-    <Compile Include="GameSpecific\CrashTS\Level\Object_RestartPoint.cs" />
-    <Compile Include="GameSpecific\CrashTS\Level\Object_SceneHeader.cs" />
-    <Compile Include="GameSpecific\CrashTS\Level\Object_SpawnGroup.cs" />
-    <Compile Include="GameSpecific\CrashTS\Level\Object_StartGrid.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Level\Object_RestartPoint.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Level\Object_SceneHeader.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Level\Object_SpawnGroup.cs" />
+    <Compile Include="GameSpecific\CrashTeamRacing\Level\Object_StartGrid.cs" />
     <Compile Include="GameSpecific\CrashTS\Modder_Twins.cs" />
     <Compile Include="GameSpecific\CrashTS\Mods\TS_ChangeCreditsChunk.cs" />
     <Compile Include="GameSpecific\CrashTS\Mods\TS_ChangeStartingChunk.cs" />

@@ -9,12 +9,14 @@ namespace CrateModLoader.LevelAPI
         public int ID = 0;
         public int ObjectCategory = 0;
         public EditorVisual Visual = EditorVisual.Wireframe;
+        public CollisionDataBase VisualData = null;
 
         public enum EditorVisual
         {
             Wireframe = 0,
             Box,
             Point,
+            Custom,
         }
 
         [Category("Base"), Description("Position of the object."), TypeConverter(typeof(ExpandableObjectConverter))]
@@ -26,6 +28,15 @@ namespace CrateModLoader.LevelAPI
 
         public abstract void Load(object LevelObject);
         public abstract void Save();
+        public virtual void LoadVisuals(object LevelObject) { }
+        public event EventHandler OnPropertyUpdate;
+        public void PropertyUpdated()
+        {
+            if (OnPropertyUpdate != null)
+            {
+                OnPropertyUpdate.Invoke(this, null);
+            }
+        }
 
         public override string ToString()
         {

@@ -19,15 +19,37 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
             Indices = new List<int>();
             for (int i = 0; i < Geom.QuadBlocks.Count; i++)
             {
+                Indices.Add(Geom.QuadBlocks[i].ind[5]);
+                Indices.Add(Geom.QuadBlocks[i].ind[4]);
                 Indices.Add(Geom.QuadBlocks[i].ind[0]);
-                Indices.Add(Geom.QuadBlocks[i].ind[1]);
-                Indices.Add(Geom.QuadBlocks[i].ind[2]);
-                Indices.Add(Geom.QuadBlocks[i].ind[3]);
+
+                Indices.Add(Geom.QuadBlocks[i].ind[6]);
                 Indices.Add(Geom.QuadBlocks[i].ind[4]);
                 Indices.Add(Geom.QuadBlocks[i].ind[5]);
+
+                Indices.Add(Geom.QuadBlocks[i].ind[2]);
                 Indices.Add(Geom.QuadBlocks[i].ind[6]);
+                Indices.Add(Geom.QuadBlocks[i].ind[5]);
+
+                Indices.Add(Geom.QuadBlocks[i].ind[6]);
+                Indices.Add(Geom.QuadBlocks[i].ind[2]);
+                Indices.Add(Geom.QuadBlocks[i].ind[8]);
+
+                Indices.Add(Geom.QuadBlocks[i].ind[8]);
+                Indices.Add(Geom.QuadBlocks[i].ind[7]);
+                Indices.Add(Geom.QuadBlocks[i].ind[6]);
+
+                Indices.Add(Geom.QuadBlocks[i].ind[3]);
                 Indices.Add(Geom.QuadBlocks[i].ind[7]);
                 Indices.Add(Geom.QuadBlocks[i].ind[8]);
+
+                Indices.Add(Geom.QuadBlocks[i].ind[6]);
+                Indices.Add(Geom.QuadBlocks[i].ind[1]);
+                Indices.Add(Geom.QuadBlocks[i].ind[4]);
+
+                Indices.Add(Geom.QuadBlocks[i].ind[7]);
+                Indices.Add(Geom.QuadBlocks[i].ind[1]);
+                Indices.Add(Geom.QuadBlocks[i].ind[6]);
             }
 
             Normals = new List<System.Numerics.Vector3>();

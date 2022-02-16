@@ -84,7 +84,7 @@ namespace CrateModLoader.GameSpecific.Crash1.TrilogyCommon
                     EntID++;
                 }
             }
-            /*
+            
             foreach (OldSceneryEntry zone in file.nsf.GetEntries<OldSceneryEntry>())
             {
                 SceneryData_NSF_Old scenery = new SceneryData_NSF_Old();
@@ -94,7 +94,25 @@ namespace CrateModLoader.GameSpecific.Crash1.TrilogyCommon
                     CollisionData.Add(scenery);
                 }
             }
-            */
+            foreach (SceneryEntry zone in file.nsf.GetEntries<SceneryEntry>())
+            {
+                SceneryData_NSF scenery = new SceneryData_NSF();
+                scenery.Load(zone);
+                if (scenery.Vertices.Count > 0)
+                {
+                    CollisionData.Add(scenery);
+                }
+            }
+            foreach (NewSceneryEntry zone in file.nsf.GetEntries<NewSceneryEntry>())
+            {
+                SceneryData_NSF_New scenery = new SceneryData_NSF_New();
+                scenery.Load(zone);
+                if (scenery.Vertices.Count > 0)
+                {
+                    CollisionData.Add(scenery);
+                }
+            }
+
 
         }
 
