@@ -8,7 +8,6 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
 {
     public class Object_Pickup : LevelObjectData<PickupHeader>
     {
-        public string Name { get; set; }
         public CtrThreadID Type { get; set; }
         public string ModelName { get; private set; }
 

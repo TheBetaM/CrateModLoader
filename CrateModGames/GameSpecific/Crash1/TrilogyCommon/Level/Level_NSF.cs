@@ -16,8 +16,9 @@ namespace CrateModLoader.GameSpecific.Crash1.TrilogyCommon
             {
                 return new Dictionary<int, string>()
                 {
-                    [0] = "Zones",
-                    [1] = "Entities",
+                    [0] = "Scenery",
+                    [1] = "Zones",
+                    [2] = "Entities",
                 };
             }
             set { }
@@ -31,7 +32,7 @@ namespace CrateModLoader.GameSpecific.Crash1.TrilogyCommon
             {
                 Object_OldZone OldZone = new Object_OldZone();
                 OldZone.Load(zone);
-                OldZone.ObjectCategory = 0;
+                OldZone.ObjectCategory = 1;
                 OldZone.ID = zone.EID;
                 ObjectData.Add(OldZone);
 
@@ -40,7 +41,7 @@ namespace CrateModLoader.GameSpecific.Crash1.TrilogyCommon
                     Object_OldEntity BPoint = new Object_OldEntity();
                     BPoint.Zone = zone;
                     BPoint.Load(ent);
-                    BPoint.ObjectCategory = 1;
+                    BPoint.ObjectCategory = 2;
                     BPoint.ID = EntID;
                     ObjectData.Add(BPoint);
                     EntID++;
@@ -50,7 +51,7 @@ namespace CrateModLoader.GameSpecific.Crash1.TrilogyCommon
             {
                 Object_Zone Zone = new Object_Zone();
                 Zone.Load(zone);
-                Zone.ObjectCategory = 0;
+                Zone.ObjectCategory = 1;
                 Zone.ID = zone.EID;
                 ObjectData.Add(Zone);
 
@@ -59,7 +60,7 @@ namespace CrateModLoader.GameSpecific.Crash1.TrilogyCommon
                     Object_Entity BPoint = new Object_Entity();
                     BPoint.Zone = zone;
                     BPoint.Load(ent);
-                    BPoint.ObjectCategory = 1;
+                    BPoint.ObjectCategory = 2;
                     BPoint.ID = EntID;
                     ObjectData.Add(BPoint);
                     EntID++;
@@ -69,7 +70,7 @@ namespace CrateModLoader.GameSpecific.Crash1.TrilogyCommon
             {
                 Object_NewZone Zone = new Object_NewZone();
                 Zone.Load(zone);
-                Zone.ObjectCategory = 0;
+                Zone.ObjectCategory = 1;
                 Zone.ID = zone.EID;
                 ObjectData.Add(Zone);
 
@@ -78,7 +79,7 @@ namespace CrateModLoader.GameSpecific.Crash1.TrilogyCommon
                     Object_NewEntity BPoint = new Object_NewEntity();
                     BPoint.Zone = zone;
                     BPoint.Load(ent);
-                    BPoint.ObjectCategory = 1;
+                    BPoint.ObjectCategory = 2;
                     BPoint.ID = EntID;
                     ObjectData.Add(BPoint);
                     EntID++;
@@ -89,27 +90,33 @@ namespace CrateModLoader.GameSpecific.Crash1.TrilogyCommon
             {
                 SceneryData_NSF_Old scenery = new SceneryData_NSF_Old();
                 scenery.Load(zone);
-                if (scenery.Vertices.Count > 0)
+                scenery.ID = zone.EID;
+                scenery.ObjectCategory = 0;
+                if (scenery.VisualData.Vertices.Count > 0)
                 {
-                    CollisionData.Add(scenery);
+                    ObjectData.Add(scenery);
                 }
             }
             foreach (SceneryEntry zone in file.nsf.GetEntries<SceneryEntry>())
             {
                 SceneryData_NSF scenery = new SceneryData_NSF();
                 scenery.Load(zone);
-                if (scenery.Vertices.Count > 0)
+                scenery.ID = zone.EID;
+                scenery.ObjectCategory = 0;
+                if (scenery.VisualData.Vertices.Count > 0)
                 {
-                    CollisionData.Add(scenery);
+                    ObjectData.Add(scenery);
                 }
             }
             foreach (NewSceneryEntry zone in file.nsf.GetEntries<NewSceneryEntry>())
             {
                 SceneryData_NSF_New scenery = new SceneryData_NSF_New();
                 scenery.Load(zone);
-                if (scenery.Vertices.Count > 0)
+                scenery.ID = zone.EID;
+                scenery.ObjectCategory = 0;
+                if (scenery.VisualData.Vertices.Count > 0)
                 {
-                    CollisionData.Add(scenery);
+                    ObjectData.Add(scenery);
                 }
             }
 

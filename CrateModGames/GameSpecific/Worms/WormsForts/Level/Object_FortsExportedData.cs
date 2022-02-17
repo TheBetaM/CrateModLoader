@@ -27,6 +27,15 @@ namespace CrateModLoader.GameSpecific.WormsForts
         [Category("Settings")]
         public float WaterHeight { get; set; }
 
+        [Browsable(false)]
+        public override string Name { get; set; } = string.Empty;
+        [Browsable(false)]
+        public override ObjectVector3 Position { get; set; } = new ObjectVector3(0, 0, 0);
+        [Browsable(false)]
+        public override ObjectVector3 Rotation { get; set; } = new ObjectVector3(0, 0, 0);
+        [Browsable(false)]
+        public override ObjectVector3 Scale { get; set; } = new ObjectVector3(1, 1, 1);
+
         public override void Load(XFortsExportedData data)
         {
             Epoch = data.Epoch;

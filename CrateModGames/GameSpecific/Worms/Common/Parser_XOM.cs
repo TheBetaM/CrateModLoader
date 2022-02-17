@@ -222,7 +222,7 @@ namespace CrateModLoader.GameSpecific.WormsForts
 
         };
         public override bool DisableAsync => true; //too resource-intensive atm
-        public override bool IsLevelFile => true; 
+        public override bool IsLevelFile => true;
 
         public override XOM_File LoadObject(string filePath)
         {

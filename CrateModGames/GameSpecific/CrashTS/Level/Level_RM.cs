@@ -23,6 +23,7 @@ namespace CrateModLoader.GameSpecific.CrashTS
                     [6] = "Instance Group 6",
                     [7] = "Instance Group 7",
                     [8] = "Instance Group 8",
+                    [9] = "Collision Data",
                 };
             }
             set { }
@@ -39,9 +40,10 @@ namespace CrateModLoader.GameSpecific.CrashTS
             {
                 CollisionData_RM RM_Col = new CollisionData_RM();
                 RM_Col.Load(col);
-                if (RM_Col.Vertices.Count > 0)
+                RM_Col.ObjectCategory = 9;
+                if (RM_Col.VisualData.Vertices.Count > 0)
                 {
-                    CollisionData.Add(RM_Col);
+                    ObjectData.Add(RM_Col);
                 }
             }
 

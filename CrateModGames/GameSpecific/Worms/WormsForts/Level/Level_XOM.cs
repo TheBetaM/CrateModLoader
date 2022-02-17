@@ -14,6 +14,7 @@ namespace CrateModLoader.GameSpecific.WormsForts
             {
                 return new Dictionary<int, string>()
                 {
+                    [0] = "Collision Data",
                     [1] = "Worms Forts Exported Data",
                     [2] = "Reference Points",
                     [3] = "Build Points",
@@ -29,11 +30,15 @@ namespace CrateModLoader.GameSpecific.WormsForts
             List<XCollisionGeometry> Cols = file.GetContainers<XCollisionGeometry>();
             if (Cols != null && Cols.Count > 0)
             {
+                int ColID = 0;
                 foreach (XCollisionGeometry Col in Cols)
                 {
                     CollisionData_XOM XOM_Col = new CollisionData_XOM();
                     XOM_Col.Load(Col);
-                    CollisionData.Add(XOM_Col);
+                    XOM_Col.ObjectCategory = 0;
+                    XOM_Col.ID = ColID;
+                    ObjectData.Add(XOM_Col);
+                    ColID++;
                 }
             }
 
@@ -76,7 +81,7 @@ namespace CrateModLoader.GameSpecific.WormsForts
                 for (int i = 0; i < Export.PhantomSpheres.Count; i++)
                 {
                     Object_TriggerSphere BPoint = new Object_TriggerSphere();
-                    BPoint.Load(Export.PhantomBoxes[i]);
+                    BPoint.Load(Export.PhantomSpheres[i]);
                     BPoint.ObjectCategory = 4;
                     BPoint.ID = i;
                     ObjectData.Add(BPoint);

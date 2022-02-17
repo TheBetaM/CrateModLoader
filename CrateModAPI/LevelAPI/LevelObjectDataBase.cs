@@ -19,24 +19,20 @@ namespace CrateModLoader.LevelAPI
             Custom,
         }
 
+        [Category("Base"), Description("Name of the object.")]
+        public virtual string Name { get; set; } = string.Empty;
         [Category("Base"), Description("Position of the object."), TypeConverter(typeof(ExpandableObjectConverter))]
-        public ObjectVector3 Position { get; set; } = new ObjectVector3(0, 0, 0);
+        public virtual ObjectVector3 Position { get; set; } = new ObjectVector3(0, 0, 0);
         [Category("Base"), Description("Rotation of the object."), TypeConverter(typeof(ExpandableObjectConverter))]
-        public ObjectVector3 Rotation { get; set; } = new ObjectVector3(0, 0, 0);
+        public virtual ObjectVector3 Rotation { get; set; } = new ObjectVector3(0, 0, 0);
         [Category("Base"), Description("Scale of the object."), TypeConverter(typeof(ExpandableObjectConverter))]
-        public ObjectVector3 Scale { get; set; } = new ObjectVector3(1, 1, 1);
+        public virtual ObjectVector3 Scale { get; set; } = new ObjectVector3(1, 1, 1);
+        // For editor visual scaling (no effect on data)
+        [Browsable(false)]
+        public virtual ObjectVector3 WorldScale => new ObjectVector3(1, 1, 1);
 
         public abstract void Load(object LevelObject);
         public abstract void Save();
-        public virtual void LoadVisuals(object LevelObject) { }
-        public event EventHandler OnPropertyUpdate;
-        public void PropertyUpdated()
-        {
-            if (OnPropertyUpdate != null)
-            {
-                OnPropertyUpdate.Invoke(this, null);
-            }
-        }
 
         public override string ToString()
         {

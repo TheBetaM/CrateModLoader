@@ -9,6 +9,11 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
 {
     public class Object_RestartPoint : LevelObjectData<Pose>
     {
+        [Browsable(false)]
+        public override string Name { get; set; } = string.Empty;
+        [Browsable(false)]
+        public override ObjectVector3 Scale { get; set; } = new ObjectVector3(1, 1, 1);
+
         public override void Load(Pose data)
         {
             Position = new ObjectVector3(data.Position.X, data.Position.Y, data.Position.Z);

@@ -53,7 +53,8 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
             {
                 CollisionData_MeshInfo mesh = new CollisionData_MeshInfo();
                 mesh.Load(file.mesh);
-                CollisionData.Add(mesh);
+                mesh.ObjectCategory = 0;
+                ObjectData.Add(mesh);
             }
 
             if (file.spawnGroups != null)

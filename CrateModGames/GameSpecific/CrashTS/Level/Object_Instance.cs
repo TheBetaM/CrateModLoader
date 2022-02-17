@@ -30,6 +30,11 @@ namespace CrateModLoader.GameSpecific.CrashTS
         [Category("Settings"), DisplayName("Integer List"), Description("List of integer properties of this instance. Some are used by the game object, some by script.")]
         public List<uint> UnkI323 { get; set; } = new List<uint>();
 
+        [Browsable(false)]
+        public override ObjectVector3 Scale { get; set; } = new ObjectVector3(1, 1, 1);
+        [Browsable(false)]
+        public override string Name { get; set; } = string.Empty;
+
         public override void Load(Instance data)
         {
             Position = new ObjectVector3(-data.Pos.X, data.Pos.Y, data.Pos.Z);

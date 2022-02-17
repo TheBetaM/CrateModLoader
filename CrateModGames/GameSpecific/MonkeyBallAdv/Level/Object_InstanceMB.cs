@@ -22,6 +22,11 @@ namespace CrateModLoader.GameSpecific.MonkeyBallAdv
         [Category("Settings"), DisplayName("Script ID"), Description("The ID of the script that this object executes on every spawn.")]
         public short ScriptID { get; set; }
 
+        [Browsable(false)]
+        public override ObjectVector3 Scale { get; set; } = new ObjectVector3(1, 1, 1);
+        [Browsable(false)]
+        public override string Name { get; set; } = string.Empty;
+
         public override void Load(InstanceMB data)
         {
             Position = new ObjectVector3(-data.Pos.X, data.Pos.Y, data.Pos.Z);

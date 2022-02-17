@@ -8,8 +8,8 @@ namespace CrateModLoader.GameSpecific.Crash2
 {
     public class Object_Zone : LevelObjectData<ZoneEntry>
     {
-        [Category("Settings")]
-        public string Name { get; private set; }
+        [Browsable(false)]
+        public override ObjectVector3 WorldScale => new ObjectVector3(0.004f);
 
         public override void Load(ZoneEntry data)
         {
@@ -20,11 +20,11 @@ namespace CrateModLoader.GameSpecific.Crash2
             int y2 = BitConv.FromInt32(data.Layout, 16);
             int z2 = BitConv.FromInt32(data.Layout, 20);
 
-            Position = new ObjectVector3(xoffset / 100f, yoffset / 100f, zoffset / 100f);
+            Position = new ObjectVector3(xoffset, yoffset, zoffset);
             x2 = Math.Abs(x2);
             y2 = Math.Abs(y2);
             z2 = Math.Abs(z2);
-            Scale = new ObjectVector3(x2 / 100f, y2 / 100f, z2 / 100f);
+            Scale = new ObjectVector3(x2, y2, z2);
 
             Name = data.EName;
         }

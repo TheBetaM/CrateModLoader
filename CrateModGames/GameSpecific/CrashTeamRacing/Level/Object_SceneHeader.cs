@@ -8,6 +8,9 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
 {
     public class Object_SceneHeader : LevelObjectData<SceneHeader>
     {
+        [Browsable(false)]
+        public override string Name { get; set; } = string.Empty;
+
 
         public override void Load(SceneHeader data)
         {

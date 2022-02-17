@@ -24,6 +24,7 @@ namespace CrateModLoader.GameSpecific.MonkeyBallAdv
                     [7] = "Instance Group 7",
                     [8] = "Instance Group 8",
                     [9] = "Instance Group 9",
+                    [10] = "Collision Data",
                 };
             }
             set { }
@@ -40,9 +41,10 @@ namespace CrateModLoader.GameSpecific.MonkeyBallAdv
             {
                 CrashTS.CollisionData_RM RM_Col = new CrashTS.CollisionData_RM();
                 RM_Col.Load(col);
-                if (RM_Col.Vertices.Count > 0)
+                RM_Col.ObjectCategory = 10;
+                if (RM_Col.VisualData.Vertices.Count > 0)
                 {
-                    CollisionData.Add(RM_Col);
+                    ObjectData.Add(RM_Col);
                 }
             }
 
@@ -73,7 +75,7 @@ namespace CrateModLoader.GameSpecific.MonkeyBallAdv
 
         public override void Save(ChunkInfoRM file)
         {
-            // todo: save collision changes
+            
 
 
         }

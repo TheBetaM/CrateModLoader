@@ -12,6 +12,15 @@ namespace CrateModLoader.GameSpecific.Crash1.TrilogyCommon
         [Category("Settings"), DisplayName("Path"), Description("The entity's path.")]
         public List<ObjectVector3> Path { get; set; } = new List<ObjectVector3>();
 
+        [Browsable(false)]
+        public override ObjectVector3 Scale { get; set; } = new ObjectVector3(1, 1, 1);
+        [Browsable(false)]
+        public override ObjectVector3 Rotation { get; set; } = new ObjectVector3(0, 0, 0);
+        [Browsable(false)]
+        public override string Name { get; set; } = string.Empty;
+        [Browsable(false)]
+        public override ObjectVector3 WorldScale => new ObjectVector3(0.004f);
+
         public short EntityID { get; set; }
         public byte Type { get; set; }
         public byte Subtype { get; set; }
@@ -29,13 +38,16 @@ namespace CrateModLoader.GameSpecific.Crash1.TrilogyCommon
             int xoffset = BitConv.FromInt32(Zone.Layout, 0);
             int yoffset = BitConv.FromInt32(Zone.Layout, 4);
             int zoffset = BitConv.FromInt32(Zone.Layout, 8);
+            int x2 = BitConv.FromInt32(Zone.Layout, 12);
+            int y2 = BitConv.FromInt32(Zone.Layout, 16);
+            int z2 = BitConv.FromInt32(Zone.Layout, 20);
 
             if (data.Positions.Count > 0)
             {
-                int x = (Type != 34 ? data.Positions[0].X : data.Positions[0].X + 50) + xoffset;
-                int y = (Type != 34 ? data.Positions[0].Y : data.Positions[0].Y + 50) + yoffset;
-                int z = (Type != 34 ? data.Positions[0].Z : data.Positions[0].Z + 50) + zoffset;
-                Position = new ObjectVector3(x / 100f, y / 100f, z / 100f);
+                int x = (Type != 34 ? data.Positions[0].X : data.Positions[0].X + 50) + xoffset + (x2 / 2);
+                int y = (Type != 34 ? data.Positions[0].Y : data.Positions[0].Y + 50) + yoffset + (y2 / 2);
+                int z = (Type != 34 ? data.Positions[0].Z : data.Positions[0].Z + 50) + zoffset + (z2 / 2);
+                Position = new ObjectVector3(x, y, z);
             }
 
             EntityID = data.ID;
@@ -52,7 +64,7 @@ namespace CrateModLoader.GameSpecific.Crash1.TrilogyCommon
                 int x = (Type != 34 ? data.Positions[i].X : data.Positions[i].X + 50) + xoffset;
                 int y = (Type != 34 ? data.Positions[i].Y : data.Positions[i].Y + 50) + yoffset;
                 int z = (Type != 34 ? data.Positions[i].Z : data.Positions[i].Z + 50) + zoffset;
-                Path.Add(new ObjectVector3(data.Positions[i].X / 100f, data.Positions[i].Y / 100f, data.Positions[i].Z / 100f));
+                Path.Add(new ObjectVector3(data.Positions[i].X, data.Positions[i].Y, data.Positions[i].Z));
             }
 
         }

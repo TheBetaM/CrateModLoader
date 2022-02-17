@@ -7,12 +7,15 @@ namespace CrateModLoader.GameSpecific.WormsForts
 {
     public class Object_RefPoint : LevelObjectData<XOM.XFortsExportedData.RefPoint>
     {
-        [Category("Settings"), Description("Name of the reference point (referenced by Lua scripts).")]
-        public string Name { get; private set; }
+
+        [Browsable(false)]
+        public override ObjectVector3 Scale { get; set; } = new ObjectVector3(1, 1, 1);
+        [Browsable(false)]
+        public override ObjectVector3 WorldScale => new ObjectVector3(0.025f);
 
         public override void Load(XOM.XFortsExportedData.RefPoint data)
         {
-            Position = new ObjectVector3(data.Pos.X / 10, data.Pos.Y / 10, data.Pos.Z / 10);
+            Position = new ObjectVector3(data.Pos.X, data.Pos.Y, data.Pos.Z);
             Rotation = new ObjectVector3(data.Rot.X, data.Rot.Y, data.Rot.Z);
 
             Name = data.NamePoint;
@@ -20,7 +23,7 @@ namespace CrateModLoader.GameSpecific.WormsForts
 
         public override void Save(XOM.XFortsExportedData.RefPoint data)
         {
-            data.Pos = new XOM.Vector3(Position.X * 10, Position.Y * 10, Position.Z * 10);
+            data.Pos = new XOM.Vector3(Position.X, Position.Y, Position.Z);
             data.Rot = new XOM.Vector3(Rotation.X, Rotation.Y, Rotation.Z);
 
             //data.NamePoint = Name;
@@ -28,7 +31,7 @@ namespace CrateModLoader.GameSpecific.WormsForts
 
         public override string ToString()
         {
-            return "Reference Point " + ID + ": " + Name;
+            return Name;
         }
     }
 }
