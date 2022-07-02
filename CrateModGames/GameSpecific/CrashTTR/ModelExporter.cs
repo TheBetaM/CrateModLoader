@@ -12,136 +12,15 @@ namespace CrateModLoader.GameSpecific.CrashTTR
     {
 
         private static library_animations cachedAnims = new library_animations();
-        //Animations: Animation: ID - anim0-joint1
-        // Source ID - anim0-joint1-time
-	    //  Float array ID - anim0-joint1-time-array, count - anim frames: float array of time from 0 to end time of anim clip
-	    //  Technique Common
-	    //   Accessor source - float array ID, count - anim frames
-	    //    Param name - TIME, type - float
-        // Source ID - anim0-joint1-matrix
-	    //  Float array ID - anim0-joint1-matrix-array, count - anim frames times 16: float array of matrices
-	    //  Technique Common
-	    //   Accessor source - float array ID, count - anim frames, stride - 16
-	    //    Param name - TRANSFORM, type - float4x4
-	    // Source ID - anim0-joint1-interpolation
-	    //  Name array ID - anim0-joint1-interpolation-array, count - anim frames: name array of interpolation LINEAR
-	    //  Technique Common
-	    //   Accessor source - name array ID, count - anim frames
-	    //    Param name - INTERPOLATION, type - name
-        // Sampler ID - anim0-joint1-sampler
-	    //  Input semantic - INPUT, source - time source ID
-	    //  Input semantic - OUTPUT, source - matrix source ID
-	    //  Input semantic - INTERPOLATION, source - interpolation source ID
-        // Channel source - ID of sampler, target - joint1/transform
-	    //One animation object for every joint of every animation
-
         private static library_animation_clips cachedAnim_clips = new library_animation_clips();
-        //AnimationClips: Animation Clip ID - any, name - any, end - float (length of animation)
-        // Instance Animation URL - same as Animation ID (One of these for all joints of the animation)
-
         private static library_controllers cachedControllers = new library_controllers();
-        //Controllers: Controller: ID - controller0
-        // Skin: source - ID of geometry
-        //  Source ID - controller0-joints
-	    //   Name array ID - controller0-joints-array, count - number of joints: string array of names of joints
-	    //   Technique Common
-	    //    Accessor source - Name array ID, count - number of joints
-	    //     Param Name - JOINT, type - Name
-        //  Source ID - controller0-bind_poses
-	    //   Float array ID - controller0-bind_poses-array, count - number of joints times 16: float array
-	    //   Technique Common
-	    //    Accessor source - Float array ID, count - number of joints, stride - 16
-	    //     Param Name - TRANSFORM, type - float4x4
-        //  Source ID - controller0-weights
-	    //   Float array ID - controller0-weights-array, count - array size: float array
-	    //   Technique Common
-	    //    Accessor source - Float array ID, count - array size
-	    //     Param Name - WEIGHT, type - float
-        //  Joints
-	    //   Input semantic - JOINT, source - ID of joints source
-	    //   Input semantic - INV_BIND_MATRIX, source - ID of bind poses
-        //  Vertex Weights count - same as geometry positions array size
-	    //   Input semantic - JOINT, source - ID of joints source, offset 0
-	    //   Input semantic - WEIGHT, source - ID of weights source, offset 1
-	    //   Vcount: list of ints, number of bones affected (1) ?
-	    //   V: List of indices that describe which bonues are associated with each vertex ? index list?
-
         private static library_effects cachedEffects = new library_effects();
-        //Effects: Effect ID - same id as in material, name - any
-        // Profile_Common
-        //  Newparam SID - Image-surface
-	    //   Surface type - 2D
-	    //    Init From: ID of image
-	    //    Format: A8R8G8B8
-        //  Newparam SID - Image-sampler
-	    //   Sampler2D
-	    //    Source Image-surface
-	    //    Wrap_s CLAMP
-	    //    Wrap_t CLAMP
-	    //    Minfilter NEAREST
-	    //    Magfilter NEAREST
-	    //    Mipfilter NEAREST
-        //  Technique SID - common
-	    //   Phong
-	    //    Diffuse
-	    //     Texture texture - Image-sampler, texcoord - tc
-	    //    Transparent
-	    //     Texture texture - Image-sampler, texcoord - tc
-
         private static library_geometries cachedGeoms = new library_geometries();
-        //Geometries: Geometry ID - same as skin source, name - same as visual scene node name?
-        // Mesh
-        //  Source ID - geometry0-positions
-	    //   float array ID - geometry0-positions-array, count - array size: Positions float array
-	    //   technique common
-	    //    accessor source - float array ID, count - array size divided by 3, stride - 3
-	    //     param name - X, type - float
-	    //     param name - Y, type - float
-	    //     param name - Z, type - float
-        //  Source ID - geometry0-texcoords
-	    //   float array ID - geometry0-texcoords-array, count - array size: Positions float array
-	    //   technique common
-	    //    accessor source - float array ID, count - array size divided by 2, stride - 2
-	    //     param name - S, type - float
-	    //     param name - T, type - float
-	    //  Source ID - geometry0-colors
-	    //   float array ID - geometry0-colors-array, count - array size: Positions float array
-	    //   technique common
-	    //    accessor source - float array ID, count - array size divided by 3, stride - 3
-	    //     param name - R, type - float
-	    //     param name - G, type - float
-	    //     param name - B, type - float
-        //  Vertices ID - geometry0-vertices
-	    //   Input semantic - POSITION, source - Positions source ID
-	    //   Input semantic - TEXCOORD, source - Texcoords source ID
-	    //   Input semantic - COLOR, source - Colors source ID
-        //  Triangles material - ID of material, count - vertices count
-	    //   Input semantic - VERTEX, source - ID of Vertices section above, offset 0
-	    //   P - Array of primitives (int) ? packed normal list?
-
         private static library_materials cachedMats = new library_materials();
-        //Materials: Material ID - same name as in node and geometry, name any? or same name as effect name
-        // Instance Effect URL - effect name
-
         private static library_visual_scenes cachedVscenes = new library_visual_scenes();
-        //Visual Scenes: Visual Scene: ID - same as url in Scene, name any
-        // Node Joints ID - joint1, SID - joint1, name any? type JOINT
-	    //  Matrix SID - transform: Transform matrix
-	    //  Node Joints ID - joint2 SID - joint2 name any? Type JOINT
-	    //   ETC (from SkeletonParent of the joint)
-        // Node Model ID - node0 name polygon0 type NODE
-	    //  Instance Controller URL - same as controller ID
-	    //   Skeleton: ID of skeleton root node
-	    //   Bind Material
-	    //    Technique Common
-	    //     Instance Material symbol - same ID as Material, target - same ID as material
-	    //      Bind Vertex Input semantic - TC, input_semantic TEXCOORD
-
         private static library_images cachedImages = new library_images();
-        //Images: Image ID - same as in effects
-	    // init_from - file name of texture
 
-        public static void LoadAnim(ref Animation refAnim)
+        public static void LoadAnim(ref Pure3D.Chunks.Animation refAnim)
         {
             cachedAnims.animation = new animation[1];
             cachedAnims.animation[cachedAnims.animation.Length - 1].name = refAnim.Name;
@@ -155,7 +34,26 @@ namespace CrateModLoader.GameSpecific.CrashTTR
             cachedAnim_clips.animation_clip[cachedAnim_clips.animation_clip.Length - 1].start = 0;
         }
 
+        public static void TestExport()
+        {
+            Pure3D.File CrashOnfootAnim1 = new Pure3D.File();
+            CrashOnfootAnim1.Load(ModLoaderGlobals.ToolsPath + "file.p3d");
+            PrintHierarchy(CrashOnfootAnim1.RootChunk, 0);
 
+            Shader[] shaders = CrashOnfootAnim1.RootChunk.GetChildren<Shader>();
+            //AddSkinnedModelWithAnimations(ref CrashOnfootAnim1.RootChunk.GetChildren<Skin>()[0], ref CrashOnfootAnim1.RootChunk.GetChildren<SkeletonCTTR>()[0], ref shaders);
+            AddSkinnedModel(ref CrashOnfootAnim1.RootChunk.GetChildren<Skin>()[0], ref CrashOnfootAnim1.RootChunk.GetChildren<SkeletonCTTR>()[0], ref shaders);
+            ExportModel(ModLoaderGlobals.ToolsPath + "out.dae");
+
+        }
+
+        static void PrintHierarchy(Chunk chunk, int indent)
+        {
+            Console.WriteLine("{1}{0}", chunk.ToString(), new string('\t', indent));
+
+            foreach (var child in chunk.Children)
+                PrintHierarchy(child, indent + 1);
+        }
 
 
         public static void LoadModel(ref COLLADA OutModel)
@@ -177,6 +75,16 @@ namespace CrateModLoader.GameSpecific.CrashTTR
             //endScene.instance_visual_scene.url = "Scene0";
             //OutModel.Items[8] = endScene;
 
+            OutModel.asset = new asset();
+            //Model.asset.up_axis = UpAxisType.Z_UP;
+            //Model.asset.unit = new assetUnit();
+            //Model.asset.unit.name = "meter";
+            //Model.asset.unit.meter = 1;
+
+            OutModel.scene = new COLLADAScene();
+            OutModel.scene.instance_visual_scene = new InstanceWithExtra();
+            OutModel.scene.instance_visual_scene.url = "#Scene0";
+
         }
 
         public static void ExportModel(string ExportPath)
@@ -188,7 +96,396 @@ namespace CrateModLoader.GameSpecific.CrashTTR
             Model.Save(ExportPath);
         }
 
-        public static void AddSkinnedModelWithAnimations(ref Skin SkinChunk, ref SkeletonCTTR SkeletonChunk, ref Shader[] ShaderChunks)//, ref Animation[] AnimChunks)
+        public static void AddSkinnedModel(ref Skin SkinChunk, ref SkeletonCTTR SkeletonChunk, ref Shader[] ShaderChunks, bool SplitMesh = false)
+        {
+
+            cachedGeoms.geometry = new geometry[SkinChunk.NumPrimGroups];
+            cachedVscenes.visual_scene = new visual_scene[1] { new visual_scene() };
+            cachedVscenes.visual_scene[0].id = "Scene0";
+            cachedVscenes.visual_scene[0].name = "Scene0";
+            //CacheMaterialsTextures(Materials, TotalShaders, tex_sec);
+
+            for (int submodel = 0; submodel < SkinChunk.NumPrimGroups; submodel++)
+            {
+                PrimitiveGroupCTTR Group = SkinChunk.GetChildren<PrimitiveGroupCTTR>()[submodel];
+                PositionList PosList = Group.GetChildren<PositionList>()[0];
+                NormalList NormList = Group.GetChildren<NormalList>()[0];
+                UVList UVList = Group.GetChildren<UVList>()[0];
+                IndexList IndList = Group.GetChildren<IndexList>()[0];
+
+                cachedGeoms.geometry[submodel] = new geometry();
+                cachedGeoms.geometry[submodel].id = "geometry" + submodel;
+                cachedGeoms.geometry[submodel].name = "geometry" + submodel;
+                mesh newMesh = new Collada141.mesh();
+
+                newMesh.source = new source[3];
+
+                newMesh.source[0] = new source();
+                newMesh.source[0].id = "geometry" + submodel + "-positions";
+                float_array geom_positions = new float_array();
+                geom_positions.id = "geometry" + submodel + "-positions-array";
+
+                geom_positions.count = (ulong)PosList.Positions.Length * 3;
+                geom_positions.Values = new float[geom_positions.count];
+                int posit = 0;
+                for (int i = 0; i < (int)PosList.Positions.Length; i++)
+                {
+                    geom_positions.Values[posit] = PosList.Positions[i].X;
+                    posit++;
+                    geom_positions.Values[posit] = PosList.Positions[i].Y;
+                    posit++;
+                    geom_positions.Values[posit] = PosList.Positions[i].Z;
+                    posit++;
+                }
+
+                newMesh.source[0].Item = geom_positions;
+                newMesh.source[0].technique_common = new sourceTechnique_common();
+                newMesh.source[0].technique_common.accessor = new accessor();
+                newMesh.source[0].technique_common.accessor.source = "#" + geom_positions.id;
+                newMesh.source[0].technique_common.accessor.count = geom_positions.count / 3;
+                newMesh.source[0].technique_common.accessor.stride = 3;
+                newMesh.source[0].technique_common.accessor.param = new param[3] { new param(), new param(), new param(), };
+                newMesh.source[0].technique_common.accessor.param[0].name = "X";
+                newMesh.source[0].technique_common.accessor.param[0].type = "float";
+                newMesh.source[0].technique_common.accessor.param[1].name = "Y";
+                newMesh.source[0].technique_common.accessor.param[1].type = "float";
+                newMesh.source[0].technique_common.accessor.param[2].name = "Z";
+                newMesh.source[0].technique_common.accessor.param[2].type = "float";
+
+                newMesh.source[1] = new source();
+                newMesh.source[1].id = "geometry" + submodel + "-mesh-map-0";
+                float_array geom_texcoords = new float_array();
+                geom_texcoords.id = "geometry" + submodel + "-mesh-map-array";
+
+                geom_texcoords.count = (ulong)UVList.UVs.Length * 2;
+                geom_texcoords.Values = new float[geom_texcoords.count];
+                int coord = 0;
+                for (int i = 0; i < (int)UVList.UVs.Length; i++)
+                {
+                    geom_texcoords.Values[coord] = UVList.UVs[i].X;
+                    coord++;
+                    geom_texcoords.Values[coord] = UVList.UVs[i].Y;
+                    coord++;
+                }
+
+                newMesh.source[1].Item = geom_texcoords;
+                newMesh.source[1].technique_common = new sourceTechnique_common();
+                newMesh.source[1].technique_common.accessor = new accessor();
+                newMesh.source[1].technique_common.accessor.source = "#" + geom_texcoords.id;
+                newMesh.source[1].technique_common.accessor.count = geom_texcoords.count / 2;
+                newMesh.source[1].technique_common.accessor.stride = 2;
+                newMesh.source[1].technique_common.accessor.param = new param[2] { new param(), new param(), };
+                newMesh.source[1].technique_common.accessor.param[0].name = "S";
+                newMesh.source[1].technique_common.accessor.param[0].type = "float";
+                newMesh.source[1].technique_common.accessor.param[1].name = "T";
+                newMesh.source[1].technique_common.accessor.param[1].type = "float";
+
+                newMesh.source[2] = new source();
+                newMesh.source[2].id = "geometry" + submodel + "-normals";
+                float_array geom_normals = new float_array();
+                geom_normals.id = "geometry" + submodel + "-normals-array";
+
+                geom_normals.count = (ulong)NormList.Normals.Length * 3;
+                geom_normals.Values = new float[geom_normals.count];
+                posit = 0;
+                for (int i = 0; i < (int)NormList.Normals.Length; i++)
+                {
+                    geom_normals.Values[posit] = NormList.Normals[i].X;
+                    posit++;
+                    geom_normals.Values[posit] = NormList.Normals[i].Y;
+                    posit++;
+                    geom_normals.Values[posit] = NormList.Normals[i].Z;
+                    posit++;
+                }
+
+                newMesh.source[2].Item = geom_normals;
+                newMesh.source[2].technique_common = new sourceTechnique_common();
+                newMesh.source[2].technique_common.accessor = new accessor();
+                newMesh.source[2].technique_common.accessor.source = "#" + geom_normals.id;
+                newMesh.source[2].technique_common.accessor.count = geom_normals.count / 3;
+                newMesh.source[2].technique_common.accessor.stride = 3;
+                newMesh.source[2].technique_common.accessor.param = new param[3] { new param(), new param(), new param(), };
+                newMesh.source[2].technique_common.accessor.param[0].name = "X";
+                newMesh.source[2].technique_common.accessor.param[0].type = "float";
+                newMesh.source[2].technique_common.accessor.param[1].name = "Y";
+                newMesh.source[2].technique_common.accessor.param[1].type = "float";
+                newMesh.source[2].technique_common.accessor.param[2].name = "Z";
+                newMesh.source[2].technique_common.accessor.param[2].type = "float";
+
+                /*
+                newMesh.source[2] = new source();
+                newMesh.source[2].id = "geometry" + submodel + "-colors-Col";
+                float_array geom_colors = new float_array();
+                geom_colors.id = "geometry" + submodel + "-colors-Col-array";
+
+                geom_colors.count = (ulong)Sub.VertexCount * 4;
+                geom_colors.Values = new float[geom_colors.count];
+                coord = 0;
+                for (int i = 0; i < (int)Sub.VData.Count; i++)
+                {
+                    geom_colors.Values[coord] = Sub.VData[i].R / 255f;
+                    coord++;
+                    geom_colors.Values[coord] = Sub.VData[i].G / 255f;
+                    coord++;
+                    geom_colors.Values[coord] = Sub.VData[i].B / 255f;
+                    coord++;
+                    geom_colors.Values[coord] = Sub.VData[i].A / 255f;
+                    coord++;
+                }
+
+                newMesh.source[2].Item = geom_colors;
+                newMesh.source[2].technique_common = new sourceTechnique_common();
+                newMesh.source[2].technique_common.accessor = new accessor();
+                newMesh.source[2].technique_common.accessor.source = "#" + geom_colors.id;
+                newMesh.source[2].technique_common.accessor.count = geom_colors.count / 4;
+                newMesh.source[2].technique_common.accessor.stride = 4;
+                newMesh.source[2].technique_common.accessor.param = new param[4] { new param(), new param(), new param(), new param() };
+                newMesh.source[2].technique_common.accessor.param[0].name = "R";
+                newMesh.source[2].technique_common.accessor.param[0].type = "float";
+                newMesh.source[2].technique_common.accessor.param[1].name = "G";
+                newMesh.source[2].technique_common.accessor.param[1].type = "float";
+                newMesh.source[2].technique_common.accessor.param[2].name = "B";
+                newMesh.source[2].technique_common.accessor.param[2].type = "float";
+                newMesh.source[2].technique_common.accessor.param[3].name = "A";
+                newMesh.source[2].technique_common.accessor.param[3].type = "float";
+                */
+
+                newMesh.vertices = new vertices();
+                newMesh.vertices.id = "geometry" + submodel + "-vertices";
+                newMesh.vertices.name = "geometry" + submodel + "-vertices";
+                newMesh.vertices.input = new InputLocal[3];
+                newMesh.vertices.input[0] = new InputLocal();
+                newMesh.vertices.input[0].semantic = "POSITION";
+                newMesh.vertices.input[0].source = "#geometry" + submodel + "-positions";
+                newMesh.vertices.input[1] = new InputLocal();
+                newMesh.vertices.input[1].semantic = "TEXCOORD";
+                newMesh.vertices.input[1].source = "#geometry" + submodel + "-mesh-map-0";
+                newMesh.vertices.input[2] = new InputLocal();
+                newMesh.vertices.input[2].semantic = "NORMAL";
+                newMesh.vertices.input[2].source = "#geometry" + submodel + "-normals";
+                //newMesh.vertices.input[2] = new InputLocal();
+                //newMesh.vertices.input[2].semantic = "COLOR";
+                //newMesh.vertices.input[2].source = "#geometry" + submodel + "-colors-Col";
+
+                // triangle strip to list
+                List<uint> TriList = new List<uint>();
+                for (int i = 0; i< IndList.Indices.Length - 2; i++)
+                {
+                    if (i % 1 == 0)
+                    {
+                        TriList.Add(IndList.Indices[i + 0]);
+                        TriList.Add(IndList.Indices[i + 2]);
+                        TriList.Add(IndList.Indices[i + 1]);
+                    }
+                    else
+                    {
+                        TriList.Add(IndList.Indices[i + 0]);
+                        TriList.Add(IndList.Indices[i + 1]);
+                        TriList.Add(IndList.Indices[i + 2]);
+                    }
+                }
+
+                triangles meshTriangles = new triangles();
+                meshTriangles.material = "";
+                meshTriangles.count = (ulong)TriList.Count;
+                meshTriangles.input = new InputLocalOffset[1];
+                meshTriangles.input[0] = new InputLocalOffset();
+                meshTriangles.input[0].semantic = "VERTEX";
+                meshTriangles.input[0].source = "#" + newMesh.vertices.id;
+                meshTriangles.input[0].offset = 0;
+                string packed_primitives = "";
+                for (int i = 0; i < TriList.Count; i++)
+                {
+                    packed_primitives += $"{TriList[i]} ";
+                }
+
+                meshTriangles.p = packed_primitives;
+
+                newMesh.Items = new object[1];
+                newMesh.Items[0] = meshTriangles;
+
+                cachedGeoms.geometry[submodel].Item = newMesh;
+
+            }
+
+            uint RootJointsCount = SkinChunk.NumPrimGroups;
+            List<SkeletonJointCTTR> Joints = new List<SkeletonJointCTTR>();
+            for (int i = 0; i < SkeletonChunk.Children.Count; i++)
+            {
+                if (SkeletonChunk.Children[i] is SkeletonJointCTTR joint)
+                {
+                    Joints.Add(joint);
+                    if (joint.SkeletonParent == 0)
+                    {
+                        RootJointsCount++;
+                    }
+                }
+            }
+
+            cachedVscenes.visual_scene[0].node = new node[1];
+            cachedVscenes.visual_scene[0].node[0] = new node();
+            node RootNode = cachedVscenes.visual_scene[0].node[0];
+            RootNode.sid = "Armature";
+            RootNode.id = "Armature";
+            RootNode.name = "Armature";
+            RootNode.type = NodeType.NODE;
+            RootNode.Items = new object[1];
+            RootNode.ItemsElementName = new ItemsChoiceType2[1] { ItemsChoiceType2.matrix };
+            RootNode.Items[0] = BasePos;
+            RootNode.node1 = new node[RootJointsCount];
+            
+            for (int i = 0; i < RootJointsCount; i++)
+            {
+                RootNode.node1[i] = new node();
+            }
+
+            int MainJoint = 0;
+            for (int i = 0; i < Joints.Count; i++)
+            {
+                if (Joints[i].SkeletonParent == 0)
+                {
+                    AddJointTree(RootNode.node1[MainJoint], Joints[i], i, Joints);
+                    MainJoint++;
+                }
+            }
+
+            for (int i = 0; i < SkinChunk.NumPrimGroups; i++)
+            {
+                RootNode.node1[i + 1] = new node();
+                node SkinNode = RootNode.node1[i + 1];
+
+                SkinNode.id = "node" + i;
+                SkinNode.name = "polygon" + i;
+                SkinNode.type = NodeType.NODE;
+
+                SkinNode.instance_geometry = new instance_geometry[1] { new instance_geometry() };
+                SkinNode.instance_geometry[0].url = "#" + cachedGeoms.geometry[i].id;
+                SkinNode.instance_geometry[0].bind_material = new bind_material();
+                SkinNode.instance_geometry[0].bind_material.technique_common = new instance_material[1];
+
+                instance_material MatInstance = new instance_material();
+                MatInstance.symbol = $"Material{i}";
+                MatInstance.target = $"#Material{i}-shader";
+                MatInstance.bind_vertex_input = new instance_materialBind_vertex_input[1] { new instance_materialBind_vertex_input() };
+                MatInstance.bind_vertex_input[0].input_semantic = "TEXCOORD";
+                MatInstance.bind_vertex_input[0].semantic = "UVChannel_1";
+                MatInstance.bind_vertex_input[0].input_set = (ulong)0;
+
+                SkinNode.instance_geometry[0].bind_material.technique_common[0] = MatInstance;
+
+            }
+
+            cachedMats.material = new material[SkinChunk.NumPrimGroups];
+            cachedEffects.effect = new effect[SkinChunk.NumPrimGroups];
+            List<uint> TexDupeCheck = new List<uint>();
+
+            for (int mat = 0; mat < SkinChunk.NumPrimGroups; mat++)
+            {
+                //HGO_Model.Material ThisMaterial = HGO.Materials[mat];
+                cachedEffects.effect[mat] = new effect();
+                cachedEffects.effect[mat].id = $"Material{mat}-effect";
+                cachedEffects.effect[mat].name = $"Material{mat}-effect";
+
+                cachedEffects.effect[mat].Items = new effectFx_profile_abstractProfile_COMMON[1];
+                effectFx_profile_abstractProfile_COMMON CommonMat = new effectFx_profile_abstractProfile_COMMON();
+                fx_newparam_common SurfParam = new fx_newparam_common();
+                fx_newparam_common SampParam = new fx_newparam_common();
+                effectFx_profile_abstractProfile_COMMONTechnique TechParam = new effectFx_profile_abstractProfile_COMMONTechnique();
+
+
+                SurfParam.sid = $"Material{mat}-effect-Image-surface";
+                SurfParam.surface = new fx_surface_common();
+                SurfParam.surface.type = fx_surface_type_enum.Item2D;
+                SurfParam.surface.init_from = new fx_surface_init_from_common[1];
+                SurfParam.surface.init_from[0] = new fx_surface_init_from_common();
+                SurfParam.surface.init_from[0].Value = "";
+                SurfParam.surface.init_from[0].Value = $"image{mat}";
+
+                SampParam.sid = $"Material{mat}-effect-Image-sampler";
+                SampParam.sampler2D = new fx_sampler2D_common();
+                SampParam.sampler2D.source = $"Material{mat}-effect-Image-surface";
+
+                TechParam.sid = "common";
+                effectFx_profile_abstractProfile_COMMONTechniqueLambert common_lambert = new effectFx_profile_abstractProfile_COMMONTechniqueLambert();
+                common_color_or_texture_type textureType = new common_color_or_texture_type();
+                common_color_or_texture_typeTexture textureContent = new common_color_or_texture_typeTexture();
+                textureContent.texture = $"Material{mat}-effect-Image-sampler";
+                textureContent.texcoord = "UVChannel_1";
+                textureType.Item = textureContent;
+                common_lambert.diffuse = textureType;
+
+                TechParam.Item = common_lambert;
+
+                CommonMat.Items = new object[2] { SurfParam, SampParam };
+                CommonMat.technique = TechParam;
+                cachedEffects.effect[mat].Items[0] = CommonMat;
+
+                cachedMats.material[mat] = new material();
+                cachedMats.material[mat].id = $"Material{mat}-shader";
+
+                string sname = SkinChunk.GetChildren<PrimitiveGroupCTTR>()[mat].ShaderName;
+                cachedMats.material[mat].name = $"{sname}";
+
+                cachedMats.material[mat].instance_effect = new instance_effect();
+                cachedMats.material[mat].instance_effect.url = $"#Material{mat}-effect";
+            }
+
+
+            cachedImages.image = new image[SkinChunk.NumPrimGroups];
+            for (int i = 0; i < SkinChunk.NumPrimGroups; i++)
+            {
+                cachedImages.image[i] = new image();
+                cachedImages.image[i].id = $"image{i}";
+                string sname = SkinChunk.GetChildren<PrimitiveGroupCTTR>()[i].ShaderName;
+                cachedImages.image[i].name = $"{sname}_tex";
+                cachedImages.image[i].Item = $"Texture{i}.png";
+                for (int s = 0; s < ShaderChunks.Length; s++)
+                {
+                    if (ShaderChunks[s].Name == sname)
+                    {
+                        if (ShaderChunks[s].GetChildren<ShaderTextureParam>() != null)
+                        {
+                            foreach (ShaderTextureParam tparam in ShaderChunks[s].GetChildren<ShaderTextureParam>())
+                            {
+                                if (tparam.Param == "TEX")
+                                {
+                                    cachedImages.image[i].Item = $"{tparam.Value}";
+                                    break;
+                                }
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+
+        }
+
+        public static float[] ConvertMatrix(float[] ModelMatrix)
+        {
+            float[] Matrix = new float[16];
+            Matrix[0] = ModelMatrix[0];
+            Matrix[1] = ModelMatrix[4];
+            Matrix[2] = ModelMatrix[8];
+            Matrix[3] = ModelMatrix[12];
+            Matrix[4] = ModelMatrix[1];
+            Matrix[5] = ModelMatrix[5];
+            Matrix[6] = ModelMatrix[9];
+            Matrix[7] = ModelMatrix[13];
+            Matrix[8] = ModelMatrix[2];
+            Matrix[9] = ModelMatrix[6];
+            Matrix[10] = ModelMatrix[10];
+            Matrix[11] = ModelMatrix[14];
+            Matrix[12] = ModelMatrix[3];
+            Matrix[13] = ModelMatrix[7];
+            Matrix[14] = ModelMatrix[11];
+            Matrix[15] = ModelMatrix[15];
+            return Matrix;
+        }
+
+        public static matrix BasePos = new matrix() { sid = "transform", Values = new float[16] { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 } };
+
+        public static void AddSkinnedModelWithAnimations(ref Pure3D.Chunks.Skin SkinChunk, ref SkeletonCTTR SkeletonChunk, ref Shader[] ShaderChunks)//, ref Animation[] AnimChunks)
         {
 
             List<uint> IndexList = new List<uint>();
@@ -221,22 +518,17 @@ namespace CrateModLoader.GameSpecific.CrashTTR
                 float_array geom_positions = new float_array();
                 geom_positions.id = "geometry" + primgroups + "-positions-array";
                 PositionList posList = SkinChunk.GetChildren<PrimitiveGroupCTTR>()[primgroups].GetChildren<PositionList>()[0];
-                geom_positions.count = (ulong)posList.Positions.Length * 3;
-                geom_positions.Values = new double[geom_positions.count];
-                for (ulong i = 0; i < geom_positions.count / 3; i++)
+                geom_positions.count = (ulong)posList.Positions.Length;
+                //geom_positions.Values = new double[geom_positions.count * 3];
+                int posit = 0;
+                for (ulong i = 0; i < geom_positions.count; i++)
                 {
-                    if (i % 3 == 0)
-                    {
-                        geom_positions.Values[i] = posList.Positions[i / 3].X;
-                    }
-                    else if (i % 3 == 1)
-                    {
-                        geom_positions.Values[i] = posList.Positions[i / 3].Y;
-                    }
-                    else
-                    {
-                        geom_positions.Values[i] = posList.Positions[i / 3].Z;
-                    }
+                    geom_positions.Values[posit] = posList.Positions[i].X;
+                    posit++;
+                    geom_positions.Values[posit] = posList.Positions[i].Y;
+                    posit++;
+                    geom_positions.Values[posit] = posList.Positions[i].Z;
+                    posit++;
                 }
 
                 newMesh.source[0].Item = geom_positions;
@@ -258,22 +550,17 @@ namespace CrateModLoader.GameSpecific.CrashTTR
                 float_array geom_normals = new float_array();
                 geom_normals.id = "geometry" + primgroups + "-mesh-map-array";
                 NormalList normals = SkinChunk.GetChildren<PrimitiveGroupCTTR>()[primgroups].GetChildren<NormalList>()[0];
-                geom_normals.count = (ulong)normals.Normals.Length * 3;
-                geom_normals.Values = new double[geom_normals.count];
+                geom_normals.count = (ulong)normals.Normals.Length;
+                //geom_normals.Values = new double[geom_normals.count * 3];
+                int norm = 0;
                 for (ulong i = 0; i < geom_normals.count; i++)
                 {
-                    if (i % 3 == 0)
-                    {
-                        geom_normals.Values[i] = normals.Normals[i / 3].X;
-                    }
-                    else if (i % 3 == 1)
-                    {
-                        geom_normals.Values[i] = normals.Normals[i / 3].Y;
-                    }
-                    else
-                    {
-                        geom_normals.Values[i] = normals.Normals[i / 3].Z;
-                    }
+                    geom_normals.Values[norm] = normals.Normals[i].X;
+                    norm++;
+                    geom_normals.Values[norm] = normals.Normals[i].Y;
+                    norm++;
+                    geom_normals.Values[norm] = normals.Normals[i].Z;
+                    norm++;
                 }
 
                 newMesh.source[1].Item = geom_normals;
@@ -295,14 +582,15 @@ namespace CrateModLoader.GameSpecific.CrashTTR
                 float_array geom_texcoords = new float_array();
                 geom_texcoords.id = "geometry" + primgroups + "-mesh-map-array";
                 UVList UV = SkinChunk.GetChildren<PrimitiveGroupCTTR>()[primgroups].GetChildren<UVList>()[0];
-                geom_texcoords.count = (ulong)UV.UVs.Length * 2;
-                geom_texcoords.Values = new double[geom_texcoords.count];
+                geom_texcoords.count = (ulong)UV.UVs.Length;
+                //geom_texcoords.Values = new double[geom_texcoords.count * 2];
+                int coord = 0;
                 for (ulong i = 0; i < geom_texcoords.count; i++)
                 {
-                    ulong pos = i / 2;
-                    geom_texcoords.Values[i] = UV.UVs[pos].X;
-                    i++;
-                    geom_texcoords.Values[i] = UV.UVs[pos].Y;
+                    geom_texcoords.Values[coord] = UV.UVs[i].X;
+                    coord++;
+                    geom_texcoords.Values[coord] = UV.UVs[i].Y;
+                    coord++;
                 }
 
                 newMesh.source[2].Item = geom_texcoords;
@@ -355,9 +643,11 @@ namespace CrateModLoader.GameSpecific.CrashTTR
                 newMesh.source[3].technique_common.accessor.param[2].type = "float";
                 */
 
-                polylist meshTriangles = new polylist();
+                //polygons meshTriangles = new polygons();
+                //polylist meshTriangles = new polylist();
+                triangles meshTriangles = new triangles();
                 meshTriangles.material = "";
-                meshTriangles.count = (ulong)SkinChunk.GetChildren<PrimitiveGroupCTTR>()[primgroups].GetChildren<IndexList>()[0].Indices.Length / 4;
+                meshTriangles.count = (ulong)SkinChunk.GetChildren<PrimitiveGroupCTTR>()[primgroups].GetChildren<IndexList>()[0].Indices.Length / 3;
                 meshTriangles.input = new InputLocalOffset[3];
                 meshTriangles.input[0] = new InputLocalOffset();
                 meshTriangles.input[0].semantic = "VERTEX";
@@ -378,12 +668,12 @@ namespace CrateModLoader.GameSpecific.CrashTTR
                     packed_primitives += SkinChunk.GetChildren<PrimitiveGroupCTTR>()[primgroups].GetChildren<IndexList>()[0].Indices[i];
                     packed_primitives += " ";
                 }
-                string packed_vcount = "";
-                for (int i = 0; i < SkinChunk.GetChildren<PrimitiveGroupCTTR>()[primgroups].GetChildren<IndexList>()[0].Indices.Length / 3; i++)
-                {
-                    packed_vcount += "3 ";
-                }
-                meshTriangles.vcount = packed_vcount;
+                //string packed_vcount = "";
+                //for (int i = 0; i < SkinChunk.GetChildren<PrimitiveGroupCTTR>()[primgroups].GetChildren<IndexList>()[0].Indices.Length / 4; i++)
+                //{
+                //    packed_vcount += "4 ";
+                //}
+                //meshTriangles.vcount = packed_vcount;
                 
                 meshTriangles.p = packed_primitives;
 
@@ -468,6 +758,7 @@ namespace CrateModLoader.GameSpecific.CrashTTR
                 cachedEffects.effect[mat].Items[0].technique.Item = common_phong;
             }
 
+            
             cachedControllers.controller = new controller[SkinChunk.NumPrimGroups];
 
             for (int a = 0; a < SkinChunk.NumPrimGroups; a++)
@@ -486,10 +777,10 @@ namespace CrateModLoader.GameSpecific.CrashTTR
                 Name_array Joints_Names = new Name_array();
                 Joints_Names.id = "controller" + a + "-joints-array";
                 Joints_Names.count = (ulong)SkeletonChunk.GetChildren<SkeletonJointCTTR>().Length;
-                Joints_Names.Values = new string[Joints_Names.count];
+                //Joints_Names.Values = new string[Joints_Names.count];
                 for (ulong i = 0; i < Joints_Names.count; i++)
                 {
-                    Joints_Names.Values[i] = SkeletonChunk.GetChildren<SkeletonJointCTTR>()[i].Name;
+                    //Joints_Names.Values[i] = SkeletonChunk.GetChildren<SkeletonJointCTTR>()[i].Name;
                 }
 
                 ControllerSkin.source[0].Item = Joints_Names;
@@ -506,7 +797,7 @@ namespace CrateModLoader.GameSpecific.CrashTTR
                 float_array Bind_Poses = new float_array();
                 Bind_Poses.id = "controller" + a + "-bind_poses-array";
                 Bind_Poses.count = (ulong)SkeletonChunk.GetChildren<SkeletonJointCTTR>().Length * 16;
-                Bind_Poses.Values = new double[Bind_Poses.count];
+                //Bind_Poses.Values = new double[Bind_Poses.count];
                 int bind_pose_pos = 0;
                 for (ulong i = 0; i < Joints_Names.count; i++)
                 {
@@ -558,7 +849,7 @@ namespace CrateModLoader.GameSpecific.CrashTTR
                 float_array Weights_Array = new float_array();
                 Weights_Array.id = "controller" + a + "-weights-array";
                 Weights_Array.count = Joints_Names.count;
-                Weights_Array.Values = new double[Joints_Names.count];
+                //Weights_Array.Values = new double[Joints_Names.count];
                 for (int i = 0; i < Weights_Array.Values.Length; i++)
                 {
                     Weights_Array.Values[i] = 1;
@@ -606,30 +897,54 @@ namespace CrateModLoader.GameSpecific.CrashTTR
 
                 cachedControllers.controller[a].Item = ControllerSkin;
             }
+            
 
             cachedVscenes.visual_scene = new visual_scene[1] { new visual_scene() };
             cachedVscenes.visual_scene[0].id = "Scene0";
             cachedVscenes.visual_scene[0].name = "Scene0";
-            cachedVscenes.visual_scene[0].node = new node[SkinChunk.NumPrimGroups + 1];
-            cachedVscenes.visual_scene[0].node[0] = new node();
-            //cachedVscenes.visual_scene[0].node[0].Items = new object[1];
-            //cachedVscenes.visual_scene[0].node[0].Items[0] = new matrix();
 
+            uint RootJointsCount = 0;
+            List<SkeletonJointCTTR> Joints = new List<SkeletonJointCTTR>();
             for (int i = 0; i < SkeletonChunk.Children.Count; i++)
             {
-                SkeletonJointCTTR joint = (SkeletonJointCTTR)SkeletonChunk.Children[i];
-                if (joint.SkeletonParent == 0)
+                if (SkeletonChunk.Children[i] is SkeletonJointCTTR joint)
                 {
-                    //cachedVscenes.visual_scene[0].node[0].node1 = new node[10];
+                    Joints.Add(joint);
+                    if (joint.SkeletonParent == 0)
+                    {
+                        RootJointsCount++;
+                    }
                 }
             }
 
-            cachedVscenes.visual_scene[0].node[0].id = SkeletonChunk.Name;
-            cachedVscenes.visual_scene[0].node[0].type = NodeType.JOINT;
+            cachedVscenes.visual_scene[0].node = new node[SkinChunk.NumPrimGroups + 1];
+            cachedVscenes.visual_scene[0].node[0] = new node();
+            cachedVscenes.visual_scene[0].node[0].sid = "Armature";
+            cachedVscenes.visual_scene[0].node[0].id = "Armature";
+            cachedVscenes.visual_scene[0].node[0].name = "Armature";
+            cachedVscenes.visual_scene[0].node[0].type = NodeType.NODE;
+            cachedVscenes.visual_scene[0].node[0].node1 = new node[RootJointsCount];
+            for (int i = 0; i < RootJointsCount; i++)
+            {
+                cachedVscenes.visual_scene[0].node[0].node1[i] = new node();
+            }
+            cachedVscenes.visual_scene[0].node[0].Items = new object[5];
+            cachedVscenes.visual_scene[0].node[0].ItemsElementName = new ItemsChoiceType2[5] { ItemsChoiceType2.translate, ItemsChoiceType2.rotate, ItemsChoiceType2.rotate, ItemsChoiceType2.rotate, ItemsChoiceType2.scale };
+            cachedVscenes.visual_scene[0].node[0].Items[0] = new TargetableFloat3() { sid = "location", Values = new double[3] { 0, 0, 0 } };
+            cachedVscenes.visual_scene[0].node[0].Items[1] = new rotate() { sid = "rotationZ", Values = new double[4] { 0, 0, 1, 0 } };
+            cachedVscenes.visual_scene[0].node[0].Items[2] = new rotate() { sid = "rotationY", Values = new double[4] { 0, 1, 0, 0 } };
+            cachedVscenes.visual_scene[0].node[0].Items[3] = new rotate() { sid = "rotationX", Values = new double[4] { 1, 0, 0, 90 } };
+            cachedVscenes.visual_scene[0].node[0].Items[4] = new TargetableFloat3() { sid = "scale", Values = new double[3] { 1, 1, 1 } };
 
-            //todo: joints node tree
-            // SkeletonParent - 0 means root, the rest is chunk child index
-            // SkeletonJointCTTR.BindPose matrix as transform matrix?
+            int MainJoint = 0;
+            for (int i = 0; i < Joints.Count; i++)
+            {
+                if (Joints[i].SkeletonParent == 0)
+                {
+                    AddJointTree(cachedVscenes.visual_scene[0].node[0].node1[MainJoint], Joints[i], i, Joints);
+                    MainJoint++;
+                }
+            }
 
             for (int i = 1; i < SkinChunk.NumPrimGroups + 1; i++)
             {
@@ -640,7 +955,12 @@ namespace CrateModLoader.GameSpecific.CrashTTR
                 cachedVscenes.visual_scene[0].node[i].type = NodeType.NODE;
                 cachedVscenes.visual_scene[0].node[i].instance_controller = new instance_controller[1] { new instance_controller() };
                 cachedVscenes.visual_scene[0].node[i].instance_controller[0].url = "#" + cachedControllers.controller[i - 1].id;
-                cachedVscenes.visual_scene[0].node[i].instance_controller[0].skeleton = new string[1] { "#" + cachedVscenes.visual_scene[0].node[0].id };
+                cachedVscenes.visual_scene[0].node[i].instance_controller[0].skeleton = new string[cachedVscenes.visual_scene[0].node[0].node1.Length];
+                for (int n = 0; n < cachedVscenes.visual_scene[0].node[0].node1.Length; n++)
+                {
+                    cachedVscenes.visual_scene[0].node[i].instance_controller[0].skeleton[n] = "#" + cachedVscenes.visual_scene[0].node[0].node1[n].id;
+                }
+                //cachedVscenes.visual_scene[0].node[i].instance_controller[0].skeleton = new string[1] { "#" + cachedVscenes.visual_scene[0].node[0].node1[0].id };
                 cachedVscenes.visual_scene[0].node[i].instance_controller[0].bind_material = new bind_material();
                 cachedVscenes.visual_scene[0].node[i].instance_controller[0].bind_material.technique_common = new instance_material[1] { new instance_material() };
                 cachedVscenes.visual_scene[0].node[i].instance_controller[0].bind_material.technique_common[0].symbol = "#" + cachedMats.material[0].id;
@@ -648,19 +968,79 @@ namespace CrateModLoader.GameSpecific.CrashTTR
                 cachedVscenes.visual_scene[0].node[i].instance_controller[0].bind_material.technique_common[0].bind_vertex_input = new instance_materialBind_vertex_input[1] { new instance_materialBind_vertex_input() };
                 cachedVscenes.visual_scene[0].node[i].instance_controller[0].bind_material.technique_common[0].bind_vertex_input[0].semantic = "tc";
                 cachedVscenes.visual_scene[0].node[i].instance_controller[0].bind_material.technique_common[0].bind_vertex_input[0].input_semantic = "TEXCOORD";
+
+                cachedVscenes.visual_scene[0].node[i].Items = new object[5];
+                cachedVscenes.visual_scene[0].node[i].ItemsElementName = new ItemsChoiceType2[5] { ItemsChoiceType2.translate, ItemsChoiceType2.rotate, ItemsChoiceType2.rotate, ItemsChoiceType2.rotate, ItemsChoiceType2.scale };
+                cachedVscenes.visual_scene[0].node[i].Items[0] = new TargetableFloat3() { sid = "location", Values = new double[3] { 0, 0, 0 } };
+                cachedVscenes.visual_scene[0].node[i].Items[1] = new rotate() { sid = "rotationZ", Values = new double[4] { 0, 0, 1, 0 } };
+                cachedVscenes.visual_scene[0].node[i].Items[2] = new rotate() { sid = "rotationY", Values = new double[4] { 0, 1, 0, 0 } };
+                cachedVscenes.visual_scene[0].node[i].Items[3] = new rotate() { sid = "rotationX", Values = new double[4] { 1, 0, 0, 0 } };
+                cachedVscenes.visual_scene[0].node[i].Items[4] = new TargetableFloat3() { sid = "scale", Values = new double[3] { 1, 1, 1 } };
             }
-            
-
-
-            //not working:
-            // - vertex weights error out
-            // - mesh comes out wrong
 
             //animclips
             //anims
 
         }
 
+        public static void AddJointTree(node ParentNode, SkeletonJointCTTR Joint, int JointID, List<SkeletonJointCTTR> Joints)
+        {
 
+            ParentNode.id = Joint.Name;
+            ParentNode.name = Joint.Name;
+            ParentNode.type = NodeType.JOINT;
+            matrix NodeMatrix = new matrix();
+            float[] NodeMatrixValues = new float[16];
+            NodeMatrixValues[0] = Joint.RestPose.M11;
+            NodeMatrixValues[1] = Joint.RestPose.M12;
+            NodeMatrixValues[2] = Joint.RestPose.M13;
+            NodeMatrixValues[3] = Joint.RestPose.M14;
+            NodeMatrixValues[4] = Joint.RestPose.M21;
+            NodeMatrixValues[5] = Joint.RestPose.M22;
+            NodeMatrixValues[6] = Joint.RestPose.M23;
+            NodeMatrixValues[7] = Joint.RestPose.M24;
+            NodeMatrixValues[8] = Joint.RestPose.M31;
+            NodeMatrixValues[9] = Joint.RestPose.M32;
+            NodeMatrixValues[10] = Joint.RestPose.M33;
+            NodeMatrixValues[11] = Joint.RestPose.M34;
+            NodeMatrixValues[12] = Joint.RestPose.M41;
+            NodeMatrixValues[13] = Joint.RestPose.M42;
+            NodeMatrixValues[14] = Joint.RestPose.M43;
+            NodeMatrixValues[15] = Joint.RestPose.M44;
+            NodeMatrix.sid = "transform";
+            NodeMatrix.Values = ConvertMatrix(NodeMatrixValues); //NodeMatrixValues;
+            ParentNode.Items = new object[1];
+            ParentNode.ItemsElementName = new ItemsChoiceType2[1] { ItemsChoiceType2.matrix };
+            ParentNode.Items[0] = NodeMatrix;
+            //ParentNode.extra = new extra[1];
+            //extra ExtraData = new extra();
+            //ExtraData.technique = new technique[1];
+            //technique ExtraTech = new technique();
+            //ExtraTech.profile = "blender";
+            //ExtraData.technique[0] = ExtraTech;
+            //ParentNode.extra[0] = ExtraData;
+
+            uint ChildCount = 0;
+            for (int i = 0; i < Joints.Count; i++)
+            {
+                if (Joints[i].SkeletonParent == JointID && JointID != i && Joints[i].SkeletonParent != 0)
+                {
+                    ChildCount++;
+                }
+            }
+
+            ParentNode.node1 = new node[ChildCount];
+            int c = 0;
+            for (int i = 0; i < Joints.Count; i++)
+            {
+                if (Joints[i].SkeletonParent == JointID && JointID != i && Joints[i].SkeletonParent != 0)
+                {
+                    ParentNode.node1[c] = new node();
+                    AddJointTree(ParentNode.node1[c], Joints[i], i, Joints);
+                    c++;
+                }
+            }
+
+        }
     }
 }

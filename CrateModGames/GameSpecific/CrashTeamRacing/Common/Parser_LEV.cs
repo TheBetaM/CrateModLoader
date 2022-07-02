@@ -7,12 +7,11 @@ using CTRFramework.Shared;
 
 namespace CrateModLoader.GameSpecific.CrashTeamRacing
 {
-    public class Parser_LEV : ModParser<CtrScene>
+    public class Parser_LEV : ModParser<CtrScene, Level_LEV>
     {
         public Parser_LEV(Modder mod) : base(mod) {  }
 
         public override List<string> Extensions => new List<string>() { ".LEV" };
-        public override bool IsLevelFile => true;
 
         public override CtrScene LoadObject(string filePath)
         {
@@ -23,13 +22,6 @@ namespace CrateModLoader.GameSpecific.CrashTeamRacing
         {
             WriteLEV(thing, filePath);
             thing.Dispose();
-        }
-
-        public override LevelBase LoadLevel(CtrScene data)
-        {
-            Level_LEV lev = new Level_LEV();
-            lev.Load(data);
-            return lev;
         }
 
         public void WriteLEV(CtrScene scn, string path)

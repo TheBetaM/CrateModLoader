@@ -24,11 +24,10 @@ New games supported:
 - Crash Boom Bang! (NDS)  
 - Crash of the Titans (NDS)  
 - Super Monkey Ball Adventure (PSP)   
-- Sonic Rivals (PSP)  
   
 Crash Twinsanity
-- Improved feature compatibility with added/modded levels in Mod Crates
-- Randomzie Gem Locations: Removed an inaccessible gem location in Classroom Chaos
+- Improved feature compatibility with custom/modded levels in Mod Crates
+- Randomzie Gem Locations: Removed an incorrect gem location in Classroom Chaos
 - Randomize Character Parameters: Fixed Mechabandicoot issues
 
 Rayman 3: Hoodlum Havoc
@@ -57,7 +56,7 @@ CTR: Crash Team Racing
 - New: Driving Offroad Respawns The Driver
 - New: Randomize World Palette
 - Fixed voices and movies not playing (due to new packing method)
-- Updated CTR Framework API (existing Mod Crates may need to be updated due to layer 1 file name changes)
+- Updated CTR Framework API (existing Mod Crates need to be updated due to layer 1 file name changes)
 
 Crash of the Titans
 - New: Randomize Costume Visuals

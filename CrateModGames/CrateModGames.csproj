@@ -898,18 +898,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="GameSpecific\SonicRivals\Common\Parser_TXT.cs" />
-    <Compile Include="GameSpecific\SonicRivals\Game_SonicRivals.cs" />
-    <Compile Include="GameSpecific\SonicRivals\Game_SonicRivals2.cs" />
-    <Compile Include="GameSpecific\SonicRivals\Modder_SonicRivals.cs" />
-    <Compile Include="GameSpecific\SonicRivals\Modder_SonicRivals2.cs" />
-    <Compile Include="GameSpecific\SonicRivals\Mods\SonicRivals_Metadata.cs" />
-    <Compile Include="GameSpecific\SonicRivals\Properties\SonicRivals2_Props_Main.cs" />
-    <Compile Include="GameSpecific\SonicRivals\Properties\SonicRivals_Props_Main.cs" />
-    <Compile Include="GameSpecific\SonicRivals\Randomizers\SonicRivals2_Rand_LevelOrder.cs" />
-    <Compile Include="GameSpecific\SonicRivals\Randomizers\SonicRivals_Rand_Characters.cs" />
-    <Compile Include="GameSpecific\SonicRivals\Randomizers\SonicRivals_Rand_LevelOrder.cs" />
-    <Compile Include="GameSpecific\SonicRivals\Randomizers\SonicRivals_Rand_Music.cs" />
     <Compile Include="GameSpecific\Worms\Worms3D\Common\W3D_Common.cs" />
     <Compile Include="GameSpecific\Worms\Worms3D\Game_Worms3D.cs" />
     <Compile Include="GameSpecific\Worms\Worms3D\Modder_Worms3D.cs" />

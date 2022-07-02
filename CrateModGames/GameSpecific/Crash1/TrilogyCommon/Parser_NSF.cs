@@ -9,13 +9,12 @@ using CrateModLoader.LevelAPI;
 
 namespace CrateModLoader.GameSpecific.Crash1.TrilogyCommon
 {
-    public class Parser_NSF : ModParser<NSF_Pair>
+    public class Parser_NSF : ModParser<NSF_Pair, Level_NSF>
     {
         public override bool DisableAsync => true; // API failed during multithreading
         private GameVersion game;
         private RegionType region;
         private Dictionary<int, NSF_Pair> LevelPairs;
-        public override bool IsLevelFile => true;
 
         public Parser_NSF(Modder mod, GameVersion thisGame, RegionType r) : base(mod)
         {
@@ -275,13 +274,6 @@ namespace CrateModLoader.GameSpecific.Crash1.TrilogyCommon
             {
                 File.WriteAllBytes(Path.ChangeExtension(filePath, ".NSD"), thing.oldnsd.Save());
             }
-        }
-
-        public override LevelBase LoadLevel(NSF_Pair data)
-        {
-            Level_NSF Lev = new Level_NSF();
-            Lev.Load(data);
-            return Lev;
         }
 
         internal Crash1_Levels GetLevelFromNSF1(string nsf_name)

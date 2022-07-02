@@ -4,7 +4,7 @@ using CrateModLoader.LevelAPI;
 
 namespace CrateModLoader.GameSpecific.CrashTS
 {
-    public class Parser_RM : ModParser<ChunkInfoRM>
+    public class Parser_RM : ModParser<ChunkInfoRM, Level_RM>
     {
         private ConsoleMode console;
 
@@ -18,7 +18,6 @@ namespace CrateModLoader.GameSpecific.CrashTS
         }
 
         public override List<string> Extensions => new List<string>() { ".RM2", ".RMX" };
-        public override bool IsLevelFile => true;
 
         public override ChunkInfoRM LoadObject(string filePath)
         {
@@ -39,13 +38,6 @@ namespace CrateModLoader.GameSpecific.CrashTS
         public override void SaveObject(ChunkInfoRM thing, string filePath)
         {
             thing.File.SaveFile(filePath);
-        }
-
-        public override LevelBase LoadLevel(ChunkInfoRM data)
-        {
-            Level_RM Lev = new Level_RM();
-            Lev.Load(data);
-            return Lev;
         }
     }
 }

@@ -130,7 +130,9 @@ namespace CrateModLoader
             }
             else
             {
-                Pipeline.Build(inputPath, outputPath, worker, Game.UseLegacyMethod);
+                bool LegacyMethod = false;
+                if (Game != null && Game.UseLegacyMethod) LegacyMethod = true;
+                Pipeline.Build(inputPath, outputPath, worker, LegacyMethod);
             }
 
         }
@@ -311,7 +313,9 @@ namespace CrateModLoader
             }
             else
             {
-                Pipeline.Extract(inputPath, outputPath, worker, Game.UseLegacyMethod);
+                bool LegacyMethod = false;
+                if (Game != null && Game.UseLegacyMethod) LegacyMethod = true;
+                Pipeline.Extract(inputPath, outputPath, worker, LegacyMethod);
             }
 
         }

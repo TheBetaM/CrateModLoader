@@ -60,7 +60,7 @@ namespace CrateModLoader
         public List<ModPropertyBase> ActiveProps = new List<ModPropertyBase>();
         public List<LevelBase> Levels = new List<LevelBase>(); // Level API
         public virtual bool NoAsyncProcess => false;
-        public bool IsBusy => ProcessBusy || PassBusy; //{ get; set; }
+        public bool IsBusy => ProcessBusy || PassBusy;
         public bool PassBusy { get; set; }
         public bool ProcessBusy { get; set; }
         public string ProcessMessage { get; set; }
@@ -546,12 +546,6 @@ namespace CrateModLoader
             {
                 mod.BeforeCachePass();
             }
-            /*
-            foreach (KeyValuePair<string, IMod> pair in ModScripts)
-            {
-                pair.Value.BeforeCachePass();
-            }
-            */
         }
         public void StartCachePass(object value)
         {
@@ -559,12 +553,6 @@ namespace CrateModLoader
             {
                 mod.CachePass(value);
             }
-            /*
-            foreach (KeyValuePair<string, IMod> pair in ModScripts)
-            {
-                pair.Value.CachePass(value);
-            }
-            */
         }
         public void AfterCachePass()
         {
@@ -572,12 +560,6 @@ namespace CrateModLoader
             {
                 mod.AfterCachePass();
             }
-            /*
-            foreach (KeyValuePair<string, IMod> pair in ModScripts)
-            {
-                pair.Value.AfterCachePass();
-            }
-            */
         }
         public void BeforeModPass()
         {
@@ -585,12 +567,6 @@ namespace CrateModLoader
             {
                 mod.BeforeModPass();
             }
-            /*
-            foreach (KeyValuePair<string, IMod> pair in ModScripts)
-            {
-                pair.Value.BeforeModPass();
-            }
-            */
         }
         public void StartModPass(object value)
         {
@@ -598,12 +574,6 @@ namespace CrateModLoader
             {
                 mod.ModPass(value);
             }
-            /*
-            foreach (KeyValuePair<string, IMod> pair in ModScripts)
-            {
-                pair.Value.ModPass(value);
-            }
-            */
         }
         public void AfterModPass()
         {
@@ -611,12 +581,6 @@ namespace CrateModLoader
             {
                 mod.AfterModPass();
             }
-            /*
-            foreach (KeyValuePair<string, IMod> pair in ModScripts)
-            {
-                pair.Value.AfterModPass();
-            }
-            */
         }
         public void BeforePreloadPass()
         {
@@ -624,12 +588,6 @@ namespace CrateModLoader
             {
                 mod.BeforePreloadPass();
             }
-            /*
-            foreach (KeyValuePair<string, IMod> pair in ModScripts)
-            {
-                pair.Value.BeforePreloadPass();
-            }
-            */
         }
         public void StartPreloadPass(object value)
         {
@@ -637,12 +595,6 @@ namespace CrateModLoader
             {
                 mod.PreloadPass(value);
             }
-            /*
-            foreach (KeyValuePair<string, IMod> pair in ModScripts)
-            {
-                pair.Value.PreloadPass(value);
-            }
-            */
         }
         public void AfterPreloadPass()
         {
@@ -650,12 +602,6 @@ namespace CrateModLoader
             {
                 mod.AfterPreloadPass();
             }
-            /*
-            foreach (KeyValuePair<string, IMod> pair in ModScripts)
-            {
-                pair.Value.AfterPreloadPass();
-            }
-            */
         }
         public void StartPass(object value, ModPass pass = ModPass.Mod)
         {
@@ -678,7 +624,6 @@ namespace CrateModLoader
         {
             ProcessBusy = true;
 
-            // UI doesn't update until an await if this isn't here
             BackgroundWorker asyncWorker = new BackgroundWorker();
             asyncWorker.DoWork += new DoWorkEventHandler(AsyncWorker_DoWork);
             asyncWorker.RunWorkerAsync();
@@ -706,7 +651,6 @@ namespace CrateModLoader
             Levels.Clear();
             Props.Clear();
             EnabledModCrates.Clear();
-            //ModScripts.Clear();
         }
     }
 }

@@ -46,7 +46,7 @@ namespace Pure3D.Chunks
             {
                 SkeletonParentName = "Root";
             }
-            return $"Skeleton Joint CTTR: {Name} ParentID { SkeletonParent }, ParentName { SkeletonParentName } ";
+            return $"Skeleton Joint CTTR: {Name} ParentID { SkeletonParent }, ParentName { SkeletonParentName } Rest Pose {RestPose.M11} ; {RestPose.M12} ; {RestPose.M13} ; {RestPose.M14} | {RestPose.M21} ; {RestPose.M22} ; {RestPose.M23} ; {RestPose.M24} |{RestPose.M31} ; {RestPose.M32} ; {RestPose.M33} ; {RestPose.M34} |{RestPose.M41} ; {RestPose.M42} ; {RestPose.M43} ; {RestPose.M44}";
         }
     }
 }

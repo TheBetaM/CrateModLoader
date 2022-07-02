@@ -280,6 +280,7 @@ namespace CrateModLoader
         }
 
         public virtual LevelBase LoadLevel(T data) { return null; }
+        public virtual void SaveLevel(string Path) {  }
 
         bool CheckModsForType()
         {
@@ -296,5 +297,24 @@ namespace CrateModLoader
         }
 
 
+    }
+
+    // Mod Parser with level editor suport
+    public abstract class ModParser<T1, T2> : ModParser<T1> where T2 : Level<T1>, new()
+    {
+        public ModParser(Modder source) : base(source) { }
+        public override bool IsLevelFile => true;
+
+        public override LevelBase LoadLevel(T1 data)
+        {
+            T2 lev = new T2();
+            lev.Load(data);
+            return lev;
+        }
+
+        public override void SaveLevel(string Path)
+        {
+            
+        }
     }
 }

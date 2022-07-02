@@ -137,14 +137,7 @@ Features include:
 -   
 -  
 And more!
-  
-Sonic Rivals
-Supported: All PSP versions
-Version and seed visisble in the startup screen. (English only)
-Features include:
-- Randomize Level Order
-- Randomize Music
-  
+
 Super Monkey Ball Adventure
 Supported: All PSP versions (.ISO format) (GC, PS2 not supported yet)  
 Recommended: PSP
@@ -183,6 +176,3 @@ Supported: All PSP versions (.ISO format) (NDS not supported yet)
 Worms: Battle Islands
 Supported: All PSP versions (.ISO format) (WII not supported yet)
 
-Sonic Rivals 2
-Supported: All PSP versions
-Version and seed visisble in the startup screen. (English only)
