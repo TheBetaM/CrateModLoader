@@ -37,7 +37,7 @@ namespace CrateModLoader.GameSpecific.CrashTS.Mods
                                     state = state.nextState;
                                 }
                                 Script.MainScript.ScriptCommand command = state.scriptStateBody.command;
-                                while (command.VTableIndex != (ushort)DefaultEnums.CommandID.CreateDamageZone)
+                                while (command.VTableIndex != (ushort)DefaultEnums.CommandID.CreateDamage)
                                 {
                                     command = command.nextCommand;
                                 }

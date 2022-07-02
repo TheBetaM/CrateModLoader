@@ -575,9 +575,9 @@ namespace CrateModLoader.GameSpecific.CrashTS
                     for (int mdl = 0; mdl < gameObject.list_skins.Count; mdl++)
                     {
                         SkinX ARM_MDL = (SkinX)gameObject.list_skins[mdl];
-                        for (int i = 0; i < ARM_MDL.MaterialIDs.Length; i++)
+                        for (int i = 0; i < ARM_MDL.SubModels.Count; i++)
                         {
-                            export_mat.Add(ARM_MDL.MaterialIDs[i]);
+                            export_mat.Add(ARM_MDL.SubModels[i].MaterialID);
                         }
                     }
                 }
